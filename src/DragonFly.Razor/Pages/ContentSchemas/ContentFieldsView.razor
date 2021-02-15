@@ -7,52 +7,52 @@
     </ContentFieldSelector>
 </ModalWindow>
 
-<ul class="list-group">
+<BSListGroup>
     @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
     {
-        <li class="list-group-item">
-            <div style="display:flex;align-items:center">
-                <span style="flex-grow:1">@field.Key</span>
-                <p class="badge badge-secondary">@field.Value.FieldType</p>
-                <div>
-                    <a class="btn btn-light" @onclick="@(e => {  Up(field.Key); })"><i class="fas fa-arrow-up"></i></a>
-                    <a class="btn btn-light" @onclick="@(e => { Down(field.Key); })"><i class="fas fa-arrow-down"></i></a>
-                    <a class="btn btn-light" data-toggle="collapse" href="#@GetOptionKey(field.Key)" role="button"><i class="fas fa-cog"></i></a>
-                    <a class="btn btn-light" @onclick="@(e => { Schema.Fields.Remove(field.Key); })"><i class="fas fa-times"></i></a>
-                </div>
+    <BSListGroupItem>
+        <div style="display:flex;align-items:center">
+            <span style="flex-grow:1">@field.Key</span>
+            <p class="badge badge-secondary">@field.Value.FieldType</p>
+            <div>
+                <a class="btn btn-light" @onclick="@(e => {  Up(field.Key); })"><i class="fas fa-arrow-up"></i></a>
+                <a class="btn btn-light" @onclick="@(e => { Down(field.Key); })"><i class="fas fa-arrow-down"></i></a>
+                <a class="btn btn-light" data-toggle="collapse" href="#@GetOptionKey(field.Key)" role="button"><i class="fas fa-cog"></i></a>
+                <a class="btn btn-light" @onclick="@(e => { Schema.Fields.Remove(field.Key); })"><i class="fas fa-times"></i></a>
             </div>
-            <div class="collapse" id="@GetOptionKey(field.Key)" style="margin-top: 1rem">
-                @if (field.Value.Options != null)
+        </div>
+        <BSCollapse id="@GetOptionKey(field.Key)" style="margin-top: 1rem">
+            @if (field.Value.Options != null)
+            {
+                @if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
                 {
-                    @if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
-                    {
-                        <StringFieldOptionsView Options="@((StringFieldOptions)@field.Value.Options)" />
-                    }
-                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<FloatField>())
-                    {
-                        <FloatFieldOptionsView Options="@((FloatFieldOptions)@field.Value.Options)" />
-                    }
-                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<IntegerField>())
-                    {
-                        <IntegerFieldOptionsView Options="@((IntegerFieldOptions)@field.Value.Options)" />
-                    }
-                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<BoolField>())
-                    {
-                        <BoolFieldOptionsView Options="@((BoolFieldOptions)@field.Value.Options)" />
-                    }
-                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<ArrayField>())
-                    {
-                         <ContentFieldsView Schema="@(field.Value.Options as ArrayFieldOptions)" OptionIdSuffix="@GetOptionKey(field.Key)" />
-                    }
+                    <StringFieldOptionsView Options="@((StringFieldOptions)@field.Value.Options)" />
                 }
-                else
+                else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<FloatField>())
                 {
-                    <p>No options are available.</p>
+                    <FloatFieldOptionsView Options="@((FloatFieldOptions)@field.Value.Options)" />
                 }
-            </div>
-        </li>
+                else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<IntegerField>())
+                {
+                    <IntegerFieldOptionsView Options="@((IntegerFieldOptions)@field.Value.Options)" />
+                }
+                else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<BoolField>())
+                {
+                    <BoolFieldOptionsView Options="@((BoolFieldOptions)@field.Value.Options)" />
+                }
+                else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<ArrayField>())
+                {
+                    <ContentFieldsView Schema="@(field.Value.Options as ArrayFieldOptions)" OptionIdSuffix="@GetOptionKey(field.Key)" />
+                }
+            }
+            else
+            {
+                <p>No options are available.</p>
+            }
+        </BSCollapse>
+    </BSListGroupItem>
     }
-</ul>
+</BSListGroup>
 
 @code {
     [Parameter]
