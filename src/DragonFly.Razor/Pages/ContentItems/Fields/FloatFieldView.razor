@@ -1,0 +1,5 @@
+﻿@inherits FieldComponent<FloatField, FloatFieldOptions>
+
+<div class="float-field">
+    <input type="number" step="0.01" class="form-control" @bind-value="@Field.Value" min="@Options.MinValue" max="@Options.MaxValue" />
+</div>

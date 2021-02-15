@@ -1,0 +1,37 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace DragonFly.Content.ContentParts
+{
+    /// <summary>
+    /// TextField
+    /// </summary>
+    public abstract class TextBaseField : SingleValueContentField<string>
+    {
+        public TextBaseField()
+        {
+        }
+
+        public TextBaseField(string text)
+        {
+            Value = text;
+        }
+
+        public override bool HasValue => Value != null;
+
+        public override string ToString()
+        {
+            return Value;
+        }
+
+        protected override void OnValueChanging(ref string newValue)
+        {
+            if(string.IsNullOrWhiteSpace(newValue))
+            {
+                newValue = null;
+            }
+        }
+    }
+}

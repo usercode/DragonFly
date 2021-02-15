@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>3c906573-393b-4c64-a23d-faa9b2a0f051</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.3" />
+    
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="FileCache\" />
+    <Folder Include="Options\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.ImageSharp\DragonFly.AspNetCore.ImageSharp.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />
+  </ItemGroup>
+
+
+</Project>

@@ -1,0 +1,15 @@
+﻿<button class="btn btn-light" @onclick="e => { Order.Asc = !Order.Asc; }">
+    @if (Order.Asc == true)
+    {
+        <span>ASC</span>
+    }
+    else
+    {
+        <span>DESC</span>
+    }
+</button>
+
+    @code {
+        [Parameter]
+        public FieldOrder Order { get; set; }
+    }

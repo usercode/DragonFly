@@ -1,0 +1,43 @@
+name: .NET Core
+
+on: 
+  release:
+    types:
+      - published
+
+jobs:
+  dragonfly:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.103
+    - name: Build with dotnet
+      run: dotnet build --configuration Release "./src/DragonFly.sln"
+    - name: Run unit tests
+      run: dotnet test "./src/DragonFly.sln"
+    - name: Create the package
+      run: dotnet pack --configuration Release "./src/DragonFly.sln"
+    - name: Publish "DragonFly.AspNetCore" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.AspNetCore.API" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.AspNetCore.API.Client" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.AspNetCore.API.Exports" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Exports/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.AspNetCore.GraphQL" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.GraphQL/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}} 
+    - name: Publish "DragonFly.AspNetCore.ImageSharp" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.ImageSharp/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.Core" to nuget
+      run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.Razor" to nuget
+      run: dotnet nuget push "./src/DragonFly.Razor/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.Storage.MongoDB" to nuget
+      run: dotnet nuget push "./src/DragonFly.Storage.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+   

@@ -1,0 +1,55 @@
+﻿@page "/schema/{EntityType}"
+@page "/schema/create"
+@inherits ContentSchemaDetailBase
+
+@if (Entity != null)
+{
+    <div style="display:flex;flex-direction:column;height:100%" class="contentschema-detail">
+        <div style="flex:0">
+            <h1>@Entity.Name</h1>
+
+            <Toolbar Items="ToolbarItems"></Toolbar>
+        </div>
+        <div style="flex:1" class="scroll-content">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Name</label>
+                <div class="col-sm-10">
+                    @if (IsNewEntity)
+                    {
+                        <input type="text" @bind-value="@Entity.Name" class="form-control" />
+                    }
+                    else
+                    {
+                        <input type="text" @bind-value="@Entity.Name" class="form-control" readonly="readonly" />
+                    }
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Fields</label>
+                <div class="col-sm-10">
+                    <ContentFieldsView Schema="Entity" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">List fields</label>
+                <div class="col-sm-10">
+                    <ListFields TargetList="Entity.ListFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Reference fields</label>
+                <div class="col-sm-10">
+                    <ListFields TargetList="Entity.ReferenceFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Order fields</label>
+                <div class="col-sm-10">
+                    <OrderListFields TargetList="Entity.OrderFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+}

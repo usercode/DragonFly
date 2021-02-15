@@ -1,0 +1,23 @@
+﻿@if (Value)
+{
+    <input type="checkbox" checked @onchange="@(e => OnChange(false))" />
+}
+else
+{
+    <input type="checkbox" @onchange="@(e => OnChange(true))" />
+}
+
+@code {
+    [Parameter]
+    public bool Value { get; set; }
+
+    [Parameter]
+    public Action<bool> ValueChanged { get; set; }
+
+    private void OnChange(bool value)
+    {
+        Value = value;
+
+        ValueChanged?.Invoke(value);
+    }
+}

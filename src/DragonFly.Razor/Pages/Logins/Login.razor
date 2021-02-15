@@ -1,0 +1,54 @@
+﻿@page "/login"
+@inject HttpClient HttpClient
+@inject AuthenticationStateProvider Auth
+@inject NavigationManager NavigationManager
+@inject IOptions<GeneralOptions> Options
+
+<div class="text-center">
+    <div class="form-signin" style="width: 100%; max-width: 330px; padding: 15px; margin: auto;">       
+        <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Email address"  readonly="readonly" value="admin" />
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input @bind-value="Password" type="password" id="inputPassword" class="form-control" autofocus="" placeholder="Password">
+        
+        <button class="btn btn-lg btn-primary btn-block" @onclick="x => LoginAsync()">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>
+    </div>
+
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string Password { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        //var r = await HttpClient.GetAsync("api/Login/IsLoggedIn");
+
+        //if (r.IsSuccessStatusCode == false)
+        //{
+        //    NavigationManager.NavigateTo("/");
+
+        //    return;
+        //}
+    }
+
+    public async Task LoginAsync()
+    {
+        var response = await HttpClient.PostAsJson("Login", new LoginData() { Password = Password } );
+
+        if (response.IsSuccessStatusCode)
+        {
+            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated("Test");
+
+            NavigationManager.NavigateTo("./");
+        }
+        else
+        {
+            response.EnsureSuccessStatusCode();
+        }
+    }
+}

@@ -1,0 +1,44 @@
+﻿@page "/content/{EntityType}/{EntityId:guid}"
+@page "/content/{EntityType}/create"
+@inherits ContentItemDetailBase
+
+<div style="display:flex;flex-direction:column;height:100%" class="contentitem-detail">
+
+    @if (Entity != null)
+{
+    <div style="flex: 0">
+        <h1>@Entity.Schema.Name</h1>
+
+        <Toolbar Items="ToolbarItems"></Toolbar>
+    </div>
+    <div class="scroll-content" style="flex:1">
+        <div class="content-fields">
+
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Id</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                </div>
+            </div>
+
+            <ContentItemFields Content="Entity" Schema="Entity.Schema" />
+        </div>
+    </div>
+
+    <div style="flex:0; padding:12px;padding-bottom:0px">
+        <hr />
+
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Created: @Entity.CreatedAt</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Modified: @Entity.ModifiedAt</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Published: @Entity.PublishedAt</p>
+            </div>
+        </div>
+    </div>
+}
+</div>

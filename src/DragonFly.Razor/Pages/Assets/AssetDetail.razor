@@ -1,0 +1,91 @@
+@page "/asset/{EntityId:guid}"
+@page "/asset/create"
+@inherits AssetDetailBase
+@inject IImageAssetUrlService AssetPreview
+
+@if (Entity != null)
+{
+    <div style="display:flex;flex-direction:column;height:100%">
+        <div style="flex: 0">
+            <h1>Asset</h1>
+
+            <Toolbar Items="ToolbarItems"></Toolbar>
+        </div>
+        <div class="scroll-content" style="flex:1">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <!-- id -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                        </div>
+                    </div>
+
+                    <!-- name -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                        </div>
+                    </div>
+
+                    <!-- slug -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Slug</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Slug" />
+                        </div>
+                    </div>
+
+                    <!-- mimetype -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mimetype</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.MimeType" readonly />
+                        </div>
+                    </div>
+
+                    <!-- size -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Size</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Size" readonly />
+                        </div>
+                    </div>
+
+                    <!-- folder -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Folder</label>
+                        <div class="col-sm-10">
+                            @if (Entity.Folder != null)
+                            {
+                                <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
+                            }
+                        </div>
+                    </div>
+
+                    <!-- description -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" @bind="Entity.Description"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    @if (IsNewEntity == false)
+                    {
+                        <InputFile OnChange="OnInputFileChange" />
+
+                        <div>
+                            <!-- image preview -->
+                            <img src="@AssetPreview.Resize(Entity, 800, 800)" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}

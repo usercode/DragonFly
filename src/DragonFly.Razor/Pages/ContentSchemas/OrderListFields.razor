@@ -1,0 +1,41 @@
+﻿<div class="row">
+    <div class="col-lg-6">
+        <ul class="list-group">
+            @foreach (var i in TargetList)
+            {
+                <li class="list-group-item">
+                    <div style="display:flex;align-items:center">
+                        <div style="flex:1">@i.Name</div>
+                        <OrderDirection Order="i"></OrderDirection>
+                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></a>
+                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></a>
+                        <a class="btn btn-light" @onclick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-lg-6">
+        <ul class="list-group">
+            @foreach (string i in SourceList.Where(x => TargetList.Any(i => i.Name == x) == false))
+            {
+                <li class="list-group-item">
+                    <div style="display:flex;align-items:center">
+                        <span>@i</span>
+                        <span style="flex-grow:1"></span>
+                        <a class="btn btn-light" @onclick="@(e => { TargetList.Add(new FieldOrder(i, true));  })"><i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public IList<FieldOrder> TargetList { get; set; }
+
+    [Parameter]
+    public IList<string> SourceList { get; set; }
+}

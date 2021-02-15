@@ -1,0 +1,21 @@
+﻿@inject IToastService toastService
+
+<div class="toolbar">
+    @foreach (ToolbarItem item in Items)
+    {
+        <BSButton Class="toolbar-item" Color="item.Color" @onclick="@(async e => { await item.ExecuteAsync(); this.StateHasChanged(); })" disabled="@(item.IsRunning ? "disabled" : null)">
+            @if (item.IsRunning)
+            {
+                <span class="fas fa-spin fa-spinner icon"></span>
+            }
+            <span class="title">@item.Name</span>
+        </BSButton>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IEnumerable<ToolbarItem> Items { get; set; }
+
+
+} 

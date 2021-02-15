@@ -1,0 +1,133 @@
+﻿ 
+<a class="btn btn-light" @onclick="()=> ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</a>
+
+<ModalWindow Show="ShowModalDialog" Closed="ItemAdded">
+    <ContentFieldSelector @ref="Selector">
+
+    </ContentFieldSelector>
+</ModalWindow>
+
+<ul class="list-group">
+    @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
+    {
+        <li class="list-group-item">
+            <div style="display:flex;align-items:center">
+                <span style="flex-grow:1">@field.Key</span>
+                <p class="badge badge-secondary">@field.Value.FieldType</p>
+                <div>
+                    <a class="btn btn-light" @onclick="@(e => {  Up(field.Key); })"><i class="fas fa-arrow-up"></i></a>
+                    <a class="btn btn-light" @onclick="@(e => { Down(field.Key); })"><i class="fas fa-arrow-down"></i></a>
+                    <a class="btn btn-light" data-toggle="collapse" href="#@GetOptionKey(field.Key)" role="button"><i class="fas fa-cog"></i></a>
+                    <a class="btn btn-light" @onclick="@(e => { Schema.Fields.Remove(field.Key); })"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+            <div class="collapse" id="@GetOptionKey(field.Key)" style="margin-top: 1rem">
+                @if (field.Value.Options != null)
+                {
+                    @if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
+                    {
+                        <StringFieldOptionsView Options="@((StringFieldOptions)@field.Value.Options)" />
+                    }
+                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<FloatField>())
+                    {
+                        <FloatFieldOptionsView Options="@((FloatFieldOptions)@field.Value.Options)" />
+                    }
+                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<IntegerField>())
+                    {
+                        <IntegerFieldOptionsView Options="@((IntegerFieldOptions)@field.Value.Options)" />
+                    }
+                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<BoolField>())
+                    {
+                        <BoolFieldOptionsView Options="@((BoolFieldOptions)@field.Value.Options)" />
+                    }
+                    else if (field.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<ArrayField>())
+                    {
+                         <ContentFieldsView Schema="@(field.Value.Options as ArrayFieldOptions)" OptionIdSuffix="@GetOptionKey(field.Key)" />
+                    }
+                }
+                else
+                {
+                    <p>No options are available.</p>
+                }
+            </div>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter]
+    public IContentSchema Schema { get; set; }
+
+    [Parameter]
+    public string OptionIdSuffix { get; set; } = "option";
+
+    protected string GetOptionKey(string name)
+    {
+        return $"{OptionIdSuffix}_{name}";
+    }
+
+    public ContentFieldSelector Selector { get; set; }
+
+    public bool ShowModalDialog { get; set; }
+
+    protected void ItemAdded(object sender, bool result)
+    {
+        if (result)
+        {
+            ContentField defaultInstance = ContentFieldManager.Default.CreateField(Selector.ContentFieldType);
+
+            Schema.Fields.Add(Selector.Name, new ContentFieldDefinition()
+            {
+                FieldType = Selector.ContentFieldType.Name,
+                Options = defaultInstance.CreateOptions()
+            });
+
+            ShowModalDialog = false;
+
+            StateHasChanged();
+        }
+    }
+
+    protected void Up(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i != 0 && list[i].Key == key)
+            {
+                list[i - 1].Value.SortKey = i;
+                list[i].Value.SortKey = i - 1;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+
+        }
+    }
+
+    protected void Down(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i < list.Count - 1 && list[i].Key == key)
+            {
+                list[i].Value.SortKey = i + 1;
+                list[i + 1].Value.SortKey = i;
+                i++;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+
+        }
+    }
+}

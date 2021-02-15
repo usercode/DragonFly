@@ -1,0 +1,25 @@
+@inherits ContentItemTypeListBase2
+
+@if (SearchResult == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="list-group">
+
+                @foreach (DragonFly.ContentTypes.ContentSchema schema in SearchResult.Items)
+                {
+                    <a class="list-group-item list-group-item-action @(SelectedItem == schema ? "active" : "")" @onclick="() => RefreshContentItemsAsync(schema)" style="cursor:pointer">
+                        <span class="oi oi-list-rich"></span> @schema.Name
+                    </a>
+                }
+            </div>
+        </div>
+        <div class="col-lg-9">
+           <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" ItemSelected="x => SetResult(x)" />
+        </div>
+    </div>
+}

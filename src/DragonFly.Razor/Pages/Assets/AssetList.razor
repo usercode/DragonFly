@@ -1,0 +1,77 @@
+@page "/asset"
+@inherits AssetListBase
+@inject IImageAssetUrlService AssetPreview
+
+<div style="display:flex;flex-direction:column;height:100%">
+    <div style="flex:0">
+
+        @if (ListMode == EntityListMode.Default)
+        {
+            <div class="row">
+                <div class="col-lg-12">
+                    <a href="asset/create" class="btn btn-success">Create</a>
+                </div>
+            </div>
+
+            <hr />
+        }
+
+        @*@bind:event="oninput"*@
+        <input class="form-control" type="text" style="width:100%" @bind="SearchPattern" />
+
+        <hr />
+    </div>
+
+    <div style="flex: 1" class="scroll-content">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group">
+
+                    @if (SelectedFolder != null)
+                    {
+                        <div class="list-group-item list-group-item-action" @onclick="x => OpenFolder(SelectedFolder.Parent)" style="cursor:pointer">
+                            <span>...</span>
+                        </div>
+                    }
+
+                    @foreach (var folder in Folders)
+                    {
+                        <div class="list-group-item list-group-item-action @(SelectedFolder == folder ? "active" : "")" @onclick="x => OpenFolder(folder)" style="cursor:pointer">
+                            @folder.Name
+                        </div>
+
+                    }
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div style="flex: 1">
+                    @if (SearchResult == null)
+                    {
+                        <p><em>Loading...</em></p>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            @foreach (DragonFly.Contents.Assets.Asset asset in SearchResult.Items)
+                            {
+                                <div class="col-md-3">
+                                    <div class="box-item zoom action" style="height:320px">
+                                        <a @onclick="x => OpenItem(asset)">
+                                            <div class="image">
+                                                <img src="@AssetPreview.Resize(asset, 400, 400)" style="max-height:200px" alt="@asset.Name" />
+                                            </div>
+                                            <div>
+                                                <p class="title">@asset.Name</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

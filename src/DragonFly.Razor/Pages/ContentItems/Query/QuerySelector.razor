@@ -1,0 +1,43 @@
+﻿<h4>Sorting</h4>
+
+            <BSListGroup>
+                @foreach (FieldOrder field in ContentItemList.OrderFields)
+                {
+                <BSListGroupItem style="display:flex;align-items:center">
+                    <span>@field.Name</span>
+                    <div style="flex-grow:1"></div>
+
+                    <OrderDirection Order="field"></OrderDirection>
+                    
+                    <BSButton Color="Color.Light" @onclick="@(e => { ContentItemList.OrderFields.MoveUp(field);  })"><i class="fas fa-arrow-up"></i></BSButton>
+                    <BSButton Color="Color.Light" @onclick="@(e => { ContentItemList.OrderFields.MoveDown(field); })"><i class="fas fa-arrow-down"></i></BSButton>
+                    <BSButton Color="Color.Light" OnClick="x => { ContentItemList.OrderFields.Remove(field); }"><i class="fas fa-times"></i></BSButton>
+                    
+                </BSListGroupItem>
+                }
+            </BSListGroup>
+
+            @if (ContentItemList.Schema != null)
+            {
+                <BSDropdown>
+                    <BSDropdownToggle>Add field</BSDropdownToggle>
+                    <BSDropdownMenu>
+                        @foreach (var field in ContentItemList.Schema.Fields
+                                           .Where(x => ContentFieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
+                                           .Where(f => ContentItemList.OrderFields.Any(a => a.Name == f.Key) == false)
+                                           .ToList())
+                        {
+                            <BSDropdownItem OnClick="x => { ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true)); }">@field.Key</BSDropdownItem>
+                        }
+                    </BSDropdownMenu>
+                </BSDropdown>
+            }
+
+@code {
+
+    [Parameter]
+    public ContentItemListBase ContentItemList { get; set; }
+
+    [Parameter]
+    public IContentSchema Schema { get; set; }
+}

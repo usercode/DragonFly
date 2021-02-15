@@ -1,0 +1,73 @@
+﻿@inherits FieldComponent<ReferenceField, ReferenceFieldOptions>
+@inject NavigationManager NavigationManager
+@inject IImageAssetUrlService AssetPreview
+
+<div class="reference-field">
+    <ModalWindow Title="Add content" Show="ShowReferencePartSelector">
+        <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>
+    </ModalWindow>
+
+    <ul class="list-group">
+        <li class="list-group-item">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                @if (Field.ContentItem != null)
+                {
+                    <span class="badge badge-primary" style="margin-right:12px">@Field.ContentItem.Schema.Name</span>
+
+                    @foreach (var field in Field.ContentItem.Schema.ReferenceFields)
+                    {
+                        var column = Field.ContentItem.Fields[field];
+
+                        @if (column is ISingleValueContentField singleValueField)
+                        {
+                            <span>@singleValueField.Value</span>
+                        }
+                        else if (column is AssetField assetField)
+                        {
+                            @if (assetField.Asset != null && assetField.Asset.IsImage())
+                            {
+                                <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                            }
+                        }
+                    }
+                }
+
+                <div>
+                    <a class="btn btn-light" @onclick="(e => Navigate())"><i class="fas fa-arrow-right"></i></a>
+                    <a class="btn btn-light" @onclick="(e => OpenModal())"><i class="fas fa-plus"></i></a>
+                    <a class="btn btn-light" @onclick="(e => RemoveItem())"><i class="fas fa-times"></i></a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+@code {
+    public bool ShowReferencePartSelector { get; set; }
+
+    protected void Navigate()
+    {
+        NavigationManager.NavigateTo($"/content/{Field.ContentItem.Schema}/{Field.ContentItem.Id}");
+    }
+
+    protected void RemoveItem()
+    {
+        Field.ContentItem = null;
+    }
+
+    public void OpenModal()
+    {
+        ShowReferencePartSelector = true;
+
+        StateHasChanged();
+    }
+
+    public void ItemAdded(ContentItemTypeList2 sender)
+    {
+        Field.ContentItem = sender.SelectedContentItem;
+
+        ShowReferencePartSelector = false;
+
+        StateHasChanged();
+    }
+}

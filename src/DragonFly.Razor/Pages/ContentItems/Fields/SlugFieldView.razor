@@ -1,0 +1,10 @@
+﻿@inherits FieldComponent<SlugField, SlugFieldOptions>
+
+<div class="slug-field">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">@@</div>
+        </div>
+        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = Slugify.ToSlug(x.Value.ToString())" />
+    </div>
+</div>

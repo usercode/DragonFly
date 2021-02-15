@@ -1,0 +1,111 @@
+@page "/content/{EntityType}"
+@inherits ContentItemListBase
+@inject IImageAssetUrlService AssetPreview
+
+<div class="contentitem-list">
+    @if (ListMode == EntityListMode.Default)
+    {
+        <Toolbar Items="ToolbarItems"></Toolbar>
+    }
+
+    @*@bind:event="oninput"*@
+    <input class="form-control" type="text" style="width:100%" @bind="SearchPattern" />
+
+    <hr />
+
+    <div class="row">
+        <div class="col-lg-4">
+            <QuerySelector ContentItemList="@this" />
+        </div>
+        <div class="col-lg-8">
+            @if (SearchResult == null)
+            {
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            }
+            else
+            {
+                <div class="list-group">
+
+                    @foreach (var contentItem in SearchResult.Items)
+                    {
+                        <button class="list-group-item list-group-item-action" @onclick="x => OpenItem(contentItem)">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    @if (contentItem.PublishedAt != null)
+                                    {
+                                        <i class="far fa-check-square"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="far fa-check-square" style="visibility: hidden"></i>
+                                    }
+                                </div>
+                                @* no list fields available? Show id field only *@
+                                @if (contentItem.Schema.ListFields.Any() == false)
+                                {
+                                    <div class="col-lg-10">
+                                        @contentItem.Id
+                                    </div>
+                                }
+                                else
+                                {
+                                    foreach (string field in contentItem.Schema.ListFields.Take(5))
+                                    {
+                                        <div class="col-lg-2">
+                                            <div style="white-space: nowrap; overflow: hidden;">
+                                                @{
+                                                    ContentField column = contentItem.Fields[field];
+                                                }
+
+                                                @if (column is ISingleValueContentField singleValueField)
+                                                {
+                                                    <span>@singleValueField.Value</span>
+                                                }
+
+                                                else if (column is ReferenceField referenceField)
+                                                {
+                                                    @if (referenceField.ContentItem != null)
+                                                    {
+                                                        <ReferenceFields ContentItem="@referenceField.ContentItem" />
+                                                    }
+                                                }
+                                                else if (column is AssetField assetField)
+                                                {
+                                                    @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                                    {
+                                                        <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:4rem;object-fit:contain" />
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </button>
+                    }
+
+                </div>
+
+                <BSPagination>
+                    <BSPaginationItem>
+                        <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.PreviousIcon" />
+                    </BSPaginationItem>
+                    <BSPaginationItem>
+                        <BSPaginationLink Href="#">1</BSPaginationLink>
+                    </BSPaginationItem>
+                    <BSPaginationItem>
+                        <BSPaginationLink Href="#">2</BSPaginationLink>
+                    </BSPaginationItem>
+                    <BSPaginationItem>
+                        <BSPaginationLink Href="#">3</BSPaginationLink>
+                    </BSPaginationItem>
+                    <BSPaginationItem>
+                        <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.NextIcon" />
+                    </BSPaginationItem>
+                </BSPagination>
+            }
+        </div>
+    </div>
+</div>

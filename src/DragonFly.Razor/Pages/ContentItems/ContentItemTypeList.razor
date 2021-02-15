@@ -1,0 +1,21 @@
+@page "/content"
+@inherits ContentItemTypeListBase
+
+
+@if (SearchResult == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="list-group">
+
+        @foreach (DragonFly.ContentTypes.ContentSchema contentType in SearchResult.Items)
+        {
+            <a class="list-group-item list-group-item-action" href="content/@contentType.Name">
+                <span class="oi oi-list-rich"></span> @contentType.Name
+            </a>
+        }
+
+    </div>
+}

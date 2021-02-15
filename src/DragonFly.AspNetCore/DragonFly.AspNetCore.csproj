@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>usercode</Authors>
+    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
+    <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>0.1.0</Version>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageIcon>usercode.png</PackageIcon>
+    <PackageTags>cms</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+  
+  <ItemGroup>   
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />    
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.3" />
+    <PackageReference Include="ImageWizard.Core" Version="2.1.6" />
+    <PackageReference Include="ImageWizard.DocNET" Version="2.1.6" />
+    <PackageReference Include="ImageWizard.ImageSharp" Version="2.1.6" />
+    <PackageReference Include="ImageWizard.MongoDB" Version="2.1.6" />
+    <PackageReference Include="ImageWizard.SvgNet" Version="2.1.6" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\usercode.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+﻿@inherits FieldComponent<ArrayField, ArrayFieldOptions>
+
+<div class="array-field">
+    <a class="btn btn-light add-field" @onclick="()=> { Field.Items.Add(Options.CreateItem()); }"><i class="fas fa-plus"></i> Add item</a>
+
+    <ul class="list-group">
+        @{
+            int i = 1;
+        }
+        @foreach (ArrayFieldItem item in Field.Items)
+        {
+            <li class="list-group-item arrayitem-field">
+                <p>
+                    <a class="btn btn-light">#@(i++)</a>
+                    <a class="btn btn-light" @onclick="@(e => { Field.Items.MoveUp(item); })"><i class="fas fa-arrow-up"></i></a>
+                    <a class="btn btn-light" @onclick="@(e => { Field.Items.MoveDown(item); })"><i class="fas fa-arrow-down"></i></a>
+                    <a class="btn btn-light" @onclick="@(e => { Field.Items.Remove(item); })"><i class="fas fa-times"></i></a>
+                </p>
+
+                <ContentItemFields Content="item" Schema="Options" />
+            </li>
+        }
+    </ul>
+</div>

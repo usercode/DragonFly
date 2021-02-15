@@ -1,0 +1,29 @@
+@page "/webhook"
+@inherits WebHookListBase
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <a href="webhook/create" class="btn btn-success">Create</a>
+    </div>
+</div>
+
+<hr />
+
+@if (SearchResult == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<div class="list-group">
+
+    @foreach (var webHook in SearchResult.Items)
+    {
+        <a class="list-group-item list-group-item-action" href="webhook/@webHook.Id">
+            <span class="oi oi-list-rich"></span> @webHook.Name
+        </a>
+    }
+
+</div>
+}

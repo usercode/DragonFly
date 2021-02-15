@@ -1,0 +1,41 @@
+﻿<div class="bool-field-view">
+    <button class="btn @(Value == true ? "btn-dark" : "btn-light")" @onclick="e => OnChange(true)">
+        <span><i class="far fa-check-circle"></i> True</span>
+    </button>
+
+    <button class="btn @(Value == false ? "btn-dark" : "btn-light")" @onclick="e => OnChange(false)">
+        <span><i class="far fa-times-circle"></i> False</span>
+    </button>
+    @if (AllowUnset)
+    {
+        <button class="btn @(Value == null ? "btn-dark" : "btn-light")" @onclick="e => OnChange(null)">
+            <span><i class="far fa-circle"></i> Unset</span>
+        </button>
+    }
+</div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        AllowUnset = true;
+    }
+
+    [Parameter]
+    public bool? Value { get; set; }
+
+    [Parameter]
+    public Action<bool?> ValueChanged { get; set; }
+
+    [Parameter]
+    public bool AllowUnset { get; set; }
+
+    private void OnChange(bool? value)
+    {
+        Value = value;
+
+        ValueChanged?.Invoke(value);
+    }
+}
