@@ -22,4 +22,8 @@
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\usercode.png" Pack="true" PackagePath="" />
+  </ItemGroup>
 </Project>

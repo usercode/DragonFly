@@ -32,8 +32,9 @@
     <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="..\usercode.png" Pack="true" PackagePath="" />
-  </ItemGroup>
+  </ItemGroup>  
+  
 </Project>
