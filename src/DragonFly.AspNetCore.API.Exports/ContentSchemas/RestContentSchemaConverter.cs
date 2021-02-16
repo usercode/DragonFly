@@ -2,7 +2,6 @@
 using DragonFly.Client;
 using DragonFly.Content.ContentParts;
 using DragonFly.Contents.Content.Fields;
-using DragonFly.ContentTypes;
 using DragonFly.Core.ContentItems.Models.Fields;
 using DragonFly.Data.Content.ContentParts;
 using DragonFly.Data.Content.ContentTypes;

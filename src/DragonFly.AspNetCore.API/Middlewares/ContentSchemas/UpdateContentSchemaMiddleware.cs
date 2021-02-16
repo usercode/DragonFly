@@ -1,8 +1,8 @@
 ﻿using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.REST.Models;
-using DragonFly.ContentTypes;
 using DragonFly.Data;
 using DragonFly.Data.Models;
+using DragonFly.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.ContentSchemas
+namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
 {
     class UpdateContentSchemaMiddleware
     {

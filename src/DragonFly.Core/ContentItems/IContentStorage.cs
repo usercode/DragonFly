@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.AspNetCore.Rest.Exports;
-using DragonFly.ContentTypes;
+using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Core.Queries;
 using DragonFly.Models;
 

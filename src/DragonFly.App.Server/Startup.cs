@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using DragonFly.AspNetCore.Rest;
+using DragonFly.AspNetCore.API;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore.GraphQL;
 using DragonFly.Content.ContentParts;
@@ -32,6 +32,10 @@ using ImageWizard;
 using ImageWizard.DocNET;
 using DragonFly.Client.Core.Assets;
 using DragonFly.MongoDB.Options;
+using DragonFly.ContentTypes;
+using DragonFly.Contents.Content.Schemas;
+using DragonFly.Data.Content;
+using DragonFly.Models;
 
 namespace DragonFly.AspNetCore
 {

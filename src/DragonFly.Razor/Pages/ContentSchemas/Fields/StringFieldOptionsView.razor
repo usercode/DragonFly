@@ -1,7 +1,9 @@
-﻿<div class="card">
+﻿@inherits FieldOptionsComponent<StringFieldOptions>
+
+<div class="card">
     <div class="card-body">
         <div class="card-title">
-                    
+
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Required</label>
@@ -16,9 +18,4 @@
             </div>
         </div>
     </div>
-    </div>
-
-@code {
-    [Parameter]
-    public StringFieldOptions Options { get; set; }
-}
+</div>

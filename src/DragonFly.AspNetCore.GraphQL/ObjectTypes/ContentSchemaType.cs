@@ -1,4 +1,4 @@
-﻿using DragonFly.ContentTypes;
+﻿using DragonFly.Models;
 using DragonFly.Data.Content.ContentTypes;
 using GraphQL.Types;
 using System;

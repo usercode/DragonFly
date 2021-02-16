@@ -10,6 +10,7 @@ using DragonFly.Data;
 using DragonFly.Razor.Builder;
 using DragonFly.Razor.Options;
 using DragonFly.Razor.Pages.ContentItems.Fields;
+using DragonFly.Razor.Pages.ContentSchemas.Fields;
 using DragonFly.Razor.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -69,19 +70,24 @@ namespace DragonFly.Client.Core
         {
             var componentManager = host.Services.GetRequiredService<FieldComponentManager>();
 
-            componentManager.Register<ArrayFieldView>();
-            componentManager.Register<AssetFieldView>();
-            componentManager.Register<BoolFieldView>();
-            componentManager.Register<DateFieldView>();
-            componentManager.Register<FloatFieldView>();
-            componentManager.Register<IntegerFieldView>();
-            componentManager.Register<ReferenceFieldView>();
-            componentManager.Register<SlugFieldView>();
-            componentManager.Register<StringFieldView>();
-            componentManager.Register<TextAreaFieldView>();
-            componentManager.Register<XHtmlFieldView>();
-            componentManager.Register<XmlFieldView>();
+            componentManager.RegisterField<ArrayFieldView>();
+            componentManager.RegisterField<AssetFieldView>();
+            componentManager.RegisterField<BoolFieldView>();
+            componentManager.RegisterField<DateFieldView>();
+            componentManager.RegisterField<FloatFieldView>();
+            componentManager.RegisterField<IntegerFieldView>();
+            componentManager.RegisterField<ReferenceFieldView>();
+            componentManager.RegisterField<SlugFieldView>();
+            componentManager.RegisterField<StringFieldView>();
+            componentManager.RegisterField<TextAreaFieldView>();
+            componentManager.RegisterField<XHtmlFieldView>();
+            componentManager.RegisterField<XmlFieldView>();
 
+            componentManager.RegisterOptions<ArrayFieldOptionsView>();
+            componentManager.RegisterOptions<BoolFieldOptionsView>();
+            componentManager.RegisterOptions<FloatFieldOptionsView>();
+            componentManager.RegisterOptions<IntegerFieldOptionsView>();
+            componentManager.RegisterOptions<StringFieldOptionsView>();
         }
     }
 }

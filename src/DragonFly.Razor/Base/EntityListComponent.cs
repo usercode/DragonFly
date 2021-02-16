@@ -1,7 +1,6 @@
-﻿using DragonFly.AspNetCore.Rest.Exports;
+﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Client.Pages.ContentItems;
 using DragonFly.Contents.Content;
-using DragonFly.ContentTypes;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

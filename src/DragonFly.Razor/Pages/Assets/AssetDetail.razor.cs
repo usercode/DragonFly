@@ -1,6 +1,5 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Contents.Assets;
-using DragonFly.ContentTypes;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Razor.Shared.UI.Toolbars;

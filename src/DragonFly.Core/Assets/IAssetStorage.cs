@@ -1,4 +1,4 @@
-﻿using DragonFly.AspNetCore.Rest.Exports;
+﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Contents.Assets;
 using DragonFly.Core.Assets.Queries;
 using System;

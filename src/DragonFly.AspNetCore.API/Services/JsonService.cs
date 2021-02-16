@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest
+namespace DragonFly.AspNetCore.API
 {
     class JsonService
     {

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using DragonFly.AspNetCore.Rest.Exports;
+using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content.ContentParts;
 using DragonFly.Contents.Assets;
 using DragonFly.Contents.Content.Fields;

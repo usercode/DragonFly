@@ -10,7 +10,7 @@ using DragonFly.Core.Content.ContentTypes;
 using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Data.Content.ContentTypes;
 
-namespace DragonFly.ContentTypes
+namespace DragonFly.Models
 {
     /// <summary>
     /// ContentSchema

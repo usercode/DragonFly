@@ -1,5 +1,5 @@
-﻿using DragonFly.AspNetCore.Rest.Middlewares;
-using DragonFly.AspNetCore.Rest.Middlewares.ContentSchemas;
+﻿using DragonFly.AspNetCore.API.Middlewares;
+using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.Core.Builders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.ContentSchemas
+namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
 {
     static class ContentSchemaStartupExtensions
     {

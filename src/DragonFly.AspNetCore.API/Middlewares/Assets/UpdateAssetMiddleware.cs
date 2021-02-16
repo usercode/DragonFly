@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.Exports;
-using DragonFly.AspNetCore.Rest.Models.Assets;
+using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Contents.Assets;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.Assets
+namespace DragonFly.AspNetCore.API.Middlewares.Assets
 {
     class UpdateAssetMiddleware
     {

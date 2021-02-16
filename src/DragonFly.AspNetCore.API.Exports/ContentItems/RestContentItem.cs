@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DragonFly.AspNetCore.REST.Models;
 using DragonFly.Content.ContentParts;
 using DragonFly.Contents.Content;
-using DragonFly.ContentTypes;
 using Newtonsoft.Json;
 
 namespace DragonFly.Models

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Models.Assets
+namespace DragonFly.AspNetCore.API.Models.Assets
 {
     public class RestAsset : RestContentBase
     {

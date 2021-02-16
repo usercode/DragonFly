@@ -1,5 +1,4 @@
-﻿using DragonFly.AspNetCore.Rest.Exports;
-using DragonFly.ContentTypes;
+﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Core.Queries;
 using DragonFly.Data;
 using DragonFly.Data.Content;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares
+namespace DragonFly.AspNetCore.API.Middlewares
 {
     class QueryContentItemMiddleware
     {

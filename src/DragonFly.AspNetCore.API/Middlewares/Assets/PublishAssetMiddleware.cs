@@ -1,5 +1,4 @@
-﻿using DragonFly.ContentTypes;
-using DragonFly.Core;
+﻿using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Data;
 using DragonFly.Data.Content;
@@ -13,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.Assets
+namespace DragonFly.AspNetCore.API.Middlewares.Assets
 {
     class PublishAssetMiddleware
     {

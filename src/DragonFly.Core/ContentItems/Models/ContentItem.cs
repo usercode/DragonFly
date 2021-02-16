@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DragonFly.Content.ContentParts;
 using DragonFly.Contents.Content;
 using DragonFly.Contents.Content.Fields;
-using DragonFly.ContentTypes;
 using DragonFly.Core.ContentItems.Models.Validations;
 using DragonFly.Data;
 

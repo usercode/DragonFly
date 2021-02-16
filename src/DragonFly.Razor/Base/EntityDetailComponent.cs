@@ -1,5 +1,5 @@
 ﻿using DragonFly.Contents.Content;
-using DragonFly.ContentTypes;
+using DragonFly.Models;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
 using System;

@@ -1,0 +1,73 @@
+﻿@inject FieldComponentManager FieldComponentManager
+
+<BSListGroupItem>
+    <div style="display: flex; align-items: center;margin-bottom: 0.5rem;">
+        <span style="flex-grow:1">@Key</span>
+        <BSBadge Color="Color.Secondary">@Field.FieldType</BSBadge>
+        <div>
+            <BSButton Color="Color.Light" @onclick="@(e => {  Up(Key); })"><i class="fas fa-arrow-up"></i></BSButton>
+            <BSButton Color="Color.Light" @onclick="@(e => { Down(Key); })"><i class="fas fa-arrow-down"></i></BSButton>
+            <BSButton Color="Color.Light" OnClick="x=> IsOpen = !IsOpen"><i class="fas fa-cog"></i></BSButton>
+            <BSButton Color="Color.Light" @onclick="@(e => { Schema.Fields.Remove(Key); })"><i class="fas fa-times"></i></BSButton>
+        </div>
+    </div>
+    <BSCollapse IsOpen="IsOpen">
+            @FieldComponentManager.CreateOptionsComponent(Field.Options)        
+    </BSCollapse>
+</BSListGroupItem>
+
+@code {
+    [Parameter]
+    public IContentSchema Schema { get; set; }
+
+    [Parameter]
+    public string Key { get; set; }
+
+    [Parameter]
+    public ContentFieldDefinition Field { get; set; }
+
+    private bool IsOpen { get; set; }
+
+    protected void Up(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i != 0 && list[i].Key == key)
+            {
+                list[i - 1].Value.SortKey = i;
+                list[i].Value.SortKey = i - 1;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+
+        }
+    }
+
+    protected void Down(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i < list.Count - 1 && list[i].Key == key)
+            {
+                list[i].Value.SortKey = i + 1;
+                list[i + 1].Value.SortKey = i;
+                i++;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+
+        }
+    }
+}

@@ -1,6 +1,5 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Razor.Pages.ContentItems;
-using DragonFly.ContentTypes;
 using DragonFly.Core.Queries;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;

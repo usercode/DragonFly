@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.Rest.Middlewares.Logins;
+using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNet.Middleware;
 using DragonFly.AspNet.Middleware.Builders;
 using DragonFly.AspNet.Options;

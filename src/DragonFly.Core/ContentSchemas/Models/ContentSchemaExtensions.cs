@@ -1,12 +1,12 @@
 ﻿using DragonFly.Contents.Content.Fields;
-using DragonFly.ContentTypes;
 using DragonFly.Core.ContentItems.Models.Fields;
 using DragonFly.Data.Content.ContentTypes;
+using DragonFly.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content.Schemas
+namespace DragonFly.Models
 {
     public static class ContentSchemaExtensions
     {

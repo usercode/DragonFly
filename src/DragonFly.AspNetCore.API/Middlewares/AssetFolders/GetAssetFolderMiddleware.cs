@@ -1,4 +1,4 @@
-﻿using DragonFly.AspNetCore.Rest.Models.Assets;
+﻿using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using Microsoft.AspNetCore.Http;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.AssetFolders
+namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
 {
     class GetAssetFolderMiddleware
     {

@@ -11,7 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.Logins
+namespace DragonFly.AspNetCore.API.Middlewares.Logins
 {
     class LoginMiddleware
     {

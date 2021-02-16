@@ -1,4 +1,4 @@
-﻿using DragonFly.AspNetCore.Rest.Middlewares;
+﻿using DragonFly.AspNetCore.API.Middlewares;
 using DragonFly.Core.Builders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.Logins
+namespace DragonFly.AspNetCore.API.Middlewares.Logins
 {
     static class LoginStartupExtensions
     {

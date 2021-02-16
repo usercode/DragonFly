@@ -4,7 +4,6 @@ using DragonFly.Client.Core.Contents.ContentItems;
 using DragonFly.Content.ContentParts;
 using DragonFly.Contents.Content;
 using DragonFly.Contents.Content.Parts.Base;
-using DragonFly.ContentTypes;
 using DragonFly.Core;
 using DragonFly.Data.Content;
 using DragonFly.Models;

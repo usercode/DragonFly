@@ -1,8 +1,8 @@
-﻿using DragonFly.AspNetCore.Rest.Middlewares;
-using DragonFly.AspNetCore.Rest.Middlewares.AssetFolders;
-using DragonFly.AspNetCore.Rest.Middlewares.Assets;
-using DragonFly.AspNetCore.Rest.Middlewares.ContentSchemas;
-using DragonFly.AspNetCore.Rest.Middlewares.Logins;
+﻿using DragonFly.AspNetCore.API.Middlewares;
+using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
+using DragonFly.AspNetCore.API.Middlewares.Assets;
+using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
+using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNet.Middleware;
 using DragonFly.Core.Builders;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest
+namespace DragonFly.AspNetCore.API
 {
     public static class StartupExtensions
     {

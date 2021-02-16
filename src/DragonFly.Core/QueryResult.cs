@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Exports
+namespace DragonFly.AspNetCore.API.Exports
 {
     public class QueryResult<T>
     {

@@ -1,5 +1,4 @@
 ﻿using DragonFly.AspNetCore.Exports;
-using DragonFly.ContentTypes;
 using DragonFly.Data;
 using DragonFly.Data.Content;
 using DragonFly.Data.Models;
@@ -12,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares
+namespace DragonFly.AspNetCore.API.Middlewares
 {
     class UpdateContentItemMiddleware
     {

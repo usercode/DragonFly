@@ -1,5 +1,5 @@
 ﻿using DragonFly.Client.Base;
-using DragonFly.ContentTypes;
+using DragonFly.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

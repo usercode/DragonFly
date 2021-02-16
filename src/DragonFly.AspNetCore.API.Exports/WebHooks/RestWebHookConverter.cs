@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Models.WebHooks
+namespace DragonFly.AspNetCore.API.Models.WebHooks
 {
     public static class RestWebHookConverter
     {

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Rest.Middlewares.AssetFolders
+namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
 {
     static class AssetFolderStartupExtensions
     {
