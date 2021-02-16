@@ -14,11 +14,22 @@ How to create new content schema and content item
 ```csharp
 //Define schema for entities
 ContentSchema schemaProduct = new ContentSchema();
+schemaProduct.Name = "Product";
 schemaProduct.AddField<ReferenceField>("Brand");
 schemaProduct.AddField<StringField>("Name");
 schemaProduct.AddField<BoolField>("IsAvailable");
 schemaProduct.AddField<FloatField>("Price");
 schemaProduct.AddField<TextAreaField>("Description");
+
+ArrayFieldOptions attributeOptions = new ArrayFieldOptions();
+attributeOptions.AddField<StringField>("Name");
+attributeOptions.AddField<StringField>("Value");
+
+schemProduct.AddField<ArrayField>("Attributes", options: attributeOptions);
+
+ISchemaStorage schemaStorage = //use MongoStorage or ClientContentService (http client)
+
+await schemaStorage.CreateAsync(schemaProduct);
 
 //create Product entity by schema
 ContentItem contentProduct = schemaProduct.CreateItem();
@@ -27,6 +38,10 @@ contentProduct.GetField<StringField>("Name").Value = "ProductA";
 contentProduct.GetField<BoolField>("IsAvailable").Value = true;
 contentProduct.GetField<FloatField>("Price").Value = 9.99;
 contentProduct.GetField<TextAreaField>("Description").Value = "...";
+
+IContentStorage contentStorage = //...
+
+await contentStorage.CreateAsync(contentProduct);
 
 ```
 
