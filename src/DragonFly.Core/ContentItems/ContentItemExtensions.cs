@@ -7,6 +7,7 @@ using DragonFly.Contents.Content;
 using DragonFly.Contents.Content.Fields;
 using DragonFly.Contents.Content.Schemas;
 using DragonFly.Core.ContentItems.Models.Fields;
+using DragonFly.Data.Content.ContentParts;
 using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Models;
 
@@ -39,10 +40,10 @@ namespace DragonFly.Models
             return ((SingleValueContentFieldNullable<T>)contentItem.Fields[name]).Value.Value;
         }
 
-        public static IContentSchema AddField<TField>(this IContentSchema schema, string name, int sortkey = 0)
+        public static IContentSchema AddField<TField>(this IContentSchema schema, string name, int sortkey = 0, ContentFieldOptions options = null)
             where TField : ContentField
         {
-            schema.Fields.Add(name, new ContentFieldDefinition() { SortKey = sortkey, FieldType = ContentFieldManager.Default.GetContentFieldName<TField>() });
+            schema.Fields.Add(name, new ContentFieldDefinition() { SortKey = sortkey, FieldType = ContentFieldManager.Default.GetContentFieldName<TField>(), Options = options });
 
             return schema;
         }
