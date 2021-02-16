@@ -8,7 +8,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>0.1.0</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageIcon>usercode.png</PackageIcon>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageTags>cms</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -29,6 +29,6 @@
 	</ItemGroup>
   
   <ItemGroup>
-    <None Include="..\usercode.png" Pack="true" PackagePath="" />
+    <None Include="..\logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
