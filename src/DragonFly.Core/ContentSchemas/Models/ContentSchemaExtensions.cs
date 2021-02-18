@@ -15,7 +15,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddSlug(this IContentSchema schema, string name, Action<SlugFieldOptions> configOptions = null)
+        public static TContentSchema AddSlug<TContentSchema>(this TContentSchema schema, string name, Action<SlugFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             SlugFieldOptions options = new SlugFieldOptions();
 
@@ -26,7 +27,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddString(this IContentSchema schema, string name, Action<StringFieldOptions> configOptions = null)
+        public static TContentSchema AddString<TContentSchema>(this TContentSchema schema, string name, Action<StringFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             StringFieldOptions options = new StringFieldOptions();
 
@@ -37,7 +39,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddHtml(this IContentSchema schema, string name, Action<HtmlFieldOptions> configOptions = null)
+        public static TContentSchema AddHtml<TContentSchema>(this TContentSchema schema, string name, Action<HtmlFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             HtmlFieldOptions options = new HtmlFieldOptions();
 
@@ -48,7 +51,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddXml(this IContentSchema schema, string name, Action<XmlFieldOptions> configOptions = null)
+        public static TContentSchema AddXml<TContentSchema>(this TContentSchema schema, string name, Action<XmlFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             XmlFieldOptions options = new XmlFieldOptions();
 
@@ -59,7 +63,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddTextArea(this IContentSchema schema, string name, Action<TextAreaFieldOptions> configOptions = null)
+        public static TContentSchema AddTextArea<TContentSchema>(this TContentSchema schema, string name, Action<TextAreaFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             TextAreaFieldOptions options = new TextAreaFieldOptions();
 
@@ -70,7 +75,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddDate(this IContentSchema schema, string name, Action<DateFieldOptions> configOptions = null)
+        public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             DateFieldOptions options = new DateFieldOptions();
 
@@ -81,7 +87,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddFloat(this IContentSchema schema, string name, Action<FloatFieldOptions> configOptions = null)
+        public static TContentSchema AddFloat<TContentSchema>(this TContentSchema schema, string name, Action<FloatFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             FloatFieldOptions options = new FloatFieldOptions();
 
@@ -92,7 +99,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddBool(this IContentSchema schema, string name, Action<BoolFieldOptions> configOptions = null)
+        public static TContentSchema AddBool<TContentSchema>(this TContentSchema schema, string name, Action<BoolFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             BoolFieldOptions options = new BoolFieldOptions();
 
@@ -103,7 +111,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddAsset(this IContentSchema schema, string name, Action<AssetFieldOptions> configOptions = null)
+        public static TContentSchema AddAsset<TContentSchema>(this TContentSchema schema, string name, Action<AssetFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             AssetFieldOptions options = new AssetFieldOptions();
 
@@ -114,7 +123,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddReference(this IContentSchema schema, string name, Action<ReferenceFieldOptions> configOptions = null)
+        public static TContentSchema AddReference<TContentSchema>(this TContentSchema schema, string name, Action<ReferenceFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             ReferenceFieldOptions options = new ReferenceFieldOptions();
 
@@ -125,7 +135,8 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static IContentSchema AddArray(this IContentSchema schema, string name, Action<ArrayFieldOptions> configOptions = null)
+        public static TContentSchema AddArray<TContentSchema>(this TContentSchema schema, string name, Action<ArrayFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
         {
             ArrayFieldOptions options = new ArrayFieldOptions();
 

@@ -11,24 +11,30 @@ namespace DragonFly.SampleData
         public async Task CreateDataAsync(IDataStorage dataStorage)
         {
             //create brand schema
-            ContentSchema schemaBrand = new ContentSchema();
-            schemaBrand.Name = "Brand";
-            schemaBrand.AddString("Name");
-            schemaBrand.AddSlug("Slug");
-            schemaBrand.AddTextArea("Description");
+            ContentSchema schemaBrand = new ContentSchema("Brand")
+                                                .AddString("Name")
+                                                .AddSlug("Slug")
+                                                .AddTextArea("Description");
 
             //Define schema for product
-            ContentSchema schemaProduct = new ContentSchema();
-            schemaProduct.Name = "Product";
-            schemaProduct.AddReference("Brand");
-            schemaProduct.AddString("Name", options => options.IsRequired = true);
-            schemaProduct.AddSlug("Slug");
-            schemaProduct.AddBool("IsAvailable", optios => optios.DefaultValue = true);
-            schemaProduct.AddFloat("Price");
-            schemaProduct.AddTextArea("Description", options => options.MaxLength = 255);
-            schemaProduct.AddArray("Attributes", options => options
-                                                                .AddString("Name")
-                                                                .AddString("Value"));
+            ContentSchema schemaProduct = new ContentSchema("Product")
+                                                .AddReference("Brand")
+                                                .AddString("Name", options => options.IsRequired = true)
+                                                .AddSlug("Slug")
+                                                .AddBool("IsAvailable", optios => optios.DefaultValue = true)
+                                                .AddFloat("Price")
+                                                .AddTextArea("Description", options => options.MaxLength = 255)
+                                                .AddArray("Attributes", options => options
+                                                                                    .AddString("Name")
+                                                                                    .AddString("Value"));
+
+            ContentItem contentProduct = schemaProduct
+                                            .CreateItem()
+                                            .SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand))
+                                            .SetString("Name", "ProductA")
+                                            .SetBool("IsAvailable", true)
+                                            .SetFloat("Price", 9.99)
+                                            .SetTextArea("Description", "...");
 
             //await dataStorage.CreateAsync(schemaProduct);
 
