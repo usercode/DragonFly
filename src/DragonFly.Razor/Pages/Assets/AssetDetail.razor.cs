@@ -1,4 +1,5 @@
-﻿using DragonFly.Client.Base;
+﻿using BlazorStrap;
+using DragonFly.Client.Base;
 using DragonFly.Contents.Assets;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
@@ -36,7 +37,7 @@ namespace DragonFly.Client.Pages
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Publish", BlazorStrap.Color.Success, () => PublishAsync()));
+            toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);

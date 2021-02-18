@@ -1,16 +1,16 @@
 ﻿@inherits LayoutComponentBase
 @using Blazored.Toast.Configuration
 
-<BlazoredToasts Position="ToastPosition.TopRight"
-                Timeout="4"
-                IconType="IconType.FontAwesome"
-                SuccessClass="success-toast-override"
-                SuccessIcon="fa fa-thumbs-up"
-                ErrorIcon="fa fa-bug"
-                RemoveToastsOnNavigation="true"/>
-
 <AuthorizeView>
     <Authorized>
+        <BlazoredToasts Position="ToastPosition.TopRight"
+                        Timeout="4"
+                        IconType="IconType.FontAwesome"
+                        SuccessClass="success-toast-override"
+                        SuccessIcon="fa fa-thumbs-up"
+                        ErrorIcon="fa fa-bug"
+                        RemoveToastsOnNavigation="true" />
+
         <div class="sidebar">
             <NavMenu />
         </div>

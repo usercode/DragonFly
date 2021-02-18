@@ -2,13 +2,12 @@
 using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.AspNetCore.REST.Models;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.Contents.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.Assets.Queries;
-using DragonFly.Core.Queries;
 using DragonFly.Data;
 using DragonFly.Data.Models;
 using DragonFly.Models;

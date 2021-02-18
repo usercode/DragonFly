@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Queries
+namespace DragonFly.Content.Queries
 {
     public enum QueryFieldType
     {

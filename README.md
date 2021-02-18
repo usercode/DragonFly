@@ -3,43 +3,52 @@ Headless CMS based on ASP.NET Core and Blazor
 
 | Package                       | Release | 
 |-------------------------------|-----------------|
-| DragonFly.Core                | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Core.svg)](https://www.nuget.org/packages/DragonFly.Core/) |
-| DragonFly.AspNetCore          | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
-| DragonFly.Razor               | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
+| DragonFly.Core                   | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Core.svg)](https://www.nuget.org/packages/DragonFly.Core/) |
+| DragonFly.AspNetCore             | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
+| DragonFly.AspNetCore.API         | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API/) |
+| DragonFly.AspNetCore.API.Client  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.Client.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API.Client/) |
+| DragonFly.AspNetCore.ImageSharp  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.ImageSharp.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.ImageSharp/) |
+| DragonFly.Razor                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
+| DragonFly.Storage.MongoDB        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Storage.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.Storage.MongoDB/) |
 
 
-## Overview
+## DragonFly.Core
 
 How to create new content schema and content item
 ```csharp
-//Define schema for entities
+IContentStorage contentStorage = //use MongoStorage or ClientContentService (http client)
+
+//define schema for brand
+ContentSchema schemaBrand = new ContentSchema();
+schemaBrand.Name = "Brand";
+schemaBrand.AddString("Name");
+schemaBrand.AddSlug("Slug");
+schemaBrand.AddTextArea("Description");
+
+await contentStorage.CreateAsync(schemaBrand);
+
+//define schema for product
 ContentSchema schemaProduct = new ContentSchema();
 schemaProduct.Name = "Product";
-schemaProduct.AddField<ReferenceField>("Brand");
-schemaProduct.AddField<StringField>("Name");
-schemaProduct.AddField<BoolField>("IsAvailable");
-schemaProduct.AddField<FloatField>("Price");
-schemaProduct.AddField<TextAreaField>("Description");
+schemaProduct.AddReference("Brand");
+schemaProduct.AddString("Name", options => options.IsRequired = true);
+schemaProduct.AddSlug("Slug");
+schemaProduct.AddBool("IsAvailable", optios => optios.DefaultValue = true);
+schemaProduct.AddFloat("Price");
+schemaProduct.AddTextArea("Description", options => options.MaxLength = 255);
+schemaProduct.AddArray("Attributes", options => options
+                                                    .AddString("Name")
+                                                    .AddString("Value"));
 
-ArrayFieldOptions attributeOptions = new ArrayFieldOptions();
-attributeOptions.AddField<StringField>("Name");
-attributeOptions.AddField<StringField>("Value");
+await contentStorage.CreateAsync(schemaProduct);
 
-schemProduct.AddField<ArrayField>("Attributes", options: attributeOptions);
-
-ISchemaStorage schemaStorage = //use MongoStorage or ClientContentService (http client)
-
-await schemaStorage.CreateAsync(schemaProduct);
-
-//create Product entity by schema
+//create product by schema
 ContentItem contentProduct = schemaProduct.CreateItem();
-contentProduct.GetField<ReferenceField>("Brand").ContentItem = new ContentItem(Guid.Parse(""), schemaBrand);
-contentProduct.GetField<StringField>("Name").Value = "ProductA";
-contentProduct.GetField<BoolField>("IsAvailable").Value = true;
-contentProduct.GetField<FloatField>("Price").Value = 9.99;
-contentProduct.GetField<TextAreaField>("Description").Value = "...";
-
-IContentStorage contentStorage = //...
+contentProduct.SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand));
+contentProduct.SetString("Name", "ProductA");
+contentProduct.SetBool("IsAvailable", true);
+contentProduct.SetFloat("Price", 9.99);
+contentProduct.SetTextArea("Description", "...");
 
 await contentStorage.CreateAsync(contentProduct);
 

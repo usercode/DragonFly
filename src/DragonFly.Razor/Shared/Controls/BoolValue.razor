@@ -1,14 +1,14 @@
 ﻿<div class="bool-field-view">
-    <BSButton Color="Value == true ? Color.Dark : Color.Light" OnClick="e => OnChange(true)">
+    <BSButton Color="Value == true ? Color.Dark : Color.Light" OnClick="x => OnChange(true)">
         <span><i class="far fa-check-circle"></i> True</span>
     </BSButton>
 
-    <BSButton Color="Value == false ? Color.Dark : Color.Light" OnClick="e => OnChange(false)">
+    <BSButton Color="Value == false ? Color.Dark : Color.Light" OnClick="x => OnChange(false)">
         <span><i class="far fa-times-circle"></i> False</span>
     </BSButton>
     @if (AllowUnset)
     {
-        <BSButton Color="Value == null ? Color.Dark : Color.Light" OnClick="e => OnChange(null)">
+        <BSButton Color="Value == null ? Color.Dark : Color.Light" OnClick="x => OnChange(null)">
             <span><i class="far fa-circle"></i> Unset</span>
         </BSButton>
     }

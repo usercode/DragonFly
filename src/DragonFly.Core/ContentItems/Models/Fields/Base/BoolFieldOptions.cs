@@ -1,12 +1,10 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Data.Content.ContentParts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Models.Fields.Base
+namespace DragonFly.Content
 {
     public class BoolFieldOptions : SingleValueContentFieldOptions<bool>
     {

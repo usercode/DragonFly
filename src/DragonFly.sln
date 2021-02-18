@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.App.Server", "Dra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{A12D90AA-8DE9-4DAF-B211-ECA0556D0042}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.SampleData", "DragonFly.SampleData\DragonFly.SampleData.csproj", "{8E892C33-1453-4DC2-8E2C-9FB19480D908}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -89,6 +91,10 @@ Global
 		{58A424A3-253B-46FC-91A5-7D849E5E0C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58A424A3-253B-46FC-91A5-7D849E5E0C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58A424A3-253B-46FC-91A5-7D849E5E0C14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{073480CD-6268-4400-B982-99C8FCB67E5B} = {7B9DA9F7-69AA-44B3-9E64-2105DBD5537E}
 		{E7722C54-C2D8-40EF-AAB8-E9CA710FC822} = {B11DF721-439E-487C-A3ED-73BE6DBD5D1F}
 		{58A424A3-253B-46FC-91A5-7D849E5E0C14} = {B11DF721-439E-487C-A3ED-73BE6DBD5D1F}
+		{8E892C33-1453-4DC2-8E2C-9FB19480D908} = {80101F19-8924-41FA-9325-CA8AC946DC4C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069E83C9-3430-4D62-843B-B52982C42093}

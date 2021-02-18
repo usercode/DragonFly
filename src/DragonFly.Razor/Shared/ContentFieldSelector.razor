@@ -13,11 +13,11 @@
             @foreach (Type p in ContentFieldManager.Default.GetAllFieldTypes().OrderBy(x => x.Name))
             {
                 <div class="col-lg-3">
-                    <button @onclick="()=> { ContentFieldType = p; }" class="btn @((p == ContentFieldType) ? "btn-danger" : "btn-light")" style="width:100%; cursor:pointer;margin-bottom:1rem;">
+                    <BSButton OnClick="x => { ContentFieldType = p; }" Color="p == ContentFieldType ? Color.Danger : Color.Light" style="width:100%; cursor:pointer;margin-bottom:1rem;">
                         <div style="text-align:left;margin-left:2rem;">
                             <span class="oi oi-list-rich"></span> @p.Name
                         </div>
-                    </button>
+                    </BSButton>
                 </div>
             }
         </div>

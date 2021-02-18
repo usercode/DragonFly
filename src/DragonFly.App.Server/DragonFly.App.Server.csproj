@@ -7,8 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.3" />
-	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.3" />
-    
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.3" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +21,7 @@
     <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.ImageSharp\DragonFly.AspNetCore.ImageSharp.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
     <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />
   </ItemGroup>
 

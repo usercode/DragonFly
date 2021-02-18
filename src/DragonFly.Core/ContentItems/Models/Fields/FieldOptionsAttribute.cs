@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Models.Fields
+namespace DragonFly.Content
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class FieldOptionsAttribute : Attribute

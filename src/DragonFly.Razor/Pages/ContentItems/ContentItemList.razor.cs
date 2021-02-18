@@ -1,6 +1,7 @@
-﻿using DragonFly.Client.Base;
-using DragonFly.Core.ContentItems.Queries;
-using DragonFly.Core.Queries;
+﻿using BlazorStrap;
+using DragonFly.Client.Base;
+using DragonFly.Content;
+using DragonFly.Content.Queries;
 using DragonFly.Models;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
@@ -32,7 +33,7 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
+            toolbarItems.Add(new ToolbarItem("Create", Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
             toolbarItems.AddRefreshButton(this);
         }
 

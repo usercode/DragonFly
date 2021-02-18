@@ -1,4 +1,4 @@
-﻿using DragonFly.Core.ContentItems.Models.Fields;
+﻿using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Core
+namespace DragonFly.Content
 {
     public interface IDataStorage : IContentStorage, ISchemaStorage, IAssetStorage, IWebHookStorage
     {

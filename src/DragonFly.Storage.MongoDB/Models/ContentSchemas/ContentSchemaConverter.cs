@@ -1,9 +1,6 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content.Fields;
+﻿using DragonFly.Content;
 using DragonFly.ContentTypes;
-using DragonFly.Core.ContentItems.Models.Fields;
 using DragonFly.Data.Content;
-using DragonFly.Data.Content.ContentParts;
 using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Models;
 using MongoDB.Bson;

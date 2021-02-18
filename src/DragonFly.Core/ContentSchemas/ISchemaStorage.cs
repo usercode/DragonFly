@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Models;
+using DragonFly.Content;
 
-namespace DragonFly.Data
+namespace DragonFly.Content
 {
     /// <summary>
     /// IMongoStore

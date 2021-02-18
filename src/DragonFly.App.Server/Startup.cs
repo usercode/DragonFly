@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 using DragonFly.AspNetCore.API;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore.GraphQL;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Contents.Content.Parts.Base;
+using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
-using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.Data.Models.Assets;
@@ -33,9 +30,9 @@ using ImageWizard.DocNET;
 using DragonFly.Client.Core.Assets;
 using DragonFly.MongoDB.Options;
 using DragonFly.ContentTypes;
-using DragonFly.Contents.Content.Schemas;
 using DragonFly.Data.Content;
 using DragonFly.Models;
+using DragonFly.SampleData;
 
 namespace DragonFly.AspNetCore
 {
@@ -59,6 +56,9 @@ namespace DragonFly.AspNetCore
                         .AddRestApi()
                         .AddGraphQLApi()
                         .AddMongoDbStorage();
+
+            new RandomData().CreateDataAsync(null).Wait();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonFlyApi api)

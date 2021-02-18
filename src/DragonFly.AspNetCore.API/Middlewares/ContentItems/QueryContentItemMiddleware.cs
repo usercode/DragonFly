@@ -1,7 +1,7 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Core.Queries;
+using DragonFly.Content;
+using DragonFly.Content.Queries;
 using DragonFly.Data;
-using DragonFly.Data.Content;
 using DragonFly.Data.Models;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Http;

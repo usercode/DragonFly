@@ -1,10 +1,9 @@
-﻿using DragonFly.Core.ContentItems.Queries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DragonFly.Core.Queries
+namespace DragonFly.Content.Queries
 {
     /// <summary>
     /// QueryParameters

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content.ContentFields
 {
     /// <summary>
     /// ContentField

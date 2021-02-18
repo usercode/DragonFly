@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
-using DragonFly.Core.Content.ContentTypes;
-using DragonFly.Data.Content.ContentParts;
 using MongoDB.Bson;
 
 namespace DragonFly.Data.Content.ContentTypes

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Core.Queries;
-using DragonFly.Models;
+using DragonFly.Content;
+using DragonFly.Content.Queries;
 
-namespace DragonFly.Data
+namespace DragonFly.Content
 {
     /// <summary>
     /// IContentStorage

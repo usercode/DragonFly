@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.REST.Models;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content.ContentFields;
 using DragonFly.Contents.Content;
 using Newtonsoft.Json;
 

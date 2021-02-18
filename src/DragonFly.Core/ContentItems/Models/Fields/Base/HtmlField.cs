@@ -1,10 +1,9 @@
-﻿using DragonFly.Core.ContentItems.Models.Fields;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content
 {
     /// <summary>
     /// HtmlField

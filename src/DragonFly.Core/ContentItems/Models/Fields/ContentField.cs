@@ -4,9 +4,8 @@ using System.Linq;
 using System.Resources;
 using System.Threading.Tasks;
 using DragonFly.Core.ContentItems.Models.Validations;
-using DragonFly.Data.Content.ContentParts;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentField

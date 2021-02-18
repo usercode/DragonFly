@@ -1,5 +1,4 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Data.Content.ContentParts;
+﻿using DragonFly.Content;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
 using Microsoft.AspNetCore.Components;
@@ -31,7 +30,6 @@ namespace DragonFly.Razor.Services
             {
                 _cacheFieldView[fieldType] = typeof(TFieldComponent);
             }
-
         }
 
         public void RegisterOptions<TFieldComponent>()

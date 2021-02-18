@@ -6,6 +6,7 @@ using Castle.DynamicProxy;
 using DragonFly.Data.Proxies;
 using DragonFly.ContentTypes;
 using DragonFly.Contents.Assets;
+using DragonFly.Content;
 
 namespace DragonFly.Data
 {

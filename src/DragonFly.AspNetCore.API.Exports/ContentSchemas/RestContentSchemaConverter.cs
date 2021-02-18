@@ -1,10 +1,6 @@
 ﻿using DragonFly.AspNetCore.REST.Models;
 using DragonFly.Client;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Core.ContentItems.Models.Fields;
-using DragonFly.Data.Content.ContentParts;
-using DragonFly.Data.Content.ContentTypes;
+using DragonFly.Content;
 using DragonFly.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

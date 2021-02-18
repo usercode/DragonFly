@@ -1,6 +1,6 @@
 ﻿@inject FieldComponentManager FieldComponentManager
 
-<a class="btn btn-light" @onclick="()=> ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</a>
+<BSButton Color="Color.Light" class="add-field" OnClick="x => ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</BSButton>
 
 <ModalWindow Show="ShowModalDialog" Closed="ItemAdded">
     <ContentFieldSelector @ref="Selector">
@@ -11,7 +11,7 @@
 <BSListGroup>
     @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
     {
-        <ContentFieldItemView Key="@field.Key" Field="@field.Value" Schema="@Schema" />
+        <ContentFieldItemView Key="@field.Key" Field="@field.Value" FieldsView="this" />
     }
 </BSListGroup>
 
@@ -44,5 +44,50 @@
 
             StateHasChanged();
         }
+    }
+
+    public void Up(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i != 0 && list[i].Key == key)
+            {
+                list[i - 1].Value.SortKey = i;
+                list[i].Value.SortKey = i - 1;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+        }
+
+        StateHasChanged();
+    }
+
+    public void Down(string key)
+    {
+        var list = Schema.Fields
+                                    .OrderBy(x => x.Value.SortKey)
+                                    .ToList();
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (i < list.Count - 1 && list[i].Key == key)
+            {
+                list[i].Value.SortKey = i + 1;
+                list[i + 1].Value.SortKey = i;
+                i++;
+            }
+            else
+            {
+                list[i].Value.SortKey = i;
+            }
+        }
+
+        StateHasChanged();
     }
 }

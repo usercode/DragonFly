@@ -1,4 +1,4 @@
-﻿using DragonFly.Data.Content.ContentParts;
+﻿using DragonFly.Content;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

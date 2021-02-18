@@ -1,10 +1,10 @@
-﻿using DragonFly.Content.ContentParts;
+﻿using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Data.Content.ContentParts
+namespace DragonFly.Content
 {
     public abstract class ContentFieldOptions
     {

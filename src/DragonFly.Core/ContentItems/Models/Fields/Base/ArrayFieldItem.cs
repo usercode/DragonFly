@@ -1,13 +1,9 @@
-﻿using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Data.Content.ContentParts;
-using DragonFly.Data.Content.ContentTypes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content
 {
     /// <summary>
     /// ArrayFieldItem

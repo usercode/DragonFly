@@ -1,11 +1,9 @@
 ﻿using BlazorStrap;
 using DragonFly.Client.Base;
 using DragonFly.Client.Core.Contents.ContentItems;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content;
 using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Parts.Base;
 using DragonFly.Core;
-using DragonFly.Data.Content;
 using DragonFly.Models;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;

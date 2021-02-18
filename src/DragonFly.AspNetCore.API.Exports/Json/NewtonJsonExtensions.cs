@@ -1,10 +1,6 @@
 ﻿using DragonFly.AspNetCore;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Contents.Content.Parts.Base;
-using DragonFly.Core.ContentItems.Models.Fields;
+using DragonFly.Content;
 using DragonFly.Data;
-using DragonFly.Data.Content.ContentParts;
 using JsonSubTypes;
 using Newtonsoft.Json;
 using System;

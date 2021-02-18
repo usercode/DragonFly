@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Data.Content.ContentParts;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentField

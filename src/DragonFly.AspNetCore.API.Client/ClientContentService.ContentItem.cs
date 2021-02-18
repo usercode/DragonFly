@@ -2,11 +2,10 @@
 using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.REST.Models;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.Contents.Content;
 using DragonFly.Core;
-using DragonFly.Core.Queries;
 using DragonFly.Core.WebHooks.Types;
 using DragonFly.Data;
 using DragonFly.Data.Models;
@@ -21,6 +20,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using DragonFly.Content.Queries;
 
 namespace DragonFly.Client
 {

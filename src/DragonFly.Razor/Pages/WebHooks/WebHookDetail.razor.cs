@@ -1,5 +1,5 @@
 ﻿using DragonFly.Client.Base;
-using DragonFly.Core.Queries;
+using DragonFly.Content;
 using DragonFly.Core.WebHooks;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;

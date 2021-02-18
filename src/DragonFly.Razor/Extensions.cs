@@ -2,7 +2,7 @@
 using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.Client.Core.Assets;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.WebHooks;
@@ -45,6 +45,8 @@ namespace DragonFly.Client.Core
 
             builder.Services.AddBlazoredModal();
             builder.Services.AddBlazoredToast();
+            
+            builder.Services.AddBootstrapCss();
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
             builder.Services.AddTransient<ClientContentService>();
@@ -55,8 +57,6 @@ namespace DragonFly.Client.Core
 
             builder.Services.AddTransient<IImageAssetUrlService, DefaultAssetDataUrlService>();
             builder.Services.AddTransient<IImageAssetUrlService, ImageWizardAssetDataUrlService>();
-
-            builder.Services.AddBootstrapCss();
 
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();

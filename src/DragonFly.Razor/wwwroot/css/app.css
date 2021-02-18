@@ -21,14 +21,15 @@ a, .btn-link {
 button {
     cursor: pointer;
 }
+
 .bool-field-view {
     display: flex;
 }
 
-.bool-field-view .btn {
-    display: block;
-    margin-right: 4px;
-}
+    .bool-field-view .btn {
+        display: block;
+        margin-right: 0.25rem;
+    }
 
 .toolbar {
     display: flex;

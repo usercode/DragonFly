@@ -1,11 +1,11 @@
-﻿using DragonFly.Contents.Content;
+﻿using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.WebHooks
+namespace DragonFly.Content
 {
     public class WebHook : ContentBase
     {

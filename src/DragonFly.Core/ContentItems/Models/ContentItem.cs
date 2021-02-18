@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Fields;
+using DragonFly.Content;
 using DragonFly.Core.ContentItems.Models.Validations;
 using DragonFly.Data;
 
-namespace DragonFly.Models
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentItem

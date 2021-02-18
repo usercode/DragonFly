@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content.Fields
+namespace DragonFly.Content
 {
     public interface ISingleValueContentField
     {

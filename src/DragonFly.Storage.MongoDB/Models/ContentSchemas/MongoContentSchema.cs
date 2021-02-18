@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
+using DragonFly.Content.Queries;
 using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Schemas;
-using DragonFly.Core.Content.ContentTypes;
-using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Data.Content.ContentTypes;
 using MongoDB.Bson;
 

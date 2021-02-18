@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Contents.Content.Schemas;
-using DragonFly.Core.Content.ContentTypes;
-using DragonFly.Core.ContentItems.Queries;
-using DragonFly.Data.Content.ContentTypes;
+using DragonFly.Content;
+using DragonFly.Content.Queries;
 
-namespace DragonFly.Models
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentSchema

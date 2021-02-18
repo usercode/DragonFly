@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
-using DragonFly.Core.Content.ContentTypes;
-using DragonFly.Data.Content.ContentTypes;
-using DragonFly.Models;
+using DragonFly.Content;
 
-namespace DragonFly.Data.Content.ContentParts
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentPartItem

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content
+namespace DragonFly.Content
 {
     public abstract class ContentBase
     {

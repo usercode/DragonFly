@@ -1,4 +1,5 @@
-﻿using DragonFly.Core.ContentItems.Models.Fields;
+﻿using DragonFly.Content;
+using DragonFly.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,15 @@ namespace DragonFly.AspNetCore
 {
     public class DragonFlyApi : IDragonFlyApi
     {
-        public DragonFlyApi(ContentFieldManager fieldManager)
+        public DragonFlyApi(ContentFieldManager fieldManager, IDataStorage dataStorage)
         {
             Fields = fieldManager;
+            DataStorage = dataStorage;
         }
 
-        public ContentFieldManager Fields { get; private set; }
+        public ContentFieldManager Fields { get; }
+
+        public IDataStorage DataStorage { get; }
 
         public void Init()
         {

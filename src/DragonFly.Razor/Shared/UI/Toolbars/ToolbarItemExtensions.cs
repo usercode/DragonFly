@@ -1,4 +1,6 @@
-﻿using DragonFly.Client.Base;
+﻿using BlazorStrap;
+using DragonFly.Client.Base;
+using DragonFly.Content;
 using DragonFly.Contents.Content;
 using System;
 using System.Collections.Generic;
@@ -17,19 +19,19 @@ namespace DragonFly.Razor.Shared.UI.Toolbars
         //    toolbarItems.Add(new ToolbarItem("Delete", Color.Danger, () => DeleteAsync()));
         public static void AddRefreshButton(this IList<ToolbarItem> items, StartComponentBase component)
         {
-            items.Add(new ToolbarItem("Refresh", BlazorStrap.Color.Dark, () => component.RefreshAsync()));
+            items.Add(new ToolbarItem("Refresh", Color.Dark, () => component.RefreshAsync()));
         }
 
         public static void AddSaveButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
             where T : ContentBase
         {
-            items.Add(new ToolbarItem("Save", BlazorStrap.Color.Success, () => component.SaveAsync()));
+            items.Add(new ToolbarItem("Save", Color.Success, () => component.SaveAsync()));
         }
 
         public static void AddDeleteButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
            where T : ContentBase
         {
-            items.Add(new ToolbarItem("Delete", BlazorStrap.Color.Danger, () => component.DeleteAsync()));
+            items.Add(new ToolbarItem("Delete", Color.Danger, () => component.DeleteAsync()));
         }
 
         //public static void AddPublishButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)

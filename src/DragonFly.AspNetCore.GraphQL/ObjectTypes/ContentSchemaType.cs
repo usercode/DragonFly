@@ -1,7 +1,7 @@
 ﻿using DragonFly.Models;
-using DragonFly.Data.Content.ContentTypes;
 using GraphQL.Types;
 using System;
+using DragonFly.Content;
 
 namespace DragonFly.AspNetCore.GraphQL
 {

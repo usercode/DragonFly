@@ -1,12 +1,9 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Assets;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Core.ContentItems.Models.Fields;
+﻿using DragonFly.Contents.Assets;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content.Parts.Base
+namespace DragonFly.Content
 {
     [FieldOptions(typeof(AssetFieldOptions))]
     public class AssetField : ContentField

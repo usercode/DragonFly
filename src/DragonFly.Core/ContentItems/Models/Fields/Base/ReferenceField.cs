@@ -1,13 +1,8 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Core.ContentItems.Models.Fields;
-using DragonFly.Core.ContentItems.Models.Fields.Base;
-using DragonFly.Data.Content.ContentParts;
-using DragonFly.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content.Parts.Base
+namespace DragonFly.Content
 {
     /// <summary>
     /// ReferenceField

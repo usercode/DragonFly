@@ -1,7 +1,5 @@
-﻿using DragonFly.Content.ContentParts;
+﻿using DragonFly.Content;
 using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Parts.Base;
-using DragonFly.Contents.Content.Schemas;
 using DragonFly.ContentTypes;
 using DragonFly.Data.Content;
 using DragonFly.Data.Content.ContentTypes;

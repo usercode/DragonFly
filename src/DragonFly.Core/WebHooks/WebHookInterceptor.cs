@@ -1,5 +1,5 @@
-﻿using DragonFly.Contents.Assets;
-using DragonFly.Models;
+﻿using DragonFly.Content;
+using DragonFly.Contents.Assets;
 using System;
 using System.Collections.Generic;
 using System.Linq;

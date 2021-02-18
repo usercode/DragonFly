@@ -1,5 +1,5 @@
-﻿using DragonFly.Contents.Content;
-using DragonFly.Core.ContentItems.Queries;
+﻿using DragonFly.Content.Queries;
+using DragonFly.Contents.Content;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

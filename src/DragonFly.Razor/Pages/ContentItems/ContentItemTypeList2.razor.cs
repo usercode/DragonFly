@@ -1,12 +1,12 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Razor.Pages.ContentItems;
-using DragonFly.Core.Queries;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DragonFly.Content;
 
 namespace DragonFly.Client.Pages.ContentItems
 {

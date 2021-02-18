@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Data.Content.ContentParts;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace DragonFly.Content.ContentParts
+namespace DragonFly.Content.ContentFields
 {
     /// <summary>
     /// ContentField

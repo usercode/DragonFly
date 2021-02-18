@@ -2,16 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content;
-using DragonFly.Contents.Content.Fields;
-using DragonFly.Contents.Content.Schemas;
-using DragonFly.Core.ContentItems.Models.Fields;
-using DragonFly.Data.Content.ContentParts;
-using DragonFly.Data.Content.ContentTypes;
-using DragonFly.Models;
+using DragonFly.Content;
 
-namespace DragonFly.Models
+namespace DragonFly.Content
 {
     /// <summary>
     /// ContentItemExtensions
@@ -20,7 +13,12 @@ namespace DragonFly.Models
     {
         public static ContentField GetField(this IContentItem contentItem, string name)
         {
-            return contentItem.Fields[name];
+            if(contentItem.Fields.TryGetValue(name, out ContentField contentField) == false)
+            {
+                throw new Exception($"field '{name}' was not found.");
+            }
+
+            return contentField;
         }
 
         public static T GetField<T>(this IContentItem contentItem, string name)
@@ -29,23 +27,9 @@ namespace DragonFly.Models
             return (T)GetField(contentItem, name);
         }
 
-        public static T GetSingleField<T>(this IContentItem contentItem, string name)
+        public static T GetSingleValueField<T>(this IContentItem contentItem, string name)
         {
             return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
-        }
-
-        public static T GetSingleNullableField<T>(this IContentItem contentItem, string name)
-            where T : struct
-        {
-            return ((SingleValueContentFieldNullable<T>)contentItem.Fields[name]).Value.Value;
-        }
-
-        public static IContentSchema AddField<TField>(this IContentSchema schema, string name, int sortkey = 0, ContentFieldOptions options = null)
-            where TField : ContentField
-        {
-            schema.Fields.Add(name, new ContentFieldDefinition() { SortKey = sortkey, FieldType = ContentFieldManager.Default.GetContentFieldName<TField>(), Options = options });
-
-            return schema;
         }
 
         public static ContentItem CreateItem(this ContentSchema schema)
@@ -104,10 +88,15 @@ namespace DragonFly.Models
             {
                 if (contentItem.Fields.ContainsKey(field.Key) == false)
                 {
-                    ContentField c = ContentFieldManager.Default.CreateField(field.Value.FieldType);
+                    ContentField c;
+
                     if (field.Value.Options != null)
                     {
                         c = field.Value.Options.CreateContentField();
+                    }
+                    else
+                    {
+                        c = ContentFieldManager.Default.CreateField(field.Value.FieldType);
                     }
 
                     contentItem.Fields.Add(field.Key, c);

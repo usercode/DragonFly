@@ -1,10 +1,9 @@
-﻿using DragonFly.Core.Queries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace DragonFly.Core.ContentItems.Queries
+namespace DragonFly.Content.Queries
 {
     public static class QueryExtensions
     {

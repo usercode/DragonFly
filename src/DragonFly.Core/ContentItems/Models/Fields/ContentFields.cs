@@ -1,9 +1,8 @@
-﻿using DragonFly.Content.ContentParts;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Content.Fields
+namespace DragonFly.Content
 {
     public class ContentFields : Dictionary<string, ContentField>
     {

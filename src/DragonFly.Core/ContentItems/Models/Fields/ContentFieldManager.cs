@@ -1,6 +1,4 @@
-﻿using DragonFly.Content.ContentParts;
-using DragonFly.Contents.Content.Parts.Base;
-using DragonFly.Data.Content.ContentParts;
+﻿using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Models.Fields
+namespace DragonFly.Content
 {
     public class ContentFieldManager
     {
