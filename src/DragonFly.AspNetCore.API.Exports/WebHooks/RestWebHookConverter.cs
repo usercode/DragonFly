@@ -1,4 +1,4 @@
-﻿using DragonFly.AspNetCore.REST.Models;
+﻿using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Core.WebHooks;
 using System;

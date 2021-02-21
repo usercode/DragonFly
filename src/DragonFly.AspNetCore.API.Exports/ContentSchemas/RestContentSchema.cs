@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.AspNetCore.REST.Models
+namespace DragonFly.AspNetCore.API.Models
 {
     public class RestContentSchema : RestContentBase
     {
         public RestContentSchema()
         {
-            Fields = new Dictionary<string, RestContentFieldDefinition>();
+            Fields = new Dictionary<string, RestContentSchemaField>();
             ListFields = new List<string>();
             ReferenceFields = new List<string>();
             OrderFields = new List<FieldOrder>();
@@ -28,7 +28,7 @@ namespace DragonFly.AspNetCore.REST.Models
         /// Parts
         /// </summary>
         [JsonProperty("Fields", Order = 10)]
-        public IDictionary<string, RestContentFieldDefinition> Fields { get; set; }
+        public IDictionary<string, RestContentSchemaField> Fields { get; set; }
 
         /// <summary>
         /// ListFields

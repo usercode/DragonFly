@@ -1,6 +1,6 @@
 ﻿using BlazorStrap;
 using DragonFly.Client.Base;
-using DragonFly.Contents.Assets;
+using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Razor.Shared.UI.Toolbars;
@@ -26,6 +26,9 @@ namespace DragonFly.Client.Pages
 
         private IBrowserFile SelectedFile { get; set; }
 
+        [Parameter]
+        public Guid? FolderId { get; set; }
+
         public async Task PublishAsync()
         {
             await SaveAsync();
@@ -50,6 +53,11 @@ namespace DragonFly.Client.Pages
             if(IsNewEntity)
             {
                 Entity = new Asset();
+
+                if(FolderId != null)
+                {
+                    Entity.Folder = new AssetFolder(FolderId.Value);
+                }
             }
             else
             {
@@ -68,9 +76,9 @@ namespace DragonFly.Client.Pages
             else
             {
                 await ContentService.UpdateAsync(Entity);
-
-                await RefreshAsync();
             }
+
+            await RefreshAsync();
         }
 
         protected override async Task DeleteActionAsync()

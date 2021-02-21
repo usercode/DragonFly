@@ -7,11 +7,11 @@
 
         @if (ListMode == EntityListMode.Default)
         {
-            <div class="row">
+            <BSRow>
                 <div class="col-lg-12">
-                    <a href="asset/create" class="btn btn-success">Create</a>
+                    <a href="asset/create/@SelectedFolder?.Id" class="btn btn-success">Create</a>
                 </div>
-            </div>
+            </BSRow>
 
             <hr />
         }
@@ -23,8 +23,8 @@
     </div>
 
     <div style="flex: 1" class="scroll-content">
-        <div class="row">
-            <div class="col-lg-3">
+        <BSRow>
+            <BSCol LG="3">
                 <div class="list-group">
 
                     @if (SelectedFolder != null)
@@ -42,7 +42,7 @@
 
                     }
                 </div>
-            </div>
+            </BSCol>
             <div class="col-lg-9">
                 <div style="flex: 1">
                     @if (SearchResult == null)
@@ -52,7 +52,7 @@
                     else
                     {
                         <div class="row">
-                            @foreach (DragonFly.Contents.Assets.Asset asset in SearchResult.Items)
+                            @foreach (Asset asset in SearchResult.Items)
                             {
                                 <div class="col-md-3">
                                     <div class="box-item zoom action" style="height:320px">
@@ -72,6 +72,6 @@
                     }
                 </div>
             </div>
-        </div>
+        </BSRow>
     </div>
 </div>

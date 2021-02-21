@@ -24,7 +24,7 @@ namespace DragonFly.Content
             return null;
         }
 
-        public virtual IList<ValidationError> Validate()
+        public virtual IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {
             return new List<ValidationError>();
         }

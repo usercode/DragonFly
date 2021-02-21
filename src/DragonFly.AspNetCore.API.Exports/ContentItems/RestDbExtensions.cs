@@ -1,7 +1,6 @@
 ﻿using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Client;
 using DragonFly.Content;
-using DragonFly.Contents.Assets;
 using DragonFly.Contents.Content;
 using DragonFly.Data.Models;
 using DragonFly.Models;
@@ -65,7 +64,7 @@ namespace DragonFly.Models
                     case JTokenType.Array:
                         if (contentField is ArrayField arrayField)
                         {
-                            if (schema.Fields.TryGetValue(fieldName, out ContentFieldDefinition definition))
+                            if (schema.Fields.TryGetValue(fieldName, out ContentSchemaField definition))
                             {
                                 ArrayFieldOptions arrayOptions = definition.Options as ArrayFieldOptions;
 

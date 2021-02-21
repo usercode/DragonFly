@@ -13,7 +13,7 @@
 
     <hr />
 
-    <div class="row">
+    <BSRow>
         <div class="col-lg-4">
             <QuerySelector ContentItemList="@this" />
         </div>
@@ -31,7 +31,7 @@
                     @foreach (var contentItem in SearchResult.Items)
                     {
                         <button class="list-group-item list-group-item-action" @onclick="x => OpenItem(contentItem)">
-                            <div class="row">
+                            <BSRow>
                                 <div class="col-lg-2">
                                     @if (contentItem.PublishedAt != null)
                                     {
@@ -82,7 +82,7 @@
                                         </div>
                                     }
                                 }
-                            </div>
+                            </BSRow>
                         </button>
                     }
 
@@ -107,5 +107,5 @@
                 </BSPagination>
             }
         </div>
-    </div>
+    </BSRow>
 </div>

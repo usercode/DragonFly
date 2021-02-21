@@ -1,4 +1,4 @@
-﻿using DragonFly.AspNetCore.REST.Models;
+﻿using DragonFly.AspNetCore.API.Models;
 using DragonFly.Client;
 using DragonFly.Content;
 using DragonFly.Models;
@@ -58,9 +58,9 @@ namespace DragonFly.Data.Models
             return restContentItem;
         }
 
-        public static RestContentFieldDefinition ToRest(this ContentFieldDefinition definition)
+        public static RestContentSchemaField ToRest(this ContentSchemaField definition)
         {
-            RestContentFieldDefinition restContentFieldDefinition = new RestContentFieldDefinition();
+            RestContentSchemaField restContentFieldDefinition = new RestContentSchemaField();
             restContentFieldDefinition.Label = definition.Label;
             restContentFieldDefinition.SortKey = definition.SortKey;
             restContentFieldDefinition.FieldType = definition.FieldType;
@@ -73,9 +73,9 @@ namespace DragonFly.Data.Models
             return restContentFieldDefinition;
         }
 
-        public static ContentFieldDefinition ToModel(this RestContentFieldDefinition definition)
+        public static ContentSchemaField ToModel(this RestContentSchemaField definition)
         {
-            ContentFieldDefinition restContentFieldDefinition = new ContentFieldDefinition();
+            ContentSchemaField restContentFieldDefinition = new ContentSchemaField();
             restContentFieldDefinition.Label = definition.Label;
             restContentFieldDefinition.SortKey = definition.SortKey;
             restContentFieldDefinition.FieldType = definition.FieldType;

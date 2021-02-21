@@ -1,9 +1,8 @@
-﻿using DragonFly.Contents.Assets;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Core.Assets.Models
+namespace DragonFly.Content
 {
     public static class AssetExtensions
     {

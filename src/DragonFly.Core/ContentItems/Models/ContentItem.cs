@@ -44,16 +44,18 @@ namespace DragonFly.Content
         /// </summary>
         public virtual ContentFields Fields { get => _fields; set => _fields = value; }
 
-        public virtual bool Validate()
+        public virtual IEnumerable<ValidationError> Validate()
         {
             List<ValidationError> result = new List<ValidationError>();
 
             foreach(var field in Fields)
             {
-                result.AddRange(field.Value.Validate());
+                ContentSchemaField f = Schema.Fields[field.Key];
+
+                result.AddRange(field.Value.Validate(field.Key, f.Options));
             }
 
-            return result.Any() == false;
+            return result;
         }
     }
 }

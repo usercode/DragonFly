@@ -1,6 +1,6 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Client.Pages.ContentItems;
-using DragonFly.Contents.Assets;
+using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.Assets.Queries;

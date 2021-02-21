@@ -1,7 +1,6 @@
 ﻿using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
-using DragonFly.Contents.Assets;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.Assets.Queries;
@@ -14,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DragonFly.Content;
 
 namespace DragonFly.AspNetCore.API.Middlewares.Assets
 {

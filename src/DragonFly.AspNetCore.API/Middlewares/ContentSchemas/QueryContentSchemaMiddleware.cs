@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
-using DragonFly.AspNetCore.REST.Models;
+using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Data;
 using DragonFly.Data.Models;

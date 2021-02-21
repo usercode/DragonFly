@@ -64,7 +64,7 @@ namespace DragonFly.Data.Models
                 {
                     if (contentField is ArrayField arrayField)
                     {
-                        if (schema.Fields.TryGetValue(fieldName, out ContentFieldDefinition definition))
+                        if (schema.Fields.TryGetValue(fieldName, out ContentSchemaField definition))
                         {
                             ArrayFieldOptions arrayOptions = definition.Options as ArrayFieldOptions;
 

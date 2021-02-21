@@ -1,8 +1,7 @@
 ﻿using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Exports;
-using DragonFly.AspNetCore.REST.Models;
+using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
-using DragonFly.Contents.Assets;
 using DragonFly.Contents.Content;
 using DragonFly.Core;
 using DragonFly.Data;

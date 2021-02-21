@@ -1,26 +1,26 @@
-﻿<div class="row">
+﻿<BSRow>
     @foreach (var field in ContentItem.Schema.ReferenceFields)
     {
-        <div class="col-lg-2">            
-                @{
-                    var column = ContentItem.Fields[field];
-                }
+        <div class="col-lg-2">
+            @{
+                var column = ContentItem.Fields[field];
+            }
 
-                @if (column is ISingleValueContentField singleValueField)
-                {
-                    <span>@singleValueField.Value</span>
-                }
+            @if (column is ISingleValueContentField singleValueField)
+            {
+                <span>@singleValueField.Value</span>
+            }
 
-                else if (column is ReferenceField referenceField)
+            else if (column is ReferenceField referenceField)
+            {
+                @if (ContentItem != null)
                 {
-                    @if (ContentItem != null)
-                    {
-                        
-                    }
+
                 }
+            }
         </div>
     }
-</div>
+</BSRow>
 
 @code {
 

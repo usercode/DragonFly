@@ -32,7 +32,7 @@ namespace DragonFly.Data.Models
 
             foreach(var mongoField in mongoSchema.Fields)
             {
-                ContentFieldDefinition definition = new ContentFieldDefinition();
+                ContentSchemaField definition = new ContentSchemaField();
 
                 definition.Label = mongoField.Value.Label;
                 definition.SortKey = mongoField.Value.SortKey;

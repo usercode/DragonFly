@@ -16,7 +16,7 @@ namespace DragonFly.Content.Queries
             OrderFields = new List<FieldOrder>();
 
             Skip = 0;
-            Top = 50;
+            Top = 20;
         }
 
         /// <summary>

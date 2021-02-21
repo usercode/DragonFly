@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
+using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
 using DragonFly.Core;

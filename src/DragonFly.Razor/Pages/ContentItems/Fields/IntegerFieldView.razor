@@ -1,5 +1,9 @@
 ﻿@inherits FieldComponent<IntegerField, IntegerFieldOptions>
 
 <div class="integer-field">
-    <input type="number" class="form-control" @bind-value="@Field.Value" min="@Options.MinValue" max="@Options.MaxValue" />
+    <BSInput InputType="InputType.Number"              
+             @bind-Value="@Field.Value" 
+             class="form-control" 
+             min="@Options.MinValue" 
+             max="@Options.MaxValue" />
 </div>

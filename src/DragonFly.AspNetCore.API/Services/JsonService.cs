@@ -19,7 +19,7 @@ namespace DragonFly.AspNetCore.API
 
         public string Serialize<T>(T obj)
         {
-            return NewtonJsonExtensions.Serialize<T>(obj);
+            return NewtonJsonExtensions.Serialize(obj);
         }
 
         public async Task<T> Deserialize<T>(Stream stream)

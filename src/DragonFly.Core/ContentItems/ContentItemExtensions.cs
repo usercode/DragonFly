@@ -15,7 +15,7 @@ namespace DragonFly.Content
         {
             if(contentItem.Fields.TryGetValue(name, out ContentField contentField) == false)
             {
-                throw new Exception($"field '{name}' was not found.");
+                throw new Exception($"The field '{name}' was not found.");
             }
 
             return contentField;

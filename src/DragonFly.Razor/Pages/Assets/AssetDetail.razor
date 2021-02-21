@@ -1,5 +1,5 @@
 @page "/asset/{EntityId:guid}"
-@page "/asset/create"
+@page "/asset/create/{FolderId:guid}"
 @inherits AssetDetailBase
 @inject IImageAssetUrlService AssetPreview
 
@@ -12,51 +12,51 @@
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
         <div class="scroll-content" style="flex:1">
-            <div class="row">
+            <BSRow>
                 <div class="col-md-6">
 
                     <!-- id -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Id</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- name -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" @bind-value="@Entity.Name" />
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- slug -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Slug</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" @bind-value="@Entity.Slug" />
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- mimetype -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Mimetype</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" @bind-value="@Entity.MimeType" readonly />
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- size -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Size</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" @bind-value="@Entity.Size" readonly />
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- folder -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Folder</label>
                         <div class="col-sm-10">
                             @if (Entity.Folder != null)
@@ -64,15 +64,15 @@
                                 <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
                             }
                         </div>
-                    </div>
+                    </BSRow>
 
                     <!-- description -->
-                    <div class="form-group row">
+                    <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Description</label>
                         <div class="col-sm-10">
                             <textarea class="form-control" @bind="Entity.Description"></textarea>
                         </div>
-                    </div>
+                    </BSRow>
                 </div>
                 <div class="col-md-6">
                     @if (IsNewEntity == false)
@@ -85,7 +85,7 @@
                         </div>
                     }
                 </div>
-            </div>
+            </BSRow>
         </div>
     </div>
 }

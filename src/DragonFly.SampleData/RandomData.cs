@@ -21,9 +21,10 @@ namespace DragonFly.SampleData
                                                 .AddReference("Brand")
                                                 .AddString("Name", options => options.IsRequired = true)
                                                 .AddSlug("Slug")
-                                                .AddBool("IsAvailable", optios => optios.DefaultValue = true)
+                                                .AddBool("IsAvailable", options => options.DefaultValue = true)
                                                 .AddFloat("Price")
                                                 .AddTextArea("Description", options => options.MaxLength = 255)
+                                                .AddAsset("Image")
                                                 .AddArray("Attributes", options => options
                                                                                     .AddString("Name")
                                                                                     .AddString("Value"));
@@ -34,6 +35,7 @@ namespace DragonFly.SampleData
                                             .SetString("Name", "ProductA")
                                             .SetBool("IsAvailable", true)
                                             .SetFloat("Price", 9.99)
+                                            .SetAsset("Image", new Asset())
                                             .SetTextArea("Description", "...");
 
             //await dataStorage.CreateAsync(schemaProduct);

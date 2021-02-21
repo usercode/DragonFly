@@ -17,7 +17,7 @@ namespace DragonFly.Content
         }
 
         /// <summary>
-        /// Fields
+        /// Items
         /// </summary>
         public IList<ArrayFieldItem> Items { get; set; }
 

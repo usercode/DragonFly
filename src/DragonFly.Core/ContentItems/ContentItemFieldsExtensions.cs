@@ -146,5 +146,22 @@ namespace DragonFly.Content
 
             return contentItem;
         }
+
+        public static Asset GetAsset(this IContentItem contentItem, string name)
+        {
+            AssetField field = contentItem.GetField<AssetField>(name);
+
+            return field.Asset;
+        }
+
+        public static TContentItem SetAsset<TContentItem>(this TContentItem contentItem, string name, Asset asset)
+            where TContentItem : IContentItem
+        {
+            AssetField field = contentItem.GetField<AssetField>(name);
+
+            field.Asset = asset;
+
+            return contentItem;
+        }
     }
 }

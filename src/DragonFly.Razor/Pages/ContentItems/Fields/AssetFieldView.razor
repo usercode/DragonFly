@@ -2,39 +2,48 @@
 @inject NavigationManager NavigationManager
 @inject IImageAssetUrlService AssetPreview
 
-<ModalWindow Title="Select asset" Show="ShowReferencePartSelector">
-    <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
-</ModalWindow>
+<BSModal @ref="LiveDemo" IsFullScreen="true">
+    <BSModalHeader OnClick="@(() => LiveDemo.Hide())">Modal title</BSModalHeader>
+    <BSModalBody>
+        <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
+    </BSModalBody>
+    <BSModalFooter>
+        <BSButton Color="Color.Secondary" @onclick="@(() => LiveDemo.Hide())">Close</BSButton>
+        <BSButton Color="Color.Primary" @onclick="@(() => LiveDemo.Hide())">Save Changes</BSButton>
+    </BSModalFooter>
+</BSModal>
 
 <div class="asset-field">
-    <ul class="list-group">
-        <li class="list-group-item">
+    <BSListGroup>
+        <BSListGroupItem>
             <div style="display:flex;justify-content:flex-end">
-                <a class="btn btn-light" @onclick="(e => Navigate())"><i class="fas fa-arrow-right"></i></a>
+                <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
                 @if (Field.Asset != null)
                 {
-                    <a class="btn btn-light" href="@Field.Asset.GetDataUrl()" target="_blank"><i class="fas fa-arrow-down"></i></a>
+                    <BSButton Color="Color.Light" href="@Field.Asset.GetDataUrl()" target="_blank"><i class="fas fa-arrow-down"></i></BSButton>
                 }
                 else
                 {
-                    <a class="btn btn-light"><i class="fas fa-arrow-down"></i></a>
+                    <BSButton Color="Color.Light"><i class="fas fa-arrow-down"></i></BSButton>
                 }
-                <a class="btn btn-light" @onclick="(e => OpenModal())"><i class="fas fa-plus"></i></a>
-                <a class="btn btn-light" @onclick="(e => RemoveItem())"><i class="fas fa-times"></i></a>
+            <BSButton Color="Color.Light" OnClick="(e => OpenModal())"><i class="fas fa-plus"></i></BSButton>
+            <BSButton Color="Color.Light" OnClick="(e => RemoveItem())"><i class="fas fa-times"></i></BSButton>
             </div>
 
             @if (Field.Asset != null)
             {
                 <div class="row">
                     <div class="col-lg-6">
-                        @if (Field.Asset.IsImage())
-                        {
-                            <img src="@AssetPreview.Resize(Field.Asset, 400, 400)" style="max-height:200px" />
-                        }
-                        else if (Field.Asset.IsPdf())
-                        {
-                            <img src="@AssetPreview.Pdf(Field.Asset)" style="max-height:200px" />
-                        }
+                        <div class="image">
+                            @if (Field.Asset.IsImage())
+                            {
+                                <img src="@AssetPreview.Resize(Field.Asset, 400, 150)" />
+                            }
+                            else if (Field.Asset.IsPdf())
+                            {
+                                <img src="@AssetPreview.Pdf(Field.Asset)" />
+                            }
+                        </div>
                     </div>
                     <div class="col-lg-6">
                         <!-- name -->
@@ -55,16 +64,19 @@
                     </div>
                 </div>
             }
-        </li>
-    </ul>
+        </BSListGroupItem>
+    </BSListGroup>
 </div>
 
 @code {
+
+    private BSModal LiveDemo { get; set; }
+
     public bool ShowReferencePartSelector { get; set; }
 
     protected void Navigate()
     {
-        NavigationManager.NavigateTo($"/asset/{Field.Asset.Id}");
+        NavigationManager.NavigateTo($"asset/{Field.Asset.Id}");
     }
 
     protected void RemoveItem()
@@ -74,9 +86,10 @@
 
     public void OpenModal()
     {
-        ShowReferencePartSelector = true;
+        LiveDemo.Show();
+        //ShowReferencePartSelector = true;
 
-        StateHasChanged();
+        //StateHasChanged();
     }
 
     public void ItemAdded(Asset asset)
@@ -84,6 +97,8 @@
         Field.Asset = asset;
 
         ShowReferencePartSelector = false;
+
+        LiveDemo.Hide();
 
         StateHasChanged();
     }

@@ -34,7 +34,7 @@
         {
             ContentField defaultInstance = ContentFieldManager.Default.CreateField(Selector.ContentFieldType);
 
-            Schema.Fields.Add(Selector.Name, new ContentFieldDefinition()
+            Schema.Fields.Add(Selector.Name, new ContentSchemaField()
             {
                 FieldType = Selector.ContentFieldType.Name,
                 Options = defaultInstance.CreateOptions()

@@ -20,10 +20,18 @@ namespace DragonFly.Client.Base
 
         public async Task RefreshAsync()
         {
-            await RefreshActionAsync();
+            IsRefreshing = true;
 
-            OnRefreshed();
-            //StateHasChanged(); // -> beause of setting SearchPattern
+            try
+            {
+                await RefreshActionAsync();
+
+                OnRefreshed();
+            }
+            finally
+            {
+                IsRefreshing = false;
+            }
         }
 
         [Inject]
@@ -31,9 +39,19 @@ namespace DragonFly.Client.Base
 
         public IList<ToolbarItem> ToolbarItems { get; private set; }
 
+        public bool IsRefreshing { get; protected set; }
+
         protected virtual async Task RefreshActionAsync()
         {
 
+        }
+
+        protected override async Task OnParametersSetAsync()
+        {
+            //if(IsRefreshing == false)
+            //{
+            //    await RefreshAsync();
+            //}
         }
 
         protected virtual void OnRefreshed()

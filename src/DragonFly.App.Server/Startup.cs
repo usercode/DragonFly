@@ -57,7 +57,7 @@ namespace DragonFly.AspNetCore
                         .AddGraphQLApi()
                         .AddMongoDbStorage();
 
-            new RandomData().CreateDataAsync(null).Wait();
+            //new RandomData().CreateDataAsync(null).Wait();
 
         }
 

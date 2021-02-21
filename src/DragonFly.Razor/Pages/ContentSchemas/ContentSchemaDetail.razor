@@ -11,7 +11,7 @@
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
         <div style="flex:1" class="scroll-content">
-            <div class="form-group row">
+            <BSRow class="form-group">
                 <label class="col-sm-2 col-form-label">Name</label>
                 <div class="col-sm-10">
                     @if (IsNewEntity)
@@ -24,31 +24,31 @@
                     }
 
                 </div>
-            </div>
-            <div class="form-group row">
+            </BSRow>
+            <BSRow class="form-group">
                 <label class="col-sm-2 col-form-label">Fields</label>
                 <div class="col-sm-10">
                     <ContentFieldsView Schema="Entity" />
                 </div>
-            </div>
-            <div class="form-group row">
+            </BSRow>
+            <BSRow class="form-group">
                 <label class="col-sm-2 col-form-label">List fields</label>
                 <div class="col-sm-10">
                     <ListFields TargetList="Entity.ListFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
                 </div>
-            </div>
-            <div class="form-group row">
+            </BSRow>
+            <BSRow class="form-group">
                 <label class="col-sm-2 col-form-label">Reference fields</label>
                 <div class="col-sm-10">
                     <ListFields TargetList="Entity.ReferenceFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
                 </div>
-            </div>
-            <div class="form-group row">
+            </BSRow>
+            <BSRow class="form-group">
                 <label class="col-sm-2 col-form-label">Order fields</label>
                 <div class="col-sm-10">
                     <OrderListFields TargetList="Entity.OrderFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
                 </div>
-            </div>
+            </BSRow>
         </div>
 
     </div>

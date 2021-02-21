@@ -60,5 +60,10 @@ namespace DragonFly.Content
         /// OrderFields
         /// </summary>
         public IList<FieldOrder> OrderFields { get => _orderFields; set => _orderFields = value; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

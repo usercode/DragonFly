@@ -1,35 +1,35 @@
-﻿<div class="row">
+﻿<BSRow>
     <div class="col-lg-6">
-        <ul class="list-group">
-            @foreach (var i in TargetList)
+        <BSListGroup>
+            @foreach (string i in TargetList)
             {
-                <li class="list-group-item">
+                <BSListGroupItem>
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></a>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></a>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></a>
+                        <BSButton Color="Color.Light" OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></BSButton>
                     </div>
-                </li>
+                </BSListGroupItem>
             }
-        </ul>
+        </BSListGroup>
     </div>
     <div class="col-lg-6">
-        <ul class="list-group">
+        <BSListGroup>
             @foreach (var i in SourceList.Where(x => TargetList.Contains(x) == false))
             {
-                <li class="list-group-item">
+                <BSListGroupItem>
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.Add(i);  })"><i class="fas fa-arrow-left"></i></a>
+                        <BSButton Color="Color.Light" OnClick="@(e => { TargetList.Add(i);  })"><i class="fas fa-arrow-left"></i></BSButton>
                     </div>
-                </li>
+                </BSListGroupItem>
             }
-        </ul>
+        </BSListGroup>
     </div>
-</div>
+</BSRow>
 
 @code {
 

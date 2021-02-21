@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,24 @@ namespace DragonFly.Content
         public override ContentFieldOptions CreateOptions()
         {
             return new FloatFieldOptions();
+        }
+
+        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        {
+            FloatFieldOptions fieldOptions = (FloatFieldOptions)options;
+            IList<ValidationError> errors = new List<ValidationError>();
+
+            if (fieldOptions.IsRequired && HasValue == false)
+            {
+                errors.AddRequire(fieldName);
+            }
+
+            if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
+            {
+                errors.AddRange(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
+            }
+
+            return errors;
         }
 
         public override string ToString()

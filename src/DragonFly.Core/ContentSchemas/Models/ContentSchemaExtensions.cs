@@ -10,7 +10,15 @@ namespace DragonFly.Content
         public static IContentSchema AddField<TField>(this IContentSchema schema, string name, int? sortkey = null, ContentFieldOptions options = null)
             where TField : ContentField
         {
-            schema.Fields.Add(name, new ContentFieldDefinition() { SortKey = sortkey ?? 0, FieldType = ContentFieldManager.Default.GetContentFieldName<TField>(), Options = options });
+            schema.Fields.Add(name, new ContentSchemaField() { SortKey = sortkey ?? 0, FieldType = ContentFieldManager.Default.GetContentFieldName<TField>(), Options = options });
+
+            return schema;
+        }
+
+        public static TContentSchema RemoveField<TContentSchema>(this TContentSchema schema, string name)
+            where TContentSchema : IContentSchema
+        {
+            schema.Fields.Remove(name);
 
             return schema;
         }

@@ -7,9 +7,9 @@ using DragonFly.Content;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// ContentPartDefinition
+    /// ContentSchemaField
     /// </summary>
-    public class ContentFieldDefinition : IContentFieldDefinition
+    public class ContentSchemaField : IContentFieldDefinition
     {
         /// <summary>
         /// Label

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.AspNetCore.REST.Models
+namespace DragonFly.AspNetCore.API.Models
 {
     /// <summary>
     /// RestWebHook

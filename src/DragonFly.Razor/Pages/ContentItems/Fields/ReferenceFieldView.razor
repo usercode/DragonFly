@@ -7,8 +7,8 @@
         <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>
     </ModalWindow>
 
-    <ul class="list-group">
-        <li class="list-group-item">
+    <BSListGroup>
+        <BSListGroupItem>
             <div style="display: flex; align-items: center; justify-content: space-between;">
                 @if (Field.ContentItem != null)
                 {
@@ -16,7 +16,7 @@
 
                     @foreach (var field in Field.ContentItem.Schema.ReferenceFields)
                     {
-                        var column = Field.ContentItem.Fields[field];
+                        ContentField column = Field.ContentItem.Fields[field];
 
                         @if (column is ISingleValueContentField singleValueField)
                         {
@@ -33,13 +33,13 @@
                 }
 
                 <div>
-                    <a class="btn btn-light" @onclick="(e => Navigate())"><i class="fas fa-arrow-right"></i></a>
-                    <a class="btn btn-light" @onclick="(e => OpenModal())"><i class="fas fa-plus"></i></a>
-                    <a class="btn btn-light" @onclick="(e => RemoveItem())"><i class="fas fa-times"></i></a>
+                    <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
+                    <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+                    <BSButton Color="Color.Light" OnClick="e => RemoveItem()"><i class="fas fa-times"></i></BSButton>
                 </div>
             </div>
-        </li>
-    </ul>
+        </BSListGroupItem>
+    </BSListGroup>
 </div>
 
 @code {
@@ -47,7 +47,9 @@
 
     protected void Navigate()
     {
-        NavigationManager.NavigateTo($"/content/{Field.ContentItem.Schema}/{Field.ContentItem.Id}");
+        NavigationManager.NavigateTo($"content/{Field.ContentItem.Schema.Name}/{Field.ContentItem.Id}");
+
+        
     }
 
     protected void RemoveItem()

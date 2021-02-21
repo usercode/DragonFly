@@ -1,5 +1,4 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Contents.Assets;
 using DragonFly.Core.Assets.Queries;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Assets
+namespace DragonFly.Content
 {
     public interface IAssetStorage
     {

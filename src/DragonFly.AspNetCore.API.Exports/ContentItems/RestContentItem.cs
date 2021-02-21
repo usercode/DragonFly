@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.AspNetCore.REST.Models;
+using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content.ContentFields;
 using DragonFly.Contents.Content;
 using Newtonsoft.Json;

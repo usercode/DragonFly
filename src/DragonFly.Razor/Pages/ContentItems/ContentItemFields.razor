@@ -5,12 +5,12 @@
                        .Select(x => new { Key = x.Key, Value = Content.Fields[x.Key], Definition = x.Value })
                        .ToList())
     {
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">@part.Key</label>
+        <BSFormGroup>
+            <BSLabel class="col-sm-2 col-form-label">@part.Key</BSLabel>
             <div class="col-sm-10">
                 @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
             </div>
-        </div>
+        </BSFormGroup>
     }
 
 @code {

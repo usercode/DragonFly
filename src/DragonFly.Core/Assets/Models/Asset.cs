@@ -1,10 +1,9 @@
-﻿using DragonFly.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Text;
 
-namespace DragonFly.Contents.Assets
+namespace DragonFly.Content
 {
     public class Asset : ContentBase
     {
