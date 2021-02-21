@@ -29,7 +29,7 @@ ContentSchema schemaProduct = new ContentSchema("Product")
                                     .AddReference("Brand")
                                     .AddString("Name", options => options.IsRequired = true)
                                     .AddSlug("Slug")
-                                    .AddBool("IsAvailable", optios => optios.DefaultValue = true)
+                                    .AddBool("IsAvailable", options => options.DefaultValue = true)
                                     .AddFloat("Price")
                                     .AddTextArea("Description", options => options.MaxLength = 255)
                                     .AddArray("Attributes", options => options

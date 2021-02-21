@@ -6,20 +6,20 @@
 
     @if (Entity != null)
     {
-        <div style="flex: 0">
-            <h1>@Entity.Schema.Name</h1>
+    <div style="flex: 0">
+        <h1>@Entity.Schema.Name</h1>
 
-            <Toolbar Items="ToolbarItems"></Toolbar>
+        <Toolbar Items="ToolbarItems"></Toolbar>
 
-            @foreach (var validationResult in ValidationErros)
-            {
-                <BSAlert Color="Color.Danger">
-                    @validationResult.Message
-                </BSAlert>
-            }
-        </div>
+        @foreach (var validationResult in ValidationErros)
+        {
+            <BSAlert Color="Color.Danger">
+                @validationResult.Message
+            </BSAlert>
+        }
+    </div>
         <div class="scroll-content" style="flex:1">
-            <div>
+            <EditForm Model="Entity">
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Id</label>
                     <div class="col-sm-10">
@@ -28,7 +28,7 @@
                 </div>
 
                 <ContentItemFields Content="Entity" Schema="Entity.Schema" />
-            </div>
+            </EditForm>
         </div>
 
         <div style="flex:0; padding:12px;padding-bottom:0px">

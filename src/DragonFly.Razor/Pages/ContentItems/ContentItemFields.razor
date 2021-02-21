@@ -6,10 +6,12 @@
                        .ToList())
     {
         <BSFormGroup>
-            <BSLabel class="col-sm-2 col-form-label">@part.Key</BSLabel>
-            <div class="col-sm-10">
-                @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
-            </div>
+            <BSRow>
+                <BSLabel class="col-sm-2 col-form-label">@part.Key</BSLabel>
+                <div class="col-sm-10">
+                    @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
+                </div>
+            </BSRow>
         </BSFormGroup>
     }
 
