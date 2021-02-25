@@ -9,11 +9,6 @@ namespace DragonFly.Content
     public class TextAreaFieldOptions : ContentFieldOptions
     {
         /// <summary>
-        /// IsRequired
-        /// </summary>
-        public bool IsRequired { get; set; }
-
-        /// <summary>
         /// DefaultValue
         /// </summary>
         public string DefaultValue { get; set; }

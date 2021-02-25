@@ -9,13 +9,13 @@ namespace DragonFly.Client.Core.Assets
 {
     public class ImageWizardAssetDataUrlService : IImageAssetUrlService
     {
-        public string Pdf(Asset asset)
+        public string Pdf(Asset asset, int width, int height)
         {
             string url = asset.GetDataUrl();
 
             if (asset.IsPdf())
             {
-                return $"/dragonfly/image/unsafe/pagetoimage(0)/fetch{url}";
+                return $"/dragonfly/image/unsafe/pagetoimage(0)/resize({width},{height})/fetch{url}";
             }
 
             return url;

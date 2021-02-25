@@ -10,7 +10,7 @@ namespace DragonFly.Core.ContentItems.Models.Validations
     {
         public static IList<ValidationError> AddRequire(this IList<ValidationError> errors, string field)
         {
-            errors.Add(new ValidationError(field, $"The field '{field}' is required!"));
+            errors.Add(new ValidationError(field, $"The field '{field}' is required."));
 
             return errors;
         }
@@ -21,5 +21,19 @@ namespace DragonFly.Core.ContentItems.Models.Validations
 
             return errors;
         }
+        public static IList<ValidationError> AddMinimum(this IList<ValidationError> errors, string field, double? value)
+        {
+            errors.Add(new ValidationError(field, $"The field '{field}' must be at least {value} characters long."));
+
+            return errors;
+        }
+
+        public static IList<ValidationError> AddMaximum(this IList<ValidationError> errors, string field, double? value)
+        {
+            errors.Add(new ValidationError(field, $"The field '{field}' can't be longer than {value} characters."));
+
+            return errors;
+        }
+
     }
 }

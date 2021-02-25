@@ -69,6 +69,11 @@ namespace DragonFly.Data
             MongoClientSettings settings = new MongoClientSettings();
             settings.Server = new MongoServerAddress(Options.Hostname);
 
+            if (string.IsNullOrEmpty(Options.Username) == false)
+            {
+                settings.Credential = MongoCredential.CreateCredential("admin", Options.Username, Options.Password);
+            }
+
             Client = new MongoClient(settings); // connect to localhost
 
             OfmlDb = Client.GetDatabase(Options.Database);

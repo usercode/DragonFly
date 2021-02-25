@@ -25,7 +25,12 @@ namespace DragonFly.Client.Pages.ContentItems
         [Inject]
         public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
 
-        public IEnumerable<ValidationError> ValidationErros { get; set; }
+        public IList<ValidationError> ValidationErros { get; set; }
+
+        public bool IsFieldValid(string field)
+        {
+            return ValidationErros.All(x => x.Field != field);
+        }
 
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
         {
@@ -47,6 +52,8 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             await base.RefreshActionAsync();
 
+            ValidationErros.Clear();
+
             Schema = await ContentService.GetContentSchemaAsync(EntityType);
 
             if (IsNewEntity)
@@ -61,7 +68,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
         protected override async Task SaveActionAsync()
         {
-            ValidationErros = Entity.Validate();
+            ValidationErros = Entity.Validate().ToList();
 
             if(ValidationErros.Any())
             {

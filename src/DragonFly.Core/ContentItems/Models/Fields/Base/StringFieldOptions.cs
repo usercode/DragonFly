@@ -9,11 +9,6 @@ namespace DragonFly.Content
     public class StringFieldOptions : ContentFieldOptions
     {
         /// <summary>
-        /// IsRequired
-        /// </summary>
-        public bool IsRequired { get; set; }
-
-        /// <summary>
         /// DefaultValue
         /// </summary>
         public string DefaultValue { get; set; }
@@ -21,12 +16,12 @@ namespace DragonFly.Content
         /// <summary>
         /// MinLength
         /// </summary>
-        public int MinLength { get; set; }
+        public int? MinLength { get; set; }
 
         /// <summary>
         /// MaxLength
         /// </summary>
-        public int MaxLength { get; set; }
+        public int? MaxLength { get; set; }
 
         public override ContentField CreateContentField()
         {

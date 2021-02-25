@@ -23,6 +23,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
             asset.MimeType = restAsset.MimeType;
             asset.Size = restAsset.Size;
             asset.Slug = restAsset.Slug;
+            asset.Alt = restAsset.Alt;
             asset.Description = restAsset.Description;
 
             if (restAsset.Folder != null)
@@ -47,6 +48,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
             restAsset.MimeType = asset.MimeType;
             restAsset.Size = asset.Size;
             restAsset.Slug = asset.Slug;
+            restAsset.Alt = asset.Alt;
             restAsset.Description = asset.Description;
 
             if (asset.Folder != null)

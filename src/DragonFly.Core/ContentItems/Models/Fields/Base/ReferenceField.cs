@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -22,9 +23,17 @@ namespace DragonFly.Content
         /// </summary>
         public ContentItem ContentItem { get; set; }
 
-        public override ContentFieldOptions CreateOptions()
+        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {
-            return new ReferenceFieldOptions();
+            ReferenceFieldOptions fieldOptions = (ReferenceFieldOptions)options;
+            IList<ValidationError> errors = new List<ValidationError>();
+
+            if (fieldOptions.IsRequired && ContentItem == null)
+            {
+                errors.AddRequire(fieldName);
+            }
+
+            return errors;
         }
 
         public override string ToString()

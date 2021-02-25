@@ -7,8 +7,7 @@ namespace DragonFly.Content
 {
     public abstract class SingleValueContentFieldOptions<T> : ContentFieldOptions
         where T : struct
-    {
-        public bool IsRequired { get; set; }
+    { 
 
         public T? DefaultValue { get; set; }
     }

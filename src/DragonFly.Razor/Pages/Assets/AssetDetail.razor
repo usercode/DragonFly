@@ -39,6 +39,14 @@
                         </div>
                     </BSRow>
 
+                    <!-- alt -->
+                    <BSRow class="form-group">
+                        <label class="col-sm-2 col-form-label">Alt</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Alt" />
+                        </div>
+                    </BSRow>
+
                     <!-- mimetype -->
                     <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Mimetype</label>
@@ -80,8 +88,15 @@
                         <InputFile OnChange="OnInputFileChange" />
 
                         <div>
-                            <!-- image preview -->
-                            <img src="@AssetPreview.Resize(Entity, 800, 800)" />
+                            @if (Entity.IsImage())
+                            {
+                                <!-- image preview -->
+                                <img src="@AssetPreview.Resize(Entity, 800, 800)" />
+                            }
+                            else if (Entity.IsPdf())
+                            {
+                                <img src="@AssetPreview.Pdf(Entity, 800, 800)" />
+                            }
                         </div>
                     }
                 </div>

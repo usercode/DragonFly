@@ -26,6 +26,12 @@ button {
 
 .alert {
     padding: .5rem 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-group .alert {
+    padding: 0.25rem 0.25rem 0.25rem 0rem;
+    margin-bottom: 0px;
 }
 
 .modal-dialog {
@@ -303,7 +309,7 @@ app {
     }
 
     .sidebar {
-        width: 210px;
+        width: 180px;
         min-height: 100vh;
         position: sticky;
         top: 0;
@@ -313,8 +319,6 @@ app {
         position: sticky;
         top: 0;
     }
-
-    
 
     .navbar-toggler {
         display: none;

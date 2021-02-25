@@ -82,7 +82,7 @@ namespace DragonFly.Data.Models
 
             if (definition.Options != null)
             {
-                ContentFieldOptions options = ContentFieldManager.Default.CreateField(definition.FieldType).CreateOptions();
+                ContentFieldOptions options = ContentFieldManager.Default.CreateOptions(definition.FieldType);
 
                 restContentFieldDefinition.Options = (ContentFieldOptions)definition.Options.ToObject(options.GetType(), NewtonJsonExtensions.CreateSerializer());
             }

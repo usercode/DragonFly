@@ -9,7 +9,7 @@ namespace DragonFly.Client.Core.Assets
 {
     class DefaultAssetDataUrlService : IImageAssetUrlService
     {
-        public string Pdf(Asset asset)
+        public string Pdf(Asset asset, int width, int height)
         {
             string url = asset.GetDataUrl();
 

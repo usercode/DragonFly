@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  dragonfly.app.server:
+    image: ${DOCKER_REGISTRY-}dragonfly
+    build:
+      context: .
+      dockerfile: DragonFly.App.Server/Dockerfile

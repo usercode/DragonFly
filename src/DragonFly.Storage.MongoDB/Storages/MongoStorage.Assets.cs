@@ -69,6 +69,7 @@ namespace DragonFly.Data
                             Builders<MongoAsset>.Update
                                                     .Set(x => x.Name, asset.Name)
                                                     .Set(x => x.Slug, asset.Slug.ToSlug())
+                                                    .Set(x => x.Alt, asset.Alt)
                                                     .Set(x => x.Description, asset.Description)
                                                     .Set(x => x.Folder, asset.Folder?.Id)
                                                     .Set(x => x.ModifiedAt, DateTime.UtcNow)

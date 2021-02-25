@@ -19,10 +19,6 @@ namespace DragonFly.Content
 
         public virtual bool CanSorting => false;
 
-        public virtual ContentFieldOptions CreateOptions()
-        {
-            return null;
-        }
 
         public virtual IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {

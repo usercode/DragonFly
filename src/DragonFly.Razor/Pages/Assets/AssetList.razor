@@ -58,7 +58,14 @@
                                     <div class="box-item zoom action" style="height:320px">
                                         <a @onclick="x => OpenItem(asset)">
                                             <div class="image">
-                                                <img src="@AssetPreview.Resize(asset, 400, 400)" style="max-height:200px" alt="@asset.Name" />
+                                                @if (asset.IsImage())
+                                                {
+                                                    <img src="@AssetPreview.Resize(asset, 400, 400)" alt="@asset.Name" />
+                                                }
+                                                else if (asset.IsPdf())
+                                                {
+                                                    <img src="@AssetPreview.Pdf(asset, 400, 400)" />
+                                                }
                                             </div>
                                             <div>
                                                 <p class="title">@asset.Name</p>

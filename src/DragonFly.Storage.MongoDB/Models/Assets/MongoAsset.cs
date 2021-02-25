@@ -19,6 +19,11 @@ namespace DragonFly.Data.Models.Assets
         public string Name { get; set; }
 
         /// <summary>
+        /// Alt
+        /// </summary>
+        public string Alt { get; set; }
+
+        /// <summary>
         /// Description
         /// </summary>
         public string Description { get; set; }

@@ -62,6 +62,7 @@ namespace DragonFly.Data.Proxies
             main.Size = result.Size;
             main.MimeType = result.MimeType;
             main.Hash = result.Hash;
+            main.Alt = result.Alt;
             main.Description = result.Description;
             main.Folder = result.Folder;
             main.Slug = result.Slug;

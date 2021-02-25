@@ -39,7 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.App.Server", "Dra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{A12D90AA-8DE9-4DAF-B211-ECA0556D0042}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.SampleData", "DragonFly.SampleData\DragonFly.SampleData.csproj", "{8E892C33-1453-4DC2-8E2C-9FB19480D908}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.SampleData", "DragonFly.SampleData\DragonFly.SampleData.csproj", "{8E892C33-1453-4DC2-8E2C-9FB19480D908}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E892C33-1453-4DC2-8E2C-9FB19480D908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

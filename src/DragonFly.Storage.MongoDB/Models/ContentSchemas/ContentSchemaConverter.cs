@@ -38,7 +38,7 @@ namespace DragonFly.Data.Models
                 definition.SortKey = mongoField.Value.SortKey;
                 definition.FieldType = mongoField.Value.FieldType;
                 
-                ContentFieldOptions options = ContentFieldManager.Default.CreateField(mongoField.Value.FieldType).CreateOptions();
+                ContentFieldOptions options = ContentFieldManager.Default.CreateOptions(mongoField.Value.FieldType);
 
                 if (options != null && mongoField.Value.Options != BsonNull.Value)
                 {

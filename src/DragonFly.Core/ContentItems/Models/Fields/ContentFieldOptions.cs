@@ -8,6 +8,8 @@ namespace DragonFly.Content
 {
     public abstract class ContentFieldOptions
     {
+        public bool IsRequired { get; set; }
+
         public abstract ContentField CreateContentField();
 
         public virtual void ValidateContentField(ContentField contentField)

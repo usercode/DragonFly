@@ -37,7 +37,7 @@
             Schema.Fields.Add(Selector.Name, new ContentSchemaField()
             {
                 FieldType = Selector.ContentFieldType.Name,
-                Options = defaultInstance.CreateOptions()
+                Options = ContentFieldManager.Default.CreateOptions(Selector.ContentFieldType)
             });
 
             ShowModalDialog = false;

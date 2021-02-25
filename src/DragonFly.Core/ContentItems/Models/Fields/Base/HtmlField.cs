@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,19 @@ namespace DragonFly.Content
         public HtmlField()
         {
 
+        }
+
+        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        {
+            HtmlFieldOptions fieldOptions = (HtmlFieldOptions)options;
+            IList<ValidationError> errors = new List<ValidationError>();
+
+            if (fieldOptions.IsRequired && HasValue == false)
+            {
+                errors.AddRequire(fieldName);
+            }
+
+            return errors;
         }
 
         public HtmlField(string text)

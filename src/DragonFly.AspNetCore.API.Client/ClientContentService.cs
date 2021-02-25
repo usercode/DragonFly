@@ -26,7 +26,7 @@ namespace DragonFly.Client
         {
             Client = httpClient;
 
-            Client.DefaultRequestHeaders.Add("ApiKey", "1111");
+            //Client.DefaultRequestHeaders.Add("ApiKey", "4321");
         }
 
         /// <summary>

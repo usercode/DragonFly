@@ -107,7 +107,7 @@ namespace DragonFly.Content
         {
             Type fieldType = _byFieldName[fieldName];
 
-            return CreateOptions(_byField[fieldType]);
+            return CreateOptions(fieldType);
         }
 
         public ContentFieldOptions CreateOptions<TField>()

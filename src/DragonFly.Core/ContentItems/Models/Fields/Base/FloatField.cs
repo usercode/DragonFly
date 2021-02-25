@@ -22,11 +22,6 @@ namespace DragonFly.Content
             Value = number;
         }
 
-        public override ContentFieldOptions CreateOptions()
-        {
-            return new FloatFieldOptions();
-        }
-
         public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {
             FloatFieldOptions fieldOptions = (FloatFieldOptions)options;

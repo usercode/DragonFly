@@ -11,6 +11,6 @@ namespace DragonFly.Client.Core.Assets
     {
         string Resize(Asset asset, int width, int height);
 
-        string Pdf(Asset asset);
+        string Pdf(Asset asset, int width, int height);
     }
 }

@@ -26,5 +26,15 @@ namespace DragonFly.MongoDB.Options
         /// Hostname
         /// </summary>
         public string Hostname { get; set; }
+
+        /// <summary>
+        /// Username
+        /// </summary>
+        public string Username { get; set; }
+
+        /// <summary>
+        /// Password
+        /// </summary>
+        public string Password { get; set; }
     }
 }

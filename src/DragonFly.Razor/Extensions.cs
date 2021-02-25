@@ -84,6 +84,7 @@ namespace DragonFly.Client.Core
             componentManager.RegisterField<XmlFieldView>();
 
             componentManager.RegisterOptions<ArrayFieldOptionsView>();
+            componentManager.RegisterOptions<AssetFieldOptionsView>();
             componentManager.RegisterOptions<BoolFieldOptionsView>();
             componentManager.RegisterOptions<FloatFieldOptionsView>();
             componentManager.RegisterOptions<IntegerFieldOptionsView>();

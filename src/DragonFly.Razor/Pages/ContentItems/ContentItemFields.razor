@@ -1,19 +1,39 @@
 ﻿@inject FieldComponentManager FieldComponentManager
 
-    @foreach (var part in Schema.Fields
-                       .OrderBy(x => x.Value.SortKey)
-                       .Select(x => new { Key = x.Key, Value = Content.Fields[x.Key], Definition = x.Value })
-                       .ToList())
+@foreach (var part in Schema.Fields
+           .OrderBy(x => x.Value.SortKey)
+           .Select(x => new { Key = x.Key, Value = Content.Fields[x.Key], Definition = x.Value })
+           .ToList())
+{
+    @if (Detail.IsFieldValid(part.Key) == false)
+    {
+        <BSFormGroup>
+            <BSAlert Color="Color.Danger">
+                <BSRow>
+                    <BSLabel class="col-sm-2 col-form-label">
+                        @part.Key
+                    </BSLabel>
+                    <div class="col-sm-10">
+                        @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
+                    </div>
+                </BSRow>
+            </BSAlert>
+        </BSFormGroup>
+    }
+    else
     {
         <BSFormGroup>
             <BSRow>
-                <BSLabel class="col-sm-2 col-form-label">@part.Key</BSLabel>
+                <BSLabel class="col-sm-2 col-form-label">
+                    @part.Key
+                </BSLabel>
                 <div class="col-sm-10">
                     @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
                 </div>
             </BSRow>
         </BSFormGroup>
     }
+}
 
 @code {
     [Parameter]
@@ -21,4 +41,7 @@
 
     [Parameter]
     public IContentSchema Schema { get; set; }
+
+    [CascadingParameter]
+    public ContentItemDetail Detail { get; set; }
 }

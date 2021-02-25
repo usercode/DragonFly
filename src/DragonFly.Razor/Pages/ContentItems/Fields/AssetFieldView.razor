@@ -17,17 +17,17 @@
     <BSListGroup>
         <BSListGroupItem>
             <div style="display:flex;justify-content:flex-end">
-                <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
+                <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
                 @if (Field.Asset != null)
                 {
-                    <BSButton Color="Color.Light" href="@Field.Asset.GetDataUrl()" target="_blank"><i class="fas fa-arrow-down"></i></BSButton>
+                    <BSButton Color="Color.Light" href="@Field.Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
                 }
                 else
                 {
                     <BSButton Color="Color.Light"><i class="fas fa-arrow-down"></i></BSButton>
                 }
-            <BSButton Color="Color.Light" OnClick="(e => OpenModal())"><i class="fas fa-plus"></i></BSButton>
-            <BSButton Color="Color.Light" OnClick="(e => RemoveItem())"><i class="fas fa-times"></i></BSButton>
+            <BSButton Color="Color.Light" OnClick="(e => OpenModal())" title="Select"><i class="fas fa-plus"></i></BSButton>
+            <BSButton Color="Color.Light" OnClick="(e => RemoveItem())" title="Remove"><i class="fas fa-times"></i></BSButton>
             </div>
 
             @if (Field.Asset != null)
@@ -41,7 +41,7 @@
                             }
                             else if (Field.Asset.IsPdf())
                             {
-                                <img src="@AssetPreview.Pdf(Field.Asset)" />
+                                <img src="@AssetPreview.Pdf(Field.Asset, 400, 150)" />
                             }
                         </div>
                     </div>
@@ -81,7 +81,7 @@
 
     protected void RemoveItem()
     {
-
+        Field.Asset = null;
     }
 
     public void OpenModal()

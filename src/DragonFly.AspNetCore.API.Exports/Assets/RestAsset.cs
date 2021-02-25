@@ -25,6 +25,12 @@ namespace DragonFly.AspNetCore.API.Models.Assets
         /// <summary>
         /// Description
         /// </summary>
+        [JsonProperty("Alt", Order = 100)]
+        public virtual string Alt { get; set; }
+
+        /// <summary>
+        /// Description
+        /// </summary>
         [JsonProperty("Description", Order = 100)]
         public virtual string Description { get; set; }
 

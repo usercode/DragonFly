@@ -24,23 +24,17 @@ namespace DragonFly.Content
             Value = value;
         }
 
-        public override ContentFieldOptions CreateOptions()
-        {
-            return new BoolFieldOptions();
-        }
-
         public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {
-            BoolFieldOptions boolFieldOptions = (BoolFieldOptions)options;
+            BoolFieldOptions fieldOptions = (BoolFieldOptions)options;
             IList<ValidationError> errors = new List<ValidationError>();
 
-            if (boolFieldOptions.IsRequired && HasValue == false)
+            if (fieldOptions.IsRequired && HasValue == false)
             {
                 errors.AddRequire(fieldName);
             }
 
             return errors;
-            
         }
 
         public override string ToString()

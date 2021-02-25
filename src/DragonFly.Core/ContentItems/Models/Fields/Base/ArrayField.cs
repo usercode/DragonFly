@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,9 +22,22 @@ namespace DragonFly.Content
         /// </summary>
         public IList<ArrayFieldItem> Items { get; set; }
 
-        public override ContentFieldOptions CreateOptions()
+        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
         {
-            return new ArrayFieldOptions();
+            ArrayFieldOptions fieldOptions = (ArrayFieldOptions)options;
+            IList<ValidationError> errors = new List<ValidationError>();
+
+            if (fieldOptions.IsRequired && Items.Any() == false)
+            {
+                errors.AddRequire(fieldName);
+            }
+
+            if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
+            {
+                errors.AddRange(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
+            }
+
+            return errors;
         }
     }
 }

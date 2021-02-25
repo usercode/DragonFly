@@ -24,6 +24,11 @@ namespace DragonFly.Content
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// Alt
+        /// </summary>
+        public virtual string Alt { get; set; }
+
+        /// <summary>
         /// Description
         /// </summary>
         public virtual string Description { get; set; }
