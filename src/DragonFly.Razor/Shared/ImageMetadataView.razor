@@ -1,0 +1,28 @@
+﻿@inherits AssetMetadataComponent<ImageMetadata>
+
+<BSFormGroup>
+    <BSRow>
+        <BSLabel class="col-sm-2 col-form-label">
+            Width
+        </BSLabel>
+        <div class="col-sm-10">
+            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.Width" IsReadonly="true" />
+        </div>
+    </BSRow>
+</BSFormGroup>
+
+<BSFormGroup>
+    <BSRow>
+        <BSLabel class="col-sm-2 col-form-label">
+            Height
+        </BSLabel>
+        <div class="col-sm-10">
+            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.Height" IsReadonly="true" />
+        </div>
+    </BSRow>
+</BSFormGroup>
+
+@code {
+
+}
+

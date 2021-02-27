@@ -14,7 +14,6 @@ using DragonFly.Core.Assets;
 using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.Data.Models.Assets;
-using DragonFly.ImageSharp;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,7 +51,6 @@ namespace DragonFly.AspNetCore
 
             //DragonFly
             services.AddDragonFly()
-                        .AddImageSharpProcessing()
                         .AddRestApi()
                         .AddGraphQLApi()
                         .AddMongoDbStorage();

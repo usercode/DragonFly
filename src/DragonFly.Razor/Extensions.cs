@@ -1,6 +1,7 @@
 ﻿using Blazored.Modal;
 using Blazored.Toast;
 using BlazorStrap;
+using DragonFly.Assets;
 using DragonFly.Client.Core.Assets;
 using DragonFly.Content;
 using DragonFly.Core;
@@ -12,6 +13,7 @@ using DragonFly.Razor.Options;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
 using DragonFly.Razor.Services;
+using DragonFly.Razor.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -62,6 +64,10 @@ namespace DragonFly.Client.Core
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
             builder.Services.AddSingleton<FieldComponentManager>();
+            builder.Services.AddSingleton<AssetMetadataComponentManager>();
+
+            builder.Services.AddSingleton(ContentFieldManager.Default);
+            builder.Services.AddSingleton(AssetMetadataManager.Default);
 
             return new DragonFlyClientBuilder(builder);
         }
@@ -89,6 +95,12 @@ namespace DragonFly.Client.Core
             componentManager.RegisterOptions<FloatFieldOptionsView>();
             componentManager.RegisterOptions<IntegerFieldOptionsView>();
             componentManager.RegisterOptions<StringFieldOptionsView>();
+
+            //assets
+            var assetMetadataManager = host.Services.GetRequiredService<AssetMetadataComponentManager>();
+
+            assetMetadataManager.Register<ImageMetadataView>();
+
         }
     }
 }

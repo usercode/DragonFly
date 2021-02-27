@@ -8,7 +8,7 @@ namespace DragonFly.Content
 {
     public interface IAssetProcessing
     {
-        IEnumerable<string> MimeTypes { get; }
+        bool CanUse(Asset asset);
 
         Task OnAssetChangedAsync(Asset asset, Stream stream);
 

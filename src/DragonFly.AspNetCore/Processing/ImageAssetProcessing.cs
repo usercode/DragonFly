@@ -1,5 +1,5 @@
-﻿using DragonFly.Content;
-using DragonFly.Contents.Assets;
+﻿using DragonFly.Assets;
+using DragonFly.Content;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,10 @@ namespace DragonFly.Core.Assets
 {
     public class ImageAssetProcessing : IAssetProcessing
     {
-        public IEnumerable<string> MimeTypes => new [] { "image/png", "image/jpeg", "image/gif" };
+        public bool CanUse(Asset asset)
+        {
+            return asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
+        }
 
         public async Task OnAssetChangedAsync(Asset asset, Stream stream)
         {
@@ -21,7 +24,7 @@ namespace DragonFly.Core.Assets
             {
                 ImageMetadata imageMetadata = new ImageMetadata() { Width = imageInfo.Width, Height = imageInfo.Height };
 
-                asset.Metaddata.TryAdd("Image", imageMetadata);
+                asset.SetMetadata(imageMetadata);
             }
         }
     }

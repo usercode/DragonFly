@@ -31,6 +31,11 @@ namespace DragonFly.AspNetCore.API.Models.Assets
                 asset.Folder = restAsset.Folder.ToModel();
             }
 
+            foreach(var item in restAsset.Metaddata)
+            {
+                asset.SetMetadata((AssetMetadata)item.Value.ToObject(AssetMetadataManager.Default.GetMetadataType(item.Key)));
+            }
+
 
             return asset;
         }

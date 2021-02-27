@@ -1,6 +1,7 @@
 ﻿using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,7 +62,7 @@ namespace DragonFly.Data.Models.Assets
 
             foreach (var item in mongoAsset.Metaddata)
             {
-                
+                asset.SetMetadata((AssetMetadata)BsonSerializer.Deserialize(item.Value, AssetMetadataManager.Default.GetMetadataType(item.Key)));
             }
 
             return asset;

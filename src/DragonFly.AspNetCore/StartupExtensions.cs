@@ -24,6 +24,7 @@ using DragonFly.Content;
 using ImageWizard;
 using ImageWizard.DocNET;
 using ImageWizard.MongoDB;
+using DragonFly.Assets;
 
 namespace DragonFly.Core
 {
@@ -39,7 +40,7 @@ namespace DragonFly.Core
                                                 {
                                                     context.Response.StatusCode = StatusCodes.Status401Unauthorized; return Task.CompletedTask;
                                                 };
-                                            } );
+                                            });
             services.AddAuthorization();
 
             services.AddSingleton<DragonFlyContext>();
@@ -60,6 +61,9 @@ namespace DragonFly.Core
                 .SetFileCache();
 
             services.AddSingleton(ContentFieldManager.Default);
+            services.AddSingleton(AssetMetadataManager.Default);
+
+            services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
 
             return new DragonFlyBuilder(services);
         }

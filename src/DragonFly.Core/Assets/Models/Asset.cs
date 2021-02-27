@@ -9,7 +9,7 @@ namespace DragonFly.Content
     {
         public Asset()
         {
-            _metaddata = new Dictionary<string, AssetMetadata>();
+            _metaddata = new AssetMetadatas();
         }
 
         public Asset(Guid id)
@@ -58,11 +58,11 @@ namespace DragonFly.Content
         /// </summary>
         public virtual AssetFolder Folder { get; set; }
 
-        private IDictionary<string, AssetMetadata> _metaddata;
+        private AssetMetadatas _metaddata;
 
         /// <summary>
         /// Metaddata
         /// </summary>
-        public virtual IDictionary<string, AssetMetadata> Metaddata { get => _metaddata; set => _metaddata = value; }
+        public virtual AssetMetadatas Metaddata { get => _metaddata; set => _metaddata = value; }
     }
 }

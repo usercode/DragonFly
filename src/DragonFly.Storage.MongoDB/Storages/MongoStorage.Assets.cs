@@ -102,7 +102,7 @@ namespace DragonFly.Data
                 asset.MimeType = mimetype;
             }
 
-            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.MimeTypes.Any(m => m == asset.MimeType)))
+            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
             {
                 using (Stream assetStream = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
                 {
