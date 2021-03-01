@@ -25,7 +25,7 @@ namespace DragonFly.AspNetCore.API.Models.WebHooks
             return restWebHook;
         }
 
-        public static WebHook FromRest(this RestWebHook restWebHook)
+        public static WebHook ToModel(this RestWebHook restWebHook)
         {
             WebHook webHook = new WebHook();
             webHook.Id = restWebHook.Id;

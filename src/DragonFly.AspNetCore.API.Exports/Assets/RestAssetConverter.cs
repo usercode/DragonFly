@@ -36,7 +36,6 @@ namespace DragonFly.AspNetCore.API.Models.Assets
                 asset.SetMetadata((AssetMetadata)item.Value.ToObject(AssetMetadataManager.Default.GetMetadataType(item.Key)));
             }
 
-
             return asset;
         }
 

@@ -1,4 +1,7 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.AspNetCore.API.Models;
+using DragonFly.AspNetCore.API.Models.WebHooks;
+using DragonFly.Content;
+using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.Data.Models;
 using DragonFly.Models;
@@ -12,30 +15,25 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares
 {
-    class GetContentItemMiddleware
+    class GetWebHookMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public GetContentItemMiddleware(RequestDelegate next)
+        public GetWebHookMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
         public async Task InvokeAsync(
             HttpContext context, 
-            IContentStorage contentStore, 
-            ISchemaStorage schemaStorage,
+            IWebHookStorage contentStore, 
             JsonService jsonService)
         {
-            Guid contentId = Guid.Parse((string)context.GetRouteValue("id"));
-            string schema = (string)context.GetRouteValue("schema");
+            Guid id = Guid.Parse((string)context.GetRouteValue("id"));
 
-            ContentItem result = await contentStore.GetContentItemAsync(schema, contentId);
-            ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
+            WebHook result = await contentStore.GetAsync(id);
 
-            result.ApplySchema(schemaModel);
-
-            RestContentItem restModel = result.ToRest();
+            RestWebHook restModel = result.ToRest();
 
             string json = jsonService.Serialize(restModel);
 

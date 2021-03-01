@@ -1,4 +1,5 @@
 @page "/asset/{EntityId:guid}"
+@page "/asset/create"
 @page "/asset/create/{FolderId:guid}"
 @inherits AssetDetailBase
 @inject IImageAssetUrlService AssetPreview
@@ -6,8 +7,8 @@
 
 @if (Entity != null)
 {
-<div style="display:flex;flex-direction:column;height:100%">
-   
+    <div style="display:flex;flex-direction:column;height:100%">
+
         <div style="flex: 0">
             <h1>Asset</h1>
 
@@ -112,6 +113,6 @@
                 </BSRow>
             </EditForm>
         </div>
-        
-</div>
+
+    </div>
 }

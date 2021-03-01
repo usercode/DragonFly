@@ -6,7 +6,7 @@ using System.Text;
 namespace DragonFly.Content
 {
     [FieldOptions(typeof(DateFieldOptions))]
-    public class DateField : SingleValueContentFieldNullable<DateTime>
+    public class DateField : SingleValueContentField<DateTime?>
     {
         public DateField()
         {

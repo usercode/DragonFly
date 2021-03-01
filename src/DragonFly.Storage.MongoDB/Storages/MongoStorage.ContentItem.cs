@@ -51,7 +51,7 @@ namespace DragonFly.Data
 
         public async Task<QueryResult<ContentItem>> Query(string schemaName, QueryParameters queryParameters)
         {
-            ContentSchema schema = await GetContentSchemaByNameAsync(schemaName);
+            ContentSchema schema = await GetContentSchemaAsync(schemaName);
             var items = GetMongoCollection(schemaName);
 
             List<FilterDefinition<MongoContentItem>> query = new List<FilterDefinition<MongoContentItem>>();
@@ -168,7 +168,7 @@ namespace DragonFly.Data
                 contentItem.Id = Guid.NewGuid();
             }
 
-            DateTime now = DateTime.UtcNow;
+            DateTime now = DateTimeService.Current();
 
             contentItem.CreatedAt = now;
             contentItem.ModifiedAt = now;
@@ -197,7 +197,7 @@ namespace DragonFly.Data
                                         Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id),
                                         Builders<MongoContentItem>.Update
                                                                     .Set(x => x.Fields, contentItem.Fields.ToMongo())
-                                                                    .Set(x => x.ModifiedAt, DateTime.UtcNow)
+                                                                    .Set(x => x.ModifiedAt, DateTimeService.Current())
                                                                     .Set(x => x.PublishedAt, null)
                                                                     .Set(x => x.SchemaVersion, contentItem.SchemaVersion)
                                                                     .Inc(x => x.Version, 1));
@@ -256,7 +256,7 @@ namespace DragonFly.Data
             //update publish date
             await drafts.UpdateOneAsync(
                         Builders<MongoContentItem>.Filter.Eq(x=> x.Id, id), 
-                        Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTime.UtcNow));
+                        Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
 
             //refresh contentitem
             contentItem = await GetContentItemAsync(schema, id);

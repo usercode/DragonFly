@@ -46,9 +46,15 @@ namespace DragonFly.Core
             services.AddSingleton<DragonFlyContext>();
             services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
 
+            services.AddSingleton<IDateTimeService, DateTimeService>();
+
+            services.AddSingleton(ContentFieldManager.Default);
+            services.AddSingleton(AssetMetadataManager.Default);
+
+            services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
+
             //ImageWizard
             services.ConfigureOptions<HttpLoaderConfigureOptions>();
-            //services.ConfigureOptions<MongoDbConfigureOptions>();
 
             services.AddImageWizard(x =>
             {
@@ -59,11 +65,6 @@ namespace DragonFly.Core
                 .AddDocNET()
                 .AddHttpLoader()
                 .SetFileCache();
-
-            services.AddSingleton(ContentFieldManager.Default);
-            services.AddSingleton(AssetMetadataManager.Default);
-
-            services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
 
             return new DragonFlyBuilder(services);
         }

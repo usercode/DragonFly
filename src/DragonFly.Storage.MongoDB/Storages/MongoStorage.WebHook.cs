@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
@@ -29,7 +30,7 @@ namespace DragonFly.Data
     /// </summary>
     public partial class MongoStorage : IWebHookStorage
     {
-        public async Task<IEnumerable<WebHook>> QueryAsync(WebHookQuery query)
+        public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
         {
             IQueryable<MongoWebHook> q = WebHooks.AsQueryable();
 
@@ -38,7 +39,9 @@ namespace DragonFly.Data
                 q = q.Where(x => x.EventName == query.Event);
             }
 
-            return q.ToList().Select(x => x.ToModel()).ToList();
+            var items = q.ToList().Select(x => x.ToModel()).ToList();
+
+            return new QueryResult<WebHook>() { Items = items };
         }
 
         public async Task<WebHook> GetAsync(Guid id)

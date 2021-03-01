@@ -1,4 +1,5 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.AspNetCore.API.Exports;
+using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DragonFly.Core.WebHooks
 {
     public interface IWebHookStorage
     {
-        Task<IEnumerable<WebHook>> QueryAsync(WebHookQuery query);
+        Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query);
 
         Task<WebHook> GetAsync(Guid id);
 

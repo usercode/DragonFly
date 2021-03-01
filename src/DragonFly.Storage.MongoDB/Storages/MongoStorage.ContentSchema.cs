@@ -35,7 +35,7 @@ namespace DragonFly.Data
                 schema.Id = Guid.NewGuid();
             }
 
-            DateTime now = DateTime.UtcNow;
+            DateTime now = DateTimeService.Current();
 
             schema.CreatedAt = now;
             schema.ModifiedAt = now;
@@ -64,6 +64,16 @@ namespace DragonFly.Data
                         .Select(x => x.ToModel())
                         .ToList()
             };
+        }
+
+        public Task<ContentSchema> GetContentSchemaAsync(string name)
+        {
+            return Task.Run(() => ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name).ToModel());
+        }
+
+        public Task<ContentSchema> GetContentSchemaAsync(Guid id)
+        {
+            return Task.Run(() => ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id).ToModel());
         }
     }
 }

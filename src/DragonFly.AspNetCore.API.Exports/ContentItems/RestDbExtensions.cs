@@ -139,15 +139,6 @@ namespace DragonFly.Models
             {
                 if (includeNavigationProperties == true)
                 {
-                    //JObject doc = new JObject();
-                    //doc.Add("Id", referenceField.ContentItem.Id);
-                    //doc.Add("Schema", referenceField.ContentItem.Type);
-
-                    //foreach (var f in referenceField.ContentItem.Fields)
-                    //{
-                    //    doc.Add(f.Key, f.Value.ToRestValue(false));
-                    //}
-
                     //bsonValue = doc;
                     bsonValue = JObject.FromObject(referenceField.ContentItem.ToRest(false), NewtonJsonExtensions.CreateSerializer());
                 }

@@ -21,7 +21,10 @@ namespace DragonFly.Data.Models
             {
                 if (bsonValue is BsonString bsonString)
                 {
-                    ((SingleValueContentField<string>)contentField).Value = bsonString.Value;
+                    if (contentField is SingleValueContentField<string> stringField)
+                    {
+                        stringField.Value = bsonString.Value;
+                    }
                 }
                 else if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
                 {
@@ -29,9 +32,9 @@ namespace DragonFly.Data.Models
                     {
                         assetField.Asset = ContentItemProxy.CreateAsset(bsonBinary.ToGuid());
                     }
-                    else
+                    else if(contentField is SingleValueContentField<Guid?> guidField)
                     {
-                        ((SingleValueContentField<Guid?>)contentField).Value = bsonBinary.ToGuid();
+                        guidField.Value = bsonBinary.ToGuid();
                     }
                 }
                 else if (bsonValue is BsonDateTime bsonDate)
@@ -50,15 +53,24 @@ namespace DragonFly.Data.Models
                 }
                 else if (bsonValue is BsonInt64 bsonLong)
                 {
-                    ((SingleValueContentField<long?>)contentField).Value = bsonLong.Value;
+                    if (contentField is SingleValueContentField<long?> longField)
+                    {
+                        longField.Value = bsonLong.Value;
+                    }
                 }
                 else if (bsonValue is BsonDouble bsonDouble)
                 {
-                    ((SingleValueContentField<double?>)contentField).Value = bsonDouble.Value;
+                    if (contentField is SingleValueContentField<double?> doubleField)
+                    {
+                        doubleField.Value = bsonDouble.Value;
+                    }
                 }
                 else if (bsonValue is BsonBoolean bsonBoolean)
                 {
-                    ((SingleValueContentField<bool?>)contentField).Value = bsonBoolean.Value;
+                    if (contentField is SingleValueContentField<bool?> boolField)
+                    {
+                        boolField.Value = bsonBoolean.Value;
+                    }
                 }
                 else if (bsonValue is BsonArray bsonArray)
                 {

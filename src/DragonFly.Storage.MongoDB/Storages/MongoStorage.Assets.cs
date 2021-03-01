@@ -39,7 +39,7 @@ namespace DragonFly.Data
 
         public async Task CreateAsync(Asset asset)
         {
-            DateTime now = DateTime.UtcNow;
+            DateTime now = DateTimeService.Current();
 
             asset.CreatedAt = now;
             asset.ModifiedAt = now;
@@ -72,7 +72,7 @@ namespace DragonFly.Data
                                                     .Set(x => x.Alt, asset.Alt)
                                                     .Set(x => x.Description, asset.Description)
                                                     .Set(x => x.Folder, asset.Folder?.Id)
-                                                    .Set(x => x.ModifiedAt, DateTime.UtcNow)
+                                                    .Set(x => x.ModifiedAt, DateTimeService.Current())
                                                     .Inc(x => x.Version, 1)
                                                     );
         }

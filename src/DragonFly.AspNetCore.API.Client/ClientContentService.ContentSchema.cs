@@ -24,6 +24,15 @@ namespace DragonFly.Client
     public partial class ClientContentService
     {
 
+        public async Task<ContentSchema> GetContentSchemaAsync(Guid id)
+        {
+            var response = await Client.GetAsync($"api/schema/{id}");
+
+            var e = await response.Content.ParseJsonAsync<RestContentSchema>();
+
+            return e.ToModel();
+        }
+
         public async Task<ContentSchema> GetContentSchemaAsync(string name)
         {
             var response = await Client.GetAsync($"api/schema/{name}");
@@ -42,7 +51,7 @@ namespace DragonFly.Client
         {
             string type = entity.GetType().Name;
 
-            await Client.PutAsJson($"api/schema/{type}", entity);
+            await Client.PutAsJson($"api/schema/{entity.Id}", entity);
         }
 
         public async Task<QueryResult<ContentSchema>> GetContentSchemas()

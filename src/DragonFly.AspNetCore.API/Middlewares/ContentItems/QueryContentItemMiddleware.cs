@@ -33,7 +33,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
 
             QueryParameters queryParameters = await jsonService.Deserialize<QueryParameters>(context.Request.Body);
 
-            ContentSchema schemaModel = await schemaStorage.GetContentSchemaByNameAsync(schema);
+            ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
 
             QueryResult<ContentItem> contentItems = await contentStore.Query(schema, queryParameters);
 

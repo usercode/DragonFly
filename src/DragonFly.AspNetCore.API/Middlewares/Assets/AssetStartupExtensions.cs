@@ -13,16 +13,16 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
     {
         public static void MapAssetRestApi(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapQueryAsset();
-            endpoints.MapGetAsset();
-            endpoints.MapCreateAsset();
-            endpoints.MapUpdateAsset();
-            endpoints.MapPublishAsset();
-            endpoints.MapDownloadAsset();
-            endpoints.MapUploadAsset();
+            endpoints.MapQuery();
+            endpoints.MapGet();
+            endpoints.MapCreate();
+            endpoints.MapUpdate();
+            endpoints.MapPublish();
+            endpoints.MapDownload();
+            endpoints.MapUpload();
         }
 
-        private static IEndpointConventionBuilder MapQueryAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<QueryAssetMiddleware>()
@@ -31,7 +31,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapPost("asset/query", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapGetAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<GetAssetMiddleware>()
@@ -40,7 +40,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapGet("asset/{id:guid}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapCreateAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<CreateAssetMiddleware>()
@@ -49,7 +49,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapPost("asset", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapUpdateAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<UpdateAssetMiddleware>()
@@ -58,7 +58,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapPut("asset/{id:guid}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapPublishAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapPublish(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<PublishAssetMiddleware>()
@@ -67,7 +67,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapPost("asset/{id:guid}/publish", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapDownloadAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapDownload(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<DownloadAssetMiddleware>()
@@ -76,7 +76,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapGet("asset/{id:guid}/download", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapUploadAsset(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapUpload(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<UploadAssetMiddleware>()

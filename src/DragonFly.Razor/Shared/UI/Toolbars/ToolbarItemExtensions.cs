@@ -28,6 +28,18 @@ namespace DragonFly.Razor.Shared.UI.Toolbars
             items.Add(new ToolbarItem("Save", Color.Success, () => component.SaveAsync()));
         }
 
+        public static void AddCreateButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
+            where T : ContentBase
+        {
+            items.Add(new ToolbarItem("Create", Color.Success, () => component.CreateAsync()));
+        }
+
+        public static void AddUpdateButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
+            where T : ContentBase
+        {
+            items.Add(new ToolbarItem("Update", Color.Success, () => component.UpdateAsync()));
+        }
+
         public static void AddDeleteButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
            where T : ContentBase
         {

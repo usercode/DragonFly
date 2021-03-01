@@ -4,6 +4,11 @@
   flex-direction: column;
   height: 100%; }
 
+.contentitem-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
+
 html {
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -20,6 +25,9 @@ a, .btn-link {
 
 button {
   cursor: pointer; }
+
+.pagination {
+  flex-wrap: wrap; }
 
 .alert {
   padding: .5rem 1.25rem;

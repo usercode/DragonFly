@@ -6,6 +6,7 @@ using DragonFly.Contents.Content;
 using DragonFly.Core;
 using DragonFly.Core.ContentItems.Models.Validations;
 using DragonFly.Models;
+using DragonFly.Razor.Base;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -36,11 +37,18 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
-            toolbarItems.Add(new ToolbarItem("Unpublish", Color.Dark, () => UnpublishAsync()));
-            toolbarItems.AddRefreshButton(this);
-            toolbarItems.AddSaveButton(this);
-            toolbarItems.AddDeleteButton(this);
+            if(IsNewEntity)
+            {
+                toolbarItems.AddCreateButton(this);
+            }
+            else
+            {
+                toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
+                toolbarItems.Add(new ToolbarItem("Unpublish", Color.Dark, () => UnpublishAsync()));
+                toolbarItems.AddRefreshButton(this);
+                toolbarItems.AddSaveButton(this);
+                toolbarItems.AddDeleteButton(this);
+            }
 
             if (ContentItemActions != null)
             {
@@ -66,26 +74,27 @@ namespace DragonFly.Client.Pages.ContentItems
             }
         }
 
-        protected override async Task SaveActionAsync()
+        protected override async Task CreateActionAsync()
+        {
+            await ContentService.CreateAsync(Entity);
+
+            NavigationManager.NavigateTo($"content/{EntityType}/{Entity.Id}");
+        }
+
+        protected override async Task UpdateActionAsync()
+        {
+            await ContentService.UpdateAsync(Entity);
+        }
+
+        protected override void OnSaving(SavingEventArgs args)
         {
             ValidationErros = Entity.Validate().ToList();
 
-            if(ValidationErros.Any())
+            if (ValidationErros.Any())
             {
                 StateHasChanged();
 
-                return;
-            }
-
-            if (IsNewEntity)
-            {
-                await ContentService.CreateAsync(Entity);
-
-                NavigationManager.NavigateTo($"content/{EntityType}/{Entity.Id}");
-            }
-            else
-            {
-                await ContentService.UpdateAsync(Entity);
+                args.CanSave = false;
             }
         }
 

@@ -19,8 +19,6 @@ namespace DragonFly.Content
             Value = text;
         }
 
-        public override bool HasValue => Value != null;
-
         public override string ToString()
         {
             return Value;

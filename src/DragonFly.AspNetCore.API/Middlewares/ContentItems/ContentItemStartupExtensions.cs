@@ -16,15 +16,15 @@ namespace DragonFly.AspNetCore.API.Middlewares
     {
         public static void MapContentItemRestApi(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapQueryContentItem();
-            endpoints.MapGetContentItem();
-            endpoints.MapCreateContentItem();
-            endpoints.MapUpdateContentItem();
-            endpoints.MapDeleteContentItem();
-            endpoints.MapPublishContentItem();
+            endpoints.MapQuery();
+            endpoints.MapGet();
+            endpoints.MapCreate();
+            endpoints.MapUpdate();
+            endpoints.MapDelete();
+            endpoints.MapPublish();
         }
 
-        private static IEndpointConventionBuilder MapQueryContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<QueryContentItemMiddleware>()
@@ -33,7 +33,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             return endpoints.MapPost("content/{schema}/query", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapGetContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<GetContentItemMiddleware>()                                                 
@@ -42,7 +42,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             return endpoints.MapGet("content/{schema}/{id:guid}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapCreateContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<CreateContentItemMiddleware>()
@@ -51,7 +51,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             return endpoints.MapPost("content/{schema}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapUpdateContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<UpdateContentItemMiddleware>()                                                  
@@ -60,7 +60,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             return endpoints.MapPut("content/{schema}/{id:guid}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapDeleteContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapDelete(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<DeleteContentItemMiddleware>()
@@ -69,7 +69,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             return endpoints.MapDelete("content/{schema}/{id:guid}", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapPublishContentItem(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapPublish(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<PublishContentItemMiddleware>()

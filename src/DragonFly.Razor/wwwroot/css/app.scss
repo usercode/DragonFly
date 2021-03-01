@@ -1,6 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 @import "contentdetail.scss";
+@import "contentlist.scss";
 
 html {
     height: 100%;
@@ -22,6 +23,10 @@ a, .btn-link {
 
 button {
     cursor: pointer;
+}
+
+.pagination {
+    flex-wrap: wrap;
 }
 
 .alert {

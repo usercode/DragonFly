@@ -8,7 +8,7 @@ namespace DragonFly.Content
     /// <summary>
     /// ContentField
     /// </summary>
-    public abstract class SingleValueContentField<T> : ContentField, ISingleValueContentField
+    public abstract class SingleValueContentField<T> : ContentField, ISingleValueContentField       
     {
         public SingleValueContentField()
         {
@@ -31,7 +31,7 @@ namespace DragonFly.Content
             }
         }
 
-        public abstract bool HasValue { get; }
+        public bool HasValue => Value != null;
 
         object ISingleValueContentField.Value => Value;
 

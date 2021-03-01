@@ -11,15 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
+namespace DragonFly.AspNetCore.API.Middlewares
 {
-    static class ContentSchemaStartupExtensions
+    static class WebHookStartupExtensions
     {
-        public static void MapContentSchemaRestApi(this IEndpointRouteBuilder endpoints)
+        public static void MapWebHookRestApi(this IEndpointRouteBuilder endpoints)
         {
             endpoints.MapQuery();
-            endpoints.MapGetById();
-            endpoints.MapGetByName();            
+            endpoints.MapGet();
             endpoints.MapCreate();
             endpoints.MapUpdate();
         }
@@ -27,46 +26,37 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
         private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryContentSchemaMiddleware>()
+                                                    .UseMiddleware<QueryWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("schema/query", pipeline);
+            return endpoints.MapPost("webhook/query", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapGetByName(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetContentSchemaMiddleware>()
+                                                    .UseMiddleware<GetWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapGet("schema/{name}", pipeline);
-        }
-
-        private static IEndpointConventionBuilder MapGetById(this IEndpointRouteBuilder endpoints)
-        {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetContentSchemaMiddleware>()
-                                                    .Build();
-
-            return endpoints.MapGet("schema/{id:guid}", pipeline);
+            return endpoints.MapGet("webhook/{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<CreateContentSchemaMiddleware>()
+                                                    .UseMiddleware<CreateWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("schema", pipeline);
+            return endpoints.MapPost("webhook", pipeline);
         }
 
         private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<UpdateContentSchemaMiddleware>()
+                                                    .UseMiddleware<UpdateWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPut("schema/{id:guid}", pipeline);
+            return endpoints.MapPut("webhook/{id:guid}", pipeline);
         }
     }
 }

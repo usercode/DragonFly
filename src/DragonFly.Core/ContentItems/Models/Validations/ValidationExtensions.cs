@@ -1,39 +1,27 @@
-﻿using System;
+﻿using DragonFly.Content;
+using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Models.Validations
+namespace DragonFly.Content
 {
     public static class ValidationExtensions
     {
-        public static IList<ValidationError> AddRequire(this IList<ValidationError> errors, string field)
+        public static IEnumerable<ValidationError> Validate(this ContentItem contentItem)
         {
-            errors.Add(new ValidationError(field, $"The field '{field}' is required."));
+            List<ValidationError> result = new List<ValidationError>();
 
-            return errors;
+            foreach (var field in contentItem.Fields)
+            {
+                ContentSchemaField f = contentItem.Schema.Fields[field.Key];
+
+                result.AddRange(field.Value.Validate(field.Key, f.Options));
+            }
+
+            return result;
         }
-
-        public static IList<ValidationError> AddRange(this IList<ValidationError> errors, string field, double? from, double? to)
-        {
-            errors.Add(new ValidationError(field, $"The field '{field}' is out of range! The value must be between {from} and {to}."));
-
-            return errors;
-        }
-        public static IList<ValidationError> AddMinimum(this IList<ValidationError> errors, string field, double? value)
-        {
-            errors.Add(new ValidationError(field, $"The field '{field}' must be at least {value} characters long."));
-
-            return errors;
-        }
-
-        public static IList<ValidationError> AddMaximum(this IList<ValidationError> errors, string field, double? value)
-        {
-            errors.Add(new ValidationError(field, $"The field '{field}' can't be longer than {value} characters."));
-
-            return errors;
-        }
-
     }
 }

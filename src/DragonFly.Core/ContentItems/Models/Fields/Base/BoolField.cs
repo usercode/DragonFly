@@ -10,7 +10,7 @@ namespace DragonFly.Content
     /// BoolField
     /// </summary>
     [FieldOptions(typeof(BoolFieldOptions))]
-    public class BoolField : SingleValueContentFieldNullable<bool>
+    public class BoolField : SingleValueContentField<bool?>
     {
         public BoolField()
         {

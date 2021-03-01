@@ -55,7 +55,7 @@ namespace DragonFly.Data
 
         public async Task CreateAsync(AssetFolder folder)
         {
-            folder.CreatedAt = DateTime.UtcNow;
+            folder.CreatedAt = DateTimeService.Current();
             folder.ModifiedAt = folder.CreatedAt;
 
             var mongo = folder.ToMongo();

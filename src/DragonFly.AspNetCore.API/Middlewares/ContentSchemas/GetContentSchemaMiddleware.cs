@@ -27,9 +27,21 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             ISchemaStorage schemaStorage,
             JsonService jsonService)
         {
-            string name = (string)context.GetRouteValue("name");
+            ContentSchema schema;
 
-            ContentSchema schema = await schemaStorage.GetContentSchemaByNameAsync(name);
+            if (context.GetRouteValue("id") is string)
+            {
+                Guid id = Guid.Parse((string)context.GetRouteValue("id"));
+
+                schema = await schemaStorage.GetContentSchemaAsync(id);
+            }
+            else
+            {
+                string name = (string)context.GetRouteValue("name");
+
+                schema = await schemaStorage.GetContentSchemaAsync(name);
+            }
+
             RestContentSchema restSchema = schema.ToRest();
 
             string json = jsonService.Serialize(restSchema);

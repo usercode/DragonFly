@@ -2,26 +2,12 @@
 @page "/webhook/create"
 @inherits WebHookDetailBase
 
-@if(Entity == null)
-{
-    <p>TEST</p>
-}
-
 @if (Entity != null)
 {
     <h1>@Entity.Name</h1>
 
-    <hr />
+    <Toolbar Items="ToolbarItems"></Toolbar>
 
-    //actions
-    <div>
-        <button type="button" class="btn btn-dark" @onclick="@(e => SaveAsync())">Save</button>
-        <button type="button" class="btn btn-danger" @onclick="@(e => DeleteAsync())">Delete</button>
-    </div>
-
-    <hr />
-
-    //id
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Id</label>
         <div class="col-sm-10">

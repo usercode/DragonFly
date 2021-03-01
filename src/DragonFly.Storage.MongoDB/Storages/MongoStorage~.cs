@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using DragonFly.AspNetCore.Services;
 using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
@@ -49,6 +50,8 @@ namespace DragonFly.Data
 
         private IEnumerable<IContentInterceptor> Interceptors { get; }
 
+        public IDateTimeService DateTimeService { get; }
+
         private static MongoStorage _default;
 
         public static MongoStorage Default
@@ -58,6 +61,7 @@ namespace DragonFly.Data
         }
 
         public MongoStorage(
+            IDateTimeService dateTimeService,
             IOptions<MongoDbOptions> options, 
             IEnumerable<IAssetProcessing> assetProcessings, 
             IEnumerable<IContentInterceptor> interceptors)
@@ -87,6 +91,7 @@ namespace DragonFly.Data
 
             ContentItems = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 
+            DateTimeService = dateTimeService;
             AssetProcessings = assetProcessings;
             Interceptors = interceptors;
         }
@@ -102,7 +107,7 @@ namespace DragonFly.Data
 
         public async Task<ContentItem> GetContentItemAsync(string schema, Guid id)
         {
-            ContentSchema contentSchema = await GetContentSchemaByNameAsync(schema);
+            ContentSchema contentSchema = await GetContentSchemaAsync(schema);
             var items = GetMongoCollection(schema);
 
             var result = items.AsQueryable().FirstOrDefault(x => x.Id == id);
@@ -114,20 +119,6 @@ namespace DragonFly.Data
 
             return result.ToModel(contentSchema);
         }
-
-       
-
-        public Task<ContentSchema> GetContentSchemaByNameAsync(string name)
-        {
-            return Task.Run(() => ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name).ToModel());
-        }
-
-       
-
-      
-
-      
-
        
     }
 }

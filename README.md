@@ -9,7 +9,6 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.AspNetCore             | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
 | DragonFly.AspNetCore.API         | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API/) |
 | DragonFly.AspNetCore.API.Client  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.Client.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API.Client/) |
-| DragonFly.AspNetCore.ImageSharp  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.ImageSharp.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.ImageSharp/) |
 | DragonFly.Razor                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
 | DragonFly.Storage.MongoDB        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Storage.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.Storage.MongoDB/) |
 
@@ -63,7 +62,6 @@ await contentStorage.CreateAsync(contentProduct);
 
       //DragonFly
       services.AddDragonFly()
-                  .AddImageSharpProcessing()
                   .AddRestApi()
                   .AddGraphQLApi()
                   .AddMongoDbStorage();

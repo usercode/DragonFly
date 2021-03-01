@@ -10,7 +10,7 @@ namespace DragonFly.Content
     /// NumberPart
     /// </summary>
     [FieldOptions(typeof(FloatFieldOptions))]
-    public class FloatField : SingleValueContentFieldNullable<double>
+    public class FloatField : SingleValueContentField<double?>
     {
         public FloatField()
         {

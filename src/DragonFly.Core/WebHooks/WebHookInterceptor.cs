@@ -32,7 +32,7 @@ namespace DragonFly.Core.WebHooks
         {
             var result = await storage.QueryAsync(new WebHookQuery() { Event = null });
 
-            foreach(WebHook item in result)
+            foreach(WebHook item in result.Items)
             {
                 HttpResponseMessage response = await HttpClient.PostAsync(item.TargetUrl + $"?schema={contentItem.Schema.Name}&id={contentItem.Id}", new StringContent(""));
 
@@ -45,7 +45,7 @@ namespace DragonFly.Core.WebHooks
         {
             var result = await storage.QueryAsync(new WebHookQuery() { Event = null });
 
-            foreach (WebHook item in result)
+            foreach (WebHook item in result.Items)
             {
                 HttpResponseMessage response = await HttpClient.PostAsync(item.TargetUrl + $"?asset={asset.Id}", new StringContent(""));
 

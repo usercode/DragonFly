@@ -37,6 +37,7 @@ namespace DragonFly.AspNetCore.API
                     endpoints.MapContentSchemaRestApi();
                     endpoints.MapAssetRestApi();
                     endpoints.MapAssetFolderRestApi();
+                    endpoints.MapWebHookRestApi();
                 });
             });
 

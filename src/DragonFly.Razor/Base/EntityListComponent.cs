@@ -16,6 +16,7 @@ namespace DragonFly.Client.Base
         public EntityListComponent()
         {
             ListMode = EntityListMode.Default;
+            PageSize = 20;
         }
 
         [Parameter]
@@ -43,6 +44,13 @@ namespace DragonFly.Client.Base
         /// </summary>
         public QueryResult<T> SearchResult { get; set; }
 
+        [Parameter]
+        public int CurrentPageIndex { get; set; }
+
+        public int PageSize { get; set; }
+
+        public int CountPages => (int)Math.Ceiling((double)SearchResult.TotalCount / PageSize);
+
         private string _searchPattern;
 
         /// <summary>
@@ -69,6 +77,15 @@ namespace DragonFly.Client.Base
             {
                 Navigation.NavigateTo(GetNavigationPath(entity));
             }
+        }
+
+        public async Task GoToPageAsync(int pageIndex)
+        {
+            CurrentPageIndex = pageIndex;
+
+            await RefreshAsync();
+
+            StateHasChanged();
         }
     }
 }

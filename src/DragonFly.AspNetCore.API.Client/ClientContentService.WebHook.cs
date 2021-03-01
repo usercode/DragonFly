@@ -16,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DragonFly.AspNetCore.API.Exports;
 
 namespace DragonFly.Client
 {
@@ -31,7 +32,7 @@ namespace DragonFly.Client
 
             var e = await response.Content.ParseJsonAsync<RestWebHook>();
 
-            return e.FromRest();
+            return e.ToModel();
         }
 
         public async Task CreateAsync(WebHook entity)
@@ -45,7 +46,7 @@ namespace DragonFly.Client
 
         public async Task UpdateAsync(WebHook entity)
         {
-            await Client.PutAsJson($"api/webhook", entity);
+            await Client.PutAsJson($"api/webhook/{entity.Id}", entity);
         }
 
         public async Task DeleteAsync(WebHook webHook)
@@ -53,13 +54,15 @@ namespace DragonFly.Client
             await Client.DeleteAsync($"api/webhook/{webHook.Id}");
         }
 
-        public async Task<IEnumerable<WebHook>> QueryAsync(WebHookQuery query)
+        public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
         {
-            var response = await Client.GetAsync("api/webhook");
+            var response = await Client.PostAsJson("api/webhook/query", query);
 
-            var result = await response.Content.ParseJsonAsync<IEnumerable<RestWebHook>>();
+            QueryResult<RestWebHook> result = await response.Content.ParseJsonAsync<QueryResult<RestWebHook>>();
 
-            return result.Select(x => x.FromRest()).ToList();
+            IList<WebHook> items = result.Items.Select(x => x.ToModel()).ToList();
+
+            return new QueryResult<WebHook>() { Items = items };
         }
     }
 }

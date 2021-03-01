@@ -30,7 +30,7 @@ namespace DragonFly.Client.Pages.ContentItems
         protected override async Task RefreshActionAsync()
         {
           
-            //SearchResult = await ContentService.QueryAsync(new WebHookQuery());
+            SearchResult = await WebHookStore.QueryAsync(new WebHookQuery());
         }
     }
 }

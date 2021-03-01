@@ -40,10 +40,18 @@ namespace DragonFly.Client.Pages
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
-            toolbarItems.AddRefreshButton(this);
-            toolbarItems.AddSaveButton(this);
-            toolbarItems.AddDeleteButton(this);
+            if(IsNewEntity)
+            {               
+                toolbarItems.AddCreateButton(this);
+            }
+            else
+            {
+                toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
+                toolbarItems.AddRefreshButton(this);
+                toolbarItems.AddUpdateButton(this);
+                toolbarItems.AddDeleteButton(this);
+            }           
+            
         }
 
         protected override async Task RefreshActionAsync()

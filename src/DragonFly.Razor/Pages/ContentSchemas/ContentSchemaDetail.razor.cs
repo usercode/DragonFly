@@ -17,21 +17,20 @@ namespace DragonFly.Client.Pages
             Entity = new ContentSchema();
         }
 
-        public override bool IsNewEntity => EntityType == null;
-
-
-
-        //[Parameter]
-        //public bool ShowAddFieldModal { get; set; }
-
-
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.AddRefreshButton(this);
-            toolbarItems.AddSaveButton(this);
-            toolbarItems.AddDeleteButton(this);
+            if(IsNewEntity)
+            {
+                toolbarItems.AddCreateButton(this);
+            }
+            else
+            {
+                toolbarItems.AddRefreshButton(this);
+                toolbarItems.AddUpdateButton(this);
+                toolbarItems.AddDeleteButton(this);
+            }
         }
 
         protected override async Task RefreshActionAsync()
@@ -44,20 +43,18 @@ namespace DragonFly.Client.Pages
             }
             else
             {
-                Entity = await ContentService.GetContentSchemaAsync(EntityType);
+                Entity = await ContentService.GetContentSchemaAsync(EntityId);
             }
         }
 
-        protected override async Task SaveActionAsync()
+        protected override async Task CreateActionAsync()
         {
-            if(IsNewEntity)
-            {
-                await ContentService.CreateSchemaAsync(Entity);
-            }
-            else
-            {
-                await ContentService.UpdateSchemaAsync(Entity);
-            }            
+            await ContentService.CreateSchemaAsync(Entity);
+        }
+
+        protected override async Task UpdateActionAsync()
+        {
+            await ContentService.UpdateSchemaAsync(Entity);
         }
     }
 }

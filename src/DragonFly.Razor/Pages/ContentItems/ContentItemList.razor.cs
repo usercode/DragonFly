@@ -50,7 +50,9 @@ namespace DragonFly.Client.Pages.ContentItems
 
                 var queryParameters = new QueryParameters()
                 {
-                    SearchPattern = SearchPattern
+                   SearchPattern = SearchPattern,
+                   Skip = CurrentPageIndex * PageSize,
+                   Top = PageSize
                 };
 
                 foreach (FieldOrder f in OrderFields)

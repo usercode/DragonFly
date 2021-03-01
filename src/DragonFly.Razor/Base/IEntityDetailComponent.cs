@@ -31,6 +31,8 @@ namespace DragonFly.Client.Base
 
         Task RefreshAsync();
 
+        Task CreateAsync();
+        Task UpdateAsync();
         Task SaveAsync();
 
         Task DeleteAsync();

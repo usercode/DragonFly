@@ -10,7 +10,7 @@ namespace DragonFly.Content
     /// IntegerField
     /// </summary>
     [FieldOptions(typeof(IntegerFieldOptions))]
-    public class IntegerField : SingleValueContentFieldNullable<long>
+    public class IntegerField : SingleValueContentField<long?>
     {
         public IntegerField()
         {

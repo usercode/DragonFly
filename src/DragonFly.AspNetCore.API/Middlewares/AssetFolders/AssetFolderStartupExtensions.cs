@@ -13,11 +13,11 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
     {
         public static void MapAssetFolderRestApi(this IEndpointRouteBuilder endpoints)
         {
-            endpoints.MapQueryAssetFolder();
-            endpoints.MapGetAssetFolder();
+            endpoints.MapQuery();
+            endpoints.MapGet();
         }
 
-        private static IEndpointConventionBuilder MapQueryAssetFolder(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<QueryAssetFolderMiddleware>()
@@ -26,7 +26,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
             return endpoints.MapPost("assetfolder/query", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapGetAssetFolder(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
                                                     .UseMiddleware<GetAssetFolderMiddleware>()

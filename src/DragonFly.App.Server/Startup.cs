@@ -54,9 +54,6 @@ namespace DragonFly.AspNetCore
                         .AddRestApi()
                         .AddGraphQLApi()
                         .AddMongoDbStorage();
-
-            //new RandomData().CreateDataAsync(null).Wait();
-
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonFlyApi api)
