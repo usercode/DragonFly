@@ -15,7 +15,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 5.0.103
+        dotnet-version: 5.0.x
     - name: Build with dotnet
       run: dotnet build --configuration Release "./src/DragonFly.sln"
     - name: Run unit tests
@@ -29,11 +29,7 @@ jobs:
     - name: Publish "DragonFly.AspNetCore.API.Client" to nuget
       run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.AspNetCore.API.Exports" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Exports/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.GraphQL" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.GraphQL/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}} 
-    - name: Publish "DragonFly.AspNetCore.ImageSharp" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.ImageSharp/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Exports/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
     - name: Publish "DragonFly.Core" to nuget
       run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Razor" to nuget
