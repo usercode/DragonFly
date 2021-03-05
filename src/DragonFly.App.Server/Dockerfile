@@ -1,14 +1,14 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
+FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
 COPY ["DragonFly.App.Server/DragonFly.App.Server.csproj", "DragonFly.App.Server/"]
-COPY ["DragonFly.AspNetCore.ImageSharp/DragonFly.AspNetCore.ImageSharp.csproj", "DragonFly.AspNetCore.ImageSharp/"]
+COPY ["DragonFly.AspNetCore.SchemaBuilder/DragonFly.AspNetCore.SchemaBuilder.csproj", "DragonFly.AspNetCore.SchemaBuilder/"]
 COPY ["DragonFly.AspNetCore/DragonFly.AspNetCore.csproj", "DragonFly.AspNetCore/"]
 COPY ["DragonFly.Core/DragonFly.Core.csproj", "DragonFly.Core/"]
 COPY ["DragonFly.AspNetCore.API.Client/DragonFly.AspNetCore.API.Client.csproj", "DragonFly.AspNetCore.API.Client/"]

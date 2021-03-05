@@ -30,19 +30,22 @@ namespace DragonFly.SampleData
                                                                                     .AddString("Value"));
 
             ContentItem contentProduct = schemaProduct
-                                            .CreateItem()
+                                            .CreateContentItem()
                                             .SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand))
                                             .SetString("Name", "ProductA")
                                             .SetBool("IsAvailable", true)
                                             .SetFloat("Price", 9.99)
                                             .SetAsset("Image", new Asset())
-                                            .SetTextArea("Description", "...");
+                                            .SetTextArea("Description", "...")
+                                            .AddArrayFieldItem("Attributes", schemaProduct, item => item
+                                                                                    .SetString("Name", "Size")
+                                                                                    .SetString("Value", "M"));
 
             //await dataStorage.CreateAsync(schemaProduct);
 
 
             var schemas = new Faker<ContentItem>("de")
-                                .CustomInstantiator(x => schemaBrand.CreateItem())
+                                .CustomInstantiator(x => schemaBrand.CreateContentItem())
                                 .FinishWith((f, c) => 
                                 { 
                                     c.SetString("Name", f.Vehicle.Manufacturer());
@@ -52,7 +55,7 @@ namespace DragonFly.SampleData
                                 .GenerateLazy(100);
 
             var product = new Faker<ContentItem>("de")
-                               .CustomInstantiator(x => schemaProduct.CreateItem())
+                               .CustomInstantiator(x => schemaProduct.CreateContentItem())
                                .FinishWith((f, c) =>
                                {
                                    c.SetString("Name", f.Vehicle.Model());

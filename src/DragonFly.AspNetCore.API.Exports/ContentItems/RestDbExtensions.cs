@@ -70,7 +70,7 @@ namespace DragonFly.Models
 
                                 foreach (JObject item in bsonValue)
                                 {
-                                    ArrayFieldItem arrayFieldItem = arrayOptions.CreateItem();
+                                    ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
 
                                     foreach (var subitem in item)
                                     {

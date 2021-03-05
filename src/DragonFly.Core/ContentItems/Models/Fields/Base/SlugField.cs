@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// TextField
+    /// SlugField
     /// </summary>
     [FieldOptions(typeof(SlugFieldOptions))]
     public class SlugField : TextBaseField
@@ -22,6 +22,14 @@ namespace DragonFly.Content
         public SlugField(string text)
         {
             Value = text;
+        }
+
+        protected override void OnValueChanging(ref string newValue)
+        {
+            //if (newValue != null)
+            //{
+            //    newValue = Slugify.ToSlug(newValue);
+            //}
         }
 
         public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)

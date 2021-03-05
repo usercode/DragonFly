@@ -66,7 +66,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
             if (IsNewEntity)
             {
-                Entity = Schema.CreateItem();
+                Entity = Schema.CreateContentItem();
             }
             else
             {

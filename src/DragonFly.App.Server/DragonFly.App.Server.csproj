@@ -22,6 +22,7 @@
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder\DragonFly.AspNetCore.SchemaBuilder.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
     <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />

@@ -49,7 +49,7 @@ namespace DragonFly.Data
 
         public async Task UpdateAsync(ContentSchema entity)
         {
-            entity.ModifiedAt = DateTime.UtcNow;
+            entity.ModifiedAt = DateTimeService.Current();
 
             await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Where(x => x.Id == entity.Id), entity.ToMongo());
         }

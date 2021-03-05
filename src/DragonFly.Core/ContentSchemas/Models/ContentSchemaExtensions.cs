@@ -7,6 +7,13 @@ namespace DragonFly.Content
 {
     public static class ContentSchemaExtensions
     {
+        public static IContentSchema AddField(this IContentSchema schema, string name, Type fieldType, int? sortkey = null, ContentFieldOptions options = null)
+        {
+            schema.Fields.Add(name, new ContentSchemaField() { SortKey = sortkey ?? 0, FieldType = ContentFieldManager.Default.GetContentFieldName(fieldType), Options = options });
+
+            return schema;
+        }
+
         public static IContentSchema AddField<TField>(this IContentSchema schema, string name, int? sortkey = null, ContentFieldOptions options = null)
             where TField : ContentField
         {
@@ -107,6 +114,18 @@ namespace DragonFly.Content
             return schema;
         }
 
+        public static TContentSchema AddInteger<TContentSchema>(this TContentSchema schema, string name, Action<IntegerFieldOptions> configOptions = null)
+            where TContentSchema : IContentSchema
+        {
+            IntegerFieldOptions options = new IntegerFieldOptions();
+
+            configOptions?.Invoke(options);
+
+            schema.AddField<IntegerField>(name, null, options);
+
+            return schema;
+        }
+
         public static TContentSchema AddBool<TContentSchema>(this TContentSchema schema, string name, Action<BoolFieldOptions> configOptions = null)
             where TContentSchema : IContentSchema
         {
@@ -153,6 +172,12 @@ namespace DragonFly.Content
             schema.AddField<ArrayField>(name, null, options);
 
             return schema;
+        }
+
+        public static ArrayFieldOptions GetArrayFieldOptions<TContentSchema>(this TContentSchema schema, string name)
+            where TContentSchema : IContentSchema
+        {
+            return (ArrayFieldOptions)schema.Fields[name].Options;
         }
     }
 }

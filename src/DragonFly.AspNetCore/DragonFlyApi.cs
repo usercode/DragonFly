@@ -10,7 +10,10 @@ namespace DragonFly.AspNetCore
 {
     public class DragonFlyApi : IDragonFlyApi
     {
-        public DragonFlyApi(ContentFieldManager fieldManager, AssetMetadataManager assetMetadata, IDataStorage dataStorage)
+        public DragonFlyApi(
+            ContentFieldManager fieldManager, 
+            AssetMetadataManager assetMetadata,
+            IDataStorage dataStorage)
         {
             Fields = fieldManager;
             AssetMetadatas = assetMetadata;

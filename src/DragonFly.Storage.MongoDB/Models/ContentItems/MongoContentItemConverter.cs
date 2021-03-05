@@ -17,7 +17,7 @@ namespace DragonFly.Data.Models
     {
         public static ContentItem ToModel(this MongoContentItem mongoContentItem, ContentSchema schema)
         {
-            ContentItem contentItem = schema.CreateItem();
+            ContentItem contentItem = schema.CreateContentItem();
 
             contentItem.Id = mongoContentItem.Id;
             contentItem.CreatedAt = mongoContentItem.CreatedAt;

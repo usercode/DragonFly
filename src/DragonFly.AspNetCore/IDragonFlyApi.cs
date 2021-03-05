@@ -11,6 +11,19 @@ namespace DragonFly.AspNetCore
     {
         void Init();
 
+        /// <summary>
+        /// Fields
+        /// </summary>
         ContentFieldManager Fields { get; }
+
+        /// <summary>
+        /// AssetMetadatas
+        /// </summary>
+        AssetMetadataManager AssetMetadatas { get; }
+
+        /// <summary>
+        /// DataStorage
+        /// </summary>
+        IDataStorage DataStorage { get; }
     }
 }

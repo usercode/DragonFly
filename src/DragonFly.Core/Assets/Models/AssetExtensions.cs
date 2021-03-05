@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -18,42 +19,42 @@ namespace DragonFly.Content
 
         public static bool IsJpeg(this Asset asset)
         {
-            return asset.MimeType == "image/jpeg";
+            return asset.MimeType == MimeTypes.Jpeg;
         }
 
         public static bool IsPng(this Asset asset)
         {
-            return asset.MimeType == "image/png";
+            return asset.MimeType == MimeTypes.Png;
         }
 
         public static bool IsGif(this Asset asset)
         {
-            return asset.MimeType == "image/gif";
+            return asset.MimeType == MimeTypes.Gif;
         }
 
         public static bool IsBmp(this Asset asset)
         {
-            return asset.MimeType == "image/bmp";
+            return asset.MimeType == MimeTypes.Bmp;
         }
 
         public static bool IsSVG(this Asset asset)
         {
-            return asset.MimeType == "image/svg+xml";
+            return asset.MimeType == MimeTypes.Svg;
         }
 
         public static bool IsPdf(this Asset asset)
         {
-            return asset.MimeType == "application/pdf";
+            return asset.MimeType == MimeTypes.Pdf;
         }
 
         public static bool IsXml(this Asset asset)
         {
-            return asset.MimeType == "application/xml";
+            return asset.MimeType == MimeTypes.Xml;
         }
 
         public static bool IsPlainText(this Asset asset)
         {
-            return asset.MimeType == "text/plain";
+            return asset.MimeType == MimeTypes.PlainText;
         }
 
 

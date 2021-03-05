@@ -1,7 +1,8 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-@import "contentdetail.scss";
-@import "contentlist.scss";
+@import "contentitem-detail.scss";
+@import "contentitem-list.scss";
+@import "asset-detail.scss";
 
 html {
     height: 100%;

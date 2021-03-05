@@ -45,13 +45,13 @@ namespace DragonFly.Core
 
             services.AddSingleton<DragonFlyContext>();
             services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
-
             services.AddSingleton<IDateTimeService, DateTimeService>();
 
             services.AddSingleton(ContentFieldManager.Default);
             services.AddSingleton(AssetMetadataManager.Default);
 
             services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
+            
 
             //ImageWizard
             services.ConfigureOptions<HttpLoaderConfigureOptions>();

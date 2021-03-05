@@ -39,8 +39,4 @@
     <None Include="..\logo.png" Pack="true" PackagePath="" />
     <None Include="compilerconfig.json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AssetMetadatas\" />
-  </ItemGroup>
 </Project>

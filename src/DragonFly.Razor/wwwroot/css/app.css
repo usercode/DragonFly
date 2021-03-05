@@ -9,6 +9,11 @@
   flex-direction: column;
   height: 100%; }
 
+.asset-detail {
+  display: flex;
+  flex-direction: column;
+  height: 100%; }
+
 html {
   height: 100%;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

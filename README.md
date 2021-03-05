@@ -17,7 +17,7 @@ Headless CMS based on ASP.NET Core and Blazor
 
 How to create new content schema and content item
 ```csharp
-IContentStorage contentStorage = //use MongoStorage or ClientContentService (http client)
+IContentStorage contentStorage = ...;//use MongoStorage or ClientContentService (http client)
 
 //create brand schema
 ContentSchema schemaBrand = new ContentSchema("Brand")
@@ -41,12 +41,15 @@ await contentStorage.CreateAsync(schemaProduct);
 
 //create product by schema
 ContentItem contentProduct = schemaProduct
-                            .CreateItem()
+                            .CreateContentItem()
                             .SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand))
                             .SetString("Name", "ProductA")
                             .SetBool("IsAvailable", true)
                             .SetFloat("Price", 9.99)
-                            .SetTextArea("Description", "...");
+                            .SetTextArea("Description", "...")
+                            .AddArrayFieldItem("Attributes", schemaProduct, item => item
+                                                                    .SetString("Name", "Size")
+                                                                    .SetString("Value", "M"));
 
 await contentStorage.CreateAsync(contentProduct);
 

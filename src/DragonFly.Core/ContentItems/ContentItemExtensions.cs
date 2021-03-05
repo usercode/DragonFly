@@ -32,7 +32,7 @@ namespace DragonFly.Content
             return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
         }
 
-        public static ContentItem CreateItem(this ContentSchema schema)
+        public static ContentItem CreateContentItem(this ContentSchema schema)
         {
             ContentItem item = new ContentItem();
             item.Schema = schema;
@@ -42,7 +42,7 @@ namespace DragonFly.Content
             return item;
         }
 
-        public static ArrayFieldItem CreateItem(this ArrayFieldOptions options)
+        public static ArrayFieldItem CreateArrayField(this ArrayFieldOptions options)
         {
             ArrayFieldItem item = new ArrayFieldItem();
 

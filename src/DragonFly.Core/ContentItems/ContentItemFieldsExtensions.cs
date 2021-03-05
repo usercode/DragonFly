@@ -163,5 +163,44 @@ namespace DragonFly.Content
 
             return contentItem;
         }
+
+        public static ArrayFieldItem GetArrayField<TContentItem>(this TContentItem contentItem, string name, int index)
+            where TContentItem : IContentItem
+        {
+            ArrayField arrayField = contentItem.GetField<ArrayField>(name);
+
+            return arrayField.Items[index];
+        }
+
+        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, IContentSchema schema, Action<ArrayFieldItem> action)
+            where TContentItem : IContentItem
+        {
+            ArrayFieldOptions options = schema.GetArrayFieldOptions(name);
+            ArrayFieldItem item = options.CreateArrayField();
+            
+            action(item);
+
+            return AddArrayFieldItem(contentItem, name, item);
+        }
+
+        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, ArrayFieldItem item)
+            where TContentItem : IContentItem
+        {
+            ArrayField arrayField = contentItem.GetField<ArrayField>(name);
+            
+            arrayField.Items.Add(item);
+
+            return contentItem;
+        }
+
+        public static TContentItem RemoveArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, int index)
+            where TContentItem : IContentItem
+        {
+            ArrayField arrayField = contentItem.GetField<ArrayField>(name);
+
+            arrayField.Items.RemoveAt(index);
+
+            return contentItem;
+        }
     }
 }

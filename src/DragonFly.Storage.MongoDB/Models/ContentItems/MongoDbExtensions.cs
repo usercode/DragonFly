@@ -82,7 +82,7 @@ namespace DragonFly.Data.Models
 
                             foreach (BsonDocument item in bsonArray)
                             {
-                                ArrayFieldItem arrayFieldItem = arrayOptions.CreateItem();
+                                ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
 
                                 foreach (BsonElement subitem in item)
                                 {

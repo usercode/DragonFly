@@ -24,7 +24,7 @@ namespace DragonFly.Data.Models
                 schema = restContentItem.Schema.ToModel();
             }
 
-            ContentItem contentItem = schema.CreateItem();
+            ContentItem contentItem = schema.CreateContentItem();
 
             contentItem.Id = restContentItem.Id;
             contentItem.Schema = schema;

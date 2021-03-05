@@ -13,6 +13,8 @@ namespace DragonFly.Content
         /// </summary>
         public virtual Guid Id { get => _id; set => _id = value; }
 
+        public virtual bool IsNew => Id == Guid.Empty;
+
         public virtual DateTime? CreatedAt { get; set; }
 
         public virtual DateTime? ModifiedAt { get; set; }
