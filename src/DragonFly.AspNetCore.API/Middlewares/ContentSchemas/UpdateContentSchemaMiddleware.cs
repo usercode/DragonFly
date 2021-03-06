@@ -28,7 +28,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             ISchemaStorage schemaStorage,
             JsonService jsonService)
         {
-            Guid id = Guid.Parse((string)context.GetRouteValue("name"));
+            Guid id = Guid.Parse((string)context.GetRouteValue("id"));
 
             RestContentSchema input = await jsonService.Deserialize<RestContentSchema>(context.Request.Body);
 
