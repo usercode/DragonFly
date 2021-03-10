@@ -15,6 +15,21 @@ Headless CMS based on ASP.NET Core and Blazor
 
 ## DragonFly.Core
 
+### Supported fields
+- StringField
+- FloatField
+- BoolField
+- AssetField
+- ReferenceField
+- EmbedField
+- ArrayField
+- DateField
+- IntegerField
+- SlugField
+- XmlField
+- XHtmlField
+- HtmlField
+
 How to create new content schema and content item
 ```csharp
 IContentStorage contentStorage = ...;//use MongoStorage or ClientContentService (http client)
