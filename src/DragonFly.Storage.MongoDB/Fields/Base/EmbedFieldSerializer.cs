@@ -13,7 +13,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class EmbedFieldSerializer : FieldSerializer<EmbedField>
     {
-        public override void Read(ContentSchemaField definition, EmbedField contentField, BsonValue bsonValue)
+        public override void Read(ContentSchemaField schemaField, EmbedField contentField, BsonValue bsonValue)
         {
             string schemaName = bsonValue[ReferenceField.SchemaField].AsString;
 

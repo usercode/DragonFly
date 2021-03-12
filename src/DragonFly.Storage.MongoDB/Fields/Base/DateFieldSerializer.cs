@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class DateFieldSerializer : FieldSerializer<DateField>
     {
-        public override void Read(ContentSchemaField definition, DateField contentField, BsonValue bsonvalue)
+        public override void Read(ContentSchemaField schemaField, DateField contentField, BsonValue bsonvalue)
         {
             contentField.Value = (DateTime?)bsonvalue;
         }

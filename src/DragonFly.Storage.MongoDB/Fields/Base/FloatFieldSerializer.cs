@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class FloatFieldSerializer : FieldSerializer<FloatField>
     {
-        public override void Read(ContentSchemaField definition, FloatField contentField, BsonValue bsonvalue)
+        public override void Read(ContentSchemaField schemaField, FloatField contentField, BsonValue bsonvalue)
         {
             contentField.Value = (double?)bsonvalue;
         }

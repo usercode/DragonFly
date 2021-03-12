@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class BoolFieldSerializer : FieldSerializer<BoolField>
     {
-        public override void Read(ContentSchemaField definition, BoolField contentField, BsonValue bsonvalue)
+        public override void Read(ContentSchemaField schemaField, BoolField contentField, BsonValue bsonvalue)
         {
             contentField.Value = (bool?)bsonvalue;
         }

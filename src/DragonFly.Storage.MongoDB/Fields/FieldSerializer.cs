@@ -11,7 +11,7 @@ namespace DragonFly.Storage.MongoDB.Fields
     public abstract class FieldSerializer<TContentField> : IFieldSerializer
         where TContentField : ContentField
     {
-        public abstract void Read(ContentSchemaField definition, TContentField contentField, BsonValue bsonValue);
+        public abstract void Read(ContentSchemaField schemaField, TContentField contentField, BsonValue bsonValue);
 
         public abstract BsonValue Write(TContentField contentField);
 

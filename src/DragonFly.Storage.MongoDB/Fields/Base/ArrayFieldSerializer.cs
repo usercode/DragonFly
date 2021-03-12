@@ -11,11 +11,11 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class ArrayFieldSerializer : FieldSerializer<ArrayField>
     {
-        public override void Read(ContentSchemaField definition, ArrayField contentField, BsonValue bsonvalue)
+        public override void Read(ContentSchemaField schemaField, ArrayField contentField, BsonValue bsonvalue)
         {
             if (bsonvalue is BsonArray bsonArray)
             {
-                ArrayFieldOptions arrayOptions = definition.Options as ArrayFieldOptions;
+                ArrayFieldOptions arrayOptions = schemaField.Options as ArrayFieldOptions;
 
                 foreach (BsonDocument item in bsonArray)
                 {

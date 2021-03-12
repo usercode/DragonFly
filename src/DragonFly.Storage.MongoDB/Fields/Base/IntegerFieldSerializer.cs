@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class IntegerFieldSerializer : FieldSerializer<IntegerField>
     {
-        public override void Read(ContentSchemaField definition, IntegerField contentField, BsonValue bsonvalue)
+        public override void Read(ContentSchemaField schemaField, IntegerField contentField, BsonValue bsonvalue)
         {
             contentField.Value = (long?)bsonvalue;
         }

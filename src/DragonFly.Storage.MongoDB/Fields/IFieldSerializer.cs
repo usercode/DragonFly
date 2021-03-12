@@ -19,7 +19,7 @@ namespace DragonFly.Storage.MongoDB.Fields
         /// </summary>
         /// <param name="bsonvalue"></param>
         /// <returns></returns>
-        void Read(ContentSchemaField definition, ContentField contentField, BsonValue bsonvalue);
+        void Read(ContentSchemaField schemaField, ContentField contentField, BsonValue bsonvalue);
 
         /// <summary>
         /// Write

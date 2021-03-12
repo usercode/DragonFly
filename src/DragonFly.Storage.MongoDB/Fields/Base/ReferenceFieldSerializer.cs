@@ -11,7 +11,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class ReferenceFieldSerializer : FieldSerializer<ReferenceField>
     {
-        public override void Read(ContentSchemaField definition, ReferenceField contentField, BsonValue bsonValue)
+        public override void Read(ContentSchemaField schemaField, ReferenceField contentField, BsonValue bsonValue)
         {
             if (bsonValue is BsonDocument bsonDocument)
             {
