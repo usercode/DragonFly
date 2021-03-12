@@ -1,9 +1,8 @@
 # DragonFly
 Headless CMS based on ASP.NET Core and Blazor
-
-![Alt text](resources/screenshot.jpg)
-
 [![Docker](https://img.shields.io/docker/pulls/usercode/dragonfly)](https://hub.docker.com/r/usercode/dragonfly)
+
+![Alt text](resources/screenshot.png)
 
 | Package                       | Release | 
 |-------------------------------|-----------------|
