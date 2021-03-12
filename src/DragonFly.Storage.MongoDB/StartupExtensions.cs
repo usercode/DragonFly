@@ -4,6 +4,8 @@ using DragonFly.Core.Assets;
 using DragonFly.Core.Builders;
 using DragonFly.Core.WebHooks;
 using DragonFly.MongoDB.Options;
+using DragonFly.Storage.MongoDB.Fields;
+using DragonFly.Storage.MongoDB.Fields.Base;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -31,6 +33,9 @@ namespace DragonFly.Data
             builder.Services.AddSingleton<IAssetStorage>(x => x.GetRequiredService<MongoStorage>());
             builder.Services.AddSingleton<IAssetFolderStorage>(x => x.GetRequiredService<MongoStorage>());
             builder.Services.AddSingleton<IWebHookStorage>(x => x.GetRequiredService<MongoStorage>());
+
+
+            builder.Services.AddSingleton(MongoFieldManager.Default);
 
             return builder;
         }

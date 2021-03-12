@@ -27,7 +27,6 @@ namespace DragonFly.Data.Models
             ContentItem contentItem = schema.CreateContentItem();
 
             contentItem.Id = restContentItem.Id;
-            contentItem.Schema = schema;
             contentItem.CreatedAt = restContentItem.CreatedAt;
             contentItem.ModifiedAt = restContentItem.ModifiedAt;
             contentItem.PublishedAt = restContentItem.PublishedAt;
@@ -35,6 +34,20 @@ namespace DragonFly.Data.Models
             contentItem.SchemaVersion = restContentItem.SchemaVersion;
 
             foreach(var restField in restContentItem.Fields)
+            {
+                restField.Value.FromRestValue(restField.Key, contentItem, schema);
+            }
+
+            return contentItem;
+        }
+
+        public static ContentEmbedded ToModel(this RestContentEmbedded restContentItem)
+        {
+            ContentSchema schema = restContentItem.Schema.ToModel();
+
+            ContentEmbedded contentItem = schema.CreateContentEmbedded();
+
+            foreach (var restField in restContentItem.Fields)
             {
                 restField.Value.FromRestValue(restField.Key, contentItem, schema);
             }
@@ -57,6 +70,20 @@ namespace DragonFly.Data.Models
             foreach (var field in contentItem.Fields)
             {
                 restContentItem.Fields.Add(field.Key, field.Value.ToRestValue(includeNavigationProperties));
+            }
+
+            return restContentItem;
+        }
+
+        public static RestContentItem ToRest(this ContentEmbedded contentItem)
+        {
+            RestContentItem restContentItem = new RestContentItem();
+
+            restContentItem.Schema = contentItem.Schema.ToRest();
+
+            foreach (var field in contentItem.Fields)
+            {
+                restContentItem.Fields.Add(field.Key, field.Value.ToRestValue());
             }
 
             return restContentItem;

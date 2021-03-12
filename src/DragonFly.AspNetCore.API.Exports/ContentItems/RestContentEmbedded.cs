@@ -10,11 +10,11 @@ using Newtonsoft.Json;
 namespace DragonFly.Models
 {
     /// <summary>
-    /// ContentItem
+    /// RestContentEmbedded
     /// </summary>
-    public class RestContentItem : RestContentBase
+    public class RestContentEmbedded
     {
-        public RestContentItem()
+        public RestContentEmbedded()
         {
             Fields = new RestContentFields();
         }
@@ -24,12 +24,6 @@ namespace DragonFly.Models
         /// </summary>
         [JsonProperty("Schema", Order = 1)]
         public RestContentSchema Schema { get; set; }
-
-        /// <summary>
-        /// SchemaVersion
-        /// </summary>
-        [JsonProperty("SchemaVersion", Order = 2)]
-        public int SchemaVersion { get; set; }
 
         /// <summary>
         /// Fields

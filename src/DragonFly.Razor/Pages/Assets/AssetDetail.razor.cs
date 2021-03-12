@@ -73,20 +73,16 @@ namespace DragonFly.Client.Pages
             }
         }
 
-        protected override async Task SaveActionAsync()
+        protected override async Task CreateActionAsync()
         {
-            if(IsNewEntity)
-            {
-                await ContentService.CreateAsync(Entity);
+            await ContentService.CreateAsync(Entity);
 
-                NavigationManager.NavigateTo($"asset/{Entity.Id}");
-            }
-            else
-            {
-                await ContentService.UpdateAsync(Entity);
-            }
+            NavigationManager.NavigateTo($"asset/{Entity.Id}");
+        }
 
-            await RefreshAsync();
+        protected override async Task UpdateActionAsync()
+        {
+            await ContentService.UpdateAsync(Entity);
         }
 
         protected override async Task DeleteActionAsync()

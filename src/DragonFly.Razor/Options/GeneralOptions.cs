@@ -10,7 +10,7 @@ namespace DragonFly.Client.Core.Options
     {
         public GeneralOptions()
         {
-            Name = "DragonFly.Client";
+            Name = "DragonFly";
         }
 
         public string Name { get; set; }

@@ -84,28 +84,25 @@ namespace DragonFly.Models
                         break;
 
                     case JTokenType.Object:
-
                         if (contentField is ReferenceField referenceField)
                         {
                             if (bsonValue.HasValues)
                             {
-                                try
-                                {
-                                    var c = bsonValue.ToObject<RestContentItem>(NewtonJsonExtensions.CreateSerializer());
-                                    referenceField.ContentItem = c.ToModel();
-                                }
-                                catch(Exception ex)
-                                {
-                                    throw;
-                                }
+                                RestContentItem restContentItem = bsonValue.ToObject<RestContentItem>(NewtonJsonExtensions.CreateSerializer());
+                                referenceField.ContentItem = restContentItem.ToModel();
                             }
+                        }
+                        else if (contentField is EmbedField embedField)
+                        {
+                            RestContentEmbedded restContentItem = bsonValue.ToObject<RestContentEmbedded>(NewtonJsonExtensions.CreateSerializer());
+                            embedField.ContentEmbedded = restContentItem.ToModel();
                         }
                         else if (contentField is AssetField assetField)
                         {
-                            if(bsonValue.HasValues)
+                            if (bsonValue.HasValues)
                             {
-                                var c = bsonValue.ToObject<RestAsset>();
-                                assetField.Asset = c.ToModel();
+                                RestAsset restAsset = bsonValue.ToObject<RestAsset>();
+                                assetField.Asset = restAsset.ToModel();
                             }
                         }
                         else
@@ -135,19 +132,28 @@ namespace DragonFly.Models
                     bsonValue = new JValue(singleValueField.Value);
                 }
             }
-            else if (field is ReferenceField referenceField && referenceField.ContentItem != null)
+            else if (field is ReferenceField referenceField)
             {
-                if (includeNavigationProperties == true)
+                if (referenceField.ContentItem != null)
                 {
-                    //bsonValue = doc;
-                    bsonValue = JObject.FromObject(referenceField.ContentItem.ToRest(false), NewtonJsonExtensions.CreateSerializer());
+                    if (includeNavigationProperties == true)
+                    {
+                        bsonValue = JObject.FromObject(referenceField.ContentItem.ToRest(false), NewtonJsonExtensions.CreateSerializer());
+                    }
+                }
+            }
+            else if (field is EmbedField embedField)
+            {
+                if (embedField.ContentEmbedded != null)
+                {
+                    bsonValue = JObject.FromObject(embedField.ContentEmbedded.ToRest(), NewtonJsonExtensions.CreateSerializer());
                 }
             }
             else if (field is AssetField assetField)
             {
                 if (assetField.Asset != null)
                 {
-                    bsonValue = JObject.FromObject(assetField.Asset);
+                    bsonValue = JObject.FromObject(assetField.Asset.ToRest());
                 }
             }
             else if (field is ArrayField arrayField)

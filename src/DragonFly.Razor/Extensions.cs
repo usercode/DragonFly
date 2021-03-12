@@ -80,6 +80,7 @@ namespace DragonFly.Client.Core
             componentManager.RegisterField<AssetFieldView>();
             componentManager.RegisterField<BoolFieldView>();
             componentManager.RegisterField<DateFieldView>();
+            componentManager.RegisterField<EmbedFieldView>();
             componentManager.RegisterField<FloatFieldView>();
             componentManager.RegisterField<IntegerFieldView>();
             componentManager.RegisterField<ReferenceFieldView>();
@@ -92,6 +93,7 @@ namespace DragonFly.Client.Core
             componentManager.RegisterOptions<ArrayFieldOptionsView>();
             componentManager.RegisterOptions<AssetFieldOptionsView>();
             componentManager.RegisterOptions<BoolFieldOptionsView>();
+            componentManager.RegisterOptions<EmbedFieldOptionsView>();
             componentManager.RegisterOptions<FloatFieldOptionsView>();
             componentManager.RegisterOptions<IntegerFieldOptionsView>();
             componentManager.RegisterOptions<StringFieldOptionsView>();

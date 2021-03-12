@@ -1,4 +1,5 @@
 ﻿using DragonFly.Client.Base;
+using DragonFly.Content;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -14,6 +15,11 @@ namespace DragonFly.Client.Pages.ContentItems
         {
 
         }
-       
+
+        protected override string GetNavigationPath(ContentSchema entity)
+        {
+            return $"content/{entity.Name}";
+        }
+
     }
 }

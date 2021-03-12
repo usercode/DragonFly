@@ -58,9 +58,9 @@ namespace DragonFly.Client.Base
             else
             {
                 await UpdateAsync();
-
-                await RefreshAsync();
             }
+
+            await RefreshAsync();
         }
 
         public async Task CreateAsync()

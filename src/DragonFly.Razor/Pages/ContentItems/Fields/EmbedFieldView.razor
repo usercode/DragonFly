@@ -1,0 +1,50 @@
+﻿@inherits FieldComponent<EmbedField, EmbedFieldOptions>
+@inject NavigationManager NavigationManager
+@inject IImageAssetUrlService AssetPreview
+
+<BSModal @ref="LiveDemo" IsFullScreen="true">
+    <BSModalHeader OnClick="@(() => LiveDemo.Hide())">Modal title</BSModalHeader>
+    <BSModalBody>
+        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.Hide(); Field.ContentEmbedded = x.CreateContentEmbedded(); StateHasChanged(); }"></ContentItemTypeList>
+    </BSModalBody>
+    <BSModalFooter>
+        <BSButton Color="Color.Secondary" @onclick="@(() => LiveDemo.Hide())">Close</BSButton>
+        <BSButton Color="Color.Primary" @onclick="@(() => LiveDemo.Hide())">Save Changes</BSButton>
+    </BSModalFooter>
+</BSModal>
+
+<div class="embed-field">
+    <BSListGroup>
+        <BSListGroupItem>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                @if (Field.ContentEmbedded != null)
+                {
+                    <span class="badge badge-primary" style="margin-right:12px">@Field.ContentEmbedded.Schema.Name</span>
+                }
+                    <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+                </div>
+            <div>
+                @if (Field.ContentEmbedded != null)
+                {
+                    <div>
+                        <ContentItemFields Content="Field.ContentEmbedded" Schema="Field.ContentEmbedded.Schema" />
+                    </div>
+                }
+            </div>
+        </BSListGroupItem>
+    </BSListGroup>
+</div>
+
+@code {
+    private BSModal LiveDemo { get; set; }
+
+    protected void RemoveItem()
+    {
+        Field.ContentEmbedded = null;
+    }
+
+    public void OpenModal()
+    {
+        LiveDemo.Show();
+    }
+}

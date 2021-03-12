@@ -73,6 +73,13 @@
                                                             <ReferenceFields ContentItem="@referenceField.ContentItem" />
                                                         }
                                                     }
+                                                    else if (column is EmbedField embedField)
+                                                    {
+                                                        @if (embedField.ContentEmbedded != null)
+                                                        {
+
+                                                        }
+                                                    }
                                                     else if (column is AssetField assetField)
                                                     {
                                                         @if (assetField.Asset != null && assetField.Asset.IsImage())

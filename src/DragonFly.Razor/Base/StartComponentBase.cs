@@ -13,9 +13,7 @@ namespace DragonFly.Client.Base
     {
         public StartComponentBase()
         {
-            ToolbarItems = new List<ToolbarItem>();
-
-            BuildToolbarItems(ToolbarItems);
+            RebuildToolbar();
         }
 
         public async Task RefreshAsync()
@@ -52,15 +50,22 @@ namespace DragonFly.Client.Base
             //{
             //    await RefreshAsync();
             //}
+
+            RebuildToolbar();
         }
 
         protected virtual void OnRefreshed()
         {
+            RebuildToolbar();
+
+            StateHasChanged();
+        }
+
+        protected void RebuildToolbar()
+        {
             List<ToolbarItem> list = new List<ToolbarItem>();
             BuildToolbarItems(list);
             ToolbarItems = list;
-
-            StateHasChanged();
         }
 
         protected virtual void BuildToolbarItems(IList<ToolbarItem> toolbarItems)

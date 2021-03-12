@@ -9,26 +9,20 @@ using DragonFly.Data;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// ContentItem
+    /// ContentEmbed
     /// </summary>
-    public class ContentItem : ContentBase, IContentItemWithSchema
+    public class ContentEmbedded : IContentItemWithSchema
     {
-        public ContentItem()
+        public ContentEmbedded()
         {
             _fields = new ContentFields();
         }
 
-        public ContentItem(Guid id, ContentSchema schema)
+        public ContentEmbedded(ContentSchema schema)
             : this()
         {
-            _id = id;
             _schema = schema;
         }
-
-        /// <summary>
-        /// SchemaVersion
-        /// </summary>
-        public int SchemaVersion { get; set; }
 
         private ContentSchema _schema;
 

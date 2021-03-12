@@ -10,10 +10,10 @@ else
 {
     <div class="list-group">
 
-        @foreach (ContentSchema contentType in SearchResult.Items)
+        @foreach (ContentSchema schema in SearchResult.Items)
         {
-            <a class="list-group-item list-group-item-action" href="content/@contentType.Name">
-                <span class="oi oi-list-rich"></span> @contentType.Name
+            <a class="list-group-item list-group-item-action" @onclick="x => OpenItem(schema)">
+                <span class="oi oi-list-rich"></span> @schema.Name
             </a>
         }
 

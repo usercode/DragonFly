@@ -1,10 +1,7 @@
 ﻿@inject IOptions<GeneralOptions> Options
 
 <div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">@Options.Value.Name</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <p class="navbar-brand">@Options.Value.Name</p>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">

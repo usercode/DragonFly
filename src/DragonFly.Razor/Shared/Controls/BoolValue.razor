@@ -16,13 +16,6 @@
 
 @code {
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        AllowUnset = true;
-    }
-
     [Parameter]
     public bool? Value { get; set; }
 
@@ -30,7 +23,7 @@
     public Action<bool?> ValueChanged { get; set; }
 
     [Parameter]
-    public bool AllowUnset { get; set; }
+    public bool AllowUnset { get; set; } 
 
     private void OnChange(bool? value)
     {

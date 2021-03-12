@@ -42,6 +42,16 @@ namespace DragonFly.Content
             return item;
         }
 
+        public static ContentEmbedded CreateContentEmbedded(this ContentSchema schema)
+        {
+            ContentEmbedded item = new ContentEmbedded();
+            item.Schema = schema;
+
+            ApplySchema(item, schema);
+
+            return item;
+        }
+
         public static ArrayFieldItem CreateArrayField(this ArrayFieldOptions options)
         {
             ArrayFieldItem item = new ArrayFieldItem();
