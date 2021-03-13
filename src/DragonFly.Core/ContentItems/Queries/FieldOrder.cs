@@ -8,6 +8,7 @@ namespace DragonFly.Content.Queries
     {
         public FieldOrder()
         {
+            Name = string.Empty;
             Asc = true;
         }
 

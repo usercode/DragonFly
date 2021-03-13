@@ -7,8 +7,13 @@ namespace System
 {
     public static class Slugify
     {
-        public static string ToSlug(this string phrase)
+        public static string? ToSlug(this string? phrase)
         {
+            if (phrase == null)
+            {
+                return null;
+            }
+
             string str = phrase.ToLower().Trim();
 
             str = Regex.Replace(str, "ä", "ae", RegexOptions.Compiled);

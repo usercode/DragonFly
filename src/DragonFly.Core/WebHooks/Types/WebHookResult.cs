@@ -8,6 +8,6 @@ namespace DragonFly.Core.WebHooks.Types
 {
     public class WebHookResult
     {
-        public string Message { get; set; }
+        public string? Message { get; set; }
     }
 }

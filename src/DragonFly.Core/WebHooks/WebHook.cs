@@ -9,12 +9,12 @@ namespace DragonFly.Content
 {
     public class WebHook : ContentBase
     {
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
-        public virtual string EventName { get; set; }
+        public virtual string? EventName { get; set; }
 
-        public virtual string TargetUrl { get; set; }
+        public virtual string? TargetUrl { get; set; }
 
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
     }
 }

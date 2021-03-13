@@ -15,6 +15,7 @@ namespace DragonFly.Content.Queries
             Fields = new List<FieldQuery>();
             OrderFields = new List<FieldOrder>();
 
+            SearchPattern = string.Empty;
             Skip = 0;
             Top = 20;
         }

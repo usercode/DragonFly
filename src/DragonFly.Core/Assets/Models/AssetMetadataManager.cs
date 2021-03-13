@@ -14,7 +14,7 @@ namespace DragonFly.Content
         private IDictionary<string, Type> _byName;
         private IDictionary<Type, string> _byType;
 
-        private static AssetMetadataManager _default;
+        private static AssetMetadataManager? _default;
 
         public static AssetMetadataManager Default
         {
@@ -59,7 +59,7 @@ namespace DragonFly.Content
 
         public string GetMetadataName(Type type)
         {
-            if (_byType.TryGetValue(type, out string name))
+            if (_byType.TryGetValue(type, out string? name))
             {
                 return name;
             }
@@ -69,7 +69,7 @@ namespace DragonFly.Content
 
         public Type GetMetadataType(string name)
         {
-            if(_byName.TryGetValue(name, out Type result))
+            if(_byName.TryGetValue(name, out Type? result))
             {
                 return result;
             }

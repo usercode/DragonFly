@@ -8,6 +8,11 @@ namespace DragonFly.Content
 {
     public class TextAreaFieldOptions : ContentFieldOptions
     {
+        public TextAreaFieldOptions()
+        {
+            DefaultValue = string.Empty;
+        }
+
         /// <summary>
         /// DefaultValue
         /// </summary>

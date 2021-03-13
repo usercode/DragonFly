@@ -33,6 +33,11 @@ namespace DragonFly.Data
         {
             var entity = AssetFolders.AsQueryable().FirstOrDefault(x => x.Id == id);
 
+            if(entity == null)
+            {
+                throw new Exception();
+            }
+
             return entity.ToModel();
         }
 

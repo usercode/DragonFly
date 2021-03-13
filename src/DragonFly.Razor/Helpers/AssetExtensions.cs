@@ -11,6 +11,11 @@ namespace DragonFly.Razor.Helpers
     {
         public static string ToFileSize(this Asset asset)
         {
+            if(asset.Size == null)
+            {
+                return "? KB";
+            }
+
             return  $"{(double)asset.Size / 1024:###,###,##0.00} KB";
         }
     }

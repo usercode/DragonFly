@@ -36,13 +36,11 @@ namespace DragonFly.Data
         public IMongoDatabase OfmlDb { get; }
 
         public IMongoCollection<MongoContentSchema> ContentSchemas { get; }
-        public IMongoCollection<MongoContentSchema> ContentSchemasPublished { get; }
         public IMongoCollection<MongoAssetFolder> AssetFolders { get; }
-        public IMongoCollection<MongoAssetFolder> AssetFoldersPublished { get; }
         public IMongoCollection<MongoAsset> Assets { get; }
-        public IMongoCollection<MongoAsset> AssetsPublished { get; }
+        //public IMongoCollection<MongoAsset> AssetsPublished { get; }
         public IGridFSBucket AssetData { get; private set; }
-        public IGridFSBucket AssetDataPublished { get; private set; }
+        //public IGridFSBucket AssetDataPublished { get; private set; }
 
         public IMongoCollection<MongoWebHook> WebHooks { get; }
 
@@ -52,11 +50,11 @@ namespace DragonFly.Data
 
         public IDateTimeService DateTimeService { get; }
 
-        private static MongoStorage _default;
+        private static MongoStorage? _default;
 
         public static MongoStorage Default
         {
-            get => _default;
+            get => _default!;
             set => _default = value;
         }
 

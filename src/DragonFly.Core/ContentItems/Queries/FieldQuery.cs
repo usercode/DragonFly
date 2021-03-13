@@ -8,7 +8,8 @@ namespace DragonFly.Content.Queries
     {
         public FieldQuery()
         {
-
+            Name = string.Empty;
+            Value = string.Empty;
         }
 
         public FieldQuery(string name, string value, QueryFieldType valueType)

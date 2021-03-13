@@ -21,10 +21,10 @@ namespace DragonFly.Content
 
         public override string ToString()
         {
-            return Value;
+            return $"{Value}";
         }
 
-        protected override void OnValueChanging(ref string newValue)
+        protected override void OnValueChanging(ref string? newValue)
         {
             if(string.IsNullOrWhiteSpace(newValue))
             {

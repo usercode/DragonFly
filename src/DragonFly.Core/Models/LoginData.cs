@@ -8,6 +8,11 @@ namespace DragonFly.AspNetCore.Exports
 {
     public class LoginData
     {
-        public string Password { get; set; }
+        public LoginData()
+        {
+
+        }
+
+        public string? Password { get; set; }
     }
 }

@@ -20,9 +20,8 @@ namespace DragonFly.Content
         public virtual bool CanSorting => false;
 
 
-        public virtual IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public virtual void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            return new List<ValidationError>();
         }
     }
 }

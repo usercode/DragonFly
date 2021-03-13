@@ -9,12 +9,12 @@ namespace DragonFly.Data.Models.WebHooks
 {
     public class MongoWebHook : MongoContentBase
     {
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
-        public virtual string EventName { get; set; }
+        public virtual string? EventName { get; set; }
 
-        public virtual string TargetUrl { get; set; }
+        public virtual string? TargetUrl { get; set; }
 
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
     }
 }

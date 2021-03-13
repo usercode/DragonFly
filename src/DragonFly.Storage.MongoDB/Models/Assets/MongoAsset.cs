@@ -16,37 +16,37 @@ namespace DragonFly.Data.Models.Assets
         /// <summary>
         /// Name
         /// </summary>
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Alt
         /// </summary>
-        public string Alt { get; set; }
+        public string? Alt { get; set; }
 
         /// <summary>
         /// Description
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Filename
         /// </summary>
-        public string Slug { get; set; }
+        public string? Slug { get; set; }
 
         /// <summary>
         /// Size
         /// </summary>
-        public long Size { get; set; }
+        public long? Size { get; set; }
 
         /// <summary>
         /// Hash
         /// </summary>
-        public string Hash { get; set; }
+        public string? Hash { get; set; }
 
         /// <summary>
         /// ContentType
         /// </summary>
-        public string MimeType { get; set; }
+        public string? MimeType { get; set; }
 
         /// <summary>
         /// Parent

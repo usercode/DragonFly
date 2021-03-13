@@ -7,7 +7,7 @@ namespace DragonFly.Contents.Assets
 {
     public class MongoAssetFolder : MongoContentBase
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public Guid? Parent { get; set; }
     }

@@ -13,15 +13,10 @@ namespace DragonFly.Content
     /// </summary>
     public class ContentEmbedded : IContentItemWithSchema
     {
-        public ContentEmbedded()
-        {
-            _fields = new ContentFields();
-        }
-
         public ContentEmbedded(ContentSchema schema)
-            : this()
         {
             _schema = schema;
+            _fields = new ContentFields();
         }
 
         private ContentSchema _schema;

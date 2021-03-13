@@ -16,6 +16,7 @@ namespace DragonFly.ContentTypes
     {
         public MongoContentSchema()
         {
+            Name = string.Empty;
             Fields = new Dictionary<string, MongoContentFieldDefinition>();
             ListFields = new List<string>();
             ReferenceFields = new List<string>();
@@ -25,13 +26,12 @@ namespace DragonFly.ContentTypes
         /// <summary>
         /// Name
         /// </summary>
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         
-
         /// <summary>
         /// Parts
         /// </summary>
-        public IDictionary<string, MongoContentFieldDefinition> Fields { get; set; }
+        public virtual IDictionary<string, MongoContentFieldDefinition> Fields { get; set; }
 
         /// <summary>
         /// ListFields

@@ -46,7 +46,12 @@ namespace DragonFly.Data
 
         public async Task<WebHook> GetAsync(Guid id)
         {
-            MongoWebHook result = WebHooks.AsQueryable().FirstOrDefault(x => x.Id == id);
+            MongoWebHook? result = WebHooks.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+            if(result == null)
+            {
+                throw new Exception();
+            }
 
             return result.ToModel();
         }

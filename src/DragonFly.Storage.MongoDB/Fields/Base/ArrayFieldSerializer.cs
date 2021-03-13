@@ -15,7 +15,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
         {
             if (bsonvalue is BsonArray bsonArray)
             {
-                ArrayFieldOptions arrayOptions = schemaField.Options as ArrayFieldOptions;
+                ArrayFieldOptions arrayOptions = (ArrayFieldOptions)schemaField.Options;
 
                 foreach (BsonDocument item in bsonArray)
                 {

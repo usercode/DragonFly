@@ -23,13 +23,14 @@ namespace DragonFly.Data.Models
                 return;
             }
 
-            if (contentItem.Fields.TryGetValue(fieldName, out ContentField contentField))
+            if (contentItem.Fields.TryGetValue(fieldName, out ContentField? contentField))
             {
-                schema.Fields.TryGetValue(fieldName, out ContentSchemaField definition);
+                if (schema.Fields.TryGetValue(fieldName, out ContentSchemaField? schemaField))
+                {
+                    IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(contentField.GetType());
 
-                IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(contentField.GetType());
-                
-                fieldSerializer.Read(definition, contentField, bsonValue);
+                    fieldSerializer.Read(schemaField, contentField, bsonValue);
+                }
             }
         }
 

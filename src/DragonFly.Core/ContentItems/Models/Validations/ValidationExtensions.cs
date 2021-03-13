@@ -18,7 +18,11 @@ namespace DragonFly.Content
             {
                 ContentSchemaField f = contentItem.Schema.Fields[field.Key];
 
-                result.AddRange(field.Value.Validate(field.Key, f.Options));
+                ValidationContext validationContext = new ValidationContext();
+
+                field.Value.Validate(field.Key, f.Options, validationContext);
+
+                return validationContext.Errors;
             }
 
             return result;

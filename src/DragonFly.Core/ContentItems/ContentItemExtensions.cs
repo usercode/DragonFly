@@ -13,7 +13,7 @@ namespace DragonFly.Content
     {
         public static ContentField GetField(this IContentItem contentItem, string name)
         {
-            if(contentItem.Fields.TryGetValue(name, out ContentField contentField) == false)
+            if(contentItem.Fields.TryGetValue(name, out ContentField? contentField) == false)
             {
                 throw new Exception($"The field '{name}' was not found.");
             }
@@ -27,15 +27,14 @@ namespace DragonFly.Content
             return (T)GetField(contentItem, name);
         }
 
-        public static T GetSingleValueField<T>(this IContentItem contentItem, string name)
+        public static T? GetSingleValueField<T>(this IContentItem contentItem, string name)
         {
             return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
         }
 
         public static ContentItem CreateContentItem(this ContentSchema schema)
         {
-            ContentItem item = new ContentItem();
-            item.Schema = schema;
+            ContentItem item = new ContentItem(schema);
 
             ApplySchema(item, schema);
 
@@ -44,8 +43,7 @@ namespace DragonFly.Content
 
         public static ContentEmbedded CreateContentEmbedded(this ContentSchema schema)
         {
-            ContentEmbedded item = new ContentEmbedded();
-            item.Schema = schema;
+            ContentEmbedded item = new ContentEmbedded(schema);
 
             ApplySchema(item, schema);
 
@@ -61,15 +59,30 @@ namespace DragonFly.Content
             return item;
         }
 
-        public static void ApplySchema(this ContentItem contentItem)
+        public static void ApplySchema(this ContentItem? contentItem)
         {
+            if (contentItem == null)
+            {
+                throw new ArgumentNullException(nameof(contentItem));
+            }
+
             ApplySchema(contentItem, contentItem.Schema);
 
             contentItem.SchemaVersion = contentItem.Schema.Version;
         }
 
-        public static void ApplySchema(this IContentItem contentItem, IContentSchema schema)
+        public static void ApplySchema(this IContentItem? contentItem, IContentSchema? schema)
         {
+            if (contentItem == null)
+            {
+                throw new ArgumentNullException(nameof(contentItem));
+            }
+
+            if (schema == null)
+            {
+                throw new ArgumentNullException(nameof(schema));
+            }
+
             //remove content fields by schema
             foreach (var field in contentItem.Fields.ToList())
             {
@@ -84,7 +97,7 @@ namespace DragonFly.Content
             {
                 if (field.Value is ArrayField arrayField)
                 {
-                    ArrayFieldOptions options = (ArrayFieldOptions)schema.Fields[field.Key].Options;
+                    ArrayFieldOptions? options = (ArrayFieldOptions?)schema.Fields[field.Key].Options;
 
                     foreach (ArrayFieldItem item in arrayField.Items)
                     {

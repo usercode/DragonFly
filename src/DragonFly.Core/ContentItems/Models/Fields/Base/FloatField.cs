@@ -22,27 +22,27 @@ namespace DragonFly.Content
             Value = number;
         }
 
-        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             FloatFieldOptions fieldOptions = (FloatFieldOptions)options;
-            IList<ValidationError> errors = new List<ValidationError>();
 
-            if (fieldOptions.IsRequired && HasValue == false)
+            if (fieldOptions != null)
             {
-                errors.AddRequire(fieldName);
-            }
+                if (fieldOptions.IsRequired && HasValue == false)
+                {
+                    context.AddRequireValidation(fieldName);
+                }
 
-            if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
-            {
-                errors.AddRange(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
+                if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
+                {
+                    context.AddRangeValidation(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
+                }                
             }
-
-            return errors;
         }
 
         public override string ToString()
         {
-            return Value.ToString();
+            return $"{Value}";
         }
     }
 }

@@ -13,13 +13,14 @@ namespace DragonFly.Data.Content.ContentTypes
     {
         public MongoContentFieldDefinition()
         {
+            FieldType = string.Empty;
             Options = BsonNull.Value;
         }
 
         /// <summary>
         /// Label
         /// </summary>
-        public string Label { get; set; }
+        public string? Label { get; set; }
 
         /// <summary>
         /// SortKey

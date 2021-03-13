@@ -19,10 +19,9 @@ namespace DragonFly.Data.Models
     {
         public static ContentSchema ToModel(this MongoContentSchema mongoSchema)
         {
-            ContentSchema schema = new ContentSchema();
+            ContentSchema schema = new ContentSchema(mongoSchema.Name);
 
             schema.Id = mongoSchema.Id;
-            schema.Name = mongoSchema.Name;
             schema.CreatedAt = mongoSchema.CreatedAt;
             schema.ModifiedAt = mongoSchema.ModifiedAt;
             schema.Version = mongoSchema.Version;
@@ -30,27 +29,26 @@ namespace DragonFly.Data.Models
             schema.ReferenceFields = mongoSchema.ReferenceFields.ToList();
             schema.OrderFields = mongoSchema.OrderFields.ToList();
 
-            foreach(var mongoField in mongoSchema.Fields)
+            foreach(var field in mongoSchema.Fields)
             {
-                ContentSchemaField definition = new ContentSchemaField();
+                Type optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
+                ContentFieldOptions? options = null;
 
-                definition.Label = mongoField.Value.Label;
-                definition.SortKey = mongoField.Value.SortKey;
-                definition.FieldType = mongoField.Value.FieldType;
-                
-                ContentFieldOptions options = ContentFieldManager.Default.CreateOptions(mongoField.Value.FieldType);
-
-                if (options != null && mongoField.Value.Options != BsonNull.Value)
+                if (field.Value.Options != BsonNull.Value)
                 {
-                    definition.Options = (ContentFieldOptions)BsonSerializer.Deserialize((BsonDocument)mongoField.Value.Options, options.GetType());
+                    options = (ContentFieldOptions)BsonSerializer.Deserialize((BsonDocument)field.Value.Options, optionsType);
                 }
 
-                if(definition.Options == null)
+                if (options == null)
                 {
-                    definition.Options = options;
+                    options = ContentFieldManager.Default.CreateOptions(field.Value.FieldType);
                 }
 
-                schema.Fields.Add(mongoField.Key, definition);
+                ContentSchemaField schemaField = new ContentSchemaField(field.Value.FieldType, options);
+                schemaField.Label = field.Value.Label;
+                schemaField.SortKey = field.Value.SortKey;
+
+                schema.Fields.Add(field.Key, schemaField);
             }
 
             return schema;

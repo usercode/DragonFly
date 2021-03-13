@@ -18,29 +18,28 @@ namespace DragonFly.Content
         /// <summary>
         /// ContentEmbedded
         /// </summary>
-        public ContentEmbedded ContentEmbedded { get; set; }
+        public ContentEmbedded? ContentEmbedded { get; set; }
 
-        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             EmbedFieldOptions fieldOptions = (EmbedFieldOptions)options;
-            IList<ValidationError> errors = new List<ValidationError>();
 
             if (fieldOptions.IsRequired && ContentEmbedded == null)
             {
-                errors.AddRequire(fieldName);
+                context.AddRequireValidation(fieldName);
             }
-
-            return errors;
         }
 
         public override string ToString()
         {
-            if(ContentEmbedded == null)
+            if (ContentEmbedded == null)
             {
                 return "no embed";
             }
-
-            return ContentEmbedded.ToString();
+            else
+            {
+                return $"{ContentEmbedded}";
+            }
         }
     }
 }

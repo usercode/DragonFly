@@ -56,7 +56,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
         /// Size
         /// </summary>
         [JsonProperty("Size", Order = 100)]
-        public virtual long Size { get; set; }
+        public virtual long? Size { get; set; }
 
         /// <summary>
         /// Folder

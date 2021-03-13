@@ -9,17 +9,23 @@ namespace DragonFly.Content
     {
         public AssetFolder()
         {
-
+            Name = "Unknown";
         }
 
         public AssetFolder(Guid id)
+            : this()
         {
             Id = id;
         }
 
+        /// <summary>
+        /// Name
+        /// </summary>
+        public virtual string? Name { get; set; }
 
-        public virtual string Name { get; set; }
-
-        public virtual AssetFolder Parent { get; set; }
+        /// <summary>
+        /// Parent
+        /// </summary>
+        public virtual AssetFolder? Parent { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace DragonFly.Core.Assets.Queries
     {
         public AssetFolderQuery()
         {
+            Pattern = string.Empty;
             Take = 50;
         }
 

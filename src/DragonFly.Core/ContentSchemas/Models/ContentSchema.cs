@@ -14,6 +14,7 @@ namespace DragonFly.Content
     {
         public ContentSchema()
         {
+            _name = string.Empty;
             _fields = new ContentSchemaFields();
             _listFields = new List<string>();
             _referenceFields = new List<string>();

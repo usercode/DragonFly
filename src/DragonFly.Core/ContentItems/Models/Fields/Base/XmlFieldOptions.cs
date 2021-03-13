@@ -8,6 +8,11 @@ namespace DragonFly.Content
 {
     public class XmlFieldOptions : ContentFieldOptions
     {
+        public XmlFieldOptions()
+        {
+            DefaultValue = string.Empty;
+        }
+
         /// <summary>
         /// DefaultValue
         /// </summary>

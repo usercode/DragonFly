@@ -30,7 +30,7 @@ namespace DragonFly.Core.WebHooks
 
         public async Task OnPublishedAsync(IDataStorage storage, ContentItem contentItem)
         {
-            var result = await storage.QueryAsync(new WebHookQuery() { Event = null });
+            var result = await storage.QueryAsync(new WebHookQuery());
 
             foreach(WebHook item in result.Items)
             {
@@ -43,7 +43,7 @@ namespace DragonFly.Core.WebHooks
 
         public async Task OnPublishedAsync(IDataStorage storage, Asset asset)
         {
-            var result = await storage.QueryAsync(new WebHookQuery() { Event = null });
+            var result = await storage.QueryAsync(new WebHookQuery());
 
             foreach (WebHook item in result.Items)
             {

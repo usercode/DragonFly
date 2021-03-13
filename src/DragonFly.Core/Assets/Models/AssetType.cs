@@ -16,11 +16,6 @@ namespace DragonFly.Core.Assets.Models
         public static AssetType Video = new AssetType("Video", MimeTypes.Mp4, MimeTypes.Ogg, MimeTypes.WebM);
         public static AssetType Document = new AssetType("Document", MimeTypes.Pdf);
 
-        public AssetType()
-        {
-            UsedMimeTypes = new List<string>();
-        }
-
         public AssetType(string name, params string[] mimeTypes)
         {
             Name = name;

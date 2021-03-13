@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields
 {
     public class MongoFieldManager
     {
-        private static MongoFieldManager _default;
+        private static MongoFieldManager? _default;
 
         public static MongoFieldManager Default
         {
@@ -59,7 +59,7 @@ namespace DragonFly.Storage.MongoDB.Fields
 
         public IFieldSerializer GetByType(Type fieldType)
         {
-            if (_fields.TryGetValue(fieldType, out IFieldSerializer fieldSerializer))
+            if (_fields.TryGetValue(fieldType, out IFieldSerializer? fieldSerializer))
             {
                 return fieldSerializer;
             }

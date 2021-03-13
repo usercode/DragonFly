@@ -129,7 +129,7 @@ namespace DragonFly.Data
 
             if(string.IsNullOrEmpty(assetQuery.Pattern) == false)
             {
-                query = query.Where(x => x.Name.Contains(assetQuery.Pattern));
+                query = query.Where(x => x.Name!.Contains(assetQuery.Pattern));
             }
 
             QueryResult<Asset> queryResult = new QueryResult<Asset>();

@@ -16,34 +16,31 @@ namespace DragonFly.Content
         {
         }
 
-        public StringField(string text)
+        public StringField(string? text)
         {
             Value = text;
         }
 
-        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             StringFieldOptions fieldOptions = (StringFieldOptions)options;
-            IList<ValidationError> errors = new List<ValidationError>();
 
             if (fieldOptions.IsRequired && HasValue == false)
             {
-                errors.AddRequire(fieldName);
+                context.AddRequireValidation(fieldName);
             }
 
-            if (HasValue)
+            if (Value != null)
             {
                 if (Value.Length < fieldOptions.MinLength)
                 {
-                    errors.AddMinimum(fieldName, fieldOptions.MinLength);
+                    context.AddMinimumValidation(fieldName, fieldOptions.MinLength);
                 }
                 else if (Value.Length > fieldOptions.MaxLength)
                 {
-                    errors.AddMaximum(fieldName, fieldOptions.MaxLength);
+                    context.AddMaximumValidation(fieldName, fieldOptions.MaxLength);
                 }
             }
-
-            return errors;
         }
 
         public override bool CanSorting => true;

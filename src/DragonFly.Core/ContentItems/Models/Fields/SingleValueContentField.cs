@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// ContentField
+    /// SingleValueContentField
     /// </summary>
     public abstract class SingleValueContentField<T> : ContentField, ISingleValueContentField       
     {
@@ -15,12 +15,12 @@ namespace DragonFly.Content
 
         }
 
-        private T _value;
+        private T? _value;
 
         /// <summary>
         /// Value
         /// </summary>
-        public T Value 
+        public T? Value 
         {
             get => _value;
             set
@@ -33,9 +33,9 @@ namespace DragonFly.Content
 
         public bool HasValue => Value != null;
 
-        object ISingleValueContentField.Value => Value;
+        object? ISingleValueContentField.Value => Value;
 
-        protected virtual void OnValueChanging(ref T newValue)
+        protected virtual void OnValueChanging(ref T? newValue)
         {
         }
 

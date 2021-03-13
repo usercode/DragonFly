@@ -18,13 +18,12 @@ namespace DragonFly.Data.Models
     {
         public static ContentSchema ToModel(this RestContentSchema restContentItem)
         {
-            ContentSchema contentSchema = new ContentSchema();
+            ContentSchema contentSchema = new ContentSchema(restContentItem.Name);
 
             contentSchema.Id = restContentItem.Id;
             contentSchema.CreatedAt = restContentItem.CreatedAt;
             contentSchema.ModifiedAt = restContentItem.ModifiedAt;
             contentSchema.Version = restContentItem.Version;
-            contentSchema.Name = restContentItem.Name;
             contentSchema.ListFields = restContentItem.ListFields.ToList();
             contentSchema.ReferenceFields = restContentItem.ReferenceFields.ToList();
             contentSchema.OrderFields = restContentItem.OrderFields.ToList();
@@ -58,16 +57,16 @@ namespace DragonFly.Data.Models
             return restContentItem;
         }
 
-        public static RestContentSchemaField ToRest(this ContentSchemaField definition)
+        public static RestContentSchemaField ToRest(this ContentSchemaField schemaField)
         {
             RestContentSchemaField restContentFieldDefinition = new RestContentSchemaField();
-            restContentFieldDefinition.Label = definition.Label;
-            restContentFieldDefinition.SortKey = definition.SortKey;
-            restContentFieldDefinition.FieldType = definition.FieldType;
+            restContentFieldDefinition.Label = schemaField.Label;
+            restContentFieldDefinition.SortKey = schemaField.SortKey;
+            restContentFieldDefinition.FieldType = schemaField.FieldType;
 
-            if (definition.Options != null)
+            if (schemaField.Options != null)
             {
-                restContentFieldDefinition.Options = JObject.FromObject(definition.Options, NewtonJsonExtensions.CreateSerializer());
+                restContentFieldDefinition.Options = JObject.FromObject(schemaField.Options, NewtonJsonExtensions.CreateSerializer());
             }
 
             return restContentFieldDefinition;
@@ -75,19 +74,15 @@ namespace DragonFly.Data.Models
 
         public static ContentSchemaField ToModel(this RestContentSchemaField definition)
         {
-            ContentSchemaField restContentFieldDefinition = new ContentSchemaField();
-            restContentFieldDefinition.Label = definition.Label;
-            restContentFieldDefinition.SortKey = definition.SortKey;
-            restContentFieldDefinition.FieldType = definition.FieldType;
+            Type optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
 
-            if (definition.Options != null)
-            {
-                ContentFieldOptions options = ContentFieldManager.Default.CreateOptions(definition.FieldType);
+            ContentFieldOptions options = (ContentFieldOptions)definition.Options.ToObject(optionsType, NewtonJsonExtensions.CreateSerializer());
 
-                restContentFieldDefinition.Options = (ContentFieldOptions)definition.Options.ToObject(options.GetType(), NewtonJsonExtensions.CreateSerializer());
-            }
+            ContentSchemaField schemaField = new ContentSchemaField(definition.FieldType, options);
+            schemaField.Label = definition.Label;
+            schemaField.SortKey = definition.SortKey;
 
-            return restContentFieldDefinition;
+            return schemaField;
         }
     }
 }

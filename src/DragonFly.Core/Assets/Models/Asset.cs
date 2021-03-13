@@ -21,42 +21,42 @@ namespace DragonFly.Content
         /// <summary>
         /// Name
         /// </summary>
-        public virtual string Name { get; set; }
+        public virtual string? Name { get; set; }
 
         /// <summary>
         /// Alt
         /// </summary>
-        public virtual string Alt { get; set; }
+        public virtual string? Alt { get; set; }
 
         /// <summary>
         /// Description
         /// </summary>
-        public virtual string Description { get; set; }
+        public virtual string? Description { get; set; }
 
         /// <summary>
         /// Filename
         /// </summary>
-        public virtual string Slug { get; set; }
+        public virtual string? Slug { get; set; }
 
         /// <summary>
         /// ContentType
         /// </summary>
-        public virtual string MimeType { get; set; }
+        public virtual string? MimeType { get; set; }
 
         /// <summary>
         /// Hash
         /// </summary>
-        public virtual string Hash { get; set; }
+        public virtual string? Hash { get; set; }
 
         /// <summary>
         /// Size
         /// </summary>
-        public virtual long Size { get; set; }
+        public virtual long? Size { get; set; }
 
         /// <summary>
         /// Folder
         /// </summary>
-        public virtual AssetFolder Folder { get; set; }
+        public virtual AssetFolder? Folder { get; set; }
 
         private AssetMetadatas _metaddata;
 

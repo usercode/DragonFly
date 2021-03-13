@@ -8,7 +8,7 @@ namespace DragonFly.Core.WebHooks
 {
     public class WebHookQuery
     {
-        public string Event { get; set; }
+        public string? Event { get; set; }
 
     }
 }

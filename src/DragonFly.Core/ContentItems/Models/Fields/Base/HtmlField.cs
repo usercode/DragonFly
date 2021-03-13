@@ -17,17 +17,14 @@ namespace DragonFly.Content
 
         }
 
-        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             HtmlFieldOptions fieldOptions = (HtmlFieldOptions)options;
-            IList<ValidationError> errors = new List<ValidationError>();
 
             if (fieldOptions.IsRequired && HasValue == false)
             {
-                errors.AddRequire(fieldName);
+                context.AddRequireValidation(fieldName);
             }
-
-            return errors;
         }
 
         public HtmlField(string text)

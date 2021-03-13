@@ -13,16 +13,16 @@ namespace DragonFly.Content
     /// </summary>
     public class ContentItem : ContentBase, IContentItemWithSchema
     {
-        public ContentItem()
+        public ContentItem(ContentSchema schema)
         {
+            _schema = schema;
             _fields = new ContentFields();
         }
 
         public ContentItem(Guid id, ContentSchema schema)
-            : this()
+            : this(schema)
         {
             _id = id;
-            _schema = schema;
         }
 
         /// <summary>

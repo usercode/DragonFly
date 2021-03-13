@@ -39,7 +39,7 @@ namespace DragonFly.Data
                 name += "_Published";
             }
 
-            if (ContentItems.TryGetValue(name, out IMongoCollection<MongoContentItem> items) == false)
+            if (ContentItems.TryGetValue(name, out IMongoCollection<MongoContentItem>? items) == false)
             {
                 items = OfmlDb.GetCollection<MongoContentItem>(name);
 

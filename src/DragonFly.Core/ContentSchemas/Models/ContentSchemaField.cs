@@ -11,10 +11,16 @@ namespace DragonFly.Content
     /// </summary>
     public class ContentSchemaField : IContentFieldDefinition
     {
+        public ContentSchemaField(string fieldType, ContentFieldOptions options)
+        {
+            FieldType = fieldType;
+            Options = options;
+        }
+
         /// <summary>
         /// Label
         /// </summary>
-        public string Label { get; set; }
+        public string? Label { get; set; }
 
         /// <summary>
         /// SortKey

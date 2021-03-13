@@ -44,7 +44,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder
             {
                 if (property.PropertyType.IsSubclassOf(typeof(ContentField)))
                 {
-                    schema.AddField(property.Name, property.PropertyType);
+                    //schema.AddField(property.Name, property.PropertyType);
                 }                
             }
 

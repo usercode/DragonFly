@@ -22,22 +22,19 @@ namespace DragonFly.Content
         /// </summary>
         public IList<ArrayFieldItem> Items { get; set; }
 
-        public override IEnumerable<ValidationError> Validate(string fieldName, ContentFieldOptions options)
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             ArrayFieldOptions fieldOptions = (ArrayFieldOptions)options;
-            IList<ValidationError> errors = new List<ValidationError>();
 
             if (fieldOptions.IsRequired && Items.Any() == false)
             {
-                errors.AddRequire(fieldName);
+                context.AddRequireValidation(fieldName);
             }
 
             if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
             {
-                errors.AddRange(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
+                context.AddRangeValidation(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
             }
-
-            return errors;
         }
     }
 }
