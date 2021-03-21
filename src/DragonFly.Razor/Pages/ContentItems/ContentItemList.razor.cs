@@ -41,13 +41,13 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             if (EntityType != null)
             {
-                if (Schema == null)
-                {
-                    Schema = await ContentService.GetContentSchemaAsync(EntityType);
+                Schema = await ContentService.GetContentSchemaAsync(EntityType);
 
+                if (OrderFields.Any() == false)
+                {
                     OrderFields = Schema.OrderFields.ToList();
                 }
-
+                
                 var queryParameters = new QueryParameters()
                 {
                    SearchPattern = SearchPattern,

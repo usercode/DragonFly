@@ -60,7 +60,7 @@ namespace DragonFly.Client.Base
         public string SearchPattern 
         {
             get => _searchPattern;
-            set { _searchPattern = value; RefreshAsync();  }
+            set { _searchPattern = value; }
         }
 
         protected abstract string GetNavigationPath(T entity);

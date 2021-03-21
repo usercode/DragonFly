@@ -34,7 +34,7 @@ namespace DragonFly.Content
         {
             if (ContentEmbedded == null)
             {
-                return "no embed";
+                return "no embedded content";
             }
             else
             {

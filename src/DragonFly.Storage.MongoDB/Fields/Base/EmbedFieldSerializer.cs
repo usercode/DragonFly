@@ -21,7 +21,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 
             contentField.ContentEmbedded = schema.CreateContentEmbedded();
 
-            if (bsonValue[nameof(IContentItem.Fields)] is BsonDocument bsonDocument)
+            if (bsonValue[nameof(IContentElement.Fields)] is BsonDocument bsonDocument)
             {
                 foreach (var field in bsonDocument)
                 {
@@ -44,7 +44,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
                     fields.Add(f.Key, f.Value.ToBsonValue());
                 }
 
-                doc.Add(nameof(IContentItem.Fields), fields);
+                doc.Add(nameof(IContentElement.Fields), fields);
 
                 return doc;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +32,7 @@ namespace DragonFly.Content
             }
         }
 
+        [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
         public bool HasValue => Value != null;
 
         object? ISingleValueContentField.Value => Value;

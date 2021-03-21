@@ -11,9 +11,9 @@ namespace DragonFly.Content
     /// </summary>
     public static class ContentItemExtensions
     {
-        public static ContentField GetField(this IContentItem contentItem, string name)
+        public static ContentField GetField(this IContentElement contentItem, string name)
         {
-            if(contentItem.Fields.TryGetValue(name, out ContentField? contentField) == false)
+            if (contentItem.Fields.TryGetValue(name, out ContentField? contentField) == false)
             {
                 throw new Exception($"The field '{name}' was not found.");
             }
@@ -21,13 +21,13 @@ namespace DragonFly.Content
             return contentField;
         }
 
-        public static T GetField<T>(this IContentItem contentItem, string name)
+        public static T GetField<T>(this IContentElement contentItem, string name)
            where T : ContentField
         {
             return (T)GetField(contentItem, name);
         }
 
-        public static T? GetSingleValueField<T>(this IContentItem contentItem, string name)
+        public static T? GetSingleValueField<T>(this IContentElement contentItem, string name)
         {
             return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
         }
@@ -71,7 +71,7 @@ namespace DragonFly.Content
             contentItem.SchemaVersion = contentItem.Schema.Version;
         }
 
-        public static void ApplySchema(this IContentItem? contentItem, IContentSchema? schema)
+        public static void ApplySchema(this IContentElement? contentItem, IContentSchema? schema)
         {
             if (contentItem == null)
             {

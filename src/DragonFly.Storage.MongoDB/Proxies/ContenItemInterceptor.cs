@@ -41,7 +41,7 @@ namespace DragonFly.Data.Proxies
 
         private async Task LoadDataAsync(ContentItem main)
         {
-            var result = await MongoStorage.Default.GetContentItemAsync(main.Schema.Name, main.Id);
+            ContentItem result = await MongoStorage.Default.GetContentItemAsync(main.Schema.Name, main.Id);
 
             main.Id = result.Id;
             main.Schema = result.Schema;

@@ -42,11 +42,13 @@ namespace DragonFly.AspNetCore.API.Middlewares
                 contentItem.ApplySchema(schemaModel);
             }
 
-            QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>();
-            resultQuery.Offset = contentItems.Offset;
-            resultQuery.Count = contentItems.Count;
-            resultQuery.TotalCount = contentItems.TotalCount;
-            resultQuery.Items = contentItems.Items.Select(x => x.ToRest()).ToList();
+            QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()
+            {
+                Offset = contentItems.Offset,
+                Count = contentItems.Count,
+                TotalCount = contentItems.TotalCount,
+                Items = contentItems.Items.Select(x => x.ToRest()).ToList()
+            };
 
             string json = jsonService.Serialize(resultQuery);
 

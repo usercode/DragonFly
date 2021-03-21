@@ -1,4 +1,6 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.AspNetCore.API.Models;
+using DragonFly.Client;
+using DragonFly.Content;
 using DragonFly.Models;
 using Newtonsoft.Json.Linq;
 using System;
@@ -21,7 +23,15 @@ namespace DragonFly.Data.Models
         {
             if (schema == null)
             {
-                schema = restContentItem.Schema.ToModel();
+                if (restContentItem.Schema.Type == JTokenType.String)
+                {
+                    schema = new ContentSchema(restContentItem.Schema.Value<string>());
+                }
+                else
+                {
+                    RestContentSchema restSchema = restContentItem.Schema.ToObject<RestContentSchema>(NewtonJsonExtensions.CreateSerializer());
+                    schema = restSchema.ToModel();
+                }
             }
 
             ContentItem contentItem = schema.CreateContentItem();
@@ -55,12 +65,19 @@ namespace DragonFly.Data.Models
             return contentItem;
         }
 
-        public static RestContentItem ToRest(this ContentItem contentItem, bool includeNavigationProperties = true)
+        public static RestContentItem ToRest(this ContentItem contentItem, bool includeSchema = true, bool includeNavigationProperties = true)
         {
             RestContentItem restContentItem = new RestContentItem();
 
             restContentItem.Id = contentItem.Id;
-            restContentItem.Schema = contentItem.Schema.ToRest();
+            if (includeSchema)
+            {
+                restContentItem.Schema = JObject.FromObject(contentItem.Schema.ToRest());
+            }
+            else
+            {
+                restContentItem.Schema = contentItem.Schema.Name;
+            }
             restContentItem.CreatedAt = contentItem.CreatedAt;
             restContentItem.ModifiedAt = contentItem.ModifiedAt;
             restContentItem.PublishedAt = contentItem.PublishedAt;
@@ -78,8 +95,7 @@ namespace DragonFly.Data.Models
         public static RestContentItem ToRest(this ContentEmbedded contentItem)
         {
             RestContentItem restContentItem = new RestContentItem();
-
-            restContentItem.Schema = contentItem.Schema.ToRest();
+            restContentItem.Schema = JObject.FromObject(contentItem.Schema.ToRest());
 
             foreach (var field in contentItem.Fields)
             {

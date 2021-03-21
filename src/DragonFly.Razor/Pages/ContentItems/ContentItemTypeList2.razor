@@ -7,19 +7,21 @@
 else
 {
 <BSRow>
-    <div class="col-lg-3">
-        <div class="list-group">
-
+    <BSCol LG="3">
+        <BSListGroup>
             @foreach (ContentSchema schema in SearchResult.Items)
             {
                 <a class="list-group-item list-group-item-action @(SelectedItem == schema ? "active" : "")" @onclick="() => RefreshContentItemsAsync(schema)" style="cursor:pointer">
                     <span class="oi oi-list-rich"></span> @schema.Name
                 </a>
             }
-        </div>
-    </div>
-    <div class="col-lg-9">
-        <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" ItemSelected="x => SetResult(x)" />
-    </div>
+        </BSListGroup>
+    </BSCol>
+    <BSCol LG="9">
+        @if (SelectedItem != null)
+        {
+        <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" EntityType="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />
+        }
+    </BSCol>
 </BSRow>
 }

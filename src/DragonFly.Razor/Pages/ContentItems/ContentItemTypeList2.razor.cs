@@ -30,7 +30,12 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             SelectedItem = schema;
 
-            await ContentItemList.RefreshAsync(schema.Name);
+            if(ContentItemList != null)
+            {
+                await ContentItemList.RefreshAsync(schema.Name);
+            }
+
+            StateHasChanged();
         }
 
         public void SetResult(ContentItem contentItem)

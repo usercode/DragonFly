@@ -6,6 +6,7 @@ using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Contents.Content;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DragonFly.Models
 {
@@ -23,7 +24,7 @@ namespace DragonFly.Models
         /// Schema
         /// </summary>
         [JsonProperty("Schema", Order = 1)]
-        public RestContentSchema Schema { get; set; }
+        public JToken Schema { get; set; }
 
         /// <summary>
         /// SchemaVersion

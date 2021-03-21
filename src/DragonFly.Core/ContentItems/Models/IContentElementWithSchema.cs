@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DragonFly.Content
 {
-    public interface IContentItem
+    public interface IContentElementWithSchema : IContentElement
     {
-        ContentFields Fields { get; }
+        ContentSchema Schema { get; }
     }
 }

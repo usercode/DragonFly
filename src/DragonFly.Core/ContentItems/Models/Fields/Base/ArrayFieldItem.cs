@@ -8,7 +8,7 @@ namespace DragonFly.Content
     /// <summary>
     /// ArrayFieldItem
     /// </summary>
-    public class ArrayFieldItem : IContentItem
+    public class ArrayFieldItem : IContentElement
     {
         public ArrayFieldItem()
         {

@@ -11,7 +11,7 @@ namespace DragonFly.Content
     /// <summary>
     /// ContentItem
     /// </summary>
-    public class ContentItem : ContentBase, IContentItemWithSchema
+    public class ContentItem : ContentBase, IContentElement, IContentElementWithSchema
     {
         public ContentItem(ContentSchema schema)
         {
@@ -28,7 +28,7 @@ namespace DragonFly.Content
         /// <summary>
         /// SchemaVersion
         /// </summary>
-        public int SchemaVersion { get; set; }
+        public virtual int SchemaVersion { get; set; }
 
         private ContentSchema _schema;
 

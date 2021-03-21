@@ -31,7 +31,7 @@ namespace DragonFly.Client.Base
 
         [Parameter]
         public string EntityType { get; set; }
-
+        
         [Parameter]
         public T Entity { get; set; }
 

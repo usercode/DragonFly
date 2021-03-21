@@ -11,7 +11,7 @@ namespace DragonFly.Content
     /// </summary>
     public static class ContentItemFieldsExtensions
     {
-        public static string? GetString(this IContentItem contentItem, string name)
+        public static string? GetString(this IContentElement contentItem, string name)
         {
             StringField field = contentItem.GetField<StringField>(name);
 
@@ -19,7 +19,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetString<TContentItem>(this TContentItem contentItem, string name, string? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             StringField field = contentItem.GetField<StringField>(name);
 
@@ -28,7 +28,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static string? GetSlug(this IContentItem contentItem, string name)
+        public static string? GetSlug(this IContentElement contentItem, string name)
         {
             SlugField field = contentItem.GetField<SlugField>(name);
 
@@ -36,7 +36,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetSlug<TContentItem>(this TContentItem contentItem, string name, string? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             SlugField field = contentItem.GetField<SlugField>(name);
 
@@ -45,7 +45,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static string? GetTextArea(this IContentItem contentItem, string name)
+        public static string? GetTextArea(this IContentElement contentItem, string name)
         {
             TextAreaField field = contentItem.GetField<TextAreaField>(name);
 
@@ -53,7 +53,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetTextArea<TContentItem>(this TContentItem contentItem, string name, string? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             TextAreaField field = contentItem.GetField<TextAreaField>(name);
 
@@ -62,7 +62,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static bool? GetBool(this IContentItem contentItem, string name)
+        public static bool? GetBool(this IContentElement contentItem, string name)
         {
             BoolField field = contentItem.GetField<BoolField>(name);
 
@@ -70,7 +70,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetBool<TContentItem>(this TContentItem contentItem, string name, bool? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             BoolField field = contentItem.GetField<BoolField>(name);
 
@@ -79,7 +79,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static double? GetFloat(this IContentItem contentItem, string name)
+        public static double? GetFloat(this IContentElement contentItem, string name)
         {
             FloatField field = contentItem.GetField<FloatField>(name);
 
@@ -87,7 +87,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetFloat<TContentItem>(this TContentItem contentItem, string name, double? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             FloatField field = contentItem.GetField<FloatField>(name);
 
@@ -96,7 +96,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static long? GetInteger(this IContentItem contentItem, string name)
+        public static long? GetInteger(this IContentElement contentItem, string name)
         {
             IntegerField field = contentItem.GetField<IntegerField>(name);
 
@@ -104,7 +104,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetInteger<TContentItem>(this TContentItem contentItem, string name, long? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             IntegerField field = contentItem.GetField<IntegerField>(name);
 
@@ -113,7 +113,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static DateTime? GetDate(this IContentItem contentItem, string name)
+        public static DateTime? GetDate(this IContentElement contentItem, string name)
         {
             DateField field = contentItem.GetField<DateField>(name);
 
@@ -121,7 +121,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetDate<TContentItem>(this TContentItem contentItem, string name, DateTime? value)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             DateField field = contentItem.GetField<DateField>(name);
 
@@ -130,7 +130,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static ContentItem? GetReference(this IContentItem contentItem, string name)
+        public static ContentItem? GetReference(this IContentElement contentItem, string name)
         {
             ReferenceField field = contentItem.GetField<ReferenceField>(name);
 
@@ -138,7 +138,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetReference<TContentItem>(this TContentItem contentItem, string name, ContentItem? reference)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             ReferenceField field = contentItem.GetField<ReferenceField>(name);
 
@@ -147,7 +147,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static Asset? GetAsset(this IContentItem contentItem, string name)
+        public static Asset? GetAsset(this IContentElement contentItem, string name)
         {
             AssetField field = contentItem.GetField<AssetField>(name);
 
@@ -155,7 +155,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem SetAsset<TContentItem>(this TContentItem contentItem, string name, Asset? asset)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             AssetField field = contentItem.GetField<AssetField>(name);
 
@@ -165,7 +165,7 @@ namespace DragonFly.Content
         }
 
         public static ArrayFieldItem GetArrayField<TContentItem>(this TContentItem contentItem, string name, int index)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);
 
@@ -173,7 +173,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, IContentSchema schema, Action<ArrayFieldItem> action)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             ArrayFieldOptions options = schema.GetArrayFieldOptions(name);
             ArrayFieldItem item = options.CreateArrayField();
@@ -184,7 +184,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, ArrayFieldItem item)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);
             
@@ -194,7 +194,7 @@ namespace DragonFly.Content
         }
 
         public static TContentItem RemoveArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, int index)
-            where TContentItem : IContentItem
+            where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);
 

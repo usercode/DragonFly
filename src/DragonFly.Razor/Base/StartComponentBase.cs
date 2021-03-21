@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,6 +16,8 @@ namespace DragonFly.Client.Base
         {
             RebuildToolbar();
         }
+
+        protected bool _init = false;
 
         public async Task RefreshAsync()
         {
@@ -44,21 +47,23 @@ namespace DragonFly.Client.Base
 
         }
 
-        protected override async Task OnParametersSetAsync()
+        public override async Task SetParametersAsync(ParameterView parameters)
         {
-            //if(IsRefreshing == false)
-            //{
-            //    await RefreshAsync();
-            //}
+            Debug.WriteLine("SetParametersAsync");
 
-            RebuildToolbar();
+            foreach (var k in parameters)
+            {
+                Debug.WriteLine(k.Name + " " + k.Value);
+            }
+
+            await base.SetParametersAsync(parameters);
+
+            //await InvokeAsync(RefreshAsync);
         }
 
         protected virtual void OnRefreshed()
         {
             RebuildToolbar();
-
-            StateHasChanged();
         }
 
         protected void RebuildToolbar()
@@ -75,7 +80,7 @@ namespace DragonFly.Client.Base
 
         protected override async Task OnInitializedAsync()
         {
-            await RefreshAsync();
+            await InvokeAsync(RefreshAsync);
         }
 
         public async Task NavigateToExternalUrl(string url)

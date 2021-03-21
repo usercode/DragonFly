@@ -30,7 +30,7 @@ namespace DragonFly.Content
                 context.AddRequireValidation(fieldName);
             }
 
-            if (Value != null)
+            if (HasValue)
             {
                 if (Value.Length < fieldOptions.MinLength)
                 {

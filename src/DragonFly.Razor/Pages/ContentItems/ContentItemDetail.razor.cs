@@ -28,6 +28,9 @@ namespace DragonFly.Client.Pages.ContentItems
 
         public IList<ValidationError> ValidationErros { get; set; }
 
+        [Parameter]
+        public Guid? CloneFromEntityId { get; set; }
+
         public bool IsFieldValid(string field)
         {
             return ValidationErros.All(x => x.Field != field);
@@ -45,6 +48,7 @@ namespace DragonFly.Client.Pages.ContentItems
             {
                 toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
                 toolbarItems.Add(new ToolbarItem("Unpublish", Color.Dark, () => UnpublishAsync()));
+                toolbarItems.Add(new ToolbarItem("Clone", Color.Light, ()=> CloneAsync()));
                 toolbarItems.AddRefreshButton(this);
                 toolbarItems.AddSaveButton(this);
                 toolbarItems.AddDeleteButton(this);
@@ -67,11 +71,23 @@ namespace DragonFly.Client.Pages.ContentItems
             if (IsNewEntity)
             {
                 Entity = Schema.CreateContentItem();
+
+                if(CloneFromEntityId != null)
+                {
+                    ContentItem original = await ContentService.GetContentItemAsync(EntityType, CloneFromEntityId.Value);
+
+                    Entity.Fields = original.Fields;
+                }
             }
             else
             {
                 Entity = await ContentService.GetContentItemAsync(EntityType, EntityId);
             }
+        }
+
+        public async Task CloneAsync()
+        {
+            NavigationManager.NavigateTo($"content/{EntityType}/create/{Entity.Id}");
         }
 
         protected override async Task CreateActionAsync()

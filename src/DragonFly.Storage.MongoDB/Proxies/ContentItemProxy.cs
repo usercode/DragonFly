@@ -18,14 +18,22 @@ namespace DragonFly.Data
         {
             ContentItem contentItem = new ContentItem(id, CreateContentSchema(schema));
 
-            return Generator.CreateClassProxyWithTarget(contentItem, new ContenItemInterceptor());
+            return (ContentItem)Generator.CreateClassProxyWithTarget(
+                                    typeof(ContentItem),
+                                    contentItem, 
+                                    new object[] { id, CreateContentSchema(schema) },
+                                    new ContenItemInterceptor());
         }
 
         public static ContentSchema CreateContentSchema(string schema)
         {
             ContentSchema contentSchema = new ContentSchema(schema);
 
-            return Generator.CreateClassProxyWithTarget(contentSchema, new ContentSchemaInterceptor(schema));
+            return (ContentSchema)Generator.CreateClassProxyWithTarget(
+                                    typeof(ContentSchema),
+                                    contentSchema, 
+                                    new object[] { schema },
+                                    new ContentSchemaInterceptor(schema));
         }
 
         public static Asset CreateAsset(Guid assetId)

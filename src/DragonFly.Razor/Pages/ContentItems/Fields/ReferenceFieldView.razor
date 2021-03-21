@@ -2,54 +2,65 @@
 @inject NavigationManager NavigationManager
 @inject IImageAssetUrlService AssetPreview
 
-<div class="reference-field">
-    <ModalWindow Title="Add content" Show="ShowReferencePartSelector">
-        <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>
-    </ModalWindow>
+@if (_init)
+{
+    <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
+        <BSModalHeader OnClick="@(() => _init = false)">Select asset</BSModalHeader>
+        <BSModalBody>
+            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>            
+        </BSModalBody>
+        <BSModalFooter>
+            <BSButton Color="Color.Primary" @onclick="@(() => _init = false)">Ok</BSButton>
+        </BSModalFooter>
+    </BSModal>
+}
 
-    <BSListGroup>
-        <BSListGroupItem>
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                @if (Field.ContentItem != null)
-                {
-                    <span class="badge badge-primary" style="margin-right:12px">@Field.ContentItem.Schema.Name</span>
-
-                    @foreach (var field in Field.ContentItem.Schema.ReferenceFields)
+    <div class="reference-field">
+        <BSListGroup>
+            <BSListGroupItem>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    @if (Field.ContentItem != null)
                     {
-                        ContentField column = Field.ContentItem.Fields[field];
+                        <span class="badge badge-primary" style="margin-right:12px">@Field.ContentItem.Schema.Name</span>
 
-                        @if (column is ISingleValueContentField singleValueField)
+                        @foreach (var field in Field.ContentItem.Schema.ReferenceFields)
                         {
-                            <span>@singleValueField.Value</span>
-                        }
-                        else if (column is AssetField assetField)
-                        {
-                            @if (assetField.Asset != null && assetField.Asset.IsImage())
+                            ContentField column = Field.ContentItem.Fields[field];
+
+                            @if (column is ISingleValueContentField singleValueField)
                             {
-                                <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                <span>@singleValueField.Value</span>
+                            }
+                            else if (column is AssetField assetField)
+                            {
+                                @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                {
+                                    <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                }
                             }
                         }
                     }
-                }
 
-                <div>
-                    <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
-                    <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
-                    <BSButton Color="Color.Light" OnClick="e => RemoveItem()"><i class="fas fa-times"></i></BSButton>
+                    <div>
+                        <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => RemoveItem()"><i class="fas fa-times"></i></BSButton>
+                    </div>
                 </div>
-            </div>
-        </BSListGroupItem>
-    </BSListGroup>
-</div>
+            </BSListGroupItem>
+        </BSListGroup>
+    </div>
 
-@code {
-    public bool ShowReferencePartSelector { get; set; }
+    @code {
+
+private bool _init = false;
+    //private BSModal LiveDemo { get; set; }
 
     protected void Navigate()
     {
         NavigationManager.NavigateTo($"content/{Field.ContentItem.Schema.Name}/{Field.ContentItem.Id}");
 
-        
+
     }
 
     protected void RemoveItem()
@@ -59,17 +70,17 @@
 
     public void OpenModal()
     {
-        ShowReferencePartSelector = true;
-
-        StateHasChanged();
+        //LiveDemo.Show();
+        _init = true;
     }
 
     public void ItemAdded(ContentItemTypeList2 sender)
     {
         Field.ContentItem = sender.SelectedContentItem;
 
-        ShowReferencePartSelector = false;
+        //LiveDemo.Hide();
+            _init = false;
 
         StateHasChanged();
     }
-}
+    }

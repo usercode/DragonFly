@@ -10,7 +10,7 @@
         }
 
         @*@bind:event="oninput"*@
-        <input class="form-control" type="text" style="width:100%" @bind="SearchPattern" />
+        <input class="form-control" type="text" style="width:100%" @onchange="async (x) => { SearchPattern = x.Value.ToString(); await RefreshAsync(); }" />
 
         <hr />
     </div>

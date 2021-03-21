@@ -95,8 +95,10 @@
                     <div class="col-md-6">
                         @if (IsNewEntity == false)
                         {
-                            <InputFile OnChange="OnInputFileChange" />
-
+                            <div>
+                                <InputFile OnChange="OnInputFileChange" />
+                            </div>
+                            <div>
                                 @if (Entity.IsImage())
                                 {
                                     <!-- image preview -->
@@ -111,6 +113,7 @@
                                         </iframe>
                                     </div>
                                 }
+                            </div>
                         }
                     </div>
                 </BSRow>
