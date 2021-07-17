@@ -25,7 +25,7 @@ namespace DragonFly.AspNet.Middleware
 
         public Task Invoke(HttpContext context, DragonFlyContext dragonFlyContext)
         {
-            string requestApiKey = context.Request.Headers[ApiKeyHeaderName].FirstOrDefault();
+            string? requestApiKey = context.Request.Headers[ApiKeyHeaderName].FirstOrDefault();
 
             if (requestApiKey == dragonFlyContext.Options.ApiKey)
             {

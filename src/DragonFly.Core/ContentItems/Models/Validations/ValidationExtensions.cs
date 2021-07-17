@@ -22,7 +22,7 @@ namespace DragonFly.Content
 
                 field.Value.Validate(field.Key, f.Options, validationContext);
 
-                return validationContext.Errors;
+                result.AddRange(validationContext.Errors);
             }
 
             return result;

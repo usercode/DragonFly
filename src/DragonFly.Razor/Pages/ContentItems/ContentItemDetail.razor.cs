@@ -82,6 +82,8 @@ namespace DragonFly.Client.Pages.ContentItems
             else
             {
                 Entity = await ContentService.GetContentItemAsync(EntityType, EntityId);
+
+                StateHasChanged();
             }
         }
 
@@ -113,7 +115,6 @@ namespace DragonFly.Client.Pages.ContentItems
                 args.CanSave = false;
             }
         }
-
 
         public async Task PublishAsync()
         {

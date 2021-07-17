@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>usercode</Authors>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
@@ -19,9 +19,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="3.3.2" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="4.4.1" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="4.4.1" />
+    <PackageReference Include="GraphQL" Version="4.5.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="5.0.2" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="5.0.2" />
   </ItemGroup>
 
   <ItemGroup>

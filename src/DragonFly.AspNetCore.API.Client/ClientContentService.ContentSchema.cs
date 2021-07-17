@@ -44,7 +44,11 @@ namespace DragonFly.Client
 
         public async Task CreateSchemaAsync(ContentBase entity)
         {
-            await Client.PostAsJson($"api/schema", entity);
+            var response = await Client.PostAsJson($"api/schema", entity);
+
+            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+
+            entity.Id = result.Id;
         }
 
         public async Task UpdateSchemaAsync(ContentBase entity)

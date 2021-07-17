@@ -31,9 +31,9 @@ namespace DragonFly.Data
     {
         public async Task<AssetFolder> GetAssetFolderAsync(Guid id)
         {
-            var entity = AssetFolders.AsQueryable().FirstOrDefault(x => x.Id == id);
+            MongoAssetFolder? entity = AssetFolders.AsQueryable().FirstOrDefault(x => x.Id == id);
 
-            if(entity == null)
+            if (entity == null)
             {
                 throw new Exception();
             }
@@ -63,7 +63,7 @@ namespace DragonFly.Data
             folder.CreatedAt = DateTimeService.Current();
             folder.ModifiedAt = folder.CreatedAt;
 
-            var mongo = folder.ToMongo();
+            MongoAssetFolder mongo = folder.ToMongo();
 
             await AssetFolders.InsertOneAsync(mongo);
 

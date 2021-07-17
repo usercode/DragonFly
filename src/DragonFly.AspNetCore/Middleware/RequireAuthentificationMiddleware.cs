@@ -23,7 +23,7 @@ namespace DragonFly.AspNet.Middleware
 
         public async Task Invoke(HttpContext context)
         {
-            if (context.User.Identity.IsAuthenticated == false)
+            if (context.User.Identity?.IsAuthenticated == false)
             {
                 context.Response.StatusCode = StatusCodes.Status403Forbidden;
             }

@@ -51,7 +51,7 @@ namespace DragonFly.Client.Base
 
         protected virtual async Task SaveActionAsync()
         {
-            if(IsNewEntity)
+            if (IsNewEntity)
             {
                 await CreateAsync();
             }
@@ -66,6 +66,8 @@ namespace DragonFly.Client.Base
         public async Task CreateAsync()
         {
             await CreateActionAsync();
+
+            RebuildToolbar();
         }
 
         protected virtual async Task CreateActionAsync()
@@ -76,6 +78,8 @@ namespace DragonFly.Client.Base
         public async Task UpdateAsync()
         {
             await UpdateActionAsync();
+
+            RebuildToolbar();
         }
 
         protected virtual async Task UpdateActionAsync()
@@ -89,7 +93,7 @@ namespace DragonFly.Client.Base
 
             OnSaving(args);
 
-            if(args.CanSave == false)
+            if (args.CanSave == false)
             {
                 return;
             }
@@ -106,7 +110,7 @@ namespace DragonFly.Client.Base
 
         protected virtual void OnSaved()
         {
-
+            RebuildToolbar();
         }
 
         public async Task DeleteAsync()

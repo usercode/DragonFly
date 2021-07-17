@@ -18,8 +18,12 @@ namespace DragonFly.Client.Base
         }
 
         protected bool _init = false;
-
-        public async Task RefreshAsync()
+        public Task RefreshAsync()
+        {
+            return RefreshAsync(true);
+        }
+         
+        public async Task RefreshAsync(bool stateHasChanged)
         {
             IsRefreshing = true;
 
@@ -28,6 +32,11 @@ namespace DragonFly.Client.Base
                 await RefreshActionAsync();
 
                 OnRefreshed();
+
+                if (stateHasChanged)
+                {
+                    await InvokeAsync(StateHasChanged);
+                }
             }
             finally
             {
@@ -49,7 +58,7 @@ namespace DragonFly.Client.Base
 
         public override async Task SetParametersAsync(ParameterView parameters)
         {
-            Debug.WriteLine("SetParametersAsync");
+            Debug.WriteLine("SetParametersAsync");           
 
             foreach (var k in parameters)
             {
@@ -57,8 +66,11 @@ namespace DragonFly.Client.Base
             }
 
             await base.SetParametersAsync(parameters);
+        }
 
-            //await InvokeAsync(RefreshAsync);
+        protected override async Task OnParametersSetAsync()
+        {
+            await RefreshAsync(false);
         }
 
         protected virtual void OnRefreshed()
@@ -80,7 +92,7 @@ namespace DragonFly.Client.Base
 
         protected override async Task OnInitializedAsync()
         {
-            await InvokeAsync(RefreshAsync);
+            //await InvokeAsync(RefreshAsync);
         }
 
         public async Task NavigateToExternalUrl(string url)

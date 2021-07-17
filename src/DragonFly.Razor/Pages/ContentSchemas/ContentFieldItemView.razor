@@ -3,7 +3,7 @@
 <BSListGroupItem>
     <div style="display: flex; align-items: center;">
         <span style="flex-grow:1">@Key</span>
-        <BSBadge Color="Color.Secondary">@Field.FieldType</BSBadge>
+        <BSBadge Color="Color.Secondary" Class="bg-secondary">@Field.FieldType</BSBadge>
         <div>
             <BSButton Color="Color.Light" OnClick="x => FieldsView.Up(Key)"><i class="fas fa-arrow-up"></i></BSButton>
             <BSButton Color="Color.Light" OnClick="x => FieldsView.Down(Key)"><i class="fas fa-arrow-down"></i></BSButton>

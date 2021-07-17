@@ -28,10 +28,10 @@ namespace DragonFly.AspNetCore.GraphQL
                 x.UseAuthorization();
 
                 //x.UseGraphQL<>();
-                x.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-                {
-                    Path = "/ui/playground"                    
-                });
+                //x.UseGraphQLPlayground(new GraphQLPlaygroundOptions
+                //{
+                //    Path = "/ui/playground"                    
+                //});
 
                 x.UseEndpoints(endpoints =>
                 {

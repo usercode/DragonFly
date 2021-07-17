@@ -23,7 +23,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 
             if (bsonValue[nameof(IContentElement.Fields)] is BsonDocument bsonDocument)
             {
-                foreach (var field in bsonDocument)
+                foreach (BsonElement field in bsonDocument)
                 {
                     field.Value.FromBsonValue(field.Name, contentField.ContentEmbedded, schema);
                 }

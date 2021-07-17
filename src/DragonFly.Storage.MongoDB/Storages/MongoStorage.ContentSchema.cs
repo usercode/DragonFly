@@ -66,14 +66,28 @@ namespace DragonFly.Data
             };
         }
 
-        public Task<ContentSchema> GetContentSchemaAsync(string name)
+        public async Task<ContentSchema> GetContentSchemaAsync(string name)
         {
-            return Task.Run(() => ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name).ToModel());
+            MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name);
+
+            if (schema == null)
+            {
+                throw new Exception($"Schema was not found: {name}");
+            }
+
+            return schema.ToModel();
         }
 
-        public Task<ContentSchema> GetContentSchemaAsync(Guid id)
+        public async Task<ContentSchema> GetContentSchemaAsync(Guid id)
         {
-            return Task.Run(() => ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id).ToModel());
+            MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+            if (schema == null)
+            {
+                throw new Exception($"Schema was not found: {id}");
+            }
+
+            return schema.ToModel();
         }
     }
 }

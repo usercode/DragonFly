@@ -135,6 +135,7 @@ app {
 }
 
 .col-form-label {
+    padding-top: 2px;
     padding-bottom: 0px;
 }
 
@@ -151,6 +152,7 @@ app {
 .asset-field .image {
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 150px;
 }
 

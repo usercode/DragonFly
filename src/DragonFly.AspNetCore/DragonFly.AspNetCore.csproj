@@ -1,7 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
     <Authors>usercode</Authors>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
@@ -23,13 +24,13 @@
   </ItemGroup>
   
   <ItemGroup>   
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.4" />    
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.4" />
-    <PackageReference Include="ImageWizard.Core" Version="2.1.7" />
-    <PackageReference Include="ImageWizard.DocNET" Version="2.1.7" />
-    <PackageReference Include="ImageWizard.ImageSharp" Version="2.1.7" />
-    <PackageReference Include="ImageWizard.MongoDB" Version="2.1.7" />
-    <PackageReference Include="ImageWizard.SvgNet" Version="2.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.7" />    
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.7" />
+    <PackageReference Include="ImageWizard.Core" Version="2.1.9" />
+    <PackageReference Include="ImageWizard.DocNET" Version="2.1.9" />
+    <PackageReference Include="ImageWizard.ImageSharp" Version="2.1.9" />
+    <PackageReference Include="ImageWizard.MongoDB" Version="2.1.9" />
+    <PackageReference Include="ImageWizard.SvgNet" Version="2.1.9" />
   </ItemGroup>
   
   <ItemGroup>

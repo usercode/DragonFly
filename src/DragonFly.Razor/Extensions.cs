@@ -97,6 +97,7 @@ namespace DragonFly.Client.Core
             componentManager.RegisterOptions<FloatFieldOptionsView>();
             componentManager.RegisterOptions<IntegerFieldOptionsView>();
             componentManager.RegisterOptions<StringFieldOptionsView>();
+            componentManager.RegisterOptions<ReferenceFieldOptionsView>();
 
             //assets
             var assetMetadataManager = host.Services.GetRequiredService<AssetMetadataComponentManager>();

@@ -50,6 +50,8 @@ namespace DragonFly.Client.Pages
         protected override async Task CreateActionAsync()
         {
             await ContentService.CreateSchemaAsync(Entity);
+
+            NavigationManager.NavigateTo($"schema/{Entity.Id}");
         }
 
         protected override async Task UpdateActionAsync()

@@ -71,7 +71,7 @@ namespace DragonFly.Content
             contentItem.SchemaVersion = contentItem.Schema.Version;
         }
 
-        public static void ApplySchema(this IContentElement? contentItem, IContentSchema? schema)
+        public static void ApplySchema(this IContentElement? contentItem, ISchemaElement? schema)
         {
             if (contentItem == null)
             {

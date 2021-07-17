@@ -1,0 +1,15 @@
+﻿@inherits FieldOptionsComponent<ReferenceFieldOptions>
+
+<BSCard>
+    <BSCard CardType="CardType.Body">
+        <BSCard CardType="CardType.Title">
+
+        </BSCard>
+        <BSRow class="form-group">
+            <label class="col-sm-2 col-form-label">Required</label>
+            <div class="col-sm-8">
+                <CheckBoxView @bind-Value="@Options.IsRequired" />
+            </div>
+        </BSRow>        
+    </BSCard>
+</BSCard>

@@ -12,7 +12,7 @@ else
 
         @foreach (ContentSchema schema in SearchResult.Items)
         {
-            <a class="list-group-item list-group-item-action" @onclick="x => OpenItem(schema)">
+            <a class="list-group-item list-group-item-action" @onclick="x => OpenItem(schema)" style="cursor:pointer">
                 <span class="oi oi-list-rich"></span> @schema.Name
             </a>
         }

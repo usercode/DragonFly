@@ -25,7 +25,7 @@ namespace DragonFly.Razor.Services
         {
             Type fieldType = typeof(TMetadataComponent).GetProperty(nameof(IAssetMetadataComponent.Metadata)).PropertyType;
 
-            if(_cacheView.TryAdd(fieldType, typeof(TMetadataComponent)) == false)
+            if (_cacheView.TryAdd(fieldType, typeof(TMetadataComponent)) == false)
             {
                 _cacheView[fieldType] = typeof(TMetadataComponent);
             }

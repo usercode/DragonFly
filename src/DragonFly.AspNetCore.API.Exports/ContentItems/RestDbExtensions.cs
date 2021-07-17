@@ -14,7 +14,7 @@ namespace DragonFly.Models
 {
     public static class RestDbExtensions
     {
-        public static void FromRestValue(this JToken bsonValue, string fieldName, IContentElement contentItem, IContentSchema schema)
+        public static void FromRestValue(this JToken bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
         {
             if (contentItem.Fields.TryGetValue(fieldName, out ContentField contentField))
             {

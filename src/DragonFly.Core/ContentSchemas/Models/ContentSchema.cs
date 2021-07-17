@@ -10,7 +10,7 @@ namespace DragonFly.Content
     /// <summary>
     /// ContentSchema
     /// </summary>
-    public class ContentSchema : ContentBase, IContentSchema
+    public class ContentSchema : ContentBase, ISchemaElement
     {
         public ContentSchema()
         {

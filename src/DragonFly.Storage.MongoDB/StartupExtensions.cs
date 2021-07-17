@@ -7,6 +7,7 @@ using DragonFly.MongoDB.Options;
 using DragonFly.Storage.MongoDB.Fields;
 using DragonFly.Storage.MongoDB.Fields.Base;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,8 @@ namespace DragonFly.Data
 
 
             builder.Services.AddSingleton(MongoFieldManager.Default);
+
+            BsonClassMap.RegisterClassMap<ReferenceFieldOptions>();
 
             return builder;
         }

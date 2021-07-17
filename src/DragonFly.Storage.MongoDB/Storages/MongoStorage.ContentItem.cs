@@ -56,6 +56,7 @@ namespace DragonFly.Data
 
             List<FilterDefinition<MongoContentItem>> query = new List<FilterDefinition<MongoContentItem>>();
 
+            //filter all fields
             if (string.IsNullOrEmpty(queryParameters.SearchPattern) == false)
             {
                 List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
@@ -112,7 +113,6 @@ namespace DragonFly.Data
                 string v = fieldQuery.Value;
                 object v2;
 
-
                 if (v == null)
                 {
                     v2 = BsonNull.Value;
@@ -126,7 +126,7 @@ namespace DragonFly.Data
                         QueryFieldType.Double => double.Parse(v),
                         _ => throw new Exception()
                     };
-                }                
+                }
 
                 query.Add(Builders<MongoContentItem>.Filter.Eq(fieldQuery.Name, v2));
             }
@@ -144,6 +144,19 @@ namespace DragonFly.Data
             else
             {
                 q = Builders<MongoContentItem>.Filter.Empty;
+            }
+
+            //projection
+            if (schema.ListFields.Any())
+            {
+                var p = Builders<MongoContentItem>.Projection.Include(x => x.Id);
+
+                foreach (string field in schema.ListFields)
+                {
+                    p = p.Include($"{nameof(MongoContentItem.Fields)}.{field}");
+                }
+
+                findOptions.Projection = p;
             }
 
             var cursor = await items.FindAsync(q, findOptions);
@@ -190,7 +203,12 @@ namespace DragonFly.Data
 
             var drafts = GetMongoCollection(contentItem.Schema.Name);
 
-            contentItem.Validate();
+            var validations = contentItem.Validate();
+
+            if(validations.Any())
+            {
+                throw new Exception();
+            }
 
             //update all fields, version
             MongoContentItem result = await drafts.FindOneAndUpdateAsync(

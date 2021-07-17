@@ -118,6 +118,7 @@ app {
   padding: .2rem .75rem; }
 
 .col-form-label {
+  padding-top: 2px;
   padding-bottom: 0px; }
 
 .input-group-text {
@@ -131,6 +132,7 @@ app {
 .asset-field .image {
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 150px; }
 
 .main {

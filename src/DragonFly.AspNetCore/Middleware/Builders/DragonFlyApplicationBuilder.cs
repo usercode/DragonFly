@@ -22,7 +22,7 @@ namespace DragonFly.AspNet.Middleware.Builders
 
         IFeatureCollection IApplicationBuilder.ServerFeatures => Builder.ServerFeatures;
 
-        IDictionary<string, object> IApplicationBuilder.Properties => Builder.Properties;
+        IDictionary<string, object?> IApplicationBuilder.Properties => Builder.Properties;
 
         RequestDelegate IApplicationBuilder.Build() => Builder.Build();
 

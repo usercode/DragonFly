@@ -28,7 +28,12 @@ namespace DragonFly.AspNetCore.API.Middlewares.Logins
         {
             if(context.Request.Path == "/login" && context.Request.Method == HttpMethods.Post)
             {
-                LoginData loginData = await context.Request.ReadFromJsonAsync<LoginData>();
+                LoginData? loginData = await context.Request.ReadFromJsonAsync<LoginData>();
+
+                if (loginData == null)
+                {
+                    throw new Exception("Login data are not available.");
+                }
 
                 if (loginData.Password == options.Value.Password)
                 {

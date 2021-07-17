@@ -63,6 +63,8 @@ namespace DragonFly.Client.Pages.ContentItems
                 SearchResult = await ContentService.Query(
                                                     Schema.Name, 
                                                    queryParameters);
+
+                
             }
         }
 

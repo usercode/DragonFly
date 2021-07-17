@@ -172,7 +172,7 @@ namespace DragonFly.Content
             return arrayField.Items[index];
         }
 
-        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, IContentSchema schema, Action<ArrayFieldItem> action)
+        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, ISchemaElement schema, Action<ArrayFieldItem> action)
             where TContentItem : IContentElement
         {
             ArrayFieldOptions options = schema.GetArrayFieldOptions(name);

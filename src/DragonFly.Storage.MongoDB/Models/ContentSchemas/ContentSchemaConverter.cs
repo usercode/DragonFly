@@ -31,24 +31,31 @@ namespace DragonFly.Data.Models
 
             foreach(var field in mongoSchema.Fields)
             {
-                Type optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
-                ContentFieldOptions? options = null;
-
-                if (field.Value.Options != BsonNull.Value)
+                try
                 {
-                    options = (ContentFieldOptions)BsonSerializer.Deserialize((BsonDocument)field.Value.Options, optionsType);
-                }
+                    Type optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
+                    ContentFieldOptions? options = null;
 
-                if (options == null)
+                    if (field.Value.Options != BsonNull.Value)
+                    {
+                        options = (ContentFieldOptions)BsonSerializer.Deserialize((BsonDocument)field.Value.Options, optionsType);
+                    }
+
+                    if (options == null)
+                    {
+                        options = ContentFieldManager.Default.CreateOptions(field.Value.FieldType);
+                    }
+
+                    ContentSchemaField schemaField = new ContentSchemaField(field.Value.FieldType, options);
+                    schemaField.Label = field.Value.Label;
+                    schemaField.SortKey = field.Value.SortKey;
+
+                    schema.Fields.Add(field.Key, schemaField);
+                }
+                catch(Exception ex)
                 {
-                    options = ContentFieldManager.Default.CreateOptions(field.Value.FieldType);
+                    throw;
                 }
-
-                ContentSchemaField schemaField = new ContentSchemaField(field.Value.FieldType, options);
-                schemaField.Label = field.Value.Label;
-                schemaField.SortKey = field.Value.SortKey;
-
-                schema.Fields.Add(field.Key, schemaField);
             }
 
             return schema;

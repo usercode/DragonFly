@@ -16,7 +16,7 @@ namespace DragonFly.Data.Models
 {
     public static class MongoDbExtensions
     {
-        public static void FromBsonValue(this BsonValue bsonValue, string fieldName, IContentElement contentItem, IContentSchema schema)
+        public static void FromBsonValue(this BsonValue bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
         {
             if (bsonValue == BsonNull.Value)
             {
