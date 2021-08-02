@@ -15,12 +15,19 @@ namespace DragonFly.AspNetCore.API.Middlewares
 {
     static class WebHookStartupExtensions
     {
-        public static void MapWebHookRestApi(this IEndpointRouteBuilder endpoints)
+        public static void UseWebHookRestApi(this IApplicationBuilder builder)
         {
-            endpoints.MapQuery();
-            endpoints.MapGet();
-            endpoints.MapCreate();
-            endpoints.MapUpdate();
+            builder.Map("/webhook", x =>
+            {
+                x.UseRouting();
+                x.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapQuery();
+                    endpoints.MapGet();
+                    endpoints.MapCreate();
+                    endpoints.MapUpdate();
+                });
+            });            
         }
 
         private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
@@ -29,7 +36,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<QueryWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("webhook/query", pipeline);
+            return endpoints.MapPost("query", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
@@ -38,7 +45,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<GetWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapGet("webhook/{id:guid}", pipeline);
+            return endpoints.MapGet("{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
@@ -47,7 +54,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<CreateWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("webhook", pipeline);
+            return endpoints.MapPost("", pipeline);
         }
 
         private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
@@ -56,7 +63,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<UpdateWebHookMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPut("webhook/{id:guid}", pipeline);
+            return endpoints.MapPut("{id:guid}", pipeline);
         }
     }
 }

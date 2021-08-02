@@ -22,11 +22,12 @@ namespace DragonFly.Content
 
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            EmbedFieldOptions fieldOptions = (EmbedFieldOptions)options;
-
-            if (fieldOptions.IsRequired && ContentEmbedded == null)
+            if (options is EmbedFieldOptions fieldOptions)
             {
-                context.AddRequireValidation(fieldName);
+                if (fieldOptions.IsRequired && ContentEmbedded == null)
+                {
+                    context.AddRequireValidation(fieldName);
+                }
             }
         }
 

@@ -21,8 +21,8 @@
   
   <ItemGroup>
 	  <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.12.4" />
-    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.12.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.0" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.13.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -16,7 +16,6 @@ namespace DragonFly.AspNetCore.API
         {
         }
 
-
         public string Serialize<T>(T obj)
         {
             return NewtonJsonExtensions.Serialize(obj);

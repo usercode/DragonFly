@@ -24,16 +24,6 @@ namespace DragonFly.Content
             Value = number;
         }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            IntegerFieldOptions fieldOptions = (IntegerFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-        }
-
         public override string ToString()
         {
             return $"{Value}";

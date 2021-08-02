@@ -39,16 +39,22 @@ namespace DragonFly.AspNetCore.SchemaBuilder
             {
                 schema = new ContentSchema(type.Name);
             }
-
-            foreach(PropertyInfo property in type.GetProperties())
+            else
             {
-                if (property.PropertyType.IsSubclassOf(typeof(ContentField)))
-                {
-                    //schema.AddField(property.Name, property.PropertyType);
-                }                
+                schema.Fields.Clear();
             }
 
-            if(schema.IsNew)
+            IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
+
+            foreach (PropertyInfo property in type.GetProperties())
+            {
+                if (allFieldTypes.Contains(property.PropertyType))
+                {
+                    schema.AddField(property.Name, property.PropertyType);
+                }
+            }
+
+            if (schema.IsNew)
             {
                 await Storage.CreateAsync(schema);
             }
@@ -57,7 +63,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder
                 await Storage.UpdateAsync(schema);
             }
 
-            if(_schema.TryAdd(type, schema) == false)
+            if (_schema.TryAdd(type, schema) == false)
             {
                 throw new Exception($"The type '{type.Name}' already exists.");
             }

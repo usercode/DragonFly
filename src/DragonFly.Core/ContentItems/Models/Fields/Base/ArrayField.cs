@@ -24,16 +24,17 @@ namespace DragonFly.Content
 
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            ArrayFieldOptions fieldOptions = (ArrayFieldOptions)options;
-
-            if (fieldOptions.IsRequired && Items.Any() == false)
+            if (options is ArrayFieldOptions fieldOptions)
             {
-                context.AddRequireValidation(fieldName);
-            }
+                if (fieldOptions.IsRequired && Items.Any() == false)
+                {
+                    context.AddRequireValidation(fieldName);
+                }
 
-            if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
-            {
-                context.AddRangeValidation(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
+                if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
+                {
+                    context.AddRangeValidation(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
+                }
             }
         }
     }

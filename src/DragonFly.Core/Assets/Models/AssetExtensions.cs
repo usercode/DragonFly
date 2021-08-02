@@ -9,7 +9,7 @@ namespace DragonFly.Content
     {
         public static bool IsImage(this Asset asset)
         {
-            if(asset.MimeType == null)
+            if (asset.MimeType == null)
             {
                 return false;
             }

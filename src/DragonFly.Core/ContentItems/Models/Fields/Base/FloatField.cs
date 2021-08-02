@@ -24,9 +24,7 @@ namespace DragonFly.Content
 
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            FloatFieldOptions fieldOptions = (FloatFieldOptions)options;
-
-            if (fieldOptions != null)
+            if (options is FloatFieldOptions fieldOptions)
             {
                 if (fieldOptions.IsRequired && HasValue == false)
                 {
@@ -36,7 +34,7 @@ namespace DragonFly.Content
                 if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
                 {
                     context.AddRangeValidation(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
-                }                
+                }
             }
         }
 

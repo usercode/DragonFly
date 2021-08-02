@@ -11,10 +11,17 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
 {
     static class AssetFolderStartupExtensions
     {
-        public static void MapAssetFolderRestApi(this IEndpointRouteBuilder endpoints)
+        public static void UseAssetFolderRestApi(this IApplicationBuilder builder)
         {
-            endpoints.MapQuery();
-            endpoints.MapGet();
+            builder.Map("/assetfolder", x =>
+            {
+                x.UseRouting();
+                x.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapQuery();
+                    endpoints.MapGet();
+                });
+            });
         }
 
         private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
@@ -23,7 +30,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
                                                     .UseMiddleware<QueryAssetFolderMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("assetfolder/query", pipeline);
+            return endpoints.MapPost("query", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
@@ -32,7 +39,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
                                                     .UseMiddleware<GetAssetFolderMiddleware>()
                                                     .Build();
 
-            return endpoints.MapGet("assetfolder/{id:guid}", pipeline);
+            return endpoints.MapGet("{id:guid}", pipeline);
         }
     }
 }

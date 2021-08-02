@@ -14,11 +14,12 @@ namespace DragonFly.Content
 
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            AssetFieldOptions fieldOptions = (AssetFieldOptions)options;
-
-            if (fieldOptions.IsRequired && Asset == null)
+            if (options is AssetFieldOptions fieldOptions)
             {
-                context.AddRequireValidation(fieldName);
+                if (fieldOptions.IsRequired && Asset == null)
+                {
+                    context.AddRequireValidation(fieldName);
+                }
             }
         }
 

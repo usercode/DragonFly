@@ -32,14 +32,5 @@ namespace DragonFly.Content
             //}
         }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            SlugFieldOptions fieldOptions = (SlugFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-        }
     }
 }

@@ -30,15 +30,11 @@ namespace DragonFly.AspNetCore.API
         {
             builder.Map("/api", x =>
             {
-                x.UseRouting();
-                x.UseEndpoints(endpoints => 
-                {
-                    endpoints.MapContentItemRestApi();
-                    endpoints.MapContentSchemaRestApi();
-                    endpoints.MapAssetRestApi();
-                    endpoints.MapAssetFolderRestApi();
-                    endpoints.MapWebHookRestApi();
-                });
+                x.UseContentItemRestApi();
+                x.UseContentSchemaRestApi();
+                x.UseAssetRestApi();
+                x.UseAssetFolderRestApi();
+                x.UseWebHookRestApi();
             });
 
             return builder;

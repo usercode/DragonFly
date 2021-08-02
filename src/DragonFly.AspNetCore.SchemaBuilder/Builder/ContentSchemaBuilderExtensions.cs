@@ -9,6 +9,15 @@ namespace DragonFly.AspNetCore.SchemaBuilder
 {
     public static class ContentSchemaBuilderExtensions
     {
+        public static T ToModel<T>(this ContentItem contentItem)
+        {
+            T instance = Activator.CreateInstance<T>();
+
+
+
+            return instance;
+        }
+
         public static async Task CreateAsync<TContentType>(this IContentStorage storage, TContentType entity)
             where TContentType : class
         {

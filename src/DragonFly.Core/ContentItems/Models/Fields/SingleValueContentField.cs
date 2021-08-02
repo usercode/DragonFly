@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.ContentItems.Models.Validations;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -36,6 +37,14 @@ namespace DragonFly.Content
         public bool HasValue => Value != null;
 
         object? ISingleValueContentField.Value => Value;
+
+        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+        {
+            if (options.IsRequired && HasValue == false)
+            {
+                context.AddRequireValidation(fieldName);
+            }
+        }
 
         protected virtual void OnValueChanging(ref T? newValue)
         {

@@ -13,17 +13,6 @@ namespace DragonFly.Content
 
         }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            DateFieldOptions fieldOptions = (DateFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-
-        }
-
         public DateField(DateTime? date)
         {
             Value = date;

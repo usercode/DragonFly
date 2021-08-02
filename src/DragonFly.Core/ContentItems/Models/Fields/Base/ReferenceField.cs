@@ -23,16 +23,6 @@ namespace DragonFly.Content
         /// </summary>
         public ContentItem? ContentItem { get; set; }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            ReferenceFieldOptions fieldOptions = (ReferenceFieldOptions)options;
-
-            if (fieldOptions.IsRequired && ContentItem == null)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-        }
-
         public override string ToString()
         {
             if(ContentItem == null)

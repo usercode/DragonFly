@@ -51,7 +51,6 @@ namespace DragonFly.Core
             services.AddSingleton(AssetMetadataManager.Default);
 
             services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
-            
 
             //ImageWizard
             services.ConfigureOptions<HttpLoaderConfigureOptions>();
@@ -106,7 +105,6 @@ namespace DragonFly.Core
                                     {
                                         x.UseBlazorFrameworkFiles();
                                         x.UseStaticFiles();
-                                        //x.UseStaticFiles(basePath);
                                         x.UseRouting();
                                         x.UseEndpoints(endpoints => endpoints.MapFallbackToFile("index.html"));
                                     }

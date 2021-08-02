@@ -19,7 +19,7 @@ namespace DragonFly.Content
         {
             get
             {
-                if(_default == null)
+                if (_default == null)
                 {
                     _default = new ContentFieldManager();
 

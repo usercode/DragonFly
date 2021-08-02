@@ -16,12 +16,13 @@ namespace DragonFly.Data
 
         public static ContentItem CreateContentItem(Guid id, string schema)
         {
-            ContentItem contentItem = new ContentItem(id, CreateContentSchema(schema));
+            ContentSchema contentSchema = CreateContentSchema(schema);
+            ContentItem contentItem = new ContentItem(id, contentSchema);
 
             return (ContentItem)Generator.CreateClassProxyWithTarget(
                                     typeof(ContentItem),
                                     contentItem, 
-                                    new object[] { id, CreateContentSchema(schema) },
+                                    new object[] { id, contentSchema },
                                     new ContenItemInterceptor());
         }
 

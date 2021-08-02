@@ -34,7 +34,7 @@ namespace DragonFly.Data.Proxies
 
                     _isLoaded = true;
                 }
-            }        
+            }
 
             invocation.Proceed();
         }

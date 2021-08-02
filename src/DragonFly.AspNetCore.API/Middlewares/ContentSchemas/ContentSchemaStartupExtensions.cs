@@ -15,13 +15,20 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
 {
     static class ContentSchemaStartupExtensions
     {
-        public static void MapContentSchemaRestApi(this IEndpointRouteBuilder endpoints)
+        public static void UseContentSchemaRestApi(this IApplicationBuilder builder)
         {
-            endpoints.MapQuery();
-            endpoints.MapGetById();
-            endpoints.MapGetByName();            
-            endpoints.MapCreate();
-            endpoints.MapUpdate();
+            builder.Map("/schema", x =>
+            {
+                x.UseRouting();
+                x.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapQuery();
+                    endpoints.MapGetById();
+                    endpoints.MapGetByName();
+                    endpoints.MapCreate();
+                    endpoints.MapUpdate();
+                });
+            });            
         }
 
         private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
@@ -30,7 +37,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
                                                     .UseMiddleware<QueryContentSchemaMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("schema/query", pipeline);
+            return endpoints.MapPost("query", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGetByName(this IEndpointRouteBuilder endpoints)
@@ -39,7 +46,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
                                                     .UseMiddleware<GetContentSchemaMiddleware>()
                                                     .Build();
 
-            return endpoints.MapGet("schema/{name}", pipeline);
+            return endpoints.MapGet("{name}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGetById(this IEndpointRouteBuilder endpoints)
@@ -48,7 +55,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
                                                     .UseMiddleware<GetContentSchemaMiddleware>()
                                                     .Build();
 
-            return endpoints.MapGet("schema/{id:guid}", pipeline);
+            return endpoints.MapGet("{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
@@ -57,7 +64,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
                                                     .UseMiddleware<CreateContentSchemaMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("schema", pipeline);
+            return endpoints.MapPost("", pipeline);
         }
 
         private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
@@ -66,7 +73,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
                                                     .UseMiddleware<UpdateContentSchemaMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPut("schema/{id:guid}", pipeline);
+            return endpoints.MapPut("{id:guid}", pipeline);
         }
     }
 }

@@ -17,16 +17,6 @@ namespace DragonFly.Content
 
         }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            HtmlFieldOptions fieldOptions = (HtmlFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-        }
-
         public HtmlField(string text)
         {
             Value = text;

@@ -1,4 +1,5 @@
-﻿using DragonFly.AspNetCore.API.Middlewares;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.API.Middlewares;
 using DragonFly.Core.Builders;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -14,14 +15,21 @@ namespace DragonFly.AspNetCore.API.Middlewares
 {
     static class ContentItemStartupExtensions
     {
-        public static void MapContentItemRestApi(this IEndpointRouteBuilder endpoints)
+        public static void UseContentItemRestApi(this IApplicationBuilder builder)
         {
-            endpoints.MapQuery();
-            endpoints.MapGet();
-            endpoints.MapCreate();
-            endpoints.MapUpdate();
-            endpoints.MapDelete();
-            endpoints.MapPublish();
+            builder.Map("/content", x =>
+            {
+                x.UseRouting();
+                x.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapQuery();
+                    endpoints.MapGet();
+                    endpoints.MapCreate();
+                    endpoints.MapUpdate();
+                    endpoints.MapDelete();
+                    endpoints.MapPublish();
+                });
+            });
         }
 
         private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
@@ -30,7 +38,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<QueryContentItemMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("content/{schema}/query", pipeline);
+            return endpoints.MapPost("{schema}/query", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
@@ -39,7 +47,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<GetContentItemMiddleware>()                                                 
                                                     .Build();
 
-            return endpoints.MapGet("content/{schema}/{id:guid}", pipeline);
+            return endpoints.MapGet("{schema}/{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
@@ -48,7 +56,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<CreateContentItemMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("content/{schema}", pipeline);
+            return endpoints.MapPost("{schema}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
@@ -57,7 +65,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<UpdateContentItemMiddleware>()                                                  
                                                     .Build();
 
-            return endpoints.MapPut("content/{schema}/{id:guid}", pipeline);
+            return endpoints.MapPut("{schema}/{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapDelete(this IEndpointRouteBuilder endpoints)
@@ -66,7 +74,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<DeleteContentItemMiddleware>()
                                                     .Build();
 
-            return endpoints.MapDelete("content/{schema}/{id:guid}", pipeline);
+            return endpoints.MapDelete("{schema}/{id:guid}", pipeline);
         }
 
         private static IEndpointConventionBuilder MapPublish(this IEndpointRouteBuilder endpoints)
@@ -75,7 +83,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<PublishContentItemMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("content/{schema}/{id:guid}/publish", pipeline);
+            return endpoints.MapPost("{schema}/{id:guid}/publish", pipeline);
         }
     }
 }

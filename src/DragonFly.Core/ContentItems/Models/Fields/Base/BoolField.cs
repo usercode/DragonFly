@@ -24,16 +24,6 @@ namespace DragonFly.Content
             Value = value;
         }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-            BoolFieldOptions fieldOptions = (BoolFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
-        }
-
         public override string ToString()
         {
             return $"{Value}";

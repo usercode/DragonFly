@@ -23,22 +23,23 @@ namespace DragonFly.Content
 
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
-            StringFieldOptions fieldOptions = (StringFieldOptions)options;
-
-            if (fieldOptions.IsRequired && HasValue == false)
+            if (options is StringFieldOptions fieldOptions)
             {
-                context.AddRequireValidation(fieldName);
-            }
-
-            if (HasValue)
-            {
-                if (Value.Length < fieldOptions.MinLength)
+                if (fieldOptions.IsRequired && HasValue == false)
                 {
-                    context.AddMinimumValidation(fieldName, fieldOptions.MinLength);
+                    context.AddRequireValidation(fieldName);
                 }
-                else if (Value.Length > fieldOptions.MaxLength)
+
+                if (HasValue)
                 {
-                    context.AddMaximumValidation(fieldName, fieldOptions.MaxLength);
+                    if (Value.Length < fieldOptions.MinLength)
+                    {
+                        context.AddMinimumValidation(fieldName, fieldOptions.MinLength);
+                    }
+                    else if (Value.Length > fieldOptions.MaxLength)
+                    {
+                        context.AddMaximumValidation(fieldName, fieldOptions.MaxLength);
+                    }
                 }
             }
         }

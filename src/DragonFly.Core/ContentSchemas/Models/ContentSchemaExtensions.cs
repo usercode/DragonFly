@@ -7,19 +7,22 @@ namespace DragonFly.Content
 {
     public static class ContentSchemaExtensions
     {
-        public static ISchemaElement AddField(this ISchemaElement schema, string name, Type fieldType, ContentFieldOptions options, int? sortkey = null)
+        public static ISchemaElement AddField(this ISchemaElement schema, string name, Type fieldType, ContentFieldOptions? options = null, int sortkey = 0)
         {
-            schema.Fields.Add(name, new ContentSchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey ?? 0, Options = options });
+            if (options == null)
+            {
+                options = ContentFieldManager.Default.CreateOptions(name);
+            }
+
+            schema.Fields.Add(name, new ContentSchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options });
 
             return schema;
         }
 
-        public static ISchemaElement AddField<TField>(this ISchemaElement schema, string name, ContentFieldOptions options, int? sortkey = null)
+        public static ISchemaElement AddField<TField>(this ISchemaElement schema, string name, ContentFieldOptions? options = null, int sortkey = 0)
             where TField : ContentField
         {
-            schema.Fields.Add(name, new ContentSchemaField(ContentFieldManager.Default.GetContentFieldName<TField>(), options) { SortKey = sortkey ?? 0, Options = options });
-
-            return schema;
+            return AddField(schema, name, typeof(TField), options, sortkey);
         }
 
         public static TContentSchema RemoveField<TContentSchema>(this TContentSchema schema, string name)
@@ -37,7 +40,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<SlugField>(name, options, null);
+            schema.AddField<SlugField>(name, options);
 
             return schema;
         }
@@ -49,7 +52,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<StringField>(name, options, null);
+            schema.AddField<StringField>(name, options);
 
             return schema;
         }
@@ -61,7 +64,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<HtmlField>(name, options, null);
+            schema.AddField<HtmlField>(name, options);
 
             return schema;
         }
@@ -73,7 +76,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<XmlField>(name, options, null);
+            schema.AddField<XmlField>(name, options);
 
             return schema;
         }
@@ -85,7 +88,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<TextAreaField>(name, options, null);
+            schema.AddField<TextAreaField>(name, options);
 
             return schema;
         }
@@ -97,7 +100,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<DateField>(name, options, null);
+            schema.AddField<DateField>(name, options);
 
             return schema;
         }
@@ -109,7 +112,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<FloatField>(name, options, null);
+            schema.AddField<FloatField>(name, options);
 
             return schema;
         }
@@ -121,7 +124,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<IntegerField>(name, options, null);
+            schema.AddField<IntegerField>(name, options);
 
             return schema;
         }
@@ -133,7 +136,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<BoolField>(name, options, null);
+            schema.AddField<BoolField>(name, options);
 
             return schema;
         }
@@ -145,7 +148,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<AssetField>(name, options, null);
+            schema.AddField<AssetField>(name, options);
 
             return schema;
         }
@@ -163,7 +166,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<ReferenceField>(name, options, null);
+            schema.AddField<ReferenceField>(name, options);
 
             return schema;
         }
@@ -175,7 +178,7 @@ namespace DragonFly.Content
 
             configOptions?.Invoke(options);
 
-            schema.AddField<ArrayField>(name, options, null);
+            schema.AddField<ArrayField>(name, options);
 
             return schema;
         }
