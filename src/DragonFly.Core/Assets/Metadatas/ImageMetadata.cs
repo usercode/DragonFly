@@ -5,6 +5,9 @@ using System.Text;
 
 namespace DragonFly.Assets
 {
+    /// <summary>
+    /// ImageMetadata
+    /// </summary>
     [AssetMetadata("Image")]
     public class ImageMetadata : AssetMetadata
     {

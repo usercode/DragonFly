@@ -17,7 +17,12 @@ namespace DragonFly.Client
         public static JsonSerializer CreateSerializer()
         {
             var d = new FieldTypeDiscriminatorMapper();
-            foreach (var t in ContentFieldManager.Default.GetAllOptionTypes())
+            foreach (Type t in ContentFieldManager.Default.GetAllOptionTypes())
+            {
+                d.AddType(t);
+            }
+
+            foreach(Type t in ContentFieldManager.Default.GetAllQueryTypes())
             {
                 d.AddType(t);
             }

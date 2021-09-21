@@ -6,6 +6,9 @@ using System.Text;
 
 namespace DragonFly.Data.Models.Assets
 {
+    /// <summary>
+    /// MongoAsset
+    /// </summary>
     public class MongoAsset : MongoContentBase
     {
         public MongoAsset()

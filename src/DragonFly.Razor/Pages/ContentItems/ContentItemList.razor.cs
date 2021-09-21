@@ -2,7 +2,9 @@
 using DragonFly.Client.Base;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
+using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Models;
+using DragonFly.Razor.Services;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -17,7 +19,11 @@ namespace DragonFly.Client.Pages.ContentItems
         public ContentItemListBase()
         {
             OrderFields = new List<FieldOrder>();
+            QueryFields = new List<FieldQueryBase>();
         }
+
+        [Inject]
+        public ContentFieldManager ContentFieldManager { get; set; }
 
         /// <summary>
         /// Schema
@@ -29,12 +35,24 @@ namespace DragonFly.Client.Pages.ContentItems
         /// </summary>
         public IList<FieldOrder> OrderFields { get; private set; }
 
+        /// <summary>
+        /// QueryFields
+        /// </summary>
+        public IList<FieldQueryBase> QueryFields { get; private set; }
+
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
         {
             base.BuildToolbarItems(toolbarItems);
 
             toolbarItems.Add(new ToolbarItem("Create", Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
             toolbarItems.AddRefreshButton(this);
+        }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+
         }
 
         protected override async Task RefreshActionAsync()
@@ -46,6 +64,17 @@ namespace DragonFly.Client.Pages.ContentItems
                 if (OrderFields.Any() == false)
                 {
                     OrderFields = Schema.OrderFields.ToList();
+                }
+
+                if (QueryFields.Any() == false)
+                {
+                    foreach (var field in Schema.Fields.Where(x => x.Value.Options.IsSearchable))
+                    {
+                        FieldQueryBase q = ContentFieldManager.CreateQuery(field.Value.FieldType);
+                        q.FieldName = field.Key;
+
+                        QueryFields.Add(q);
+                    }
                 }
                 
                 var queryParameters = new QueryParameters()
@@ -60,11 +89,12 @@ namespace DragonFly.Client.Pages.ContentItems
                     queryParameters.AddFieldOrder(f.Name, f.Asc);
                 }
 
-                SearchResult = await ContentService.Query(
-                                                    Schema.Name, 
-                                                   queryParameters);
+                foreach (FieldQueryBase query in QueryFields)
+                {
+                    queryParameters.Fields2.Add(query);
+                }
 
-                
+                SearchResult = await ContentService.QueryAsync(Schema.Name, queryParameters);
             }
         }
 

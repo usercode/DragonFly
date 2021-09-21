@@ -5,6 +5,9 @@ using System.Text;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// ContentSchemaExtensions
+    /// </summary>
     public static class ContentSchemaExtensions
     {
         public static ISchemaElement AddField(this ISchemaElement schema, string name, Type fieldType, ContentFieldOptions? options = null, int sortkey = 0)
@@ -14,7 +17,7 @@ namespace DragonFly.Content
                 options = ContentFieldManager.Default.CreateOptions(name);
             }
 
-            schema.Fields.Add(name, new ContentSchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options });
+            schema.Fields.Add(name, new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options });
 
             return schema;
         }

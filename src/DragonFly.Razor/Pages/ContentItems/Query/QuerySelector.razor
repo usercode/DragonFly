@@ -1,34 +1,44 @@
-﻿<h4>Sorting</h4>
+﻿@inject FieldComponentManager FieldComponentManager
 
-<BSListGroup>
+
+
+@if (ContentItemList.Schema != null)
+{
+    <h4>Order</h4>
+
+    <BSListGroup>
     @foreach (FieldOrder field in ContentItemList.OrderFields)
     {
     <BSListGroupItem style="display:flex;align-items:center">
         <span>@field.Name</span>
         <div style="flex-grow:1"></div>
 
-        <OrderDirection Order="field"></OrderDirection>
-        <BSButton Color="Color.Light" OnClick="@(e => { ContentItemList.OrderFields.MoveUp(field);  })"><i class="fas fa-arrow-up"></i></BSButton>
-        <BSButton Color="Color.Light" OnClick="@(e => { ContentItemList.OrderFields.MoveDown(field); })"><i class="fas fa-arrow-down"></i></BSButton>
-        <BSButton Color="Color.Light" OnClick="x => { ContentItemList.OrderFields.Remove(field); }"><i class="fas fa-times"></i></BSButton>                    
+        <OrderDirection Order="field" />
+        <BSButton Color="Color.Light" OnClick="x => ContentItemList.OrderFields.MoveUp(field)"><i class="fas fa-arrow-up"></i></BSButton>
+        <BSButton Color="Color.Light" OnClick="x => ContentItemList.OrderFields.MoveDown(field)"><i class="fas fa-arrow-down"></i></BSButton>
+        <BSButton Color="Color.Light" OnClick="x => ContentItemList.OrderFields.Remove(field)"><i class="fas fa-times"></i></BSButton>        
     </BSListGroupItem>
     }
-</BSListGroup>
+    </BSListGroup>
 
-@if (ContentItemList.Schema != null)
-{
-    <BSDropdown>
-        <BSDropdownToggle>Add field</BSDropdownToggle>
-        <BSDropdownMenu>
-            @foreach (var field in ContentItemList.Schema.Fields
-                                .Where(x => ContentFieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
-                                .Where(f => ContentItemList.OrderFields.Any(a => a.Name == f.Key) == false)
-                                .ToList())
-            {
-                <BSDropdownItem OnClick="x => { ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true)); }">@field.Key</BSDropdownItem>
-            }
-        </BSDropdownMenu>
-    </BSDropdown>
+    @if (GetUnsedOrderFields().Any())
+    {
+        <BSDropdown>
+            <BSDropdownToggle Color="Color.Light">Add field</BSDropdownToggle>
+            <BSDropdownMenu>
+                @foreach (var field in GetUnsedOrderFields())
+                {
+                    <BSDropdownItem OnClick="x => ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true))">@field.Key</BSDropdownItem>
+                }
+            </BSDropdownMenu>
+        </BSDropdown>
+    }
+
+    <h4>Filter</h4>
+    @foreach (var fieldQuery in ContentItemList.QueryFields)
+    {
+        @FieldComponentManager.CreateQueryFieldComponent(fieldQuery)
+    }
 }
 
 @code {
@@ -38,4 +48,12 @@
 
     [Parameter]
     public ISchemaElement Schema { get; set; }
+
+    public IEnumerable<KeyValuePair<string, SchemaField>> GetUnsedOrderFields()
+    {
+        return ContentItemList.Schema.Fields
+                                          .Where(x => ContentFieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
+                                          .Where(f => ContentItemList.OrderFields.Any(a => a.Name == f.Key) == false)
+                                          ;
+    }
 }

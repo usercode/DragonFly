@@ -1,4 +1,5 @@
 ﻿using DragonFly.Content;
+using DragonFly.Core.ContentItems.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,14 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// ContentFieldManager
+    /// </summary>
     public class ContentFieldManager
     {
-        private IDictionary<Type, Type> _byField;
-        private IDictionary<string, Type> _byFieldName;
+        private IDictionary<Type, Type> _optionsByField;
+        private IDictionary<Type, Type> _queryByField;
+        private IDictionary<string, Type> _fieldByName;
 
         private static ContentFieldManager? _default;
 
@@ -45,32 +50,47 @@ namespace DragonFly.Content
 
         private ContentFieldManager()
         {
-            _byField = new Dictionary<Type, Type>();
-            _byFieldName = new Dictionary<string, Type>();
+            _optionsByField = new Dictionary<Type, Type>();
+            _queryByField = new Dictionary<Type, Type>();
+            _fieldByName = new Dictionary<string, Type>();
         }
 
         public void RegisterField<TField>()
             where TField : ContentField, new()
         {
-            FieldOptionsAttribute? fieldOptions = typeof(TField).GetCustomAttribute<FieldOptionsAttribute>();
+            //name
+            _fieldByName.Add(typeof(TField).Name, typeof(TField));
 
-            if (fieldOptions == null)
+            //options
+            FieldOptionsAttribute? fieldOptionsAttribute = typeof(TField).GetCustomAttribute<FieldOptionsAttribute>();
+
+            if (fieldOptionsAttribute != null)
             {
-                throw new Exception($"FieldOptionsAttribute does not exisits: {typeof(TField).Name}");
+                _optionsByField.Add(typeof(TField), fieldOptionsAttribute.OptionsType);
             }
 
-            _byField.Add(typeof(TField), fieldOptions.OptionsType);
-            _byFieldName.Add(typeof(TField).Name, typeof(TField));
+            //query
+            FieldQueryAttribute? fieldQueryAttribute = typeof(TField).GetCustomAttribute<FieldQueryAttribute>();
+
+            if (fieldQueryAttribute != null)
+            {
+                _queryByField.Add(typeof(TField), fieldQueryAttribute.QueryType);
+            }
         }
 
         public IEnumerable<Type> GetAllOptionTypes()
         {
-            return _byField.Values;
+            return _optionsByField.Values;
         }
 
         public IEnumerable<Type> GetAllFieldTypes()
         {
-            return _byField.Select(x => x.Key).ToList();
+            return _optionsByField.Select(x => x.Key).ToList();
+        }
+
+        public IEnumerable<Type> GetAllQueryTypes()
+        {
+            return _queryByField.Values;
         }
 
         public string GetContentFieldName<T>()
@@ -91,7 +111,7 @@ namespace DragonFly.Content
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            return _byFieldName[fieldName];
+            return _fieldByName[fieldName];
         }
 
         public ContentField CreateField<T>()
@@ -119,9 +139,9 @@ namespace DragonFly.Content
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type t = GetContentFieldType(fieldName);
+            Type fieldType = GetContentFieldType(fieldName);
 
-            return CreateField(t);
+            return CreateField(fieldType);
         }
 
         public Type GetOptionsType(string? fieldName)
@@ -131,9 +151,37 @@ namespace DragonFly.Content
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type fieldType = _byFieldName[fieldName];
+            Type fieldType = GetContentFieldType(fieldName);
+            Type optionsType = _optionsByField[fieldType];
 
-            return _byField[fieldType];
+            return optionsType;
+        }
+
+        public Type GetQueryType(string? fieldName)
+        {
+            if (fieldName == null)
+            {
+                throw new ArgumentNullException(nameof(fieldName));
+            }
+
+            Type fieldType = GetContentFieldType(fieldName);
+            Type queryType = _queryByField[fieldType];
+
+            return queryType;
+        }
+
+        public FieldQueryBase CreateQuery(string? fieldName)
+        {
+            Type type = GetQueryType(fieldName);
+
+            FieldQueryBase? instance = (FieldQueryBase?)Activator.CreateInstance(type);
+
+            if (instance == null)
+            {
+                throw new Exception();
+            }
+
+            return instance;
         }
 
         public ContentFieldOptions CreateOptions(string? fieldName)
@@ -144,8 +192,9 @@ namespace DragonFly.Content
             }
 
             Type fieldType = GetContentFieldType(fieldName);
+            ContentFieldOptions options = CreateOptions(fieldType);
 
-            return CreateOptions(fieldType);
+            return options;
         }
 
         public ContentFieldOptions CreateOptions<TField>()
@@ -156,13 +205,13 @@ namespace DragonFly.Content
 
         public ContentFieldOptions CreateOptions(Type fieldType)
         {
-            if (_byField.TryGetValue(fieldType, out Type? t))
+            if (_optionsByField.TryGetValue(fieldType, out Type? t))
             {
                 ContentFieldOptions? options = (ContentFieldOptions?)Activator.CreateInstance(t);
 
-                if(options == null)
+                if (options == null)
                 {
-                    throw new Exception();
+                    throw new Exception($"Could not create options for {fieldType.Name}.");
                 }
 
                 return options;

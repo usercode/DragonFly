@@ -2,37 +2,21 @@
 
 @foreach (var part in Schema.Fields
            .OrderBy(x => x.Value.SortKey)
-           .Select(x => new { Key = x.Key, Value = Content.Fields[x.Key], Definition = x.Value })
+           .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
            .ToList())
 {
-    @if (Detail.IsFieldValid(part.Key) == false)
-    {
-        <BSFormGroup>
-            <BSAlert Color="Color.Danger">
-                <BSRow>
-                    <BSLabel class="col-sm-2 col-form-label">
-                        @part.Key
-                    </BSLabel>
-                    <div class="col-sm-10">
-                        @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
-                    </div>
-                </BSRow>
-            </BSAlert>
-        </BSFormGroup>
-    }
-    else
-    {
-        <BSFormGroup>
+    <BSFormGroup>
+        <BSAlert Color="GetFieldColor(part.FieldName)">
             <BSRow>
                 <BSLabel class="col-sm-2 col-form-label">
-                    @part.Key
+                    @part.FieldName
                 </BSLabel>
                 <div class="col-sm-10">
-                    @FieldComponentManager.CreateFieldComponent(part.Value, part.Definition.Options)
+                    @FieldComponentManager.CreateFieldComponent(part.ContentField, part.SchemaField.Options)
                 </div>
             </BSRow>
-        </BSFormGroup>
-    }
+        </BSAlert>
+    </BSFormGroup>
 }
 
 @code {
@@ -44,4 +28,18 @@
 
     [CascadingParameter]
     public ContentItemDetail Detail { get; set; }
+
+    private Color GetFieldColor(string field)
+    {
+        bool valid = Detail.IsFieldValid(field);
+
+        if (valid)
+        {
+            return Color.None;
+        }
+        else
+        {
+            return Color.Danger;
+        }
+    }
 }

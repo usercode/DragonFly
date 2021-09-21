@@ -62,7 +62,7 @@ namespace DragonFly.Client
 
         public async Task CreateAsync(Asset entity)
         {
-            var response = await Client.PostAsJson($"api/asset", entity);
+            var response = await Client.PostAsJson($"api/asset", entity.ToRest());
 
             var result = await response.Content.ParseJsonAsync<ResourceCreated>();
 

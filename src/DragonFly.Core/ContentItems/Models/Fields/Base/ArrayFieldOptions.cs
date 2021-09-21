@@ -12,13 +12,13 @@ namespace DragonFly.Content
     {
         public ArrayFieldOptions()
         {
-            Fields = new ContentSchemaFields();
+            Fields = new SchemaFields();
         }
 
         /// <summary>
         /// Fields
         /// </summary>
-        public ContentSchemaFields Fields { get; set; }
+        public SchemaFields Fields { get; set; }
 
         /// <summary>
         /// MinItems

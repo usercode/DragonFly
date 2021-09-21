@@ -10,7 +10,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class TextAreaFieldSerializer : FieldSerializer<TextAreaField>
     {
-        public override void Read(ContentSchemaField schemaField, TextAreaField contentField, BsonValue bsonvalue)
+        public override void Read(SchemaField schemaField, TextAreaField contentField, BsonValue bsonvalue)
         {
             if (bsonvalue is BsonString bsonString)
             {

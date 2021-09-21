@@ -37,7 +37,7 @@ namespace DragonFly.SampleData
                                             .SetFloat("Price", 9.99)
                                             .SetAsset("Image", new Asset())
                                             .SetTextArea("Description", "...")
-                                            .AddArrayFieldItem("Attributes", schemaProduct, item => item
+                                            .AddArrayItem("Attributes", schemaProduct, item => item
                                                                                     .SetString("Name", "Size")
                                                                                     .SetString("Value", "M"));
 

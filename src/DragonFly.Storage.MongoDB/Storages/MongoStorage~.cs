@@ -38,9 +38,7 @@ namespace DragonFly.Data
         public IMongoCollection<MongoContentSchema> ContentSchemas { get; }
         public IMongoCollection<MongoAssetFolder> AssetFolders { get; }
         public IMongoCollection<MongoAsset> Assets { get; }
-        //public IMongoCollection<MongoAsset> AssetsPublished { get; }
         public IGridFSBucket AssetData { get; private set; }
-        //public IGridFSBucket AssetDataPublished { get; private set; }
 
         public IMongoCollection<MongoWebHook> WebHooks { get; }
 
@@ -106,13 +104,13 @@ namespace DragonFly.Data
         public async Task<ContentItem> GetContentItemAsync(string schema, Guid id)
         {
             ContentSchema contentSchema = await GetContentSchemaAsync(schema);
-            var items = GetMongoCollection(schema);
+            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
 
-            var result = items.AsQueryable().FirstOrDefault(x => x.Id == id);
-            
-            if(result == null)
+            MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+            if (result == null)
             {
-                throw new Exception("Not Found");
+                throw new Exception($"ContentItem '{schema}/{id}' not found");
             }
 
             return result.ToModel(contentSchema);

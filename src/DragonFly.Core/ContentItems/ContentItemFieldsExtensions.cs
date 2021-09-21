@@ -164,7 +164,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static ArrayFieldItem GetArrayField<TContentItem>(this TContentItem contentItem, string name, int index)
+        public static ArrayFieldItem GetArrayItem<TContentItem>(this TContentItem contentItem, string name, int index)
             where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);
@@ -172,7 +172,7 @@ namespace DragonFly.Content
             return arrayField.Items[index];
         }
 
-        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, ISchemaElement schema, Action<ArrayFieldItem> action)
+        public static TContentItem AddArrayItem<TContentItem>(this TContentItem contentItem, string name, ISchemaElement schema, Action<ArrayFieldItem> action)
             where TContentItem : IContentElement
         {
             ArrayFieldOptions options = schema.GetArrayFieldOptions(name);
@@ -180,10 +180,10 @@ namespace DragonFly.Content
             
             action(item);
 
-            return AddArrayFieldItem(contentItem, name, item);
+            return AddArrayItem(contentItem, name, item);
         }
 
-        public static TContentItem AddArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, ArrayFieldItem item)
+        public static TContentItem AddArrayItem<TContentItem>(this TContentItem contentItem, string name, ArrayFieldItem item)
             where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);
@@ -193,7 +193,7 @@ namespace DragonFly.Content
             return contentItem;
         }
 
-        public static TContentItem RemoveArrayFieldItem<TContentItem>(this TContentItem contentItem, string name, int index)
+        public static TContentItem RemoveArrayItem<TContentItem>(this TContentItem contentItem, string name, int index)
             where TContentItem : IContentElement
         {
             ArrayField arrayField = contentItem.GetField<ArrayField>(name);

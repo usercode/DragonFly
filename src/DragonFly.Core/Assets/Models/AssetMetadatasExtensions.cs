@@ -22,12 +22,14 @@ namespace DragonFly.Content
 
         public static AssetMetadata GetMetadata(this Asset asset, Type type)
         {
-            if (asset.Metaddata.TryGetValue(AssetMetadataManager.Default.GetMetadataName(type), out AssetMetadata? metadata))
+            string name = AssetMetadataManager.Default.GetMetadataName(type);
+
+            if (asset.Metaddata.TryGetValue(name, out AssetMetadata? metadata))
             {
                 return metadata;
             }
 
-            throw new Exception();
+            throw new Exception($"Metadata '{name}' not found.");
         }
 
         public static T GetMetadata<T>(this Asset asset)

@@ -1,4 +1,5 @@
 ﻿using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Core.ContentItems.Queries.Fields;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace DragonFly.Content
     /// TextField
     /// </summary>
     [FieldOptions(typeof(StringFieldOptions))]
+    [FieldQuery(typeof(StringQuery))]
     public class StringField : TextBaseField
     {
         public StringField()

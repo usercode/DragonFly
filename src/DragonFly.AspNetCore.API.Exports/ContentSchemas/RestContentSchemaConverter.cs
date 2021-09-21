@@ -57,7 +57,7 @@ namespace DragonFly.Data.Models
             return restContentItem;
         }
 
-        public static RestContentSchemaField ToRest(this ContentSchemaField schemaField)
+        public static RestContentSchemaField ToRest(this SchemaField schemaField)
         {
             RestContentSchemaField restContentFieldDefinition = new RestContentSchemaField();
             restContentFieldDefinition.Label = schemaField.Label;
@@ -72,13 +72,13 @@ namespace DragonFly.Data.Models
             return restContentFieldDefinition;
         }
 
-        public static ContentSchemaField ToModel(this RestContentSchemaField definition)
+        public static SchemaField ToModel(this RestContentSchemaField definition)
         {
             Type optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
 
             ContentFieldOptions options = (ContentFieldOptions)definition.Options.ToObject(optionsType, NewtonJsonExtensions.CreateSerializer());
 
-            ContentSchemaField schemaField = new ContentSchemaField(definition.FieldType, options);
+            SchemaField schemaField = new SchemaField(definition.FieldType, options);
             schemaField.Label = definition.Label;
             schemaField.SortKey = definition.SortKey;
 

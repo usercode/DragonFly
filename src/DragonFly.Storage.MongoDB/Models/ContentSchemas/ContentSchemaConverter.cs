@@ -46,7 +46,7 @@ namespace DragonFly.Data.Models
                         options = ContentFieldManager.Default.CreateOptions(field.Value.FieldType);
                     }
 
-                    ContentSchemaField schemaField = new ContentSchemaField(field.Value.FieldType, options);
+                    SchemaField schemaField = new SchemaField(field.Value.FieldType, options);
                     schemaField.Label = field.Value.Label;
                     schemaField.SortKey = field.Value.SortKey;
 

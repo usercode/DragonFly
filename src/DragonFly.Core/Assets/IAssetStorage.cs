@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// IAssetStorage
+    /// </summary>
     public interface IAssetStorage
     {
         Task<Asset> GetAssetAsync(Guid id);

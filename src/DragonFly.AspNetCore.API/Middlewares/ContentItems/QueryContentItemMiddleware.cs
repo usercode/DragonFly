@@ -35,7 +35,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
 
             ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
 
-            QueryResult<ContentItem> contentItems = await contentStore.Query(schema, queryParameters);
+            QueryResult<ContentItem> contentItems = await contentStore.QueryAsync(schema, queryParameters);
 
             foreach (ContentItem contentItem in contentItems.Items)
             {

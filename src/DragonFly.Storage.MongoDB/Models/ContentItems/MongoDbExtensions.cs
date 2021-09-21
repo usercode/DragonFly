@@ -16,16 +16,16 @@ namespace DragonFly.Data.Models
 {
     public static class MongoDbExtensions
     {
-        public static void FromBsonValue(this BsonValue bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
+        public static void ToModelValue(this BsonValue bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
         {
             if (bsonValue == BsonNull.Value)
             {
                 return;
             }
 
-            if (contentItem.Fields.TryGetValue(fieldName, out ContentField? contentField))
+            if (contentItem.TryGetField(fieldName, out ContentField? contentField))
             {
-                if (schema.Fields.TryGetValue(fieldName, out ContentSchemaField? schemaField))
+                if (schema.Fields.TryGetValue(fieldName, out SchemaField? schemaField))
                 {
                     IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(contentField.GetType());
 

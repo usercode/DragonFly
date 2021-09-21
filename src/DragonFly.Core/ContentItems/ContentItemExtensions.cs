@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Content;
@@ -13,7 +14,7 @@ namespace DragonFly.Content
     {
         public static ContentField GetField(this IContentElement contentItem, string name)
         {
-            if (contentItem.Fields.TryGetValue(name, out ContentField? contentField) == false)
+            if (contentItem.TryGetField(name, out ContentField? contentField) == false)
             {
                 throw new Exception($"The field '{name}' was not found.");
             }
@@ -27,9 +28,24 @@ namespace DragonFly.Content
             return (T)GetField(contentItem, name);
         }
 
-        public static T? GetSingleValueField<T>(this IContentElement contentItem, string name)
+        public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
+        {
+            if (contentElement.Fields.TryGetValue(name, out contentField) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
         {
             return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
+        }
+
+        public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
+        {
+            ((SingleValueContentField<T>)contentItem.Fields[name]).Value = value;
         }
 
         public static ContentItem CreateContentItem(this ContentSchema schema)
@@ -71,7 +87,7 @@ namespace DragonFly.Content
             contentItem.SchemaVersion = contentItem.Schema.Version;
         }
 
-        public static void ApplySchema(this IContentElement? contentItem, ISchemaElement? schema)
+        public static void ApplySchema(this IContentElement contentItem, ISchemaElement schema)
         {
             if (contentItem == null)
             {
@@ -97,7 +113,7 @@ namespace DragonFly.Content
             {
                 if (field.Value is ArrayField arrayField)
                 {
-                    ArrayFieldOptions? options = (ArrayFieldOptions?)schema.Fields[field.Key].Options;
+                    ArrayFieldOptions options = (ArrayFieldOptions)schema.Fields[field.Key].Options;
 
                     foreach (ArrayFieldItem item in arrayField.Items)
                     {

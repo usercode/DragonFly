@@ -11,7 +11,7 @@ namespace DragonFly.Content
     /// <summary>
     /// ContentEmbed
     /// </summary>
-    public class ContentEmbedded : IContentElement, IContentElementWithSchema
+    public class ContentEmbedded : IContentElement
     {
         public ContentEmbedded(ContentSchema schema)
         {

@@ -11,7 +11,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class AssetFieldSerializer : FieldSerializer<AssetField>
     {
-        public override void Read(ContentSchemaField schemaField, AssetField contentField, BsonValue bsonValue)
+        public override void Read(SchemaField schemaField, AssetField contentField, BsonValue bsonValue)
         {
             if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
             {

@@ -9,9 +9,9 @@ namespace DragonFly.Content
     /// <summary>
     /// ContentSchemaField
     /// </summary>
-    public class ContentSchemaField : IContentFieldDefinition
+    public class SchemaField
     {
-        public ContentSchemaField(string fieldType, ContentFieldOptions options)
+        public SchemaField(string fieldType, ContentFieldOptions options)
         {
             FieldType = fieldType;
             Options = options;

@@ -10,22 +10,18 @@ namespace DragonFly.Content
 {
     public static class ValidationExtensions
     {
-        public static IEnumerable<ValidationError> Validate(this ContentItem contentItem)
+        public static ValidationContext Validate(this ContentItem contentItem)
         {
-            List<ValidationError> result = new List<ValidationError>();
+            ValidationContext validationContext = new ValidationContext();
 
             foreach (var field in contentItem.Fields)
             {
-                ContentSchemaField f = contentItem.Schema.Fields[field.Key];
-
-                ValidationContext validationContext = new ValidationContext();
+                SchemaField f = contentItem.Schema.Fields[field.Key];
 
                 field.Value.Validate(field.Key, f.Options, validationContext);
-
-                result.AddRange(validationContext.Errors);
             }
 
-            return result;
+            return validationContext;
         }
     }
 }

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Models.Assets
 {
+    /// <summary>
+    /// RestAsset
+    /// </summary>
     public class RestAsset : RestContentBase
     {
         public RestAsset()

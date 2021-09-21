@@ -17,7 +17,16 @@ namespace DragonFly.Client.Base
             RebuildToolbar();
         }
 
-        protected bool _init = false;
+        public async Task InitAsync()
+        {
+            await InitActionAsync();
+        }
+
+        protected virtual async Task InitActionAsync()
+        {
+
+        }
+
         public Task RefreshAsync()
         {
             return RefreshAsync(true);
@@ -56,20 +65,9 @@ namespace DragonFly.Client.Base
 
         }
 
-        public override async Task SetParametersAsync(ParameterView parameters)
-        {
-            Debug.WriteLine("SetParametersAsync");           
-
-            foreach (var k in parameters)
-            {
-                Debug.WriteLine(k.Name + " " + k.Value);
-            }
-
-            await base.SetParametersAsync(parameters);
-        }
-
         protected override async Task OnParametersSetAsync()
         {
+            await InitAsync();
             await RefreshAsync(false);
         }
 
@@ -92,7 +90,7 @@ namespace DragonFly.Client.Base
 
         protected override async Task OnInitializedAsync()
         {
-            //await InvokeAsync(RefreshAsync);
+            await InitAsync();
         }
 
         public async Task NavigateToExternalUrl(string url)

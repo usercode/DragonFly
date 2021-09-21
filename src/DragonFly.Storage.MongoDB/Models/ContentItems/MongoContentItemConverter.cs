@@ -28,7 +28,7 @@ namespace DragonFly.Data.Models
 
             foreach(var mongoField in mongoContentItem.Fields)
             {
-                mongoField.Value.FromBsonValue(mongoField.Key, contentItem, schema);
+                mongoField.Value.ToModelValue(mongoField.Key, contentItem, schema);
             }
 
             return contentItem;

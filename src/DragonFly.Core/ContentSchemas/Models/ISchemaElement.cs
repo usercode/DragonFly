@@ -4,8 +4,14 @@ using System.Text;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// ISchemaElement
+    /// </summary>
     public interface ISchemaElement
     {
-        ContentSchemaFields Fields { get; }
+        /// <summary>
+        /// Fields
+        /// </summary>
+        SchemaFields Fields { get; }
     }
 }

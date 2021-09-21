@@ -20,20 +20,20 @@ namespace DragonFly.Client.Pages.ContentItems
     {
         public ContentItemDetailBase()
         {
-            ValidationErros = new List<ValidationError>();
+            ValidationContext = new ValidationContext();
         }
 
         [Inject]
         public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
 
-        public IList<ValidationError> ValidationErros { get; set; }
+        public ValidationContext ValidationContext { get; set; }
 
         [Parameter]
         public Guid? CloneFromEntityId { get; set; }
 
         public bool IsFieldValid(string field)
         {
-            return ValidationErros.All(x => x.Field != field);
+            return ValidationContext.Errors.All(x => x.Field != field);
         }
 
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -64,7 +64,7 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             await base.RefreshActionAsync();
 
-            ValidationErros.Clear();
+            ValidationContext = new ValidationContext();
 
             Schema = await ContentService.GetContentSchemaAsync(EntityType);
 
@@ -106,9 +106,9 @@ namespace DragonFly.Client.Pages.ContentItems
 
         protected override void OnSaving(SavingEventArgs args)
         {
-            ValidationErros = Entity.Validate().ToList();
+            ValidationContext = Entity.Validate();
 
-            if (ValidationErros.Any())
+            if (ValidationContext.Errors.Any())
             {
                 StateHasChanged();
 

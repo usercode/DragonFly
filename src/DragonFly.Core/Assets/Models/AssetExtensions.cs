@@ -37,6 +37,11 @@ namespace DragonFly.Content
             return asset.MimeType == MimeTypes.Bmp;
         }
 
+        public static bool IsWebP(this Asset asset)
+        {
+            return asset.MimeType == MimeTypes.WebP;
+        }
+
         public static bool IsSVG(this Asset asset)
         {
             return asset.MimeType == MimeTypes.Svg;
@@ -56,7 +61,5 @@ namespace DragonFly.Content
         {
             return asset.MimeType == MimeTypes.PlainText;
         }
-
-
     }
 }

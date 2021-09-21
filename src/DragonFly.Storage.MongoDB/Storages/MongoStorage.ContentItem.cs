@@ -10,11 +10,14 @@ using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
+using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Data.Content;
 using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Data.Models;
 using DragonFly.Data.Models.Assets;
 using DragonFly.Models;
+using DragonFly.Storage.MongoDB.Query;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
@@ -49,10 +52,10 @@ namespace DragonFly.Data
             return items;
         }
 
-        public async Task<QueryResult<ContentItem>> Query(string schemaName, QueryParameters queryParameters)
+        public async Task<QueryResult<ContentItem>> QueryAsync(string schemaName, QueryParameters queryParameters)
         {
             ContentSchema schema = await GetContentSchemaAsync(schemaName);
-            var items = GetMongoCollection(schemaName);
+            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schemaName);
 
             List<FilterDefinition<MongoContentItem>> query = new List<FilterDefinition<MongoContentItem>>();
 
@@ -65,7 +68,7 @@ namespace DragonFly.Data
                                         .Where(x=> x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
                                         .Select(x=> x.Key))
                 {
-                    patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"Fields.{field}", new BsonRegularExpression(queryParameters.SearchPattern, "i")));
+                    patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(queryParameters.SearchPattern, "i")));
                 }
 
                 if (patternQuery.Count > 1)
@@ -131,23 +134,8 @@ namespace DragonFly.Data
                 query.Add(Builders<MongoContentItem>.Filter.Eq(fieldQuery.Name, v2));
             }
 
-            FilterDefinition<MongoContentItem> q;
-
-            if (query.Count >= 2)
-            {
-                q = Builders<MongoContentItem>.Filter.And(query);
-            }
-            else if(query.Count == 1)
-            {
-                q = query.First();
-            }
-            else
-            {
-                q = Builders<MongoContentItem>.Filter.Empty;
-            }
-
             //projection
-            if (schema.ListFields.Any())
+            if (queryParameters.IncludeListFieldsOnly && schema.ListFields.Any())
             {
                 var p = Builders<MongoContentItem>.Projection.Include(x => x.Id);
 
@@ -159,9 +147,38 @@ namespace DragonFly.Data
                 findOptions.Projection = p;
             }
 
-            var cursor = await items.FindAsync(q, findOptions);
+            //FieldQuery
+            QueryActionContext converterContext = new QueryActionContext();
+
+            foreach (FieldQueryBase f in queryParameters.Fields2)
+            {
+                IQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
+
+                converter.Apply(f, converterContext);
+            }
+
+            query.AddRange(converterContext.Filters);
+
+            //bundle filter definitions
+            FilterDefinition<MongoContentItem> q;
+
+            if (query.Count >= 2)
+            {
+                q = Builders<MongoContentItem>.Filter.And(query);
+            }
+            else if (query.Count == 1)
+            {
+                q = query.First();
+            }
+            else
+            {
+                q = Builders<MongoContentItem>.Filter.Empty;
+            }
+
+            //execute query
+            var cursor = await collection.FindAsync(q, findOptions);
             
-            long totalCount = await items.CountDocumentsAsync(q);
+            long totalCount = await collection.CountDocumentsAsync(q);
 
             IList<MongoContentItem> result = await cursor.ToListAsync();
 
@@ -201,11 +218,11 @@ namespace DragonFly.Data
         {
             contentItem.ApplySchema();
 
-            var drafts = GetMongoCollection(contentItem.Schema.Name);
+            IMongoCollection<MongoContentItem> drafts = GetMongoCollection(contentItem.Schema.Name);
 
-            var validations = contentItem.Validate();
+            ValidationContext validations = contentItem.Validate();
 
-            if(validations.Any())
+            if (validations.Errors.Any())
             {
                 throw new Exception();
             }
@@ -256,8 +273,8 @@ namespace DragonFly.Data
                 await interceptor.OnPublishingAsync(this, contentItem);
             }
 
-            var drafts = GetMongoCollection(schema, false);
-            var published = GetMongoCollection(schema, true);
+            IMongoCollection<MongoContentItem> drafts = GetMongoCollection(schema, false);
+            IMongoCollection<MongoContentItem> published = GetMongoCollection(schema, true);
 
             //find contentitem
             MongoContentItem found = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
@@ -288,8 +305,8 @@ namespace DragonFly.Data
 
         public async Task UnpublishAsync(string schema, Guid id)
         {
-            var drafts = GetMongoCollection(schema, false);
-            var published = GetMongoCollection(schema, true);
+            IMongoCollection<MongoContentItem> drafts = GetMongoCollection(schema, false);
+            IMongoCollection<MongoContentItem> published = GetMongoCollection(schema, true);
 
             //delete published contentitem
             await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));

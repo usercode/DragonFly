@@ -5,6 +5,9 @@ using System.Text;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// Asset
+    /// </summary>
     public class Asset : ContentBase
     {
         public Asset()

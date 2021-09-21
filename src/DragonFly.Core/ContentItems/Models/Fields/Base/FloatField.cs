@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// NumberPart
+    /// FloatField
     /// </summary>
     [FieldOptions(typeof(FloatFieldOptions))]
     public class FloatField : SingleValueContentField<double?>

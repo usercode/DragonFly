@@ -40,15 +40,15 @@ namespace DragonFly.Content
         public void Register<TMetadata>()
             where TMetadata : AssetMetadata, new()
         {
-            var a = typeof(TMetadata).GetCustomAttribute<AssetMetadataAttribute>();
+            AssetMetadataAttribute? metadataAttribute = typeof(TMetadata).GetCustomAttribute<AssetMetadataAttribute>();
 
-            if(a == null)
+            if (metadataAttribute == null)
             {
                 throw new Exception($"The class '{typeof(TMetadata).Name}' needs the ImageMetadataAttribute.");
             }
 
-            _byName.Add(a.Name, typeof(TMetadata));
-            _byType.Add(typeof(TMetadata), a.Name);
+            _byName.Add(metadataAttribute.Name, typeof(TMetadata));
+            _byType.Add(typeof(TMetadata), metadataAttribute.Name);
         }
 
         public string GetMetadataName<T>()

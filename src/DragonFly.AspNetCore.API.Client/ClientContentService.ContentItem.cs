@@ -71,9 +71,9 @@ namespace DragonFly.Client
             await Client.DeleteAsync($"api/content/{schema}/{id}");
         }
 
-        public async Task<QueryResult<ContentItem>> Query(string schema, QueryParameters queryParameters)
+        public async Task<QueryResult<ContentItem>> QueryAsync(string schema, QueryParameters queryParameters)
         {
-            HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/{schema}/query", queryParameters);
+            HttpResponseMessage response = await Client.PostAsJson($"api/content/{schema}/query", queryParameters);
 
             var queryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentItem>>();
 

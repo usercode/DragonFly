@@ -64,7 +64,7 @@ namespace DragonFly.Models
                     case JTokenType.Array:
                         if (contentField is ArrayField arrayField)
                         {
-                            if (schema.Fields.TryGetValue(fieldName, out ContentSchemaField definition))
+                            if (schema.Fields.TryGetValue(fieldName, out SchemaField definition))
                             {
                                 ArrayFieldOptions arrayOptions = definition.Options as ArrayFieldOptions;
 

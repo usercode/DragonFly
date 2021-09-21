@@ -31,6 +31,5 @@ namespace DragonFly.Content
             //    newValue = Slugify.ToSlug(newValue);
             //}
         }
-
     }
 }

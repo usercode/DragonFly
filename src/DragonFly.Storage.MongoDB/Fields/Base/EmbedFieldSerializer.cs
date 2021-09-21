@@ -13,7 +13,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class EmbedFieldSerializer : FieldSerializer<EmbedField>
     {
-        public override void Read(ContentSchemaField schemaField, EmbedField contentField, BsonValue bsonValue)
+        public override void Read(SchemaField schemaField, EmbedField contentField, BsonValue bsonValue)
         {
             string schemaName = bsonValue[ReferenceField.SchemaField].AsString;
 
@@ -25,7 +25,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
             {
                 foreach (BsonElement field in bsonDocument)
                 {
-                    field.Value.FromBsonValue(field.Name, contentField.ContentEmbedded, schema);
+                    field.Value.ToModelValue(field.Name, contentField.ContentEmbedded, schema);
                 }
             }
         }

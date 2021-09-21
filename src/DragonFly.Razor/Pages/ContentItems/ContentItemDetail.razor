@@ -13,7 +13,7 @@
                 <Toolbar Items="ToolbarItems"></Toolbar>
             </div>
             <div class="scroll-content" style="flex:1">
-                @foreach (var validationResult in ValidationErros)
+                @foreach (var validationResult in ValidationContext.Errors)
                 {
                     <BSAlert Color="Color.Danger">
                         @validationResult.Message

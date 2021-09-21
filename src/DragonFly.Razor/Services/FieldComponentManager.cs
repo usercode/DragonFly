@@ -1,5 +1,8 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.Assets;
+using DragonFly.Content;
+using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Razor.Pages.ContentItems.Fields;
+using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -14,11 +17,15 @@ namespace DragonFly.Razor.Services
     {
         private IDictionary<Type, Type> _cacheFieldView;
         private IDictionary<Type, Type> _cacheFieldOptionsView;
+        private IDictionary<Type, Type> _cacheAssetMetadataView;
+        private IDictionary<Type, Type> _cacheQueryView;
 
         public FieldComponentManager()
         {
             _cacheFieldView = new Dictionary<Type, Type>();
             _cacheFieldOptionsView = new Dictionary<Type, Type>();
+            _cacheAssetMetadataView = new Dictionary<Type, Type>();
+            _cacheQueryView = new Dictionary<Type, Type>();
         }
 
         public void RegisterField<TFieldComponent>()
@@ -40,6 +47,45 @@ namespace DragonFly.Razor.Services
             if (_cacheFieldOptionsView.TryAdd(fieldOptionsType, typeof(TFieldComponent)))
             {
                 _cacheFieldOptionsView[fieldOptionsType] = typeof(TFieldComponent);
+            }
+        }
+
+        public void RegisterAssetMetadata<TMetadataComponent>()
+          where TMetadataComponent : IAssetMetadataComponent
+        {
+            Type fieldType = typeof(TMetadataComponent).GetProperty(nameof(IAssetMetadataComponent.Metadata)).PropertyType;
+
+            if (_cacheAssetMetadataView.TryAdd(fieldType, typeof(TMetadataComponent)) == false)
+            {
+                _cacheAssetMetadataView[fieldType] = typeof(TMetadataComponent);
+            }
+        }
+
+        public void RegisterQuery<TQueryView>()
+            where TQueryView : IQueryComponent
+        {
+            Type queryType = typeof(TQueryView).GetProperty(nameof(IQueryComponent.Query)).PropertyType;
+
+            if (_cacheQueryView.TryAdd(queryType, typeof(TQueryView)))
+            {
+                _cacheQueryView[queryType] = typeof(TQueryView);
+            }
+        }
+
+        public RenderFragment CreateMetadataComponent(AssetMetadata metadata)
+        {
+            if (_cacheAssetMetadataView.TryGetValue(metadata.GetType(), out Type viewType))
+            {
+                return builder =>
+                {
+                    builder.OpenComponent(0, viewType);
+                    builder.AddAttribute(0, nameof(IAssetMetadataComponent.Metadata), metadata);
+                    builder.CloseComponent();
+                };
+            }
+            else
+            {
+                return builder => { builder.OpenElement(0, "p"); builder.AddContent(0, "no metadata available"); builder.CloseElement(); };
             }
         }
 
@@ -75,6 +121,23 @@ namespace DragonFly.Razor.Services
             {
                 return builder => { builder.OpenElement(0, "div"); builder.AddContent(0, "no options available"); builder.CloseElement(); };
             }            
+        }
+
+        public RenderFragment CreateQueryFieldComponent(FieldQueryBase fieldQuery)
+        {
+            if (_cacheQueryView.TryGetValue(fieldQuery.GetType(), out Type viewType))
+            {
+                return builder =>
+                {
+                    builder.OpenComponent(0, viewType);
+                    builder.AddAttribute(0, nameof(IQueryComponent.Query), fieldQuery);
+                    builder.CloseComponent();
+                };
+            }
+            else
+            {
+                return builder => { builder.OpenElement(0, "p"); builder.AddContent(0, "no metadata available"); builder.CloseElement(); };
+            }
         }
     }
 }

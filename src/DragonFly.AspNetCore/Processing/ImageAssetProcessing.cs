@@ -16,8 +16,10 @@ namespace DragonFly.Core.Assets
             return asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
         }
 
-        public async Task OnAssetChangedAsync(Asset asset, Stream stream)
+        public async Task OnAssetChangedAsync(Asset asset, OpenAssetStream openStream)
         {
+            using Stream stream = await openStream();
+
             IImageInfo imageInfo = await Image.IdentifyAsync(stream);
 
             if (imageInfo != null)

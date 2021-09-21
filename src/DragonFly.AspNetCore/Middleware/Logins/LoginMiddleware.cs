@@ -41,6 +41,8 @@ namespace DragonFly.AspNetCore.API.Middlewares.Logins
                 }
                 else
                 {
+                    await Task.Delay(TimeSpan.FromSeconds(3));
+
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 }
             }

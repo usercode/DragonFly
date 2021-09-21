@@ -21,15 +21,15 @@
   
   <ItemGroup>
 	  <PackageReference Include="Castle.Core" Version="4.4.1" />
-    <PackageReference Include="MongoDB.Driver" Version="2.13.0" />
-    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.13.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <PackageReference Include="MongoDB.Driver" Version="2.13.1" />
+    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.13.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
   </ItemGroup>
 </Project>

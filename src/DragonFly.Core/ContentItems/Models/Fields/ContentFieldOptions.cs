@@ -10,11 +10,13 @@ namespace DragonFly.Content
     {
         public bool IsRequired { get; set; }
 
+        public bool IsSearchable { get; set; }
+
         public abstract ContentField CreateContentField();
 
-        public virtual void ValidateContentField(ContentField contentField)
-        {
+        //public virtual void ValidateContentField(ContentField contentField)
+        //{
 
-        }
+        //}
     }
 }

@@ -15,11 +15,12 @@
         <hr />
     </div>
     <div class="scroll-content" style="flex:1">
+        <EditForm Model="this">
         <BSRow>
-            <BSCol LG="4">
+            <BSCol LG="3">
                 <QuerySelector ContentItemList="@this" />
             </BSCol>
-            <BSCol LG="8">
+            <BSCol LG="9">
                 @if (SearchResult == null)
                 {
                     <div class="spinner-border" role="status">
@@ -98,6 +99,7 @@
                 }
             </BSCol>
         </BSRow>
+      </EditForm>
     </div>
     <div class="flex:0">
         @if (SearchResult != null)

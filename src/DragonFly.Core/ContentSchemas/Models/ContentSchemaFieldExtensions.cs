@@ -9,7 +9,7 @@ namespace DragonFly.Content
 {
     public static class ContentSchemaFieldExtensions
     {
-        public static ArrayFieldOptions GetArrayFieldOptions(this ContentSchemaField schemaField)
+        public static ArrayFieldOptions GetArrayFieldOptions(this SchemaField schemaField)
         {
             ArrayFieldOptions? options = (ArrayFieldOptions?)schemaField.Options;
 

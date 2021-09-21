@@ -3,7 +3,7 @@
 @page "/asset/create/{FolderId:guid}"
 @inherits AssetDetailBase
 @inject IImageAssetUrlService AssetPreview
-@inject AssetMetadataComponentManager AssetComponentManager
+@inject FieldComponentManager FieldComponentManager
 
 @if (Entity != null)
 {
@@ -89,7 +89,7 @@
                         @foreach (var m in Entity.Metaddata)
                         {
                             <h3>@m.Key</h3>
-                            @AssetComponentManager.CreateMetadataComponent(m.Value)
+                            @FieldComponentManager.CreateMetadataComponent(m.Value)
                         }
                     </div>
                     <div class="col-md-6">

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DragonFly.Content.Queries;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content.Queries
+namespace DragonFly.Content
 {
     public class FieldQuery
     {

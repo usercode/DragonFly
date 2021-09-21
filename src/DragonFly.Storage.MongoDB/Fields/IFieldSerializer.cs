@@ -15,11 +15,16 @@ namespace DragonFly.Storage.MongoDB.Fields
     public interface IFieldSerializer
     {
         /// <summary>
+        /// FieldType
+        /// </summary>
+        Type FieldType { get; }
+
+        /// <summary>
         /// Read
         /// </summary>
         /// <param name="bsonvalue"></param>
         /// <returns></returns>
-        void Read(ContentSchemaField schemaField, ContentField contentField, BsonValue bsonvalue);
+        void Read(SchemaField schemaField, ContentField contentField, BsonValue bsonvalue);
 
         /// <summary>
         /// Write

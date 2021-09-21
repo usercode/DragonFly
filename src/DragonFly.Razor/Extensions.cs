@@ -11,6 +11,7 @@ using DragonFly.Data;
 using DragonFly.Razor.Builder;
 using DragonFly.Razor.Options;
 using DragonFly.Razor.Pages.ContentItems.Fields;
+using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
 using DragonFly.Razor.Services;
 using DragonFly.Razor.Shared;
@@ -64,7 +65,6 @@ namespace DragonFly.Client.Core
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
             builder.Services.AddSingleton<FieldComponentManager>();
-            builder.Services.AddSingleton<AssetMetadataComponentManager>();
 
             builder.Services.AddSingleton(ContentFieldManager.Default);
             builder.Services.AddSingleton(AssetMetadataManager.Default);
@@ -99,10 +99,9 @@ namespace DragonFly.Client.Core
             componentManager.RegisterOptions<StringFieldOptionsView>();
             componentManager.RegisterOptions<ReferenceFieldOptionsView>();
 
-            //assets
-            var assetMetadataManager = host.Services.GetRequiredService<AssetMetadataComponentManager>();
+            componentManager.RegisterAssetMetadata<ImageMetadataView>();
 
-            assetMetadataManager.Register<ImageMetadataView>();
+            componentManager.RegisterQuery<StringFieldQueryView>();
 
         }
     }

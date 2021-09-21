@@ -43,7 +43,7 @@ namespace DragonFly.Data.Models
             contentItem.Version = restContentItem.Version;
             contentItem.SchemaVersion = restContentItem.SchemaVersion;
 
-            foreach(var restField in restContentItem.Fields)
+            foreach (var restField in restContentItem.Fields)
             {
                 restField.Value.FromRestValue(restField.Key, contentItem, schema);
             }

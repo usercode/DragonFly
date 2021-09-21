@@ -20,18 +20,18 @@ namespace DragonFly.Storage.MongoDB.Fields
                 {
                     _default = new MongoFieldManager();
 
-                    _default.Register<ArrayField, ArrayFieldSerializer>();
-                    _default.Register<AssetField, AssetFieldSerializer>();
-                    _default.Register<BoolField, BoolFieldSerializer>();
-                    _default.Register<DateField, DateFieldSerializer>();
-                    _default.Register<EmbedField, EmbedFieldSerializer>();
-                    _default.Register<FloatField, FloatFieldSerializer>();
-                    _default.Register<IntegerField, IntegerFieldSerializer>();
-                    _default.Register<ReferenceField, ReferenceFieldSerializer>();
-                    _default.Register<StringField, StringFieldSerializer>();
-                    _default.Register<SlugField, SlugFieldSerializer>();
-                    _default.Register<TextAreaField, TextAreaFieldSerializer>();
-                    _default.Register<XHtmlField, XHtmlFieldSerializer>();
+                    _default.Register<ArrayFieldSerializer>();
+                    _default.Register<AssetFieldSerializer>();
+                    _default.Register<BoolFieldSerializer>();
+                    _default.Register<DateFieldSerializer>();
+                    _default.Register<EmbedFieldSerializer>();
+                    _default.Register<FloatFieldSerializer>();
+                    _default.Register<IntegerFieldSerializer>();
+                    _default.Register<ReferenceFieldSerializer>();
+                    _default.Register<StringFieldSerializer>();
+                    _default.Register<SlugFieldSerializer>();
+                    _default.Register<TextAreaFieldSerializer>();
+                    _default.Register<XHtmlFieldSerializer>();
                 }
 
                 return _default;
@@ -45,16 +45,17 @@ namespace DragonFly.Storage.MongoDB.Fields
             _fields = new Dictionary<Type, IFieldSerializer>();
         }
 
-        public void Register(Type fieldType, IFieldSerializer fieldSerializer)
+        public void Register(IFieldSerializer fieldSerializer)
         {
-            _fields.Add(fieldType, fieldSerializer);
+            _fields.Add(fieldSerializer.FieldType, fieldSerializer);
         }
 
-        public void Register<TContentField, TSerializer>()
-            where TContentField : ContentField
-            where TSerializer : FieldSerializer<TContentField>, new()
+        public void Register<TSerializer>()
+            where TSerializer : IFieldSerializer, new()
         {
-            Register(typeof(TContentField), new TSerializer());
+            TSerializer serializer = new TSerializer();
+
+            Register(serializer);
         }
 
         public IFieldSerializer GetByType(Type fieldType)

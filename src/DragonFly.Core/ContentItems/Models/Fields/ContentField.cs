@@ -19,7 +19,6 @@ namespace DragonFly.Content
 
         public virtual bool CanSorting => false;
 
-
         public virtual void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
         }

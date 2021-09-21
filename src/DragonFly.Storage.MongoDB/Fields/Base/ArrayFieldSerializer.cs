@@ -11,7 +11,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class ArrayFieldSerializer : FieldSerializer<ArrayField>
     {
-        public override void Read(ContentSchemaField schemaField, ArrayField contentField, BsonValue bsonvalue)
+        public override void Read(SchemaField schemaField, ArrayField contentField, BsonValue bsonvalue)
         {
             if (bsonvalue is BsonArray bsonArray)
             {
@@ -23,7 +23,7 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
 
                     foreach (BsonElement subitem in item)
                     {
-                        subitem.Value.FromBsonValue(subitem.Name, arrayFieldItem, arrayOptions);
+                        subitem.Value.ToModelValue(subitem.Name, arrayFieldItem, arrayOptions);
                     }
 
                     contentField.Items.Add(arrayFieldItem);

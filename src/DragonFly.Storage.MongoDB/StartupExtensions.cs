@@ -6,6 +6,7 @@ using DragonFly.Core.WebHooks;
 using DragonFly.MongoDB.Options;
 using DragonFly.Storage.MongoDB.Fields;
 using DragonFly.Storage.MongoDB.Fields.Base;
+using DragonFly.Storage.MongoDB.Query;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 using System;
@@ -35,8 +36,8 @@ namespace DragonFly.Data
             builder.Services.AddSingleton<IAssetFolderStorage>(x => x.GetRequiredService<MongoStorage>());
             builder.Services.AddSingleton<IWebHookStorage>(x => x.GetRequiredService<MongoStorage>());
 
-
             builder.Services.AddSingleton(MongoFieldManager.Default);
+            builder.Services.AddSingleton(MongoQueryManager.Default);
 
             BsonClassMap.RegisterClassMap<ReferenceFieldOptions>();
 

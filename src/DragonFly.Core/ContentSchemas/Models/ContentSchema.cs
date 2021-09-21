@@ -15,7 +15,7 @@ namespace DragonFly.Content
         public ContentSchema()
         {
             _name = string.Empty;
-            _fields = new ContentSchemaFields();
+            _fields = new SchemaFields();
             _listFields = new List<string>();
             _referenceFields = new List<string>();
             _orderFields = new List<FieldOrder>();
@@ -34,12 +34,12 @@ namespace DragonFly.Content
         /// </summary>
         public virtual string Name { get => _name; set => _name = value; }
 
-        private ContentSchemaFields _fields;
+        private SchemaFields _fields;
 
         /// <summary>
         /// Fields
         /// </summary>
-        public virtual ContentSchemaFields Fields { get => _fields; set => _fields = value; }
+        public virtual SchemaFields Fields { get => _fields; set => _fields = value; }
 
         private IList<string> _listFields;
 

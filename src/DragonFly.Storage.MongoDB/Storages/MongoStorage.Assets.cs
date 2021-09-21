@@ -89,7 +89,7 @@ namespace DragonFly.Data
 
                 byte[] hash = sha.ComputeHash(s);
 
-                string hashString = hash.Aggregate(string.Empty, (a, b) => a += b.ToString("x2"));
+                string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
                 //await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id),
                 //                            Builders<MongoAsset>.Update
@@ -104,10 +104,7 @@ namespace DragonFly.Data
 
             foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
             {
-                using (Stream assetStream = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
-                {
-                    await processing.OnAssetChangedAsync(asset, assetStream);
-                }
+                await processing.OnAssetChangedAsync(asset, async () => await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()));                
             }
 
             await Assets.FindOneAndReplaceAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id), asset.ToMongo());
@@ -127,7 +124,7 @@ namespace DragonFly.Data
                 query = query.Where(x => x.Folder == assetQuery.Folder.Value);
             }
 
-            if(string.IsNullOrEmpty(assetQuery.Pattern) == false)
+            if (string.IsNullOrEmpty(assetQuery.Pattern) == false)
             {
                 query = query.Where(x => x.Name!.Contains(assetQuery.Pattern));
             }
