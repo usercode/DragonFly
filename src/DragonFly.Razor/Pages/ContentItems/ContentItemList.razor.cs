@@ -2,7 +2,6 @@
 using DragonFly.Client.Base;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
-using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Models;
 using DragonFly.Razor.Services;
 using DragonFly.Razor.Shared.UI.Toolbars;
@@ -19,7 +18,7 @@ namespace DragonFly.Client.Pages.ContentItems
         public ContentItemListBase()
         {
             OrderFields = new List<FieldOrder>();
-            QueryFields = new List<FieldQueryBase>();
+            QueryFields = new List<FieldQuery>();
         }
 
         [Inject]
@@ -38,7 +37,7 @@ namespace DragonFly.Client.Pages.ContentItems
         /// <summary>
         /// QueryFields
         /// </summary>
-        public IList<FieldQueryBase> QueryFields { get; private set; }
+        public IList<FieldQuery> QueryFields { get; private set; }
 
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
         {
@@ -68,30 +67,32 @@ namespace DragonFly.Client.Pages.ContentItems
 
                 if (QueryFields.Any() == false)
                 {
-                    foreach (var field in Schema.Fields.Where(x => x.Value.Options.IsSearchable))
+                    foreach (var field in Schema.Fields
+                                                    .Where(x => x.Value.Options.IsSearchable)
+                                                    .OrderBy(x => x.Value.SortKey))
                     {
-                        FieldQueryBase q = ContentFieldManager.CreateQuery(field.Value.FieldType);
+                        FieldQuery q = ContentFieldManager.CreateQuery(field.Value.FieldType);
                         q.FieldName = field.Key;
 
                         QueryFields.Add(q);
                     }
                 }
-                
-                var queryParameters = new QueryParameters()
-                {
-                   SearchPattern = SearchPattern,
-                   Skip = CurrentPageIndex * PageSize,
-                   Top = PageSize
-                };
+
+                QueryParameters queryParameters = new ()
+                                                    {
+                                                       SearchPattern = SearchPattern,
+                                                       Skip = CurrentPageIndex * PageSize,
+                                                       Top = PageSize
+                                                    };
 
                 foreach (FieldOrder f in OrderFields)
                 {
                     queryParameters.AddFieldOrder(f.Name, f.Asc);
                 }
 
-                foreach (FieldQueryBase query in QueryFields)
+                foreach (FieldQuery query in QueryFields.Where(x=> x.IsEmpty() == false))
                 {
-                    queryParameters.Fields2.Add(query);
+                    queryParameters.Fields.Add(query);
                 }
 
                 SearchResult = await ContentService.QueryAsync(Schema.Name, queryParameters);

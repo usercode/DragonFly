@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// StringQueryType
+    /// </summary>
     public enum StringQueryType
     {
-        Equal,
+        Equals,
         Contains,
         StartsWith,
         EndsWith

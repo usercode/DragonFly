@@ -1,5 +1,4 @@
-﻿using DragonFly.Core.ContentItems.Queries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,6 @@ namespace DragonFly.Content.Queries
         public QueryParameters()
         {
             Fields = new List<FieldQuery>();
-            Fields2 = new List<FieldQueryBase>();
             OrderFields = new List<FieldOrder>();
 
             SearchPattern = string.Empty;
@@ -43,11 +41,6 @@ namespace DragonFly.Content.Queries
         /// Fields
         /// </summary>
         public IList<FieldQuery> Fields { get; set; }
-
-        /// <summary>
-        /// Fields2
-        /// </summary>
-        public IList<FieldQueryBase> Fields2 { get; set; }
 
         /// <summary>
         /// OrderFields

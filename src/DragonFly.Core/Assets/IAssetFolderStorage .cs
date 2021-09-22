@@ -1,11 +1,12 @@
-﻿using DragonFly.Core.Assets.Queries;
+﻿using DragonFly.Content;
+using DragonFly.Core.Assets.Queries;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly
 {
     /// <summary>
     /// IAssetFolderStorage

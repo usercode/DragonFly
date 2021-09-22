@@ -28,6 +28,9 @@ using DragonFly.Assets;
 
 namespace DragonFly.Core
 {
+    /// <summary>
+    /// StartupExtensions
+    /// </summary>
     public static class StartupExtensions
     {
         public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
@@ -51,6 +54,7 @@ namespace DragonFly.Core
             services.AddSingleton(AssetMetadataManager.Default);
 
             services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
+            services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
             //ImageWizard
             services.ConfigureOptions<HttpLoaderConfigureOptions>();

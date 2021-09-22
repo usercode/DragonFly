@@ -1,0 +1,102 @@
+﻿@inject NavigationManager NavigationManager
+@inject IImageAssetUrlService AssetPreview
+
+@if (_init)
+{
+    <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
+        <BSModalHeader OnClick="@(() => _init = false)">Select asset</BSModalHeader>
+        <BSModalBody>
+            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>            
+        </BSModalBody>
+        <BSModalFooter>
+            <BSButton Color="Color.Primary" @onclick="@(() => _init = false)">Ok</BSButton>
+        </BSModalFooter>
+    </BSModal>
+}
+
+    <div class="reference-field">
+        <BSListGroup>
+            <BSListGroupItem>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  
+                    @if (ContentItem != null)
+                    {
+                        <span class="badge badge-primary" style="margin-right:12px">@ContentItem.Schema.Name</span>
+
+                        @foreach (string field in ContentItem.Schema.ReferenceFields)
+                        {
+                            ContentField column = ContentItem.Fields[field];
+
+                            @if (column is ISingleValueContentField singleValueField)
+                            {
+                                <span>@singleValueField.Value</span>
+                            }
+                            else if (column is AssetField assetField)
+                            {
+                                @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                {
+                                    <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                      <span>...</span>
+                    }
+
+                    <div>
+                        <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+                        <BSButton Color="Color.Light" OnClick="e => RemoveItem()"><i class="fas fa-times"></i></BSButton>
+                    </div>
+                </div>
+            </BSListGroupItem>
+        </BSListGroup>
+    </div>
+
+    @code {
+
+    private ContentItem _contentItem;
+
+    [Parameter]
+    public ContentItem ContentItem 
+    {
+        get => _contentItem;
+        set
+        {
+            _contentItem = value;
+
+            ContentItemChanged?.Invoke(_contentItem);
+        }
+    }
+
+    [Parameter]
+    public Action<ContentItem> ContentItemChanged { get; set; }
+
+    private bool _init = false;
+
+    protected void Navigate()
+    {
+        NavigationManager.NavigateTo($"content/{ContentItem.Schema.Name}/{ContentItem.Id}");
+    }
+
+    protected void RemoveItem()
+    {
+        ContentItem = null;
+    }
+
+    public void OpenModal()
+    {
+        _init = true;
+    }
+
+    public void ItemAdded(ContentItemTypeList2 sender)
+    {
+        ContentItem = sender.SelectedContentItem;
+
+        _init = false;
+
+        StateHasChanged();
+    }
+    }

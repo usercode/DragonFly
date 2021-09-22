@@ -4,10 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Queries.Fields.References
+namespace DragonFly.Content
 {
-    public class ReferenceQuery : FieldQueryBase
+    /// <summary>
+    /// ReferenceQuery
+    /// </summary>
+    public class ReferenceQuery : FieldQuery
     {
-        public Guid Id { get; set; }
+        /// <summary>
+        /// ContentItemId
+        /// </summary>
+        public Guid? ContentItemId { get; set; }
+
+        public override bool IsEmpty() => ContentItemId == null;
     }
 }

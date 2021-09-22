@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// AssetMetadataManager
+    /// </summary>
     public class AssetMetadataManager
     {
         private IDictionary<string, Type> _byName;
@@ -20,11 +23,12 @@ namespace DragonFly.Content
         {
             get
             {
-                if(_default == null)
+                if (_default == null)
                 {
                     _default = new AssetMetadataManager();
 
                     _default.Register<ImageMetadata>();
+                    _default.Register<PdfMetadata>();
                 }
 
                 return _default;

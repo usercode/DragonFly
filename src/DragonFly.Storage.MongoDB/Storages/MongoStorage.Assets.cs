@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Contents.Assets;
@@ -15,6 +16,7 @@ using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Data.Models;
 using DragonFly.Data.Models.Assets;
 using DragonFly.Models;
+using DragonFly.Storage.MongoDB;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
@@ -34,7 +36,7 @@ namespace DragonFly.Data
         {
             MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
-            return asset.FromMongo();
+            return asset.ToModel();
         }
 
         public async Task CreateAsync(Asset asset)
@@ -58,12 +60,6 @@ namespace DragonFly.Data
 
         public async Task UpdateAsync(Asset asset)
         {
-            //asset.ModifiedAt = DateTime.UtcNow;
-
-            //MongoAsset mongoAsset = asset.ToMongo();
-
-            //await Assets.ReplaceOneAsync(Builders<MongoAsset>.Filter.Where(x => x.Id == asset.Id), mongoAsset);
-
             await Assets.UpdateOneAsync(
                             Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
                             Builders<MongoAsset>.Update
@@ -79,10 +75,13 @@ namespace DragonFly.Data
 
         public async Task UploadAsync(Guid id, string mimetype, Stream stream)
         {
+            //get asset by id
             Asset asset = await GetAssetAsync(id);
-
+            
+            //upload new stream to asset
             await AssetData.UploadFromStreamAsync(id.ToString(), stream);
 
+            //refresh asset infos
             using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
             {
                 SHA256 sha = SHA256.Create();
@@ -91,23 +90,27 @@ namespace DragonFly.Data
 
                 string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
-                //await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id),
-                //                            Builders<MongoAsset>.Update
-                //                                        .Set(x => x.Size, s.Length)
-                //                                        .Set(x => x.Hash, hashString)
-                //                                        .Inc(x => x.Version, 1));
-
-                asset.Hash = hashString;
                 asset.Size = s.Length;
+                asset.Hash = hashString;                
                 asset.MimeType = mimetype;
+                asset.Metaddata.Clear();
+
+                await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id),
+                                            Builders<MongoAsset>.Update
+                                                        .Set(x => x.Size, s.Length)
+                                                        .Set(x => x.Hash, hashString)
+                                                        .Set(x => x.MimeType, mimetype)
+                                                        .Set(x => x.Metaddata, new Dictionary<string, BsonDocument>())
+                                                        .Inc(x => x.Version, 1));
             }
 
+            MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
+
+            //add metadata
             foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
             {
-                await processing.OnAssetChangedAsync(asset, async () => await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()));                
+                await processing.OnAssetChangedAsync(context);
             }
-
-            await Assets.FindOneAndReplaceAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id), asset.ToMongo());
         }
 
         public async Task<Stream> DownloadAsync(Guid id)
@@ -117,7 +120,7 @@ namespace DragonFly.Data
 
         public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
         {
-            IQueryable<MongoAsset> query = Assets.AsQueryable();
+            IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
 
             if (assetQuery.Folder != null)
             {
@@ -129,12 +132,14 @@ namespace DragonFly.Data
                 query = query.Where(x => x.Name!.Contains(assetQuery.Pattern));
             }
 
+            IList<MongoAsset> result = await query
+                                                .OrderByDescending(x => x.CreatedAt)
+                                                .Take(assetQuery.Take)
+                                                .ToListAsync();
+
             QueryResult<Asset> queryResult = new QueryResult<Asset>();
-            queryResult.Items = query
-                                    .OrderByDescending(x => x.CreatedAt)
-                                    .Take(assetQuery.Take)
-                                    .ToList()
-                                    .Select(x => x.FromMongo())
+            queryResult.Items = result
+                                    .Select(x => x.ToModel())
                                     .ToList();
             queryResult.Offset = assetQuery.Take;
             queryResult.Count = queryResult.Items.Count;
@@ -158,10 +163,11 @@ namespace DragonFly.Data
         {
             var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, id.ToString()));
 
-            foreach (var f in await fileData.ToListAsync())
+            foreach (GridFSFileInfo f in await fileData.ToListAsync())
             {
                 await AssetData.DeleteAsync(f.Id);
             }
+
             await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id));
         }
     }

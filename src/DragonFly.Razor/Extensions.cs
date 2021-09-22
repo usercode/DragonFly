@@ -100,8 +100,11 @@ namespace DragonFly.Client.Core
             componentManager.RegisterOptions<ReferenceFieldOptionsView>();
 
             componentManager.RegisterAssetMetadata<ImageMetadataView>();
+            componentManager.RegisterAssetMetadata<PdfMetadataView>();
 
             componentManager.RegisterQuery<StringFieldQueryView>();
+            componentManager.RegisterQuery<IntegerFieldQueryView>();
+            componentManager.RegisterQuery<ReferenceFieldQueryView>();
 
         }
     }

@@ -1,4 +1,4 @@
-﻿using DragonFly.Core.ContentItems.Queries;
+﻿using DragonFly.Content;
 using DragonFly.Models;
 using MongoDB.Driver;
 using System;
@@ -11,6 +11,6 @@ namespace DragonFly.Storage.MongoDB.Query
 {
     public interface IQueryAction
     {
-        void Apply(FieldQueryBase query, QueryActionContext context);
+        void Apply(FieldQuery query, QueryActionContext context);
     }
 }

@@ -1,29 +1,25 @@
-﻿using DragonFly.Content.Queries;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
-    public class FieldQuery
+    /// <summary>
+    /// FieldQuery
+    /// </summary>
+    public abstract class FieldQuery
     {
-        public FieldQuery()
-        {
-            Name = string.Empty;
-            Value = string.Empty;
-        }
+        /// <summary>
+        /// FieldName
+        /// </summary>
+        public virtual string? FieldName { get; set; }
 
-        public FieldQuery(string name, string value, QueryFieldType valueType)
-        {
-            Name = name;
-            Value = value;
-            ValueType = valueType;
-        }
-
-        public string Name { get; set; }
-
-        public string Value { get; set; }
-
-        public QueryFieldType ValueType { get; set; }
+        /// <summary>
+        /// IsEmpty
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool IsEmpty() => false;
     }
 }

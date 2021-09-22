@@ -1,5 +1,4 @@
 ﻿using DragonFly.Content.Queries;
-using DragonFly.Core.ContentItems.Queries.Fields;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// StringQueryExtensions
+    /// </summary>
     public static class StringQueryExtensions
     {
-        public static QueryParameters AddStringQuery(this QueryParameters queryParameters, string name, string pattern, StringQueryType type = StringQueryType.Equal)
+        public static QueryParameters AddStringQuery(this QueryParameters queryParameters, string name, string pattern, StringQueryType type = StringQueryType.Equals)
         {
-            queryParameters.Fields2.Add(new StringQuery() { FieldName = name, Pattern = pattern, Type = type });
+            queryParameters.Fields.Add(new StringQuery() { FieldName = name, Pattern = pattern, Type = type });
 
             return queryParameters;
         }

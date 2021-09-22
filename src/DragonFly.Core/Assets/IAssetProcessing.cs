@@ -1,13 +1,12 @@
-﻿using System;
+﻿using DragonFly.Content;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly
 {
-    public delegate Task<Stream> OpenAssetStream();
-
     /// <summary>
     /// IAssetProcessing
     /// </summary>
@@ -26,7 +25,7 @@ namespace DragonFly.Content
         /// <param name="asset"></param>
         /// <param name="openStream"></param>
         /// <returns></returns>
-        Task OnAssetChangedAsync(Asset asset, OpenAssetStream openStream);
+        Task OnAssetChangedAsync(IAssetProcessingContext context);
 
     }
 }

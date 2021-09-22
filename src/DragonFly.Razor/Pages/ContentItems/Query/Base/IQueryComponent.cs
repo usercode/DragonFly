@@ -1,5 +1,4 @@
 ﻿using DragonFly.Content;
-using DragonFly.Core.ContentItems.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +11,6 @@ namespace DragonFly.Razor.Pages.ContentItems.Query
     {
         SchemaField Field { get; }
 
-        FieldQueryBase Query { get; }
+        FieldQuery Query { get; }
     }
 }

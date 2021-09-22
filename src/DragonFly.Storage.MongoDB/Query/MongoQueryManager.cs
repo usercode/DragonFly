@@ -1,7 +1,4 @@
 ﻿using DragonFly.Content;
-using DragonFly.Core.ContentItems.Queries;
-using DragonFly.Core.ContentItems.Queries.Fields;
-using DragonFly.Core.ContentItems.Queries.Fields.Integers;
 using DragonFly.Storage.MongoDB.Query.Base;
 using System;
 using System.Collections.Generic;
@@ -28,6 +25,7 @@ namespace DragonFly.Storage.MongoDB.Query
 
                     _default.Register<StringQuery, StringQueryAction>();
                     _default.Register<IntegerQuery, IntegerQueryAction>();
+                    _default.Register<ReferenceQuery, ReferenceQueryAction>();
                 }
 
                 return _default;
@@ -47,7 +45,7 @@ namespace DragonFly.Storage.MongoDB.Query
         }
 
         public void Register<TQuery, TQueryConverter>()
-            where TQuery : FieldQueryBase
+            where TQuery : FieldQuery
             where TQueryConverter : QueryAction<TQuery>, new()
         {
             Register(typeof(TQuery), new TQueryConverter());

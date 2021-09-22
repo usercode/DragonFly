@@ -31,13 +31,13 @@ namespace DragonFly.Data.Models.Assets
 
             foreach (var item in asset.Metaddata)
             {
-                mongoAsset.Metaddata.Add(item.Key, item.Value.ToBsonDocument(item.Value.GetType()));
+                mongoAsset.Metaddata.Add(item.Key, item.Value.ToMongo());
             }
 
             return mongoAsset;
         }
 
-        public static Asset FromMongo(this MongoAsset mongoAsset)
+        public static Asset ToModel(this MongoAsset mongoAsset)
         {
             Asset asset = new Asset()
             {
@@ -62,10 +62,20 @@ namespace DragonFly.Data.Models.Assets
 
             foreach (var item in mongoAsset.Metaddata)
             {
-                asset.SetMetadata((AssetMetadata)BsonSerializer.Deserialize(item.Value, AssetMetadataManager.Default.GetMetadataType(item.Key)));
+                asset.SetMetadata(item.Value.ToModel(item.Key));
             }
 
             return asset;
+        }
+
+        public static BsonDocument ToMongo(this AssetMetadata metadata)
+        {
+            return metadata.ToBsonDocument(metadata.GetType());
+        }
+
+        public static AssetMetadata ToModel(this BsonDocument document, string name)
+        {
+            return (AssetMetadata)BsonSerializer.Deserialize(document, AssetMetadataManager.Default.GetMetadataType(name));
         }
     }
 }

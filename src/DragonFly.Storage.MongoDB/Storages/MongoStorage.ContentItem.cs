@@ -11,7 +11,6 @@ using DragonFly.ContentTypes;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.ContentItems.Models.Validations;
-using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Data.Content;
 using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Data.Models;
@@ -57,7 +56,7 @@ namespace DragonFly.Data
             ContentSchema schema = await GetContentSchemaAsync(schemaName);
             IMongoCollection<MongoContentItem> collection = GetMongoCollection(schemaName);
 
-            List<FilterDefinition<MongoContentItem>> query = new List<FilterDefinition<MongoContentItem>>();
+            List<FilterDefinition<MongoContentItem>> filters = new List<FilterDefinition<MongoContentItem>>();
 
             //filter all fields
             if (string.IsNullOrEmpty(queryParameters.SearchPattern) == false)
@@ -73,11 +72,11 @@ namespace DragonFly.Data
 
                 if (patternQuery.Count > 1)
                 {
-                    query.Add(Builders<MongoContentItem>.Filter.Or(patternQuery));
+                    filters.Add(Builders<MongoContentItem>.Filter.Or(patternQuery));
                 }
                 else if (patternQuery.Count == 1)
                 {
-                    query.Add(patternQuery.First());
+                    filters.Add(patternQuery.First());
                 }
                 else
                 {
@@ -110,30 +109,6 @@ namespace DragonFly.Data
                 }
             }
 
-            //query
-            foreach (FieldQuery fieldQuery in queryParameters.Fields)
-            {
-                string v = fieldQuery.Value;
-                object v2;
-
-                if (v == null)
-                {
-                    v2 = BsonNull.Value;
-                }
-                else
-                {
-                    v2 = fieldQuery.ValueType switch
-                    {
-                        QueryFieldType.Guid => Guid.Parse(v),
-                        QueryFieldType.String => v,
-                        QueryFieldType.Double => double.Parse(v),
-                        _ => throw new Exception()
-                    };
-                }
-
-                query.Add(Builders<MongoContentItem>.Filter.Eq(fieldQuery.Name, v2));
-            }
-
             //projection
             if (queryParameters.IncludeListFieldsOnly && schema.ListFields.Any())
             {
@@ -150,25 +125,25 @@ namespace DragonFly.Data
             //FieldQuery
             QueryActionContext converterContext = new QueryActionContext();
 
-            foreach (FieldQueryBase f in queryParameters.Fields2)
+            foreach (FieldQuery f in queryParameters.Fields.Where(x => x.IsEmpty() == false))
             {
                 IQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
 
                 converter.Apply(f, converterContext);
             }
 
-            query.AddRange(converterContext.Filters);
+            filters.AddRange(converterContext.Filters);
 
             //bundle filter definitions
             FilterDefinition<MongoContentItem> q;
 
-            if (query.Count >= 2)
+            if (filters.Count >= 2)
             {
-                q = Builders<MongoContentItem>.Filter.And(query);
+                q = Builders<MongoContentItem>.Filter.And(filters);
             }
-            else if (query.Count == 1)
+            else if (filters.Count == 1)
             {
-                q = query.First();
+                q = filters.First();
             }
             else
             {

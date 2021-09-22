@@ -36,10 +36,11 @@ button {
 
 .alert {
   padding: .5rem 1.25rem;
-  margin-bottom: 0.5rem; }
+  margin-bottom: 0.5rem;
+  border: none; }
 
 .form-group .alert {
-  padding: 0.25rem 0.25rem 0.25rem 0rem;
+  padding: 0rem;
   margin-bottom: 0px; }
 
 .modal-dialog {
@@ -100,7 +101,8 @@ app {
 .top-row {
   height: 3.5rem;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  justify-content: center; }
 
 /*.content-fields .list-group-item {
     padding: .2rem .75rem;
@@ -176,10 +178,8 @@ app {
 .sub-sidebar .nav-item a {
   color: #d7d7d7;
   border-radius: 4px;
-  height: 3rem;
   display: flex;
-  align-items: center;
-  line-height: 3rem; }
+  align-items: center; }
 
 .sub-sidebar .nav-item a.active {
   background-color: rgba(255, 255, 255, 0.25);
@@ -208,10 +208,9 @@ app {
 .sidebar .nav-item a {
   color: #d7d7d7;
   border-radius: 4px;
-  height: 3rem;
   display: flex;
   align-items: center;
-  line-height: 3rem; }
+  line-height: 2rem; }
 
 .sidebar .nav-item a.active {
   background-color: rgba(255, 255, 255, 0.25);

@@ -2,25 +2,25 @@
 
 <BSListGroup>
 	<BSListGroupItem>
-		<BSLabel>@Query.FieldName</BSLabel>
-		<BSRow>
-			<BSCol>
-				<BSInput InputType="InputType.Text" class="form-control" @bind-Value="@Query.Pattern" />
-			</BSCol>
-			<BSCol LG="auto">
-				<BSDropdown>
-					<BSDropdownToggle Color="@Color.Light">@Query.Type</BSDropdownToggle>
-					<BSDropdownMenu>
-						@foreach(var value in Enum.GetValues(typeof(StringQueryType)))
-						{
-							<BSDropdownItem @onclick="e => { Query.Type = (StringQueryType)value; }">@value</BSDropdownItem>
-						}
-					</BSDropdownMenu>
-				</BSDropdown>
-			</BSCol>
-		
-		</BSRow>
-		
+		<BSFormGroup>
+			<BSLabel class="form-label badge bg-secondary">@Query.FieldName</BSLabel>
+			<BSRow>
+				<BSCol>
+					<BSInput InputType="InputType.Text" class="form-control" @bind-Value="@Query.Pattern" />
+				</BSCol>
+				<BSCol LG="auto">
+					<BSDropdown>
+						<BSDropdownToggle Color="@Color.Light">@Query.Type</BSDropdownToggle>
+						<BSDropdownMenu>
+							@foreach(var value in Enum.GetValues(typeof(StringQueryType)))
+							{
+								<BSDropdownItem @onclick="e => { Query.Type = (StringQueryType)value; }">@value</BSDropdownItem>
+							}
+						</BSDropdownMenu>
+					</BSDropdown>
+				</BSCol>		
+			</BSRow>
+		</BSFormGroup>
 	</BSListGroupItem>
 </BSListGroup>
 

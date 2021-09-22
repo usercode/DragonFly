@@ -1,5 +1,4 @@
 ﻿using DragonFly.Core.ContentItems.Models.Validations;
-using DragonFly.Core.ContentItems.Queries.Fields;
 using System;
 using System.Collections.Generic;
 using System.Linq;

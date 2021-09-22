@@ -7,8 +7,11 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Assets
+namespace DragonFly.AspNetCore
 {
+    /// <summary>
+    /// ImageAssetProcessing
+    /// </summary>
     public class ImageAssetProcessing : IAssetProcessing
     {
         public bool CanUse(Asset asset)
@@ -16,17 +19,17 @@ namespace DragonFly.Core.Assets
             return asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
         }
 
-        public async Task OnAssetChangedAsync(Asset asset, OpenAssetStream openStream)
+        public async Task OnAssetChangedAsync(IAssetProcessingContext context)
         {
-            using Stream stream = await openStream();
+            using Stream stream = await context.OpenAssetStreamAsync();
 
             IImageInfo imageInfo = await Image.IdentifyAsync(stream);
 
             if (imageInfo != null)
             {
-                ImageMetadata imageMetadata = new ImageMetadata() { Width = imageInfo.Width, Height = imageInfo.Height };
+                ImageMetadata imageMetadata = new ImageMetadata() { Width = imageInfo.Width, Height = imageInfo.Height, BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
 
-                asset.SetMetadata(imageMetadata);
+                await context.AddMetadataAsync(imageMetadata);
             }
         }
     }

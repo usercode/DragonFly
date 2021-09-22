@@ -1,6 +1,5 @@
 ﻿using DragonFly.Assets;
 using DragonFly.Content;
-using DragonFly.Core.ContentItems.Queries;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
@@ -123,7 +122,7 @@ namespace DragonFly.Razor.Services
             }            
         }
 
-        public RenderFragment CreateQueryFieldComponent(FieldQueryBase fieldQuery)
+        public RenderFragment CreateQueryFieldComponent(FieldQuery fieldQuery)
         {
             if (_cacheQueryView.TryGetValue(fieldQuery.GetType(), out Type viewType))
             {

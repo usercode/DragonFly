@@ -1,12 +1,12 @@
-﻿@inherits AssetMetadataComponent<ImageMetadata>
+﻿@inherits AssetMetadataComponent<PdfMetadata>
 
 <BSFormGroup>
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
-            Width
+            Pages
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.Width" IsReadonly="true" />
+            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.CountPages" IsReadonly="true" />
         </div>
     </BSRow>
 </BSFormGroup>
@@ -14,10 +14,10 @@
 <BSFormGroup>
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
-            Height
+            PDF version
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.Height" IsReadonly="true" />
+            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.PdfVersion" IsReadonly="true" />
         </div>
     </BSRow>
 </BSFormGroup>
@@ -25,10 +25,10 @@
 <BSFormGroup>
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
-            Bits per pixel
+            Encrypted
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.BitsPerPixel" IsReadonly="true" />
+            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.IsEncrypted" IsReadonly="true" />
         </div>
     </BSRow>
 </BSFormGroup>

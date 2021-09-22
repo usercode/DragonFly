@@ -6,24 +6,24 @@ using System.Text;
 namespace DragonFly.Assets
 {
     /// <summary>
-    /// ImageMetadata
+    /// PdfMetadata
     /// </summary>
-    [AssetMetadata("Image")]
-    public class ImageMetadata : AssetMetadata
+    [AssetMetadata("Pdf")]
+    public class PdfMetadata : AssetMetadata
     {
         /// <summary>
-        /// Width
+        /// CountPages
         /// </summary>
-        public int Width { get; set; }
+        public int? CountPages { get; set; }
 
         /// <summary>
-        /// Height
+        /// PdfVersion
         /// </summary>
-        public int Height { get; set; }
+        public string? PdfVersion { get; set; }
 
         /// <summary>
-        /// BitsPerPixel
+        /// IsEncrypted
         /// </summary>
-        public int BitsPerPixel { get; set; }
+        public bool? IsEncrypted { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DragonFly.Core.ContentItems.Queries;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +9,7 @@ namespace DragonFly.Content
     /// <summary>
     /// StringQuery
     /// </summary>
-    public class StringQuery : FieldQueryBase
+    public class StringQuery : FieldQuery
     {
         /// <summary>
         /// Pattern
@@ -21,5 +20,10 @@ namespace DragonFly.Content
         /// Type
         /// </summary>
         public StringQueryType Type { get; set; }
+
+        public override bool IsEmpty()
+        {
+            return string.IsNullOrWhiteSpace(Pattern);
+        }
     }
 }

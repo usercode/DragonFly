@@ -33,10 +33,11 @@ button {
 .alert {
     padding: .5rem 1.25rem;
     margin-bottom: 0.5rem;
+    border: none;
 }
 
 .form-group .alert {
-    padding: 0.25rem 0.25rem 0.25rem 0rem;
+    padding: 0rem;
     margin-bottom: 0px;
 }
 
@@ -112,6 +113,7 @@ app {
     height: 3.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 /*.content-fields .list-group-item {
@@ -207,10 +209,8 @@ app {
     .sub-sidebar .nav-item a {
         color: #d7d7d7;
         border-radius: 4px;
-        height: 3rem;
         display: flex;
         align-items: center;
-        line-height: 3rem;
     }
 
         .sub-sidebar .nav-item a.active {
@@ -243,14 +243,13 @@ app {
         padding-bottom: 1rem;
     }
 
-    .sidebar .nav-item a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
+.sidebar .nav-item a {
+    color: #d7d7d7;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    line-height: 2rem;
+}
 
         .sidebar .nav-item a.active {
             background-color: rgba(255,255,255,0.25);

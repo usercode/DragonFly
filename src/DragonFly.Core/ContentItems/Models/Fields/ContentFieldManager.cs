@@ -1,5 +1,4 @@
 ﻿using DragonFly.Content;
-using DragonFly.Core.ContentItems.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -170,11 +169,11 @@ namespace DragonFly.Content
             return queryType;
         }
 
-        public FieldQueryBase CreateQuery(string? fieldName)
+        public FieldQuery CreateQuery(string? fieldName)
         {
             Type type = GetQueryType(fieldName);
 
-            FieldQueryBase? instance = (FieldQueryBase?)Activator.CreateInstance(type);
+            FieldQuery? instance = (FieldQuery?)Activator.CreateInstance(type);
 
             if (instance == null)
             {

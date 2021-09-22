@@ -4,21 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Queries.Fields.Integers
+namespace DragonFly.Content
 {
     /// <summary>
     /// IntegerQuery
     /// </summary>
-    public class IntegerQuery : FieldQueryBase
+    public class IntegerQuery : FieldQuery
     {
         /// <summary>
-        /// Value
+        /// MinValue
         /// </summary>
-        public int Value { get; set; }
+        public int? MinValue { get; set; }
 
         /// <summary>
-        /// Type
+        /// MaxValue
         /// </summary>
-        public IntegerQueryOperator Operator { get; set; }
+        public int? MaxValue { get; set; }
+
+        public override bool IsEmpty()
+        {
+            return MinValue == null && MaxValue == null;
+        }
     }
 }

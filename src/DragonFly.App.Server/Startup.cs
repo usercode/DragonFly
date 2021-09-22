@@ -25,7 +25,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using ImageWizard;
-using ImageWizard.DocNET;
 using DragonFly.Client.Core.Assets;
 using DragonFly.MongoDB.Options;
 using DragonFly.ContentTypes;
