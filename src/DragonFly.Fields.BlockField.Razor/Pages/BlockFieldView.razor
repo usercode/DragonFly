@@ -1,0 +1,34 @@
+﻿@inherits FieldComponent<BlockField>
+
+<BSRow>
+	<BSCol LG="8">
+		<BSListGroup>
+			@foreach(Element element in Field.Document.Blocks)
+			{
+				<BSListGroupItem>
+					<div class="arrayitem-field">
+						<BSButton Color="Color.Light" OnClick="@(e => { Field.Document.Blocks.MoveUp(element); })" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
+						<BSButton Color="Color.Light" OnClick="@(e => { Field.Document.Blocks.MoveDown(element); })" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
+						<BSButton Color="Color.Light" OnClick="@(e => { Field.Document.Blocks.Remove(element); })" title="Remove"><i class="fas fa-times"></i></BSButton>
+					</div>
+
+					@ComponentManager.Default.CreateComponent(element)
+				</BSListGroupItem>
+			}
+		</BSListGroup>
+	</BSCol>
+	<BSCol LG="4">
+		@foreach(Element t in BlockFieldManager.Default.GetAllElements())
+		{
+			<BSButton class="btn btn-light" OnClick="e => Add(t)">@t.Name</BSButton>
+		}
+	</BSCol>
+</BSRow>
+
+
+@code {
+	private void Add(Element element)
+	{
+		Field.Document.Blocks.Add(element);
+	}
+}

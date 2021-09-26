@@ -1,37 +1,32 @@
-﻿@inherits QueryComponent<IntegerQuery>
+﻿@inherits QueryComponent<IntegerFieldQuery>
 
-<BSListGroup>
-	<BSListGroupItem>
-		 <BSFormGroup>
-			<BSLabel class="form-label badge bg-secondary">@Query.FieldName </BSLabel>
-			<BSRow>
-				<BSCol LG="4">
-					<BSLabel class="form-label">Min value</BSLabel>
-				</BSCol>
-				<BSCol>
-					 <BSInput InputType="InputType.Number"              
-											 @bind-Value="@Query.MinValue"
-											 class="form-control" 
-											  />
-				</BSCol>
+<BSFormGroup>
+	<BSRow>
+		<BSCol LG="4">
+			<BSLabel class="form-label">Min value</BSLabel>
+		</BSCol>
+		<BSCol>
+				<BSInput InputType="InputType.Number"              
+										@bind-Value="@Query.MinValue"
+										class="form-control" 
+										/>
+		</BSCol>
 		
-			</BSRow>
-			</BSFormGroup>
-			<BSFormGroup>
-			<BSRow>
-				<BSCol LG="4">
-					<BSLabel class="form-label">Max value</BSLabel>
-				</BSCol>
-				<BSCol>
-					 <BSInput InputType="InputType.Number"              
-											 @bind-Value="@Query.MaxValue"
-											 class="form-control" 
-											  />
-				</BSCol>
-			</BSRow>
-		</BSFormGroup>
-	</BSListGroupItem>
-</BSListGroup>
+	</BSRow>
+</BSFormGroup>
+<BSFormGroup>
+	<BSRow>
+		<BSCol LG="4">
+			<BSLabel class="form-label">Max value</BSLabel>
+		</BSCol>
+		<BSCol>
+				<BSInput InputType="InputType.Number"              
+										@bind-Value="@Query.MaxValue"
+										class="form-control" 
+										/>
+		</BSCol>
+	</BSRow>
+</BSFormGroup>
 
 @code {
 

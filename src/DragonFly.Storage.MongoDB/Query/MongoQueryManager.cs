@@ -23,37 +23,38 @@ namespace DragonFly.Storage.MongoDB.Query
                 {
                     _default = new MongoQueryManager();
 
-                    _default.Register<StringQuery, StringQueryAction>();
-                    _default.Register<IntegerQuery, IntegerQueryAction>();
-                    _default.Register<ReferenceQuery, ReferenceQueryAction>();
+                    _default.Register<StringFieldQuery, StringFieldQueryAction>();
+                    _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
+                    _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
+                    _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
                 }
 
                 return _default;
             }
         }
 
-        private IDictionary<Type, IQueryAction> _fields;
+        private IDictionary<Type, IFieldQueryAction> _fields;
 
         public MongoQueryManager()
         {
-            _fields = new Dictionary<Type, IQueryAction>();
+            _fields = new Dictionary<Type, IFieldQueryAction>();
         }
 
-        public void Register(Type fieldType, IQueryAction queryConverter)
+        public void Register(Type fieldType, IFieldQueryAction queryConverter)
         {
             _fields.Add(fieldType, queryConverter);
         }
 
         public void Register<TQuery, TQueryConverter>()
             where TQuery : FieldQuery
-            where TQueryConverter : QueryAction<TQuery>, new()
+            where TQueryConverter : FieldQueryAction<TQuery>, new()
         {
             Register(typeof(TQuery), new TQueryConverter());
         }
 
-        public IQueryAction GetByType(Type fieldType)
+        public IFieldQueryAction GetByType(Type fieldType)
         {
-            if (_fields.TryGetValue(fieldType, out IQueryAction? queryConverter))
+            if (_fields.TryGetValue(fieldType, out IFieldQueryAction? queryConverter))
             {
                 return queryConverter;
             }

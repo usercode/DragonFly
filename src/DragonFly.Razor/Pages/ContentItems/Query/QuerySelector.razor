@@ -1,6 +1,4 @@
-﻿@inject FieldComponentManager FieldComponentManager
-
-
+﻿@inject ComponentManager FieldComponentManager
 
 @if (ContentItemList.Schema != null)
 {
@@ -35,10 +33,16 @@
     }
 
     <h4>Filter</h4>
+    <BSListGroup>
+	
     @foreach (var fieldQuery in ContentItemList.QueryFields)
     {
-        @FieldComponentManager.CreateQueryFieldComponent(fieldQuery)
+        <BSListGroupItem>
+            <BSLabel class="form-label badge bg-secondary">@fieldQuery.FieldName</BSLabel>
+            @FieldComponentManager.CreateComponent(fieldQuery)
+        </BSListGroupItem>
     }
+    </BSListGroup>
 }
 
 @code {

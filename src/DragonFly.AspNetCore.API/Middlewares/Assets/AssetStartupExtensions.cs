@@ -25,7 +25,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
                     endpoints.MapPublish();
                     endpoints.MapDownload();
                     endpoints.MapUpload();
-                    endpoints.MapExecuteMetadata();
+                    endpoints.MapRefreshMetadata();
                 });
             });
         }
@@ -93,13 +93,13 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             return endpoints.MapPost("{id:guid}/upload", pipeline);
         }
 
-        private static IEndpointConventionBuilder MapExecuteMetadata(this IEndpointRouteBuilder endpoints)
+        private static IEndpointConventionBuilder MapRefreshMetadata(this IEndpointRouteBuilder endpoints)
         {
             RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<ExecuteMetadataAssetMiddleware>()
+                                                    .UseMiddleware<RefreshMetadataAssetMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("{id:guid}/metadata/{metadata}/execute", pipeline);
+            return endpoints.MapPost("{id:guid}/metadata", pipeline);
         }
     }
 }

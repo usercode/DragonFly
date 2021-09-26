@@ -22,7 +22,7 @@ namespace DragonFly.Content
         /// <summary>
         /// Value
         /// </summary>
-        public T? Value 
+        public virtual T? Value 
         {
             get => _value;
             set

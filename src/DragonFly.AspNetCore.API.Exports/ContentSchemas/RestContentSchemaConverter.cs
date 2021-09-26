@@ -76,7 +76,12 @@ namespace DragonFly.Data.Models
         {
             Type optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
 
-            ContentFieldOptions options = (ContentFieldOptions)definition.Options.ToObject(optionsType, NewtonJsonExtensions.CreateSerializer());
+            ContentFieldOptions? options = null;
+
+            if (optionsType != null)
+            {
+                options = (ContentFieldOptions)definition.Options.ToObject(optionsType, NewtonJsonExtensions.CreateSerializer());
+            }
 
             SchemaField schemaField = new SchemaField(definition.FieldType, options);
             schemaField.Label = definition.Label;

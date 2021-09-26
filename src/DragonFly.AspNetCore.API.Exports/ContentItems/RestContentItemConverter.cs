@@ -45,7 +45,7 @@ namespace DragonFly.Data.Models
 
             foreach (var restField in restContentItem.Fields)
             {
-                restField.Value.FromRestValue(restField.Key, contentItem, schema);
+                restField.Value.ToModelValue(restField.Key, contentItem, schema);
             }
 
             return contentItem;
@@ -59,7 +59,7 @@ namespace DragonFly.Data.Models
 
             foreach (var restField in restContentItem.Fields)
             {
-                restField.Value.FromRestValue(restField.Key, contentItem, schema);
+                restField.Value.ToModelValue(restField.Key, contentItem, schema);
             }
 
             return contentItem;

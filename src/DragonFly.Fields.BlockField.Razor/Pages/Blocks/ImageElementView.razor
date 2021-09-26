@@ -1,0 +1,31 @@
+﻿@inherits ElementComponent<ImageElement>
+@inject IAssetStorage AssetStorage
+
+<AssetSelector @bind-Asset="Asset" />
+
+@code {
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (Element.AssetId != null)
+		{
+			Asset = await AssetStorage.GetAssetAsync(Element.AssetId.Value);
+		}
+	}
+
+	private Asset _asset;
+
+	[Parameter]
+	public Asset Asset 
+	{
+		get => _asset;
+		set
+		{
+			_asset = value;
+
+			Element.AssetId = _asset?.Id;
+
+			
+		}
+	}
+}

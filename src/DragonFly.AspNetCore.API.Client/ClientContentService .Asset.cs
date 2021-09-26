@@ -79,9 +79,14 @@ namespace DragonFly.Client
             await Client.PutAsJson($"api/asset/{entity.Id}", entity.ToRest());
         }
 
-        public async Task DeleteAsybc(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             await Client.DeleteAsync($"api/asset/{id}");
+        }
+
+        public async Task ApplyMetadataAsync(Guid id)
+        {
+            await Client.PostAsync($"api/asset/{id}/metadata", new StringContent(string.Empty));
         }
     }
 }

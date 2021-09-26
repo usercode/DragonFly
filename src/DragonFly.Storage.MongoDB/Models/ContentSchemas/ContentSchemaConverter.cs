@@ -33,7 +33,7 @@ namespace DragonFly.Data.Models
             {
                 try
                 {
-                    Type optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
+                    Type? optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
                     ContentFieldOptions? options = null;
 
                     if (field.Value.Options != BsonNull.Value)
@@ -86,7 +86,7 @@ namespace DragonFly.Data.Models
                 {
                     BsonDocument doc = field.Value.Options.ToBsonDocument(field.Value.Options.GetType());
 
-                    if(doc.ElementCount > 0)
+                    if (doc.ElementCount > 0)
                     {
                         definition.Options = doc;
                     }

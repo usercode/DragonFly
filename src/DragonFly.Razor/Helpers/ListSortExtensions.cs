@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Razor.Helpers
 {
-    static class ListSortExtensions
+    public static class ListSortExtensions
     {
         public static void MoveUp<T>(this IList<T> sourceList, T item)
         {

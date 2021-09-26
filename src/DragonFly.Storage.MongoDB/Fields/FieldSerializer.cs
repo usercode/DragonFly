@@ -6,14 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Fields
+namespace DragonFly.Storage.Abstractions
 {
+    /// <summary>
+    /// FieldSerializer
+    /// </summary>
+    /// <typeparam name="TContentField"></typeparam>
     public abstract class FieldSerializer<TContentField> : IFieldSerializer
         where TContentField : ContentField
     {
         public Type FieldType => typeof(TContentField);
 
-        public abstract void Read(SchemaField schemaField, TContentField contentField, BsonValue bsonValue);
+        public abstract TContentField Read(SchemaField schemaField, BsonValue bsonValue);
 
         public abstract BsonValue Write(TContentField contentField);
 
@@ -22,9 +26,9 @@ namespace DragonFly.Storage.MongoDB.Fields
             return Write((TContentField)contentField);
         }
 
-        void IFieldSerializer.Read(SchemaField definition, ContentField contentField, BsonValue bsonvalue)
+        ContentField IFieldSerializer.Read(SchemaField definition, BsonValue bsonvalue)
         {
-            Read(definition, (TContentField)contentField, bsonvalue);
+            return Read(definition, bsonvalue);
         }
     }
 }

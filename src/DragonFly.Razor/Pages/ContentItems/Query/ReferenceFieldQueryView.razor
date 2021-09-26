@@ -1,20 +1,6 @@
-﻿@inherits QueryComponent<ReferenceQuery>
+﻿@inherits QueryComponent<ReferenceFieldQuery>
 
-<BSListGroup>
-	<BSListGroupItem>
-		<BSFormGroup>
-			<BSLabel class="form-label badge bg-secondary">@Query.FieldName</BSLabel>
-			<BSRow>
-				<BSCol>
-					<ReferenceSelector @bind-ContentItem="ContentItem" />
-				</BSCol>
-				<BSCol LG="auto">
-					
-				</BSCol>		
-			</BSRow>
-		</BSFormGroup>
-	</BSListGroupItem>
-</BSListGroup>
+<ReferenceSelector @bind-ContentItem="ContentItem" />				
 
 @code {
 

@@ -1,5 +1,6 @@
 ﻿using DragonFly.Content;
 using DragonFly.Data.Models;
+using DragonFly.Storage.Abstractions;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,23 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Storage.MongoDB.Fields.Base
 {
+    /// <summary>
+    /// ArrayFieldSerializer
+    /// </summary>
     public class ArrayFieldSerializer : FieldSerializer<ArrayField>
     {
-        public override void Read(SchemaField schemaField, ArrayField contentField, BsonValue bsonvalue)
+        public override ArrayField Read(SchemaField schemaField, BsonValue bsonvalue)
         {
+            ArrayField contentField = new ArrayField();
+
             if (bsonvalue is BsonArray bsonArray)
             {
-                ArrayFieldOptions arrayOptions = (ArrayFieldOptions)schemaField.Options;
+                ArrayFieldOptions? arrayOptions = (ArrayFieldOptions?)schemaField.Options;
+
+                if (arrayOptions == null)
+                {
+                    throw new Exception("arrayfield options are not available.");
+                }
 
                 foreach (BsonDocument item in bsonArray)
                 {
@@ -29,6 +40,8 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
                     contentField.Items.Add(arrayFieldItem);
                 }
             }
+
+            return contentField;
         }
 
         public override BsonValue Write(ArrayField contentField)

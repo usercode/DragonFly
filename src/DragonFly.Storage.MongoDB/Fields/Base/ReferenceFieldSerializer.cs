@@ -6,13 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DragonFly.Storage.Abstractions;
 
 namespace DragonFly.Storage.MongoDB.Fields.Base
 {
     public class ReferenceFieldSerializer : FieldSerializer<ReferenceField>
     {
-        public override void Read(SchemaField schemaField, ReferenceField contentField, BsonValue bsonValue)
+        public override ReferenceField Read(SchemaField schemaField, BsonValue bsonValue)
         {
+            ReferenceField contentField = new ReferenceField();
+
             if (bsonValue is BsonDocument bsonDocument)
             {
                 if (bsonDocument[ReferenceField.IdField] != BsonNull.Value)
@@ -23,6 +26,8 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
                     contentField.ContentItem = ContentItemProxy.CreateContentItem(targetId, targetType);
                 }
             }
+
+            return contentField;
         }
 
         public override BsonValue Write(ReferenceField contentField)

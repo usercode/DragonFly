@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// ValidationExtensions
+    /// </summary>
     public static class ValidationExtensions
     {
         public static ValidationContext Validate(this ContentItem contentItem)
@@ -18,7 +21,10 @@ namespace DragonFly.Content
             {
                 SchemaField f = contentItem.Schema.Fields[field.Key];
 
-                field.Value.Validate(field.Key, f.Options, validationContext);
+                if (f.Options != null)
+                {
+                    field.Value.Validate(field.Key, f.Options, validationContext);
+                }
             }
 
             return validationContext;

@@ -1,4 +1,5 @@
 ﻿using DragonFly.Content;
+using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields.Base;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Storage.MongoDB.Fields
 {
+    /// <summary>
+    /// MongoFieldManager
+    /// </summary>
     public class MongoFieldManager
     {
         private static MongoFieldManager? _default;
@@ -22,16 +26,16 @@ namespace DragonFly.Storage.MongoDB.Fields
 
                     _default.Register<ArrayFieldSerializer>();
                     _default.Register<AssetFieldSerializer>();
-                    _default.Register<BoolFieldSerializer>();
-                    _default.Register<DateFieldSerializer>();
                     _default.Register<EmbedFieldSerializer>();
-                    _default.Register<FloatFieldSerializer>();
-                    _default.Register<IntegerFieldSerializer>();
-                    _default.Register<ReferenceFieldSerializer>();
-                    _default.Register<StringFieldSerializer>();
-                    _default.Register<SlugFieldSerializer>();
-                    _default.Register<TextAreaFieldSerializer>();
-                    _default.Register<XHtmlFieldSerializer>();
+                    _default.Register<ReferenceFieldSerializer>();               
+
+                    _default.Register<SingleValueFieldSerializer<StringField>>();
+                    _default.Register<SingleValueFieldSerializer<SlugField>>();
+                    _default.Register<SingleValueFieldSerializer<IntegerField>>();
+                    _default.Register<SingleValueFieldSerializer<TextAreaField>>();
+                    _default.Register<SingleValueFieldSerializer<HtmlField>>();
+                    _default.Register<SingleValueFieldSerializer<XHtmlField>>();
+                    _default.Register<SingleValueFieldSerializer<DateField>>();
                 }
 
                 return _default;
@@ -47,7 +51,10 @@ namespace DragonFly.Storage.MongoDB.Fields
 
         public void Register(IFieldSerializer fieldSerializer)
         {
-            _fields.Add(fieldSerializer.FieldType, fieldSerializer);
+            if (_fields.TryAdd(fieldSerializer.FieldType, fieldSerializer) == false)
+            {
+                _fields[fieldSerializer.FieldType] = fieldSerializer;
+            }
         }
 
         public void Register<TSerializer>()
@@ -58,14 +65,29 @@ namespace DragonFly.Storage.MongoDB.Fields
             Register(serializer);
         }
 
-        public IFieldSerializer GetByType(Type fieldType)
+        public IFieldSerializer GetByType(Type contentFieldType)
         {
-            if (_fields.TryGetValue(fieldType, out IFieldSerializer? fieldSerializer))
+            if (_fields.TryGetValue(contentFieldType, out IFieldSerializer? fieldSerializer))
             {
                 return fieldSerializer;
             }
 
-            throw new Exception($"Field serializer not found: {fieldType.Name}");
+            if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueContentField)))
+            {
+                //create SingleValueFieldSerializer
+                fieldSerializer = (IFieldSerializer?)Activator.CreateInstance(typeof(SingleValueFieldSerializer<>).MakeGenericType(contentFieldType));
+
+                if (fieldSerializer == null)
+                {
+                    throw new Exception($"Could not create FieldSerializer for {contentFieldType.Name}");
+                }
+
+                _fields.Add(contentFieldType, fieldSerializer);
+
+                return fieldSerializer;
+            }
+
+            throw new Exception($"Field serializer not found: {contentFieldType.Name}");
         }
     }
 }

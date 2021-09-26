@@ -1,5 +1,4 @@
 ﻿using DragonFly.Content;
-using DragonFly.Data.Models;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Fields
+namespace DragonFly.Storage.Abstractions
 {
     /// <summary>
     /// IFieldSerializer
@@ -24,7 +23,7 @@ namespace DragonFly.Storage.MongoDB.Fields
         /// </summary>
         /// <param name="bsonvalue"></param>
         /// <returns></returns>
-        void Read(SchemaField schemaField, ContentField contentField, BsonValue bsonvalue);
+        ContentField Read(SchemaField schemaField, BsonValue bsonvalue);
 
         /// <summary>
         /// Write

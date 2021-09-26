@@ -84,7 +84,7 @@ namespace DragonFly.Content
 
         public IEnumerable<Type> GetAllFieldTypes()
         {
-            return _optionsByField.Select(x => x.Key).ToList();
+            return _fieldByName.Select(x => x.Value).ToList();
         }
 
         public IEnumerable<Type> GetAllQueryTypes()
@@ -143,7 +143,7 @@ namespace DragonFly.Content
             return CreateField(fieldType);
         }
 
-        public Type GetOptionsType(string? fieldName)
+        public Type? GetOptionsType(string? fieldName)
         {
             if (fieldName == null)
             {
@@ -151,9 +151,13 @@ namespace DragonFly.Content
             }
 
             Type fieldType = GetContentFieldType(fieldName);
-            Type optionsType = _optionsByField[fieldType];
 
-            return optionsType;
+            if (_optionsByField.TryGetValue(fieldType, out Type? type))
+            {
+                return type;
+            }
+
+            return null;
         }
 
         public Type GetQueryType(string? fieldName)
@@ -183,7 +187,7 @@ namespace DragonFly.Content
             return instance;
         }
 
-        public ContentFieldOptions CreateOptions(string? fieldName)
+        public ContentFieldOptions? CreateOptions(string? fieldName)
         {
             if (fieldName == null)
             {
@@ -191,18 +195,18 @@ namespace DragonFly.Content
             }
 
             Type fieldType = GetContentFieldType(fieldName);
-            ContentFieldOptions options = CreateOptions(fieldType);
+            ContentFieldOptions? options = CreateOptions(fieldType);
 
             return options;
         }
 
-        public ContentFieldOptions CreateOptions<TField>()
+        public ContentFieldOptions? CreateOptions<TField>()
             where TField : ContentField
         {
             return CreateOptions(typeof(TField));
         }
 
-        public ContentFieldOptions CreateOptions(Type fieldType)
+        public ContentFieldOptions? CreateOptions(Type fieldType)
         {
             if (_optionsByField.TryGetValue(fieldType, out Type? t))
             {
@@ -217,7 +221,7 @@ namespace DragonFly.Content
             }
             else
             {
-                throw new Exception($"Field not found: {fieldType.Name}");
+                return null;
             }
         }
     }

@@ -104,13 +104,7 @@ namespace DragonFly.Data
                                                         .Inc(x => x.Version, 1));
             }
 
-            MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
-
-            //add metadata
-            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
-            {
-                await processing.OnAssetChangedAsync(context);
-            }
+            await ApplyMetadataAsync(asset.Id);
         }
 
         public async Task<Stream> DownloadAsync(Guid id)
@@ -159,7 +153,7 @@ namespace DragonFly.Data
             }
         }
 
-        public async Task DeleteAsybc(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, id.ToString()));
 
@@ -169,6 +163,19 @@ namespace DragonFly.Data
             }
 
             await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id));
+        }
+
+        public async Task ApplyMetadataAsync(Guid id)
+        {
+            Asset asset = await GetAssetAsync(id);
+
+            MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
+
+            //add metadata
+            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
+            {
+                await processing.OnAssetChangedAsync(context);
+            }
         }
     }
 }

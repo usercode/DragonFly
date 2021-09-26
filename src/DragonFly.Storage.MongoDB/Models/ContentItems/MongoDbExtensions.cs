@@ -4,6 +4,7 @@ using DragonFly.ContentTypes;
 using DragonFly.Data.Content;
 using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Models;
+using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -23,14 +24,13 @@ namespace DragonFly.Data.Models
                 return;
             }
 
-            if (contentItem.TryGetField(fieldName, out ContentField? contentField))
+            if (schema.Fields.TryGetValue(fieldName, out SchemaField? schemaField))
             {
-                if (schema.Fields.TryGetValue(fieldName, out SchemaField? schemaField))
-                {
-                    IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(contentField.GetType());
+                IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
 
-                    fieldSerializer.Read(schemaField, contentField, bsonValue);
-                }
+                ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
+
+                contentItem.SetField(fieldName, contentField);
             }
         }
 

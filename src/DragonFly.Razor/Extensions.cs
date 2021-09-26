@@ -64,47 +64,46 @@ namespace DragonFly.Client.Core
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
-            builder.Services.AddSingleton<FieldComponentManager>();
-
+            builder.Services.AddSingleton(ComponentManager.Default);
             builder.Services.AddSingleton(ContentFieldManager.Default);
             builder.Services.AddSingleton(AssetMetadataManager.Default);
+
+            ComponentManager.Default.RegisterField<ArrayFieldView>();
+            ComponentManager.Default.RegisterField<AssetFieldView>();
+            ComponentManager.Default.RegisterField<BoolFieldView>();
+            ComponentManager.Default.RegisterField<DateFieldView>();
+            ComponentManager.Default.RegisterField<EmbedFieldView>();
+            ComponentManager.Default.RegisterField<FloatFieldView>();
+            ComponentManager.Default.RegisterField<IntegerFieldView>();
+            ComponentManager.Default.RegisterField<ReferenceFieldView>();
+            ComponentManager.Default.RegisterField<SlugFieldView>();
+            ComponentManager.Default.RegisterField<StringFieldView>();
+            ComponentManager.Default.RegisterField<TextAreaFieldView>();
+            ComponentManager.Default.RegisterField<XHtmlFieldView>();
+            ComponentManager.Default.RegisterField<XmlFieldView>();
+
+            ComponentManager.Default.RegisterOptions<ArrayFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<AssetFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<BoolFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<EmbedFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<FloatFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<IntegerFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<StringFieldOptionsView>();
+            ComponentManager.Default.RegisterOptions<ReferenceFieldOptionsView>();
+
+            ComponentManager.Default.RegisterAssetMetadata<ImageMetadataView>();
+            ComponentManager.Default.RegisterAssetMetadata<PdfMetadataView>();
+
+            ComponentManager.Default.RegisterQuery<StringFieldQueryView>();
+            ComponentManager.Default.RegisterQuery<IntegerFieldQueryView>();
+            ComponentManager.Default.RegisterQuery<ReferenceFieldQueryView>();
+            ComponentManager.Default.RegisterQuery<AssetFieldQueryView>();
 
             return new DragonFlyClientBuilder(builder);
         }
 
         public static void UseDragonFlyClient(this WebAssemblyHost host)
         {
-            var componentManager = host.Services.GetRequiredService<FieldComponentManager>();
-
-            componentManager.RegisterField<ArrayFieldView>();
-            componentManager.RegisterField<AssetFieldView>();
-            componentManager.RegisterField<BoolFieldView>();
-            componentManager.RegisterField<DateFieldView>();
-            componentManager.RegisterField<EmbedFieldView>();
-            componentManager.RegisterField<FloatFieldView>();
-            componentManager.RegisterField<IntegerFieldView>();
-            componentManager.RegisterField<ReferenceFieldView>();
-            componentManager.RegisterField<SlugFieldView>();
-            componentManager.RegisterField<StringFieldView>();
-            componentManager.RegisterField<TextAreaFieldView>();
-            componentManager.RegisterField<XHtmlFieldView>();
-            componentManager.RegisterField<XmlFieldView>();
-
-            componentManager.RegisterOptions<ArrayFieldOptionsView>();
-            componentManager.RegisterOptions<AssetFieldOptionsView>();
-            componentManager.RegisterOptions<BoolFieldOptionsView>();
-            componentManager.RegisterOptions<EmbedFieldOptionsView>();
-            componentManager.RegisterOptions<FloatFieldOptionsView>();
-            componentManager.RegisterOptions<IntegerFieldOptionsView>();
-            componentManager.RegisterOptions<StringFieldOptionsView>();
-            componentManager.RegisterOptions<ReferenceFieldOptionsView>();
-
-            componentManager.RegisterAssetMetadata<ImageMetadataView>();
-            componentManager.RegisterAssetMetadata<PdfMetadataView>();
-
-            componentManager.RegisterQuery<StringFieldQueryView>();
-            componentManager.RegisterQuery<IntegerFieldQueryView>();
-            componentManager.RegisterQuery<ReferenceFieldQueryView>();
 
         }
     }

@@ -123,11 +123,11 @@ namespace DragonFly.Data
             }
 
             //FieldQuery
-            QueryActionContext converterContext = new QueryActionContext();
+            FieldQueryActionContext converterContext = new FieldQueryActionContext();
 
             foreach (FieldQuery f in queryParameters.Fields.Where(x => x.IsEmpty() == false))
             {
-                IQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
+                IFieldQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
 
                 converter.Apply(f, converterContext);
             }
@@ -256,7 +256,7 @@ namespace DragonFly.Data
 
             if (found == null)
             {
-                throw new Exception($"content item not found: {schema}/{id}");
+                throw new Exception($"Content item not found: {schema}/{id}");
             }
 
             //add contentitem to published collection

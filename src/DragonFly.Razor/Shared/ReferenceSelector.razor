@@ -21,7 +21,7 @@
                   
                     @if (ContentItem != null)
                     {
-                        <span class="badge badge-primary" style="margin-right:12px">@ContentItem.Schema.Name</span>
+                        <span class="badge bg-primary">@ContentItem.Schema.Name</span>
 
                         @foreach (string field in ContentItem.Schema.ReferenceFields)
                         {
@@ -46,57 +46,63 @@
                     }
 
                     <div>
-                        <BSButton Color="Color.Light" OnClick="e => Navigate()"><i class="fas fa-arrow-right"></i></BSButton>
-                        <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
-                        <BSButton Color="Color.Light" OnClick="e => RemoveItem()"><i class="fas fa-times"></i></BSButton>
+                        @if (ContentItem != null)
+                        {
+                            <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>                        
+                            <BSButton Color="Color.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>
+                        }
+                        <BSButton Color="Color.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
                     </div>
                 </div>
             </BSListGroupItem>
         </BSListGroup>
     </div>
 
-    @code {
+@code {
 
-    private ContentItem _contentItem;
+private ContentItem _contentItem;
 
-    [Parameter]
-    public ContentItem ContentItem 
+[Parameter]
+public ContentItem ContentItem 
+{
+    get => _contentItem;
+    set
     {
-        get => _contentItem;
-        set
-        {
-            _contentItem = value;
+        _contentItem = value;
 
-            ContentItemChanged?.Invoke(_contentItem);
-        }
+        ContentItemChanged?.Invoke(_contentItem);
     }
+}
 
-    [Parameter]
-    public Action<ContentItem> ContentItemChanged { get; set; }
+[Parameter]
+public Action<ContentItem> ContentItemChanged { get; set; }
 
-    private bool _init = false;
+private bool _init = false;
 
-    protected void Navigate()
+protected void Navigate()
+{
+    if (ContentItem != null)
     {
         NavigationManager.NavigateTo($"content/{ContentItem.Schema.Name}/{ContentItem.Id}");
     }
+}
 
-    protected void RemoveItem()
-    {
-        ContentItem = null;
-    }
+protected void RemoveItem()
+{
+    ContentItem = null;
+}
 
-    public void OpenModal()
-    {
-        _init = true;
-    }
+public void OpenModal()
+{
+    _init = true;
+}
 
-    public void ItemAdded(ContentItemTypeList2 sender)
-    {
-        ContentItem = sender.SelectedContentItem;
+public void ItemAdded(ContentItemTypeList2 sender)
+{
+    ContentItem = sender.SelectedContentItem;
 
-        _init = false;
+    _init = false;
 
-        StateHasChanged();
-    }
-    }
+    StateHasChanged();
+}
+}

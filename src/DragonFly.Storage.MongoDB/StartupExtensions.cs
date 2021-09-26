@@ -39,7 +39,9 @@ namespace DragonFly.Data
             builder.Services.AddSingleton(MongoFieldManager.Default);
             builder.Services.AddSingleton(MongoQueryManager.Default);
 
+            //fix for array options
             BsonClassMap.RegisterClassMap<ReferenceFieldOptions>();
+            BsonClassMap.RegisterClassMap<BoolFieldOptions>();
 
             return builder;
         }

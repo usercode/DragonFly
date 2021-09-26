@@ -11,7 +11,7 @@ namespace DragonFly.Content
     /// </summary>
     public class SchemaField
     {
-        public SchemaField(string fieldType, ContentFieldOptions options)
+        public SchemaField(string fieldType, ContentFieldOptions? options)
         {
             FieldType = fieldType;
             Options = options;
@@ -35,6 +35,6 @@ namespace DragonFly.Content
         /// <summary>
         /// Options
         /// </summary>
-        public ContentFieldOptions Options { get; set; }
+        public ContentFieldOptions? Options { get; set; }
     }
 }

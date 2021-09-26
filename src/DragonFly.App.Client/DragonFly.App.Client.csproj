@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.Fields.BlockField.Razor\DragonFly.Fields.BlockField.Razor.csproj" />
     <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />
   </ItemGroup>
 

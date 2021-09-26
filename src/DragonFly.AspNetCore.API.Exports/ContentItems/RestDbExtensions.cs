@@ -14,11 +14,11 @@ namespace DragonFly.Models
 {
     public static class RestDbExtensions
     {
-        public static void FromRestValue(this JToken bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
+        public static void ToModelValue(this JToken bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
         {
             if (contentItem.Fields.TryGetValue(fieldName, out ContentField contentField))
             {
-                switch(bsonValue.Type)
+                switch (bsonValue.Type)
                 {
                     case JTokenType.Null:
                         break;
@@ -74,7 +74,7 @@ namespace DragonFly.Models
 
                                     foreach (var subitem in item)
                                     {
-                                        FromRestValue(subitem.Value, subitem.Key, arrayFieldItem, arrayOptions);
+                                        ToModelValue(subitem.Value, subitem.Key, arrayFieldItem, arrayOptions);
                                     }
 
                                     arrayField.Items.Add(arrayFieldItem);
@@ -112,7 +112,7 @@ namespace DragonFly.Models
                             contentItem.Fields[fieldName] = c;
                         }
                         break;
-                }               
+                }
             }
         }
 

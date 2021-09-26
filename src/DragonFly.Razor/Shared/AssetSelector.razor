@@ -1,0 +1,104 @@
+﻿@inject NavigationManager NavigationManager
+@inject IImageAssetUrlService AssetPreview
+
+@if (_init)
+{
+    <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
+        <BSModalHeader OnClick="@(() => _init = false)">Select asset</BSModalHeader>
+        <BSModalBody>
+            <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />       
+        </BSModalBody>
+        <BSModalFooter>
+            <BSButton Color="Color.Primary" @onclick="@(() => _init = false)">Ok</BSButton>
+        </BSModalFooter>
+    </BSModal>
+}
+
+<BSListGroup>
+    <BSListGroupItem>
+        <div style="display:flex;justify-content:flex-end"> 
+            @if (Asset != null)
+            {
+                <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                @if (ShowDownloadButton)
+                {
+                    <BSButton Color="Color.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                }
+                <BSButton Color="Color.Light" OnClick="(e => RemoveItem())" title="Remove"><i class="fas fa-times"></i></BSButton>               
+            }
+
+            <BSButton Color="Color.Light" OnClick="(e => OpenModal())" title="Select"><i class="fas fa-plus"></i></BSButton>
+        </div>
+
+        @if (Asset != null)
+        {
+            <BSRow>
+                <div class="col-lg-6">
+                    <div class="image">
+                        @if (Asset.IsImage())
+                        {
+                            <img src="@AssetPreview.Resize(Asset, 400, 150)" />
+                        }
+                        else if (Asset.IsPdf())
+                        {
+                            <img src="@AssetPreview.Pdf(Asset, 400, 150)" />
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <p class="field-readonly">@Asset.Name</p>
+                    <p class="field-readonly">@Asset.MimeType</p>
+                </div>
+            </BSRow>
+        }
+    </BSListGroupItem>
+</BSListGroup>
+
+@code {
+    private Asset _asset;
+
+    [Parameter]
+    public Asset Asset 
+    {
+        get => _asset;
+        set
+        {
+            _asset = value;
+
+            AssetChanged?.Invoke(_asset);
+        }
+    }
+
+    [Parameter]
+    public Action<Asset> AssetChanged { get; set; }
+
+    [Parameter]
+    public bool ShowDownloadButton { get; set; }
+
+    private bool _init = false;
+
+    protected void Navigate()
+    {
+        NavigationManager.NavigateTo($"asset/{Asset.Id}");
+    }
+
+    protected void RemoveItem()
+    {
+        Asset = null;
+    }
+
+    public void OpenModal()
+    {
+        //LiveDemo.Show();
+        _init = true;
+    }
+
+    public void ItemAdded(Asset asset)
+    {
+        Asset = asset;
+
+        _init = false;
+
+        StateHasChanged();
+    }
+}

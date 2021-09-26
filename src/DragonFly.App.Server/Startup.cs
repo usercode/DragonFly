@@ -32,6 +32,7 @@ using DragonFly.Data.Content;
 using DragonFly.Models;
 using DragonFly.SampleData;
 using DragonFly.AspNetCore.SchemaBuilder;
+using DragonFly.Fields.BlockField.Storage;
 
 namespace DragonFly.AspNetCore
 {
@@ -53,8 +54,9 @@ namespace DragonFly.AspNetCore
             services.AddDragonFly()
                         .AddRestApi()
                         .AddGraphQLApi()
-                        .AddMongoDbStorage()
-                        .AddSchemaBuilder();
+                        .AddMongoDbStorage()                        
+                        .AddSchemaBuilder()
+                        .AddBlockField();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonFlyApi api)

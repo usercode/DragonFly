@@ -1,28 +1,21 @@
-﻿@inherits QueryComponent<StringQuery>
+﻿@inherits QueryComponent<StringFieldQuery>
 
-<BSListGroup>
-	<BSListGroupItem>
-		<BSFormGroup>
-			<BSLabel class="form-label badge bg-secondary">@Query.FieldName</BSLabel>
-			<BSRow>
-				<BSCol>
-					<BSInput InputType="InputType.Text" class="form-control" @bind-Value="@Query.Pattern" />
-				</BSCol>
-				<BSCol LG="auto">
-					<BSDropdown>
-						<BSDropdownToggle Color="@Color.Light">@Query.Type</BSDropdownToggle>
-						<BSDropdownMenu>
-							@foreach(var value in Enum.GetValues(typeof(StringQueryType)))
-							{
-								<BSDropdownItem @onclick="e => { Query.Type = (StringQueryType)value; }">@value</BSDropdownItem>
-							}
-						</BSDropdownMenu>
-					</BSDropdown>
-				</BSCol>		
-			</BSRow>
-		</BSFormGroup>
-	</BSListGroupItem>
-</BSListGroup>
+<BSRow>
+	<BSCol>
+		<BSInput InputType="InputType.Text" class="form-control" @bind-Value="@Query.Pattern" />
+	</BSCol>
+	<BSCol LG="auto">
+		<BSDropdown>
+			<BSDropdownToggle Color="@Color.Light">@Query.Type</BSDropdownToggle>
+			<BSDropdownMenu>
+				@foreach(var value in Enum.GetValues(typeof(StringFieldQueryType)))
+				{
+					<BSDropdownItem @onclick="e => { Query.Type = (StringFieldQueryType)value; }">@value</BSDropdownItem>
+				}
+			</BSDropdownMenu>
+		</BSDropdown>
+	</BSCol>		
+</BSRow>
 
 @code {
 

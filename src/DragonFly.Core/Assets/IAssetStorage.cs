@@ -21,11 +21,13 @@ namespace DragonFly.Content
 
         Task UpdateAsync(Asset asset);
 
-        Task DeleteAsybc(Guid id);
+        Task DeleteAsync(Guid id);
 
         Task PublishAsync(Guid id);
 
         Task UploadAsync(Guid id, string mimetype, Stream stream);
+
+        Task ApplyMetadataAsync(Guid id);
 
         Task<Stream> DownloadAsync(Guid id);
     }

@@ -1,0 +1,19 @@
+﻿@inherits QueryComponent<AssetFieldQuery>
+
+<AssetSelector @bind-Asset="Asset" />
+
+@code {
+
+	private Asset _asset;
+
+	public Asset Asset 
+	{
+		get => _asset;
+		set
+		{
+			_asset = value;
+
+			Query.AssetId = _asset?.Id;
+		}
+	}
+}

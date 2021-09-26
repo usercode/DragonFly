@@ -9,7 +9,7 @@ namespace DragonFly.Content
     /// ReferenceField
     /// </summary>
     [FieldOptions(typeof(ReferenceFieldOptions))]
-    [FieldQuery(typeof(ReferenceQuery))]
+    [FieldQuery(typeof(ReferenceFieldQuery))]
     public class ReferenceField : ContentField
     {
         public const string IdField = "Id";

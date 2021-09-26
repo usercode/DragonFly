@@ -10,7 +10,7 @@ namespace DragonFly.Content
     /// IntegerField
     /// </summary>
     [FieldOptions(typeof(IntegerFieldOptions))]
-    [FieldQuery(typeof(IntegerQuery))]
+    [FieldQuery(typeof(IntegerFieldQuery))]
     public class IntegerField : SingleValueContentField<long?>
     {
         public IntegerField()

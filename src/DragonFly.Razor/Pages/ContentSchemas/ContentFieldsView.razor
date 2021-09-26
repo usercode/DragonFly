@@ -1,6 +1,4 @@
-﻿@inject FieldComponentManager FieldComponentManager
-
-<BSButton Color="Color.Light" class="add-field" OnClick="x => ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</BSButton>
+﻿<BSButton Color="Color.Light" class="add-field" OnClick="x => ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</BSButton>
 
 <ModalWindow Show="ShowModalDialog" Closed="ItemAdded">
     <ContentFieldSelector @ref="Selector">
@@ -32,7 +30,9 @@
     {
         if (result)
         {
-            Schema.Fields.Add(Selector.Name, new SchemaField(Selector.ContentFieldType.Name, ContentFieldManager.Default.CreateOptions(Selector.ContentFieldType)));
+            var options = ContentFieldManager.Default.CreateOptions(Selector.ContentFieldType);
+
+            Schema.Fields.Add(Selector.Name, new SchemaField(Selector.ContentFieldType.Name, options));
 
             ShowModalDialog = false;
 

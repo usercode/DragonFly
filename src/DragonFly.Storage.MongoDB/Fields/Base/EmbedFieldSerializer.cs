@@ -8,13 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DragonFly.Storage.Abstractions;
 
 namespace DragonFly.Storage.MongoDB.Fields.Base
 {
+    /// <summary>
+    /// EmbedFieldSerializer
+    /// </summary>
     public class EmbedFieldSerializer : FieldSerializer<EmbedField>
     {
-        public override void Read(SchemaField schemaField, EmbedField contentField, BsonValue bsonValue)
+        public override EmbedField Read(SchemaField schemaField, BsonValue bsonValue)
         {
+            EmbedField contentField = new EmbedField();
+
             string schemaName = bsonValue[ReferenceField.SchemaField].AsString;
 
             ContentSchema schema = MongoStorage.Default.GetContentSchemaAsync(schemaName).GetAwaiter().GetResult();
@@ -28,6 +34,8 @@ namespace DragonFly.Storage.MongoDB.Fields.Base
                     field.Value.ToModelValue(field.Name, contentField.ContentEmbedded, schema);
                 }
             }
+
+            return contentField;
         }
 
         public override BsonValue Write(EmbedField contentField)

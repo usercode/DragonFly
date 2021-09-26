@@ -22,8 +22,8 @@ namespace DragonFly.AspNetCore.API.Middlewares
         }
 
         public async Task InvokeAsync(
-            HttpContext context, 
-            IContentStorage contentStore, 
+            HttpContext context,
+            IContentStorage contentStore,
             ISchemaStorage schemaStorage,
             JsonService jsonService)
         {
@@ -31,7 +31,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             string schema = (string)context.GetRouteValue("schema");
 
             ContentItem result = await contentStore.GetContentItemAsync(schema, contentId);
-             ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
+            ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
 
             result.ApplySchema(schemaModel);
 

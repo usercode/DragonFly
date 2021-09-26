@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using DragonFly.Client.Core;
 using DragonFly.App.Client;
 using DragonFly.Client.Core.Assets;
+using DragonFly.Fields.BlockField.Razor;
 
 namespace DragonFly.Client
 {
@@ -23,7 +24,8 @@ namespace DragonFly.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<DragonFly.App.Client.App>("app");
 
-            builder.AddDragonFlyClient();
+            builder.AddDragonFlyClient()
+                        .AddBlockField();
 
             WebAssemblyHost build = builder.Build();
 

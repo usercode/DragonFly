@@ -12,7 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages
+namespace DragonFly.Razor.Pages.Assets
 {
     public class AssetDetailBase : EntityDetailComponent<Asset>
     {
@@ -40,8 +40,8 @@ namespace DragonFly.Client.Pages
         {
             base.BuildToolbarItems(toolbarItems);
 
-            if(IsNewEntity)
-            {               
+            if (IsNewEntity)
+            {
                 toolbarItems.AddCreateButton(this);
             }
             else
@@ -50,19 +50,19 @@ namespace DragonFly.Client.Pages
                 toolbarItems.AddRefreshButton(this);
                 toolbarItems.AddUpdateButton(this);
                 toolbarItems.AddDeleteButton(this);
-            }           
-            
+                toolbarItems.Add(new ToolbarItem("Refresh metadata", Color.Danger, () => ApplyMetadata()));
+            }            
         }
 
         protected override async Task RefreshActionAsync()
         {
             await base.RefreshActionAsync();
 
-            if(IsNewEntity)
+            if (IsNewEntity)
             {
                 Entity = new Asset();
 
-                if(FolderId != null)
+                if (FolderId != null)
                 {
                     Entity.Folder = new AssetFolder(FolderId.Value);
                 }
@@ -87,7 +87,7 @@ namespace DragonFly.Client.Pages
 
         protected override async Task DeleteActionAsync()
         {
-            await AssetStore.DeleteAsybc(Entity.Id);
+            await AssetStore.DeleteAsync(Entity.Id);
 
             NavigationManager.NavigateTo($"asset");
         }
@@ -100,6 +100,13 @@ namespace DragonFly.Client.Pages
             {
                 await ContentService.UploadAsync(Entity.Id, SelectedFile.ContentType, stream);
             }
+
+            await RefreshAsync();
+        }
+
+        public virtual async Task ApplyMetadata()
+        {
+            await ContentService.ApplyMetadataAsync(EntityId);
 
             await RefreshAsync();
         }

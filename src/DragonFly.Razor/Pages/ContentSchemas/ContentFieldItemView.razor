@@ -1,4 +1,4 @@
-﻿@inject FieldComponentManager FieldComponentManager
+﻿@inject ComponentManager ComponentManager
 
 <BSListGroupItem>
     <div style="display: flex; align-items: center;">
@@ -12,7 +12,10 @@
         </div>
     </div>
     <BSCollapse IsOpen="IsOpen">
-       @FieldComponentManager.CreateOptionsComponent(Field.Options)
+        @if(Field.Options != null)
+        {
+            @ComponentManager.CreateComponent(Field.Options)
+        }
     </BSCollapse>
 </BSListGroupItem>
 

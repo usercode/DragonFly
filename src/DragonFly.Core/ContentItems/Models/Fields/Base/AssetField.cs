@@ -5,13 +5,13 @@ using System.Text;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// AssetField
+    /// </summary>
     [FieldOptions(typeof(AssetFieldOptions))]
+    [FieldQuery(typeof(AssetFieldQuery))]
     public class AssetField : ContentField
     {
-        public AssetField()
-        {
-        }
-
         public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
         {
             if (options is AssetFieldOptions fieldOptions)
@@ -23,6 +23,9 @@ namespace DragonFly.Content
             }
         }
 
+        /// <summary>
+        /// Asset
+        /// </summary>
         public Asset? Asset { get; set; }
     }
 }
