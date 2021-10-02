@@ -13,11 +13,11 @@ using System.Threading.Tasks;
 namespace DragonFly.Razor.Services
 {
     /// <summary>
-    /// FieldComponentManager
+    /// ComponentManager
     /// </summary>
     public class ComponentManager
     {
-        private static ComponentManager? _default;
+        private static ComponentManager _default;
 
         public static ComponentManager Default
         {
@@ -35,7 +35,7 @@ namespace DragonFly.Razor.Services
 
         private IDictionary<Type, Type> _cacheFieldView;
 
-        public ComponentManager()
+        private ComponentManager()
         {
             _cacheFieldView = new Dictionary<Type, Type>();
         }

@@ -1,5 +1,6 @@
 ﻿using DragonFly.Assets;
 using DragonFly.Content;
+using DragonFly.Core;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace DragonFly.AspNetCore
     /// </summary>
     public class ImageAssetProcessing : IAssetProcessing
     {
-        public bool CanUse(Asset asset)
+        public IEnumerable<string> SupportedMimetypes
         {
-            return asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
+            get => new[] { MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
         }
 
         public async Task OnAssetChangedAsync(IAssetProcessingContext context)

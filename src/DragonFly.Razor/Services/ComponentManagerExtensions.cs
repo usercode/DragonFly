@@ -25,7 +25,7 @@ namespace DragonFly.Razor.Services
             componentManager.Register(fieldType, typeof(TFieldComponent));
         }
 
-        public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, ContentFieldOptions options)
+        public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, ContentFieldOptions? options)
         {
             Type componentType = componentManager.GetComponentType(contentField.GetType());
 
@@ -50,7 +50,7 @@ namespace DragonFly.Razor.Services
         {
             Type componentType = componentManager.GetComponentType(options.GetType());
 
-            if(componentType != null)
+            if (componentType != null)
             {
                 return builder =>
                 {

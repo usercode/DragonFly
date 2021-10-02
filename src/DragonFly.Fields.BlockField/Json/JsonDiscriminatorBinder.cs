@@ -17,12 +17,12 @@ namespace DragonFly.Fields.BlockField.Storage.Json
         public override void BindToName(Type serializedType, out string? assemblyName, out string? typeName)
         {
             assemblyName = null;
-            typeName = BlockFieldManager.Default.GetElementNameByType(serializedType);
+            typeName = BlockFieldManager.Default.GetBlockNameByType(serializedType);
         }
 
         public override Type BindToType(string? assemblyName, string typeName)
         {
-            return BlockFieldManager.Default.GetElementTypeByName(typeName);
+            return BlockFieldManager.Default.GetBlockTypeByName(typeName);
         }
     }
 }

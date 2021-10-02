@@ -7,7 +7,7 @@
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.1.5</Version>
+    <Version>0.2.0</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
     <PackageTags>cms</PackageTags>
@@ -17,11 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+  </ItemGroup> 
   
   <ItemGroup>   
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
@@ -32,6 +28,7 @@
     <PackageReference Include="ImageWizard.MongoDB" Version="2.1.9" />
     <PackageReference Include="ImageWizard.SvgNet" Version="2.1.9" />
     <PackageReference Include="PdfPig" Version="0.1.5" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
   
   <ItemGroup>

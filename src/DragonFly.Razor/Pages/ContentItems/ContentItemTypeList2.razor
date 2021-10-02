@@ -7,7 +7,7 @@
 else
 {
 <BSRow>
-    <BSCol LG="3">
+    <BSCol LG="2">
         <BSListGroup>
             @foreach (ContentSchema schema in SearchResult.Items)
             {
@@ -17,7 +17,7 @@ else
             }
         </BSListGroup>
     </BSCol>
-    <BSCol LG="9">
+    <BSCol LG="10">
         @if (SelectedItem != null)
         {
         <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" EntityType="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />

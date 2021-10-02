@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    /// <summary>
+    /// ContentFieldOptions
+    /// </summary>
     public abstract class ContentFieldOptions
     {
+        /// <summary>
+        /// IsRequired
+        /// </summary>
         public bool IsRequired { get; set; }
 
+        /// <summary>
+        /// IsSearchable
+        /// </summary>
         public bool IsSearchable { get; set; }
 
         public abstract ContentField CreateContentField();

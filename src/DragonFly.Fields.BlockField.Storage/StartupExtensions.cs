@@ -16,12 +16,6 @@ namespace DragonFly.Fields.BlockField.Storage
         {
             ContentFieldManager.Default.RegisterField<BlockField>();
 
-            MongoFieldManager.Default.Register<BlockFieldSerializer>();
-
-            BlockFieldManager.Default.RegisterElement<BlockElement>();
-            BlockFieldManager.Default.RegisterElement<ImageElement>();
-            BlockFieldManager.Default.RegisterElement<HtmlElement>();
-
             return builder;
         }
     }

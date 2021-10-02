@@ -1,0 +1,54 @@
+﻿@inherits BlockComponent<ColumnBlock>
+@inject ComponentManager ComponentManager
+
+<div class="block-layout">
+	<BSRow>
+		<BSCol LG="auto">
+			<BSButton class="block-layout-add-column-btn" Color="Color.Light" OnClick="e => AddColumn(0)" title="Insert column"><i class="fas fa-plus"></i></BSButton>
+		</BSCol>
+		@for (int i = 0; i < Block.Columns.Count; i++)
+		{
+			int index = i;
+			Column column = Block.Columns[i];
+
+			<BSCol>
+				<div class="column-content">
+					<div class="vstack gap-2 column-action">
+						<BSButton class="block-layout-add-btn" Color="Color.Light" OnClick="e => Block.Columns.MoveUp(index)" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
+						<BSButton class="block-layout-remove-btn" Color="Color.Light" OnClick="e => RemoveColumn(index)" title="Remove column"><i class="fas fa-minus"></i></BSButton>						
+						<BSButton class="block-layout-add-btn" Color="Color.Light" OnClick="e => Block.Columns.MoveDown(index)" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
+					</div>
+					<BlocksView Blocks="column.Blocks" />
+				</div>
+			</BSCol>
+			<BSCol LG="auto">
+				<BSButton class="block-layout-add-column-btn" Color="Color.Light" OnClick="e => AddColumn(index+1)" title="Insert column"><i class="fas fa-plus"></i></BSButton>				
+			</BSCol>
+		}
+	</BSRow>
+</div>
+
+@code {
+	[CascadingParameter]
+	public FieldComponent<BlockField> BlockField { get; set; }
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		//if (Block.Columns.Count == 0)
+		//{
+		//	Block.Columns.Add(new Column());
+		//}
+	}
+
+	private void AddColumn(int pos)
+	{
+		Block.Columns.Insert(pos, new Column());
+	}
+
+	private void RemoveColumn(int pos)
+	{
+		Block.Columns.RemoveAt(pos);
+	}
+}

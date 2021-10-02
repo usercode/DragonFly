@@ -5,16 +5,20 @@
 	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <Version>0.1.5</Version>
+	  <Version>0.2.0</Version>
 	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
 	  <PackageIcon>logo.png</PackageIcon>
 	  <PackageTags>cms</PackageTags>
 	  <IncludeSymbols>true</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\styles.css" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="TinyMCE.Blazor" Version="0.0.7" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,6 +28,10 @@
 
 	<ItemGroup>
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\styles.css" />
 	</ItemGroup>
 	
 </Project>

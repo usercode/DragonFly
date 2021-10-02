@@ -33,6 +33,8 @@ using DragonFly.Models;
 using DragonFly.SampleData;
 using DragonFly.AspNetCore.SchemaBuilder;
 using DragonFly.Fields.BlockField.Storage;
+using ImageWizard.Settings;
+using ImageWizard.Core.ImageCaches;
 
 namespace DragonFly.AspNetCore
 {
@@ -49,12 +51,13 @@ namespace DragonFly.AspNetCore
         {
             services.Configure<DragonFlyOptions>(Configuration.GetSection("General"));
             services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
+            services.Configure<FileCacheSettings>(Configuration.GetSection("AssetCache"));
 
             //DragonFly
             services.AddDragonFly()
                         .AddRestApi()
                         .AddGraphQLApi()
-                        .AddMongoDbStorage()                        
+                        .AddMongoDbStorage()
                         .AddSchemaBuilder()
                         .AddBlockField();
         }

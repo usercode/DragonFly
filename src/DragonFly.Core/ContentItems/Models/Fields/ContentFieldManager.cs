@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content
 {
+    public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute);
+
     /// <summary>
     /// ContentFieldManager
     /// </summary>
     public class ContentFieldManager
     {
-        private IDictionary<Type, Type> _optionsByField;
-        private IDictionary<Type, Type> _queryByField;
-        private IDictionary<string, Type> _fieldByName;
-
         private static ContentFieldManager? _default;
 
         public static ContentFieldManager Default
@@ -30,7 +28,7 @@ namespace DragonFly.Content
                     _default.RegisterField<ArrayField>();
                     _default.RegisterField<AssetField>();
                     _default.RegisterField<BoolField>();
-                    _default.RegisterField<DateField>();
+                    _default.RegisterField<DateTimeField>();
                     _default.RegisterField<EmbedField>();
                     _default.RegisterField<FloatField>();
                     _default.RegisterField<HtmlField>();
@@ -47,6 +45,12 @@ namespace DragonFly.Content
             }
         }
 
+        private IDictionary<Type, Type> _optionsByField;
+        private IDictionary<Type, Type> _queryByField;
+        private IDictionary<string, Type> _fieldByName;
+
+        public event ContentItemAddedHandler? Added;
+
         private ContentFieldManager()
         {
             _optionsByField = new Dictionary<Type, Type>();
@@ -54,27 +58,31 @@ namespace DragonFly.Content
             _fieldByName = new Dictionary<string, Type>();
         }
 
-        public void RegisterField<TField>()
-            where TField : ContentField, new()
+        public void RegisterField<TContentField>()
+            where TContentField : ContentField, new()
         {
+            Type contentFieldType = typeof(TContentField);
+
             //name
-            _fieldByName.Add(typeof(TField).Name, typeof(TField));
+            _fieldByName.Add(contentFieldType.Name, contentFieldType);
 
             //options
-            FieldOptionsAttribute? fieldOptionsAttribute = typeof(TField).GetCustomAttribute<FieldOptionsAttribute>();
+            FieldOptionsAttribute? fieldOptionsAttribute = contentFieldType.GetCustomAttribute<FieldOptionsAttribute>();
 
             if (fieldOptionsAttribute != null)
             {
-                _optionsByField.Add(typeof(TField), fieldOptionsAttribute.OptionsType);
+                _optionsByField.Add(typeof(TContentField), fieldOptionsAttribute.OptionsType);
             }
 
             //query
-            FieldQueryAttribute? fieldQueryAttribute = typeof(TField).GetCustomAttribute<FieldQueryAttribute>();
+            FieldQueryAttribute? fieldQueryAttribute = contentFieldType.GetCustomAttribute<FieldQueryAttribute>();
 
             if (fieldQueryAttribute != null)
             {
-                _queryByField.Add(typeof(TField), fieldQueryAttribute.QueryType);
+                _queryByField.Add(contentFieldType, fieldQueryAttribute.QueryType);
             }
+
+            Added?.Invoke(contentFieldType, fieldOptionsAttribute, fieldQueryAttribute);
         }
 
         public IEnumerable<Type> GetAllOptionTypes()

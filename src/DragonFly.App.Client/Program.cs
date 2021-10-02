@@ -23,13 +23,12 @@ namespace DragonFly.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<DragonFly.App.Client.App>("app");
+            //builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.AddDragonFlyClient()
                         .AddBlockField();
 
             WebAssemblyHost build = builder.Build();
-
-            build.UseDragonFlyClient();
 
             await build.RunAsync();
         }

@@ -10,14 +10,14 @@ using MongoDB.Bson;
 namespace DragonFly.ContentTypes
 {
     /// <summary>
-    /// ContentType
+    /// MongoContentSchema
     /// </summary>
     public class MongoContentSchema : MongoContentBase
     {
         public MongoContentSchema()
         {
             Name = string.Empty;
-            Fields = new Dictionary<string, MongoContentFieldDefinition>();
+            Fields = new Dictionary<string, MongoSchemaField>();
             ListFields = new List<string>();
             ReferenceFields = new List<string>();
             OrderFields = new List<FieldOrder>();
@@ -31,7 +31,7 @@ namespace DragonFly.ContentTypes
         /// <summary>
         /// Parts
         /// </summary>
-        public virtual IDictionary<string, MongoContentFieldDefinition> Fields { get; set; }
+        public virtual IDictionary<string, MongoSchemaField> Fields { get; set; }
 
         /// <summary>
         /// ListFields

@@ -74,8 +74,7 @@ img {
   height: auto; }
 
 textarea.form-control {
-  width: 100%;
-  height: 400px; }
+  width: 100%; }
 
 .btn {
   padding: .275rem .75rem; }
@@ -133,7 +132,7 @@ app {
 
 .asset-field .image {
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
   height: 150px; }
 

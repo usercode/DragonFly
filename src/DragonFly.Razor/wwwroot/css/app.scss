@@ -81,7 +81,6 @@ img {
 
     textarea.form-control {
         width: 100%;
-        height: 400px;
     }
 
 .btn {
@@ -153,7 +152,7 @@ app {
 
 .asset-field .image {
     display: flex;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
     height: 150px;
 }

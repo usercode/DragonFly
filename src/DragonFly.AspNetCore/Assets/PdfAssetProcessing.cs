@@ -1,5 +1,6 @@
 ﻿using DragonFly.Assets;
 using DragonFly.Content;
+using DragonFly.Core;
 using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace DragonFly.AspNetCore
     /// </summary>
     public class PdfAssetProcessing : IAssetProcessing
     {
-        public bool CanUse(Asset asset)
+        public IEnumerable<string> SupportedMimetypes
         {
-            return asset.IsPdf();
+            get => new[] { MimeTypes.Pdf };
         }
 
         public async Task OnAssetChangedAsync(IAssetProcessingContext context)

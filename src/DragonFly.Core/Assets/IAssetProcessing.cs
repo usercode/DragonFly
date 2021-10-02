@@ -13,11 +13,11 @@ namespace DragonFly
     public interface IAssetProcessing
     {
         /// <summary>
-        /// CanUse
+        /// SupportedMimetypes
         /// </summary>
         /// <param name="asset"></param>
         /// <returns></returns>
-        bool CanUse(Asset asset);
+        IEnumerable<string> SupportedMimetypes { get; }
 
         /// <summary>
         /// OnAssetChangedAsync

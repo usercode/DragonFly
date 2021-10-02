@@ -39,11 +39,27 @@ namespace DragonFly.Data
             builder.Services.AddSingleton(MongoFieldManager.Default);
             builder.Services.AddSingleton(MongoQueryManager.Default);
 
-            //fix for array options
-            BsonClassMap.RegisterClassMap<ReferenceFieldOptions>();
-            BsonClassMap.RegisterClassMap<BoolFieldOptions>();
+            //fix for nested field options (inside ArrayFieldOptions)
+            ContentFieldManager.Default.GetAllOptionTypes().Foreach(x => AutoMapClass(x));
+            ContentFieldManager.Default.Added += ContentFieldAdded;
 
             return builder;
+        }
+
+        private static void AutoMapClass(Type type)
+        {
+            BsonClassMap map = new BsonClassMap(type);
+            map.AutoMap();
+
+            BsonClassMap.RegisterClassMap(map);
+        }
+
+        private static void ContentFieldAdded(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute)
+        {
+            if (fieldOptionsAttribute != null)
+            {
+                AutoMapClass(fieldOptionsAttribute.OptionsType);
+            }
         }
     }
 }

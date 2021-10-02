@@ -1,34 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Authors>usercode</Authors>
+		<PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
+		<Description>Headless CMS based on ASP.NET Core and Blazor</Description>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Version>0.2.0</Version>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageIcon>logo.png</PackageIcon>
+		<PackageTags>cms</PackageTags>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Authors>usercode</Authors>
-    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
-    <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.1.5</Version>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageTags>cms</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-  
 	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.10" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.AspNetCore.API.Exports\DragonFly.AspNetCore.API.Exports.csproj" />
-	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+		<ProjectReference Include="..\DragonFly.AspNetCore.API.Exports\DragonFly.AspNetCore.API.Exports.csproj" />
+		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	</ItemGroup>
-  
-  <ItemGroup>
-    <None Include="..\logo.png" Pack="true" PackagePath="" />
-  </ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
 </Project>

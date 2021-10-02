@@ -96,14 +96,14 @@ namespace DragonFly.Content
             return schema;
         }
 
-        public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateFieldOptions>? configOptions = null)
+        public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateTimeFieldOptions>? configOptions = null)
             where TContentSchema : ISchemaElement
         {
-            DateFieldOptions options = new DateFieldOptions();
+            DateTimeFieldOptions options = new DateTimeFieldOptions();
 
             configOptions?.Invoke(options);
 
-            schema.AddField<DateField>(name, options);
+            schema.AddField<DateTimeField>(name, options);
 
             return schema;
         }

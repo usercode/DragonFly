@@ -26,7 +26,7 @@ namespace DragonFly.Data.Models
 
             if (schema.Fields.TryGetValue(fieldName, out SchemaField? schemaField))
             {
-                IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
+                IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
 
                 ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
 
@@ -36,7 +36,7 @@ namespace DragonFly.Data.Models
 
         public static BsonValue ToBsonValue(this ContentField contentField)
         {
-            IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByType(contentField.GetType());
+            IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(contentField.GetType());
 
             return fieldSerializer.Write(contentField);
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Fields.BlockField.Blocks;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace DragonFly.Fields.BlockField
                 if (_default == null)
                 {
                     _default = new BlockFieldManager();
+
+                    _default.RegisterBlock<ColumnBlock>();
+                    _default.RegisterBlock<ImageBlock>();
+                    _default.RegisterBlock<TextBlock>();
+                    _default.RegisterBlock<HtmlBlock>();
                 }
 
                 return _default;
@@ -32,51 +38,51 @@ namespace DragonFly.Fields.BlockField
         private IDictionary<string, Type> _elementsByName;
         private IDictionary<Type, string> _elementsByType;
 
-        public BlockFieldManager()
+        private BlockFieldManager()
         {
             _elementsByName = new Dictionary<string, Type>();
             _elementsByType = new Dictionary<Type, string>();
         }
 
-        public IEnumerable<Type> GetAllTypes()
+        public IEnumerable<Type> GetAllBlockTypes()
         {
             return _elementsByType.Keys.ToList();
         }
 
-        public IEnumerable<Element> GetAllElements()
+        public IEnumerable<Block> GetAllBlocks()
         {
-            return _elementsByType.Keys.Select(x => (Element?)Activator.CreateInstance(x)).ToList();
+            return _elementsByType.Keys.Select(x => (Block?)Activator.CreateInstance(x)).ToList();
         }
 
         /// <summary>
         /// RegisterElement
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
-        public void RegisterElement<TElement>()
-            where TElement : Element
+        public void RegisterBlock<TBlock>()
+            where TBlock : Block
         {
-            _elementsByName.Add(typeof(TElement).Name, typeof(TElement));
-            _elementsByType.Add(typeof(TElement), typeof(TElement).Name);
+            _elementsByName.Add(typeof(TBlock).Name, typeof(TBlock));
+            _elementsByType.Add(typeof(TBlock), typeof(TBlock).Name);
         }
 
-        public Type GetElementTypeByName(string name)
+        public Type GetBlockTypeByName(string name)
         {
             if (_elementsByName.TryGetValue(name, out Type? type))
             {
                 return type;
             }
 
-            throw new Exception($"Element '{name}' not found.");
+            throw new Exception($"Block '{name}' not found.");
         }
 
-        public string GetElementNameByType(Type type)
+        public string GetBlockNameByType(Type type)
         {
             if (_elementsByType.TryGetValue(type, out string? name))
             {
                 return name;
             }
 
-            throw new Exception($"Element '{type.Name}' not found.");
+            throw new Exception($"Block '{type.Name}' not found.");
         }
     }
 }

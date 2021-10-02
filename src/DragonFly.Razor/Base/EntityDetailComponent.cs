@@ -18,6 +18,9 @@ namespace DragonFly.Client.Base
         {
         }
 
+        public EventHandler Saving;
+        public EventHandler Saved;
+
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
@@ -98,9 +101,13 @@ namespace DragonFly.Client.Base
                 return;
             }
 
+            Saving?.Invoke(this, new SavingEventArgs());
+
             await SaveActionAsync();
 
             OnSaved();
+
+            Saved?.Invoke(this, new EventArgs());
         }
 
         protected virtual void OnSaving(SavingEventArgs args)

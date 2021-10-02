@@ -53,8 +53,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Fields.BlockField
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Fields.BlockField.Storage", "DragonFly.Fields.BlockField.Storage\DragonFly.Fields.BlockField.Storage.csproj", "{EC22DEF1-CA1D-4276-925A-EFF653B67C18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFLy.Fields.BlockField.Tests", "..\DragonFLy.Fields.BlockField.Tests\DragonFLy.Fields.BlockField.Tests.csproj", "{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,10 +123,6 @@ Global
 		{EC22DEF1-CA1D-4276-925A-EFF653B67C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC22DEF1-CA1D-4276-925A-EFF653B67C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC22DEF1-CA1D-4276-925A-EFF653B67C18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -150,7 +144,6 @@ Global
 		{16623E6E-AD33-4D80-B0B4-C471308467F0} = {CD5595F0-4A34-46DA-AF0F-6D3E91FB13A0}
 		{0D3EDA02-877D-408F-93A2-6B764BB96ABB} = {CD5595F0-4A34-46DA-AF0F-6D3E91FB13A0}
 		{EC22DEF1-CA1D-4276-925A-EFF653B67C18} = {CD5595F0-4A34-46DA-AF0F-6D3E91FB13A0}
-		{3C359F1A-3D4F-4F89-8C8B-B63D1A870F3D} = {CD5595F0-4A34-46DA-AF0F-6D3E91FB13A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069E83C9-3430-4D62-843B-B52982C42093}

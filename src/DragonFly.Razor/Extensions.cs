@@ -71,7 +71,7 @@ namespace DragonFly.Client.Core
             ComponentManager.Default.RegisterField<ArrayFieldView>();
             ComponentManager.Default.RegisterField<AssetFieldView>();
             ComponentManager.Default.RegisterField<BoolFieldView>();
-            ComponentManager.Default.RegisterField<DateFieldView>();
+            ComponentManager.Default.RegisterField<DateTimeFieldView>();
             ComponentManager.Default.RegisterField<EmbedFieldView>();
             ComponentManager.Default.RegisterField<FloatFieldView>();
             ComponentManager.Default.RegisterField<IntegerFieldView>();
@@ -100,11 +100,6 @@ namespace DragonFly.Client.Core
             ComponentManager.Default.RegisterQuery<AssetFieldQueryView>();
 
             return new DragonFlyClientBuilder(builder);
-        }
-
-        public static void UseDragonFlyClient(this WebAssemblyHost host)
-        {
-
         }
     }
 }

@@ -10,22 +10,22 @@ namespace DragonFly.Fields.BlockField.Razor
 {
     public static class ComponentManagerExtensions
     {
-        public static void RegisterElement<TElementComponent>(this ComponentManager component)
-            where TElementComponent : IElementComponent
+        public static void RegisterBlock<TBlockComponent>(this ComponentManager component)
+            where TBlockComponent : IBlockComponent
         {
-            Type? elementType = typeof(TElementComponent).GetProperty(nameof(IElementComponent.Element)).PropertyType;
+            Type? elementType = typeof(TBlockComponent).GetProperty(nameof(IBlockComponent.Block)).PropertyType;
 
-            component.Register(elementType, typeof(TElementComponent));
+            component.Register(elementType, typeof(TBlockComponent));
         }
 
-        public static RenderFragment CreateComponent(this ComponentManager componentManager, Element element)
+        public static RenderFragment CreateComponent(this ComponentManager componentManager, Block element)
         {
             Type componentType = componentManager.GetComponentType(element.GetType());
 
             return builder =>
             {
                 builder.OpenComponent(0, componentType);
-                builder.AddAttribute(0, nameof(IElementComponent.Element), element);
+                builder.AddAttribute(0, nameof(IBlockComponent.Block), element);
                 builder.CloseComponent();
             };
         }

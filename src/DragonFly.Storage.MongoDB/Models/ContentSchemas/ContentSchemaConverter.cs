@@ -29,16 +29,16 @@ namespace DragonFly.Data.Models
             schema.ReferenceFields = mongoSchema.ReferenceFields.ToList();
             schema.OrderFields = mongoSchema.OrderFields.ToList();
 
-            foreach(var field in mongoSchema.Fields)
+            foreach (var field in mongoSchema.Fields)
             {
                 try
                 {
                     Type? optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
                     ContentFieldOptions? options = null;
 
-                    if (field.Value.Options != BsonNull.Value)
+                    if (field.Value.Options is BsonDocument bsonOptions)
                     {
-                        options = (ContentFieldOptions)BsonSerializer.Deserialize((BsonDocument)field.Value.Options, optionsType);
+                        options = (ContentFieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
                     }
 
                     if (options == null)
@@ -52,7 +52,7 @@ namespace DragonFly.Data.Models
 
                     schema.Fields.Add(field.Key, schemaField);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw;
                 }
@@ -76,26 +76,31 @@ namespace DragonFly.Data.Models
 
             foreach(var field in schema.Fields)
             {
-                MongoContentFieldDefinition definition = new MongoContentFieldDefinition();
-
-                definition.Label = field.Value.Label;
-                definition.SortKey = field.Value.SortKey;
-                definition.FieldType = field.Value.FieldType;
-
-                if (field.Value.Options != null)
-                {
-                    BsonDocument doc = field.Value.Options.ToBsonDocument(field.Value.Options.GetType());
-
-                    if (doc.ElementCount > 0)
-                    {
-                        definition.Options = doc;
-                    }
-                }
-
-                mongoContentItem.Fields.Add(field.Key, definition);
+                mongoContentItem.Fields.Add(field.Key, field.Value.ToMongo());
             }
 
             return mongoContentItem;
+        }
+
+        public static MongoSchemaField ToMongo(this SchemaField schemaField)
+        {
+            MongoSchemaField mongoSchemaField = new MongoSchemaField();
+
+            mongoSchemaField.Label = schemaField.Label;
+            mongoSchemaField.SortKey = schemaField.SortKey;
+            mongoSchemaField.FieldType = schemaField.FieldType;
+
+            if (schemaField.Options != null)
+            {
+                BsonDocument doc = schemaField.Options.ToBsonDocument(schemaField.Options.GetType());
+
+                if (doc.ElementCount > 0)
+                {
+                    mongoSchemaField.Options = doc;
+                }
+            }
+
+            return mongoSchemaField;
         }
     }
 }

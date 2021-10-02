@@ -1,0 +1,50 @@
+﻿.block-field-view {
+    display: flex;
+    flex-direction: column;
+}
+
+.block-field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0px;
+}
+
+    .block-field:hover .block-field-options {
+        visibility: visible;
+    }
+
+    .block-field .block-field-options {
+        flex-grow: 0;
+        visibility: visible;
+        margin-bottom: 1.5rem;
+    }
+
+    .block-field .block-field-content {
+        flex-grow: 1;
+    }
+
+    .block-field .block-field-view .block-field-add-btn:first-child {
+        margin-top: 0px;
+    }
+
+    .block-field .block-field-view .block-field-add-btn:last-child {
+        margin-bottom: 0px;
+    }
+
+    .block-field-add-btn {
+        margin: 4px 0px;
+    }
+
+    .block-field .block-layout .column-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .block-field .block-layout .column-content .column-action {
+            margin-bottom: 1.0rem;
+        }
+
+.block-layout-add-column-btn {
+    height: 100%;
+}

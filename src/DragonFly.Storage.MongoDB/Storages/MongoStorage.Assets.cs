@@ -172,7 +172,7 @@ namespace DragonFly.Data
             MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
 
             //add metadata
-            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.CanUse(asset)))
+            foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType) ))
             {
                 await processing.OnAssetChangedAsync(context);
             }
