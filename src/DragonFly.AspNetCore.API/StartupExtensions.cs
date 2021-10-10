@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 
 namespace DragonFly.AspNetCore.API
 {
@@ -32,6 +33,8 @@ namespace DragonFly.AspNetCore.API
             {
                 x.UseContentItemRestApi();
                 x.UseContentSchemaRestApi();
+                x.UseContentStructureRestApi();
+                x.UseContentNodeRestApi();
                 x.UseAssetRestApi();
                 x.UseAssetFolderRestApi();
                 x.UseWebHookRestApi();

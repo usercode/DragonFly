@@ -43,20 +43,20 @@ namespace DragonFly.Client.Pages
             }
             else
             {
-                Entity = await ContentService.GetContentSchemaAsync(EntityId);
+                Entity = await ContentService.GetSchemaAsync(EntityId);
             }
         }
 
         protected override async Task CreateActionAsync()
         {
-            await ContentService.CreateSchemaAsync(Entity);
+            await ContentService.CreateAsync(Entity);
 
             NavigationManager.NavigateTo($"schema/{Entity.Id}");
         }
 
         protected override async Task UpdateActionAsync()
         {
-            await ContentService.UpdateSchemaAsync(Entity);
+            await ContentService.UpdateAsync(Entity);
         }
     }
 }

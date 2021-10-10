@@ -38,7 +38,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
                                                     .UseMiddleware<QueryContentItemMiddleware>()
                                                     .Build();
 
-            return endpoints.MapPost("{schema}/query", pipeline);
+            return endpoints.MapPost("query", pipeline);
         }
 
         private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)

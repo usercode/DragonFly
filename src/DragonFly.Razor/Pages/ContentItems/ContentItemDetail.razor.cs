@@ -66,7 +66,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
             ValidationContext = new ValidationContext();
 
-            Schema = await ContentService.GetContentSchemaAsync(EntityType);
+            Schema = await ContentService.GetSchemaAsync(EntityType);
 
             if (IsNewEntity)
             {
@@ -74,14 +74,14 @@ namespace DragonFly.Client.Pages.ContentItems
 
                 if(CloneFromEntityId != null)
                 {
-                    ContentItem original = await ContentService.GetContentItemAsync(EntityType, CloneFromEntityId.Value);
+                    ContentItem original = await ContentService.GetContentAsync(EntityType, CloneFromEntityId.Value);
 
                     Entity.Fields = original.Fields;
                 }
             }
             else
             {
-                Entity = await ContentService.GetContentItemAsync(EntityType, EntityId);
+                Entity = await ContentService.GetContentAsync(EntityType, EntityId);
 
                 StateHasChanged();
             }

@@ -115,7 +115,7 @@ namespace DragonFly.Content
 
         public static DateTime? GetDate(this IContentElement contentItem, string name)
         {
-            DateTimeField field = contentItem.GetField<DateTimeField>(name);
+            DateField field = contentItem.GetField<DateField>(name);
 
             return field.Value;
         }
@@ -123,7 +123,7 @@ namespace DragonFly.Content
         public static TContentItem SetDate<TContentItem>(this TContentItem contentItem, string name, DateTime? value)
             where TContentItem : IContentElement
         {
-            DateTimeField field = contentItem.GetField<DateTimeField>(name);
+            DateField field = contentItem.GetField<DateField>(name);
 
             field.Value = value;
 

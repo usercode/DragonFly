@@ -17,6 +17,7 @@ using DragonFly.Data.Models.Assets;
 using DragonFly.Data.Models.WebHooks;
 using DragonFly.Models;
 using DragonFly.MongoDB.Options;
+using DragonFly.Storage.MongoDB.Models.ContentStructures;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -34,9 +35,11 @@ namespace DragonFly.Data
     public partial class MongoStorage : IDataStorage
     {
         public IMongoClient Client { get; }
-        public IMongoDatabase OfmlDb { get; }
+        public IMongoDatabase Database { get; }
 
         public IMongoCollection<MongoContentSchema> ContentSchemas { get; }
+        public IMongoCollection<MongoContentStructure> ContentStructures { get; }
+        public IMongoCollection<MongoContentNode> ContentNodes { get; }
         public IMongoCollection<MongoAssetFolder> AssetFolders { get; }
         public IMongoCollection<MongoAsset> Assets { get; }
         public IGridFSBucket AssetData { get; private set; }
@@ -77,14 +80,16 @@ namespace DragonFly.Data
 
             Client = new MongoClient(settings); // connect to localhost
 
-            OfmlDb = Client.GetDatabase(Options.Database);
+            Database = Client.GetDatabase(Options.Database);
 
-            ContentSchemas = OfmlDb.GetCollection<MongoContentSchema>("ContentSchemas");
-            WebHooks = OfmlDb.GetCollection<MongoWebHook>("WebHooks");
-            Assets = OfmlDb.GetCollection<MongoAsset>("Assets");
-            AssetFolders = OfmlDb.GetCollection<MongoAssetFolder>("AssetFolders");
+            ContentStructures = Database.GetCollection<MongoContentStructure>("ContentStructures");
+            ContentSchemas = Database.GetCollection<MongoContentSchema>("ContentSchemas");
+            ContentNodes = Database.GetCollection<MongoContentNode>("ContentNodes");
+            WebHooks = Database.GetCollection<MongoWebHook>("WebHooks");
+            Assets = Database.GetCollection<MongoAsset>("Assets");
+            AssetFolders = Database.GetCollection<MongoAssetFolder>("AssetFolders");
 
-            AssetData = new GridFSBucket(OfmlDb, new GridFSBucketOptions() { BucketName = "Assets" });
+            AssetData = new GridFSBucket(Database, new GridFSBucketOptions() { BucketName = "Assets" });
 
             ContentItems = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 
@@ -102,9 +107,9 @@ namespace DragonFly.Data
             //Pages.Indexes.CreateOne(Builders<Basecl>.IndexKeys.Ascending(x => x.Title));
         }
 
-        public async Task<ContentItem> GetContentItemAsync(string schema, Guid id)
+        public async Task<ContentItem> GetContentAsync(string schema, Guid id)
         {
-            ContentSchema contentSchema = await GetContentSchemaAsync(schema);
+            ContentSchema contentSchema = await GetSchemaAsync(schema);
             IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
 
             MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);

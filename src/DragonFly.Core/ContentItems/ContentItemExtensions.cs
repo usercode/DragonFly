@@ -38,14 +38,16 @@ namespace DragonFly.Content
             return true;
         }
 
-        public static void SetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+        public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
         {
             if (contentElement.Fields.ContainsKey(fieldName) == false)
             {
-                return;
+                return false;
             }
 
             contentElement.Fields[fieldName] = contentField;
+
+            return true;
         }
 
         public static T? GetSingleValue<T>(this IContentElement contentItem, string name)

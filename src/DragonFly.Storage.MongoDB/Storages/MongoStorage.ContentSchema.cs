@@ -40,7 +40,7 @@ namespace DragonFly.Data
             schema.CreatedAt = now;
             schema.ModifiedAt = now;
 
-            var mongo = schema.ToMongo();
+            MongoContentSchema mongo = schema.ToMongo();
 
             await ContentSchemas.InsertOneAsync(mongo);
 
@@ -51,10 +51,10 @@ namespace DragonFly.Data
         {
             entity.ModifiedAt = DateTimeService.Current();
 
-            await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Where(x => x.Id == entity.Id), entity.ToMongo());
+            await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
         }
 
-        public QueryResult<ContentSchema> QueryContentSchemas()
+        public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
         {
             return new QueryResult<ContentSchema>()
             {
@@ -66,8 +66,13 @@ namespace DragonFly.Data
             };
         }
 
-        public async Task<ContentSchema> GetContentSchemaAsync(string name)
+        public async Task<ContentSchema> GetSchemaAsync(string? name)
         {
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
             MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name);
 
             if (schema == null)
@@ -78,7 +83,7 @@ namespace DragonFly.Data
             return schema.ToModel();
         }
 
-        public async Task<ContentSchema> GetContentSchemaAsync(Guid id)
+        public async Task<ContentSchema> GetSchemaAsync(Guid id)
         {
             MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id);
 

@@ -13,9 +13,9 @@ namespace DragonFly.Content
     /// </summary>
     public interface IContentStorage
     {
-        Task<QueryResult<ContentItem>> QueryAsync(string schema, QueryParameters queryParameters);
+        Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query);
             
-        Task<ContentItem> GetContentItemAsync(string schema, Guid id);
+        Task<ContentItem> GetContentAsync(string schema, Guid id);
 
         Task CreateAsync(ContentItem contentItem);
 

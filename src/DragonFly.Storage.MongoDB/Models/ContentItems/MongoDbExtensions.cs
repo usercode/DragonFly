@@ -30,7 +30,7 @@ namespace DragonFly.Data.Models
 
                 ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
 
-                contentItem.SetField(fieldName, contentField);
+                contentItem.TrySetField(fieldName, contentField);
             }
         }
 

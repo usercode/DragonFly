@@ -21,10 +21,10 @@ namespace DragonFly.Client
     /// <summary>
     /// ContentService
     /// </summary>
-    public partial class ClientContentService
+    public partial class ClientContentService : ISchemaStorage
     {
 
-        public async Task<ContentSchema> GetContentSchemaAsync(Guid id)
+        public async Task<ContentSchema> GetSchemaAsync(Guid id)
         {
             var response = await Client.GetAsync($"api/schema/{id}");
 
@@ -33,7 +33,7 @@ namespace DragonFly.Client
             return e.ToModel();
         }
 
-        public async Task<ContentSchema> GetContentSchemaAsync(string name)
+        public async Task<ContentSchema> GetSchemaAsync(string name)
         {
             var response = await Client.GetAsync($"api/schema/{name}");
 
@@ -42,23 +42,23 @@ namespace DragonFly.Client
             return e.ToModel();
         }
 
-        public async Task CreateSchemaAsync(ContentBase entity)
+        public async Task CreateAsync(ContentSchema entity)
         {
-            var response = await Client.PostAsJson($"api/schema", entity);
+            var response = await Client.PostAsJson($"api/schema", entity.ToRest());
 
             var result = await response.Content.ParseJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
 
-        public async Task UpdateSchemaAsync(ContentBase entity)
+        public async Task UpdateAsync(ContentSchema entity)
         {
             string type = entity.GetType().Name;
 
-            await Client.PutAsJson($"api/schema/{entity.Id}", entity);
+            await Client.PutAsJson($"api/schema/{entity.Id}", entity.ToRest());
         }
 
-        public async Task<QueryResult<ContentSchema>> GetContentSchemas()
+        public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
         {
             try
             {

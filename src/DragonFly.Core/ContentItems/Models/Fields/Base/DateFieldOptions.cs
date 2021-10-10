@@ -8,15 +8,15 @@ namespace DragonFly.Content
     /// <summary>
     /// DateFieldOptions
     /// </summary>
-    public class DateTimeFieldOptions : ContentFieldOptions
+    public class DateFieldOptions : ContentFieldOptions
     {
-        public DateTimeFieldOptions()
+        public DateFieldOptions()
         {
         }
 
         public override ContentField CreateContentField()
         {
-            return new DateTimeField();
+            return new DateField();
         }
     }
 }

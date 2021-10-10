@@ -23,7 +23,7 @@ namespace DragonFly.Client.Pages
 
         protected override async Task RefreshActionAsync()
         {
-            SearchResult = await ContentService.GetContentSchemas();
+            SearchResult = await ContentService.QuerySchemasAsync();
         }
     }
 }

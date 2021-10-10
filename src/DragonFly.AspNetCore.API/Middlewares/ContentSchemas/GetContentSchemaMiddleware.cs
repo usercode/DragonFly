@@ -29,17 +29,17 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
         {
             ContentSchema schema;
 
-            if (context.GetRouteValue("id") is string)
+            if (context.GetRouteValue("id") is string stringId)
             {
-                Guid id = Guid.Parse((string)context.GetRouteValue("id"));
+                Guid id = Guid.Parse(stringId);
 
-                schema = await schemaStorage.GetContentSchemaAsync(id);
+                schema = await schemaStorage.GetSchemaAsync(id);
             }
             else
             {
                 string name = (string)context.GetRouteValue("name");
 
-                schema = await schemaStorage.GetContentSchemaAsync(name);
+                schema = await schemaStorage.GetSchemaAsync(name);
             }
 
             RestContentSchema restSchema = schema.ToRest();

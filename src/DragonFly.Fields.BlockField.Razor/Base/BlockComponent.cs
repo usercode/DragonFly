@@ -19,9 +19,5 @@ namespace DragonFly.Fields.BlockField.Razor.Base
 
         Block IBlockComponent.Block => Block;
 
-        public virtual void OnSaving()
-        {
-
-        }
     }
 }

@@ -1,0 +1,61 @@
+﻿@inject IStructureStorage Storage
+
+@if (Node != null)
+{
+    <BSListGroup>
+        <BSListGroupItem>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <span>@Node</span>
+                <div>
+                    <BSButton Color="Color.Light" OnClick="RefreshChildsAsync"><i class="fas fa-arrow-down"></i></BSButton>
+                    <BSButton Color="Color.Light" OnClick="AddContentAsync"><i class="fas fa-plus"></i></BSButton>
+                </div>
+            </div>
+        </BSListGroupItem>
+    </BSListGroup>  
+
+    <div style="margin-left: 2rem">
+      @foreach(ContentNode node in Childs)
+        {
+            <ContentNodeItem Structure="Structure" Node="node" />
+        }
+    </div>
+}
+
+@code {
+
+    [Parameter]
+    public ContentStructure Structure {get;set;}
+
+    [Parameter]
+    public ContentNode Node { get; set; }
+
+    public IList<ContentNode> Childs { get; set; }
+
+    private bool _childsLoaded;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Childs = new List<ContentNode>();
+    }
+
+    private async Task RefreshChildsAsync()
+    {
+        var result = await Storage.QueryNodesAsync(Structure.Name, Node.Id);
+
+        Childs = result.Items;
+    }
+
+    private async Task AddContentAsync()
+    {
+        ContentNode contentNode = new ContentNode();
+        contentNode.StructureName = Node.StructureName;
+        contentNode.Parent = Node;
+
+        await Storage.CreateAsync(contentNode);
+
+        Childs.Add(contentNode);
+    }
+}

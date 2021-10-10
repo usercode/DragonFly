@@ -1,4 +1,5 @@
 ﻿using DragonFly.Core.Builders;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder
     {
         public static IDragonFlyBuilder AddSchemaBuilder(this IDragonFlyBuilder builder)
         {
-
+            builder.Services.AddSingleton<IContentSchemaBuilder, ContentSchemaBuilder>();
 
             return builder;
         }

@@ -1,0 +1,21 @@
+﻿@page "/structure/{EntityId:guid}/tree"
+@inherits ContentStructureDetailTreeBase
+
+@if (Entity != null)
+{
+    <BSListGroup>
+        <BSListGroupItem>
+            <div style="display:flex;justify-content:space-between;align-items:center">
+                <strong><i class="oi oi-list-rich"></i> @Entity.Name</strong>
+                <BSButton Color="Color.Light" OnClick="AddContentAsync"><i class="fas fa-plus"></i></BSButton>
+            </div>
+        </BSListGroupItem>
+    </BSListGroup>
+
+    <div>
+         @foreach(ContentNode node in Nodes)
+        {
+            <ContentNodeItem Structure="Entity" Node="node" />
+        }
+    </div>
+}

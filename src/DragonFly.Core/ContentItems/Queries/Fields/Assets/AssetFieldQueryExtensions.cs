@@ -12,7 +12,7 @@ namespace DragonFly.Content
     /// </summary>
     public static class AssetFieldQueryExtensions
     {
-        public static QueryParameters AddAssetQuery(this QueryParameters queryParameters, string name, Guid id)
+        public static ContentItemQuery AddAssetQuery(this ContentItemQuery queryParameters, string name, Guid id)
         {
             queryParameters.Fields.Add(new AssetFieldQuery() { FieldName = name, AssetId = id });
 

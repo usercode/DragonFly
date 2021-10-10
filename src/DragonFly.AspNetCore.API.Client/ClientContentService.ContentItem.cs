@@ -29,7 +29,7 @@ namespace DragonFly.Client
     public partial class ClientContentService : IContentStorage
     {
        
-        public async Task<ContentItem> GetContentItemAsync(string schema, Guid id)
+        public async Task<ContentItem> GetContentAsync(string schema, Guid id)
         {
             var response = await Client.GetAsync($"api/content/{schema}/{id}");
 
@@ -71,9 +71,9 @@ namespace DragonFly.Client
             await Client.DeleteAsync($"api/content/{schema}/{id}");
         }
 
-        public async Task<QueryResult<ContentItem>> QueryAsync(string schema, QueryParameters queryParameters)
+        public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery queryParameters)
         {
-            HttpResponseMessage response = await Client.PostAsJson($"api/content/{schema}/query", queryParameters);
+            HttpResponseMessage response = await Client.PostAsJson($"api/content/query", queryParameters);
 
             var queryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentItem>>();
 

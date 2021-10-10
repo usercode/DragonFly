@@ -25,21 +25,16 @@ namespace DragonFly.AspNetCore.API.Middlewares
 
         public async Task InvokeAsync(
             HttpContext context, 
-            IContentStorage contentStore, 
-            ISchemaStorage schemaStorage,
+            IContentStorage contentStore,
             JsonService jsonService)
         {
-            string schema = (string)context.GetRouteValue("schema");
+            ContentItemQuery query = await jsonService.Deserialize<ContentItemQuery>(context.Request.Body);
 
-            QueryParameters queryParameters = await jsonService.Deserialize<QueryParameters>(context.Request.Body);
-
-            ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
-
-            QueryResult<ContentItem> contentItems = await contentStore.QueryAsync(schema, queryParameters);
+            QueryResult<ContentItem> contentItems = await contentStore.QueryAsync(query);
 
             foreach (ContentItem contentItem in contentItems.Items)
             {
-                contentItem.ApplySchema(schemaModel);
+                contentItem.ApplySchema();
             }
 
             QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()

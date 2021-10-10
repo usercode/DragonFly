@@ -23,7 +23,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
         protected override async Task RefreshActionAsync()
         {
-            SearchResult = await ContentService.GetContentSchemas();
+            SearchResult = await ContentService.QuerySchemasAsync();
         }
 
         public async Task RefreshContentItemsAsync(ContentSchema schema)

@@ -58,7 +58,7 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             if (EntityType != null)
             {
-                Schema = await ContentService.GetContentSchemaAsync(EntityType);
+                Schema = await ContentService.GetSchemaAsync(EntityType);
 
                 if (OrderFields.Any() == false)
                 {
@@ -78,7 +78,7 @@ namespace DragonFly.Client.Pages.ContentItems
                     }
                 }
 
-                QueryParameters queryParameters = new ()
+                ContentItemQuery quey = new ()
                                                     {
                                                        SearchPattern = SearchPattern,
                                                        Skip = CurrentPageIndex * PageSize,
@@ -87,15 +87,17 @@ namespace DragonFly.Client.Pages.ContentItems
 
                 foreach (FieldOrder f in OrderFields)
                 {
-                    queryParameters.AddFieldOrder(f.Name, f.Asc);
+                    quey.AddFieldOrder(f.Name, f.Asc);
                 }
 
                 foreach (FieldQuery query in QueryFields.Where(x=> x.IsEmpty() == false))
                 {
-                    queryParameters.Fields.Add(query);
+                    quey.Fields.Add(query);
                 }
 
-                SearchResult = await ContentService.QueryAsync(Schema.Name, queryParameters);
+                quey.Schema = Schema.Name;
+
+                SearchResult = await ContentService.QueryAsync(quey);
             }
         }
 

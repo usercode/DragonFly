@@ -1,4 +1,5 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
+using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,6 @@ namespace DragonFly.AspNetCore.SchemaBuilder
         {
             Storage = schemaStorage;
 
-            _schemaByName = new Dictionary<string, Type>();
             _schema = new Dictionary<Type, ContentSchema>();
         }
 
@@ -26,14 +26,28 @@ namespace DragonFly.AspNetCore.SchemaBuilder
         /// </summary>
         private ISchemaStorage Storage { get; }
 
-        private IDictionary<string, Type> _schemaByName;
         private IDictionary<Type, ContentSchema> _schema;
 
         public async Task BuildAsync<T>()
         {
             Type type = typeof(T);
 
-            ContentSchema schema = await Storage.GetContentSchemaAsync(type.Name);
+            ContentSchemaAttribute? schemaAttribute = type.GetCustomAttribute<ContentSchemaAttribute>();
+
+            if (schemaAttribute == null)
+            {
+                throw new Exception($"The type {type.Name} needs the ContentSchemaAttribute.");
+            }
+
+            string schemaName = type.Name;
+
+            if (schemaAttribute.SchemaName != null)
+            {
+                schemaName = schemaAttribute.SchemaName;
+            }
+
+            //load schema
+            ContentSchema schema = await Storage.GetSchemaAsync(schemaName);
 
             if (schema == null)
             {
@@ -48,7 +62,21 @@ namespace DragonFly.AspNetCore.SchemaBuilder
 
             foreach (PropertyInfo property in type.GetProperties())
             {
-                if (allFieldTypes.Contains(property.PropertyType))
+                ContentFieldAttribute? fieldAttribute = property.GetCustomAttribute<ContentFieldAttribute>();
+
+                if (fieldAttribute == null)
+                {
+                    continue;
+                }
+
+                Type fieldType = property.PropertyType;
+
+                if (fieldAttribute.FieldType != null)
+                {
+                    fieldType = fieldAttribute.FieldType;
+                }
+
+                if (allFieldTypes.Contains(fieldType))
                 {
                     schema.AddField(property.Name, property.PropertyType);
                 }

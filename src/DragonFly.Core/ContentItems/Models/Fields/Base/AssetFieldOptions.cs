@@ -14,6 +14,8 @@ namespace DragonFly.Content
         {
         }
 
+        public bool ShowPreview { get; set; }
+
         public override ContentField CreateContentField()
         {
             return new AssetField();

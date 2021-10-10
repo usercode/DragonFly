@@ -27,8 +27,8 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             ISchemaStorage schemaStorage,
             JsonService jsonService)
         {
-            QueryResult<ContentSchema> items = schemaStorage
-                                                    .QueryContentSchemas();
+            QueryResult<ContentSchema> items = await schemaStorage
+                                                    .QuerySchemasAsync();
 
             QueryResult<RestContentSchema> restQueryResult = new QueryResult<RestContentSchema>();
             restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();

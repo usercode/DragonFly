@@ -28,7 +28,7 @@ namespace DragonFly.Content
                     _default.RegisterField<ArrayField>();
                     _default.RegisterField<AssetField>();
                     _default.RegisterField<BoolField>();
-                    _default.RegisterField<DateTimeField>();
+                    _default.RegisterField<DateField>();
                     _default.RegisterField<EmbedField>();
                     _default.RegisterField<FloatField>();
                     _default.RegisterField<HtmlField>();

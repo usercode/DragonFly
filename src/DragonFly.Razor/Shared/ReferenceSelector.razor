@@ -4,17 +4,17 @@
 @if (_init)
 {
     <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
-        <BSModalHeader OnClick="@(() => _init = false)">Select asset</BSModalHeader>
+        <BSModalHeader OnClick="() => _init = false">Select asset</BSModalHeader>
         <BSModalBody>
-            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>            
+            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>
         </BSModalBody>
         <BSModalFooter>
-            <BSButton Color="Color.Primary" @onclick="@(() => _init = false)">Ok</BSButton>
+            <BSButton Color="Color.Primary" @onclick="() => _init = false">Ok</BSButton>
         </BSModalFooter>
     </BSModal>
 }
 
-    <div class="reference-field">
+    <div class="reference-selector">
         <BSListGroup>
             <BSListGroupItem>
                 <div style="display: flex; align-items: center; justify-content: space-between;">

@@ -6,11 +6,11 @@ using System.Text;
 namespace DragonFly.Content.Queries
 {
     /// <summary>
-    /// QueryParameters
+    /// ContentItemQuery
     /// </summary>
-    public class QueryParameters
+    public class ContentItemQuery
     {
-        public QueryParameters()
+        public ContentItemQuery()
         {
             Fields = new List<FieldQuery>();
             OrderFields = new List<FieldOrder>();
@@ -21,6 +21,11 @@ namespace DragonFly.Content.Queries
 
             IncludeListFieldsOnly = false;
         }
+
+        /// <summary>
+        /// Schema
+        /// </summary>
+        public string? Schema { get; set; }
 
         /// <summary>
         /// Skip

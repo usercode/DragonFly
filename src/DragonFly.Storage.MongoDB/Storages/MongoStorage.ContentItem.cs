@@ -43,7 +43,7 @@ namespace DragonFly.Data
 
             if (ContentItems.TryGetValue(name, out IMongoCollection<MongoContentItem>? items) == false)
             {
-                items = OfmlDb.GetCollection<MongoContentItem>(name);
+                items = Database.GetCollection<MongoContentItem>(name);
 
                 ContentItems.Add(name, items);
             }
@@ -51,15 +51,15 @@ namespace DragonFly.Data
             return items;
         }
 
-        public async Task<QueryResult<ContentItem>> QueryAsync(string schemaName, QueryParameters queryParameters)
+        public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
         {
-            ContentSchema schema = await GetContentSchemaAsync(schemaName);
-            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schemaName);
+            ContentSchema schema = await GetSchemaAsync(query.Schema);
+            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name);
 
             List<FilterDefinition<MongoContentItem>> filters = new List<FilterDefinition<MongoContentItem>>();
 
             //filter all fields
-            if (string.IsNullOrEmpty(queryParameters.SearchPattern) == false)
+            if (string.IsNullOrEmpty(query.SearchPattern) == false)
             {
                 List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
 
@@ -67,7 +67,7 @@ namespace DragonFly.Data
                                         .Where(x=> x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
                                         .Select(x=> x.Key))
                 {
-                    patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(queryParameters.SearchPattern, "i")));
+                    patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.SearchPattern, "i")));
                 }
 
                 if (patternQuery.Count > 1)
@@ -86,18 +86,18 @@ namespace DragonFly.Data
 
             var findOptions = new FindOptions<MongoContentItem>()
             {
-                Limit = queryParameters.Top,
-                Skip = queryParameters.Skip
+                Limit = query.Top,
+                Skip = query.Skip
             };
 
             //use default order?
-            if (queryParameters.OrderFields.Any() == false)
+            if (query.OrderFields.Any() == false)
             {
-                queryParameters.OrderFields = schema.OrderFields.ToList();
+                query.OrderFields = schema.OrderFields.ToList();
             }
 
             //order
-            foreach (FieldOrder orderField in queryParameters.OrderFields)
+            foreach (FieldOrder orderField in query.OrderFields)
             {
                 if (orderField.Asc)
                 {
@@ -110,7 +110,7 @@ namespace DragonFly.Data
             }
 
             //projection
-            if (queryParameters.IncludeListFieldsOnly && schema.ListFields.Any())
+            if (query.IncludeListFieldsOnly && schema.ListFields.Any())
             {
                 var p = Builders<MongoContentItem>.Projection.Include(x => x.Id);
 
@@ -125,7 +125,7 @@ namespace DragonFly.Data
             //FieldQuery
             FieldQueryActionContext converterContext = new FieldQueryActionContext();
 
-            foreach (FieldQuery f in queryParameters.Fields.Where(x => x.IsEmpty() == false))
+            foreach (FieldQuery f in query.Fields.Where(x => x.IsEmpty() == false))
             {
                 IFieldQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
 
@@ -159,7 +159,7 @@ namespace DragonFly.Data
 
             QueryResult<ContentItem> queryResult = new QueryResult<ContentItem>();
             queryResult.Items = result.Select(x => x.ToModel(schema)).ToList();
-            queryResult.Offset = queryParameters.Skip;
+            queryResult.Offset = query.Skip;
             queryResult.Count = queryResult.Items.Count;
             queryResult.TotalCount = totalCount;
 
@@ -223,7 +223,7 @@ namespace DragonFly.Data
 
         public async Task DeleteAsync(string schema, Guid id)
         {
-            ContentItem contentItem = await GetContentItemAsync(schema, id);
+            ContentItem contentItem = await GetContentAsync(schema, id);
 
             await UnpublishAsync(schema, id);
 
@@ -240,7 +240,7 @@ namespace DragonFly.Data
 
         public async Task PublishAsync(string schema, Guid id)
         {
-            ContentItem contentItem = await GetContentItemAsync(schema, id);
+            ContentItem contentItem = await GetContentAsync(schema, id);
 
             //execute interceptors
             foreach (IContentInterceptor interceptor in Interceptors)
@@ -269,7 +269,7 @@ namespace DragonFly.Data
                         Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
 
             //refresh contentitem
-            contentItem = await GetContentItemAsync(schema, id);
+            contentItem = await GetContentAsync(schema, id);
 
             //execute interceptors
             foreach (IContentInterceptor interceptor in Interceptors)
@@ -291,7 +291,7 @@ namespace DragonFly.Data
                         Builders<MongoContentItem>.Filter.Eq(x => x.Id, id), 
                         Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
-            ContentItem contentItem = await GetContentItemAsync(schema, id);
+            ContentItem contentItem = await GetContentAsync(schema, id);
 
             //execute interceptors
             foreach (IContentInterceptor interceptor in Interceptors)

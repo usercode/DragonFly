@@ -4,55 +4,59 @@
 @if (_init)
 {
     <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
-        <BSModalHeader OnClick="@(() => _init = false)">Select asset</BSModalHeader>
+        <BSModalHeader OnClick="() => _init = false">Select asset</BSModalHeader>
         <BSModalBody>
             <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />       
         </BSModalBody>
         <BSModalFooter>
-            <BSButton Color="Color.Primary" @onclick="@(() => _init = false)">Ok</BSButton>
+            <BSButton Color="Color.Primary" @onclick="() => _init = false">Ok</BSButton>
         </BSModalFooter>
     </BSModal>
 }
 
-<BSListGroup>
-    <BSListGroupItem>
-        <div style="display:flex;justify-content:flex-end"> 
-            @if (Asset != null)
-            {
-                <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
-                @if (ShowDownloadButton)
+<div class="asset-selector">
+    <BSListGroup>
+        <BSListGroupItem>
+            <div style="display:flex;justify-content:space-between;align-items:center"> 
+                @if (Asset != null)
                 {
-                    <BSButton Color="Color.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                    <a href="asset/@Asset.Id" class="link-dark"><span>@Asset.Name (@Asset.MimeType)</span></a>
                 }
-                <BSButton Color="Color.Light" OnClick="(e => RemoveItem())" title="Remove"><i class="fas fa-times"></i></BSButton>               
+                else
+                {
+                    <span></span>
+                }
+
+                <div>
+                    @if (Asset != null)
+                    {
+                        <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                        @if (ShowDownloadButton)
+                        {
+                            <BSButton Color="Color.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                        }
+                        <BSButton Color="Color.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>               
+                    }
+                        <BSButton Color="Color.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
+                </div>           
+            </div>
+
+            @if (Asset != null && ShowPreview)
+            {
+                <div class="image" style="margin-top:1rem">
+                    @if (Asset.IsImage())
+                    {
+                        <img src="@AssetPreview.Resize(Asset, 400, 150)" />
+                    }
+                    else if (Asset.IsPdf())
+                    {
+                        <img src="@AssetPreview.Pdf(Asset, 400, 150)" />
+                    }
+                </div>              
             }
-
-            <BSButton Color="Color.Light" OnClick="(e => OpenModal())" title="Select"><i class="fas fa-plus"></i></BSButton>
-        </div>
-
-        @if (Asset != null)
-        {
-            <BSRow>
-                <div class="col-lg-6">
-                    <div class="image">
-                        @if (Asset.IsImage())
-                        {
-                            <img src="@AssetPreview.Resize(Asset, 400, 150)" />
-                        }
-                        else if (Asset.IsPdf())
-                        {
-                            <img src="@AssetPreview.Pdf(Asset, 400, 150)" />
-                        }
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <p class="field-readonly">@Asset.Name</p>
-                    <p class="field-readonly">@Asset.MimeType</p>
-                </div>
-            </BSRow>
-        }
-    </BSListGroupItem>
-</BSListGroup>
+        </BSListGroupItem>
+    </BSListGroup>
+</div>
 
 @code {
     private Asset _asset;
@@ -74,6 +78,9 @@
 
     [Parameter]
     public bool ShowDownloadButton { get; set; }
+
+    [Parameter]
+    public bool ShowPreview { get; set;  }
 
     private bool _init = false;
 

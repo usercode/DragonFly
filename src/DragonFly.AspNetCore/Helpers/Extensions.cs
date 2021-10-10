@@ -10,9 +10,9 @@ namespace DragonFly.AspNetCore
 {
     public static class Extensions
     {
-        public static QueryParameters GetQuery(this HttpRequest request)
+        public static ContentItemQuery GetQuery(this HttpRequest request)
         {
-            QueryParameters result = new QueryParameters();
+            ContentItemQuery result = new ContentItemQuery();
 
             StringValues skip = request.Query["$skip"];
             StringValues top = request.Query["$top"];

@@ -30,8 +30,8 @@ namespace DragonFly.AspNetCore.API.Middlewares
             Guid contentId = Guid.Parse((string)context.GetRouteValue("id"));
             string schema = (string)context.GetRouteValue("schema");
 
-            ContentItem result = await contentStore.GetContentItemAsync(schema, contentId);
-            ContentSchema schemaModel = await schemaStorage.GetContentSchemaAsync(schema);
+            ContentItem result = await contentStore.GetContentAsync(schema, contentId);
+            ContentSchema schemaModel = await schemaStorage.GetSchemaAsync(schema);
 
             result.ApplySchema(schemaModel);
 

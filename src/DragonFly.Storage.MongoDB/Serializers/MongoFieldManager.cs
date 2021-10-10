@@ -37,7 +37,7 @@ namespace DragonFly.Storage.MongoDB.Fields
                     _default.RegisterField<SingleValueFieldSerializer<HtmlField>>();
                     _default.RegisterField<SingleValueFieldSerializer<XHtmlField>>();
                     _default.RegisterField<SingleValueFieldSerializer<XmlField>>();
-                    _default.RegisterField<SingleValueFieldSerializer<DateTimeField>>();
+                    _default.RegisterField<SingleValueFieldSerializer<DateField>>();
                 }
 
                 return _default;

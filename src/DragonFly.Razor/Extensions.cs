@@ -6,6 +6,7 @@ using DragonFly.Client.Core.Assets;
 using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
+using DragonFly.Core.ContentStructures;
 using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.Razor.Builder;
@@ -54,6 +55,7 @@ namespace DragonFly.Client.Core
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
             builder.Services.AddTransient<ClientContentService>();
             builder.Services.AddTransient<IContentStorage, ClientContentService>();
+            builder.Services.AddTransient<IStructureStorage, ClientContentService>();
             builder.Services.AddTransient<IWebHookStorage, ClientContentService>();
             builder.Services.AddTransient<IAssetStorage, ClientContentService>();
             builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();

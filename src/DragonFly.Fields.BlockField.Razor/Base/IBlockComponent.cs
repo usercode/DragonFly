@@ -8,8 +8,7 @@ namespace DragonFly.Fields.BlockField.Razor
 {
     public interface IBlockComponent
     {
-        Block? Block { get; }
+        Block Block { get; }
 
-        void OnSaving();
     }
 }
