@@ -3,6 +3,7 @@ using DragonFly.Content;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
+using DragonFly.Razor.Services;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Services
+namespace DragonFly
 {
     /// <summary>
     /// ComponentManagerExtensions
@@ -86,9 +87,9 @@ namespace DragonFly.Razor.Services
         }
 
         public static void RegisterQuery<TQueryView>(this ComponentManager componentManager)
-            where TQueryView : IQueryComponent
+            where TQueryView : IFieldQueryComponent
         {
-            Type queryType = typeof(TQueryView).GetProperty(nameof(IQueryComponent.Query)).PropertyType;
+            Type queryType = typeof(TQueryView).GetProperty(nameof(IFieldQueryComponent.Query)).PropertyType;
 
             componentManager.Register(queryType, typeof(TQueryView));
         }
@@ -100,7 +101,7 @@ namespace DragonFly.Razor.Services
             return builder =>
             {
                 builder.OpenComponent(0, componentType);
-                builder.AddAttribute(0, nameof(IQueryComponent.Query), fieldQuery);
+                builder.AddAttribute(0, nameof(IFieldQueryComponent.Query), fieldQuery);
                 builder.CloseComponent();
             };
         }

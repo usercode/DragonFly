@@ -43,7 +43,7 @@
 
     private async Task RefreshChildsAsync()
     {
-        var result = await Storage.QueryNodesAsync(Structure.Name, Node.Id);
+        var result = await Storage.QueryAsync(new NodesQuery() { Structure = Structure.Name, ParentId = Node.Id });
 
         Childs = result.Items;
     }

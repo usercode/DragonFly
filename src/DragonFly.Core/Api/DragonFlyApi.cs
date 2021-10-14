@@ -10,6 +10,21 @@ namespace DragonFly
 {
     public class DragonFlyApi : IDragonFlyApi
     {
+        private static DragonFlyApi? _default;
+
+        public static DragonFlyApi Default
+        {
+            get
+            {
+                if (_default == null)
+                {
+                    _default = new DragonFlyApi();
+                }
+
+                return _default;
+            }
+        }
+
         public DragonFlyApi()
         {
         }

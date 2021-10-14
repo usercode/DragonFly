@@ -13,9 +13,15 @@ namespace DragonFly
     /// </summary>
     public static class DragonFLyApiExtensions
     {
-        public static BlockFieldManager BlockField(this IDragonFlyApi dragonFlyApi)
+        public static BlockFieldManager BlockField(this IDragonFlyApi api)
         {
             return BlockFieldManager.Default;
+        }
+
+        public static void RegisterBlock<TBlock>(this IDragonFlyApi api)
+            where TBlock : Block
+        {
+            api.BlockField().RegisterBlock<TBlock>();
         }
     }
 }

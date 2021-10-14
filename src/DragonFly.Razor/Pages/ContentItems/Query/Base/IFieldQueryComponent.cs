@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Razor.Pages.ContentItems.Query
 {
-    public interface IQueryComponent
+    public interface IFieldQueryComponent
     {
         SchemaField Field { get; }
 

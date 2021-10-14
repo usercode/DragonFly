@@ -64,14 +64,14 @@ namespace DragonFly.Content
             Type contentFieldType = typeof(TContentField);
 
             //name
-            _fieldByName.Add(contentFieldType.Name, contentFieldType);
+            _fieldByName[contentFieldType.Name] = contentFieldType;
 
             //options
             FieldOptionsAttribute? fieldOptionsAttribute = contentFieldType.GetCustomAttribute<FieldOptionsAttribute>();
 
             if (fieldOptionsAttribute != null)
             {
-                _optionsByField.Add(typeof(TContentField), fieldOptionsAttribute.OptionsType);
+                _optionsByField[typeof(TContentField)] = fieldOptionsAttribute.OptionsType;
             }
 
             //query
@@ -79,7 +79,7 @@ namespace DragonFly.Content
 
             if (fieldQueryAttribute != null)
             {
-                _queryByField.Add(contentFieldType, fieldQueryAttribute.QueryType);
+                _queryByField[contentFieldType] = fieldQueryAttribute.QueryType;
             }
 
             Added?.Invoke(contentFieldType, fieldOptionsAttribute, fieldQueryAttribute);

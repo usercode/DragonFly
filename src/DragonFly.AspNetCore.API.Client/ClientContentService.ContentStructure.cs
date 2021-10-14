@@ -16,6 +16,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 
 namespace DragonFly.Client
 {
@@ -83,9 +84,9 @@ namespace DragonFly.Client
             }
         }
 
-        public async Task<QueryResult<ContentNode>> QueryNodesAsync(string structureName, Guid? parent)
+        public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
         {
-            var response = await Client.PostAsync($"api/node/query/{structureName}?parentId={parent}", new StringContent(""));
+            var response = await Client.PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""));
 
             var restQueryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentNode>>();
 

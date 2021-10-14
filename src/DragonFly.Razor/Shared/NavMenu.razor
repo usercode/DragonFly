@@ -1,4 +1,5 @@
 ﻿@inject IOptions<GeneralOptions> Options
+@inject IDragonFlyApi Api
 
 <div class="top-row pl-4 navbar navbar-dark">
     <p class="navbar-brand">@Options.Value.Name</p>
@@ -11,36 +12,14 @@
                 <span class="oi oi-home icon" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="schema">
-                <span class="oi oi-list-rich icon" aria-hidden="true"></span> Schema
+        @foreach(MenuItem menuItem in Api.MainMenu().Items)
+        {
+             <li class="nav-item px-3">
+            <NavLink class="nav-link" href="@menuItem.Route">
+                <span class="@menuItem.CssIcon" aria-hidden="true"></span> @menuItem.Title
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="content">
-                <span class="oi oi-list-rich icon" aria-hidden="true"></span> Content
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="structure">
-                <span class="oi oi-list-rich icon" aria-hidden="true"></span> Structure
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="asset">
-                <span class="far fa-image icon" aria-hidden="true"></span> Assets
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="webhook">
-                <span class="oi oi-list-rich icon" aria-hidden="true"></span> WebHooks
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="settings">
-                <span class="fas fa-tools icon" aria-hidden="true"></span> Settings
-            </NavLink>
-        </li>
+        }
     </ul>
 </div>
 

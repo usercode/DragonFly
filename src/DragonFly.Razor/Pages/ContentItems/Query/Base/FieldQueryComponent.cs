@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Razor.Pages.ContentItems.Query
 {
-    public abstract class QueryComponent<TQuery> : ComponentBase, IQueryComponent
+    public abstract class FieldQueryComponent<TQuery> : ComponentBase, IFieldQueryComponent
         where TQuery : FieldQuery
     {
         public SchemaField Field { get; set; }
@@ -16,6 +16,6 @@ namespace DragonFly.Razor.Pages.ContentItems.Query
         [Parameter]
         public TQuery Query { get; set; }
 
-        FieldQuery IQueryComponent.Query => Query;
+        FieldQuery IFieldQueryComponent.Query => Query;
     }
 }

@@ -19,14 +19,12 @@ namespace DragonFly.Fields.BlockField.Razor
         {
             builder.WebAssemblyHostBuilder.Services.AddSingleton(BlockFieldManager.Default);
 
-            ContentFieldManager.Default.RegisterField<BlockField>();
+            DragonFlyApi.Default.RegisterField<BlockField, BlockFieldView>();
 
-            ComponentManager.Default.RegisterField<BlockFieldView>();
-
-            ComponentManager.Default.RegisterBlock<ColumnBlockView>();
-            ComponentManager.Default.RegisterBlock<ImageBlockView>();
-            ComponentManager.Default.RegisterBlock<TextBlockView>();
-            ComponentManager.Default.RegisterBlock<HtmlBlockView>();
+            DragonFlyApi.Default.RegisterBlock<ColumnBlock, ColumnBlockView>();
+            DragonFlyApi.Default.RegisterBlock<ImageBlock, ImageBlockView>();
+            DragonFlyApi.Default.RegisterBlock<TextBlock, TextBlockView>();
+            DragonFlyApi.Default.RegisterBlock<HtmlBlock, HtmlBlockView>();
 
             return builder;
         }

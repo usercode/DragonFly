@@ -61,8 +61,8 @@ namespace DragonFly.Fields.BlockField
         public void RegisterBlock<TBlock>()
             where TBlock : Block
         {
-            _elementsByName.Add(typeof(TBlock).Name, typeof(TBlock));
-            _elementsByType.Add(typeof(TBlock), typeof(TBlock).Name);
+            _elementsByName[typeof(TBlock).Name] = typeof(TBlock);
+            _elementsByType[typeof(TBlock)] = typeof(TBlock).Name;
         }
 
         public Type GetBlockTypeByName(string name)

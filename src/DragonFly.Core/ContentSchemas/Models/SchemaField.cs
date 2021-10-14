@@ -7,7 +7,7 @@ using DragonFly.Content;
 namespace DragonFly.Content
 {
     /// <summary>
-    /// ContentSchemaField
+    /// SchemaField
     /// </summary>
     public class SchemaField
     {

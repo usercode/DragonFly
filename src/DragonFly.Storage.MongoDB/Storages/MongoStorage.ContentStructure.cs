@@ -1,6 +1,7 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 using DragonFly.Storage.MongoDB.Models.ContentStructures;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -84,21 +85,21 @@ namespace DragonFly.Data
             };
         }
 
-        public async Task<QueryResult<ContentNode>> QueryNodesAsync(string structureName, Guid? parent)
+        public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
         {
-            IMongoQueryable<MongoContentNode> query = ContentNodes.AsQueryable()
-                                                                .Where(x => x.StructureName == structureName);
+            IMongoQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
+                                                                .Where(x => x.StructureName == query.Structure);
 
-            if (parent != null)
+            if (query.ParentId != null)
             {
-                query = query.Where(x => x.Parent == parent.Value);
+                q = q.Where(x => x.Parent == query.ParentId.Value);
             }
             else
             {
-                query = query.Where(x => x.Parent == null);
+                q = q.Where(x => x.Parent == null);
             }
 
-            var result = await query.ToListAsync();
+            var result = await q.ToListAsync();
 
             return new QueryResult<ContentNode>()
             {

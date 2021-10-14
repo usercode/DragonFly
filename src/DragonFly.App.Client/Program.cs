@@ -30,6 +30,8 @@ namespace DragonFly.Client
 
             WebAssemblyHost build = builder.Build();
 
+            build.UseDragonFLyClient();
+
             await build.RunAsync();
         }
     }

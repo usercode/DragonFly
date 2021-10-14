@@ -1,6 +1,6 @@
 <CascadingBlazoredModal>
     <CascadingAuthenticationState>
-        <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(DragonFly.Client.Core.Extensions).Assembly }">
+        <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(DragonFly.Client.Core.DragonFlyClientExtensions).Assembly }">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                     <NotAuthorized>
@@ -12,7 +12,6 @@
                 <LayoutView Layout="@typeof(MainLayout)">
                     <p>Sorry, there's nothing at this address.</p>
                 </LayoutView>
-
             </NotFound>
         </Router>
     </CascadingAuthenticationState>

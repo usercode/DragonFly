@@ -21,8 +21,6 @@
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />
-    <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder.Generator\DragonFly.AspNetCore.SchemaBuilder.Generator.csproj" 
-					  OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder\DragonFly.AspNetCore.SchemaBuilder.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Fields.BlockField.Storage\DragonFly.Fields.BlockField.Storage.csproj" />

@@ -1,6 +1,7 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 using DragonFly.Models;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
@@ -55,7 +56,7 @@ namespace DragonFly.Client.Pages
             {
                 Entity = await ContentService.GetStructureAsync(EntityId);
 
-                var nodesResult = await ContentService.QueryNodesAsync(Entity.Name, null);
+                var nodesResult = await ContentService.QueryAsync(new NodesQuery() { Structure = Entity.Name, ParentId = null });
 
                 Nodes = nodesResult.Items;
             }

@@ -42,10 +42,7 @@ namespace DragonFly.Razor.Services
 
         public void Register(Type fieldType, Type componentType)
         {
-            if (_cacheFieldView.TryAdd(fieldType, componentType))
-            {
-                _cacheFieldView[fieldType] = componentType;
-            }
+            _cacheFieldView[fieldType] = componentType;
         }
 
         public Type GetComponentType(Type fieldType)

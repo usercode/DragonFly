@@ -25,17 +25,18 @@
 
                         @foreach (string field in ContentItem.Schema.ReferenceFields)
                         {
-                            ContentField column = ContentItem.Fields[field];
-
-                            @if (column is ISingleValueContentField singleValueField)
+                            if (ContentItem.TryGetField(field, out ContentField column))
                             {
-                                <span>@singleValueField.Value</span>
-                            }
-                            else if (column is AssetField assetField)
-                            {
-                                @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                @if (column is ISingleValueContentField singleValueField)
                                 {
-                                    <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                    <span>@singleValueField.Value</span>
+                                }
+                                else if (column is AssetField assetField)
+                                {
+                                    @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                    {
+                                        <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                    }
                                 }
                             }
                         }

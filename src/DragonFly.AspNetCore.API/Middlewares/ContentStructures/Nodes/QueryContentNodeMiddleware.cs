@@ -2,6 +2,7 @@
 using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 using DragonFly.Data;
 using DragonFly.Data.Models;
 using DragonFly.Models;
@@ -40,7 +41,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             }
 
             QueryResult<ContentNode> items = await storage
-                                                    .QueryNodesAsync(structureName, parentId);
+                                                    .QueryAsync(new NodesQuery() { Structure = structureName, ParentId = parentId });
 
             QueryResult<RestContentNode> restQueryResult = new QueryResult<RestContentNode>();
             restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();

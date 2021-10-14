@@ -1,5 +1,6 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
+using DragonFly.Core.ContentStructures.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,6 @@ namespace DragonFly.Core.ContentStructures
 
         Task UpdateAsync(ContentNode node);
 
-        Task<QueryResult<ContentNode>> QueryNodesAsync(string structureName, Guid? parent);
+        Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query);
     }
 }
