@@ -21,7 +21,7 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.MainMenu().AddMenuItem("Assets", "far fa-image icon", "asset");
+            api.MainMenu().Add("Assets", "far fa-image icon", "asset");
 
             api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
             api.RegisterMetadata<PdfMetadata, PdfMetadataView>();

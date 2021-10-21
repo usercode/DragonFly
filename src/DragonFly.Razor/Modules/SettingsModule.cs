@@ -20,9 +20,9 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.MainMenu().AddMenuItem("Settings", "fas fa-tools icon", "settings");
+            api.MainMenu().Add("Settings", "fas fa-tools icon", "settings");
 
-            api.AddSettings<ClientModules>("Modules");
+            api.Settings().Add<ClientModules>("Modules");
         }
     }
 }

@@ -33,7 +33,7 @@ namespace DragonFly.Razor.MainMenu
 
         public IList<MenuItem> Items { get; private set; }
 
-        public void AddMenuItem(string title, string cssIcon, string route)
+        public void Add(string title, string cssIcon, string route)
         {
             Items.Add(new MenuItem(title, cssIcon, route));
         }

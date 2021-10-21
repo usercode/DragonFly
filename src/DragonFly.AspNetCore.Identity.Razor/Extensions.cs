@@ -16,9 +16,9 @@ namespace DragonFly.AspNetCore.Identity.Razor
     {
         public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
         {
-            builder.Init(x => x.RegisterModule<Module>());
-
             builder.Services.AddTransient<ILoginService, IdentityLoginService>();
+
+            builder.Init(api => api.RegisterModule<Module>());
 
             return builder;
         }

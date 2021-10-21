@@ -1,4 +1,5 @@
 ﻿using DragonFly.Razor.Pages.Settings;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,16 @@ namespace DragonFly.Razor.Settings
         }
 
         public IList<SettingsItem> Items { get; }
+
+        public void Add<T>(string title)
+            where T : ComponentBase
+        {
+            Add(title, typeof(T));
+        }
+
+        public void Add(string title, Type componentType)
+        {
+            Items.Add(new SettingsItem(title, componentType));
+        }
     }
 }

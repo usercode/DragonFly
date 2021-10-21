@@ -16,8 +16,8 @@ namespace DragonFly.AspNetCore.Identity.Razor
 
         public override void Init(IDragonFlyApi api)
         {
-            api.AddSettings<UserList>("Users");
-            api.AddSettings<RoleList>("Roles");
+            api.Settings().Add<UserList>("Users");
+            api.Settings().Add<RoleList>("Roles");
         }
     }
 }
