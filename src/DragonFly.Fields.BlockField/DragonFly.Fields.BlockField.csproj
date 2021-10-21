@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
@@ -22,7 +21,7 @@
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
 	</ItemGroup>

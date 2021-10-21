@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.10" />
-	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />    
+	  <PackageReference Include="AspNetCore.Identity.Mongo" Version="8.3.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0-rc.1.21452.10" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,8 +23,11 @@
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.Identity.EF\DragonFly.AspNetCore.Identity.EF.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.Identity.MongoDB\DragonFly.AspNetCore.Identity.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder\DragonFly.AspNetCore.SchemaBuilder.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
     <ProjectReference Include="..\DragonFly.Fields.BlockField.Storage\DragonFly.Fields.BlockField.Storage.csproj" />
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
     <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />

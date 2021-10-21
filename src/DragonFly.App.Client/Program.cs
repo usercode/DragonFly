@@ -14,6 +14,7 @@ using DragonFly.Client.Core;
 using DragonFly.App.Client;
 using DragonFly.Client.Core.Assets;
 using DragonFly.Fields.BlockField.Razor;
+using DragonFly.AspNetCore.Identity.Razor;
 
 namespace DragonFly.Client
 {
@@ -26,7 +27,9 @@ namespace DragonFly.Client
             //builder.RootComponents.Add<HeadOutlet>("head::after");
 
             builder.AddDragonFlyClient()
-                        .AddBlockField();
+                        .AddBlockField()
+                        .AddIdentity()
+                        ;
 
             WebAssemblyHost build = builder.Build();
 

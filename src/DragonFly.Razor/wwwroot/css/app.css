@@ -39,12 +39,21 @@ button {
   margin-bottom: 0.5rem;
   border: none; }
 
+a.list-group-item {
+  cursor: pointer; }
+
 .form-group .alert {
   padding: 0rem;
   margin-bottom: 0px; }
 
 .modal-dialog {
   padding: 45px; }
+
+.field-label {
+  margin: 0.25rem 0px;
+  /*font-weight: 600;*/
+  text-align: right;
+  width: 100%; }
 
 .bool-field-view {
   display: flex; }

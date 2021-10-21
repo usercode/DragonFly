@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Razor.Pages.Settings.Modules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,9 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.AddMenuItem("Settings", "fas fa-tools icon", "settings");
+            api.MainMenu().AddMenuItem("Settings", "fas fa-tools icon", "settings");
+
+            api.AddSettings<ClientModules>("Modules");
         }
     }
 }

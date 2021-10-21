@@ -8,7 +8,7 @@ namespace DragonFly.Core.ContentStructures.Queries
 {
     public class NodesQuery
     {
-        public string? Structure { get; set; }
+        public Guid? Structure { get; set; }
 
         public Guid? ParentId { get; set; }
     }

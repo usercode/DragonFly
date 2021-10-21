@@ -56,7 +56,7 @@ namespace DragonFly.Client.Pages
             {
                 Entity = await ContentService.GetStructureAsync(EntityId);
 
-                var nodesResult = await ContentService.QueryAsync(new NodesQuery() { Structure = Entity.Name, ParentId = null });
+                var nodesResult = await ContentService.QueryAsync(new NodesQuery() { Structure = Entity.Id, ParentId = null });
 
                 Nodes = nodesResult.Items;
             }
@@ -77,7 +77,7 @@ namespace DragonFly.Client.Pages
         public async Task AddContentAsync()
         {
             ContentNode contentNode = new ContentNode();
-            contentNode.StructureName = Entity.Name;
+            contentNode.Structure = Entity.Id;
 
             await Storage.CreateAsync(contentNode);
 

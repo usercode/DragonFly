@@ -60,11 +60,11 @@ namespace DragonFly.Client
             await Client.PutAsJson($"api/structure/{entity.Id}", entity);
         }
 
-        public async Task<QueryResult<ContentStructure>> QueryStructuresAsync()
+        public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
         {
             try
             {
-                var response = await Client.PostAsync("api/structure/query", new StringContent(""));
+                var response = await Client.PostAsJson("api/structure/query", query);
 
                 var restQueryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentStructure>>();
 

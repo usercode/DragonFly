@@ -21,7 +21,7 @@
   
   <ItemGroup>   
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.11" />
     <PackageReference Include="ImageWizard.Core" Version="2.1.9" />
 	<PackageReference Include="ImageWizard.DocNET" Version="2.1.9" />
     <PackageReference Include="ImageWizard.ImageSharp" Version="2.1.9" />
@@ -38,6 +38,10 @@
 
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Init\" />
   </ItemGroup>  
   
 </Project>

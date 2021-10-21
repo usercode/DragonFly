@@ -24,21 +24,6 @@ namespace DragonFly.Content
                 if (_default == null)
                 {
                     _default = new ContentFieldManager();
-
-                    _default.RegisterField<ArrayField>();
-                    _default.RegisterField<AssetField>();
-                    _default.RegisterField<BoolField>();
-                    _default.RegisterField<DateField>();
-                    _default.RegisterField<EmbedField>();
-                    _default.RegisterField<FloatField>();
-                    _default.RegisterField<HtmlField>();
-                    _default.RegisterField<IntegerField>();
-                    _default.RegisterField<ReferenceField>();
-                    _default.RegisterField<SlugField>();
-                    _default.RegisterField<StringField>();
-                    _default.RegisterField<TextAreaField>();
-                    _default.RegisterField<XHtmlField>();
-                    _default.RegisterField<XmlField>();
                 }
 
                 return _default;
@@ -59,7 +44,7 @@ namespace DragonFly.Content
         }
 
         public void RegisterField<TContentField>()
-            where TContentField : ContentField, new()
+            where TContentField : ContentField
         {
             Type contentFieldType = typeof(TContentField);
 
@@ -85,7 +70,7 @@ namespace DragonFly.Content
             Added?.Invoke(contentFieldType, fieldOptionsAttribute, fieldQueryAttribute);
         }
 
-        public IEnumerable<Type> GetAllOptionTypes()
+        public IEnumerable<Type> GetAllOptionsTypes()
         {
             return _optionsByField.Values;
         }
@@ -111,20 +96,25 @@ namespace DragonFly.Content
             return type.Name;
         }
 
-        public Type GetContentFieldType(string fieldName)
+        public Type GetContentFieldType(string fieldType)
         {
-            if (fieldName == null)
+            if (fieldType == null)
             {
-                throw new ArgumentNullException(nameof(fieldName));
+                throw new ArgumentNullException(nameof(fieldType));
             }
 
-            return _fieldByName[fieldName];
+            return _fieldByName[fieldType];
         }
 
         public ContentField CreateField<T>()
             where T : ContentField
         {
             return CreateField(typeof(T));
+        }
+
+        public IEnumerable<ContentField> CreateContentFields()
+        {
+            return GetAllFieldTypes().Select(x => CreateField(x)).ToList();
         }
 
         public ContentField CreateField(Type t)

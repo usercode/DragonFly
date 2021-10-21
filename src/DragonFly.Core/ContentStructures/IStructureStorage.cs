@@ -24,7 +24,7 @@ namespace DragonFly.Core.ContentStructures
 
         Task<ContentStructure> GetStructureAsync(string name);
 
-        Task<QueryResult<ContentStructure>> QueryStructuresAsync();
+        Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query);
 
         
         //ContentNodes

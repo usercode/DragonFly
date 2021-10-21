@@ -11,9 +11,9 @@
         {
             <BSListGroupItem class="arrayitem-field">                
                 <BSButton Color="Color.Light">#@(i++)</BSButton>
-                <BSButton Color="Color.Light" OnClick="@(e => { Field.Items.MoveUp(item); })" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-                <BSButton Color="Color.Light" OnClick="@(e => { Field.Items.MoveDown(item); })" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                <BSButton Color="Color.Light" OnClick="@(e => { Field.Items.Remove(item); })" title="Remove"><i class="fas fa-times"></i></BSButton>
+                <BSButton Color="Color.Light" OnClick="e => Field.Items.MoveUp(item)" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
+                <BSButton Color="Color.Light" OnClick="e => Field.Items.MoveDown(item)" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
+                <BSButton Color="Color.Light" OnClick="e => Field.Items.Remove(item)" title="Remove"><i class="fas fa-times"></i></BSButton>
                 
                 <ContentItemFields Content="item" Schema="Options" />
             </BSListGroupItem>

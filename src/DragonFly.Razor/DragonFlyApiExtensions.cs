@@ -15,7 +15,7 @@ namespace DragonFly
     public static class DragonFlyApiExtensions
     {
         public static void RegisterField<TField, TFieldView>(this IDragonFlyApi api)
-            where TField : ContentField, new()
+            where TField : ContentField
             where TFieldView : IFieldComponent
         {
             api.ContentField().RegisterField<TField>();

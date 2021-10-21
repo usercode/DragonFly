@@ -2,25 +2,32 @@
 @inject HttpClient HttpClient
 @inject AuthenticationStateProvider Auth
 @inject NavigationManager NavigationManager
+@inject ILoginService LoginService
 @inject IOptions<GeneralOptions> Options
 
 <div class="text-center">
     <div class="form-signin" style="width: 100%; max-width: 330px; padding: 15px; margin: auto;">       
         <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Email address"  readonly="readonly" value="admin" />
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input @bind-value="Password" type="password" id="inputPassword" class="form-control" autofocus="" placeholder="Password">
         
-        <button class="btn btn-lg btn-primary btn-block" @onclick="x => LoginAsync()">Sign in</button>
+        <div class="form-floating mb-3">
+          <input @bind-value="Username" type="email" class="form-control" id="floatingInput" placeholder="Username">
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input @bind-value="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+        </div>
+        
+        <button class="btn btn-lg btn-primary btn-block mt-3" @onclick="x => LoginAsync()">Login</button>
         <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>
 
     </div>
-
-
 </div>
 
 @code {
+
+    [Parameter]
+    public string Username { get; set; }
 
     [Parameter]
     public string Password { get; set; }
@@ -39,9 +46,9 @@
 
     public async Task LoginAsync()
     {
-        var response = await HttpClient.PostAsJson("Login", new LoginData() { Password = Password } );
+        bool result = await LoginService.LoginAsync(Username, Password);
 
-        if (response.IsSuccessStatusCode)
+        if (result)
         {
             ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated("Test");
 
@@ -49,7 +56,7 @@
         }
         else
         {
-            response.EnsureSuccessStatusCode();
+            throw new Exception("Login failed.");
         }
     }
 }

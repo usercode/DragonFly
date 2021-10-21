@@ -8,13 +8,19 @@
     <BSFormGroup>
         <BSAlert Color="GetFieldColor(part.FieldName)">
             <BSRow>
-                <BSLabel class="col-sm-2 col-form-label">
-                    @part.FieldName
-                </BSLabel>
-                <div class="col-sm-10">
-                    @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
-                </div>
+                <BSCol SM="2">
+                    <BSLabel class="field-label">
+                @part.FieldName
+            </BSLabel>
+                </BSCol>
+                <BSCol SM="10">
+                     <div class="field">
+                @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
+            </div>
+                </BSCol>
             </BSRow>
+            
+           
         </BSAlert>
     </BSFormGroup>
 }

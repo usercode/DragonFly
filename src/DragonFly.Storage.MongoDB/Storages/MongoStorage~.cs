@@ -105,22 +105,6 @@ namespace DragonFly.Data
         public virtual void CreateIndex()
         {
             //Pages.Indexes.CreateOne(Builders<Basecl>.IndexKeys.Ascending(x => x.Title));
-        }
-
-        public async Task<ContentItem> GetContentAsync(string schema, Guid id)
-        {
-            ContentSchema contentSchema = await GetSchemaAsync(schema);
-            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
-
-            MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
-
-            if (result == null)
-            {
-                throw new Exception($"ContentItem '{schema}/{id}' not found");
-            }
-
-            return result.ToModel(contentSchema);
-        }
-       
+        }       
     }
 }

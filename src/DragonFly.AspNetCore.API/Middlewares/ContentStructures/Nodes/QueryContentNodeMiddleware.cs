@@ -30,7 +30,11 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             IStructureStorage storage,
             JsonService jsonService)
         {
-            string structureName = (string)context.GetRouteValue("structure");
+            Guid? structure = null;
+            if (context.GetRouteValue("structure") is string stringStructure)
+            {
+                structure = Guid.Parse(stringStructure);
+            }
 
             var parentIdQuery = context.Request.Query["parentId"];
             Guid? parentId = null;
@@ -41,7 +45,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             }
 
             QueryResult<ContentNode> items = await storage
-                                                    .QueryAsync(new NodesQuery() { Structure = structureName, ParentId = parentId });
+                                                    .QueryAsync(new NodesQuery() { Structure = structure, ParentId = parentId });
 
             QueryResult<RestContentNode> restQueryResult = new QueryResult<RestContentNode>();
             restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();

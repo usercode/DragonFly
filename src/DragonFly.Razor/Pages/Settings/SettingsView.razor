@@ -1,0 +1,32 @@
+﻿@page "/settings"
+@inject IDragonFlyApi Api
+
+<BSRow>
+	<BSCol LG="3">
+		<BSListGroup>
+			@foreach (SettingsItem c in Api.Settings().Items)
+			{
+				<a class="list-group-item @(SelectedComponent == c ? "active" : "")" @onclick="e => SelectedComponent = c">
+					<span>@c.Name</span>
+				</a>
+			}
+		</BSListGroup>
+	</BSCol>
+	<BSCol LG="9">
+		@if (SelectedComponent != null)
+		{
+			@CreateComponent()
+		}
+	</BSCol>
+</BSRow>
+@code {
+
+	public SettingsItem SelectedComponent { get; set; }
+
+	public RenderFragment CreateComponent() => builder =>
+					{
+						builder.OpenComponent(0, SelectedComponent.ComponentType);
+						builder.CloseComponent();
+					};
+
+}

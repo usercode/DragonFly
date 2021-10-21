@@ -25,6 +25,7 @@ using ImageWizard;
 using ImageWizard.DocNET;
 using ImageWizard.MongoDB;
 using DragonFly.Assets;
+using Microsoft.AspNetCore.Identity;
 
 namespace DragonFly.Core
 {
@@ -69,7 +70,16 @@ namespace DragonFly.Core
                 .AddHttpLoader()
                 .SetFileCache();
 
-            return new DragonFlyBuilder(services);
+            IDragonFlyBuilder builder = new DragonFlyBuilder(services);
+            builder.Init(x =>
+            {
+                x.RegisterDefaultFields();
+
+                x.AssetMetadata().Register<ImageMetadata>();
+                x.AssetMetadata().Register<PdfMetadata>();
+            });
+
+            return builder;
         }
 
         public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)

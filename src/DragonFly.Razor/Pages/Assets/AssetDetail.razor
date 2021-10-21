@@ -98,22 +98,21 @@
                             <div>
                                 <InputFile OnChange="OnInputFileChange" />
                             </div>
-                            <div>
-                                @if (Entity.IsImage())
-                                {
-                                    <!-- image preview -->
-                                    <img src="@AssetPreview.Resize(Entity, 800, 800)" />
-                                }
-                                else if (Entity.IsPdf())
-                                {
-                                    @*<img src="@AssetPreview.Pdf(Entity, 800, 800)" />*@
-                                    <div id="pdf" style="width: 100%; height: 100%;">
-                                        <iframe src="@Entity.GetDataUrl()" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
-                                            <p>It appears your web browser doesn't support iframes.</p>
-                                        </iframe>
-                                    </div>
-                                }
-                            </div>
+                            
+                            @if (Entity.IsImage())
+                            {
+                                <!-- image preview -->
+                                <img src="@AssetPreview.Resize(Entity, 800, 800)" />
+                            }
+                            else if (Entity.IsPdf())
+                            {
+                                @*<img src="@AssetPreview.Pdf(Entity, 800, 800)" />*@
+                                <div id="pdf" style="width: 100%; height: 100%;">
+                                    <iframe src="@Entity.GetDataUrl()" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
+                                        <p>It appears your web browser doesn't support iframes.</p>
+                                    </iframe>
+                                </div>
+                            }
                         }
                     </div>
                 </BSRow>

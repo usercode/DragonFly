@@ -18,7 +18,7 @@ namespace DragonFly.Razor.Modules
     /// </summary>
     public class ContentModule : ClientModule
     {
-        public override string Name => "ContentModule";
+        public override string Name => "Content";
 
         public override string Description => "Manage content schema and items";
 
@@ -26,9 +26,9 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.AddMenuItem("Schema", "oi oi-list-rich icon", "schema");
-            api.AddMenuItem("Structure", "oi oi-list-rich icon", "structure");
-            api.AddMenuItem("Content", "oi oi-list-rich icon", "content");
+            api.MainMenu().AddMenuItem("Schema", "oi oi-list-rich icon", "schema");
+            api.MainMenu().AddMenuItem("Structure", "oi oi-list-rich icon", "structure");
+            api.MainMenu().AddMenuItem("Content", "oi oi-list-rich icon", "content");
 
             api.RegisterField<ArrayField, ArrayFieldView, ArrayFieldOptionsView>();
             api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();

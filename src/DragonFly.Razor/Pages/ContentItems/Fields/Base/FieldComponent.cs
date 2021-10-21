@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Razor.Pages.ContentItems.Fields
 {
-    public abstract class FieldComponent<TContentField, TContentFieldOptions> : ComponentBase, IFieldComponent
-        where TContentField : ContentField
-        where TContentFieldOptions : ContentFieldOptions
+    public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent
+        where TField : ContentField
+        where TFieldOptions : ContentFieldOptions
     {
         [Parameter]
-        public TContentField Field { get; set; }
+        public TField Field { get; set; }
 
         [Parameter]
-        public TContentFieldOptions Options { get; set; }
+        public TFieldOptions Options { get; set; }
 
         ContentField IFieldComponent.Field => Field;
 

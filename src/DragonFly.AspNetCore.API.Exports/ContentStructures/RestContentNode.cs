@@ -13,7 +13,7 @@ namespace DragonFly.AspNetCore.API.Models
         {
         }
 
-        public string StructureName { get; set; }
+        public Guid? Structure { get; set; }
 
         public RestContentNode Parent { get; set; }
     }

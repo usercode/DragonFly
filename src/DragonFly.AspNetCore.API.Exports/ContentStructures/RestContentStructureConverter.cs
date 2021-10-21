@@ -50,7 +50,7 @@ namespace DragonFly.Data.Models
             contentNode.CreatedAt = restContentNode.CreatedAt;
             contentNode.ModifiedAt = restContentNode.ModifiedAt;
             contentNode.Version = restContentNode.Version;
-            contentNode.StructureName = restContentNode.StructureName;
+            contentNode.Structure = restContentNode.Structure;
 
             if (restContentNode.Parent != null)
             {
@@ -68,7 +68,7 @@ namespace DragonFly.Data.Models
             restContentItem.CreatedAt = contentNode.CreatedAt;
             restContentItem.ModifiedAt = contentNode.ModifiedAt;
             restContentItem.Version = contentNode.Version;
-            restContentItem.StructureName = contentNode.StructureName;
+            restContentItem.Structure = contentNode.Structure;
 
             if (contentNode.Parent != null)
             {

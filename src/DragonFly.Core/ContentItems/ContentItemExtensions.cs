@@ -125,7 +125,12 @@ namespace DragonFly.Content
             {
                 if (field.Value is ArrayField arrayField)
                 {
-                    ArrayFieldOptions options = (ArrayFieldOptions)schema.Fields[field.Key].Options;
+                    ArrayFieldOptions? options = (ArrayFieldOptions?)schema.Fields[field.Key].Options;
+
+                    if (options == null)
+                    {
+                        throw new Exception("ArrayFieldOptions are not available.");
+                    }
 
                     foreach (ArrayFieldItem item in arrayField.Items)
                     {

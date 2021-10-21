@@ -35,6 +35,10 @@ using DragonFly.AspNetCore.SchemaBuilder;
 using DragonFly.Fields.BlockField.Storage;
 using ImageWizard.Settings;
 using ImageWizard.Core.ImageCaches;
+using DragonFly.AspNetCore.Identity;
+using DragonFly.AspNetCore.Identity.EF;
+using Microsoft.EntityFrameworkCore;
+using DragonFly.AspNetCore.Identity.MongoDB;
 
 namespace DragonFly.AspNetCore
 {
@@ -58,13 +62,15 @@ namespace DragonFly.AspNetCore
                         .AddRestApi()
                         .AddGraphQLApi()
                         .AddMongoDbStorage()
+                        //.AddIdentityEF(db => db.UseSqlite("Filename=./dragonfly_identity.db"))
+                        //.AddIdentityMongoDb(db => db.ConnectionString = "mongodb://localhost/DragonFly_Identity")
                         .AddSchemaBuilder()
                         .AddBlockField();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonFlyApi api)
         {
-            api.Init();
+            api.InitAsync().GetAwaiter().GetResult();
 
             if (env.IsDevelopment())
             {

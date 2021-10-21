@@ -15,7 +15,7 @@ namespace DragonFly.Content
         /// <summary>
         /// StructureName
         /// </summary>
-        public string? StructureName { get; set; }
+        public Guid? Structure { get; set; }
 
         /// <summary>
         /// Parent

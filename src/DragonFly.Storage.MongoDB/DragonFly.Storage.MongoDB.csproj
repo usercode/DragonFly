@@ -20,8 +20,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Castle.Core" Version="4.4.1" />
-		<PackageReference Include="MongoDB.Driver" Version="2.13.1" />
-		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.13.1" />
+		<PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.13.2" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Index\Fields\" />
 		<Folder Include="Models\Events\" />
 	</ItemGroup>
 </Project>

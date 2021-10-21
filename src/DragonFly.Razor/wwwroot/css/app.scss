@@ -36,6 +36,10 @@ button {
     border: none;
 }
 
+a.list-group-item {
+    cursor: pointer;
+}
+
 .form-group .alert {
     padding: 0rem;
     margin-bottom: 0px;
@@ -43,6 +47,13 @@ button {
 
 .modal-dialog {
     padding: 45px;
+}
+
+.field-label {
+    margin: 0.25rem 0px;
+    /*font-weight: 600;*/
+    text-align:right;
+    width: 100%;
 }
 
 .bool-field-view {

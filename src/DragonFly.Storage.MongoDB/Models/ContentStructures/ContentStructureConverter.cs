@@ -34,7 +34,7 @@ namespace DragonFly.Storage.MongoDB.Models.ContentStructures
             mongoNode.CreatedAt = node.CreatedAt;
             mongoNode.ModifiedAt = node.ModifiedAt;
             mongoNode.Target = node.Target;
-            mongoNode.StructureName = node.StructureName;
+            mongoNode.Structure = node.Structure;
             mongoNode.Parent = node.Parent?.Id;
 
             return mongoNode;
@@ -47,7 +47,7 @@ namespace DragonFly.Storage.MongoDB.Models.ContentStructures
             node.CreatedAt = mongoNode.CreatedAt;
             node.ModifiedAt = mongoNode.ModifiedAt;
             node.Target = mongoNode.Target;
-            node.StructureName = mongoNode.StructureName;
+            node.Structure = mongoNode.Structure;
 
             return node;
         }

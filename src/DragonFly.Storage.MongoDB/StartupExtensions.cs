@@ -7,6 +7,7 @@ using DragonFly.Core.WebHooks;
 using DragonFly.MongoDB.Options;
 using DragonFly.Storage.MongoDB.Fields;
 using DragonFly.Storage.MongoDB.Fields.Base;
+using DragonFly.Storage.MongoDB.Index;
 using DragonFly.Storage.MongoDB.Query;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
@@ -40,10 +41,12 @@ namespace DragonFly.Data
 
             builder.Services.AddSingleton(MongoFieldManager.Default);
             builder.Services.AddSingleton(MongoQueryManager.Default);
+            builder.Services.AddSingleton(MongoIndexManager.Default);
 
             //fix for nested field options (inside ArrayFieldOptions)
-            ContentFieldManager.Default.GetAllOptionTypes().Foreach(x => AutoMapClass(x));
-            ContentFieldManager.Default.Added += ContentFieldAdded;
+            builder.PreInit(x => x.ContentField().Added += ContentFieldAdded);
+
+            builder.PostInit<CreateIndexAction>();
 
             return builder;
         }

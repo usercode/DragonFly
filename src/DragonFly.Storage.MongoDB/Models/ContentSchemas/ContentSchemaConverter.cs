@@ -39,6 +39,18 @@ namespace DragonFly.Data.Models
                     if (field.Value.Options is BsonDocument bsonOptions)
                     {
                         options = (ContentFieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
+
+                        //add missing options inside ArrayFieldOptions
+                        if (options is ArrayFieldOptions arrayFieldOptions)
+                        {
+                            foreach (var f in arrayFieldOptions.Fields)
+                            {
+                                if (f.Value.Options == null)
+                                {
+                                    f.Value.Options = ContentFieldManager.Default.CreateOptions(f.Value.FieldType);
+                                }
+                            }
+                        }
                     }
 
                     if (options == null)

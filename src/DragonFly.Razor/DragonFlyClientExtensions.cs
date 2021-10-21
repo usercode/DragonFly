@@ -6,17 +6,19 @@ using DragonFly.Client.Core.Assets;
 using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
+using DragonFly.Core.Builders;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Core.Modules;
 using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.Razor;
-using DragonFly.Razor.Builder;
 using DragonFly.Razor.Modules;
 using DragonFly.Razor.Modules.Base;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
+using DragonFly.Razor.Pages.Settings;
+using DragonFly.Razor.Pages.Settings.Modules;
 using DragonFly.Razor.Services;
 using DragonFly.Razor.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -35,34 +37,30 @@ namespace DragonFly.Client.Core
 {
     public static class DragonFlyClientExtensions
     {
-        public static IDragonFlyClientBuilder AddDragonFlyClient(this WebAssemblyHostBuilder builder)
+        public static IDragonFlyBuilder AddDragonFlyClient(this WebAssemblyHostBuilder builder)
         {
             var uri = new Uri(builder.HostEnvironment.BaseAddress);
 
             return AddDragonFlyClient(builder, new Uri( $"{uri.Scheme}://{uri.Authority}/dragonfly/"), uri);
         }
 
-        private static IDragonFlyClientBuilder AddDragonFlyClient(this WebAssemblyHostBuilder builder, Uri apiBaseUri, Uri clientBaseUrl)
+        private static IDragonFlyBuilder AddDragonFlyClient(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
         {
+            DragonFlyBuilder builder = new DragonFlyBuilder(hostBuilder.Services);
+
             DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
             DragonFlyApp.Default.ClientBaseUrl = clientBaseUrl;
 
-            //default modules
-            DragonFlyApi.Default.RegisterModule<ContentModule>();
-            DragonFlyApi.Default.RegisterModule<AssetModule>();
-            DragonFlyApi.Default.RegisterModule<WebHookModule>();
-            DragonFlyApi.Default.RegisterModule<SettingsModule>();
+            builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
 
-            builder.Services.AddSingleton(typeof(IDragonFlyApi), DragonFlyApi.Default);
-
-            builder.Services.AddSingleton(DragonFlyApp.Default);            
+            builder.Services.AddSingleton(DragonFlyApp.Default);
             builder.Services.AddSingleton(ComponentManager.Default);
             builder.Services.AddSingleton(ContentFieldManager.Default);
             builder.Services.AddSingleton(AssetMetadataManager.Default);
 
             builder.Services.AddBlazoredModal();
             builder.Services.AddBlazoredToast();
-            
+
             builder.Services.AddBootstrapCss();
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
@@ -78,22 +76,33 @@ namespace DragonFly.Client.Core
 
             builder.Services.AddSingleton<IDragonFlyModule, AssetModule>();
 
-
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
-            return new DragonFlyClientBuilder(builder);
+            //default modules
+            builder.Init(x =>
+            {
+                x.RegisterModule<ContentModule>();
+                x.RegisterModule<AssetModule>();
+                x.RegisterModule<WebHookModule>();
+                x.RegisterModule<SettingsModule>();
+
+                x.AssetMetadata().Register<ImageMetadata>();
+                x.AssetMetadata().Register<PdfMetadata>();
+            });
+
+            return builder;
         }
 
         public static void UseDragonFLyClient(this WebAssemblyHost host)
         {
             IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
-            api.Init();
+            api.InitAsync().GetAwaiter().GetResult();
 
             foreach (ClientModule module in api.Module().Modules)
             {
-                module.Init(DragonFlyApi.Default);
-            }            
+                module.Init(api);
+            }
         }
     }
 }

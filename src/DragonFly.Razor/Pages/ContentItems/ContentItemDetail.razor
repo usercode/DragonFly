@@ -21,12 +21,18 @@
                 }
 
                 <EditForm Model="Entity">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Id</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                        </div>
-                    </div>
+                    <BSFormGroup>
+                        <BSRow>
+                            <BSCol SM="2">
+                                <label class="field-label">Id</label>
+                            </BSCol>
+                            <BSCol SM="10">
+                                <div class="field">
+                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                                </div>
+                            </BSCol>
+                        </BSRow>                        
+                    </BSFormGroup>
 
                     <ContentItemFields Content="Entity" Schema="Entity.Schema" />
                 </EditForm>

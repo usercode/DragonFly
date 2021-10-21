@@ -26,9 +26,6 @@ namespace DragonFly.Content
                 if (_default == null)
                 {
                     _default = new AssetMetadataManager();
-
-                    _default.Register<ImageMetadata>();
-                    _default.Register<PdfMetadata>();
                 }
 
                 return _default;

@@ -73,22 +73,24 @@ namespace DragonFly.Data
             return structure.ToModel();
         }
 
-        public async Task<QueryResult<ContentStructure>> QueryStructuresAsync()
+        public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
         {
+            IList<MongoContentStructure> result = await ContentStructures.AsQueryable()
+                                                                                .OrderBy(x => x.Name)
+                                                                                .ToListAsync();
+
             return new QueryResult<ContentStructure>()
             {
-                Items = ContentStructures.AsQueryable()
-                                            .OrderBy(x => x.Name)
-                                            .ToList()
-                                            .Select(x => x.ToModel())
-                                            .ToList()
+                Items = result
+                            .Select(x => x.ToModel())
+                            .ToList()
             };
         }
 
         public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
         {
             IMongoQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
-                                                                .Where(x => x.StructureName == query.Structure);
+                                                                .Where(x => x.Structure == query.Structure);
 
             if (query.ParentId != null)
             {

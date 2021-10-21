@@ -17,9 +17,9 @@ using System.Threading.Tasks;
 namespace DragonFly
 {
     /// <summary>
-    /// DragonFlyApiBlockManagerExtensions
+    /// DragonFlyApiExtensions
     /// </summary>
-    public static class DragonFlyApiBlockManagerExtensions
+    public static class DragonFlyApiExtensions
     {
         public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
             where TBlock : Block

@@ -26,7 +26,6 @@ namespace DragonFly.Razor.Services
                 if (_default == null)
                 {
                     _default = new ComponentManager();
-
                 }
 
                 return _default;

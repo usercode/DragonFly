@@ -9,6 +9,6 @@ namespace DragonFly
 {
     public interface IDragonFlyApi
     {
-        void Init();
+        Task InitAsync();
     }
 }

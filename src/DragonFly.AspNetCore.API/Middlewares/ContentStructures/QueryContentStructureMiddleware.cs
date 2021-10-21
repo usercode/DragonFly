@@ -2,6 +2,7 @@
 using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 using DragonFly.Data;
 using DragonFly.Data.Models;
 using DragonFly.Models;
@@ -28,8 +29,9 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             IStructureStorage storage,
             JsonService jsonService)
         {
-            QueryResult<ContentStructure> items = await storage
-                                                    .QueryStructuresAsync();
+            StructureQuery query = await jsonService.Deserialize<StructureQuery>(context.Request.Body);
+
+            QueryResult<ContentStructure> items = await storage.QueryAsync(query);
 
             QueryResult<RestContentStructure> restQueryResult = new QueryResult<RestContentStructure>();
             restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();

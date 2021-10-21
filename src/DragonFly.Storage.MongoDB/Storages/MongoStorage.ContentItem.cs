@@ -32,7 +32,27 @@ namespace DragonFly.Data
     /// </summary>
     public partial class MongoStorage : IContentStorage
     {
-        private IMongoCollection<MongoContentItem> GetMongoCollection(string type, bool published = false)
+        public async Task<ContentItem> GetContentAsync(string schema, Guid id)
+        {
+            ContentSchema contentSchema = await GetSchemaAsync(schema);
+            IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
+
+            MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+            if (result == null)
+            {
+                throw new Exception($"ContentItem '{schema}/{id}' not found");
+            }
+
+            return result.ToModel(contentSchema);
+        }
+
+        public IMongoCollection<MongoContentItem> GetMongoCollection(ContentSchema schema, bool published = false)
+        {
+            return GetMongoCollection(schema.Name, published);
+        }
+
+        public IMongoCollection<MongoContentItem> GetMongoCollection(string type, bool published = false)
         {
             string name = $"ContentItems_{type}";
 

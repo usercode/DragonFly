@@ -13,7 +13,7 @@ namespace DragonFly.Razor.Modules
     /// </summary>
     public class AssetModule : ClientModule
     {
-        public override string Name => "AssetModule";
+        public override string Name => "Asset";
 
         public override string Description => "Manage assets for content items";
 
@@ -21,7 +21,7 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.AddMenuItem("Assets", "far fa-image icon", "asset");
+            api.MainMenu().AddMenuItem("Assets", "far fa-image icon", "asset");
 
             api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
             api.RegisterMetadata<PdfMetadata, PdfMetadataView>();

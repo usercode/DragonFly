@@ -38,7 +38,5 @@ namespace DragonFly.Content
 
             return schema;
         }
-
-        
     }
 }

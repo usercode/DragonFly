@@ -1,6 +1,7 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
+using DragonFly.Core.ContentStructures.Queries;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -24,7 +25,7 @@ namespace DragonFly.Client.Pages
 
         protected override async Task RefreshActionAsync()
         {
-            SearchResult = await ContentService.QueryStructuresAsync();
+            SearchResult = await ContentService.QueryAsync(new StructureQuery());
         }
     }
 }
