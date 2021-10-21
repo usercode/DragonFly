@@ -71,12 +71,12 @@ namespace DragonFly.Core
                 .SetFileCache();
 
             IDragonFlyBuilder builder = new DragonFlyBuilder(services);
-            builder.Init(x =>
+            builder.Init(api =>
             {
-                x.RegisterDefaultFields();
+                api.RegisterDefaultFields();
 
-                x.AssetMetadata().Register<ImageMetadata>();
-                x.AssetMetadata().Register<PdfMetadata>();
+                api.AssetMetadata().Register<ImageMetadata>();
+                api.AssetMetadata().Register<PdfMetadata>();
             });
 
             return builder;

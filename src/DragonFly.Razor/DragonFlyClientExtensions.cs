@@ -80,15 +80,15 @@ namespace DragonFly.Client.Core
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
             //default modules
-            builder.Init(x =>
+            builder.Init(api =>
             {
-                x.RegisterModule<ContentModule>();
-                x.RegisterModule<AssetModule>();
-                x.RegisterModule<WebHookModule>();
-                x.RegisterModule<SettingsModule>();
+                api.RegisterModule<ContentModule>();
+                api.RegisterModule<AssetModule>();
+                api.RegisterModule<WebHookModule>();
+                api.RegisterModule<SettingsModule>();
 
-                x.AssetMetadata().Register<ImageMetadata>();
-                x.AssetMetadata().Register<PdfMetadata>();
+                api.AssetMetadata().Register<ImageMetadata>();
+                api.AssetMetadata().Register<PdfMetadata>();
             });
 
             return builder;

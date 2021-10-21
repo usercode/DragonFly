@@ -18,7 +18,7 @@ namespace DragonFly
             where TField : ContentField
             where TFieldView : IFieldComponent
         {
-            api.ContentField().RegisterField<TField>();
+            api.ContentField().Register<TField>();
             api.Component().RegisterField<TFieldView>();
         }
 

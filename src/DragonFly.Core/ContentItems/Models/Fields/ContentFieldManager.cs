@@ -43,10 +43,10 @@ namespace DragonFly.Content
             _fieldByName = new Dictionary<string, Type>();
         }
 
-        public void RegisterField<TContentField>()
-            where TContentField : ContentField
+        public void Register<TField>()
+            where TField : ContentField
         {
-            Type contentFieldType = typeof(TContentField);
+            Type contentFieldType = typeof(TField);
 
             //name
             _fieldByName[contentFieldType.Name] = contentFieldType;
@@ -56,7 +56,7 @@ namespace DragonFly.Content
 
             if (fieldOptionsAttribute != null)
             {
-                _optionsByField[typeof(TContentField)] = fieldOptionsAttribute.OptionsType;
+                _optionsByField[typeof(TField)] = fieldOptionsAttribute.OptionsType;
             }
 
             //query

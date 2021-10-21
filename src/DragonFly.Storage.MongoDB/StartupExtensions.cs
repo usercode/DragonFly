@@ -44,7 +44,7 @@ namespace DragonFly.Data
             builder.Services.AddSingleton(MongoIndexManager.Default);
 
             //fix for nested field options (inside ArrayFieldOptions)
-            builder.PreInit(x => x.ContentField().Added += ContentFieldAdded);
+            builder.PreInit(api => api.ContentField().Added += ContentFieldAdded);
 
             builder.PostInit<CreateIndexAction>();
 

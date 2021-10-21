@@ -9,30 +9,22 @@ namespace DragonFly
 {
     public static class DragonFlyApiFieldExtensions
     {
-        public static IDragonFlyApi RegisterField<TContentField>(this IDragonFlyApi api)
-            where TContentField : ContentField, new()
-        {
-            api.ContentField().RegisterField<TContentField>();
-
-            return api;
-        }
-
         public static IDragonFlyApi RegisterDefaultFields(this IDragonFlyApi api)
         {
-            api.RegisterField<ArrayField>();
-            api.RegisterField<AssetField>();
-            api.RegisterField<BoolField>();
-            api.RegisterField<DateField>();
-            api.RegisterField<EmbedField>();
-            api.RegisterField<FloatField>();
-            api.RegisterField<HtmlField>();
-            api.RegisterField<IntegerField>();
-            api.RegisterField<ReferenceField>();
-            api.RegisterField<SlugField>();
-            api.RegisterField<StringField>();
-            api.RegisterField<TextAreaField>();
-            api.RegisterField<XHtmlField>();
-            api.RegisterField<XmlField>();
+            api.ContentField().Register<ArrayField>();
+            api.ContentField().Register<AssetField>();
+            api.ContentField().Register<BoolField>();
+            api.ContentField().Register<DateField>();
+            api.ContentField().Register<EmbedField>();
+            api.ContentField().Register<FloatField>();
+            api.ContentField().Register<HtmlField>();
+            api.ContentField().Register<IntegerField>();
+            api.ContentField().Register<ReferenceField>();
+            api.ContentField().Register<SlugField>();
+            api.ContentField().Register<StringField>();
+            api.ContentField().Register<TextAreaField>();
+            api.ContentField().Register<XHtmlField>();
+            api.ContentField().Register<XmlField>();
 
             return api;
         }

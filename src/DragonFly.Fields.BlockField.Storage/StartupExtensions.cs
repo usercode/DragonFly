@@ -14,7 +14,7 @@ namespace DragonFly.Fields.BlockField.Storage
     {
         public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
         {
-            builder.Init(x => x.RegisterField<BlockField>());
+            builder.Init(api => api.ContentField().Register<BlockField>());
 
             return builder;
         }
