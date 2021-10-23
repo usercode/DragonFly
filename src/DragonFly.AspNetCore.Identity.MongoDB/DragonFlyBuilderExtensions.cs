@@ -1,5 +1,7 @@
 ﻿using AspNetCore.Identity.Mongo;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
+using DragonFly.AspNetCore.Identity.MongoDB.Services;
+using DragonFly.Identity.Services;
 using DragonFly.Core.Builders;
 using DragonFly.Security;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,9 +18,12 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
         public static IDragonFlyBuilder AddIdentityMongoDb(this IDragonFlyBuilder builder, Action<MongoIdentityOptions> dbOptions)
         {
             builder.Services.AddTransient<ILoginService, LoginService>();
+            builder.Services.AddTransient<IUserStore, UserService>();
 
             builder.AddIdentity<DbUser, DbRole>(x => x.AddMongoDbStores<DbUser, DbRole, Guid>(dbOptions));
-            
+
+            builder.PostInit<SeedDataAction>();
+
             return builder;
         }
     }

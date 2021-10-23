@@ -25,7 +25,7 @@ namespace DragonFly
             where TBlock : Block
             where TBlockView : BlockComponent<TBlock>
         {
-            api.RegisterBlock<TBlock>();
+            api.BlockField().Add<TBlock>();
             api.Component().RegisterBlock<TBlockView>();
         }
     }

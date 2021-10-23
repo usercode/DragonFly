@@ -22,10 +22,12 @@ namespace DragonFly.Fields.BlockField.Razor
             builder.Init(api =>
             {
                 api.RegisterField<BlockField, BlockFieldView>();
+
                 api.RegisterBlock<ColumnBlock, ColumnBlockView>();
-                api.RegisterBlock<ImageBlock, ImageBlockView>();
+                api.RegisterBlock<AssetBlock, AssetBlockView>();
                 api.RegisterBlock<TextBlock, TextBlockView>();
                 api.RegisterBlock<HtmlBlock, HtmlBlockView>();
+                api.RegisterBlock<UnknownBlock, UnknownBlockView>();
             });           
 
             return builder;

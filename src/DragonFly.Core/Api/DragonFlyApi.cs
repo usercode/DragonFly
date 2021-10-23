@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly
 {
+    /// <summary>
+    /// DragonFlyApi
+    /// </summary>
     public class DragonFlyApi : IDragonFlyApi
     {
         public DragonFlyApi(IServiceProvider serviceProvider)
@@ -20,17 +23,19 @@ namespace DragonFly
 
         public async Task InitAsync()
         {
-            foreach (IPreInitialize item in ServiceProvider.GetServices<IPreInitialize>())
+            using IServiceScope scope = ServiceProvider.CreateScope();
+
+            foreach (IPreInitialize item in scope.ServiceProvider.GetServices<IPreInitialize>())
             {
                 await item.ExecuteAsync(this);
             }
 
-            foreach (IInitialize item in ServiceProvider.GetServices<IInitialize>())
+            foreach (IInitialize item in scope.ServiceProvider.GetServices<IInitialize>())
             {
                 await item.ExecuteAsync(this);
             }
 
-            foreach (IPostInitialize item in ServiceProvider.GetServices<IPostInitialize>())
+            foreach (IPostInitialize item in scope.ServiceProvider.GetServices<IPostInitialize>())
             {
                 await item.ExecuteAsync(this);
             }

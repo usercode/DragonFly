@@ -21,6 +21,8 @@ namespace DragonFly.AspNetCore.Identity.EF
 
             builder.AddIdentity<DbUser, DbRole>(x => x.AddEntityFrameworkStores<DragonFlyIdentityContext>());
 
+            builder.Services.AddTransient<IPostInitialize, SeedDataAction>();
+
             return builder;
         }
     }

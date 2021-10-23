@@ -6,15 +6,22 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Exports
 {
+    /// <summary>
+    /// LoginData
+    /// </summary>
     public class LoginData
     {
         public LoginData()
         {
-
+            Username = String.Empty;
+            Password = String.Empty;
+            IsPersistent = false;
         }
 
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
-        public string? Password { get; set; }
+        public string Password { get; set; }
+
+        public bool IsPersistent { get; set; }
     }
 }

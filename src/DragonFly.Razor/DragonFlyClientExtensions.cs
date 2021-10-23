@@ -74,21 +74,19 @@ namespace DragonFly.Client.Core
             builder.Services.AddTransient<IImageAssetUrlService, DefaultAssetDataUrlService>();
             builder.Services.AddTransient<IImageAssetUrlService, ImageWizardAssetDataUrlService>();
 
-            builder.Services.AddSingleton<IDragonFlyModule, AssetModule>();
-
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 
             //default modules
             builder.Init(api =>
             {
-                api.RegisterModule<ContentModule>();
-                api.RegisterModule<AssetModule>();
-                api.RegisterModule<WebHookModule>();
-                api.RegisterModule<SettingsModule>();
+                api.Module().Add<ContentModule>();
+                api.Module().Add<AssetModule>();
+                api.Module().Add<WebHookModule>();
+                api.Module().Add<SettingsModule>();
 
-                api.AssetMetadata().Register<ImageMetadata>();
-                api.AssetMetadata().Register<PdfMetadata>();
+                api.AssetMetadata().Add<ImageMetadata>();
+                api.AssetMetadata().Add<PdfMetadata>();
             });
 
             return builder;

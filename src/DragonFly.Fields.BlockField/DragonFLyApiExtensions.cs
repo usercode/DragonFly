@@ -17,11 +17,5 @@ namespace DragonFly
         {
             return BlockFieldManager.Default;
         }
-
-        public static void RegisterBlock<TBlock>(this IDragonFlyApi api)
-            where TBlock : Block
-        {
-            api.BlockField().RegisterBlock<TBlock>();
-        }
     }
 }

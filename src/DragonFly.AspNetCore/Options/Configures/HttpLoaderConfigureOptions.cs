@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNet.Options
+namespace DragonFly.AspNet.Options;
+
+class HttpLoaderConfigureOptions : IConfigureOptions<HttpLoaderOptions>
 {
-    class HttpLoaderConfigureOptions : IConfigureOptions<HttpLoaderOptions>
+    public HttpLoaderConfigureOptions(IOptions<DragonFlyOptions> options)
     {
-        public HttpLoaderConfigureOptions(IOptions<DragonFlyOptions> options)
-        {
-            Options = options.Value;
-        }
+        Options = options.Value;
+    }
 
-        public DragonFlyOptions Options { get; }
+    public DragonFlyOptions Options { get; }
 
-        public void Configure(HttpLoaderOptions options)
-        {
-            options.SetHeader("ApiKey", Options.ApiKey);
-        }
+    public void Configure(HttpLoaderOptions options)
+    {
+        options.SetHeader("ApiKey", Options.ApiKey);
     }
 }

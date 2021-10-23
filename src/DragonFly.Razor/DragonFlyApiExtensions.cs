@@ -18,7 +18,7 @@ namespace DragonFly
             where TField : ContentField
             where TFieldView : IFieldComponent
         {
-            api.ContentField().Register<TField>();
+            api.ContentField().Add<TField>();
             api.Component().RegisterField<TFieldView>();
         }
 
@@ -45,7 +45,7 @@ namespace DragonFly
             where TMetadata : AssetMetadata
             where TMetadataView : IAssetMetadataComponent
         {
-            api.AssetMetadata().Register<TMetadata>();
+            api.AssetMetadata().Add<TMetadata>();
             api.Component().RegisterAssetMetadata<TMetadataView>();
         }
     }

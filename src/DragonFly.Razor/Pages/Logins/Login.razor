@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@using DragonFly.Core.Security
 @inject HttpClient HttpClient
 @inject AuthenticationStateProvider Auth
 @inject NavigationManager NavigationManager
@@ -42,11 +43,16 @@
 
         //    return;
         //}
+
+        #if DEBUG
+        Username = DefaultSecurity.DefaultUsername;
+        Password = DefaultSecurity.DefaultPassword;
+        #endif
     }
 
     public async Task LoginAsync()
     {
-        bool result = await LoginService.LoginAsync(Username, Password);
+        bool result = await LoginService.LoginAsync(Username, Password, true);
 
         if (result)
         {

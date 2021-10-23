@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.Razor.Components
+namespace DragonFly.Identity.Razor.Components
 {
     public partial class RoleList
     {

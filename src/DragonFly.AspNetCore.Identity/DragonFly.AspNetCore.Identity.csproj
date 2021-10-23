@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
 	  <Nullable>enable</Nullable>
@@ -24,6 +24,7 @@
 	
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
 	</ItemGroup>
 	
 </Project>

@@ -43,7 +43,7 @@ namespace DragonFly.Content
             _fieldByName = new Dictionary<string, Type>();
         }
 
-        public void Register<TField>()
+        public void Add<TField>()
             where TField : ContentField
         {
             Type contentFieldType = typeof(TField);

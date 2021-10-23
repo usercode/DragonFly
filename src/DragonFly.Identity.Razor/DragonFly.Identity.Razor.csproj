@@ -32,6 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
 	  <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />
 	</ItemGroup>
 </Project>

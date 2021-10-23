@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Services
+namespace DragonFly.AspNetCore.Services;
+
+public interface IDateTimeService
 {
-    public interface IDateTimeService
-    {
-        DateTime Current();
-
-
-    }
+    DateTime Current();
 }

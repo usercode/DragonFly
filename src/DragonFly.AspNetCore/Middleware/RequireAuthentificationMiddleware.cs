@@ -9,28 +9,27 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNet.Middleware
+namespace DragonFly.AspNet.Middleware;
+
+class RequireAuthentificationMiddleware
 {
-    class RequireAuthentificationMiddleware
+    private readonly RequestDelegate _next;
+
+
+    public RequireAuthentificationMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-
-        public RequireAuthentificationMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context)
+    {
+        if (context.User.Identity?.IsAuthenticated == false)
         {
-            _next = next;
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
         }
-
-        public async Task Invoke(HttpContext context)
+        else
         {
-            if (context.User.Identity?.IsAuthenticated == false)
-            {
-                context.Response.StatusCode = StatusCodes.Status403Forbidden;
-            }
-            else
-            {
-                await _next(context);
-            }
+            await _next(context);
         }
     }
 }

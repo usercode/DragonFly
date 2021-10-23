@@ -14,11 +14,5 @@ namespace DragonFly
         {
             return ModuleManager.Default;
         }
-
-        public static void RegisterModule<TModule>(this IDragonFlyApi api)
-            where TModule : ClientModule, new()
-        {
-            api.Module().Modules.Add(new TModule());
-        }
     }
 }

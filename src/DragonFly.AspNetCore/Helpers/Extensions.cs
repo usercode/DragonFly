@@ -6,28 +6,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace DragonFly.AspNetCore
+namespace DragonFly.AspNetCore;
+public static class Extensions
 {
-    public static class Extensions
+    public static ContentItemQuery GetQuery(this HttpRequest request)
     {
-        public static ContentItemQuery GetQuery(this HttpRequest request)
+        ContentItemQuery result = new ContentItemQuery();
+
+        StringValues skip = request.Query["$skip"];
+        StringValues top = request.Query["$top"];
+
+        if (skip.Count > 0)
         {
-            ContentItemQuery result = new ContentItemQuery();
-
-            StringValues skip = request.Query["$skip"];
-            StringValues top = request.Query["$top"];
-
-            if (skip.Count > 0)
-            {
-                result.Skip = int.Parse(skip.First());
-            }
-
-            if (top.Count > 0)
-            {
-                result.Top = int.Parse(top.First());
-            }
-
-            return result;
+            result.Skip = int.Parse(skip.First());
         }
+
+        if (top.Count > 0)
+        {
+            result.Top = int.Parse(top.First());
+        }
+
+        return result;
     }
 }

@@ -8,30 +8,29 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore
+namespace DragonFly.AspNetCore;
+
+/// <summary>
+/// ImageAssetProcessing
+/// </summary>
+public class ImageAssetProcessing : IAssetProcessing
 {
-    /// <summary>
-    /// ImageAssetProcessing
-    /// </summary>
-    public class ImageAssetProcessing : IAssetProcessing
+    public IEnumerable<string> SupportedMimetypes
     {
-        public IEnumerable<string> SupportedMimetypes
+        get => new[] { MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
+    }
+
+    public async Task OnAssetChangedAsync(IAssetProcessingContext context)
+    {
+        using Stream stream = await context.OpenAssetStreamAsync();
+
+        IImageInfo imageInfo = await Image.IdentifyAsync(stream);
+
+        if (imageInfo != null)
         {
-            get => new[] { MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
-        }
+            ImageMetadata imageMetadata = new ImageMetadata() { Width = imageInfo.Width, Height = imageInfo.Height, BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
 
-        public async Task OnAssetChangedAsync(IAssetProcessingContext context)
-        {
-            using Stream stream = await context.OpenAssetStreamAsync();
-
-            IImageInfo imageInfo = await Image.IdentifyAsync(stream);
-
-            if (imageInfo != null)
-            {
-                ImageMetadata imageMetadata = new ImageMetadata() { Width = imageInfo.Width, Height = imageInfo.Height, BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
-
-                await context.AddMetadataAsync(imageMetadata);
-            }
+            await context.AddMetadataAsync(imageMetadata);
         }
     }
 }

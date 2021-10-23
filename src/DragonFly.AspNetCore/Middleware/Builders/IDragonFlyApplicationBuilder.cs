@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNet.Middleware
+namespace DragonFly.AspNet.Middleware;
+
+public interface IDragonFlyApplicationBuilder : IApplicationBuilder
 {
-    public interface IDragonFlyApplicationBuilder : IApplicationBuilder
-    {
-        
-    }
+
 }

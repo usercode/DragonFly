@@ -21,9 +21,9 @@ namespace DragonFly.AspNetCore.Identity.EF
 
         public SignInManager<DbUser> SignInManager { get; }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
         {
-            SignInResult result = await SignInManager.PasswordSignInAsync(username, password, false, true);
+            SignInResult result = await SignInManager.PasswordSignInAsync(username, password, isPersistent, true);
 
             return result.Succeeded;
         }

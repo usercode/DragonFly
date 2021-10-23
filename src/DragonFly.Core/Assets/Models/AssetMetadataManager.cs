@@ -38,7 +38,7 @@ namespace DragonFly.Content
             _byType = new Dictionary<Type, string>();
         }
 
-        public void Register<TMetadata>()
+        public void Add<TMetadata>()
             where TMetadata : AssetMetadata
         {
             AssetMetadataAttribute? metadataAttribute = typeof(TMetadata).GetCustomAttribute<AssetMetadataAttribute>();

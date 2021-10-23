@@ -9,30 +9,29 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNet.Middleware
+namespace DragonFly.AspNet.Middleware;
+
+class InternalApiKeyMiddleware
 {
-    class InternalApiKeyMiddleware
+    public const string ApiKeyHeaderName = "ApiKey";
+
+    private readonly RequestDelegate _next;
+
+
+    public InternalApiKeyMiddleware(RequestDelegate next)
     {
-        public const string ApiKeyHeaderName = "ApiKey";
+        _next = next;
+    }
 
-        private readonly RequestDelegate _next;
+    public Task Invoke(HttpContext context, DragonFlyContext dragonFlyContext)
+    {
+        string? requestApiKey = context.Request.Headers[ApiKeyHeaderName].FirstOrDefault();
 
-
-        public InternalApiKeyMiddleware(RequestDelegate next)
+        if (requestApiKey == dragonFlyContext.Options.ApiKey)
         {
-            _next = next;
+            context.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, ApiKeyHeaderName) }, "apikey"));
         }
 
-        public Task Invoke(HttpContext context, DragonFlyContext dragonFlyContext)
-        {
-            string? requestApiKey = context.Request.Headers[ApiKeyHeaderName].FirstOrDefault();
-
-            if (requestApiKey == dragonFlyContext.Options.ApiKey)
-            {
-                context.User = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { new Claim(ClaimTypes.Name, ApiKeyHeaderName) }, "apikey"));
-            }
-
-            return _next(context);
-        }
+        return _next(context);
     }
 }

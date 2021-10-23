@@ -1,5 +1,4 @@
-﻿using DragonFly.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +7,10 @@ using System.Threading.Tasks;
 namespace DragonFly.Fields.BlockField.Blocks
 {
     /// <summary>
-    /// ImageElement
+    /// UnknownBlock
     /// </summary>
-    public class ImageBlock : Block
+    public class UnknownBlock : Block
     {
-        public Guid? AssetId { get; set; }
+        
     }
 }

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.GraphQL
+namespace DragonFly.AspNetCore
 {
     public static class StartupExtensions
     {

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,9 +20,9 @@ namespace DragonFly.AspNetCore.Identity.Razor
 
         private HttpClient Client { get; }
 
-        public async Task<bool> LoginAsync(string username, string password)
+        public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
         {
-            var response = await Client.PostAsJson("Login", new LoginData() { Username = username, Password = password });
+            var response = await Client.PostAsJsonAsync("login", new LoginData() { Username = username, Password = password, IsPersistent = false });
 
             return response.IsSuccessStatusCode;
         }

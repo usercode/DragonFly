@@ -6,23 +6,22 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Services
+namespace DragonFly.AspNetCore.Services;
+
+public class RandomKeyService
 {
-    public class RandomKeyService
+    public RandomKeyService()
     {
-        public RandomKeyService()
-        {
-            Generator = RandomNumberGenerator.Create();
-        }
+        Generator = RandomNumberGenerator.Create();
+    }
 
-        private RandomNumberGenerator Generator { get; }
+    private RandomNumberGenerator Generator { get; }
 
-        public string Generate(int length = 64)
-        {
-            byte[] keyBuffer = new byte[length];
-            Generator.GetBytes(keyBuffer);
+    public string Generate(int length = 64)
+    {
+        byte[] keyBuffer = new byte[length];
+        Generator.GetBytes(keyBuffer);
 
-            return WebEncoders.Base64UrlEncode(keyBuffer);
-        }
+        return WebEncoders.Base64UrlEncode(keyBuffer);
     }
 }

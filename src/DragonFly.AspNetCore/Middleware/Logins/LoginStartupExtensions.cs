@@ -10,24 +10,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.Logins
+namespace DragonFly.AspNetCore.API.Middlewares.Logins;
+
+static class LoginStartupExtensions
 {
-    static class LoginStartupExtensions
+    public static void MapDragonFlyLoginRestApi(this IEndpointRouteBuilder endpoints)
     {
-        public static void MapDragonFlyLoginRestApi(this IEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapLogin();
-        }
-
-        private static IEndpointConventionBuilder MapLogin(this IEndpointRouteBuilder endpoints)
-        {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<LoginMiddleware>()
-                                                    .Build();
-
-            return endpoints.MapPost("login", pipeline);
-        }
-
-        
+        endpoints.MapLogin();
     }
+
+    private static IEndpointConventionBuilder MapLogin(this IEndpointRouteBuilder endpoints)
+    {
+        RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
+                                                .UseMiddleware<LoginMiddleware>()
+                                                .Build();
+
+        return endpoints.MapPost("login", pipeline);
+    }
+
+
 }

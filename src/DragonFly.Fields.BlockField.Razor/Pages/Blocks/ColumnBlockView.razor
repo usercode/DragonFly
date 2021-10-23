@@ -29,18 +29,6 @@
 </div>
 
 @code {
-	[CascadingParameter]
-	public FieldComponent<BlockField> BlockField { get; set; }
-
-	protected override void OnInitialized()
-	{
-		base.OnInitialized();
-
-		//if (Block.Columns.Count == 0)
-		//{
-		//	Block.Columns.Add(new Column());
-		//}
-	}
 
 	private void AddColumn(int pos)
 	{

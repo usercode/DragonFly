@@ -1,6 +1,7 @@
 ﻿using DragonFly.Fields.BlockField.Blocks;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,11 @@ namespace DragonFly.Fields.BlockField
                 {
                     _default = new BlockFieldManager();
 
-                    _default.RegisterBlock<ColumnBlock>();
-                    _default.RegisterBlock<ImageBlock>();
-                    _default.RegisterBlock<TextBlock>();
-                    _default.RegisterBlock<HtmlBlock>();
+                    _default.Add<ColumnBlock>();
+                    _default.Add<AssetBlock>();
+                    _default.Add<TextBlock>();
+                    _default.Add<HtmlBlock>();
+                    _default.Add<UnknownBlock>();
                 }
 
                 return _default;
@@ -58,31 +60,31 @@ namespace DragonFly.Fields.BlockField
         /// RegisterElement
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
-        public void RegisterBlock<TBlock>()
+        public void Add<TBlock>()
             where TBlock : Block
         {
             _elementsByName[typeof(TBlock).Name] = typeof(TBlock);
             _elementsByType[typeof(TBlock)] = typeof(TBlock).Name;
         }
 
-        public Type GetBlockTypeByName(string name)
+        public bool TryGetBlockTypeByName(string name, [NotNullWhen(true)] out Type? type)
         {
-            if (_elementsByName.TryGetValue(name, out Type? type))
+            if (_elementsByName.TryGetValue(name, out type))
             {
-                return type;
+                return true;
             }
 
-            throw new Exception($"Block '{name}' not found.");
+            return false;
         }
 
-        public string GetBlockNameByType(Type type)
+        public bool TryGetBlockNameByType(Type type, [NotNullWhen(true)] out string? typeName)
         {
-            if (_elementsByType.TryGetValue(type, out string? name))
+            if (_elementsByType.TryGetValue(type, out typeName))
             {
-                return name;
+                return true;
             }
 
-            throw new Exception($"Block '{type.Name}' not found.");
+            return false;
         }
     }
 }

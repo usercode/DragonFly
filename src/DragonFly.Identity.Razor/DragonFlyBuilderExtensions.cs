@@ -1,5 +1,6 @@
-﻿using DragonFly.AspNetCore.Identity.Razor.Components;
-using DragonFly.Core.Builders;
+﻿using DragonFly.Core.Builders;
+using DragonFly.Identity.Razor.Services;
+using DragonFly.Identity.Services;
 using DragonFly.Razor.Pages.Settings;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -12,13 +13,14 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.Razor
 {
-    public static class Extensions
+    public static class DragonFlyBuilderExtensions
     {
         public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
         {
             builder.Services.AddTransient<ILoginService, IdentityLoginService>();
+            builder.Services.AddTransient<IUserStore, UserService>();
 
-            builder.Init(api => api.RegisterModule<Module>());
+            builder.Init(api => api.Module().Add<Module>());
 
             return builder;
         }

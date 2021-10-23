@@ -15,8 +15,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
+using DragonFly.AspNetCore.API;
 
-namespace DragonFly.AspNetCore.API
+namespace DragonFly.AspNetCore
 {
     public static class StartupExtensions
     {

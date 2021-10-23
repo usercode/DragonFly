@@ -6,16 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Middleware
+namespace DragonFly.AspNetCore.Middleware;
+
+public class DragonFlyContext
 {
-    public class DragonFlyContext
+    public DragonFlyContext(IOptions<DragonFlyOptions> options)
     {
-        public DragonFlyContext(IOptions<DragonFlyOptions> options)
-        {
-            Options = options.Value;
-        }
-
-        public DragonFlyOptions Options { get; }
-
+        Options = options.Value;
     }
+
+    public DragonFlyOptions Options { get; }
+
 }

@@ -32,5 +32,11 @@ namespace DragonFly.Razor.Modules.Base
         }
 
         public IList<ClientModule> Modules { get; }
+
+        public void Add<TModule>()
+            where TModule : ClientModule, new()
+        {
+            Modules.Add(new TModule());
+        }
     }
 }

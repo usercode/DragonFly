@@ -10,46 +10,46 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using DragonFly.Security;
 
-namespace DragonFly.AspNetCore.API.Middlewares.Logins
+namespace DragonFly.AspNetCore.API.Middlewares.Logins;
+
+class LoginMiddleware
 {
-    class LoginMiddleware
+    private readonly RequestDelegate _next;
+
+    public LoginMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public LoginMiddleware(RequestDelegate next)
+    public async Task InvokeAsync(
+        HttpContext context,
+        ILoginService loginService)
+    {
+        if (context.Request.Path == "/login" && context.Request.Method == HttpMethods.Post)
         {
-            _next = next;
-        }
+            LoginData? loginData = await context.Request.ReadFromJsonAsync<LoginData>();
 
-        public async Task InvokeAsync(
-            HttpContext context,
-            IOptions<DragonFlyOptions> options)
-        {
-            if(context.Request.Path == "/login" && context.Request.Method == HttpMethods.Post)
+            if (loginData == null)
             {
-                LoginData? loginData = await context.Request.ReadFromJsonAsync<LoginData>();
+                throw new Exception("Login data are not available.");
+            }
 
-                if (loginData == null)
-                {
-                    throw new Exception("Login data are not available.");
-                }
-
-                if (loginData.Password == options.Value.Password)
-                {
-                    await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { }, "password")));
-                }
-                else
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(3));
-
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                }
+            if (await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent))
+            {
+                //await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { }, "password")));
             }
             else
             {
-                await _next(context);
-            }         
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+            }
+        }
+        else
+        {
+            await _next(context);
         }
     }
 }

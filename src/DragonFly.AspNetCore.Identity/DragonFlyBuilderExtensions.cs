@@ -1,4 +1,7 @@
-﻿using DragonFly.Core.Builders;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.Identity.Middlewares;
+using DragonFly.Core.Builders;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -36,7 +39,7 @@ namespace DragonFly.AspNetCore.Identity
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromDays(1);
 
                 options.LoginPath = "/manager/login";
                 options.AccessDeniedPath = "/manager/access-denied";
@@ -47,6 +50,13 @@ namespace DragonFly.AspNetCore.Identity
                                                         .AddDefaultTokenProviders();
 
             options?.Invoke(identity);
+
+            return builder;
+        }
+
+        public static IDragonFlyApplicationBuilder UseIdentity(this IDragonFlyApplicationBuilder builder)
+        {
+            builder.UseIdentityApi();
 
             return builder;
         }
