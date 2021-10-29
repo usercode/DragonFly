@@ -1,6 +1,7 @@
 ﻿using DragonFly.Core.Builders;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;
+using DragonFly.Razor;
 using DragonFly.Razor.Pages.Settings;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -17,8 +18,10 @@ namespace DragonFly.AspNetCore.Identity.Razor
     {
         public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
         {
-            builder.Services.AddTransient<ILoginService, IdentityLoginService>();
-            builder.Services.AddTransient<IUserStore, UserService>();
+            builder.AddRazorRouting();
+
+            builder.Services.AddTransient<ILoginService, LoginService>();
+            builder.Services.AddTransient<IIdentityService, IdentityService>();
 
             builder.Init(api => api.Module().Add<Module>());
 

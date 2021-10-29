@@ -48,6 +48,8 @@ namespace DragonFly.Client.Core
         {
             DragonFlyBuilder builder = new DragonFlyBuilder(hostBuilder.Services);
 
+            builder.AddRazorRouting();
+
             DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
             DragonFlyApp.Default.ClientBaseUrl = clientBaseUrl;
 
@@ -84,9 +86,6 @@ namespace DragonFly.Client.Core
                 api.Module().Add<AssetModule>();
                 api.Module().Add<WebHookModule>();
                 api.Module().Add<SettingsModule>();
-
-                api.AssetMetadata().Add<ImageMetadata>();
-                api.AssetMetadata().Add<PdfMetadata>();
             });
 
             return builder;

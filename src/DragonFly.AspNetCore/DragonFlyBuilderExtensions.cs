@@ -1,5 +1,4 @@
 ﻿using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNet.Middleware;
 using DragonFly.AspNet.Middleware.Builders;
 using DragonFly.AspNet.Options;
@@ -37,16 +36,7 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
-        services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                                        .AddCookie(x =>
-                                        {
-                                            x.Events.OnRedirectToLogin = context =>
-                                            {
-                                                context.Response.StatusCode = StatusCodes.Status401Unauthorized; return Task.CompletedTask;
-                                            };
-                                        });
-        services.AddAuthorization();
+        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();       
 
         services.AddSingleton<DragonFlyContext>();
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
@@ -94,14 +84,10 @@ public static class DragonFlyBuilderExtensions
                                 x =>
                                 {
                                     x.UseRouting();
-                                    x.UseAuthentication();
-                                    x.UseAuthorization();
-                                    x.UseMiddleware<InternalApiKeyMiddleware>();
-                                    x.UseMiddleware<LoginMiddleware>();
-                                    x.UseMiddleware<RequireAuthentificationMiddleware>();
-                                    x.UseImageWizard();
 
                                     dragonFlyBuilder(new DragonFlyApplicationBuilder(x));
+
+                                    x.UseImageWizard();
                                 }
             );
 

@@ -1,6 +1,6 @@
 <CascadingBlazoredModal>
     <CascadingAuthenticationState>
-        <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(DragonFly.Client.Core.DragonFlyClientExtensions).Assembly }">
+        <Router AppAssembly="@typeof(Program).Assembly" AdditionalAssemblies="RazorRoutingManager.Default.Items">
             <Found Context="routeData">
                 <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                     <NotAuthorized>

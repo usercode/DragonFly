@@ -1,0 +1,14 @@
+﻿@inherits RoleListBase
+
+<BSListGroup>
+	@foreach(var role in Roles)
+	{
+		<a class="list-group-item list-group-item-action" @onclick="x => OpenItem(role)">
+			<BSRow>
+				<BSCol LG="5">
+					@role.Name
+				</BSCol>			
+			</BSRow>			
+		</a>
+	}
+</BSListGroup>

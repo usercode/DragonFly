@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Client.Base
 {
     public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailComponent<T>
-        where T : ContentBase
+        where T : Entity
     {
         public EntityDetailComponent()
         {

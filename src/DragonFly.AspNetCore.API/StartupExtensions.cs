@@ -2,7 +2,6 @@
 using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
 using DragonFly.AspNetCore.API.Middlewares.Assets;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
-using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNet.Middleware;
 using DragonFly.Core.Builders;
 using Microsoft.AspNetCore.Builder;

@@ -82,7 +82,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder
                 }
             }
 
-            if (schema.IsNew)
+            if (schema.IsNew())
             {
                 await Storage.CreateAsync(schema);
             }

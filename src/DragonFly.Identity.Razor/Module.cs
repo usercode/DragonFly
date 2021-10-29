@@ -1,4 +1,6 @@
 ﻿using DragonFly.Identity.Razor.Components;
+using DragonFly.Identity.Razor.Components.Roles;
+using DragonFly.Identity.Razor.Components.Users;
 using DragonFly.Razor.Modules;
 using System;
 using System.Collections.Generic;

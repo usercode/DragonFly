@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/asset-detail.css",
     "inputFile": "wwwroot/css/asset-detail.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/bootstrap_start.css",
+    "inputFile": "wwwroot/css/bootstrap_start.scss"
   }
 ]

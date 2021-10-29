@@ -6,15 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AspNetCore.Identity.Mongo" Version="8.3.1" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.11" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.11" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.13.2" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DragonFly.AspNetCore.Identity\DragonFly.AspNetCore.Identity.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Middlewares\Permissions\" />
+	  <Folder Include="Models\" />
+	</ItemGroup>
 
 </Project>

@@ -1,0 +1,63 @@
+﻿@page "/settings/identity/user/{EntityId:guid}"
+@inherits UserDetailBase
+
+@if (Entity != null)
+{
+    <div class="user-detail">
+
+        <div style="flex: 0">
+            <h1>User</h1>
+
+            <Toolbar Items="ToolbarItems"></Toolbar>
+        </div>
+        <div class="scroll-content" style="flex:1">
+            <EditForm Model="Entity">
+                <div>
+                    <div class="col-md-6">
+
+                        <!-- id -->
+                        <BSRow class="form-group">
+                            <label class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                            </div>
+                        </BSRow>
+
+                        <!-- username -->
+                        <BSRow class="form-group">
+                            <label class="col-sm-2 col-form-label">Username</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" @bind-value="@Entity.UserName" />
+                            </div>
+                        </BSRow>
+
+                        <BSRow class="form-group">
+                                <label class="col-sm-2 col-form-label">Roles</label>
+                                <div class="col-sm-10">                                    
+                                        @foreach(var role in Roles.OrderBy(x => x.Object.Name))
+                                        {
+                                            <div class="form-check">
+                                                 <input id="checkRole" type="checkbox" class="form-check-input" value="" @bind="role.IsSelected" />
+                                            
+                                            <label class="form-check-label" for="checkRole">
+                                                @role.Object.Name
+                                                </label>
+                                            </div>
+                                        }                                    
+                                </div>                                
+                        </BSRow>
+
+                          <!-- username -->
+                        <BSRow class="form-group">
+                            <label class="col-sm-2 col-form-label">New password</label>
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" @bind-value="@NewPassword" />
+                            </div>
+                        </BSRow>
+                        
+                    </div>
+                 </div>
+          </EditForm>
+        </div>
+   </div>
+}

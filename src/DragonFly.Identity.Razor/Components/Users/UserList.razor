@@ -1,0 +1,21 @@
+﻿@inherits UserListBase
+
+<BSListGroup>
+	@foreach(var user in Users)
+	{
+			<a class="list-group-item list-group-item-action" @onclick="x => OpenItem(user)">
+			<BSRow>
+				<BSCol LG="5">
+					@user.UserName
+				</BSCol>
+				<BSCol LG="5">
+					@user.Email
+				</BSCol>
+			</BSRow>
+			</a>
+	}
+</BSListGroup>
+
+@code {
+	
+}

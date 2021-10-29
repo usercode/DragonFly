@@ -81,7 +81,7 @@ namespace DragonFly.Data
             Client = new MongoClient(settings); // connect to localhost
 
             Database = Client.GetDatabase(Options.Database);
-
+            
             ContentStructures = Database.GetCollection<MongoContentStructure>("ContentStructures");
             ContentSchemas = Database.GetCollection<MongoContentSchema>("ContentSchemas");
             ContentNodes = Database.GetCollection<MongoContentNode>("ContentNodes");

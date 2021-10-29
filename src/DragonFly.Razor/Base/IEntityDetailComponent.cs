@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Client.Base
 {
     public interface IEntityDetailComponent<T>
-        where T : ContentBase
+        where T : Entity
     {
 
         [Inject]

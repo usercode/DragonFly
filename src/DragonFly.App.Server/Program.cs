@@ -24,8 +24,7 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddGraphQLApi()
                     .AddMongoDbStorage()
-                    //.AddIdentityEF(db => db.UseSqlite("Filename=./dragonfly_identity.db"))
-                    .AddIdentityMongoDb(db => db.ConnectionString = "mongodb://localhost/DragonFly_Identity")
+                    .AddIdentityMongoDb()
                     .AddSchemaBuilder()
                     .AddBlockField();
 
@@ -41,15 +40,15 @@ if (env.IsDevelopment())
     app.UseDeveloperExceptionPage();
     app.UseWebAssemblyDebugging();
 }
+
 app.UseHttpsRedirection();
 app.UseDragonFly(
                 x =>
                 {
-                    x.UseRestApi();
-                    x.UseGraphQLApi();
                     x.UseIdentity();
+                    x.UseRestApi();
+                    x.UseGraphQLApi();                    
                 });
 app.UseDragonFlyManager();
 
 app.Run();
-        

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Security
 {
+    /// <summary>
+    /// ILoginService
+    /// </summary>
     public interface ILoginService
     {
         Task<bool> LoginAsync(string username, string password, bool isPersistent);
