@@ -13,19 +13,19 @@ COPY ["DragonFly.AspNetCore/DragonFly.AspNetCore.csproj", "DragonFly.AspNetCore/
 COPY ["DragonFly.Core/DragonFly.Core.csproj", "DragonFly.Core/"]
 COPY ["DragonFly.AspNetCore.API.Client/DragonFly.AspNetCore.API.Client.csproj", "DragonFly.AspNetCore.API.Client/"]
 COPY ["DragonFly.AspNetCore.API.Exports/DragonFly.AspNetCore.API.Exports.csproj", "DragonFly.AspNetCore.API.Exports/"]
-COPY ["DragonFly.Fields.BlockField.AspNetCore/DragonFly.Fields.BlockField.AspNetCore.csproj", "DragonFly.Fields.BlockField.AspNetCore/"]
+COPY ["DragonFly.Fields.BlockField.Storage/DragonFly.Fields.BlockField.Storage.csproj", "DragonFly.Fields.BlockField.Storage/"]
 COPY ["DragonFly.Fields.BlockField/DragonFly.Fields.BlockField.csproj", "DragonFly.Fields.BlockField/"]
+COPY ["DragonFly.Storage.MongoDB/DragonFly.Storage.MongoDB.csproj", "DragonFly.Storage.MongoDB/"]
 COPY ["DragonFly.App.Client/DragonFly.App.Client.csproj", "DragonFly.App.Client/"]
 COPY ["DragonFly.Identity.Razor/DragonFly.Identity.Razor.csproj", "DragonFly.Identity.Razor/"]
 COPY ["DragonFly.Identity/DragonFly.Identity.csproj", "DragonFly.Identity/"]
 COPY ["DragonFly.Razor/DragonFly.Razor.csproj", "DragonFly.Razor/"]
 COPY ["DragonFly.Fields.BlockField.Razor/DragonFly.Fields.BlockField.Razor.csproj", "DragonFly.Fields.BlockField.Razor/"]
 COPY ["DragonFly.AspNetCore.GraphQL/DragonFly.AspNetCore.GraphQL.csproj", "DragonFly.AspNetCore.GraphQL/"]
-COPY ["DragonFly.Storage.MongoDB/DragonFly.Storage.MongoDB.csproj", "DragonFly.Storage.MongoDB/"]
 COPY ["DragonFly.AspNetCore.Permissions/DragonFly.AspNetCore.Permissions.csproj", "DragonFly.AspNetCore.Permissions/"]
 COPY ["DragonFly.AspNetCore.API/DragonFly.AspNetCore.API.csproj", "DragonFly.AspNetCore.API/"]
+COPY ["DragonFly.AspNetCore.Identity.MongoDB/DragonFly.AspNetCore.Identity.MongoDB.csproj", "DragonFly.AspNetCore.Identity.MongoDB/"]
 COPY ["DragonFly.SampleData/DragonFly.SampleData.csproj", "DragonFly.SampleData/"]
-COPY ["DragonFly.Identity.AspNetCore/DragonFly.Identity.AspNetCore.csproj", "DragonFly.Identity.AspNetCore/"]
 RUN dotnet restore "DragonFly.App.Server/DragonFly.App.Server.csproj"
 COPY . .
 WORKDIR "/src/DragonFly.App.Server"

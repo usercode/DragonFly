@@ -9,7 +9,7 @@ namespace DragonFly.Core.Permissions
     /// <summary>
     /// PermissionManager
     /// </summary>
-    public class PermissionManager
+    public class PermissionManager : IPermissionElement
     {
         private static PermissionManager? _default;
 
@@ -35,5 +35,21 @@ namespace DragonFly.Core.Permissions
         /// Items
         /// </summary>
         public IList<PermissionItem> Items { get; }
+
+        public IEnumerable<PermissionItem> Childs => Items;
+
+        public PermissionItem Add(PermissionItem permissionItem)
+        {
+            PermissionItem? found = Items.FirstOrDefault(x => x.Name == permissionItem.Name);
+
+            if (found != null)
+            {
+                return found;
+            }
+
+            Items.Add(permissionItem);
+
+            return permissionItem;
+        }
     }
 }

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Core.Permissions
 {
-    public class PermissionItem
+    public interface IPermissionElement
     {
-        public string Name { get; set; }
-
-
+        PermissionItem Add(PermissionItem permissionItem);
     }
 }

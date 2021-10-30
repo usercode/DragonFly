@@ -20,7 +20,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.Fields.BlockField\DragonFly.Fields.BlockField.csproj" />
-		<ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />
 	</ItemGroup>
 
 </Project>

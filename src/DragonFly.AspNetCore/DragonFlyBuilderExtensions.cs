@@ -4,11 +4,8 @@ using DragonFly.AspNet.Middleware.Builders;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Services;
-using DragonFly.Core.Assets;
 using DragonFly.Core.Builders;
 using DragonFly.Core.WebHooks;
-using DragonFly.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -22,9 +19,6 @@ using System.Threading.Tasks;
 using DragonFly.Content;
 using ImageWizard;
 using ImageWizard.DocNET;
-using ImageWizard.MongoDB;
-using DragonFly.Assets;
-using Microsoft.AspNetCore.Identity;
 using DragonFly.Core;
 
 namespace DragonFly.AspNetCore;
@@ -36,7 +30,7 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();       
+        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 
         services.AddSingleton<DragonFlyContext>();
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
@@ -64,10 +58,8 @@ public static class DragonFlyBuilderExtensions
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
         {
-            api.RegisterDefaultFields();
-
-            api.AssetMetadata().Add<ImageMetadata>();
-            api.AssetMetadata().Add<PdfMetadata>();
+            api.ContentField().AddDefaults();
+            api.AssetMetadata().AddDefaults();
         });
 
         return builder;

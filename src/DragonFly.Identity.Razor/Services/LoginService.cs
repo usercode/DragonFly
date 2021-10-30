@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.Razor
 {
-    public class LoginService : ILoginService
+    class LoginService : ILoginService
     {
         public LoginService(HttpClient client)
         {
@@ -22,7 +22,7 @@ namespace DragonFly.AspNetCore.Identity.Razor
 
         public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
         {
-            var response = await Client.PostAsJsonAsync("login", new LoginData() { Username = username, Password = password, IsPersistent = false });
+            HttpResponseMessage response = await Client.PostAsJsonAsync("login", new LoginData() { Username = username, Password = password, IsPersistent = isPersistent });
 
             return response.IsSuccessStatusCode;
         }

@@ -16,12 +16,13 @@ using Microsoft.AspNetCore.Builder;
 using DragonFly.AspNetCore.Identity.Middlewares;
 using Microsoft.AspNetCore.Http;
 using DragonFly.AspNetCore.API.Middlewares.Logins;
+using DragonFly.AspNetCore.Identity.MongoDB;
 
-namespace DragonFly.AspNetCore.Identity.MongoDB
+namespace DragonFly.Identity.AspNetCore.MongoDB
 {
     public static class DragonFlyBuilderExtensions
     {
-        public static IDragonFlyBuilder AddIdentityMongoDb(this IDragonFlyBuilder builder)
+        public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
         {
             return AddIdentityMongoDb(builder, x => { });
         }

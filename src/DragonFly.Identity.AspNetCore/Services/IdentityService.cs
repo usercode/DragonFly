@@ -51,6 +51,11 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
         {
             MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
 
+            if (user == null)
+            {
+                return false;
+            }
+
             string hashed = PasswordHashGenerator.Generate(user.Username, Convert.FromBase64String(user.Salt), password);
 
             if (user.Password != hashed)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DragonFly.Core.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
         {
             Database = "DragonFly_Identity";
             Hostname = "localhost";
+
+            InitialUsername = DefaultSecurity.DefaultUsername;
+            InitialPassword = DefaultSecurity.DefaultPassword;
         }
 
         /// <summary>
@@ -36,5 +40,9 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
         /// Password
         /// </summary>
         public string? Password { get; set; }
+
+        public string InitialUsername { get; set; }
+
+        public string InitialPassword { get; set; }
     }
 }

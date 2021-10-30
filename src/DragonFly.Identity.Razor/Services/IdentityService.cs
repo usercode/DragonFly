@@ -14,7 +14,7 @@ namespace DragonFly.Identity.Razor.Services
     /// <summary>
     /// IdentityService
     /// </summary>
-    internal class IdentityService : IIdentityService
+    class IdentityService : IIdentityService
     {
         public IdentityService(HttpClient client)
         {

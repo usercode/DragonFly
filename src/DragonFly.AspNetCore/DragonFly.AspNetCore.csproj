@@ -28,6 +28,7 @@
     <PackageReference Include="ImageWizard.MongoDB" Version="2.1.9" />
     <PackageReference Include="ImageWizard.SvgNet" Version="2.1.9" />
     <PackageReference Include="PdfPig" Version="0.1.5" />
+    <PackageReference Include="Scrutor" Version="3.3.0" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
   
@@ -38,6 +39,10 @@
 
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Permissions\" />
   </ItemGroup>  
   
 </Project>

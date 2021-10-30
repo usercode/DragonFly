@@ -2,19 +2,16 @@ using System;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.Identity;
-using DragonFly.AspNetCore.Identity.MongoDB;
+using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.MongoDB.Options;
 using ImageWizard.Core.ImageCaches;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
-            
+
 builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
 builder.Services.Configure<FileCacheSettings>(builder.Configuration.GetSection("AssetCache"));
@@ -24,9 +21,11 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddGraphQLApi()
                     .AddMongoDbStorage()
-                    .AddIdentityMongoDb()
+                    .AddMongoDbIdentity()
                     .AddSchemaBuilder()
-                    .AddBlockField();
+                    .AddBlockField()
+                    //.AddPermissions()
+                    ;
 
 var app = builder.Build();
 
@@ -47,7 +46,7 @@ app.UseDragonFly(
                 {
                     x.UseIdentity();
                     x.UseRestApi();
-                    x.UseGraphQLApi();                    
+                    x.UseGraphQLApi();
                 });
 app.UseDragonFlyManager();
 
