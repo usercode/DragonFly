@@ -24,7 +24,7 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddSchemaBuilder()
                     .AddBlockField()
-                    //.AddPermissions()
+                    .AddPermissions()
                     ;
 
 var app = builder.Build();
@@ -47,6 +47,7 @@ app.UseDragonFly(
                     x.UseIdentity();
                     x.UseRestApi();
                     x.UseGraphQLApi();
+                    x.UsePermission();
                 });
 app.UseDragonFlyManager();
 

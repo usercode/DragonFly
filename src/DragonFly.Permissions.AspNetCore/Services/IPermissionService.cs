@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Permissions
+namespace DragonFly.Permissions.AspNetCore
 {
-    public interface IPermissionElement
+    public interface IPermissionService
     {
-        PermissionItem Add(PermissionItem permissionItem);
+        Task AuthorizeAsync(string permission);
     }
 }

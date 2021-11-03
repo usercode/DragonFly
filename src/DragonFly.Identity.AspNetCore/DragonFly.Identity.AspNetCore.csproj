@@ -13,10 +13,10 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+	  <ProjectReference Include="..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Middlewares\Permissions\" />
 	  <Folder Include="Models\" />
 	</ItemGroup>
 

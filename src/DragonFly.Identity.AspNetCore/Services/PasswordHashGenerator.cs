@@ -11,16 +11,16 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
 {
     class PasswordHashGenerator : IPasswordHashGenerator
     {
-        public string Generate(string username, byte[] salt, string password)
+        public byte[] Generate(string username, byte[] salt, string password)
         {
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                                                                     password: password,
-                                                                     salt: salt,
-                                                                     prf: KeyDerivationPrf.HMACSHA512,
-                                                                     iterationCount: 10_000,
-                                                                     numBytesRequested: 512 / 8));
+            byte[] hash = KeyDerivation.Pbkdf2(
+                                                password: password,
+                                                salt: salt,
+                                                prf: KeyDerivationPrf.HMACSHA512,
+                                                iterationCount: 10_000,
+                                                numBytesRequested: 512 / 8);
 
-            return hashed;
+            return hash;
         }
 
         public byte[] GenerateRandomSalt()

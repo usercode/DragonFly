@@ -1,7 +1,9 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
+using DragonFly.ContentItems;
 using DragonFly.Core.ContentItems;
+using DragonFly.Permissions.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
@@ -18,10 +20,10 @@ namespace DragonFly.AspNetCore.Content
     public class ContentStorageAuthorization : IContentStorage
     {
         public ContentStorageAuthorization(
-            IContentStorage storage, 
-            IDragonFlyApi api)
+            IContentStorage storage,
+            IPermissionService permissionService)
         {
-            Api = api;
+            PermissionService = permissionService;
             Storage = storage;
         }
 
@@ -33,53 +35,53 @@ namespace DragonFly.AspNetCore.Content
         /// <summary>
         /// Authorization
         /// </summary>
-        public IDragonFlyApi Api { get; }
+        public IPermissionService PermissionService { get; }
 
         public async Task CreateAsync(ContentItem contentItem)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentCreate);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentCreate);
 
             await Storage.CreateAsync(contentItem);
         }
 
         public async Task DeleteAsync(string schema, Guid id)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentDelete);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentDelete);
 
             await Storage.DeleteAsync(schema, id);
         }
 
         public async Task<ContentItem> GetContentAsync(string schema, Guid id)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentRead);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentRead);
 
             return await Storage.GetContentAsync(schema, id);
         }
 
         public async Task PublishAsync(string schema, Guid id)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentPublish);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentPublish);
 
             await Storage.PublishAsync(schema, id);
         }
 
         public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentRead);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentQuery);
 
             return await Storage.QueryAsync(query);
         }
 
         public async Task UnpublishAsync(string schema, Guid id)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentUnpublish);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentUnpublish);
 
             await Storage.UnpublishAsync(schema, id);
         }
 
         public async Task UpdateAsync(ContentItem entity)
         {
-            await Api.AuthorizeAsync(ContentItemPermissions.ContentUpdate);
+            await PermissionService.AuthorizeAsync(ContentItemPermissions.ContentUpdate);
 
             await Storage.UpdateAsync(entity);
         }

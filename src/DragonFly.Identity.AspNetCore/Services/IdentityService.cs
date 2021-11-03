@@ -20,14 +20,16 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
     /// <summary>
     /// IdentityService
     /// </summary>
-    class IdentityService : IIdentityService, ILoginService
+    class IdentityService : IIdentityService
     {
         public IdentityService(
             MongoIdentityStore store,
+            IDragonFlyApi api,
             IHttpContextAccessor httpContextAccessor,
             IPasswordHashGenerator passwordGenerater)
         {
             Store = store;
+            Api = api;
             HttpContext = httpContextAccessor;
             PasswordHashGenerator = passwordGenerater;
         }
@@ -47,37 +49,11 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
         /// </summary>
         public IHttpContextAccessor HttpContext { get; }
 
-        public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
-        {
-            MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
+        /// <summary>
+        /// Api
+        /// </summary>
+        public IDragonFlyApi Api { get; }
 
-            if (user == null)
-            {
-                return false;
-            }
-
-            string hashed = PasswordHashGenerator.Generate(user.Username, Convert.FromBase64String(user.Salt), password);
-
-            if (user.Password != hashed)
-            {
-                return false;
-            }
-
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("UserId", user.Id.ToString()));
-            claims.Add(new Claim("Username", user.Username));
-
-            var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
-
-            await HttpContext.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
-
-            return true;
-        }
-
-        public async Task Logout()
-        {
-            await HttpContext.HttpContext!.SignOutAsync();
-        }
 
         public async Task CreateUserAsync(IdentityUser user, string password)
         {
@@ -103,14 +79,15 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
         public async Task ChangePasswordAsync(MongoIdentityUser user, string newPassword)
         {
             byte[] salt = PasswordHashGenerator.GenerateRandomSalt();
-            string password = PasswordHashGenerator.Generate(user.Username, salt, newPassword);
+            byte[] password = PasswordHashGenerator.Generate(user.Username, salt, newPassword);
 
             string saltAsBase64 = Convert.ToBase64String(salt);
+            string passwordAsBase64 = Convert.ToBase64String(password);
 
             await Store.Users.UpdateOneAsync(
                                 Builders<MongoIdentityUser>.Filter.Eq(x => x.Id, user.Id),
                                 Builders<MongoIdentityUser>.Update
-                                                    .Set(x => x.Password, password)
+                                                    .Set(x => x.Password, passwordAsBase64)
                                                     .Set(x => x.Salt, saltAsBase64));
         }
 
@@ -150,6 +127,17 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
 
         public async Task CreateRoleAsync(IdentityRole role)
         {
+            List<string> policies = new List<string>();
+
+            foreach (string p in role.Permissions)
+            {
+                policies.AddRange(Api.Permission().GetPolicy(p));
+            }
+
+            policies = policies.Distinct().ToList();
+
+            role.Permissions = policies;
+
             MongoIdentityRole identity = role.ToMongo();
 
             await Store.Roles.InsertOneAsync(identity);
@@ -164,26 +152,52 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
             return items.Select(x => x.ToModel()).ToList();
         }
 
-        public async Task<IEnumerable<IdentityPermission>> GetPermissionsAsync()
+        public async Task<IEnumerable<string>> GetPermissionsAsync(IdentityUser user)
         {
-            throw new Exception();
-            //return await Store.Permissions.AsQueryable().ToListAsync();
+            IEnumerable<IdentityRole> roles = Store.Roles
+                                                      .AsQueryable()
+                                                      .Where(x => user.Roles.Any(r => r.Id == x.Id))
+                                                      .ToList()
+                                                      .Select(x => x.ToModel())
+                                                      .ToList();
+
+            IDictionary<string, string> permissions = new Dictionary<string, string>();
+
+            foreach (IdentityRole role in roles)
+            {
+                foreach (string p in role.Permissions)
+                {
+                    permissions[p] = p;
+                }
+            }
+
+            return permissions.Keys;
         }
 
         public async Task UpdateUserAsync(IdentityUser user)
         {
             await Store.Users.UpdateOneAsync(Builders<MongoIdentityUser>.Filter.Eq(x => x.Id, user.Id),
                                             Builders<MongoIdentityUser>.Update
-                                                                        .Set(x => x.Username, user.UserName)
+                                                                        .Set(x => x.Username, user.Username)
                                                                         .Set(x=> x.Roles, user.Roles.Select(r => r.Id).ToList())                                                                        
                                                                         );
         }
 
         public async Task UpdateRoleAsync(IdentityRole role)
         {
+            List<string> policies = new List<string>();
+
+            foreach (string p in role.Permissions)
+            {
+                policies.AddRange(Api.Permission().GetPolicy(p));
+            }
+
+            policies = policies.Distinct().ToList();
+
             await Store.Roles.UpdateOneAsync(Builders<MongoIdentityRole>.Filter.Eq(x => x.Id, role.Id),
                                             Builders<MongoIdentityRole>.Update
                                                                         .Set(x => x.Name, role.Name)
+                                                                        .Set(x => x.Permissions, policies)
                                                                         );
         }
 

@@ -17,6 +17,11 @@ using DragonFly.AspNetCore.Identity.Middlewares;
 using Microsoft.AspNetCore.Http;
 using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNetCore.Identity.MongoDB;
+using DragonFly.Permissions.AspNetCore;
+using DragonFly.Identity.AspNetCore.Permissions;
+using DragonFly.Identity.AspNetCore.Services;
+using DragonFly.Identity.AspNetCore.Authorization;
+using DragonFly.Identity.Permissions;
 
 namespace DragonFly.Identity.AspNetCore.MongoDB
 {
@@ -31,9 +36,11 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
         {
             builder.Services.Configure(options);
 
-            builder.Services.AddTransient<ILoginService, IdentityService>();
+            builder.Services.AddTransient<ILoginService, LoginService>();
             builder.Services.AddTransient<IIdentityService, IdentityService>();
-            builder.Services.AddTransient<IPasswordHashGenerator, PasswordHashGenerator>();
+
+            builder.Services.AddSingleton<IPermissionService, PermissionService>();
+            builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
 
             builder.Services.AddSingleton<MongoIdentityStore>();
 
@@ -41,9 +48,30 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
                             .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie();
 
-            builder.Services.AddAuthorization();
+            builder.Services.Decorate<IIdentityService, IdentityServiceAuthorization>();
+
+            builder.Init(api =>
+            {
+                api.Permission()
+                                .Add("User", x => x
+                                                .Add(IdentityPermissions.UserRead, description: "Read user", sortkey: 0, childs: x => x
+                                                        .Add(IdentityPermissions.UserQuery, description: "Query user"))
+                                                .Add(IdentityPermissions.UserCreate, description: "Create user", sortkey: 1)
+                                                .Add(IdentityPermissions.UserUpdate, description: "Update user", sortkey: 2)
+                                                .Add(IdentityPermissions.UserDelete, description: "Delete user", sortkey: 3)
+                                                )
+                                .Add("Role", x => x
+                                                .Add(IdentityPermissions.RoleRead, description: "Read role", sortkey: 0, childs: x => x
+                                                        .Add(IdentityPermissions.RoleQuery, description: "Query role"))
+                                                .Add(IdentityPermissions.RoleCreate, description: "Create role", sortkey: 1)
+                                                .Add(IdentityPermissions.RoleUpdate, description: "Update role", sortkey: 2)
+                                                .Add(IdentityPermissions.RoleDelete, description: "Delete role", sortkey: 3)
+                                );
+            });
 
             builder.PostInit<SeedDataAction>();
+
+            builder.Services.AddAuthorization();
 
             return builder;
         }

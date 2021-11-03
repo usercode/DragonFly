@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems
+namespace DragonFly.ContentItems
 {
     public class ContentItemPermissions
     {
+        public const string Content = "Content";
+
         public const string ContentRead = "ContentRead";
+        public const string ContentQuery = "ContentQuery";
         public const string ContentCreate = "ContentCreate";
         public const string ContentUpdate = "ContentUpdate";
         public const string ContentDelete = "ContentDelete";

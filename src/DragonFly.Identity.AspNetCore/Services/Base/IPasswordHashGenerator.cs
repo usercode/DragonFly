@@ -8,7 +8,7 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services.Base
 {
     public interface IPasswordHashGenerator
     {
-        string Generate(string username, byte[] salt, string password);
+        byte[] Generate(string username, byte[] salt, string password);
 
         byte[] GenerateRandomSalt();
     }

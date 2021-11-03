@@ -1,0 +1,35 @@
+﻿<div class="form-check">
+    <input id="check_@Permission.Element.Name" type="checkbox" class="form-check-input" @bind="Permission.IsSelected" />
+                                            
+    <label class="form-check-label" for="check_@Permission.Element.Name">
+        @if(string.IsNullOrEmpty(Permission.Element.Description) == false)
+        {
+        @Permission.Element.Description    
+        }
+        else
+        {
+            @Permission.Element.Name            
+        }
+        
+        </label>
+    </div>
+
+    <div style="margin-left: 1.5rem">
+        @foreach(SelectableElementTree<Permission> sub in Permission.Childs)
+        {
+            <PermissionItemView Permission="sub" />
+        }
+    </div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Permission.IsSelectedChanged += x => StateHasChanged();
+    }
+
+    [Parameter]
+    public SelectableElementTree<Permission> Permission { get; set; }
+}

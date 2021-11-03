@@ -1,5 +1,4 @@
-﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +27,5 @@ namespace DragonFly.Identity.Services
         Task<IEnumerable<IdentityRole>> GetRolesAsync();
 
         Task<IEnumerable<IdentityUser>> GetUsersAsync();
-
-        Task<IEnumerable<IdentityPermission>> GetPermissionsAsync();
     }
 }

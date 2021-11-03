@@ -7,15 +7,25 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Identity
 {
+    /// <summary>
+    /// IdentityRole
+    /// </summary>
     public class IdentityRole : Entity
     {
         public IdentityRole()
         {
-            Permissions = new List<IdentityPermission>();
+            Name = string.Empty;
+            Permissions = new List<string>();
         }
 
+        /// <summary>
+        /// Name
+        /// </summary>
         public string Name { get; set; }
 
-        public IList<IdentityPermission> Permissions { get; set; }
+        /// <summary>
+        /// Permissions
+        /// </summary>
+        public IList<string> Permissions { get; set; }
     }
 }

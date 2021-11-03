@@ -1,5 +1,4 @@
 ﻿using BlazorStrap;
-using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Razor.Base;
@@ -24,7 +23,7 @@ namespace DragonFly.Identity.Razor.Components.Users
         [Inject]
         public IIdentityService UserStore { get; set; }
 
-        public IEnumerable<SelectableObject<IdentityRole>> Roles { get; set; }
+        public IEnumerable<SelectableElement<IdentityRole>> Roles { get; set; }
 
         public string NewPassword { get; set; }
 
@@ -50,7 +49,7 @@ namespace DragonFly.Identity.Razor.Components.Users
 
             IEnumerable<IdentityRole> roles = await UserStore.GetRolesAsync();
 
-            Roles = roles.Select(x => new SelectableObject<IdentityRole>(Entity.Roles.Any(r => r.Id == x.Id), x)).ToList();
+            Roles = roles.Select(x => new SelectableElement<IdentityRole>(Entity.Roles.Any(r => r.Id == x.Id), x)).ToList();
 
             
         }
@@ -59,7 +58,7 @@ namespace DragonFly.Identity.Razor.Components.Users
         {
             base.OnSaving(args);
 
-            Entity.Roles = Roles.Where(x => x.IsSelected).Select(x => x.Object).ToList();
+            Entity.Roles = Roles.Where(x => x.IsSelected).Select(x => x.Element).ToList();
         }
 
         protected override async Task UpdateActionAsync()

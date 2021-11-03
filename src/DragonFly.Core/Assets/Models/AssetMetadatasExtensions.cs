@@ -12,11 +12,8 @@ namespace DragonFly.Content
         {
             string name = AssetMetadataManager.Default.GetMetadataName(metadata.GetType());
 
-            if (asset.Metaddata.TryAdd(name, metadata) == false)
-            {
-                asset.Metaddata[name] = metadata;
-            }
-
+            asset.Metaddata[name] = metadata;
+            
             return asset;
         }
 

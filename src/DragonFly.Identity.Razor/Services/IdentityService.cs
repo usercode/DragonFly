@@ -1,5 +1,4 @@
-﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
-using DragonFly.Identity.Commands;
+﻿using DragonFly.Identity.Commands;
 using DragonFly.Identity.Services;
 using System;
 using System.Collections.Generic;
@@ -45,20 +44,6 @@ namespace DragonFly.Identity.Razor.Services
             HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user", user);
 
             response.EnsureSuccessStatusCode();
-        }
-
-        public async Task<IEnumerable<IdentityPermission>> GetPermissionsAsync()
-        {
-            HttpResponseMessage response = await Client.PostAsJsonAsync($"identity/permission/query", new StringContent(""));
-
-            IList<IdentityPermission>? result = await response.Content.ReadFromJsonAsync<IList<IdentityPermission>>();
-
-            if (result == null)
-            {
-                throw new Exception();
-            }
-
-            return result;
         }
 
         public async Task<IEnumerable<IdentityRole>> GetRolesAsync()
