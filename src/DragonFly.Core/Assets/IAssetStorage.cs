@@ -1,4 +1,5 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
+using DragonFly.Content;
 using DragonFly.Core.Assets.Queries;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Storage
 {
     /// <summary>
     /// IAssetStorage
@@ -27,8 +28,8 @@ namespace DragonFly.Content
 
         Task UploadAsync(Guid id, string mimetype, Stream stream);
 
-        Task ApplyMetadataAsync(Guid id);
-
         Task<Stream> DownloadAsync(Guid id);
+
+        Task ApplyMetadataAsync(Guid id);        
     }
 }

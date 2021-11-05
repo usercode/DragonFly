@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DragonFly.Content;
+using DragonFly.Storage;
 
 namespace DragonFly.AspNetCore.API.Middlewares.Assets
 {

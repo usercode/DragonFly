@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.ContentItems
 {
-    public class ContentItemPermissions
+    public class ContentPermissions
     {
         public const string Content = "Content";
 

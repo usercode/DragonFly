@@ -33,6 +33,8 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+	  <ProjectReference Include="..\DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj" />
+	  <ProjectReference Include="..\DragonFly.Permissions.Razor\DragonFly.Permissions.Razor.csproj" />
 	  <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
 	  <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />
 	</ItemGroup>

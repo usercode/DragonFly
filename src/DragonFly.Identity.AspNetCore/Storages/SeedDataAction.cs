@@ -6,6 +6,7 @@ using DragonFly.Core.Security;
 using DragonFly.Identity;
 using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
+using DragonFly.MongoDB.Options;
 using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,14 +26,14 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
     class SeedDataAction : IPostInitialize
     {
         public SeedDataAction(
-            IOptions<MongoDbIdentityOptions> options,
+            IOptions<MongoDbOptions> options,
             MongoIdentityStore mongoStore)
         {
             Options = options.Value;
             Store = mongoStore;
         }
 
-        public MongoDbIdentityOptions Options { get; }
+        public MongoDbOptions Options { get; }
 
         /// <summary>
         /// Store
@@ -56,13 +57,13 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
             {
                 IdentityRole roleAdmin = new IdentityRole();
                 roleAdmin.Name = "Administrators";
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentRead);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentQuery);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentCreate);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentUpdate);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentDelete);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentPublish);
-                roleAdmin.Permissions.Add(ContentItemPermissions.ContentUnpublish);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentRead);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentQuery);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentCreate);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentUpdate);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentDelete);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentPublish);
+                roleAdmin.Permissions.Add(ContentPermissions.ContentUnpublish);
                 roleAdmin.Permissions.Add(AssetPermissions.AssetRead);
                 roleAdmin.Permissions.Add(AssetPermissions.AssetQuery);
                 roleAdmin.Permissions.Add(AssetPermissions.AssetCreate);
@@ -87,8 +88,8 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
 
                 IdentityRole roleReaders = new IdentityRole();
                 roleReaders.Name = "ReadOnly";
-                roleReaders.Permissions.Add(ContentItemPermissions.ContentRead);
-                roleReaders.Permissions.Add(ContentItemPermissions.ContentQuery);
+                roleReaders.Permissions.Add(ContentPermissions.ContentRead);
+                roleReaders.Permissions.Add(ContentPermissions.ContentQuery);
                 roleReaders.Permissions.Add(AssetPermissions.AssetRead);
                 roleReaders.Permissions.Add(AssetPermissions.AssetQuery);
 

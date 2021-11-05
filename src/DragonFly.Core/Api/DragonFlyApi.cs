@@ -17,13 +17,21 @@ namespace DragonFly
     {
         public DragonFlyApi(IServiceProvider serviceProvider)
         {
+            _done = false;
             ServiceProvider = serviceProvider;
         }
         
         public IServiceProvider ServiceProvider { get; }
 
+        private bool _done;
+
         public async Task InitAsync()
         {
+            if (_done)
+            {
+                throw new Exception("The DragonFlyApi is already initialized.");
+            }
+
             using IServiceScope scope = ServiceProvider.CreateScope();
 
             foreach (IPreInitialize item in scope.ServiceProvider.GetServices<IPreInitialize>())
@@ -40,6 +48,8 @@ namespace DragonFly
             {
                 await item.ExecuteAsync(this);
             }
+
+            _done = true;
         }
     }
 }

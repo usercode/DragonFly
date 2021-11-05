@@ -1,6 +1,8 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Core.Assets.Queries;
+using DragonFly.Storage;
+using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,9 +19,9 @@ namespace DragonFly.Permissions.AspNetCore.Content
     {
         public AssetStorageAuthorization(
             IAssetStorage storage,
-            IPermissionService permissionService)
+            IDragonFlyApi api)
         {
-            PermissionService = permissionService;
+            Api = api;
             Storage = storage;
         }
 
@@ -31,67 +33,67 @@ namespace DragonFly.Permissions.AspNetCore.Content
         /// <summary>
         /// Authorization
         /// </summary>
-        public IPermissionService PermissionService { get; }
+        public IDragonFlyApi Api { get; }
 
         public async Task ApplyMetadataAsync(Guid id)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetUpdate);
+            await Api.AuthorizeAsync(AssetPermissions.AssetUpdate);
 
             await Storage.ApplyMetadataAsync(id);
         }
 
         public async Task CreateAsync(Asset asset)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetCreate);
+            await Api.AuthorizeAsync(AssetPermissions.AssetCreate);
 
             await Storage.CreateAsync(asset);
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetDelete);
+            await Api.AuthorizeAsync(AssetPermissions.AssetDelete);
 
             await Storage.DeleteAsync(id);
         }
 
         public async Task<Stream> DownloadAsync(Guid id)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetDownload);
+            await Api.AuthorizeAsync(AssetPermissions.AssetDownload);
 
             return await Storage.DownloadAsync(id);
         }
 
         public async Task<Asset> GetAssetAsync(Guid id)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetRead);
+            await Api.AuthorizeAsync(AssetPermissions.AssetRead);
 
             return await Storage.GetAssetAsync(id);
         }
 
         public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetRead);
+            await Api.AuthorizeAsync(AssetPermissions.AssetRead);
 
             return await Storage.GetAssetsAsync(assetQuery);
         }
 
         public async Task PublishAsync(Guid id)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetPublish);
+            await Api.AuthorizeAsync(AssetPermissions.AssetPublish);
 
             await Storage.PublishAsync(id);
         }
 
         public async Task UpdateAsync(Asset asset)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetUpdate);
+            await Api.AuthorizeAsync(AssetPermissions.AssetUpdate);
 
             await Storage.UpdateAsync(asset);
         }
 
         public async Task UploadAsync(Guid id, string mimetype, Stream stream)
         {
-            await PermissionService.AuthorizeAsync(AssetPermissions.AssetUpload);
+            await Api.AuthorizeAsync(AssetPermissions.AssetUpload);
 
             await Storage.UploadAsync(id, mimetype, stream);
         }

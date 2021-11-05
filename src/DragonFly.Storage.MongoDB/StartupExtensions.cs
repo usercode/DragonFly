@@ -1,13 +1,11 @@
 ﻿using DragonFly.Content;
-using DragonFly.Core;
-using DragonFly.Core.Assets;
 using DragonFly.Core.Builders;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Core.WebHooks;
 using DragonFly.Data;
 using DragonFly.MongoDB.Options;
+using DragonFly.Storage;
 using DragonFly.Storage.MongoDB.Fields;
-using DragonFly.Storage.MongoDB.Fields.Base;
 using DragonFly.Storage.MongoDB.Index;
 using DragonFly.Storage.MongoDB.Query;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +13,6 @@ using MongoDB.Bson.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore
 {
@@ -52,19 +48,14 @@ namespace DragonFly.AspNetCore
             return builder;
         }
 
-        private static void AutoMapClass(Type type)
-        {
-            BsonClassMap map = new BsonClassMap(type);
-            map.AutoMap();
-
-            BsonClassMap.RegisterClassMap(map);
-        }
-
         private static void ContentFieldAdded(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute)
         {
             if (fieldOptionsAttribute != null)
             {
-                AutoMapClass(fieldOptionsAttribute.OptionsType);
+                BsonClassMap map = new BsonClassMap(fieldOptionsAttribute.OptionsType);
+                map.AutoMap();
+
+                BsonClassMap.RegisterClassMap(map);
             }
         }
     }

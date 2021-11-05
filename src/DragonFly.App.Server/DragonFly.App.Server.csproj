@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DragonFLy.ApiKeys.AspNetCore\DragonFLy.ApiKeys.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore.GraphQL\DragonFly.AspNetCore.GraphQL.csproj" />

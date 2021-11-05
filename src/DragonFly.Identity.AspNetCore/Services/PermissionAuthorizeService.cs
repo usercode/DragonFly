@@ -1,5 +1,6 @@
 ﻿using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
+using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
@@ -16,16 +17,14 @@ namespace DragonFly.Identity.AspNetCore.Permissions
     /// <summary>
     /// PermissionService
     /// </summary>
-    class PermissionService : IPermissionService
+    class PermissionAuthorizeService : IAuthorizePermissionService
     {
-        public PermissionService(
+        public PermissionAuthorizeService(
             MongoIdentityStore store,
-            IDragonFlyApi api,
-            IHttpContextAccessor httpContextAccessor)
+            IDragonFlyApi api)
         {
             Store = store;
             Api = api;
-            HttpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -38,21 +37,11 @@ namespace DragonFly.Identity.AspNetCore.Permissions
         /// </summary>
         public IDragonFlyApi Api { get; }
 
-        /// <summary>
-        /// HttpContextAccessor
-        /// </summary>
-        public IHttpContextAccessor HttpContextAccessor { get; }
-
-        public async Task AuthorizeAsync(string permission)
+        public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
         {
             IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
 
-            if (HttpContextAccessor.HttpContext!.User.Identity!.IsAuthenticated == false)
-            {
-                throw new Exception("The current user is not authenticated.");
-            }
-
-            Claim? claim = HttpContextAccessor.HttpContext!.User.FindFirst("UserId");
+            Claim? claim = principal.FindFirst("UserId");
 
             if (claim == null)
             {
@@ -65,10 +54,7 @@ namespace DragonFly.Identity.AspNetCore.Permissions
 
             bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
 
-            if (found == false)
-            {
-                throw new Exception($"Access denied: {permission}");
-            }
+            return found;
         }
     }
 }

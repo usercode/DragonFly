@@ -21,6 +21,7 @@ using DragonFly.Razor.Pages.Settings;
 using DragonFly.Razor.Pages.Settings.Modules;
 using DragonFly.Razor.Services;
 using DragonFly.Razor.Shared;
+using DragonFly.Storage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

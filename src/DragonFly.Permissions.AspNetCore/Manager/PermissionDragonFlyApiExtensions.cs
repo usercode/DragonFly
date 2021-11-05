@@ -16,15 +16,21 @@ namespace DragonFly
             return PermissionManager.Default;
         }
 
-        public static IPermission AddDefaults(this IPermission manager)
+        public static IPermission AddDefaults(this PermissionManager manager)
         {
             manager
-                    .Add(ContentItemPermissions.Content, x => x
-                                .Add(ContentItemPermissions.ContentRead, description: "Read content", sortkey: 0, childs: x => x
-                                            .Add(ContentItemPermissions.ContentQuery, description: "Query content"))
-                                .Add(ContentItemPermissions.ContentCreate, description: "Create content", sortkey: 1)
-                                .Add(ContentItemPermissions.ContentUpdate, description: "Update content", sortkey: 2)
-                                .Add(ContentItemPermissions.ContentDelete, description: "Delete content", sortkey: 3)
+                    .Add(ContentPermissions.Content, x => x
+                                .Add(ContentPermissions.ContentRead, description: "Read content", sortkey: 0, childs: x => x
+                                            .Add(ContentPermissions.ContentQuery, description: "Query content"))
+                                .Add(ContentPermissions.ContentCreate, description: "Create content", sortkey: 1)
+                                .Add(ContentPermissions.ContentUpdate, description: "Update content", sortkey: 2)
+                                .Add(ContentPermissions.ContentDelete, description: "Delete content", sortkey: 3)
+                                )
+                    .Add(SchemaPermissions.Schema, x => x
+                                .Add(SchemaPermissions.SchemaRead, description: "Read schema")
+                                .Add(SchemaPermissions.SchemaCreate, description: "Create schema")
+                                .Add(SchemaPermissions.SchemaUpdate, description: "Update schema")
+                                .Add(SchemaPermissions.SchemaDelete, description: "Delete schema")
                                 )
                     .Add(AssetPermissions.Asset, x => x
                                 .Add(AssetPermissions.AssetRead, description: "Read asset", sortkey: 0, childs: x => x

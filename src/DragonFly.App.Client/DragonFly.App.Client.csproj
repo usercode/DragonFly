@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DragonFly.ApiKeys.Razor\DragonFly.ApiKeys.Razor.csproj" />
     <ProjectReference Include="..\DragonFly.Fields.BlockField.Razor\DragonFly.Fields.BlockField.Razor.csproj" />
     <ProjectReference Include="..\DragonFly.Identity.Razor\DragonFly.Identity.Razor.csproj" />
     <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />

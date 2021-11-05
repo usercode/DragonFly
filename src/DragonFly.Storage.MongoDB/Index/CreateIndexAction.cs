@@ -40,7 +40,7 @@ namespace DragonFly.Storage.MongoDB.Index
 
             foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))
             {
-                var collection = MongoStorage.GetMongoCollection(schema);
+                IMongoCollection<MongoContentItem> collection = MongoStorage.GetMongoCollection(schema);
 
                 //IEnumerable<ContentField> fields = Api.ContentField().CreateContentFields();
 

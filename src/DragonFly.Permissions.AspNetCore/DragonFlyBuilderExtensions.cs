@@ -7,7 +7,10 @@ using DragonFly.Core.Permissions;
 using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
 using DragonFly.Permissions.AspNetCore.Content;
+using DragonFly.Permissions.AspNetCore.Providers;
 using DragonFly.Permissions.AspNetCore.Services;
+using DragonFly.Storage;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -27,7 +30,12 @@ public static class DragonFlyBuilderExtensions
     {
         builder.Services.Decorate<IContentStorage, ContentStorageAuthorization>();
         builder.Services.Decorate<IAssetStorage, AssetStorageAuthorization>();
-        builder.Services.Decorate<IPermissionService, DisablePermissionService>();
+        builder.Services.Decorate<ISchemaStorage, SchemaStorageAuthorization>();
+
+        builder.Services.Decorate<IAuthorizePermissionService, DisablePermissionService>();
+
+        builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
         builder.Init(api =>
         {

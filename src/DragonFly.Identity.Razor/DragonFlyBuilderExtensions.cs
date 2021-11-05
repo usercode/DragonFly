@@ -1,6 +1,8 @@
 ﻿using DragonFly.Core.Builders;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;
+using DragonFly.Permissions.Client;
+using DragonFly.Permissions.Services;
 using DragonFly.Razor;
 using DragonFly.Razor.Pages.Settings;
 using DragonFly.Security;
@@ -22,6 +24,7 @@ namespace DragonFly.AspNetCore.Identity.Razor
 
             builder.Services.AddTransient<ILoginService, LoginService>();
             builder.Services.AddTransient<IIdentityService, IdentityService>();
+            builder.Services.AddTransient<IPermissionService, ClientPermissionService>();
 
             builder.Init(api => api.Module().Add<Module>());
 

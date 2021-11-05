@@ -1,6 +1,8 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Permissions;
+using DragonFly.Permissions.Razor;
+using DragonFly.Permissions.Services;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
@@ -27,6 +29,9 @@ namespace DragonFly.Identity.Razor.Components.Roles
         [Inject]
         public HttpClient Client { get; set; }
 
+        [Inject]
+        public IPermissionService PermissionService { get; set; }
+
         public IEnumerable<SelectableElementTree<Permission>> Permissions { get; set; }
 
         protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -49,32 +54,11 @@ namespace DragonFly.Identity.Razor.Components.Roles
         {
             Entity = await UserStore.GetRoleAsync(EntityId);
 
-            HttpResponseMessage response = await Client.PostAsync("permission/query", new StringContent(string.Empty));
+            IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
-            response.EnsureSuccessStatusCode();
-
-            IEnumerable<Permission>? permissions = await response.Content.ReadFromJsonAsync<IEnumerable<Permission>>();
-
-            if (permissions == null)
-            {
-                throw new Exception("Could not load the permissions.");
-            }
-
-            IEnumerable<SelectableElementTree<Permission>> Transform(IEnumerable<Permission> permissions)
-            {
-                foreach (Permission permission in permissions
-                                                            .OrderBy(x => x.SortKey)
-                                                            .ThenBy(x => x.Name))
-                {
-                    yield return new SelectableElementTree<Permission>(
-                                            Entity.Permissions.Any(p => p == permission.Name),
-                                            permission,
-                                            Transform(permission.Childs).ToList())
-                            .EnableActivePath();
-                }
-            };
-
-            Permissions = Transform(permissions).ToList();
+            Permissions = permissions
+                                    .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
+                                    .ToList();
         }
 
         protected override async Task UpdateActionAsync()

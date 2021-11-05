@@ -3,6 +3,7 @@ using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.Core.Assets;
 using DragonFly.Core.Assets.Queries;
+using DragonFly.Storage;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;

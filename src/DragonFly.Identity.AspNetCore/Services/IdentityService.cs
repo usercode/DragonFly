@@ -161,17 +161,9 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Services
                                                       .Select(x => x.ToModel())
                                                       .ToList();
 
-            IDictionary<string, string> permissions = new Dictionary<string, string>();
+            string[] permissions = roles.SelectMany(x => x.Permissions).Distinct().ToArray();
 
-            foreach (IdentityRole role in roles)
-            {
-                foreach (string p in role.Permissions)
-                {
-                    permissions[p] = p;
-                }
-            }
-
-            return permissions.Keys;
+            return permissions;
         }
 
         public async Task UpdateUserAsync(IdentityUser user)

@@ -1,4 +1,5 @@
 ﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
+using DragonFly.MongoDB.Options;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
@@ -14,7 +15,7 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
     /// </summary>
     internal class MongoIdentityStore
     {
-        public MongoIdentityStore(IOptions<MongoDbIdentityOptions> options)
+        public MongoIdentityStore(IOptions<MongoDbOptions> options)
         {
             Options = options.Value;
 
@@ -30,8 +31,8 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
 
             Database = Client.GetDatabase(Options.Database);
 
-            Users = Database.GetCollection<MongoIdentityUser>("Users");
-            Roles = Database.GetCollection<MongoIdentityRole>("Roles");
+            Users = Database.GetCollection<MongoIdentityUser>("Identity_Users");
+            Roles = Database.GetCollection<MongoIdentityRole>("Identity_Roles");
 
             Users.Indexes.CreateOne(new CreateIndexModel<MongoIdentityUser>(Builders<MongoIdentityUser>.IndexKeys.Ascending(x => x.NormalizedEmail)));
             Users.Indexes.CreateOne(new CreateIndexModel<MongoIdentityUser>(Builders<MongoIdentityUser>.IndexKeys.Ascending(x => x.NormalizedUsername)));
@@ -40,7 +41,7 @@ namespace DragonFly.AspNetCore.Identity.MongoDB
 
         }
 
-        public MongoDbIdentityOptions Options { get; }
+        public MongoDbOptions Options { get; }
 
         public MongoClient Client { get; }
 

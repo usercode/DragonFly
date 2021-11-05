@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly.Storage
 {
     /// <summary>
     /// IAssetFolderStorage

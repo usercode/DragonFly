@@ -5,20 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
-using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
-using DragonFly.Core;
-using DragonFly.Core.Assets;
-using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Data.Models;
 using DragonFly.Data.Models.Assets;
-using DragonFly.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
 using MongoDB.Driver.Linq;
 
 namespace DragonFly.Data

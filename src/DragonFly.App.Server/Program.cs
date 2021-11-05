@@ -4,6 +4,7 @@ using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.MongoDB.Options;
+using DragonFLy.ApiKeys;
 using ImageWizard.Core.ImageCaches;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +25,7 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddSchemaBuilder()
                     .AddBlockField()
+                    .AddApiKeys()
                     .AddPermissions()
                     ;
 
@@ -42,13 +44,17 @@ if (env.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseDragonFly(
-                x =>
-                {
-                    x.UseIdentity();
-                    x.UseRestApi();
-                    x.UseGraphQLApi();
-                    x.UsePermission();
-                });
+        x =>
+        {
+            x.UseApiKey();
+            x.UseIdentity();
+        },
+        x =>
+        {
+            x.UseRestApi();
+            x.UseGraphQLApi();
+            x.UsePermission();
+        });
 app.UseDragonFlyManager();
 
 app.Run();

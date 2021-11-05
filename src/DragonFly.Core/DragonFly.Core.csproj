@@ -23,4 +23,8 @@
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Storages\" />
+  </ItemGroup>
 </Project>

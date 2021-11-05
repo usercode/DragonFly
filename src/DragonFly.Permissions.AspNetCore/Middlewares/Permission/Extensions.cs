@@ -13,7 +13,7 @@ namespace DragonFly.Permissions.AspNetCore
     {
         public static void UsePermissionItemApi(this IApplicationBuilder builder)
         {
-            builder.Map("/permission", x =>
+            builder.Map("/api/permission", x =>
             {
                 x.UseRouting();
                 x.UseEndpoints(endpoints =>

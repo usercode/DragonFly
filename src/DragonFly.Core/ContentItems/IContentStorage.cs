@@ -6,7 +6,7 @@ using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
 
-namespace DragonFly.Content
+namespace DragonFly.Storage
 {
     /// <summary>
     /// IContentStorage

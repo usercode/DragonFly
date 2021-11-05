@@ -36,11 +36,9 @@ class LoginMiddleware
                 throw new Exception("Login data are not available.");
             }
 
-            if (await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent))
-            {
-                //await context.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { }, "password")));
-            }
-            else
+            bool valid = await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent);
+
+            if (valid == false)
             {
                 await Task.Delay(TimeSpan.FromSeconds(3));
 

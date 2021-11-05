@@ -43,7 +43,7 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
         //ImageWizard
-        services.ConfigureOptions<HttpLoaderConfigureOptions>();
+        //services.ConfigureOptions<HttpLoaderConfigureOptions>();
 
         services.AddImageWizard(x =>
         {
@@ -65,17 +65,23 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
+    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyApplicationBuilder> dragonFlyBuilderAuth, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
     {
-        return UseDragonFly(builder, "/dragonfly", dragonFlyBuilder);
+        return UseDragonFly(builder, "/dragonfly", dragonFlyBuilderAuth, dragonFlyBuilder);
     }
 
-    private static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, PathString basePath, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
+    private static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, PathString basePath, Action<IDragonFlyApplicationBuilder> dragonFlyBuilderAuth, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
     {
         builder.Map(basePath,
                                 x =>
                                 {
                                     x.UseRouting();
+                                    x.UseAuthentication();
+                                    x.UseAuthorization();
+
+                                    dragonFlyBuilderAuth(new DragonFlyApplicationBuilder(x));
+
+                                    x.UseMiddleware<RequireAuthentificationMiddleware>();
 
                                     dragonFlyBuilder(new DragonFlyApplicationBuilder(x));
 

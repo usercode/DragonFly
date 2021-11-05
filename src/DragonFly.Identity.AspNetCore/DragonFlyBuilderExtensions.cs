@@ -22,6 +22,9 @@ using DragonFly.Identity.AspNetCore.Permissions;
 using DragonFly.Identity.AspNetCore.Services;
 using DragonFly.Identity.AspNetCore.Authorization;
 using DragonFly.Identity.Permissions;
+using DragonFly.MongoDB.Options;
+using DragonFly.Permissions.Services;
+using DragonFly.Permissions;
 
 namespace DragonFly.Identity.AspNetCore.MongoDB
 {
@@ -29,17 +32,10 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
     {
         public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
         {
-            return AddIdentityMongoDb(builder, x => { });
-        }
-
-        public static IDragonFlyBuilder AddIdentityMongoDb(this IDragonFlyBuilder builder, Action<MongoDbIdentityOptions> options)
-        {
-            builder.Services.Configure(options);
-
             builder.Services.AddTransient<ILoginService, LoginService>();
             builder.Services.AddTransient<IIdentityService, IdentityService>();
 
-            builder.Services.AddSingleton<IPermissionService, PermissionService>();
+            builder.Services.AddSingleton<IAuthorizePermissionService, PermissionAuthorizeService>();
             builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
 
             builder.Services.AddSingleton<MongoIdentityStore>();
@@ -47,6 +43,8 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
             builder.Services
                             .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                             .AddCookie();
+
+            builder.Services.AddAuthorization();
 
             builder.Services.Decorate<IIdentityService, IdentityServiceAuthorization>();
 
@@ -71,19 +69,12 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
 
             builder.PostInit<SeedDataAction>();
 
-            builder.Services.AddAuthorization();
-
             return builder;
         }
 
         public static IDragonFlyApplicationBuilder UseIdentity(this IDragonFlyApplicationBuilder builder)
         {
-            builder.UseAuthentication();
-            builder.UseAuthorization();
-
             builder.UseMiddleware<LoginMiddleware>();
-            builder.UseMiddleware<InternalApiKeyMiddleware>();
-            builder.UseMiddleware<RequireAuthentificationMiddleware>();
 
             builder.Map("/identity",
                 x =>

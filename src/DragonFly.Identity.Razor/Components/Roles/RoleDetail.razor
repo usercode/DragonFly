@@ -6,7 +6,7 @@
     <div class="role-detail">
 
         <div style="flex: 0">
-            <h1>User</h1>
+            <h1>Role</h1>
 
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
@@ -34,8 +34,7 @@
                         <BSRow class="form-group">
                                 <label class="col-sm-2 col-form-label">Permissions</label>
                                 <div class="col-sm-10">
-
-                                        @foreach(var permission in Permissions)
+                                        @foreach(SelectableElementTree<Permission> permission in Permissions)
                                         {
                                             <PermissionItemView Permission="permission" />
                                         }

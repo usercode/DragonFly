@@ -1,0 +1,19 @@
+﻿@inherits ApiKeyListBase
+
+<BSListGroup>
+	@foreach(ApiKey entity in Items)
+	{
+		<a class="list-group-item list-group-item-action" @onclick="x => OpenItem(entity)">
+			<BSRow>
+				<BSCol LG="5">
+					@entity.Name
+				</BSCol>
+			</BSRow>			
+		</a>
+	}
+</BSListGroup>
+
+
+@code {
+
+}
