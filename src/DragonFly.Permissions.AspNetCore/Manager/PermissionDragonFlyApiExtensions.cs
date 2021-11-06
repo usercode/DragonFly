@@ -27,7 +27,8 @@ namespace DragonFly
                                 .Add(ContentPermissions.ContentDelete, description: "Delete content", sortkey: 3)
                                 )
                     .Add(SchemaPermissions.Schema, x => x
-                                .Add(SchemaPermissions.SchemaRead, description: "Read schema")
+                                .Add(SchemaPermissions.SchemaRead, description: "Read schema", childs: x => x
+                                            .Add(SchemaPermissions.SchemaQuery, description: "Query schema"))
                                 .Add(SchemaPermissions.SchemaCreate, description: "Create schema")
                                 .Add(SchemaPermissions.SchemaUpdate, description: "Update schema")
                                 .Add(SchemaPermissions.SchemaDelete, description: "Delete schema")

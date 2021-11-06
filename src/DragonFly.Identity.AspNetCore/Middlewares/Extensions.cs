@@ -1,5 +1,8 @@
-﻿using DragonFly.AspNetCore.Identity.Middlewares.Roles;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.Exports;
+using DragonFly.AspNetCore.Identity.Middlewares.Roles;
 using DragonFly.AspNetCore.Identity.Middlewares.Users;
+using DragonFly.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -13,10 +16,12 @@ namespace DragonFly.AspNetCore.Identity.Middlewares
 {
     internal static class Extensions
     {
-        public static void UseIdentityApi(this IApplicationBuilder builder)
+        public static IDragonFlyEndpointRouteBuilder MapIdentityApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.UseUserApi();
-            builder.UseRoleApi();
+            endpoints.MapUserApi();
+            endpoints.MapRoleApi();
+
+            return endpoints;
         }
     }
 }

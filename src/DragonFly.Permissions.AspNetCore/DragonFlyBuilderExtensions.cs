@@ -1,5 +1,6 @@
 ﻿using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.Content;
+using DragonFly.AspNetCore.Middleware;
 using DragonFly.Content;
 using DragonFly.ContentItems;
 using DragonFly.Core.Builders;
@@ -45,10 +46,9 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyApplicationBuilder UsePermission(this IDragonFlyApplicationBuilder builder)
+    public static IDragonFlyFullBuilder MapPermission(this IDragonFlyFullBuilder builder)
     {
-        builder
-            .UsePermissionItemApi();
+        builder.Endpoints(endpoints => endpoints.MapPermissionItemApi());
 
         return builder;
     }

@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.API.Models.Assets;
+using DragonFly.Content;
+using DragonFly.Core.Assets.Queries;
+using DragonFly.Storage;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -11,35 +16,34 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
 {
     static class AssetFolderStartupExtensions
     {
-        public static void UseAssetFolderRestApi(this IApplicationBuilder builder)
+        public static void MapAssetFolderRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.Map("/assetfolder", x =>
-            {
-                x.UseRouting();
-                x.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapQuery();
-                    endpoints.MapGet();
-                });
-            });
+            endpoints.MapPost("api/assetfolder/query", MapQuery);
+            endpoints.MapGet("api/assetfolder/{id:guid}", MapGet);
         }
 
-        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
+        private static async Task MapQuery(HttpContext context, JsonService jsonService, IAssetFolderStorage storage)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryAssetFolderMiddleware>()
-                                                    .Build();
+            AssetFolderQuery query = await jsonService.Deserialize<AssetFolderQuery>(context.Request.Body);
 
-            return endpoints.MapPost("query", pipeline);
+            IEnumerable<AssetFolder> assets = await storage.GetAssetFoldersAsync(query);
+
+            IEnumerable<RestAssetFolder> result = assets.Select(x => x.ToRest()).ToList();
+
+            string json = jsonService.Serialize(result);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
+        private static async Task MapGet(HttpContext context, JsonService jsonService, IAssetFolderStorage storage, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetAssetFolderMiddleware>()
-                                                    .Build();
+            AssetFolder entity = await storage.GetAssetFolderAsync(id);
 
-            return endpoints.MapGet("{id:guid}", pipeline);
+            RestAssetFolder restAsset = entity.ToRest();
+
+            string json = jsonService.Serialize(restAsset);
+
+            await context.Response.WriteAsync(json);
         }
     }
 }

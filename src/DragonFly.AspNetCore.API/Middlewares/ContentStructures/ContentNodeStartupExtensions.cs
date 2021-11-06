@@ -1,41 +1,36 @@
-﻿using DragonFly.AspNetCore.API.Exports;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.API.Exports;
+using DragonFly.AspNetCore.API.Middlewares;
+using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.AspNetCore.API.Models;
+using DragonFly.AspNetCore.Exports;
 using DragonFly.Content;
+using DragonFly.Core.Builders;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Core.ContentStructures.Queries;
-using DragonFly.Data;
 using DragonFly.Data.Models;
-using DragonFly.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
+namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
 {
-    class QueryContentNodeMiddleware
+    static class ContentNodeStartupExtensions
     {
-        private readonly RequestDelegate _next;
-
-        public QueryContentNodeMiddleware(RequestDelegate next)
+        public static void MapContentNodeRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            _next = next;
+            endpoints.MapPost("api/node/query/{structure:guid}", MapQuery);
+            endpoints.MapPost("api/node", MapCreate);
         }
 
-        public async Task InvokeAsync(
-            HttpContext context,
-            IStructureStorage storage,
-            JsonService jsonService)
+        private static async Task MapQuery(HttpContext context, JsonService jsonService, IStructureStorage storage, Guid structure)
         {
-            Guid? structure = null;
-            if (context.GetRouteValue("structure") is string stringStructure)
-            {
-                structure = Guid.Parse(stringStructure);
-            }
-
             var parentIdQuery = context.Request.Query["parentId"];
             Guid? parentId = null;
 
@@ -54,6 +49,21 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             restQueryResult.TotalCount = items.TotalCount;
 
             string json = jsonService.Serialize(restQueryResult);
+
+            await context.Response.WriteAsync(json);
+        }
+
+        private static async Task MapCreate(HttpContext context, JsonService jsonService, IStructureStorage storage)
+        {
+            RestContentNode input = await jsonService.Deserialize<RestContentNode>(context.Request.Body);
+
+            ContentNode m = input.ToModel();
+
+            await storage.CreateAsync(m);
+
+            var result = new ResourceCreated() { Id = m.Id };
+
+            string json = jsonService.Serialize(result);
 
             await context.Response.WriteAsync(json);
         }

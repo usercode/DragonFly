@@ -1,8 +1,16 @@
 ﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Middlewares;
+using DragonFly.AspNetCore.Exports;
+using DragonFly.Content;
+using DragonFly.Content.Queries;
 using DragonFly.Core.Builders;
+using DragonFly.Data.Models;
+using DragonFly.Models;
+using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -15,75 +23,95 @@ namespace DragonFly.AspNetCore.API.Middlewares
 {
     static class ContentItemStartupExtensions
     {
-        public static void UseContentItemRestApi(this IApplicationBuilder builder)
+        public static void MapContentItemRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.Map("/content", x =>
+            endpoints.MapPost("api/content/query", MapQuery);
+            endpoints.MapGet("api/content/{schema}/{id:guid}", MapGet);
+            endpoints.MapPost("api/content/{schema}", MapCreate);
+            endpoints.MapPut("api/content/{schema}", MapUpdate);
+            endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
+            endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
+        }
+
+        private static async Task MapQuery(HttpContext context, JsonService jsonService, IContentStorage storage)
+        {
+            ContentItemQuery query = await jsonService.Deserialize<ContentItemQuery>(context.Request.Body);
+            QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
+
+            foreach (ContentItem contentItem in contentItems.Items)
             {
-                x.UseRouting();
-                x.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapQuery();
-                    endpoints.MapGet();
-                    endpoints.MapCreate();
-                    endpoints.MapUpdate();
-                    endpoints.MapDelete();
-                    endpoints.MapPublish();
-                });
-            });
+                contentItem.ApplySchema();
+            }
+
+            QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()
+            {
+                Offset = contentItems.Offset,
+                Count = contentItems.Count,
+                TotalCount = contentItems.TotalCount,
+                Items = contentItems.Items.Select(x => x.ToRest()).ToList()
+            };
+
+            string json = jsonService.Serialize(resultQuery);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
+        private static async Task MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, JsonService jsonService, string schema, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryContentItemMiddleware>()
-                                                    .Build();
+            ContentItem result = await contentStore.GetContentAsync(schema, id);
+            ContentSchema schemaModel = await schemaStorage.GetSchemaAsync(schema);
 
-            return endpoints.MapPost("query", pipeline);
+            result.ApplySchema(schemaModel);
+
+            RestContentItem restModel = result.ToRest();
+
+            string json = jsonService.Serialize(restModel);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
+        private static async Task MapCreate(HttpContext context, IContentStorage contentStore, JsonService jsonService)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetContentItemMiddleware>()                                                 
-                                                    .Build();
+            RestContentItem input = await jsonService.Deserialize<RestContentItem>(context.Request.Body);
 
-            return endpoints.MapGet("{schema}/{id:guid}", pipeline);
+            ContentItem model = input.ToModel();
+
+            await contentStore.CreateAsync(model);
+
+            ResourceCreated result = new ResourceCreated() { Id = model.Id };
+
+            string json = jsonService.Serialize(result);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
+        private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, JsonService jsonService)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<CreateContentItemMiddleware>()
-                                                    .Build();
+            RestContentItem input = await jsonService.Deserialize<RestContentItem>(context.Request.Body);
 
-            return endpoints.MapPost("{schema}", pipeline);
+            ContentItem model = input.ToModel();
+
+            await contentStore.UpdateAsync(model);
+
+            ResourceCreated result = new ResourceCreated() { Id = input.Id };
+
+            string json = jsonService.Serialize(result);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
+        private static async Task MapDelete(HttpContext context, IContentStorage contentStore, JsonService jsonService, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<UpdateContentItemMiddleware>()                                                  
-                                                    .Build();
+            string schema = (string)context.GetRouteValue("schema");
 
-            return endpoints.MapPut("{schema}/{id:guid}", pipeline);
+            await contentStore.DeleteAsync(schema, id);
         }
 
-        private static IEndpointConventionBuilder MapDelete(this IEndpointRouteBuilder endpoints)
+        private static async Task MapPublish(HttpContext context, IContentStorage contentStore, JsonService jsonService, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<DeleteContentItemMiddleware>()
-                                                    .Build();
+            string schema = (string)context.GetRouteValue("schema");
 
-            return endpoints.MapDelete("{schema}/{id:guid}", pipeline);
-        }
-
-        private static IEndpointConventionBuilder MapPublish(this IEndpointRouteBuilder endpoints)
-        {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<PublishContentItemMiddleware>()
-                                                    .Build();
-
-            return endpoints.MapPost("{schema}/{id:guid}/publish", pipeline);
+            await contentStore.PublishAsync(schema, id);
         }
     }
 }

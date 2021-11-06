@@ -1,6 +1,13 @@
-﻿using DragonFly.AspNetCore.API.Middlewares;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.API.Exports;
+using DragonFly.AspNetCore.API.Middlewares;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
+using DragonFly.AspNetCore.API.Models;
+using DragonFly.AspNetCore.API.Models.WebHooks;
+using DragonFly.AspNetCore.Exports;
+using DragonFly.Content;
 using DragonFly.Core.Builders;
+using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -15,55 +22,69 @@ namespace DragonFly.AspNetCore.API.Middlewares
 {
     static class WebHookStartupExtensions
     {
-        public static void UseWebHookRestApi(this IApplicationBuilder builder)
+        public static void MapWebHookRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.Map("/webhook", x =>
-            {
-                x.UseRouting();
-                x.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapQuery();
-                    endpoints.MapGet();
-                    endpoints.MapCreate();
-                    endpoints.MapUpdate();
-                });
-            });            
+            endpoints.MapPost("api/webhook/query", MapQuery);
+            endpoints.MapGet("api/webhook/{id:guid}", MapGet);
+            endpoints.MapPost("api/webhook", MapCreate);
+            endpoints.MapPut("api/webhook", MapUpdate);
         }
 
-        private static IEndpointConventionBuilder MapQuery(this IEndpointRouteBuilder endpoints)
+        private static async Task MapQuery(HttpContext context, JsonService jsonService, IWebHookStorage storage)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryWebHookMiddleware>()
-                                                    .Build();
+            QueryResult<WebHook> items = await storage
+                                                     .QueryAsync(new WebHookQuery());
 
-            return endpoints.MapPost("query", pipeline);
+            QueryResult<RestWebHook> restQueryResult = new QueryResult<RestWebHook>();
+            restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
+            restQueryResult.Offset = items.Offset;
+            restQueryResult.Count = items.Count;
+            restQueryResult.TotalCount = items.TotalCount;
+
+            string json = jsonService.Serialize(restQueryResult);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapGet(this IEndpointRouteBuilder endpoints)
+        private static async Task MapGet(HttpContext context, JsonService jsonService, IWebHookStorage storage, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetWebHookMiddleware>()
-                                                    .Build();
+            WebHook result = await storage.GetAsync(id);
 
-            return endpoints.MapGet("{id:guid}", pipeline);
+            RestWebHook restModel = result.ToRest();
+
+            string json = jsonService.Serialize(restModel);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapCreate(this IEndpointRouteBuilder endpoints)
+        private static async Task MapCreate(HttpContext context, JsonService jsonService, IWebHookStorage storage)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<CreateWebHookMiddleware>()
-                                                    .Build();
+            RestWebHook input = await jsonService.Deserialize<RestWebHook>(context.Request.Body);
 
-            return endpoints.MapPost("", pipeline);
+            WebHook model = input.ToModel();
+
+            await storage.CreateAsync(model);
+
+            ResourceCreated result = new ResourceCreated() { Id = model.Id };
+
+            string json = jsonService.Serialize(result);
+
+            await context.Response.WriteAsync(json);
         }
 
-        private static IEndpointConventionBuilder MapUpdate(this IEndpointRouteBuilder endpoints)
+        private static async Task MapUpdate(HttpContext context, JsonService jsonService, IWebHookStorage storage)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<UpdateWebHookMiddleware>()
-                                                    .Build();
+            RestWebHook input = await jsonService.Deserialize<RestWebHook>(context.Request.Body);
 
-            return endpoints.MapPut("{id:guid}", pipeline);
+            WebHook model = input.ToModel();
+
+            await storage.UpdateAsync(model);
+
+            ResourceCreated result = new ResourceCreated() { Id = model.Id };
+
+            string json = jsonService.Serialize(result);
+
+            await context.Response.WriteAsync(json);
         }
     }
 }

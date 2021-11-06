@@ -1,6 +1,7 @@
 ﻿using DragonFly;
 using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.Identity.MongoDB;
+using DragonFly.AspNetCore.Middleware;
 using DragonFly.Core.Builders;
 using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
@@ -35,10 +36,10 @@ namespace DragonFLy.ApiKeys
             return builder;
         }
 
-        public static IDragonFlyApplicationBuilder UseApiKey(this IDragonFlyApplicationBuilder builder)
+        public static IDragonFlyFullBuilder MapApiKey(this IDragonFlyFullBuilder builder)
         {
-            builder.UseMiddleware<ApiKeyMiddleware>();
-            builder.UseApiKeyApi();
+            builder.PreAuthBuilder(x => x.UseMiddleware<ApiKeyMiddleware>());
+            builder.Endpoints(x => x.MapApiKeyApi());
 
             return builder;
         }

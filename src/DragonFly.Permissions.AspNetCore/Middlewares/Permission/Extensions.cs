@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -11,25 +13,16 @@ namespace DragonFly.Permissions.AspNetCore
 {
     internal static class Extensions
     {
-        public static void UsePermissionItemApi(this IApplicationBuilder builder)
+        public static void MapPermissionItemApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.Map("/api/permission", x =>
-            {
-                x.UseRouting();
-                x.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapQueryPermission();
-                });
-            });
+            endpoints.MapPost("permission/query", MapQuery);
         }
 
-        private static IEndpointConventionBuilder MapQueryPermission(this IEndpointRouteBuilder endpoints)
+        private static async Task MapQuery(HttpContext context, IDragonFlyApi api)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryPermissionMiddleware>()
-                                                    .Build();
+            IEnumerable<Permission> items = api.Permission().Items;
 
-            return endpoints.MapPost("query", pipeline);
+            await context.Response.WriteAsJsonAsync(items);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DragonFly.AspNet.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System;
@@ -9,37 +10,26 @@ using System.Threading.Tasks;
 
 namespace DragonFLy.ApiKeys.AspNetCore.Middlewares
 {
-    internal static class Extensions
+    static class Extensions
     {
-        public static void UseApiKeyApi(this IApplicationBuilder builder)
+        public static void MapApiKeyApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
-            builder.Map("/api/apikey", x =>
-            {
-                x.UseRouting();
-                x.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapGetApiKey();
-                    endpoints.MapQueryApiKey();
-                });
-            });
+            endpoints.MapGet("apikey/{id:guid}", MapGet);
+            endpoints.MapPost("apikey/query", MapQuery);
         }
 
-        private static IEndpointConventionBuilder MapGetApiKey(this IEndpointRouteBuilder endpoints)
+        private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<GetApiKeyMiddleware>()
-                                                    .Build();
+            ApiKey entity = await service.GetApiKey(id);
 
-            return endpoints.MapGet("{id:guid}", pipeline);
+            await context.Response.WriteAsJsonAsync(entity);
         }
 
-        private static IEndpointConventionBuilder MapQueryApiKey(this IEndpointRouteBuilder endpoints)
+        private static async Task MapQuery(HttpContext context, IApiKeyService service)
         {
-            RequestDelegate pipeline = endpoints.CreateApplicationBuilder()
-                                                    .UseMiddleware<QueryApiKeyMiddleware>()
-                                                    .Build();
+            IEnumerable<ApiKey> items = await service.GetAllApiKeys();
 
-            return endpoints.MapPost("query", pipeline);
+            await context.Response.WriteAsJsonAsync(items);
         }
     }
 }

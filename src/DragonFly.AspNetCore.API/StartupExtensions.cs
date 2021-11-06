@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.API;
+using DragonFly.AspNetCore.Middleware;
 
 namespace DragonFly.AspNetCore
 {
@@ -27,17 +28,17 @@ namespace DragonFly.AspNetCore
             return builder;
         }
 
-        public static IDragonFlyApplicationBuilder UseRestApi(this IDragonFlyApplicationBuilder builder)
+        public static IDragonFlyFullBuilder MapRestApi(this IDragonFlyFullBuilder builder)
         {
-            builder.Map("/api", x =>
+            builder.Endpoints(endpoints =>
             {
-                x.UseContentItemRestApi();
-                x.UseContentSchemaRestApi();
-                x.UseContentStructureRestApi();
-                x.UseContentNodeRestApi();
-                x.UseAssetRestApi();
-                x.UseAssetFolderRestApi();
-                x.UseWebHookRestApi();
+                endpoints.MapContentItemRestApi();
+                endpoints.MapContentSchemaRestApi();
+                endpoints.MapContentStructureRestApi();
+                endpoints.MapContentNodeRestApi();
+                endpoints.MapAssetRestApi();
+                endpoints.MapAssetFolderRestApi();
+                endpoints.MapWebHookRestApi();
             });
 
             return builder;

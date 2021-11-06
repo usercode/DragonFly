@@ -15,16 +15,15 @@ using DragonFly.AspNet.Middleware;
 using Microsoft.AspNetCore.Builder;
 using DragonFly.AspNetCore.Identity.Middlewares;
 using Microsoft.AspNetCore.Http;
-using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.Permissions.AspNetCore;
 using DragonFly.Identity.AspNetCore.Permissions;
 using DragonFly.Identity.AspNetCore.Services;
 using DragonFly.Identity.AspNetCore.Authorization;
 using DragonFly.Identity.Permissions;
-using DragonFly.MongoDB.Options;
-using DragonFly.Permissions.Services;
 using DragonFly.Permissions;
+using DragonFly.AspNetCore.Middleware;
+using DragonFly.AspNetCore.API.Middlewares.Logins;
 
 namespace DragonFly.Identity.AspNetCore.MongoDB
 {
@@ -72,15 +71,10 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
             return builder;
         }
 
-        public static IDragonFlyApplicationBuilder UseIdentity(this IDragonFlyApplicationBuilder builder)
+        public static IDragonFlyFullBuilder MapIdentity(this IDragonFlyFullBuilder builder)
         {
-            builder.UseMiddleware<LoginMiddleware>();
-
-            builder.Map("/identity",
-                x =>
-                {
-                    x.UseIdentityApi();
-                });
+            builder.PreAuthBuilder(x => x.UseMiddleware<LoginMiddleware>());
+            builder.Endpoints(x => x.MapIdentityApi());
 
             return builder;
         }

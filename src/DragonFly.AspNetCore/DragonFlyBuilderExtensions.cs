@@ -20,6 +20,7 @@ using DragonFly.Content;
 using ImageWizard;
 using ImageWizard.DocNET;
 using DragonFly.Core;
+using DragonFly.AspNetCore.Middleware.Builders;
 
 namespace DragonFly.AspNetCore;
 
@@ -65,27 +66,30 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyApplicationBuilder> dragonFlyBuilderAuth, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
+    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyFullBuilder> fullbuilder)
     {
-        return UseDragonFly(builder, "/dragonfly", dragonFlyBuilderAuth, dragonFlyBuilder);
-    }
-
-    private static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, PathString basePath, Action<IDragonFlyApplicationBuilder> dragonFlyBuilderAuth, Action<IDragonFlyApplicationBuilder> dragonFlyBuilder)
-    {
-        builder.Map(basePath,
+        builder.Map("/dragonfly",
                                 x =>
                                 {
+                                    DragonFlyFullBuilder end = new DragonFlyFullBuilder();
+                                    fullbuilder(end);
+
                                     x.UseRouting();
                                     x.UseAuthentication();
                                     x.UseAuthorization();
 
-                                    dragonFlyBuilderAuth(new DragonFlyApplicationBuilder(x));
+                                    end.PreAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseMiddleware<RequireAuthentificationMiddleware>();
 
-                                    dragonFlyBuilder(new DragonFlyApplicationBuilder(x));
+                                    end.PostAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseImageWizard();
+
+                                    x.UseEndpoints(e =>
+                                    {
+                                        end.EndpointList.Foreach(a => a(new DragonFlyEndpointRouteBuilder(e)));
+                                    });
                                 }
             );
 

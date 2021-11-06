@@ -22,7 +22,7 @@ namespace DragonFly.Permissions.Client
 
         public async Task<IEnumerable<Permission>> GetPermissionsAsync()
         {
-            HttpResponseMessage response = await Client.PostAsync("api/permission/query", new StringContent(string.Empty));
+            HttpResponseMessage response = await Client.PostAsync("permission/query", new StringContent(string.Empty));
 
             response.EnsureSuccessStatusCode();
 
