@@ -50,8 +50,8 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
-//app.UseSwagger();
-//app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

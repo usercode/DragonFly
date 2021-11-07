@@ -39,7 +39,7 @@ namespace DragonFly.Data.Models.Assets
         /// <summary>
         /// Size
         /// </summary>
-        public long? Size { get; set; }
+        public long Size { get; set; }
 
         /// <summary>
         /// Hash

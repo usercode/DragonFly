@@ -33,7 +33,7 @@ namespace DragonFly.Core.WebHooks
         {
             var result = await storage.QueryAsync(new WebHookQuery());
 
-            foreach(WebHook item in result.Items)
+            foreach (WebHook item in result.Items)
             {
                 HttpResponseMessage response = await HttpClient.PostAsync(item.TargetUrl + $"?schema={contentItem.Schema.Name}&id={contentItem.Id}", new StringContent(""));
 

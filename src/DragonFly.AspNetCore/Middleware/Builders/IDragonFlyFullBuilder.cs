@@ -14,6 +14,6 @@ namespace DragonFly.AspNetCore.Middleware
 
         void PreAuthBuilder(Action<IDragonFlyApplicationBuilder> builder);
 
-        void PostAuthBuilder(Action<IDragonFlyApplicationBuilder> builder);
+        void Builder(Action<IDragonFlyApplicationBuilder> builder);
     }
 }

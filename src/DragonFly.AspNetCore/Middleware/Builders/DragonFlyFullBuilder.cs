@@ -31,7 +31,7 @@ namespace DragonFly.AspNetCore.Middleware.Builders
             PreAuthBuilders.Add(builder);
         }
 
-        public void PostAuthBuilder(Action<IDragonFlyApplicationBuilder> builder)
+        public void Builder(Action<IDragonFlyApplicationBuilder> builder)
         {
             PostAuthBuilders.Add(builder);
         }

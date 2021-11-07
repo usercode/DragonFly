@@ -21,6 +21,9 @@ using ImageWizard;
 using ImageWizard.DocNET;
 using DragonFly.Core;
 using DragonFly.AspNetCore.Middleware.Builders;
+using DragonFly.ImageWizard;
+using DragonFly.Client.Core.Assets;
+using ImageWizard.Client;
 
 namespace DragonFly.AspNetCore;
 
@@ -43,18 +46,22 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
-        //ImageWizard
-        //services.ConfigureOptions<HttpLoaderConfigureOptions>();
+        services.AddSingleton<IAssetPreviewUrlService, ImageWizardAssetDataUrlService>();
 
+        //ImageWizard
         services.AddImageWizard(x =>
         {
+            x.GenerateRandomKey();
             x.AllowUnsafeUrl = true;
         })
             .AddImageSharp()
             .AddSvgNet()
             .AddDocNET()
-            .AddHttpLoader()
-            .SetFileCache();
+            .AddDragonFly()
+            .SetFileCache()
+            ;
+
+        //services.AddImageWizardClient();
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
@@ -98,12 +105,7 @@ public static class DragonFlyBuilderExtensions
 
     public static IApplicationBuilder UseDragonFlyManager(this IApplicationBuilder builder)
     {
-        return UseDragonFlyManager(builder, "/manager");
-    }
-
-    private static IApplicationBuilder UseDragonFlyManager(this IApplicationBuilder builder, PathString basePath)
-    {
-        builder.Map(basePath,
+        builder.Map("/manager",
                                 x =>
                                 {
                                     x.UseBlazorFrameworkFiles();

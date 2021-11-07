@@ -1,5 +1,4 @@
 ﻿@inject NavigationManager NavigationManager
-@inject IImageAssetUrlService AssetPreview
 
 @if (_init)
 {
@@ -35,7 +34,7 @@
                                 {
                                     @if (assetField.Asset != null && assetField.Asset.IsImage())
                                     {
-                                        <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:2rem;object-fit:contain" />
+                                        <img src="@assetField.Asset.PreviewUrl" style="height:2rem;object-fit:contain" />
                                     }
                                 }
                             }

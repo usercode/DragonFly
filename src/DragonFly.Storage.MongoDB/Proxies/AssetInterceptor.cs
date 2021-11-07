@@ -66,6 +66,7 @@ namespace DragonFly.Data.Proxies
             main.Description = result.Description;
             main.Folder = result.Folder;
             main.Slug = result.Slug;
+            main.PreviewUrl = result.PreviewUrl;
             main.Metaddata = result.Metaddata;
         }
     }

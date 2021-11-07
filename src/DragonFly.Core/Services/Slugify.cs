@@ -7,11 +7,11 @@ namespace System
 {
     public static class Slugify
     {
-        public static string? ToSlug(this string? phrase)
+        public static string ToSlug(this string? phrase)
         {
             if (phrase == null)
             {
-                return null;
+                return string.Empty;
             }
 
             string str = phrase.ToLower().Trim();

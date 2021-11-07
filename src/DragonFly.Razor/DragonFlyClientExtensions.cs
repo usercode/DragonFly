@@ -74,9 +74,6 @@ namespace DragonFly.Client.Core
             builder.Services.AddTransient<IAssetStorage, ClientContentService>();
             builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
 
-            builder.Services.AddTransient<IImageAssetUrlService, DefaultAssetDataUrlService>();
-            builder.Services.AddTransient<IImageAssetUrlService, ImageWizardAssetDataUrlService>();
-
             builder.Services.AddAuthorizationCore();
             builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
 

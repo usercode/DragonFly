@@ -16,6 +16,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ImageWizard.Client" Version="2.1.9" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup> 
   
@@ -35,6 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+    <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

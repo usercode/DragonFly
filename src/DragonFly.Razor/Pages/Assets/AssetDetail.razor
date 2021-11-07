@@ -2,7 +2,6 @@
 @page "/asset/create"
 @page "/asset/create/{FolderId:guid}"
 @inherits AssetDetailBase
-@inject IImageAssetUrlService AssetPreview
 @inject ComponentManager FieldComponentManager
 
 @if (Entity != null)
@@ -99,20 +98,19 @@
                                 <InputFile OnChange="OnInputFileChange" />
                             </div>
                             
-                            @if (Entity.IsImage())
+                            @if (string.IsNullOrEmpty(Entity.PreviewUrl) == false)
                             {
                                 <!-- image preview -->
-                                <img src="@AssetPreview.Resize(Entity, 800, 800)" />
+                                <img src="@Entity.PreviewUrl" />
                             }
-                            else if (Entity.IsPdf())
-                            {
-                                @*<img src="@AssetPreview.Pdf(Entity, 800, 800)" />*@
+                            @*else if (Entity.IsPdf())
+                            {                                
                                 <div id="pdf" style="width: 100%; height: 100%;">
                                     <iframe src="@Entity.GetDataUrl()" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
                                         <p>It appears your web browser doesn't support iframes.</p>
                                     </iframe>
                                 </div>
-                            }
+                            }*@
                         }
                     </div>
                 </BSRow>

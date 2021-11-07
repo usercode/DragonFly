@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.API.Exports;
+using DragonFly.Client.Core.Assets;
 using DragonFly.Content;
 using DragonFly.Contents.Assets;
 using DragonFly.ContentTypes;
@@ -15,6 +16,7 @@ using DragonFly.Data.Models;
 using DragonFly.Data.Models.Assets;
 using DragonFly.Storage;
 using DragonFly.Storage.MongoDB;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
@@ -27,11 +29,23 @@ namespace DragonFly.Data
     /// </summary>
     public partial class MongoStorage : IAssetStorage
     {
+        private Asset SetPreviewUrl(Asset asset)
+        {
+            IAssetPreviewUrlService? previewService = Api.ServiceProvider.GetService<IAssetPreviewUrlService>();
+
+            if (previewService != null)
+            {
+                asset.PreviewUrl = previewService.GetImageUrl(asset, 800, 800);
+            }
+
+            return asset;
+        }
+
         public async Task<Asset> GetAssetAsync(Guid id)
         {
             MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
-            return asset.ToModel();
+            return SetPreviewUrl(asset.ToModel());
         }
 
         public async Task CreateAsync(Asset asset)
@@ -128,7 +142,7 @@ namespace DragonFly.Data
 
             QueryResult<Asset> queryResult = new QueryResult<Asset>();
             queryResult.Items = result
-                                    .Select(x => x.ToModel())
+                                    .Select(x => SetPreviewUrl(x.ToModel()))
                                     .ToList();
             queryResult.Offset = assetQuery.Take;
             queryResult.Count = queryResult.Items.Count;

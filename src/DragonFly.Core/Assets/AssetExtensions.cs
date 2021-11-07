@@ -1,11 +1,13 @@
-﻿using DragonFly.Content;
+﻿using DragonFly.Client.Core.Assets;
+using DragonFly.Content;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Contents.Assets
+namespace DragonFly
 {
     public static class AssetDataUrlService
     {
@@ -16,11 +18,6 @@ namespace DragonFly.Razor.Contents.Assets
 
         public static string GetFileSize(this Asset asset)
         {
-            if (asset.Size == null)
-            {
-                return "? KB";
-            }
-
             return $"{(double)asset.Size / 1024:###,###,##0.00} KB";
         }
     }

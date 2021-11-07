@@ -1,6 +1,5 @@
 @page "/content/{EntityType}"
 @inherits ContentItemListBase
-@inject IImageAssetUrlService AssetPreview
 
 <div class="contentitem-list">
     <div class="flex:0">
@@ -85,7 +84,7 @@
                                                     {
                                                         @if (assetField.Asset != null && assetField.Asset.IsImage())
                                                         {
-                                                            <img src="@AssetPreview.Resize(assetField.Asset, 200, 200)" style="height:4rem;object-fit:contain" />
+                                                            <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
                                                         }
                                                     }
                                                 </div>

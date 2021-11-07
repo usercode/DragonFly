@@ -44,6 +44,8 @@ namespace DragonFly.Data
 
         public IDateTimeService DateTimeService { get; }
 
+        private IDragonFlyApi Api { get; }
+
         private static MongoStorage? _default;
 
         public static MongoStorage Default
@@ -55,11 +57,13 @@ namespace DragonFly.Data
         public MongoStorage(
             IDateTimeService dateTimeService,
             IOptions<MongoDbOptions> options, 
+            IDragonFlyApi api,
             IEnumerable<IAssetProcessing> assetProcessings, 
             IEnumerable<IContentInterceptor> interceptors)
         {
             Default = this;
 
+            Api = api;
             Options = options.Value;
 
             MongoClientSettings settings = new MongoClientSettings();

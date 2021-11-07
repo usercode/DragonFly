@@ -1,6 +1,5 @@
 @page "/asset"
 @inherits AssetListBase
-@inject IImageAssetUrlService AssetPreview
 
 <div style="display:flex;flex-direction:column;height:100%">
     <div style="flex:0">
@@ -58,13 +57,9 @@
                                     <div class="box-item zoom action" style="height:320px">
                                         <a @onclick="x => OpenItem(asset)">
                                             <div class="image">
-                                                @if (asset.IsImage())
+                                                @if (string.IsNullOrEmpty(asset.PreviewUrl ) == false)
                                                 {
-                                                    <img src="@AssetPreview.Resize(asset, 400, 400)" alt="@asset.Name" />
-                                                }
-                                                else if (asset.IsPdf())
-                                                {
-                                                    <img src="@AssetPreview.Pdf(asset, 400, 400)" />
+                                                    <img src="@asset.PreviewUrl" alt="@asset.Name" />
                                                 }
                                             </div>
                                             <div>

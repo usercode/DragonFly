@@ -22,6 +22,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
             asset.Hash = restAsset.Hash;
             asset.MimeType = restAsset.MimeType;
             asset.Size = restAsset.Size;
+            asset.PreviewUrl = restAsset.PreviewUrl;
             asset.Slug = restAsset.Slug;
             asset.Alt = restAsset.Alt;
             asset.Description = restAsset.Description;
@@ -51,6 +52,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
             restAsset.Hash = asset.Hash;
             restAsset.MimeType = asset.MimeType;
             restAsset.Size = asset.Size;
+            restAsset.PreviewUrl = asset.PreviewUrl;
             restAsset.Slug = asset.Slug;
             restAsset.Alt = asset.Alt;
             restAsset.Description = asset.Description;
