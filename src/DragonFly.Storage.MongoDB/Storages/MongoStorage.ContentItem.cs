@@ -242,7 +242,7 @@ namespace DragonFly.Data
 
             IMongoCollection<MongoContentItem> col = GetMongoCollection(schema, false);
 
-            await col.FindOneAndDeleteAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));
+            await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));
 
             //execute interceptors
             foreach (IContentInterceptor interceptor in Interceptors)
