@@ -1,4 +1,5 @@
-﻿using ImageWizard.Core.Middlewares;
+﻿using ImageWizard.Client;
+using ImageWizard.Core.Middlewares;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace DragonFly.ImageWizard
         {
             wizardConfiguration.Services.AddTransient<DragonFlyImageLoader>();
             wizardConfiguration.ImageLoaderManager.Register<DragonFlyImageLoader>("dragonfly");
+
+            wizardConfiguration.Services.AddImageWizardClient();
 
             return wizardConfiguration;
         }

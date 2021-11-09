@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
@@ -16,7 +16,8 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+		<PackageReference Include="ImageWizard.Client" Version="2.2.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.0" PrivateAssets="All" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,7 +25,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ImageWizard.Core" Version="2.1.9" />
+		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.DocNET" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.ImageSharp" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.MongoDB" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.SvgNet" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
