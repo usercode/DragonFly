@@ -24,7 +24,7 @@
 	</ItemGroup>
 	
   <ItemGroup>
-    <ProjectReference Include="..\DragonFLy.ApiKeys\DragonFLy.ApiKeys.csproj" />
+    <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions.Razor\DragonFly.Permissions.Razor.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
