@@ -71,9 +71,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Permissions", "Dr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiKey", "ApiKey", "{AB978E78-A6DD-41E4-A6E0-541F902B9B6A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFLy.ApiKeys", "DragonFLy.ApiKeys\DragonFLy.ApiKeys.csproj", "{9E38A748-673F-4C8D-BA8B-C66A0B299BDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys", "DragonFly.ApiKeys\DragonFly.ApiKeys.csproj", "{9E38A748-673F-4C8D-BA8B-C66A0B299BDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFLy.ApiKeys.AspNetCore", "DragonFLy.ApiKeys.AspNetCore\DragonFLy.ApiKeys.AspNetCore.csproj", "{38D4D806-1FBD-4175-B7B4-2EC72CF131D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.AspNetCore", "DragonFly.ApiKeys.AspNetCore\DragonFly.ApiKeys.AspNetCore.csproj", "{38D4D806-1FBD-4175-B7B4-2EC72CF131D5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.Razor", "DragonFly.ApiKeys.Razor\DragonFly.ApiKeys.Razor.csproj", "{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}"
 EndProject
