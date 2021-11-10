@@ -12,6 +12,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models
         {
             return new MongoApiKey()
             {
+                Id = apiKey.Id,
                 Name = apiKey.Name,
                 Permissions = apiKey.Permissions
             };
@@ -21,6 +22,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models
         {
             return new ApiKey()
             {
+                Id = mongoApiKey.Id,
                 Name = mongoApiKey.Name,
                 Permissions = mongoApiKey.Permissions
             };

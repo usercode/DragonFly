@@ -16,6 +16,8 @@ namespace DragonFLy.ApiKeys.AspNetCore.Middlewares
         {
             endpoints.MapGet("apikey/{id:guid}", MapGet);
             endpoints.MapPost("apikey/query", MapQuery);
+            endpoints.MapPost("apikey", MapCreate);
+            endpoints.MapPut("apikey", MapUpdate);
         }
 
         private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
@@ -23,6 +25,20 @@ namespace DragonFLy.ApiKeys.AspNetCore.Middlewares
             ApiKey entity = await service.GetApiKey(id);
 
             await context.Response.WriteAsJsonAsync(entity);
+        }
+
+        private static async Task MapCreate(HttpContext context, IApiKeyService service)
+        {
+            ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+
+            await service.CreateApiKey(entity);
+        }
+
+        private static async Task MapUpdate(HttpContext context, IApiKeyService service)
+        {
+            ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+
+            await service.UpdateApiKey(entity);
         }
 
         private static async Task MapQuery(HttpContext context, IApiKeyService service)

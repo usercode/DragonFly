@@ -48,6 +48,13 @@ namespace DragonFLy.ApiKeys.AspNetCore.Services
             await Store.ApiKeys.DeleteOneAsync(Builders<MongoApiKey>.Filter.Eq(x => x.Id, apiKey.Id));
         }
 
+        public async Task<ApiKey> GetApiKey(Guid id)
+        {
+            var result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+
+            return result.ToModel();
+        }
+
         public async Task<ApiKey> GetApiKey(string value)
         {
             MongoApiKey result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Value == value);
@@ -60,13 +67,6 @@ namespace DragonFLy.ApiKeys.AspNetCore.Services
             var result = await Store.ApiKeys.AsQueryable().ToListAsync();
 
             return result.Select(x => x.ToModel()).ToList();
-        }
-
-        public async Task<ApiKey> GetApiKey(Guid id)
-        {
-            var result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
-
-            return result.ToModel();
-        }
+        }       
     }
 }

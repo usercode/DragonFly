@@ -21,9 +21,18 @@ namespace DragonFly.ApiKeys.Razor.Services
 
         private HttpClient Client { get; }
 
-        public Task CreateApiKey(ApiKey apiKey)
+        public async Task CreateApiKey(ApiKey apiKey)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await Client.PostAsJsonAsync("apikey", apiKey);
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task UpdateApiKey(ApiKey apiKey)
+        {
+            HttpResponseMessage response = await Client.PutAsJsonAsync("apikey", apiKey);
+
+            response.EnsureSuccessStatusCode();
         }
 
         public Task DeleteApiKey(ApiKey apiKey)
@@ -33,7 +42,7 @@ namespace DragonFly.ApiKeys.Razor.Services
 
         public async Task<IEnumerable<ApiKey>> GetAllApiKeys()
         {
-            HttpResponseMessage response = await Client.PostAsync("api/apikey/query", new StringContent(string.Empty) );
+            HttpResponseMessage response = await Client.PostAsync("apikey/query", new StringContent(string.Empty) );
 
             response.EnsureSuccessStatusCode();
 
@@ -52,14 +61,16 @@ namespace DragonFly.ApiKeys.Razor.Services
             throw new NotImplementedException();
         }
 
-        public Task<ApiKey> GetApiKey(Guid id)
+        public async Task<ApiKey> GetApiKey(Guid id)
         {
-            throw new NotImplementedException();
-        }
+            ApiKey? apikey = await Client.GetFromJsonAsync<ApiKey>($"apikey/{id}");
 
-        public Task UpdateApiKey(ApiKey apiKey)
-        {
-            throw new NotImplementedException();
-        }
+            if (apikey == null)
+            {
+                throw new Exception();
+            }
+
+            return apikey;
+        }        
     }
 }

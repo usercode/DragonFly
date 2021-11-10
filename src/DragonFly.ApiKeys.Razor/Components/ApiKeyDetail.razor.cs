@@ -1,5 +1,7 @@
 ﻿using DragonFly.Client.Base;
+using DragonFly.Permissions.Razor;
 using DragonFly.Permissions.Services;
+using DragonFly.Razor.Base;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using DragonFLy.ApiKeys;
@@ -16,7 +18,7 @@ namespace DragonFly.ApiKeys.Razor.Components
     {
         public ApiKeyDetailBase()
         {
-
+            Permissions = new List<SelectableElementTree<Permission>>();
         }
 
         [Inject]
@@ -45,14 +47,44 @@ namespace DragonFly.ApiKeys.Razor.Components
 
         protected override async Task RefreshActionAsync()
         {
+            if (IsNewEntity)
+            {
+                Entity = new ApiKey();
+            }
+            else
+            {
+                Entity = await ApiKeyService.GetApiKey(EntityId);
+            }
+
             IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
-            Entity = await ApiKeyService.GetApiKey(EntityId);
+            Permissions = permissions
+                                    .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
+                                    .ToList();
+        }
+
+        protected override async Task CreateActionAsync()
+        {
+            await base.CreateActionAsync();
+
+            await ApiKeyService.CreateApiKey(Entity);
         }
 
         protected override async Task UpdateActionAsync()
         {
-            
+            await base.UpdateActionAsync();
+
+            await ApiKeyService.UpdateApiKey(Entity);
+        }
+
+        protected override void OnSaving(SavingEventArgs args)
+        {
+            base.OnSaving(args);
+
+            Entity.Permissions = Permissions
+                                        .ToFlatList()
+                                        .Select(x => x.Name)
+                                        .ToList();
         }
     }
 }

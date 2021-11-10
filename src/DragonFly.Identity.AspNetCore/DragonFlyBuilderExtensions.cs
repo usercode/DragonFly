@@ -34,7 +34,7 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
             builder.Services.AddTransient<ILoginService, LoginService>();
             builder.Services.AddTransient<IIdentityService, IdentityService>();
 
-            builder.Services.AddSingleton<IAuthorizePermissionService, PermissionAuthorizeService>();
+            builder.Services.AddSingleton<IPermissionAuthorizationService, PermissionAuthorizationService>();
             builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
 
             builder.Services.AddSingleton<MongoIdentityStore>();

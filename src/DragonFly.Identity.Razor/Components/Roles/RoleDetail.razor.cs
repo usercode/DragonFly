@@ -3,6 +3,7 @@ using DragonFly.Identity.Services;
 using DragonFly.Permissions;
 using DragonFly.Permissions.Razor;
 using DragonFly.Permissions.Services;
+using DragonFly.Razor.Base;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
@@ -20,7 +21,7 @@ namespace DragonFly.Identity.Razor.Components.Roles
     {
         public RoleDetailBase()
         {
-
+            Permissions = new List<SelectableElementTree<Permission>>();
         }
 
         [Inject]
@@ -52,7 +53,14 @@ namespace DragonFly.Identity.Razor.Components.Roles
 
         protected override async Task RefreshActionAsync()
         {
-            Entity = await UserStore.GetRoleAsync(EntityId);
+            if (IsNewEntity)
+            {
+                Entity = new IdentityRole();
+            }
+            else
+            {
+                Entity = await UserStore.GetRoleAsync(EntityId);
+            }
 
             IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
@@ -61,14 +69,28 @@ namespace DragonFly.Identity.Razor.Components.Roles
                                     .ToList();
         }
 
+        protected override async Task CreateActionAsync()
+        {
+            await base.CreateActionAsync();
+
+            await UserStore.CreateRoleAsync(Entity);
+        }
+
         protected override async Task UpdateActionAsync()
         {
-            Entity.Permissions = Permissions
-                                        .ToFlatList()
-                                        .Select(x => x.Name)
-                                        .ToList();
+            await base.UpdateActionAsync();
 
             await UserStore.UpdateRoleAsync(Entity);
+        }
+
+        protected override void OnSaving(SavingEventArgs args)
+        {
+            base.OnSaving(args);
+
+            Entity.Permissions = Permissions
+                                       .ToFlatList()
+                                       .Select(x => x.Name)
+                                       .ToList();
         }
     }
 }

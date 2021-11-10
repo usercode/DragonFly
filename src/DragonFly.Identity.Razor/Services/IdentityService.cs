@@ -1,4 +1,5 @@
 ﻿using DragonFly.Identity.Commands;
+using DragonFly.Identity.Rest.Commands;
 using DragonFly.Identity.Services;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,11 @@ namespace DragonFly.Identity.Razor.Services
 
         public async Task CreateUserAsync(IdentityUser user, string password)
         {
-            HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user", user);
+            CreateUser createUser = new CreateUser();
+            createUser.User = user;
+            createUser.Password = password;
+
+            HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user", createUser);
 
             response.EnsureSuccessStatusCode();
         }
@@ -100,14 +105,14 @@ namespace DragonFly.Identity.Razor.Services
 
         public async Task UpdateUserAsync(IdentityUser user)
         {
-            HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user", user);
+            HttpResponseMessage response = await Client.PutAsJsonAsync("identity/user", user);
 
             response.EnsureSuccessStatusCode();
         }
 
         public async Task UpdateRoleAsync(IdentityRole role)
         {
-            HttpResponseMessage response = await Client.PostAsJsonAsync("identity/role", role);
+            HttpResponseMessage response = await Client.PutAsJsonAsync("identity/role", role);
 
             response.EnsureSuccessStatusCode();
         }

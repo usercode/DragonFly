@@ -1,4 +1,5 @@
 ﻿using DragonFly.Client.Base;
+using DragonFly.Razor.Shared.UI.Toolbars;
 using DragonFLy.ApiKeys;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -23,7 +24,15 @@ namespace DragonFly.ApiKeys.Razor.Components
 
         protected override string GetNavigationPath(ApiKey entity)
         {
-            return $"/settings/apikey/{entity.Id}";
+            return $"settings/apikey/{entity.Id}";
+        }
+
+        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+        {
+            base.BuildToolbarItems(toolbarItems);
+
+            toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.Color.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
+            toolbarItems.AddRefreshButton(this);
         }
 
         protected override async Task RefreshActionAsync()

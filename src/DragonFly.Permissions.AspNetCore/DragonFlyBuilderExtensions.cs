@@ -33,8 +33,6 @@ public static class DragonFlyBuilderExtensions
         builder.Services.Decorate<IAssetStorage, AssetStorageAuthorization>();
         builder.Services.Decorate<ISchemaStorage, SchemaStorageAuthorization>();
 
-        builder.Services.Decorate<IAuthorizePermissionService, DisablePermissionService>();
-
         builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 

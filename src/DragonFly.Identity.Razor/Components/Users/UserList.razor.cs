@@ -1,6 +1,7 @@
 ﻿using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Razor.Pages.Settings;
+using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,14 @@ namespace DragonFly.Identity.Razor.Components.Users
         public IIdentityService UserStore { get; set; }
 
         public IList<IdentityUser> Users { get; set; }
+
+        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+        {
+            base.BuildToolbarItems(toolbarItems);
+
+            toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.Color.Success, async () => Navigation.NavigateTo("settings/identity/user/create")));
+            toolbarItems.AddRefreshButton(this);
+        }
 
         protected override string GetNavigationPath(IdentityUser entity)
         {

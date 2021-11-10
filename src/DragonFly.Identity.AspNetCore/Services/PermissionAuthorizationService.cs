@@ -17,9 +17,9 @@ namespace DragonFly.Identity.AspNetCore.Permissions
     /// <summary>
     /// PermissionService
     /// </summary>
-    class PermissionAuthorizeService : IAuthorizePermissionService
+    class PermissionAuthorizationService : IPermissionAuthorizationService
     {
-        public PermissionAuthorizeService(
+        public PermissionAuthorizationService(
             MongoIdentityStore store,
             IDragonFlyApi api)
         {
@@ -39,8 +39,6 @@ namespace DragonFly.Identity.AspNetCore.Permissions
 
         public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
         {
-            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
-
             Claim? claim = principal.FindFirst("UserId");
 
             if (claim == null)
@@ -51,6 +49,8 @@ namespace DragonFly.Identity.AspNetCore.Permissions
             Guid userId = Guid.Parse(claim.Value);
 
             MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
+
+            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
 
             bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
 

@@ -15,14 +15,16 @@
             <EditForm Model="Entity">
                 <div>
                     <div class="col-md-6">
-
-                        <!-- id -->
-                        <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">Id</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                            </div>
-                        </BSRow>
+                        @if (IsNewEntity == false)
+                        {
+                            <!-- id -->
+                            <BSRow class="form-group">
+                                <label class="col-sm-2 col-form-label">Id</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                                </div>
+                            </BSRow>
+                        }
 
                         <!-- username -->
                         <BSRow class="form-group">
@@ -35,7 +37,7 @@
                         <BSRow class="form-group">
                                 <label class="col-sm-2 col-form-label">Roles</label>
                                 <div class="col-sm-10">                                    
-                                        @foreach(var role in Roles.OrderBy(x => x.Element.Name))
+                                        @foreach(var role in Roles.OrderBy(x => x.Element.Name).ToList())
                                         {
                                             <div class="form-check">
                                                  <input type="checkbox" class="form-check-input" value="" @bind="role.IsSelected" />
@@ -48,7 +50,7 @@
                                 </div>
                         </BSRow>
 
-                          <!-- username -->
+                          <!-- new password -->
                         <BSRow class="form-group">
                             <label class="col-sm-2 col-form-label">New password</label>
                             <div class="col-sm-10">

@@ -10,7 +10,7 @@ namespace DragonFly.Permissions
     /// <summary>
     /// IAuthorizePermissionService
     /// </summary>
-    public interface IAuthorizePermissionService
+    public interface IPermissionAuthorizationService
     {
         Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission);
     }

@@ -17,7 +17,8 @@ namespace DragonFly.AspNetCore.Identity.Middlewares.Roles
         public static IDragonFlyEndpointRouteBuilder MapRoleApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
             endpoints.MapGet("identity/role/{id:guid}", MapGet);
-            endpoints.MapPost("identity/role", MapUpdate);
+            endpoints.MapPost("identity/role", MapCreate);
+            endpoints.MapPut("identity/role", MapUpdate);            
             endpoints.MapPost("identity/role/query", MapQuery);
 
             return endpoints;
@@ -28,6 +29,13 @@ namespace DragonFly.AspNetCore.Identity.Middlewares.Roles
             IdentityRole role = await identityService.GetRoleAsync(id);
 
             await context.Response.WriteAsJsonAsync(role);
+        }
+
+        private static async Task MapCreate(HttpContext context, IIdentityService identityService)
+        {
+            IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
+
+            await identityService.CreateRoleAsync(role);
         }
 
         private static async Task MapUpdate(HttpContext context, IIdentityService identityService)

@@ -17,7 +17,7 @@ namespace DragonFly.Identity.Razor.Components.Users
     {
         public UserDetailBase()
         {
-
+            Roles = new List<SelectableElement<IdentityRole>>();
         }
 
         [Inject]
@@ -45,13 +45,25 @@ namespace DragonFly.Identity.Razor.Components.Users
 
         protected override async Task RefreshActionAsync()
         {
-            Entity = await UserStore.GetUserAsync(EntityId);
+            if (IsNewEntity == false)
+            {
+                Entity = await UserStore.GetUserAsync(EntityId);
+            }
+            else
+            {
+                Entity = new IdentityUser();
+            }
 
             IEnumerable<IdentityRole> roles = await UserStore.GetRolesAsync();
 
             Roles = roles.Select(x => new SelectableElement<IdentityRole>(Entity.Roles.Any(r => r.Id == x.Id), x)).ToList();
+        }
 
-            
+        protected override async Task CreateActionAsync()
+        {
+            await base.CreateActionAsync();
+
+            await UserStore.CreateUserAsync(Entity, NewPassword);
         }
 
         protected override void OnSaving(SavingEventArgs args)
@@ -70,6 +82,5 @@ namespace DragonFly.Identity.Razor.Components.Users
                 await UserStore.ChangePasswordAsync(Entity.Id, NewPassword);
             }
         }
-
     }
 }
