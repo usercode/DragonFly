@@ -19,12 +19,6 @@ namespace DragonFly.Permissions.AspNetCore.Providers
 
         protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
-            if (DisablePermissionState.Disabled.Value)
-            {
-                context.Succeed(requirement);
-                return;
-            }
-
             bool result = false;
 
             foreach (IPermissionAuthorizationService permission in PermissionServices)

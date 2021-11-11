@@ -33,8 +33,4 @@
 	  <ProjectReference Include="..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Models\" />
-	</ItemGroup>
-
 </Project>

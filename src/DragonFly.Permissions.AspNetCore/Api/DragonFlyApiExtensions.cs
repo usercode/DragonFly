@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DragonFly.Permissions.AspNetCore.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,6 +17,11 @@ namespace DragonFly.Permissions
     {
         public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
         {
+            if (DisablePermissionState.Disabled.Value == true)
+            {
+                return;
+            }
+
             IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
             IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 

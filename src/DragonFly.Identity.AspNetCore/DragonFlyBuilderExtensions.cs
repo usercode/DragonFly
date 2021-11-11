@@ -56,6 +56,7 @@ namespace DragonFly.Identity.AspNetCore.MongoDB
                                                 .Add(IdentityPermissions.UserCreate, description: "Create user", sortkey: 1)
                                                 .Add(IdentityPermissions.UserUpdate, description: "Update user", sortkey: 2)
                                                 .Add(IdentityPermissions.UserDelete, description: "Delete user", sortkey: 3)
+                                                .Add(IdentityPermissions.PasswordChange, description: "Change password", sortkey: 4)
                                                 )
                                 .Add("Role", x => x
                                                 .Add(IdentityPermissions.RoleRead, description: "Read role", sortkey: 0, childs: x => x

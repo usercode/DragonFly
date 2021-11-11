@@ -28,9 +28,5 @@
 	  <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
-
 	
 </Project>

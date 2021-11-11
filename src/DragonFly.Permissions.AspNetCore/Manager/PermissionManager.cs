@@ -53,8 +53,6 @@ namespace DragonFly.Core.Permissions
         /// </summary>
         public IList<Permission> Items { get; }
 
-        public IEnumerable<Permission> Childs => Items;
-
         public Permission Add(Permission permissionItem)
         {
             if (_policyBuilt)
