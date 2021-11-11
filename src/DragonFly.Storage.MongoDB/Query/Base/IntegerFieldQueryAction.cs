@@ -24,7 +24,12 @@ namespace DragonFly.Storage.MongoDB.Query.Base
             if (query.MaxValue != null)
             {
                 context.Filters.Add(Builders<MongoContentItem>.Filter.Lte($"{CreateFullFieldName(query.FieldName)}", query.MaxValue.Value));
-            }          
+            }
+
+            if (query.Value != null)
+            {
+                context.Filters.Add(Builders<MongoContentItem>.Filter.Gte($"{CreateFullFieldName(query.FieldName)}", query.Value.Value));
+            }
         }
     }
 }

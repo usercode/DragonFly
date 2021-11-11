@@ -44,14 +44,8 @@ namespace DragonFly.Client.Pages.ContentItems
             base.BuildToolbarItems(toolbarItems);
 
             toolbarItems.Add(new ToolbarItem("Create", Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
+            toolbarItems.Add(new ToolbarItem("Publish all", Color.Success, async () => await PublishQueryAsync()));
             toolbarItems.AddRefreshButton(this);
-        }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-
-
         }
 
         protected override async Task RefreshActionAsync()
@@ -78,27 +72,41 @@ namespace DragonFly.Client.Pages.ContentItems
                     }
                 }
 
-                ContentItemQuery quey = new ()
-                                                    {
-                                                       SearchPattern = SearchPattern,
-                                                       Skip = CurrentPageIndex * PageSize,
-                                                       Top = PageSize
-                                                    };
-
-                foreach (FieldOrder f in OrderFields)
-                {
-                    quey.AddFieldOrder(f.Name, f.Asc);
-                }
-
-                foreach (FieldQuery query in QueryFields.Where(x=> x.IsEmpty() == false))
-                {
-                    quey.Fields.Add(query);
-                }
-
-                quey.Schema = Schema.Name;
+                ContentItemQuery quey = CreateQuery();
 
                 SearchResult = await ContentService.QueryAsync(quey);
             }
+        }
+
+        private ContentItemQuery CreateQuery()
+        {
+            ContentItemQuery query = new()
+            {
+                SearchPattern = SearchPattern,
+                Skip = CurrentPageIndex * PageSize,
+                Top = PageSize
+            };
+
+            foreach (FieldOrder f in OrderFields)
+            {
+                query.AddFieldOrder(f.Name, f.Asc);
+            }
+
+            foreach (FieldQuery fieldQuery in QueryFields.Where(x => x.IsEmpty() == false))
+            {
+                query.Fields.Add(fieldQuery);
+            }
+
+            query.Schema = Schema.Name;
+
+            return query;
+        }
+
+        public async Task PublishQueryAsync()
+        {
+            ContentItemQuery query = CreateQuery();
+
+            await ContentService.PublishQueryAsync(query);
         }
 
         public async Task Search(string pattern)

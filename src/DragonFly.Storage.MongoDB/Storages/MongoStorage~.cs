@@ -14,6 +14,7 @@ using DragonFly.Models;
 using DragonFly.MongoDB.Options;
 using DragonFly.Storage;
 using DragonFly.Storage.MongoDB.Models.ContentStructures;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
@@ -46,6 +47,8 @@ namespace DragonFly.Data
 
         private IDragonFlyApi Api { get; }
 
+        public ILogger<MongoStorage> Logger { get; }
+
         private static MongoStorage? _default;
 
         public static MongoStorage Default
@@ -59,10 +62,12 @@ namespace DragonFly.Data
             IOptions<MongoDbOptions> options, 
             IDragonFlyApi api,
             IEnumerable<IAssetProcessing> assetProcessings, 
-            IEnumerable<IContentInterceptor> interceptors)
+            IEnumerable<IContentInterceptor> interceptors,
+            ILogger<MongoStorage> logger)
         {
             Default = this;
 
+            Logger = logger;
             Api = api;
             Options = options.Value;
 

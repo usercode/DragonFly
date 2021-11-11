@@ -67,6 +67,14 @@ namespace DragonFly.AspNetCore.Content
             await Storage.PublishAsync(schema, id);
         }
 
+        public async Task PublishQueryAsync(ContentItemQuery query)
+        {
+            await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
+            await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
+
+            await Storage.PublishQueryAsync(query);
+        }
+
         public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
         {
             await Api.AuthorizeAsync(ContentPermissions.ContentQuery);

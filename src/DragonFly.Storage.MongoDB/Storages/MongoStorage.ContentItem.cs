@@ -14,6 +14,7 @@ using DragonFly.Data.Models.Assets;
 using DragonFly.Models;
 using DragonFly.Storage;
 using DragonFly.Storage.MongoDB.Query;
+using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -138,7 +139,7 @@ namespace DragonFly.Data
             //FieldQuery
             FieldQueryActionContext converterContext = new FieldQueryActionContext();
 
-            foreach (FieldQuery f in query.Fields.Where(x => x.IsEmpty() == false))
+            foreach (FieldQuery f in query.Fields)
             {
                 IFieldQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
 
@@ -289,6 +290,8 @@ namespace DragonFly.Data
             {
                 await interceptor.OnPublishedAsync(this, contentItem);
             }
+
+            Logger.LogInformation($"Content was published: {schema}/{id}");
         }
 
         public async Task UnpublishAsync(string schema, Guid id)
@@ -311,6 +314,31 @@ namespace DragonFly.Data
             {
                 await interceptor.OnUnpublishedAsync(this, contentItem);
             }
+        }
+
+        public async Task PublishQueryAsync(ContentItemQuery query)
+        {
+            int skip = 0;
+
+            query.Skip = 0;
+            query.Top = 100;
+
+            while (true)
+            {
+                var result = await QueryAsync(query);
+
+                if (result.Items.Count == 0)
+                {
+                    break;
+                }
+
+                foreach (ContentItem contentItem in result.Items)
+                {
+                    await PublishAsync(contentItem.Schema.Name, contentItem.Id);
+                }
+
+                query.Skip += skip;
+            }            
         }
     }
 }

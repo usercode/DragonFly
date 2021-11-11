@@ -23,6 +23,8 @@ namespace DragonFly.Storage
 
         Task DeleteAsync(string schema, Guid id);
 
+        Task PublishQueryAsync(ContentItemQuery query);
+
         Task PublishAsync(string schema, Guid id);
 
         Task UnpublishAsync(string schema, Guid id);

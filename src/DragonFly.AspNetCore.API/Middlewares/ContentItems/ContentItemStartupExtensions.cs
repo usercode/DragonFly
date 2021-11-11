@@ -31,6 +31,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             endpoints.MapPut("api/content/{schema}", MapUpdate);
             endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
             endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
+            endpoints.MapPost("api/content/publish", MapPublishQuery);
         }
 
         private static async Task MapQuery(HttpContext context, JsonService jsonService, IContentStorage storage)
@@ -112,6 +113,13 @@ namespace DragonFly.AspNetCore.API.Middlewares
             string schema = (string)context.GetRouteValue("schema");
 
             await contentStore.PublishAsync(schema, id);
+        }
+
+        private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, JsonService jsonService)
+        {
+            ContentItemQuery query = await jsonService.Deserialize<ContentItemQuery>(context.Request.Body);
+
+            await contentStore.PublishQueryAsync(query);
         }
     }
 }

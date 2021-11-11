@@ -1,5 +1,6 @@
 ﻿using DragonFly.Content;
 using DragonFly.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,10 @@ namespace DragonFly.Storage.MongoDB.Query.Base
             if (query.ContentItemId != null)
             {
                 context.Filters.Add(Builders<MongoContentItem>.Filter.Eq(CreateFullReferenceFieldName(query.FieldName), query.ContentItemId.Value));
+            }
+            else
+            {
+                context.Filters.Add(Builders<MongoContentItem>.Filter.Eq(CreateFullReferenceFieldName(query.FieldName), BsonType.Null));
             }
         }
     }

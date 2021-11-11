@@ -86,5 +86,12 @@ namespace DragonFly.Client
                 Items = queryResult.Items.Select(x => x.ToModel()).ToList()
             };
         }
+
+        public async Task PublishQueryAsync(ContentItemQuery query)
+        {
+            var response = await Client.PostAsJson($"api/content/publish", query);
+
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

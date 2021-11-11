@@ -14,6 +14,11 @@ namespace DragonFly.Content
         /// <summary>
         /// MinValue
         /// </summary>
+        public int? Value { get; set; }
+
+        /// <summary>
+        /// MinValue
+        /// </summary>
         public int? MinValue { get; set; }
 
         /// <summary>
@@ -23,7 +28,7 @@ namespace DragonFly.Content
 
         public override bool IsEmpty()
         {
-            return MinValue == null && MaxValue == null;
+            return Value == null && MinValue == null && MaxValue == null;
         }
     }
 }
