@@ -2,6 +2,7 @@
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
+using DragonFly.Permissions.AspNetCore.Services;
 using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -28,22 +29,25 @@ namespace DragonFLy.ApiKeys.AspNetCore.Services
 
         public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
         {
-            Claim? claim = principal.FindFirst("UserId");
-
-            if (claim == null)
+            using (new DisablePermissionState())
             {
-                throw new Exception("Unknown UserID");
+                Claim? claim = principal.FindFirst("ApiKeyId");
+
+                if (claim == null)
+                {
+                    return false;
+                }
+
+                Guid apikeyId = Guid.Parse(claim.Value);
+
+                MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
+
+                IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+
+                bool found = permissions.All(p => apikey.Permissions.Contains(p));
+
+                return found;
             }
-
-            Guid apikeyId = Guid.Parse(claim.Value);
-
-            MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
-
-            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
-
-            bool found = permissions.All(p => apikey.Permissions.Contains(p));
-
-            return found;
         }
     }
 }

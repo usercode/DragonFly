@@ -14,37 +14,44 @@ namespace DragonFly.Client
 {
     public static class NewtonJsonExtensions
     {
+        private static JsonSerializer JsonSerializer { get; set; }
+
         public static JsonSerializer CreateSerializer()
         {
-            var d = new FieldTypeDiscriminatorMapper();
-            foreach (Type t in ContentFieldManager.Default.GetAllOptionsTypes())
+            if (JsonSerializer == null)
             {
-                d.AddType(t);
+                var d = new FieldTypeDiscriminatorMapper();
+                foreach (Type t in ContentFieldManager.Default.GetAllOptionsTypes())
+                {
+                    d.AddType(t);
+                }
+
+                foreach (Type t in ContentFieldManager.Default.GetAllQueryTypes())
+                {
+                    d.AddType(t);
+                }
+
+                JsonSerializer = JsonSerializer.Create(new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    SerializationBinder = new TypeNameSerializationBinder(d),
+                    Formatting = Formatting.Indented
+                });
             }
 
-            foreach(Type t in ContentFieldManager.Default.GetAllQueryTypes())
-            {
-                d.AddType(t);
-            }
-
-            return JsonSerializer.Create(new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                SerializationBinder = new TypeNameSerializationBinder(d),
-                Formatting = Formatting.Indented
-            });
+            return JsonSerializer;
         }
 
         public static T Deserialize<T>(string json)
         {
-            var s = CreateSerializer();
+            JsonSerializer s = CreateSerializer();
 
             return s.Deserialize<T>(new JsonTextReader(new StringReader(json)));
         }
 
         public static string Serialize<T>(T obj)
         {
-            var s = CreateSerializer();
+            JsonSerializer s = CreateSerializer();
 
             StringBuilder builder = new StringBuilder();
             JsonTextWriter writer = new JsonTextWriter(new StringWriter(builder));
@@ -61,7 +68,7 @@ namespace DragonFly.Client
             return Deserialize<T>(json);
         }
 
-        public static async Task PutAsJson<T>(this HttpClient client, string url, T entity)
+        public static async Task<HttpResponseMessage> PutAsJson<T>(this HttpClient client, string url, T entity)
         {
             string json = Serialize(entity);
 
@@ -71,6 +78,8 @@ namespace DragonFly.Client
             var response = await client.SendAsync(request);
 
             response.EnsureSuccessStatusCode();
+
+            return response;
         }
 
         public static async Task<HttpResponseMessage> PostAsJson<T>(this HttpClient client, string url, T entity)

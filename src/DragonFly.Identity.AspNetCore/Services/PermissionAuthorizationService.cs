@@ -2,6 +2,7 @@
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
+using DragonFly.Permissions.AspNetCore.Services;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -39,22 +40,25 @@ namespace DragonFly.Identity.AspNetCore.Permissions
 
         public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
         {
-            Claim? claim = principal.FindFirst("UserId");
-
-            if (claim == null)
+            using (new DisablePermissionState())
             {
-                throw new Exception("Unknown UserID");
+                Claim? claim = principal.FindFirst("UserId");
+
+                if (claim == null)
+                {
+                    return false;
+                }
+
+                Guid userId = Guid.Parse(claim.Value);
+
+                MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
+
+                IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+
+                bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
+
+                return found;
             }
-
-            Guid userId = Guid.Parse(claim.Value);
-
-            MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
-
-            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
-
-            bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
-
-            return found;
         }
     }
 }

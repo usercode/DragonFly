@@ -9,7 +9,7 @@
         }
 
         @*@bind:event="oninput"*@
-        <input class="form-control" type="text" style="width:100%" @onchange="async (x) => { SearchPattern = x.Value.ToString(); await RefreshAsync(); }" />
+        <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
 
         <hr />
     </div>
@@ -109,10 +109,10 @@
                 </BSPaginationItem>
                 @for (int i = 0; i < CountPages; i++)
                 {
-                    int a = i;
+                    int i2 = i;
 
                     <BSPaginationItem>
-                        <BSPaginationLink PaginationLinkType="PaginationLinkType.Custom">@(a + 1)</BSPaginationLink>
+                        <BSPaginationLink PaginationLinkType="PaginationLinkType.Custom" @onclick="x => Page = i2">@(i2 + 1)</BSPaginationLink>
                     </BSPaginationItem>
                 }
                 <BSPaginationItem>

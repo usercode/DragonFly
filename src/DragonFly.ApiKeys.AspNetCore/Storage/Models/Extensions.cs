@@ -14,6 +14,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models
             {
                 Id = apiKey.Id,
                 Name = apiKey.Name,
+                Value = apiKey.Value,
                 Permissions = apiKey.Permissions
             };
         }
@@ -24,6 +25,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models
             {
                 Id = mongoApiKey.Id,
                 Name = mongoApiKey.Name,
+                Value = mongoApiKey.Value,
                 Permissions = mongoApiKey.Permissions
             };
         }

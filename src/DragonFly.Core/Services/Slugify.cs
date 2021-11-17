@@ -19,6 +19,7 @@ namespace System
             str = Regex.Replace(str, "ä", "ae", RegexOptions.Compiled);
             str = Regex.Replace(str, "ö", "oe", RegexOptions.Compiled);
             str = Regex.Replace(str, "ü", "ue", RegexOptions.Compiled);
+            str = Regex.Replace(str, "ß", "ss", RegexOptions.Compiled);
             str = Regex.Replace(str, @"\s+", "-", RegexOptions.Compiled);
             str = Regex.Replace(str, @"_+", "-", RegexOptions.Compiled);
             str = Regex.Replace(str, @"-+", "-", RegexOptions.Compiled);

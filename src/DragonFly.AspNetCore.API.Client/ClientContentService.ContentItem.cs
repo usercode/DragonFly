@@ -28,8 +28,7 @@ namespace DragonFly.Client
     /// ContentService
     /// </summary>
     public partial class ClientContentService : IContentStorage
-    {
-       
+    {       
         public async Task<ContentItem> GetContentAsync(string schema, Guid id)
         {
             var response = await Client.GetAsync($"api/content/{schema}/{id}");
@@ -43,7 +42,7 @@ namespace DragonFly.Client
 
         public async Task CreateAsync(ContentItem entity)
         {
-            var response = await Client.PostAsJson($"api/content/{entity.Schema.Name}", entity.ToRest());
+            var response = await Client.PostAsJson($"api/content", entity.ToRest());
 
             var result = await response.Content.ParseJsonAsync<ResourceCreated>();
 
@@ -52,7 +51,7 @@ namespace DragonFly.Client
 
         public async Task UpdateAsync(ContentItem entity)
         {
-            await Client.PutAsJson($"api/content/{entity.Schema.Name}/{entity.Id}", entity.ToRest());
+            await Client.PutAsJson($"api/content", entity.ToRest());
         }
 
         public async Task PublishAsync(string schema, Guid id)
@@ -64,12 +63,16 @@ namespace DragonFly.Client
 
         public async Task UnpublishAsync(string schema, Guid id)
         {
-            await Client.PostAsync($"api/content/{schema}/{id}/unpublish", new StringContent(string.Empty));
+            var response = await Client.PostAsync($"api/content/{schema}/{id}/unpublish", new StringContent(string.Empty));
+
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteAsync(string schema, Guid id)
         {
-            await Client.DeleteAsync($"api/content/{schema}/{id}");
+            var response = await Client.DeleteAsync($"api/content/{schema}/{id}");
+
+            response.EnsureSuccessStatusCode();
         }
 
         public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery queryParameters)

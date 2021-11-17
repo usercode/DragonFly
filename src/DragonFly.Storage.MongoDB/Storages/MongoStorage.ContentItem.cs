@@ -318,10 +318,10 @@ namespace DragonFly.Data
 
         public async Task PublishQueryAsync(ContentItemQuery query)
         {
-            int skip = 0;
+            int pageSize = 50;
 
             query.Skip = 0;
-            query.Top = 100;
+            query.Top = pageSize;
 
             while (true)
             {
@@ -337,7 +337,7 @@ namespace DragonFly.Data
                     await PublishAsync(contentItem.Schema.Name, contentItem.Id);
                 }
 
-                query.Skip += skip;
+                query.Skip += pageSize;
             }            
         }
     }

@@ -40,6 +40,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Services
                                     Builders<MongoApiKey>.Filter.Eq(x => x.Id, apiKey.Id),
                                     Builders<MongoApiKey>.Update
                                                             .Set(x => x.Name, apiKey.Name)
+                                                            .Set(x => x.Value, apiKey.Value)
                                                             .Set(x => x.Permissions, apiKey.Permissions));
         }
 

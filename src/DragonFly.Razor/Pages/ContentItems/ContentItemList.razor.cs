@@ -45,7 +45,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
             toolbarItems.Add(new ToolbarItem("Create", Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
             toolbarItems.Add(new ToolbarItem("Publish all", Color.Success, async () => await PublishQueryAsync()));
-            toolbarItems.AddRefreshButton(this);
+            toolbarItems.AddRefreshButton(this);            
         }
 
         protected override async Task RefreshActionAsync()
@@ -83,7 +83,7 @@ namespace DragonFly.Client.Pages.ContentItems
             ContentItemQuery query = new()
             {
                 SearchPattern = SearchPattern,
-                Skip = CurrentPageIndex * PageSize,
+                Skip = Page * PageSize,
                 Top = PageSize
             };
 

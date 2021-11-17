@@ -5,7 +5,7 @@
     <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
         <BSModalHeader OnClick="() => _init = false">Select asset</BSModalHeader>
         <BSModalBody>
-            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }"></ContentItemTypeList2>
+            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>
         </BSModalBody>
         <BSModalFooter>
             <BSButton Color="Color.Primary" @onclick="() => _init = false">Ok</BSButton>

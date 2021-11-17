@@ -77,7 +77,7 @@ namespace DragonFly.Client
 
         public async Task UpdateAsync(Asset entity)
         {
-            await Client.PutAsJson($"api/asset/{entity.Id}", entity.ToRest());
+            await Client.PutAsJson($"api/asset", entity.ToRest());
         }
 
         public async Task DeleteAsync(Guid id)

@@ -27,8 +27,8 @@ namespace DragonFly.AspNetCore.API.Middlewares
         {
             endpoints.MapPost("api/content/query", MapQuery);
             endpoints.MapGet("api/content/{schema}/{id:guid}", MapGet);
-            endpoints.MapPost("api/content/{schema}", MapCreate);
-            endpoints.MapPut("api/content/{schema}", MapUpdate);
+            endpoints.MapPost("api/content", MapCreate);
+            endpoints.MapPut("api/content", MapUpdate);
             endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
             endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
             endpoints.MapPost("api/content/publish", MapPublishQuery);

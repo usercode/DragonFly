@@ -44,8 +44,23 @@ namespace DragonFly.Client.Base
         /// </summary>
         public QueryResult<T> SearchResult { get; set; }
 
+        private int _page;
+
         [Parameter]
-        public int CurrentPageIndex { get; set; }
+        [SupplyParameterFromQuery(Name = "page")]
+        public int Page
+        {
+            get => _page;
+            set
+            {
+                if (_page != value)
+                {
+                    _page = value;
+
+                    Navigation.NavigateTo(Navigation.GetUriWithQueryParameter("page", _page));
+                }
+            }
+        }
 
         public int PageSize { get; set; }
 
@@ -57,10 +72,29 @@ namespace DragonFly.Client.Base
         /// SearchPattern
         /// </summary>
         [Parameter]
+        [SupplyParameterFromQuery(Name = "pattern")]
         public string SearchPattern 
         {
             get => _searchPattern;
-            set { _searchPattern = value; }
+            set 
+            {
+                if (_searchPattern != value)
+                {
+                    _searchPattern = value;
+                }
+            }
+        }
+
+        public async Task NavigateAsync()
+        {
+            if (ListMode == EntityListMode.Default)
+            {
+                Navigation.NavigateTo(Navigation.GetUriWithQueryParameters(new Dictionary<string, object>() { ["pattern"] = SearchPattern, ["page"] = Page }));
+            }
+            else
+            {
+                await RefreshAsync();
+            }
         }
 
         protected abstract string GetNavigationPath(T entity);
@@ -77,15 +111,6 @@ namespace DragonFly.Client.Base
             {
                 Navigation.NavigateTo(GetNavigationPath(entity));
             }
-        }
-
-        public async Task GoToPageAsync(int pageIndex)
-        {
-            CurrentPageIndex = pageIndex;
-
-            await RefreshAsync();
-
-            StateHasChanged();
         }
     }
 }
