@@ -27,6 +27,7 @@ namespace DragonFly.Data.Models
             schema.Version = mongoSchema.Version;
             schema.ListFields = mongoSchema.ListFields.ToList();
             schema.ReferenceFields = mongoSchema.ReferenceFields.ToList();
+            schema.QueryFields = mongoSchema.QueryFields.ToList();
             schema.OrderFields = mongoSchema.OrderFields.ToList();
 
             foreach (var field in mongoSchema.Fields)
@@ -84,6 +85,7 @@ namespace DragonFly.Data.Models
             mongoContentItem.Version = schema.Version;
             mongoContentItem.ListFields = schema.ListFields.ToList();
             mongoContentItem.ReferenceFields = schema.ReferenceFields.ToList();
+            mongoContentItem.QueryFields = schema.QueryFields.ToList();
             mongoContentItem.OrderFields = schema.OrderFields.ToList();
 
             foreach(var field in schema.Fields)

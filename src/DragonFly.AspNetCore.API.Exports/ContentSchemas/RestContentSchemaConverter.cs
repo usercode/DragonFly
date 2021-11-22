@@ -1,9 +1,8 @@
-﻿using DragonFly.AspNetCore.API.Models;
+﻿using DragonFly.AspNetCore.API.Exports.Json;
+using DragonFly.AspNetCore.API.Models;
 using DragonFly.Client;
 using DragonFly.Content;
 using DragonFly.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -11,6 +10,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace DragonFly.Data.Models
 {
@@ -26,6 +27,7 @@ namespace DragonFly.Data.Models
             contentSchema.Version = restContentItem.Version;
             contentSchema.ListFields = restContentItem.ListFields.ToList();
             contentSchema.ReferenceFields = restContentItem.ReferenceFields.ToList();
+            contentSchema.QueryFields = restContentItem.QueryFields.ToList();
             contentSchema.OrderFields = restContentItem.OrderFields.ToList();
 
             foreach (var mongoField in restContentItem.Fields)
@@ -47,6 +49,7 @@ namespace DragonFly.Data.Models
             restContentItem.Version = contentSchema.Version;
             restContentItem.ListFields = contentSchema.ListFields.ToList();
             restContentItem.ReferenceFields = contentSchema.ReferenceFields.ToList();
+            restContentItem.QueryFields = contentSchema.QueryFields.ToList();
             restContentItem.OrderFields = contentSchema.OrderFields.ToList();
 
             foreach (var field in contentSchema.Fields)
@@ -66,7 +69,7 @@ namespace DragonFly.Data.Models
 
             if (schemaField.Options != null)
             {
-                restContentFieldDefinition.Options = JObject.FromObject(schemaField.Options, NewtonJsonExtensions.CreateSerializer());
+                restContentFieldDefinition.Options = JsonSerializer.SerializeToNode(schemaField.Options, schemaField.Options.GetType(), JsonSerializerDefault.Options);
             }
 
             return restContentFieldDefinition;
@@ -74,13 +77,13 @@ namespace DragonFly.Data.Models
 
         public static SchemaField ToModel(this RestContentSchemaField definition)
         {
-            Type optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
+            Type? optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
 
             ContentFieldOptions? options = null;
 
             if (optionsType != null)
             {
-                options = (ContentFieldOptions)definition.Options.ToObject(optionsType, NewtonJsonExtensions.CreateSerializer());
+                options = (ContentFieldOptions?)definition.Options.Deserialize(optionsType, JsonSerializerDefault.Options);
             }
 
             SchemaField schemaField = new SchemaField(definition.FieldType, options);

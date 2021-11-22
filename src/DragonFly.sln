@@ -83,7 +83,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Permissions.Razor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{551D7A23-7864-4CA8-B1F1-A58B25EA210E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.ImageWizard", "DragonFly.ImageWizard\DragonFly.ImageWizard.csproj", "{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ImageWizard", "DragonFly.ImageWizard\DragonFly.ImageWizard.csproj", "{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.AspNetCore.API.Tests", "..\DragonFly.AspNetCore.API.Tests\DragonFly.AspNetCore.API.Tests.csproj", "{9558DDD7-8CBA-4F16-9258-4BD57A6019D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -203,6 +205,10 @@ Global
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9558DDD7-8CBA-4F16-9258-4BD57A6019D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9558DDD7-8CBA-4F16-9258-4BD57A6019D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9558DDD7-8CBA-4F16-9258-4BD57A6019D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9558DDD7-8CBA-4F16-9258-4BD57A6019D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -239,6 +245,7 @@ Global
 		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981} = {A7CDEAE6-F0BC-4BE6-B689-768A7FE2EDA7}
 		{B15DE6BD-E879-4DE4-8916-0B8A91791D8B} = {A7CDEAE6-F0BC-4BE6-B689-768A7FE2EDA7}
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1} = {551D7A23-7864-4CA8-B1F1-A58B25EA210E}
+		{9558DDD7-8CBA-4F16-9258-4BD57A6019D7} = {91ADE257-5696-4B85-BADA-7638271C971B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069E83C9-3430-4D62-843B-B52982C42093}

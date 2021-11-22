@@ -61,11 +61,17 @@ namespace DragonFly.Client.Pages.ContentItems
 
                 if (QueryFields.Any() == false)
                 {
-                    foreach (var field in Schema.Fields
-                                                    .Where(x => x.Value.Options?.IsSearchable == true)
-                                                    .OrderBy(x => x.Value.SortKey))
+                    foreach (var field in Schema.QueryFields
+                                                    .Select(x => Schema.Fields.First(f => f.Key == x))
+                                                    .ToList())
                     {
                         FieldQuery q = ContentFieldManager.CreateQuery(field.Value.FieldType);
+
+                        if (q == null)
+                        {
+                            continue;
+                        }
+
                         q.FieldName = field.Key;
 
                         QueryFields.Add(q);

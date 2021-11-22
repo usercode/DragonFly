@@ -3,8 +3,6 @@ using DragonFly.Client;
 using DragonFly.Content;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;

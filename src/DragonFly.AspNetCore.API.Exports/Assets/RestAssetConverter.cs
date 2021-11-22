@@ -1,9 +1,11 @@
-﻿using DragonFly.Content;
-using Newtonsoft.Json.Linq;
+﻿using DragonFly.AspNetCore.API.Exports.Json;
+using DragonFly.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Models.Assets
@@ -32,9 +34,14 @@ namespace DragonFly.AspNetCore.API.Models.Assets
                 asset.Folder = restAsset.Folder.ToModel();
             }
 
-            foreach(var item in restAsset.Metaddata)
+            foreach (var item in restAsset.Metaddata)
             {
-                asset.SetMetadata((AssetMetadata)item.Value.ToObject(AssetMetadataManager.Default.GetMetadataType(item.Key)));
+                AssetMetadata? assetMetadata = (AssetMetadata?)item.Value.Deserialize(AssetMetadataManager.Default.GetMetadataType(item.Key), JsonSerializerDefault.Options);
+
+                if (assetMetadata != null)
+                {
+                    asset.SetMetadata(assetMetadata);
+                }
             }
 
             return asset;
@@ -64,7 +71,7 @@ namespace DragonFly.AspNetCore.API.Models.Assets
 
             foreach(var metadata in asset.Metaddata)
             {
-                restAsset.Metaddata.Add(metadata.Key, JObject.FromObject(metadata.Value));
+                restAsset.Metaddata.Add(metadata.Key, JsonSerializer.SerializeToNode(metadata.Value, metadata.Value.GetType(), JsonSerializerDefault.Options));
             }
 
             return restAsset;

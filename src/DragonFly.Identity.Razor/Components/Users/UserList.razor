@@ -1,7 +1,9 @@
 ﻿@inherits UserListBase
 
+<div class="content-header">
 <Toolbar Items="ToolbarItems"></Toolbar>
-
+</div>
+<div class="scroll-content">
 <BSListGroup>
 	@foreach(IdentityUser user in Users)
 	{
@@ -17,7 +19,4 @@
 			</a>
 	}
 </BSListGroup>
-
-@code {
-	
-}
+</div>

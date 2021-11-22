@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace DragonFly.Client
@@ -28,7 +29,7 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/schema/{id}");
 
-            var e = await response.Content.ParseJsonAsync<RestContentSchema>();
+            var e = await response.Content.ReadFromJsonAsync<RestContentSchema>();
 
             return e.ToModel();
         }
@@ -37,16 +38,16 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/schema/{name}");
 
-            var e = await response.Content.ParseJsonAsync<RestContentSchema>();
+            var e = await response.Content.ReadFromJsonAsync<RestContentSchema>();
 
             return e.ToModel();
         }
 
         public async Task CreateAsync(ContentSchema entity)
         {
-            var response = await Client.PostAsJson($"api/schema", entity.ToRest());
+            var response = await Client.PostAsJsonAsync($"api/schema", entity.ToRest());
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
@@ -55,7 +56,7 @@ namespace DragonFly.Client
         {
             string type = entity.GetType().Name;
 
-            await Client.PutAsJson($"api/schema/{entity.Id}", entity.ToRest());
+            await Client.PutAsJsonAsync($"api/schema", entity.ToRest());
         }
 
         public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
@@ -64,7 +65,7 @@ namespace DragonFly.Client
             {
                 var response = await Client.PostAsync("api/schema/query", new StringContent(""));
 
-                var restQueryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentSchema>>();
+                var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>();
 
                 QueryResult<ContentSchema> queryResult = new QueryResult<ContentSchema>();
                 queryResult.Offset = restQueryResult.Offset;

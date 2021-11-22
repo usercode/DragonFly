@@ -10,7 +10,6 @@ using DragonFly.Models;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -21,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares
 {
-    static class ContentItemStartupExtensions
+    static class ContentItemApiExtensions
     {
         public static void MapContentItemRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
@@ -34,9 +33,8 @@ namespace DragonFly.AspNetCore.API.Middlewares
             endpoints.MapPost("api/content/publish", MapPublishQuery);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, IContentStorage storage)
+        private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentItemQuery query)
         {
-            ContentItemQuery query = await jsonService.Deserialize<ContentItemQuery>(context.Request.Body);
             QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
 
             foreach (ContentItem contentItem in contentItems.Items)
@@ -52,12 +50,15 @@ namespace DragonFly.AspNetCore.API.Middlewares
                 Items = contentItems.Items.Select(x => x.ToRest()).ToList()
             };
 
-            string json = jsonService.Serialize(resultQuery);
+            foreach (var i in resultQuery.Items)
+            {
+                i.ToModel();
+            }
 
-            await context.Response.WriteAsync(json);
+            return resultQuery;
         }
 
-        private static async Task MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, JsonService jsonService, string schema, Guid id)
+        private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
         {
             ContentItem result = await contentStore.GetContentAsync(schema, id);
             ContentSchema schemaModel = await schemaStorage.GetSchemaAsync(schema);
@@ -66,59 +67,39 @@ namespace DragonFly.AspNetCore.API.Middlewares
 
             RestContentItem restModel = result.ToRest();
 
-            string json = jsonService.Serialize(restModel);
-
-            await context.Response.WriteAsync(json);
+            return restModel;
         }
 
-        private static async Task MapCreate(HttpContext context, IContentStorage contentStore, JsonService jsonService)
+        private static async Task<ResourceCreated> MapCreate(HttpContext context, IContentStorage contentStore, RestContentItem input)
         {
-            RestContentItem input = await jsonService.Deserialize<RestContentItem>(context.Request.Body);
-
             ContentItem model = input.ToModel();
 
             await contentStore.CreateAsync(model);
 
             ResourceCreated result = new ResourceCreated() { Id = model.Id };
 
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
+            return result;
         }
 
-        private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, JsonService jsonService)
+        private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, RestContentItem input)
         {
-            RestContentItem input = await jsonService.Deserialize<RestContentItem>(context.Request.Body);
-
             ContentItem model = input.ToModel();
 
             await contentStore.UpdateAsync(model);
-
-            ResourceCreated result = new ResourceCreated() { Id = input.Id };
-
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
         }
 
-        private static async Task MapDelete(HttpContext context, IContentStorage contentStore, JsonService jsonService, Guid id)
+        private static async Task MapDelete(HttpContext context, IContentStorage contentStore, string schema, Guid id)
         {
-            string schema = (string)context.GetRouteValue("schema");
-
             await contentStore.DeleteAsync(schema, id);
         }
 
-        private static async Task MapPublish(HttpContext context, IContentStorage contentStore, JsonService jsonService, Guid id)
+        private static async Task MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
         {
-            string schema = (string)context.GetRouteValue("schema");
-
             await contentStore.PublishAsync(schema, id);
         }
 
-        private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, JsonService jsonService)
+        private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)
         {
-            ContentItemQuery query = await jsonService.Deserialize<ContentItemQuery>(context.Request.Body);
-
             await contentStore.PublishQueryAsync(query);
         }
     }

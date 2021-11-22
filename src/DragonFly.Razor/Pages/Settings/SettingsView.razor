@@ -1,6 +1,7 @@
 ﻿@page "/settings"
 @inject IDragonFlyApi Api
 
+<div class="settings">
 <BSRow>
 	<BSCol LG="3">
 		<BSListGroup>
@@ -19,6 +20,8 @@
 		}
 	</BSCol>
 </BSRow>
+</div>
+
 @code {
 
 	public SettingsItem SelectedComponent { get; set; }

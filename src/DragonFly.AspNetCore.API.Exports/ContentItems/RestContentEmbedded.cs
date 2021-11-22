@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Contents.Content;
-using Newtonsoft.Json;
 
 namespace DragonFly.Models
 {
@@ -22,13 +21,11 @@ namespace DragonFly.Models
         /// <summary>
         /// Schema
         /// </summary>
-        [JsonProperty("Schema", Order = 1)]
         public RestContentSchema Schema { get; set; }
 
         /// <summary>
         /// Fields
         /// </summary>
-        [JsonProperty("Fields", Order = 30)]
         public RestContentFields Fields { get; set; }
     }
 }

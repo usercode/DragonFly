@@ -18,7 +18,8 @@ namespace DragonFly.Content
             _fields = new SchemaFields();
             _listFields = new List<string>();
             _referenceFields = new List<string>();
-            _orderFields = new List<FieldOrder>();
+            _queryFields = new List<string>();
+            _orderFields = new List<FieldOrder>();            
         }
 
         public ContentSchema(string name)
@@ -61,6 +62,10 @@ namespace DragonFly.Content
         /// OrderFields
         /// </summary>
         public IList<FieldOrder> OrderFields { get => _orderFields; set => _orderFields = value; }
+
+        private IList<string> _queryFields;
+
+        public IList<string> QueryFields { get => _queryFields; set => _queryFields = value; }
 
         public override string ToString()
         {

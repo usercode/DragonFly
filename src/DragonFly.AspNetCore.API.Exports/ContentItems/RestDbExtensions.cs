@@ -1,78 +1,153 @@
-﻿using DragonFly.AspNetCore.API.Models.Assets;
+﻿using DragonFly.AspNetCore.API.Exports.Json;
+using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Client;
 using DragonFly.Content;
 using DragonFly.Contents.Content;
 using DragonFly.Data.Models;
 using DragonFly.Models;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace DragonFly.Models
 {
     public static class RestDbExtensions
     {
-        public static void ToModelValue(this JToken bsonValue, string fieldName, IContentElement contentItem, ISchemaElement schema)
+        public static void ToModelValue(this JsonNode? jsonNode, string fieldName, IContentElement content, ISchemaElement schema)
         {
-            if (contentItem.Fields.TryGetValue(fieldName, out ContentField contentField))
+            if (jsonNode == null)
             {
-                switch (bsonValue.Type)
+                return;
+            }
+
+            if (content.Fields.TryGetValue(fieldName, out ContentField? contentField))
+            {
+                //value
+                if (jsonNode is JsonValue jsonValue)
                 {
-                    case JTokenType.Null:
-                        break;
-
-                    case JTokenType.String:
-                        if (contentField is SingleValueContentField<string> stringField)
+                    if (contentField is SingleValueContentField<string> stringField)
+                    {
+                        if (jsonValue.TryGetValue(out string? stringValue))
                         {
-                            stringField.Value = bsonValue.Value<string>();
+                            stringField.Value = stringValue;
                         }
-                        else if (contentField is SingleValueContentField<Guid?> guidField)
+                    }
+                    else if (contentField is SingleValueContentField<bool?> boolField)
+                    {
+                        if (jsonValue.TryGetValue(out bool? boolValue))
                         {
-                            guidField.Value = Guid.Parse(bsonValue.Value<string>());
+                            boolField.Value = boolValue;
                         }
-                        break;
-
-                    case JTokenType.Integer:
-                        if (contentField is SingleValueContentField<short?> shortField)
+                    }
+                    else if (contentField is SingleValueContentField<Guid?> guidField)
+                    {
+                        if (jsonValue.TryGetValue(out Guid? guidValue))
                         {
-                            shortField.Value = bsonValue.Value<short?>();
+                            guidField.Value = guidValue;
                         }
-                        else if (contentField is SingleValueContentField<int?> intField)
+                    }
+                    else if (contentField is SingleValueContentField<long?> longField)
+                    {
+                        if (jsonValue.TryGetValue(out long? longValue))
                         {
-                            intField.Value = bsonValue.Value<int?>();
+                            longField.Value = longValue;
                         }
-                        else if (contentField is SingleValueContentField<long?> longField)
+                    }
+                    else if (contentField is SingleValueContentField<int?> intField)
+                    {
+                        if (jsonValue.TryGetValue(out int? intValue))
                         {
-                            longField.Value = bsonValue.Value<long?>();
+                            intField.Value = intValue;
                         }
-                        break;
-
-                    case JTokenType.Float:
-                        ((SingleValueContentField<double?>)contentField).Value = bsonValue.Value<double>();
-                        break;
-
-                    case JTokenType.Boolean:
-                        ((SingleValueContentField<bool?>)contentField).Value = bsonValue.Value<bool>();
-                        break;
-
-                    //case JTokenType.Guid:
-                    //    ((SingleContentField<Guid?>)contentField).Value = bsonValue.Value<Guid>();
-                    //    break;
-
-                    case JTokenType.Array:
-                        if (contentField is ArrayField arrayField)
+                    }
+                    else if (contentField is SingleValueContentField<short?> shortField)
+                    {
+                        if (jsonValue.TryGetValue(out short? shortValue))
                         {
-                            if (schema.Fields.TryGetValue(fieldName, out SchemaField definition))
+                            shortField.Value = shortValue;
+                        }
+                    }
+                    else if (contentField is SingleValueContentField<float?> floatField)
+                    {
+                        if (jsonValue.TryGetValue(out float? floatValue))
+                        {
+                            floatField.Value = floatValue;
+                        }
+                    }
+                    else if (contentField is SingleValueContentField<double?> doubleField)
+                    {
+                        if (jsonValue.TryGetValue(out double? doubleValue))
+                        {
+                            doubleField.Value = doubleValue;
+                        }
+                    }
+                }
+                //object
+                else if (jsonNode is JsonObject jsonObject)
+                {
+                    if (contentField is ReferenceField referenceField)
+                    {
+                        if (jsonObject.Count > 0)
+                        {
+                            RestContentItem? restContentItem = jsonObject.Deserialize<RestContentItem>();
+
+                            if (restContentItem != null)
                             {
-                                ArrayFieldOptions arrayOptions = definition.Options as ArrayFieldOptions;
+                                referenceField.ContentItem = restContentItem.ToModel();
+                            }
+                        }
+                    }
+                    else if (contentField is EmbedField embedField)
+                    {
+                        RestContentEmbedded restContentItem = jsonObject.GetValue<RestContentEmbedded>();
+                        embedField.ContentEmbedded = restContentItem.ToModel();
+                    }
+                    else if (contentField is AssetField assetField)
+                    {
+                        if (jsonObject.Count > 0)
+                        {
+                            RestAsset? restAsset = jsonObject.Deserialize<RestAsset>(JsonSerializerDefault.Options);
+                            
+                            if (restAsset != null)
+                            {
+                                assetField.Asset = restAsset.ToModel();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ContentField? c = (ContentField?)jsonObject.Deserialize(contentField.GetType(), JsonSerializerDefault.Options);
 
-                                foreach (JObject item in bsonValue)
+                        if (c != null)
+                        {
+                            content.Fields[fieldName] = c;
+                        }
+                    }
+                }
+                //array
+                else if (jsonNode is JsonArray jsonArray)
+                {
+                    if (contentField is ArrayField arrayField)
+                    {
+                        if (schema.Fields.TryGetValue(fieldName, out SchemaField? definition))
+                        {
+                            ArrayFieldOptions? arrayOptions = definition.Options as ArrayFieldOptions;
+
+                            if (arrayOptions == null)
+                            {
+                                throw new Exception();
+                            }
+
+                            foreach (JsonNode? item in jsonArray)
+                            {
+                                if (item is JsonObject itemJsonObject)
                                 {
                                     ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
 
-                                    foreach (var subitem in item)
+                                    foreach (var subitem in itemJsonObject)
                                     {
                                         ToModelValue(subitem.Value, subitem.Key, arrayFieldItem, arrayOptions);
                                     }
@@ -81,55 +156,25 @@ namespace DragonFly.Models
                                 }
                             }
                         }
-                        break;
-
-                    case JTokenType.Object:
-                        if (contentField is ReferenceField referenceField)
-                        {
-                            if (bsonValue.HasValues)
-                            {
-                                RestContentItem restContentItem = bsonValue.ToObject<RestContentItem>(NewtonJsonExtensions.CreateSerializer());
-                                referenceField.ContentItem = restContentItem.ToModel();
-                            }
-                        }
-                        else if (contentField is EmbedField embedField)
-                        {
-                            RestContentEmbedded restContentItem = bsonValue.ToObject<RestContentEmbedded>(NewtonJsonExtensions.CreateSerializer());
-                            embedField.ContentEmbedded = restContentItem.ToModel();
-                        }
-                        else if (contentField is AssetField assetField)
-                        {
-                            if (bsonValue.HasValues)
-                            {
-                                RestAsset restAsset = bsonValue.ToObject<RestAsset>();
-                                assetField.Asset = restAsset.ToModel();
-                            }
-                        }
-                        else
-                        {
-                            ContentField c = (ContentField)bsonValue.ToObject(contentField.GetType(), NewtonJsonExtensions.CreateSerializer());
-
-                            contentItem.Fields[fieldName] = c;
-                        }
-                        break;
+                    }
                 }
             }
         }
 
-        public static JToken ToRestValue(this ContentField field)
+        public static JsonNode? ToRestValue(this ContentField field)
         {
             return ToRestValue(field, true);
         }
 
-        public static JToken ToRestValue(this ContentField field, bool includeNavigationProperties)
+        public static JsonNode? ToRestValue(this ContentField field, bool includeNavigationProperties)
         {
-            JToken bsonValue = JValue.CreateNull();
+            JsonNode? bsonValue = null;
 
             if (field is ISingleValueContentField singleValueField)
             {
                 if (singleValueField.HasValue)
                 {
-                    bsonValue = new JValue(singleValueField.Value);
+                    bsonValue = JsonValue.Create(singleValueField.Value);
                 }
             }
             else if (field is ReferenceField referenceField)
@@ -138,7 +183,7 @@ namespace DragonFly.Models
                 {
                     if (includeNavigationProperties == true)
                     {
-                        bsonValue = JObject.FromObject(referenceField.ContentItem.ToRest(true, false), NewtonJsonExtensions.CreateSerializer());
+                        bsonValue = JsonSerializer.SerializeToNode(referenceField.ContentItem.ToRest(true, false), JsonSerializerDefault.Options);
                     }
                 }
             }
@@ -146,23 +191,23 @@ namespace DragonFly.Models
             {
                 if (embedField.ContentEmbedded != null)
                 {
-                    bsonValue = JObject.FromObject(embedField.ContentEmbedded.ToRest(), NewtonJsonExtensions.CreateSerializer());
+                    bsonValue = JsonSerializer.SerializeToNode(embedField.ContentEmbedded.ToRest(), JsonSerializerDefault.Options);
                 }
             }
             else if (field is AssetField assetField)
             {
                 if (assetField.Asset != null)
                 {
-                    bsonValue = JObject.FromObject(assetField.Asset.ToRest());
+                    bsonValue = JsonSerializer.SerializeToNode(assetField.Asset.ToRest(), JsonSerializerDefault.Options);
                 }
             }
             else if (field is ArrayField arrayField)
             {
-                JArray bsonArray = new JArray();
+                JsonArray bsonArray = new JsonArray();
 
                 foreach (ArrayFieldItem item in arrayField.Items)
                 {
-                    JObject doc = new JObject();
+                    JsonObject doc = new JsonObject();
 
                     foreach (var f in item.Fields)
                     {
@@ -184,7 +229,7 @@ namespace DragonFly.Models
             }
             else
             {
-                //bsonValue = field.ToBsonDocument(field.GetType());
+                bsonValue = JsonSerializer.SerializeToNode(field, field.GetType(), JsonSerializerDefault.Options);
             }
 
             return bsonValue;

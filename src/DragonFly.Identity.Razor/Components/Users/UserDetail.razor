@@ -5,16 +5,13 @@
 @if (Entity != null)
 {
     <div class="user-detail">
-
-        <div style="flex: 0">
+        <div class="content-header">
             <h1>User</h1>
-
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
-        <div class="scroll-content" style="flex:1">
+        <div class="scroll-content">
             <EditForm Model="Entity">
-                <div>
-                    <div class="col-md-6">
+               
                         @if (IsNewEntity == false)
                         {
                             <!-- id -->
@@ -56,11 +53,21 @@
                             <div class="col-sm-10">
                                 <input type="password" class="form-control" @bind-value="@NewPassword" />
                             </div>
-                        </BSRow>
-                        
-                    </div>
-                 </div>
+                        </BSRow>                  
           </EditForm>
+        </div>
+        <div class="content-footer">
+            @*<div class="row">
+                    <div class="col-sm-4">
+                        <p>Created: @Entity.CreatedAt</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>Modified: @Entity.ModifiedAt</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p>Published: @Entity.PublishedAt</p>
+                    </div>
+                </div>*@
         </div>
    </div>
 }

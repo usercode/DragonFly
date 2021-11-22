@@ -1,14 +1,14 @@
 @page "/content"
 @inherits ContentItemTypeListBase
 
-
+<div class="scroll-content">
 @if (SearchResult == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="list-group">
+    <div class="list-group" style="flex: 1">
 
         @foreach (ContentSchema schema in SearchResult.Items)
         {
@@ -19,3 +19,4 @@ else
 
     </div>
 }
+</div>

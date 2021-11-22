@@ -8,9 +8,10 @@ namespace DragonFly.Assets
     /// <summary>
     /// ImageMetadata
     /// </summary>
-    [AssetMetadata("Image")]
     public class ImageMetadata : AssetMetadata
     {
+        public override string Type => "Image";
+
         /// <summary>
         /// Width
         /// </summary>

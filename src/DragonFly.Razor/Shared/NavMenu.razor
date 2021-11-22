@@ -1,22 +1,23 @@
 ﻿@inject IOptions<GeneralOptions> Options
 @inject IDragonFlyApi Api
 
-<div class="top-row pl-4 navbar navbar-dark">
-    <p class="navbar-brand">@Options.Value.Name</p>
-</div>
-
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <ul class="nav flex-column">
-        <li class="nav-item px-3">
+        <li class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home icon" aria-hidden="true"></span> Home
             </NavLink>
         </li>
         @foreach(MenuItem menuItem in Api.MainMenu().Items)
         {
-             <li class="nav-item px-3">
+             <li class="nav-item">
             <NavLink class="nav-link" href="@menuItem.Route">
-                <span class="@menuItem.CssIcon" aria-hidden="true"></span> @menuItem.Title
+                <div>
+                    <span class="@menuItem.CssIcon" aria-hidden="true"></span>
+                </div>
+                <div class="text">
+                    @menuItem.Title
+                </div>
             </NavLink>
         </li>
         }

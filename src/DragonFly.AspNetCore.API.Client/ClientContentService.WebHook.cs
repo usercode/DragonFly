@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
 
@@ -30,23 +31,23 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/webhook/{id}");
 
-            var e = await response.Content.ParseJsonAsync<RestWebHook>();
+            var e = await response.Content.ReadFromJsonAsync<RestWebHook>();
 
             return e.ToModel();
         }
 
         public async Task CreateAsync(WebHook entity)
         {
-            var response = await Client.PostAsJson($"api/webhook", entity);
+            var response = await Client.PostAsJsonAsync($"api/webhook", entity);
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
 
         public async Task UpdateAsync(WebHook entity)
         {
-            await Client.PutAsJson($"api/webhook/{entity.Id}", entity);
+            await Client.PutAsJsonAsync($"api/webhook/{entity.Id}", entity);
         }
 
         public async Task DeleteAsync(WebHook webHook)
@@ -56,9 +57,9 @@ namespace DragonFly.Client
 
         public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
         {
-            var response = await Client.PostAsJson("api/webhook/query", query);
+            var response = await Client.PostAsJsonAsync("api/webhook/query", query);
 
-            QueryResult<RestWebHook> result = await response.Content.ParseJsonAsync<QueryResult<RestWebHook>>();
+            QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>();
 
             IList<WebHook> items = result.Items.Select(x => x.ToModel()).ToList();
 

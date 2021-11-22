@@ -1,11 +1,11 @@
-﻿using DragonFly.Fields.BlockField.Storage.Json;
-using Newtonsoft.Json;
+﻿using DragonFly.Fields.BlockField.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace DragonFly.Fields.BlockField.Storage.Serializers
@@ -15,20 +15,20 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
     /// </summary>
     public class DocumentSerializer
     {
-        private static JsonSerializerSettings GetJsonSettings()
+        public DocumentSerializer()
         {
-            return new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                SerializationBinder = new JsonDiscriminatorBinder()
-            };
+            Options = new JsonSerializerOptions();
+            Options.Converters.Add(new BlockFieldConverter());
         }
 
-        public static string Serialize(Document? document)
-        {
-            string json = JsonConvert.SerializeObject(document, GetJsonSettings());
+        /// <summary>
+        /// Options
+        /// </summary>
+        private JsonSerializerOptions Options { get; }
 
-            byte[] buffer = Encoding.UTF8.GetBytes(json);
+        public string Serialize(Document? document)
+        {
+            byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(document, Options);
 
             MemoryStream mem = new MemoryStream();
             using (GZipStream brotli = new GZipStream(mem, CompressionLevel.Optimal))
@@ -41,7 +41,7 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
             return result;
         }
 
-        public static Document? Deserialize(string input)
+        public Document? Deserialize(string input)
         {
             if (input == null)
             {
@@ -56,9 +56,9 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
                 brotli.CopyTo(mem);
             }
 
-            string json = Encoding.UTF8.GetString(mem.ToArray());
+            mem.Seek(0, SeekOrigin.Begin);
 
-            return JsonConvert.DeserializeObject<Document>(json, GetJsonSettings());
+            return JsonSerializer.Deserialize<Document>(mem, Options);
         }
     }
 }

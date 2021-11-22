@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DragonFly.Storage;
@@ -39,11 +40,11 @@ namespace DragonFly.Client
 
         public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery query)
         {
-            var response = await Client.PostAsJson("api/assetfolder/query", query);
+            var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
 
             response.EnsureSuccessStatusCode();
 
-            IEnumerable<RestAssetFolder> result = await response.Content.ParseJsonAsync<IEnumerable<RestAssetFolder>>();
+            IEnumerable<RestAssetFolder> result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
 
             return result.Select(x => x.ToModel()).ToList();
         }

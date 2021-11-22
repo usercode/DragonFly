@@ -16,6 +16,9 @@ using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.API;
 using DragonFly.AspNetCore.Middleware;
+using Microsoft.AspNetCore.Http.Json;
+using System.Text.Json;
+using DragonFly.AspNetCore.API.Exports.Json;
 
 namespace DragonFly.AspNetCore
 {
@@ -23,7 +26,13 @@ namespace DragonFly.AspNetCore
     {
         public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
         {
-            builder.Services.AddSingleton<JsonService>();
+            builder.Services.Configure<JsonOptions>(opt =>
+            {
+                foreach (var converter in JsonSerializerDefault.Options.Converters)
+                {
+                    opt.SerializerOptions.Converters.Add(converter);
+                }
+            });
 
             return builder;
         }

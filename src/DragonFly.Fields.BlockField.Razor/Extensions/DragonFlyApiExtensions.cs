@@ -22,7 +22,7 @@ namespace DragonFly
     public static class DragonFlyApiExtensions
     {
         public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
-            where TBlock : Block
+            where TBlock : Block, new()
             where TBlockView : BlockComponent<TBlock>
         {
             api.BlockField().Add<TBlock>();

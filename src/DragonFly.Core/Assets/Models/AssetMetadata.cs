@@ -6,5 +6,6 @@ namespace DragonFly.Content
 {
     public abstract class AssetMetadata
     {
+        public abstract string Type { get; }
     }
 }

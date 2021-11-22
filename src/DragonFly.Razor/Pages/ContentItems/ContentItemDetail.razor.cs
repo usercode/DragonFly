@@ -66,10 +66,10 @@ namespace DragonFly.Client.Pages.ContentItems
 
             ValidationContext = new ValidationContext();
 
-            Schema = await ContentService.GetSchemaAsync(EntityType);
-
             if (IsNewEntity)
             {
+                Schema = await ContentService.GetSchemaAsync(EntityType);
+
                 Entity = Schema.CreateContentItem();
 
                 if(CloneFromEntityId != null)

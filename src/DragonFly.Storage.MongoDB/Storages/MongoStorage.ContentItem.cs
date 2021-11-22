@@ -164,6 +164,8 @@ namespace DragonFly.Data
                 q = Builders<MongoContentItem>.Filter.Empty;
             }
 
+            findOptions.Collation = new Collation(locale: "en", strength: CollationStrength.Primary);
+
             //execute query
             var cursor = await collection.FindAsync(q, findOptions);
             

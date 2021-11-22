@@ -26,9 +26,9 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.MainMenu().Add("Schema", "oi oi-list-rich icon", "schema");
-            api.MainMenu().Add("Structure", "oi oi-list-rich icon", "structure");
-            api.MainMenu().Add("Content", "oi oi-list-rich icon", "content");
+            api.MainMenu().Add("Schema", "oi oi-list-rich", "schema");
+            api.MainMenu().Add("Structure", "oi oi-list-rich", "structure");
+            api.MainMenu().Add("Content", "oi oi-list-rich", "content");
 
             api.RegisterField<ArrayField, ArrayFieldView, ArrayFieldOptionsView>();
             api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();

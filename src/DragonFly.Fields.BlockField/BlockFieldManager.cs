@@ -61,10 +61,12 @@ namespace DragonFly.Fields.BlockField
         /// </summary>
         /// <typeparam name="TElement"></typeparam>
         public void Add<TBlock>()
-            where TBlock : Block
+            where TBlock : Block, new()
         {
-            _elementsByName[typeof(TBlock).Name] = typeof(TBlock);
-            _elementsByType[typeof(TBlock)] = typeof(TBlock).Name;
+            string typeName = new TBlock().Type;
+
+            _elementsByName[typeName] = typeof(TBlock);
+            _elementsByType[typeof(TBlock)] = typeName;
         }
 
         public bool TryGetBlockTypeByName(string name, [NotNullWhen(true)] out Type? type)

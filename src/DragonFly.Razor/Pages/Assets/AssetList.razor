@@ -1,7 +1,7 @@
 @page "/asset"
 @inherits AssetListBase
 
-<div style="display:flex;flex-direction:column;height:100%">
+<div style="display:flex;flex-direction:column">
     <div style="flex:0">
 
         @if (ListMode == EntityListMode.Default)
@@ -16,7 +16,7 @@
         }
 
         @*@bind:event="oninput"*@
-        <input class="form-control" type="text" style="width:100%" @bind="SearchPattern" />
+        <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
 
         <hr />
     </div>

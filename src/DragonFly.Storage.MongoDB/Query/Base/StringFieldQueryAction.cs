@@ -19,7 +19,7 @@ namespace DragonFly.Storage.MongoDB.Query.Base
             if (string.IsNullOrEmpty(query.Pattern) == false)
             {
                 context.Filters.Add(
-                    query.Type switch
+                    query.PatternType switch
                     {
                         StringFieldQueryType.Equals => Builders<MongoContentItem>.Filter.Eq($"{CreateFullFieldName(query.FieldName)}", query.Pattern),
                         StringFieldQueryType.Contains => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", $".*{query.Pattern}.*"),

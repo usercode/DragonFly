@@ -19,18 +19,18 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
 {
-    static class ContentSchemaStartupExtensions
+    static class ContentSchemaApiExtensions
     {
         public static void MapContentSchemaRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
             endpoints.MapPost("api/schema/query", MapQuery);
-            endpoints.MapGet("api/schema/{id:guid}", MapGetByName);
+            endpoints.MapGet("api/schema/{id:guid}", MapGetById);
             endpoints.MapGet("api/schema/{name}", MapGetByName);            
             endpoints.MapPost("api/schema", MapCreate);
             endpoints.MapPut("api/schema", MapUpdate);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, ISchemaStorage storage)
+        private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
         {
             QueryResult<ContentSchema> items = await storage
                                                     .QuerySchemasAsync();
@@ -41,54 +41,40 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
             restQueryResult.Count = items.Count;
             restQueryResult.TotalCount = items.TotalCount;
 
-            string json = jsonService.Serialize(restQueryResult);
-
-            await context.Response.WriteAsync(json);
+            return restQueryResult;
         }
 
-        private static async Task MapGetByName(HttpContext context, JsonService jsonService, ISchemaStorage storage)
+        private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)
         {
-            ContentSchema schema;
-
-            if (context.GetRouteValue("id") is string stringId)
-            {
-                Guid id = Guid.Parse(stringId);
-
-                schema = await storage.GetSchemaAsync(id);
-            }
-            else
-            {
-                string name = (string)context.GetRouteValue("name");
-
-                schema = await storage.GetSchemaAsync(name);
-            }
+            ContentSchema schema = await storage.GetSchemaAsync(id);
 
             RestContentSchema restSchema = schema.ToRest();
 
-            string json = jsonService.Serialize(restSchema);
-
-            await context.Response.WriteAsync(json);
+            return restSchema;
         }
 
-        private static async Task MapCreate(HttpContext context, JsonService jsonService, ISchemaStorage storage)
+        private static async Task<RestContentSchema> MapGetByName(HttpContext context, ISchemaStorage storage, string name)
         {
-            RestContentSchema input = await jsonService.Deserialize<RestContentSchema>(context.Request.Body);
+            ContentSchema schema = await storage.GetSchemaAsync(name);
 
+            RestContentSchema restSchema = schema.ToRest();
+
+            return restSchema;
+        }
+
+        private static async Task<ResourceCreated> MapCreate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
+        {
             ContentSchema m = input.ToModel();
 
             await storage.CreateAsync(m);
 
             var result = new ResourceCreated() { Id = m.Id };
 
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
+            return result;
         }
 
-        private static async Task MapUpdate(HttpContext context, JsonService jsonService, ISchemaStorage storage)
+        private static async Task MapUpdate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
         {
-            RestContentSchema input = await jsonService.Deserialize<RestContentSchema>(context.Request.Body);
-
             ContentSchema m = input.ToModel();
 
             await storage.UpdateAsync(m);

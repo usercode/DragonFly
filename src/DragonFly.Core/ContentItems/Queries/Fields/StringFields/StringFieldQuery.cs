@@ -17,9 +17,9 @@ namespace DragonFly.Content
         public string? Pattern { get; set; }
 
         /// <summary>
-        /// Type
+        /// PatternType
         /// </summary>
-        public StringFieldQueryType Type { get; set; }
+        public StringFieldQueryType PatternType { get; set; }
 
         public override bool IsEmpty()
         {

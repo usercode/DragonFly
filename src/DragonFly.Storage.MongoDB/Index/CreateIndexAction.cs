@@ -2,7 +2,9 @@
 using DragonFly.ContentTypes;
 using DragonFly.Data;
 using DragonFly.Data.Models;
+using DragonFly.Data.Models.Assets;
 using DragonFly.Models;
+using DragonFly.Storage.MongoDB.Models.Events;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -36,15 +38,26 @@ namespace DragonFly.Storage.MongoDB.Index
 
         public async Task ExecuteAsync(IDragonFlyApi api)
         {
+            //assets
+            await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Name)));
+            await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Slug)));
+            await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Alt)));
+            await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.MimeType)));
+            await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Size)));
+
+            //events
+            await MongoStorage.Events.Indexes.CreateOneAsync(new CreateIndexModel<MongoEvent>(Builders<MongoEvent>.IndexKeys.Ascending(x => x.Date)));
+            await MongoStorage.Events.Indexes.CreateOneAsync(new CreateIndexModel<MongoEvent>(Builders<MongoEvent>.IndexKeys.Ascending(x => x.Name)));
+
             IList<MongoContentSchema> schemas = await MongoStorage.ContentSchemas.AsQueryable().ToListAsync();
 
             foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))
             {
                 IMongoCollection<MongoContentItem> collection = MongoStorage.GetMongoCollection(schema);
 
-                //IEnumerable<ContentField> fields = Api.ContentField().CreateContentFields();
+                await collection.Indexes.DropAllAsync();
 
-                //remove unused indices
+                ////remove unused indices
                 //var existingIndices = await collection.Indexes.ListAsync();
 
                 //foreach (var f in existingIndices.ToList())
@@ -66,7 +79,11 @@ namespace DragonFly.Storage.MongoDB.Index
                     {
                         await collection.Indexes.CreateOneAsync(
                             new CreateIndexModel<MongoContentItem>(Builders<MongoContentItem>.IndexKeys.Ascending(fieldIndex.CreateIndexPath(field.Key)),
-                            new CreateIndexOptions() { Name = fieldIndex.CreateIndexName(field.Key), Unique = fieldIndex.Unique }));
+                            new CreateIndexOptions() { 
+                                Name = fieldIndex.CreateIndexName(field.Key), 
+                                Unique = fieldIndex.Unique, 
+                                Collation = new Collation(locale: "en", strength: CollationStrength.Primary)
+                            }));
                     }
                 }
             }

@@ -2,7 +2,7 @@
 @inherits ContentItemListBase
 
 <div class="contentitem-list">
-    <div class="flex:0">
+    <div class="content-header">
         @if (ListMode == EntityListMode.Default)
         {
             <Toolbar Items="ToolbarItems"></Toolbar>
@@ -13,7 +13,7 @@
 
         <hr />
     </div>
-    <div class="scroll-content" style="flex:1">
+    <div class="scroll-content">
         <EditForm Model="this">
         <BSRow>
             <BSCol LG="3">

@@ -1,5 +1,4 @@
 ﻿using DragonFly.Content;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace DragonFly.Fields.BlockField

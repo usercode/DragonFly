@@ -20,7 +20,8 @@ namespace DragonFly.ContentTypes
             Fields = new Dictionary<string, MongoSchemaField>();
             ListFields = new List<string>();
             ReferenceFields = new List<string>();
-            OrderFields = new List<FieldOrder>();
+            QueryFields = new List<string>();
+            OrderFields = new List<FieldOrder>();            
         }
 
         /// <summary>
@@ -42,6 +43,11 @@ namespace DragonFly.ContentTypes
         /// ReferenceFields
         /// </summary>
         public virtual IList<string> ReferenceFields { get; set; }
+
+        /// <summary>
+        /// QueryFields
+        /// </summary>
+        public virtual IList<string> QueryFields { get; set; }
 
         /// <summary>
         /// OrderFields

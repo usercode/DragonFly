@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.Assets
 {
-    static class AssetStartupExtensions
+    static class AssetApiExtensions
     {
         public static void MapAssetRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
@@ -32,10 +32,8 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             endpoints.MapPost("api/asset/{id:guid}/metadata", MapRefreshMetadata);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, IAssetStorage storage)
+        private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
         {
-            AssetQuery query = await jsonService.Deserialize<AssetQuery>(context.Request.Body);
-
             QueryResult<Asset> assets = await storage.GetAssetsAsync(query);
 
             QueryResult<RestAsset> queryResult = new QueryResult<RestAsset>();
@@ -44,58 +42,40 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             queryResult.TotalCount = assets.TotalCount;
             queryResult.Items = assets.Items.Select(x => x.ToRest()).ToList();
 
-            string json = jsonService.Serialize(queryResult);
-
-            await context.Response.WriteAsync(json);
+            return queryResult;
         }
 
-        private static async Task MapGet(HttpContext context, JsonService jsonService, IAssetStorage storage, Guid id)
+        private static async Task<RestAsset> MapGet(HttpContext context, IAssetStorage storage, Guid id)
         {
             Asset entity = await storage.GetAssetAsync(id);
 
             RestAsset restAsset = entity.ToRest();
 
-            string json = jsonService.Serialize(restAsset);
-
-            await context.Response.WriteAsync(json);
+            return restAsset;
         }
 
-        private static async Task MapCreate(HttpContext context, JsonService jsonService, IAssetStorage storage)
+        private static async Task<ResourceCreated> MapCreate(HttpContext context, IAssetStorage storage, RestAsset restAsset)
         {
-            RestAsset restAsset = await jsonService.Deserialize<RestAsset>(context.Request.Body);
-
             Asset asset = restAsset.ToModel();
 
             await storage.CreateAsync(asset);
 
-            var r = new ResourceCreated() { Id = asset.Id };
-
-            string json = jsonService.Serialize(r);
-
-            await context.Response.WriteAsync(json);
+            return new ResourceCreated() { Id = asset.Id };
         }
 
-        private static async Task MapUpdate(HttpContext context, JsonService jsonService, IAssetStorage storage)
+        private static async Task MapUpdate(HttpContext context, IAssetStorage storage, RestAsset restAsset)
         {
-            RestAsset restAsset = await jsonService.Deserialize<RestAsset>(context.Request.Body);
-
             Asset asset = restAsset.ToModel();
 
-            await storage.UpdateAsync(asset);
-
-            var r = new ResourceCreated() { Id = asset.Id };
-
-            string json = jsonService.Serialize(r);
-
-            await context.Response.WriteAsync(json);
+            await storage.UpdateAsync(asset);            
         }
 
-        private static async Task MapPublish(HttpContext context, JsonService jsonService, IAssetStorage storage, Guid id)
+        private static async Task MapPublish(HttpContext context, IAssetStorage storage, Guid id)
         {
             await storage.PublishAsync(id);
         }
 
-        private static async Task MapDownload(HttpContext context, JsonService jsonService, IAssetStorage storage, Guid id)
+        private static async Task MapDownload(HttpContext context, IAssetStorage storage, Guid id)
         {
             Asset asset = await storage.GetAssetAsync(id);
 
@@ -110,12 +90,12 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets
             }
         }
 
-        private static async Task MapUpload(HttpContext context, JsonService jsonService, IAssetStorage storage, Guid id)
+        private static async Task MapUpload(HttpContext context, IAssetStorage storage, Guid id)
         {
             await storage.UploadAsync(id, context.Request.ContentType, context.Request.Body);
         }
 
-        private static async Task MapRefreshMetadata(HttpContext context, JsonService jsonService, IAssetStorage storage, Guid id)
+        private static async Task MapRefreshMetadata(HttpContext context, IAssetStorage storage, Guid id)
         {
             await storage.ApplyMetadataAsync(id);
         }

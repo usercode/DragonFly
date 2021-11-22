@@ -11,6 +11,8 @@ namespace DragonFly.Content
     /// </summary>
     public abstract class ContentFieldOptions
     {
+        public string Type => GetType().Name;
+
         /// <summary>
         /// IsRequired
         /// </summary>
@@ -22,10 +24,5 @@ namespace DragonFly.Content
         public bool IsSearchable { get; set; }
 
         public abstract ContentField CreateContentField();
-
-        //public virtual void ValidateContentField(ContentField contentField)
-        //{
-
-        //}
     }
 }

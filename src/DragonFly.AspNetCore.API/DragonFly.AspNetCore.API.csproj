@@ -1,11 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
 		<Authors>usercode</Authors>
 		<PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 		<Description>Headless CMS based on ASP.NET Core and Blazor</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>0.2.2</Version>
+		<Version>0.2.4</Version>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageTags>cms</PackageTags>
@@ -24,5 +25,9 @@
 
 	<ItemGroup>
 		<None Include="..\logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Services\" />
 	</ItemGroup>
 </Project>

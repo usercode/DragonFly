@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Core.ContentStructures.Queries;
@@ -30,7 +31,7 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/structure/{id}");
 
-            var e = await response.Content.ParseJsonAsync<RestContentStructure>();
+            var e = await response.Content.ReadFromJsonAsync<RestContentStructure>();
 
             return e.ToModel();
         }
@@ -39,16 +40,16 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/structure/{name}");
 
-            var e = await response.Content.ParseJsonAsync<RestContentStructure>();
+            var e = await response.Content.ReadFromJsonAsync<RestContentStructure>();
 
             return e.ToModel();
         }
 
         public async Task CreateAsync(ContentStructure entity)
         {
-            var response = await Client.PostAsJson($"api/structure", entity);
+            var response = await Client.PostAsJsonAsync($"api/structure", entity);
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
@@ -57,16 +58,16 @@ namespace DragonFly.Client
         {
             string type = entity.GetType().Name;
 
-            await Client.PutAsJson($"api/structure/{entity.Id}", entity);
+            await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity);
         }
 
         public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
         {
             try
             {
-                var response = await Client.PostAsJson("api/structure/query", query);
+                var response = await Client.PostAsJsonAsync("api/structure/query", query);
 
-                var restQueryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentStructure>>();
+                var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>();
 
                 QueryResult<ContentStructure> queryResult = new QueryResult<ContentStructure>();
                 queryResult.Offset = restQueryResult.Offset;
@@ -88,7 +89,7 @@ namespace DragonFly.Client
         {
             var response = await Client.PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""));
 
-            var restQueryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentNode>>();
+            var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentNode>>();
 
             QueryResult<ContentNode> queryResult = new QueryResult<ContentNode>();
             queryResult.Offset = restQueryResult.Offset;
@@ -101,9 +102,9 @@ namespace DragonFly.Client
 
         public async Task CreateAsync(ContentNode node)
         {
-            var response = await Client.PostAsJson($"api/node", node);
+            var response = await Client.PostAsJsonAsync($"api/node", node);
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             node.Id = result.Id;
         }
@@ -112,7 +113,7 @@ namespace DragonFly.Client
         {
             string type = node.GetType().Name;
 
-            await Client.PutAsJson($"api/node/{node.Id}", node);
+            await Client.PutAsJsonAsync($"api/node/{node.Id}", node);
         }
     }
 }

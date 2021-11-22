@@ -11,5 +11,6 @@ namespace DragonFly.Fields.BlockField
     /// </summary>
     public abstract class Block
     {
+        public virtual string Type => GetType().Name;
     }
 }

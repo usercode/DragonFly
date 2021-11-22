@@ -1,5 +1,4 @@
 ﻿using DragonFly.Contents.Content;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,6 @@ namespace DragonFly.AspNetCore.API.Models.Assets
         /// <summary>
         /// Name
         /// </summary>
-        [JsonProperty("Name", Order = 100)]
         public virtual string Name { get; set; }
     }
 }

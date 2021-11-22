@@ -42,7 +42,7 @@ namespace DragonFly
         }
 
         public static void RegisterMetadata<TMetadata, TMetadataView>(this IDragonFlyApi api)
-            where TMetadata : AssetMetadata
+            where TMetadata : AssetMetadata, new()
             where TMetadataView : IAssetMetadataComponent
         {
             api.AssetMetadata().Add<TMetadata>();

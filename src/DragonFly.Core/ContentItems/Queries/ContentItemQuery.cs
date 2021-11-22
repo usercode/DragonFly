@@ -57,9 +57,5 @@ namespace DragonFly.Content.Queries
         /// </summary>
         public bool IncludeListFieldsOnly { get; set; }
 
-        public IQueryable<T> Apply<T>(IQueryable<T> q)
-        {
-            return q.Skip(Skip).Take(Top);
-        }
     }
 }

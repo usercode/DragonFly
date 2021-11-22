@@ -30,7 +30,9 @@ namespace DragonFly.Content
             }
         }
 
+        private IDictionary<string, Type> _optionsByName;
         private IDictionary<Type, Type> _optionsByField;
+        private IDictionary<string, Type> _queryByName;
         private IDictionary<Type, Type> _queryByField;
         private IDictionary<string, Type> _fieldByName;
 
@@ -38,7 +40,9 @@ namespace DragonFly.Content
 
         private ContentFieldManager()
         {
+            _optionsByName = new Dictionary<string, Type>();
             _optionsByField = new Dictionary<Type, Type>();
+            _queryByName = new Dictionary<string, Type>();
             _queryByField = new Dictionary<Type, Type>();
             _fieldByName = new Dictionary<string, Type>();
         }
@@ -56,6 +60,7 @@ namespace DragonFly.Content
 
             if (fieldOptionsAttribute != null)
             {
+                _optionsByName[fieldOptionsAttribute.OptionsType.Name] = fieldOptionsAttribute.OptionsType;
                 _optionsByField[typeof(TField)] = fieldOptionsAttribute.OptionsType;
             }
 
@@ -64,6 +69,7 @@ namespace DragonFly.Content
 
             if (fieldQueryAttribute != null)
             {
+                _queryByName[fieldQueryAttribute.QueryType.Name] = fieldQueryAttribute.QueryType;
                 _queryByField[contentFieldType] = fieldQueryAttribute.QueryType;
             }
 
@@ -96,14 +102,19 @@ namespace DragonFly.Content
             return type.Name;
         }
 
-        public Type GetContentFieldType(string fieldType)
+        public Type? GetContentFieldType(string fieldType)
         {
             if (fieldType == null)
             {
                 throw new ArgumentNullException(nameof(fieldType));
             }
 
-            return _fieldByName[fieldType];
+            if (_fieldByName.TryGetValue(fieldType, out Type? type))
+            {
+                return type;
+            }
+
+            return null;
         }
 
         public ContentField CreateField<T>()
@@ -129,16 +140,31 @@ namespace DragonFly.Content
             return field;
         }
 
-        public ContentField CreateField(string? fieldName)
+        public ContentField? CreateField(string? fieldName)
         {
             if (fieldName == null)
             {
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type fieldType = GetContentFieldType(fieldName);
+            Type? fieldType = GetContentFieldType(fieldName);
+
+            if (fieldType == null)
+            {
+                return null;
+            }
 
             return CreateField(fieldType);
+        }
+
+        public Type? GetOptionsTypeByName(string name)
+        {
+            if (_optionsByName.TryGetValue(name, out Type? type))
+            {
+                return type;
+            }
+
+            return null;
         }
 
         public Type? GetOptionsType(string? fieldName)
@@ -148,7 +174,12 @@ namespace DragonFly.Content
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type fieldType = GetContentFieldType(fieldName);
+            Type? fieldType = GetContentFieldType(fieldName);
+
+            if (fieldType == null)
+            {
+                return null;
+            }
 
             if (_optionsByField.TryGetValue(fieldType, out Type? type))
             {
@@ -158,28 +189,52 @@ namespace DragonFly.Content
             return null;
         }
 
-        public Type GetQueryType(string? fieldName)
+        public Type? GetQueryType(string? fieldName)
         {
             if (fieldName == null)
             {
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type fieldType = GetContentFieldType(fieldName);
-            Type queryType = _queryByField[fieldType];
+            Type? fieldType = GetContentFieldType(fieldName);
 
-            return queryType;
+            if (fieldType == null)
+            {
+                return null;
+            }
+
+            if (_queryByField.TryGetValue(fieldType, out Type? queryType))
+            {
+                return queryType;
+            }
+
+            return null;
         }
 
-        public FieldQuery CreateQuery(string? fieldName)
+        public Type? GetQueryByName(string name)
         {
-            Type type = GetQueryType(fieldName);
+            if (_queryByName.TryGetValue(name, out Type? type))
+            {
+                return type;
+            }
+
+            return null;
+        }
+
+        public FieldQuery? CreateQuery(string? fieldName)
+        {
+            Type? type = GetQueryType(fieldName);
+
+            if (type == null)
+            {
+                return null;
+            }
 
             FieldQuery? instance = (FieldQuery?)Activator.CreateInstance(type);
 
             if (instance == null)
             {
-                throw new Exception();
+                return null;
             }
 
             return instance;
@@ -192,7 +247,13 @@ namespace DragonFly.Content
                 throw new ArgumentNullException(nameof(fieldName));
             }
 
-            Type fieldType = GetContentFieldType(fieldName);
+            Type? fieldType = GetContentFieldType(fieldName);
+
+            if (fieldType == null)
+            {
+                return null;
+            }
+
             ContentFieldOptions? options = CreateOptions(fieldType);
 
             return options;

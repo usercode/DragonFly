@@ -14,6 +14,7 @@ using DragonFly.Models;
 using DragonFly.MongoDB.Options;
 using DragonFly.Storage;
 using DragonFly.Storage.MongoDB.Models.ContentStructures;
+using DragonFly.Storage.MongoDB.Models.Events;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -36,8 +37,8 @@ namespace DragonFly.Data
         public IMongoCollection<MongoAssetFolder> AssetFolders { get; }
         public IMongoCollection<MongoAsset> Assets { get; }
         public IGridFSBucket AssetData { get; private set; }
-
         public IMongoCollection<MongoWebHook> WebHooks { get; }
+        public IMongoCollection<MongoEvent> Events { get; }
 
         private IEnumerable<IAssetProcessing> AssetProcessings { get; }
 
@@ -89,6 +90,7 @@ namespace DragonFly.Data
             WebHooks = Database.GetCollection<MongoWebHook>("WebHooks");
             Assets = Database.GetCollection<MongoAsset>("Assets");
             AssetFolders = Database.GetCollection<MongoAssetFolder>("AssetFolders");
+            Events = Database.GetCollection<MongoEvent>("Events");
 
             AssetData = new GridFSBucket(Database, new GridFSBucketOptions() { BucketName = "Assets" });
 
@@ -101,11 +103,6 @@ namespace DragonFly.Data
 
         public MongoDbOptions Options { get; }
 
-        private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; }       
-
-        public virtual void CreateIndex()
-        {
-            //Pages.Indexes.CreateOne(Builders<Basecl>.IndexKeys.Ascending(x => x.Title));
-        }       
+        private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; }
     }
 }

@@ -21,6 +21,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using DragonFly.Content.Queries;
 using DragonFly.Storage;
+using DragonFly.AspNetCore.API.Exports.Json;
 
 namespace DragonFly.Client
 {
@@ -35,23 +36,23 @@ namespace DragonFly.Client
 
             response.EnsureSuccessStatusCode();
 
-            var e = await response.Content.ParseJsonAsync<RestContentItem>();
+            var e = await response.Content.ReadFromJsonAsync<RestContentItem>();
 
             return e.ToModel();
         }
 
         public async Task CreateAsync(ContentItem entity)
         {
-            var response = await Client.PostAsJson($"api/content", entity.ToRest());
+            var response = await Client.PostAsJsonAsync($"api/content", entity.ToRest());
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
 
         public async Task UpdateAsync(ContentItem entity)
         {
-            await Client.PutAsJson($"api/content", entity.ToRest());
+            await Client.PutAsJsonAsync($"api/content", entity.ToRest());
         }
 
         public async Task PublishAsync(string schema, Guid id)
@@ -77,12 +78,12 @@ namespace DragonFly.Client
 
         public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery queryParameters)
         {
-            HttpResponseMessage response = await Client.PostAsJson($"api/content/query", queryParameters);
+            HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, JsonSerializerDefault.Options);
 
-            var queryResult = await response.Content.ParseJsonAsync<QueryResult<RestContentItem>>();
+            var queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>();
 
-            return new QueryResult<ContentItem>() 
-            { 
+            return new QueryResult<ContentItem>()
+            {
                 Offset = queryResult.Offset,
                 Count = queryResult.Count,
                 TotalCount = queryResult.TotalCount,
@@ -92,7 +93,7 @@ namespace DragonFly.Client
 
         public async Task PublishQueryAsync(ContentItemQuery query)
         {
-            var response = await Client.PostAsJson($"api/content/publish", query);
+            var response = await Client.PostAsJsonAsync($"api/content/publish", query);
 
             response.EnsureSuccessStatusCode();
         }

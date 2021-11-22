@@ -17,9 +17,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DragonFly.Storage;
+using DragonFly.AspNetCore.API.Exports.Json;
 
 namespace DragonFly.Client
 {
@@ -30,9 +32,9 @@ namespace DragonFly.Client
     {
         public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
         {
-            var response = await Client.PostAsJson($"api/asset/query", assetQuery);
+            var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
 
-            return await response.Content.ParseJsonAsync<QueryResult<Asset>>();
+            return await response.Content.ReadFromJsonAsync<QueryResult<Asset>>(JsonSerializerDefault.Options);
         }
 
         public async Task UploadAsync(Guid id, string mimetype, Stream stream)
@@ -56,16 +58,16 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/asset/{id}");
 
-            RestAsset restAsset = await response.Content.ParseJsonAsync<RestAsset>();
+            RestAsset restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
 
             return restAsset.ToModel();
         }
 
         public async Task CreateAsync(Asset entity)
         {
-            var response = await Client.PostAsJson($"api/asset", entity.ToRest());
+            var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
-            var result = await response.Content.ParseJsonAsync<ResourceCreated>();
+            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
             entity.Id = result.Id;
         }
@@ -77,7 +79,7 @@ namespace DragonFly.Client
 
         public async Task UpdateAsync(Asset entity)
         {
-            await Client.PutAsJson($"api/asset", entity.ToRest());
+            await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
         }
 
         public async Task DeleteAsync(Guid id)

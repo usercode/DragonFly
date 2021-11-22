@@ -19,7 +19,7 @@ namespace DragonFly.Razor.Modules
 
         public override void Init(IDragonFlyApi api)
         {
-            api.MainMenu().Add("Webhook", "oi oi-list-rich icon", "webhook");
+            api.MainMenu().Add("Webhook", "oi oi-list-rich", "webhook");
         }
     }
 }

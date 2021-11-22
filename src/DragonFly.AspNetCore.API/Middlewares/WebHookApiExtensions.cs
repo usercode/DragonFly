@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares
 {
-    static class WebHookStartupExtensions
+    static class WebHookApiExtensions
     {
         public static void MapWebHookRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
@@ -30,7 +30,7 @@ namespace DragonFly.AspNetCore.API.Middlewares
             endpoints.MapPut("api/webhook", MapUpdate);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, IWebHookStorage storage)
+        private static async Task<QueryResult<RestWebHook>> MapQuery(HttpContext context, IWebHookStorage storage)
         {
             QueryResult<WebHook> items = await storage
                                                      .QueryAsync(new WebHookQuery());
@@ -41,50 +41,32 @@ namespace DragonFly.AspNetCore.API.Middlewares
             restQueryResult.Count = items.Count;
             restQueryResult.TotalCount = items.TotalCount;
 
-            string json = jsonService.Serialize(restQueryResult);
-
-            await context.Response.WriteAsync(json);
+           return restQueryResult;
         }
 
-        private static async Task MapGet(HttpContext context, JsonService jsonService, IWebHookStorage storage, Guid id)
+        private static async Task<RestWebHook> MapGet(HttpContext context, IWebHookStorage storage, Guid id)
         {
             WebHook result = await storage.GetAsync(id);
 
             RestWebHook restModel = result.ToRest();
 
-            string json = jsonService.Serialize(restModel);
-
-            await context.Response.WriteAsync(json);
+            return restModel;
         }
 
-        private static async Task MapCreate(HttpContext context, JsonService jsonService, IWebHookStorage storage)
+        private static async Task<ResourceCreated> MapCreate(HttpContext context, IWebHookStorage storage, RestWebHook input)
         {
-            RestWebHook input = await jsonService.Deserialize<RestWebHook>(context.Request.Body);
-
             WebHook model = input.ToModel();
 
             await storage.CreateAsync(model);
 
-            ResourceCreated result = new ResourceCreated() { Id = model.Id };
-
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
+            return new ResourceCreated() { Id = model.Id };
         }
 
-        private static async Task MapUpdate(HttpContext context, JsonService jsonService, IWebHookStorage storage)
+        private static async Task MapUpdate(HttpContext context, IWebHookStorage storage, RestWebHook input)
         {
-            RestWebHook input = await jsonService.Deserialize<RestWebHook>(context.Request.Body);
-
             WebHook model = input.ToModel();
 
             await storage.UpdateAsync(model);
-
-            ResourceCreated result = new ResourceCreated() { Id = model.Id };
-
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
         }
     }
 }

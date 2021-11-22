@@ -1,7 +1,5 @@
 ﻿using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.API.Exports;
-using DragonFly.AspNetCore.API.Middlewares;
-using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.AspNetCore.API.Models;
 using DragonFly.AspNetCore.Exports;
 using DragonFly.Content;
@@ -21,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
 {
-    static class ContentNodeStartupExtensions
+    static class ContentNodeApiExtensions
     {
         public static void MapContentNodeRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
@@ -29,7 +27,7 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
             endpoints.MapPost("api/node", MapCreate);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, IStructureStorage storage, Guid structure)
+        private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)
         {
             var parentIdQuery = context.Request.Query["parentId"];
             Guid? parentId = null;
@@ -48,24 +46,16 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
             restQueryResult.Count = items.Count;
             restQueryResult.TotalCount = items.TotalCount;
 
-            string json = jsonService.Serialize(restQueryResult);
-
-            await context.Response.WriteAsync(json);
+            return restQueryResult;
         }
 
-        private static async Task MapCreate(HttpContext context, JsonService jsonService, IStructureStorage storage)
+        private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentNode input)
         {
-            RestContentNode input = await jsonService.Deserialize<RestContentNode>(context.Request.Body);
-
             ContentNode m = input.ToModel();
 
             await storage.CreateAsync(m);
 
-            var result = new ResourceCreated() { Id = m.Id };
-
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
+            return new ResourceCreated() { Id = m.Id };
         }
     }
 }

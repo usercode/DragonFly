@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
 {
-    static class AssetFolderStartupExtensions
+    static class AssetFolderApiExtensions
     {
         public static void MapAssetFolderRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
         {
@@ -22,28 +22,22 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
             endpoints.MapGet("api/assetfolder/{id:guid}", MapGet);
         }
 
-        private static async Task MapQuery(HttpContext context, JsonService jsonService, IAssetFolderStorage storage)
+        private static async Task<IEnumerable<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)
         {
-            AssetFolderQuery query = await jsonService.Deserialize<AssetFolderQuery>(context.Request.Body);
-
             IEnumerable<AssetFolder> assets = await storage.GetAssetFoldersAsync(query);
 
             IEnumerable<RestAssetFolder> result = assets.Select(x => x.ToRest()).ToList();
 
-            string json = jsonService.Serialize(result);
-
-            await context.Response.WriteAsync(json);
+            return result;
         }
 
-        private static async Task MapGet(HttpContext context, JsonService jsonService, IAssetFolderStorage storage, Guid id)
+        private static async Task<RestAssetFolder> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
         {
             AssetFolder entity = await storage.GetAssetFolderAsync(id);
 
             RestAssetFolder restAsset = entity.ToRest();
 
-            string json = jsonService.Serialize(restAsset);
-
-            await context.Response.WriteAsync(json);
+           return restAsset;
         }
     }
 }
