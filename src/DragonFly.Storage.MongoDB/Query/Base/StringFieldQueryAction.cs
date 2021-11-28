@@ -1,5 +1,6 @@
 ﻿using DragonFly.Content;
 using DragonFly.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace DragonFly.Storage.MongoDB.Query.Base
                     query.PatternType switch
                     {
                         StringFieldQueryType.Equals => Builders<MongoContentItem>.Filter.Eq($"{CreateFullFieldName(query.FieldName)}", query.Pattern),
-                        StringFieldQueryType.Contains => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", $".*{query.Pattern}.*"),
-                        StringFieldQueryType.StartsWith => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", $"^{query.Pattern}.*"),
-                        StringFieldQueryType.EndsWith => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", $".*{query.Pattern}$"),
+                        StringFieldQueryType.Contains => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", new BsonRegularExpression($".*{query.Pattern}.*", "i")),
+                        StringFieldQueryType.StartsWith => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", new BsonRegularExpression($"^{query.Pattern}.*", "i")),
+                        StringFieldQueryType.EndsWith => Builders<MongoContentItem>.Filter.Regex($"{CreateFullFieldName(query.FieldName)}", new BsonRegularExpression($".*{query.Pattern}$", "i")),
                         _ => Builders<MongoContentItem>.Filter.Empty
                     }
                     );

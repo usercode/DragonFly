@@ -5,12 +5,11 @@
 @if (Entity != null)
 {
     <div style="display:flex;flex-direction:column;height:100%" class="contentschema-detail">
-        <div style="flex:0">
+        <div class="content-header">
             <h1>@Entity.Name</h1>
-
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
-        <div style="flex:1" class="scroll-content">
+        <div class="scroll-content">
             <EditForm Model="Entity">
                 <BSRow class="form-group">
                     <label class="col-sm-2 col-form-label">Name</label>

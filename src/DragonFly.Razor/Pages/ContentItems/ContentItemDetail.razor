@@ -3,7 +3,6 @@
 @page "/content/{EntityType}/create/{CloneFromEntityId:guid}"
 @inherits ContentItemDetailBase
 
-<div class="contentitem-detail">
     <CascadingValue Value="this" IsFixed="true">
         @if (Entity != null)
         {
@@ -53,4 +52,3 @@
             </div>
         }
     </CascadingValue>
-</div>

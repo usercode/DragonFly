@@ -10,6 +10,7 @@ namespace DragonFly.AspNetCore.API.Models
     {
         public RestContentSchema()
         {
+            Name = string.Empty;
             Fields = new Dictionary<string, RestContentSchemaField>();
             ListFields = new List<string>();
             ReferenceFields = new List<string>();

@@ -16,7 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ImageWizard.Client" Version="2.2.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup> 
   
@@ -24,12 +23,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.0" />
     <PackageReference Include="PdfPig" Version="0.1.5" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.4" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
   </ItemGroup>
 
   <ItemGroup>

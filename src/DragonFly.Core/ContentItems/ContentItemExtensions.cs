@@ -144,18 +144,23 @@ namespace DragonFly.Content
             {
                 if (contentItem.Fields.ContainsKey(field.Key) == false)
                 {
-                    ContentField c;
+                    ContentField? contentField;
 
                     if (field.Value.Options != null)
                     {
-                        c = field.Value.Options.CreateContentField();
+                        contentField = field.Value.Options.CreateContentField();
                     }
                     else
                     {
-                        c = ContentFieldManager.Default.CreateField(field.Value.FieldType);
+                        contentField = ContentFieldManager.Default.CreateField(field.Value.FieldType);
                     }
 
-                    contentItem.Fields.Add(field.Key, c);
+                    if (contentField == null)
+                    {
+                        throw new Exception($"Could not create the content item. {field.Key}");
+                    }
+
+                    contentItem.Fields.Add(field.Key, contentField);
                 }
             }
         }

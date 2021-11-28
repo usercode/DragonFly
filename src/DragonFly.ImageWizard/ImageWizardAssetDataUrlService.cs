@@ -1,5 +1,6 @@
 ﻿using DragonFly.Client.Core.Assets;
 using DragonFly.Content;
+using ImageWizard;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,23 +9,34 @@ using System.Threading.Tasks;
 
 namespace DragonFly.ImageWizard
 {
+    /// <summary>
+    /// ImageWizardAssetDataUrlService
+    /// </summary>
     public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
     {
-        public string GetImageUrl(Asset asset, int width, int height)
+        public ImageWizardAssetDataUrlService(ImageUrlBuilder imageUrlBuilder)
         {
-            string assetId = $"{asset.Id}?v={asset.Hash}";
+            ImageUrlBuilder = imageUrlBuilder;
+        }
 
+        /// <summary>
+        /// ImageUrlBuilder
+        /// </summary>
+        private ImageUrlBuilder ImageUrlBuilder { get; }
+
+        public string CreateImageUrl(Asset asset, int width, int height)
+        {
             if (asset.IsPdf())
             {
-                return $"/dragonfly/image/unsafe/pagetoimage(0)/resize({width},{height})/dragonfly/{assetId}";
+                return ImageUrlBuilder.Asset(asset).PageToImage(0).Resize(width, height).BuildUrl();
             }
             else if (asset.IsSVG())
             {
-                return $"/dragonfly/image/unsafe/dragonfly/{assetId}";
+                return ImageUrlBuilder.Asset(asset).BuildUrl();
             }
             else if (asset.IsImage())
             {
-                return $"/dragonfly/image/unsafe/resize({width},{height})/dragonfly/{assetId}";
+                return ImageUrlBuilder.Asset(asset).Resize(width, height).BuildUrl();
             }            
             else
             {

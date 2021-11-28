@@ -9,6 +9,6 @@ namespace DragonFly.Client.Core.Assets
 {
     public interface IAssetPreviewUrlService
     {
-        string GetImageUrl(Asset asset, int width, int height);
+        string CreateImageUrl(Asset asset, int width, int height);
     }
 }

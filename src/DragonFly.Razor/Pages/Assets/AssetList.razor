@@ -1,8 +1,7 @@
 @page "/asset"
 @inherits AssetListBase
 
-<div style="display:flex;flex-direction:column">
-    <div style="flex:0">
+    <div class="content-header">
 
         @if (ListMode == EntityListMode.Default)
         {
@@ -11,17 +10,13 @@
                     <a href="asset/create/@SelectedFolder?.Id" class="btn btn-success">Create</a>
                 </div>
             </BSRow>
-
-            <hr />
         }
 
         @*@bind:event="oninput"*@
         <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
-
-        <hr />
     </div>
 
-    <div style="flex: 1" class="scroll-content">
+    <div class="scroll-content">
         <BSRow>
             <BSCol LG="3">
                 <div class="list-group">
@@ -76,4 +71,3 @@
             </div>
         </BSRow>
     </div>
-</div>

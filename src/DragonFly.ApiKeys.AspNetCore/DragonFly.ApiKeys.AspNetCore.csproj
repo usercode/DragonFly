@@ -24,6 +24,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.14.0" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.14.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
 		<ProjectReference Include="..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
 	</ItemGroup>

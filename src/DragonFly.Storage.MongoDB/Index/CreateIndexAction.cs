@@ -72,7 +72,17 @@ namespace DragonFly.Storage.MongoDB.Index
 
                 foreach (var field in schema.Fields)
                 {
-                    Type fieldType = Api.ContentField().GetContentFieldType(field.Value.FieldType);
+                    if (field.Value.Options?.IsSearchable == false)
+                    {
+                        continue;
+                    }
+
+                    Type? fieldType = Api.ContentField().GetContentFieldType(field.Value.FieldType);
+
+                    if (fieldType == null)
+                    {
+                        continue;
+                    }
 
                     //add new indices
                     if (Api.Index().TryGetByType(fieldType, out FieldIndex? fieldIndex))

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Fields.BlockField.Blocks
 {
     /// <summary>
-    /// HtmlElement
+    /// HtmlBlock
     /// </summary>
     public class HtmlBlock : Block
     {

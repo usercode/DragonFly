@@ -35,7 +35,7 @@ namespace DragonFly.Data
 
             if (previewService != null)
             {
-                asset.PreviewUrl = previewService.GetImageUrl(asset, 800, 800);
+                asset.PreviewUrl = previewService.CreateImageUrl(asset, 800, 800);
             }
 
             return asset;

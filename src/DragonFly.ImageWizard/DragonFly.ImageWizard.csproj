@@ -15,8 +15,7 @@
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="ImageWizard.Client" Version="2.2.0" />
+	<ItemGroup>		
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
 
@@ -25,15 +24,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />
-		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />		
 		<PackageReference Include="ImageWizard.DocNET" Version="2.2.0" />
 		<PackageReference Include="ImageWizard.ImageSharp" Version="2.2.0" />
-		<PackageReference Include="ImageWizard.MongoDB" Version="2.2.0" />
 		<PackageReference Include="ImageWizard.SvgNet" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.Client" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	</ItemGroup>
 </Project>

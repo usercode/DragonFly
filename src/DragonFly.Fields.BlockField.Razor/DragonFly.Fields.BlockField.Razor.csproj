@@ -21,10 +21,6 @@
 		<None Include="..\logo.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
-   <ItemGroup>
-     <Content Remove="wwwroot\styles.css" />
-   </ItemGroup>
-
 	<ItemGroup>
 		<PackageReference Include="TinyMCE.Blazor" Version="0.0.8" />
 	</ItemGroup>
@@ -32,14 +28,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.Fields.BlockField\DragonFly.Fields.BlockField.csproj" />
 	  <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Services\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="wwwroot\styles.css" />
 	</ItemGroup>
 	
 </Project>

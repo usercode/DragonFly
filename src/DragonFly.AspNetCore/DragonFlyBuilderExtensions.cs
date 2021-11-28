@@ -17,13 +17,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DragonFly.Content;
-using ImageWizard;
-using ImageWizard.DocNET;
 using DragonFly.Core;
 using DragonFly.AspNetCore.Middleware.Builders;
-using DragonFly.ImageWizard;
-using DragonFly.Client.Core.Assets;
-using ImageWizard.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace DragonFly.AspNetCore;
 
@@ -46,23 +42,7 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
-        services.AddSingleton<IAssetPreviewUrlService, ImageWizardAssetDataUrlService>();
-
-        //ImageWizard
-        services.AddImageWizard(x =>
-        {
-            x.GenerateRandomKey();
-            x.AllowUnsafeUrl = true;
-        })
-            .AddImageSharp()
-            .AddSvgNet()
-            .AddDocNET()
-            .AddDragonFly()
-            .SetFileCache()
-            ;
-
-        //services.AddImageWizardClient();
-
+        
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
         {
@@ -90,8 +70,6 @@ public static class DragonFlyBuilderExtensions
                                     x.UseMiddleware<RequireAuthentificationMiddleware>();
 
                                     end.PostAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
-
-                                    x.UseImageWizard();
 
                                     x.UseEndpoints(e =>
                                     {

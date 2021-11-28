@@ -50,20 +50,14 @@ namespace DragonFly.AspNetCore.API.Middlewares
                 Items = contentItems.Items.Select(x => x.ToRest()).ToList()
             };
 
-            foreach (var i in resultQuery.Items)
-            {
-                i.ToModel();
-            }
-
             return resultQuery;
         }
 
         private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
         {
             ContentItem result = await contentStore.GetContentAsync(schema, id);
-            ContentSchema schemaModel = await schemaStorage.GetSchemaAsync(schema);
 
-            result.ApplySchema(schemaModel);
+            result.ApplySchema();
 
             RestContentItem restModel = result.ToRest();
 

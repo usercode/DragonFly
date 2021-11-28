@@ -1,7 +1,9 @@
 ﻿@inherits RoleListBase
 
+<div class="content-header">
 <Toolbar Items="ToolbarItems"></Toolbar>
-
+</div>
+<div class="scroll-content">
 <BSListGroup>
 	@foreach(IdentityRole role in Roles)
 	{
@@ -14,3 +16,4 @@
 		</a>
 	}
 </BSListGroup>
+</div>

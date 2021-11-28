@@ -4,8 +4,6 @@
 
 @if (Entity != null)
 {
-    <div class="role-detail">
-
         <div class="content-header">
             <h1>Role</h1>
 
@@ -14,7 +12,6 @@
         <div class="scroll-content">
             <EditForm Model="Entity">
                 <div>
-                    <div class="col-md-6">
                         @if (IsNewEntity == false)
                         {
                             <!-- id -->
@@ -42,11 +39,8 @@
                                             <PermissionItemView Permission="permission" />
                                         }
                                 </div>                                
-                        </BSRow>
-                        
-                    </div>
+                        </BSRow>                        
                  </div>
           </EditForm>
         </div>
-   </div>
 }

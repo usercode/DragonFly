@@ -1,7 +1,17 @@
 ﻿@inherits BlockComponent<HtmlBlock>
 
-	<TinyMCE.Blazor.Editor @bind-Value="Block.HtmlText" style="width:100%; height:100%" />
+	<TinyMCE.Blazor.Editor 
+			@bind-Value="Block.HtmlText" 
+			Conf="editorConf"
+			style="width:100%; height:100%" />
 
 @code {
 
+	private Dictionary<string, object> editorConf = new Dictionary<string, object>{
+   { "menubar", true },
+   { "plugins", "link image code table" },
+   { "toolbar", "undo redo | styleselect | forecolor | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code" },
+   { "height", "500" },
+   { "invalid_styles", "width height"}
+ };
 }

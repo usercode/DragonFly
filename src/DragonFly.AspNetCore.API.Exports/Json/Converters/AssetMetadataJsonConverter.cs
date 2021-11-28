@@ -33,7 +33,7 @@ namespace DragonFly.Core.Json
 
                     return (AssetMetadata?)JsonSerializer.Deserialize(doc.RootElement, contentFieldType, options);
                 }
-            }           
+            }
 
             return null;
         }

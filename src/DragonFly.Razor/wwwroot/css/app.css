@@ -164,6 +164,7 @@ app {
 
 .main {
   display: flex;
+  flex-direction: column;
   flex: 1;
 }
 
@@ -398,4 +399,14 @@ app {
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+
+.contentschema-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.tox-notifications-container {
+  display: none;
 }

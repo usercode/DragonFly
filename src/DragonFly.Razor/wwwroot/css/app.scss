@@ -160,6 +160,7 @@ app {
 
 .main {
     display: flex;
+    flex-direction: column;
     flex: 1;
 }
 
@@ -409,4 +410,14 @@ app {
 
 .contentitem-detail {
     @extend .detail;
+}
+
+.contentschema-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.tox-notifications-container {
+    display: none;
 }
