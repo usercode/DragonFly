@@ -175,7 +175,7 @@ services:
     networks:
       - default
     environment:
-    - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=YOUR_PASSWORD      
     volumes:
       - catalog_db:/data/db
