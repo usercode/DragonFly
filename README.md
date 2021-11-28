@@ -11,6 +11,7 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.AspNetCore.API         | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API/) |
 | DragonFly.AspNetCore.API.Client  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.Client.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API.Client/) |
 | DragonFly.Razor                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
+| DragonFly.ImageWizard            | [![NuGet](https://img.shields.io/nuget/v/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
 | DragonFly.Storage.MongoDB        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Storage.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.Storage.MongoDB/) |
 
 
@@ -89,9 +90,15 @@ await contentStorage.CreateAsync(contentProduct);
 
       //DragonFly
       services.AddDragonFly()
+                  .AddImageWizard()
                   .AddRestApi()
                   .AddGraphQLApi()
-                  .AddMongoDbStorage();
+                  .AddMongoDbStorage()
+                  .AddMongoDbIdentity()
+                  .AddSchemaBuilder()
+                  .AddBlockField()
+                  .AddApiKeys()
+                  .AddPermissions()
  }
 ```
 
@@ -110,8 +117,11 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonF
     app.UseDragonFly(
                    x =>
                    {
-                       x.UseRestApi();
-                       x.UseGraphQLApi();
+                        x.MapImageWizard();
+                        x.MapApiKey();
+                        x.MapIdentity();
+                        x.MapRestApi();
+                        x.MapPermission();
                    });
     app.UseDragonFlyManager();
  }
@@ -134,4 +144,48 @@ public static async Task Main(string[] args)
 
     await build.RunAsync();
 }
+```
+## Docker
+```yaml
+version: "2"
+
+services:
+  app:
+    image: usercode/dragonfly
+    container_name: catalog
+    restart: always
+    networks:
+      - default
+    volumes:
+      - catalog_cache:/cache
+    environment: 
+      - MongoDB__Database=DragonFly_App
+      - MongoDB__Hostname=catalog_db      
+      - MongoDB__Username=root
+      - MongoDB__Password=YOUR_PASSWORD
+      - AssetCache__Folder=/cache
+      - ImageWizard__Key=YOUR_IMAGEWIZARD_KEY
+    depends_on:
+      - db
+  
+  db:
+    image: mongo:4.4
+    container_name: catalog_db
+    restart: always
+    networks:
+      - default
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=YOUR_PASSWORD      
+    volumes:
+      - catalog_db:/data/db
+      - catalog_configdb:/data/configdb
+
+volumes:
+  catalog_db:
+    external: true
+  catalog_configdb:
+    external: true
+  catalog_cache:
+    external: true
 ```
