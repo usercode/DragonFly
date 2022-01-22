@@ -47,11 +47,11 @@ namespace DragonFly.Razor.Pages.Assets
             }
             else
             {
-                toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
+                toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
                 toolbarItems.AddRefreshButton(this);
                 toolbarItems.AddUpdateButton(this);
                 toolbarItems.AddDeleteButton(this);
-                toolbarItems.Add(new ToolbarItem("Refresh metadata", Color.Danger, () => ApplyMetadata()));
+                toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Danger, () => ApplyMetadata()));
             }            
         }
 

@@ -1,5 +1,4 @@
 ﻿using ImageWizard;
-using ImageWizard.Settings;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;

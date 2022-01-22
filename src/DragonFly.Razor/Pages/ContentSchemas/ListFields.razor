@@ -7,9 +7,9 @@
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <BSButton Color="Color.Light" OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></BSButton>
-                        <BSButton Color="Color.Light" OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></BSButton>
-                        <BSButton Color="Color.Light" OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></BSButton>
                     </div>
                 </BSListGroupItem>
             }
@@ -23,7 +23,7 @@
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <BSButton Color="Color.Light" OnClick="@(e => { TargetList.Add(i);  })"><i class="fas fa-arrow-left"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="@(e => { TargetList.Add(i);  })"><i class="fas fa-arrow-left"></i></BSButton>
                     </div>
                 </BSListGroupItem>
             }

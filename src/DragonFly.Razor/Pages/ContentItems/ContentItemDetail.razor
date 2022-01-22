@@ -14,7 +14,7 @@
             <div class="scroll-content">
                 @foreach (var validationResult in ValidationContext.Errors)
                 {
-                    <BSAlert Color="Color.Danger">
+                    <BSAlert Color="BSColor.Danger">
                         @validationResult.Message
                     </BSAlert>
                 }
@@ -22,10 +22,10 @@
                 <EditForm Model="Entity" style="flex: 1">
                     <BSFormGroup>
                         <BSRow>
-                            <BSCol SM="2">
+                            <BSCol Column="2">
                                 <label class="field-label">Id</label>
                             </BSCol>
-                            <BSCol SM="10">
+                            <BSCol Column="10">
                                 <div class="field">
                                     <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
                                 </div>

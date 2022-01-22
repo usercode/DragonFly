@@ -7,11 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Http.Json;
 using DragonFly.AspNetCore.API.Exports.Json;
+using System.Text.Json.Serialization;
 
 namespace DragonFly.AspNetCore
 {
@@ -21,7 +21,7 @@ namespace DragonFly.AspNetCore
         {
             builder.Services.Configure<JsonOptions>(opt =>
             {
-                foreach (var converter in JsonSerializerDefault.Options.Converters)
+                foreach (JsonConverter converter in JsonSerializerDefault.Options.Converters)
                 {
                     opt.SerializerOptions.Converters.Add(converter);
                 }

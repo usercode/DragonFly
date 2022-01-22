@@ -1,17 +1,15 @@
 ﻿@inject NavigationManager NavigationManager
 
-@if (_init)
-{
-    <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
-        <BSModalHeader OnClick="() => _init = false">Select asset</BSModalHeader>
-        <BSModalBody>
-            <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />       
-        </BSModalBody>
-        <BSModalFooter>
-            <BSButton Color="Color.Primary" @onclick="() => _init = false">Ok</BSButton>
-        </BSModalFooter>
+
+    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
+        <Header>Select asset</Header>
+        <Content>
+            <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
+        </Content>
+        <Footer>
+            <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync()">Ok</BSButton>
+        </Footer>
     </BSModal>
-}
 
 <div class="asset-selector">
     <BSListGroup>
@@ -30,14 +28,14 @@
                 <div>
                     @if (Asset != null)
                     {
-                        <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
                         @if (ShowDownloadButton)
                         {
-                            <BSButton Color="Color.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                            <BSButton Color="BSColor.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
                         }
-                        <BSButton Color="Color.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>               
+                        <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>               
                     }
-                        <BSButton Color="Color.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
                 </div>           
             </div>
 
@@ -55,6 +53,9 @@
 </div>
 
 @code {
+
+    public BSModal Modal { get; set; }
+
     private Asset _asset;
 
     [Parameter]
@@ -78,8 +79,6 @@
     [Parameter]
     public bool ShowPreview { get; set;  }
 
-    private bool _init = false;
-
     protected void Navigate()
     {
         NavigationManager.NavigateTo($"asset/{Asset.Id}");
@@ -90,17 +89,16 @@
         Asset = null;
     }
 
-    public void OpenModal()
+    public async void OpenModal()
     {
-        //LiveDemo.Show();
-        _init = true;
+        await Modal.ShowAsync();
     }
 
-    public void ItemAdded(Asset asset)
+    public async void ItemAdded(Asset asset)
     {
         Asset = asset;
 
-        _init = false;
+        await Modal.HideAsync();
 
         StateHasChanged();
     }

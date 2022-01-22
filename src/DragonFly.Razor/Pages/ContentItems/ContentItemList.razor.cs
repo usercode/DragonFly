@@ -43,8 +43,8 @@ namespace DragonFly.Client.Pages.ContentItems
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Create", Color.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
-            toolbarItems.Add(new ToolbarItem("Publish all", Color.Success, async () => await PublishQueryAsync()));
+            toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
+            toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, async () => await PublishQueryAsync()));
             toolbarItems.AddRefreshButton(this);            
         }
 

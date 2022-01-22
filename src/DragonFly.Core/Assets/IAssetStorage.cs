@@ -30,6 +30,6 @@ namespace DragonFly.Storage
 
         Task<Stream> DownloadAsync(Guid id);
 
-        Task ApplyMetadataAsync(Guid id);        
+        Task ApplyMetadataAsync(Guid id);
     }
 }

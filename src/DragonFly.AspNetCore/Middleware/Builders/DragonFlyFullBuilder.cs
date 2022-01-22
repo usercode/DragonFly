@@ -14,12 +14,12 @@ namespace DragonFly.AspNetCore.Middleware.Builders
         {
             EndpointList = new List<Action<IDragonFlyEndpointRouteBuilder>>();
             PreAuthBuilders = new List<Action<IDragonFlyApplicationBuilder>>();
-            PostAuthBuilders = new List<Action<IDragonFlyApplicationBuilder>>();
+            Builders = new List<Action<IDragonFlyApplicationBuilder>>();
         }
 
         public IList<Action<IDragonFlyEndpointRouteBuilder>> EndpointList { get; }
         public IList<Action<IDragonFlyApplicationBuilder>> PreAuthBuilders { get; }
-        public IList<Action<IDragonFlyApplicationBuilder>> PostAuthBuilders { get; }
+        public IList<Action<IDragonFlyApplicationBuilder>> Builders { get; }
 
         public void Endpoints(Action<IDragonFlyEndpointRouteBuilder> endpoints)
         {
@@ -33,7 +33,7 @@ namespace DragonFly.AspNetCore.Middleware.Builders
 
         public void Builder(Action<IDragonFlyApplicationBuilder> builder)
         {
-            PostAuthBuilders.Add(builder);
+            Builders.Add(builder);
         }
     }
 }

@@ -24,11 +24,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ImageWizard.Core" Version="2.2.0" />		
-		<PackageReference Include="ImageWizard.DocNET" Version="2.2.0" />
-		<PackageReference Include="ImageWizard.ImageSharp" Version="2.2.0" />
-		<PackageReference Include="ImageWizard.SvgNet" Version="2.2.0" />
-		<PackageReference Include="ImageWizard.Client" Version="2.2.0" />
+		<PackageReference Include="ImageWizard.Core" Version="3.0.1" />		
+		<PackageReference Include="ImageWizard.DocNET" Version="3.0.1" />
+		<PackageReference Include="ImageWizard.ImageSharp" Version="3.0.1" />
+		<PackageReference Include="ImageWizard.SvgNet" Version="3.0.1" />
+		<PackageReference Include="ImageWizard.Client" Version="3.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

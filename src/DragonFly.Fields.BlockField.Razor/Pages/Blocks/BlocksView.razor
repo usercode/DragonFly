@@ -4,18 +4,18 @@
 @if (ShowModal)
 {
 	<BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
-		<BSModalHeader OnClick="@(() => ShowModal = false)">Select asset</BSModalHeader>
-		<BSModalBody>
+		<Header>Select asset</Header>
+		<Content>
 			@foreach (Block block in BlockFieldManager.GetAllBlocks())
 			{
 				<div>
 					<BSButton class="btn btn-light" OnClick="e => Add(block)">@block.GetType().Name</BSButton>
 				</div>
 			}
-		</BSModalBody>
-		<BSModalFooter>
-			<BSButton Color="Color.Primary" @onclick="@(() => ShowModal = false)">Ok</BSButton>
-		</BSModalFooter>
+		</Content>
+		<Footer>
+			<BSButton Color="BSColor.Primary" @onclick="@(() => ShowModal = false)">Ok</BSButton>
+		</Footer>
 	</BSModal>
 }
 
@@ -24,7 +24,7 @@
 	<BSRow>
 		<BSCol LG="12">
 			<div class="block-field-view">
-				<BSButton Color="Color.Light" class="block-field-add-btn" OnClick="e => OpenModal(0)" title="Insert block">
+				<BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => OpenModal(0)" title="Insert block">
 					<i class="fas fa-plus"></i>
 				</BSButton>
 
@@ -35,16 +35,16 @@
 					<div class="block-field">
 						<div class="block-field-options">
 							<span class="badge bg-secondary">@Blocks[curIndex].GetType().Name</span>
-							<BSButton Color="Color.Light" OnClick="@(e => { Blocks.MoveUp(Blocks[curIndex]); })" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-							<BSButton Color="Color.Light" OnClick="@(e => { Blocks.MoveDown(Blocks[curIndex]); })" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-							<BSButton Color="Color.Light" OnClick="@(e => { Blocks.Remove(Blocks[curIndex]); })" title="Remove"><i class="fas fa-times"></i></BSButton>
+							<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.MoveUp(Blocks[curIndex]); })" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
+							<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.MoveDown(Blocks[curIndex]); })" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
+							<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.Remove(Blocks[curIndex]); })" title="Remove"><i class="fas fa-times"></i></BSButton>
 						</div>
 						<div class="block-field-content">
 							@ComponentManager.CreateComponent(Blocks[curIndex])
 						</div>
 					</div>
 
-					<BSButton Color="Color.Light" class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" title="Insert block">
+					<BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" title="Insert block">
 						<i class="fas fa-plus"></i>
 					</BSButton>
 				}

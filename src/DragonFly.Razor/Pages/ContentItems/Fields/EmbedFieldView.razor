@@ -2,14 +2,14 @@
 @inject NavigationManager NavigationManager
 
 <BSModal @ref="LiveDemo" IsFullScreen="true">
-    <BSModalHeader OnClick="@(() => LiveDemo.Hide())">Modal title</BSModalHeader>
-    <BSModalBody>
-        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.Hide(); Field.ContentEmbedded = x.CreateContentEmbedded(); StateHasChanged(); }"></ContentItemTypeList>
-    </BSModalBody>
-    <BSModalFooter>
-        <BSButton Color="Color.Secondary" @onclick="@(() => LiveDemo.Hide())">Close</BSButton>
-        <BSButton Color="Color.Primary" @onclick="@(() => LiveDemo.Hide())">Save Changes</BSButton>
-    </BSModalFooter>
+    <Header>Modal title</Header>
+    <Content>
+        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.HideAsync(); Field.ContentEmbedded = x.CreateContentEmbedded(); StateHasChanged(); }"></ContentItemTypeList>
+    </Content>
+    <Footer>
+        <BSButton Color="BSColor.Secondary" @onclick="@(() => LiveDemo.HideAsync())">Close</BSButton>
+        <BSButton Color="BSColor.Primary" @onclick="@(() => LiveDemo.HideAsync())">Save Changes</BSButton>
+    </Footer>
 </BSModal>
 
 <div class="embed-field">
@@ -20,7 +20,7 @@
                 {
                     <span class="badge badge-primary" style="margin-right:12px">@Field.ContentEmbedded.Schema.Name</span>
                 }
-                    <BSButton Color="Color.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
                 </div>
             <div>
                 @if (Field.ContentEmbedded != null)
@@ -44,6 +44,6 @@
 
     public void OpenModal()
     {
-        LiveDemo.Show();
+        LiveDemo.ShowAsync();
     }
 }

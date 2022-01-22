@@ -6,13 +6,15 @@
 	</BSCol>
 	<BSCol LG="auto">
 		<BSDropdown>
-			<BSDropdownToggle Color="@Color.Light">@Query.PatternType</BSDropdownToggle>
-			<BSDropdownMenu>
+			<Toggler>
+				<BSToggle Color="@BSColor.Light">@Query.PatternType</BSToggle>
+			</Toggler>
+			<Content>
 				@foreach(var value in Enum.GetValues(typeof(StringFieldQueryType)))
 				{
 					<BSDropdownItem @onclick="e => { Query.PatternType = (StringFieldQueryType)value; }">@value</BSDropdownItem>
 				}
-			</BSDropdownMenu>
+			</Content>
 		</BSDropdown>
 	</BSCol>		
 </BSRow>

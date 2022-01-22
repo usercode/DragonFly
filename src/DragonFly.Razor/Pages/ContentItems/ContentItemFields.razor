@@ -5,24 +5,22 @@
            .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
            .ToList())
 {
-    <BSFormGroup>
+    <div>
         <BSAlert Color="GetFieldColor(part.FieldName)">
             <BSRow>
-                <BSCol SM="2">
+                <BSCol Column="2">
                     <BSLabel class="field-label">
                 @part.FieldName
             </BSLabel>
                 </BSCol>
-                <BSCol SM="10">
+                <BSCol Column="10">
                      <div class="field">
                 @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
             </div>
                 </BSCol>
             </BSRow>
-            
-           
         </BSAlert>
-    </BSFormGroup>
+    </div>
 }
 
 @code {
@@ -35,17 +33,17 @@
     [CascadingParameter]
     public ContentItemDetail Detail { get; set; }
 
-    private Color GetFieldColor(string field)
+    private BSColor GetFieldColor(string field)
     {
         bool valid = Detail.IsFieldValid(field);
 
         if (valid)
         {
-            return Color.None;
+            return BSColor.Default;
         }
         else
         {
-            return Color.Danger;
+            return BSColor.Danger;
         }
     }
 }

@@ -15,10 +15,10 @@
 <div class="scroll-content">
     <EditForm Model="this">
     <BSRow>
-        <BSCol LG="3">
+        <BSCol Column="3">
             <QuerySelector ContentItemList="@this" />
         </BSCol>
-        <BSCol LG="9">
+        <BSCol Column="9">
             @if (SearchResult == null)
             {
                 <div class="spinner-border" role="status">
@@ -103,20 +103,16 @@
     @if (SearchResult != null)
     {
         <BSPagination>
-            <BSPaginationItem>
-                <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.PreviousIcon" />
-            </BSPaginationItem>
+                <BSPaginationItem  Href="#" PaginationLinkType="PaginationLinkType.PreviousIcon" />
             @for (int i = 0; i < CountPages; i++)
             {
                 int i2 = i;
 
-                <BSPaginationItem>
-                    <BSPaginationLink PaginationLinkType="PaginationLinkType.Custom" @onclick="x => Page = i2">@(i2 + 1)</BSPaginationLink>
-                </BSPaginationItem>
+                <BSPaginationItem  PaginationLinkType="PaginationLinkType.Custom" @onclick="x => Page = i2">@(i2 + 1)</BSPaginationItem>               
             }
-            <BSPaginationItem>
-                <BSPaginationLink Href="#" PaginationLinkType="PaginationLinkType.NextIcon" />
-            </BSPaginationItem>
+           
+            <BSPaginationItem  Href="#" PaginationLinkType="PaginationLinkType.NextIcon" />
+            
         </BSPagination>
     }
 </div>

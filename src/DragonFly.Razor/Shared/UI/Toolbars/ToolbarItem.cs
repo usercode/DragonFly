@@ -9,7 +9,7 @@ namespace DragonFly.Razor.Shared.UI.Toolbars
 {
     public class ToolbarItem
     {
-        public ToolbarItem(string name, Color color, Func<Task> action)
+        public ToolbarItem(string name, BSColor color, Func<Task> action)
         {
             Name = name;
             Color = color;
@@ -24,7 +24,7 @@ namespace DragonFly.Razor.Shared.UI.Toolbars
         /// <summary>
         /// Color
         /// </summary>
-        public Color Color { get; set; }
+        public BSColor Color { get; set; }
 
         /// <summary>
         /// IsRunning

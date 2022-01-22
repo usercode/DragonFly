@@ -1,25 +1,15 @@
-﻿using DragonFly.AspNetCore;
-using DragonFly.AspNet.Middleware;
+﻿using DragonFly.AspNet.Middleware;
 using DragonFly.AspNet.Middleware.Builders;
-using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Services;
 using DragonFly.Core.Builders;
 using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DragonFly.Content;
 using DragonFly.Core;
 using DragonFly.AspNetCore.Middleware.Builders;
-using Microsoft.Extensions.Configuration;
 
 namespace DragonFly.AspNetCore;
 
@@ -42,7 +32,6 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
-        
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
         {
@@ -69,7 +58,7 @@ public static class DragonFlyBuilderExtensions
 
                                     x.UseMiddleware<RequireAuthentificationMiddleware>();
 
-                                    end.PostAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
+                                    end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseEndpoints(e =>
                                     {

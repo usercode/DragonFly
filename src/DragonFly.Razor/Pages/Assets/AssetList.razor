@@ -18,7 +18,7 @@
 
     <div class="scroll-content">
         <BSRow>
-            <BSCol LG="3">
+            <BSCol Column="3">
                 <div class="list-group">
 
                     @if (SelectedFolder != null)
@@ -37,7 +37,7 @@
                     }
                 </div>
             </BSCol>
-            <div class="col-lg-9">
+            <BSCol Column="9">
                 <div style="flex: 1">
                     @if (SearchResult == null)
                     {
@@ -68,6 +68,6 @@
                         </div>
                     }
                 </div>
-            </div>
+            </BSCol>
         </BSRow>
     </div>

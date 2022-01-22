@@ -58,7 +58,7 @@ namespace DragonFly.Client
         {
             var response = await Client.GetAsync($"api/asset/{id}");
 
-            RestAsset restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
+            RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
 
             return restAsset.ToModel();
         }

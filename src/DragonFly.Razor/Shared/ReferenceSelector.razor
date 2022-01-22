@@ -1,17 +1,16 @@
 ﻿@inject NavigationManager NavigationManager
 
-@if (_init)
-{
-    <BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
-        <BSModalHeader OnClick="() => _init = false">Select asset</BSModalHeader>
-        <BSModalBody>
+
+    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
+        <Header>Select asset</Header>
+        <Content>
             <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>
-        </BSModalBody>
-        <BSModalFooter>
-            <BSButton Color="Color.Primary" @onclick="() => _init = false">Ok</BSButton>
-        </BSModalFooter>
+        </Content>
+        <Footer>
+            <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync() ">Ok</BSButton>
+        </Footer>
     </BSModal>
-}
+
 
     <div class="reference-selector">
         <BSListGroup>
@@ -48,10 +47,10 @@
                     <div>
                         @if (ContentItem != null)
                         {
-                            <BSButton Color="Color.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>                        
-                            <BSButton Color="Color.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>
+                            <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>                        
+                            <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>
                         }
-                        <BSButton Color="Color.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
+                        <BSButton Color="BSColor.Light" title="Select" OnClick="e => Modal.ShowAsync()"><i class="fas fa-plus"></i></BSButton>
                     </div>
                 </div>
             </BSListGroupItem>
@@ -59,6 +58,9 @@
     </div>
 
 @code {
+
+    [Parameter]
+    public BSModal Modal { get; set; }
 
     private ContentItem _contentItem;
 
@@ -77,8 +79,6 @@
     [Parameter]
     public Action<ContentItem> ContentItemChanged { get; set; }
 
-    private bool _init = false;
-
     protected void Navigate()
     {
         NavigationManager.NavigateTo($"content/{ContentItem.Schema.Name}/{ContentItem.Id}");
@@ -89,16 +89,11 @@
         ContentItem = null;
     }
 
-    public void OpenModal()
-    {
-        _init = true;
-    }
-
-    public void ItemAdded(ContentItemTypeList2 sender)
+    public async void ItemAdded(ContentItemTypeList2 sender)
     {
         ContentItem = sender.SelectedContentItem;
 
-        _init = false;
+        await Modal.HideAsync();
 
         StateHasChanged();
     }

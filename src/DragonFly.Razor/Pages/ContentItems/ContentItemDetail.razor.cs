@@ -46,9 +46,9 @@ namespace DragonFly.Client.Pages.ContentItems
             }
             else
             {
-                toolbarItems.Add(new ToolbarItem("Publish", Color.Success, () => PublishAsync()));
-                toolbarItems.Add(new ToolbarItem("Unpublish", Color.Dark, () => UnpublishAsync()));
-                toolbarItems.Add(new ToolbarItem("Clone", Color.Light, ()=> CloneAsync()));
+                toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
+                toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, () => UnpublishAsync()));
+                toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, ()=> CloneAsync()));
                 toolbarItems.AddRefreshButton(this);
                 toolbarItems.AddSaveButton(this);
                 toolbarItems.AddDeleteButton(this);
@@ -56,7 +56,7 @@ namespace DragonFly.Client.Pages.ContentItems
 
             if (ContentItemActions != null)
             {
-                ContentItemActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, Color.Dark, () => x.Execute(this))));
+                ContentItemActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, BSColor.Dark, () => x.Execute(this))));
             }
         }
 

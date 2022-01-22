@@ -1,4 +1,5 @@
-﻿using DragonFly.Client.Base;
+﻿using BlazorStrap;
+using DragonFly.Client.Base;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using DragonFLy.ApiKeys;
 using Microsoft.AspNetCore.Components;
@@ -31,7 +32,7 @@ namespace DragonFly.ApiKeys.Razor.Components
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.Color.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
+            toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
             toolbarItems.AddRefreshButton(this);
         }
 

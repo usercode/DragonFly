@@ -1,6 +1,6 @@
 @inherits ContentItemTypeListBase2
 
-<div style="display:flex; flex: 1">
+<div style="flex: 1">
 @if (SearchResult == null)
 {
     <p><em>Loading...</em></p>
@@ -8,7 +8,7 @@
 else
 {
 <BSRow class="w-100">
-    <BSCol LG="2">
+    <BSCol Column="2">
         <BSListGroup>
             @foreach (ContentSchema schema in SearchResult.Items)
             {
@@ -18,7 +18,7 @@ else
             }
         </BSListGroup>
     </BSCol>
-    <BSCol LG="10" class="h-100">
+    <BSCol Column="10" class="h-100">
         @if (SelectedItem != null)
         {
                 <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" EntityType="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />

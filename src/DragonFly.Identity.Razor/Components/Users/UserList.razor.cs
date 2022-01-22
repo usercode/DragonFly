@@ -1,4 +1,5 @@
-﻿using DragonFly.Client.Base;
+﻿using BlazorStrap;
+using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Razor.Pages.Settings;
 using DragonFly.Razor.Shared.UI.Toolbars;
@@ -27,7 +28,7 @@ namespace DragonFly.Identity.Razor.Components.Users
         {
             base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.Color.Success, async () => Navigation.NavigateTo("settings/identity/user/create")));
+            toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/identity/user/create")));
             toolbarItems.AddRefreshButton(this);
         }
 

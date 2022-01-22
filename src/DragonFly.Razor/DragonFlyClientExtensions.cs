@@ -64,7 +64,7 @@ namespace DragonFly.Client.Core
             builder.Services.AddBlazoredModal();
             builder.Services.AddBlazoredToast();
 
-            builder.Services.AddBootstrapCss();
+            builder.Services.AddBlazorStrap();
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
             builder.Services.AddTransient<ClientContentService>();
@@ -89,7 +89,7 @@ namespace DragonFly.Client.Core
             return builder;
         }
 
-        public static void UseDragonFLyClient(this WebAssemblyHost host)
+        public static void UseDragonFlyClient(this WebAssemblyHost host)
         {
             IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
             api.InitAsync().GetAwaiter().GetResult();
