@@ -15,7 +15,7 @@ namespace DragonFly.ImageWizard
     /// </summary>
     public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
     {
-        public ImageWizardAssetDataUrlService(UrlBuilder urlBuilder)
+        public ImageWizardAssetDataUrlService(IImageWizardUrlBuilder urlBuilder)
         {
             UrlBuilder = urlBuilder;
         }
@@ -23,7 +23,7 @@ namespace DragonFly.ImageWizard
         /// <summary>
         /// UrlBuilder
         /// </summary>
-        private UrlBuilder UrlBuilder { get; }
+        private IImageWizardUrlBuilder UrlBuilder { get; }
 
         public string CreateImageUrl(Asset asset, int width, int height)
         {
