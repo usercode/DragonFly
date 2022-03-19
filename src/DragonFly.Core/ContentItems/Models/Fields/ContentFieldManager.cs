@@ -102,14 +102,14 @@ namespace DragonFly.Content
             return type.Name;
         }
 
-        public Type? GetContentFieldType(string fieldType)
+        public Type? GetContentFieldType(string fieldTypeName)
         {
-            if (fieldType == null)
+            if (fieldTypeName == null)
             {
-                throw new ArgumentNullException(nameof(fieldType));
+                throw new ArgumentNullException(nameof(fieldTypeName));
             }
 
-            if (_fieldByName.TryGetValue(fieldType, out Type? type))
+            if (_fieldByName.TryGetValue(fieldTypeName, out Type? type))
             {
                 return type;
             }
@@ -189,14 +189,14 @@ namespace DragonFly.Content
             return null;
         }
 
-        public Type? GetQueryType(string? fieldName)
+        public Type? GetQueryType(string? fieldTypeName)
         {
-            if (fieldName == null)
+            if (fieldTypeName == null)
             {
-                throw new ArgumentNullException(nameof(fieldName));
+                throw new ArgumentNullException(nameof(fieldTypeName));
             }
 
-            Type? fieldType = GetContentFieldType(fieldName);
+            Type? fieldType = GetContentFieldType(fieldTypeName);
 
             if (fieldType == null)
             {
@@ -221,9 +221,9 @@ namespace DragonFly.Content
             return null;
         }
 
-        public FieldQuery? CreateQuery(string? fieldName)
+        public FieldQuery? CreateQuery(string? fieldTypeName)
         {
-            Type? type = GetQueryType(fieldName);
+            Type? type = GetQueryType(fieldTypeName);
 
             if (type == null)
             {
@@ -240,14 +240,14 @@ namespace DragonFly.Content
             return instance;
         }
 
-        public ContentFieldOptions? CreateOptions(string? fieldName)
+        public ContentFieldOptions? CreateOptions(string? fieldTypeName)
         {
-            if (fieldName == null)
+            if (fieldTypeName == null)
             {
-                throw new ArgumentNullException(nameof(fieldName));
+                throw new ArgumentNullException(nameof(fieldTypeName));
             }
 
-            Type? fieldType = GetContentFieldType(fieldName);
+            Type? fieldType = GetContentFieldType(fieldTypeName);
 
             if (fieldType == null)
             {

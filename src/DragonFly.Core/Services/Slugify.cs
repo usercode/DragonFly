@@ -20,9 +20,7 @@ namespace System
             str = str.Replace("ö", "oe");
             str = str.Replace("ü", "ue");
             str = str.Replace("ß", "ss");
-
-            str = Regex.Replace(str, @"\s+", "-", RegexOptions.Compiled);
-            str = Regex.Replace(str, @"_+", "-", RegexOptions.Compiled);           
+        
             str = Regex.Replace(str, @"[^a-z0-9-.]", "-", RegexOptions.Compiled);
             str = Regex.Replace(str, @"-+", "-", RegexOptions.Compiled);
 

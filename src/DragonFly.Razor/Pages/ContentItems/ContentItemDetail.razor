@@ -19,8 +19,8 @@
                     </BSAlert>
                 }
 
-                <EditForm Model="Entity" style="flex: 1">
-                    <BSFormGroup>
+                <BSForm Model="Entity" style="flex: 1">
+                    <div class="form-group">
                         <BSRow>
                             <BSCol Column="2">
                                 <label class="field-label">Id</label>
@@ -30,11 +30,11 @@
                                     <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
                                 </div>
                             </BSCol>
-                        </BSRow>                        
-                    </BSFormGroup>
+                        </BSRow>
+                   </div>
 
                     <ContentItemFields Content="Entity" Schema="Entity.Schema" />
-                </EditForm>
+                </BSForm>
             </div>
 
             <div class="content-footer">

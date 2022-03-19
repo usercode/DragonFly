@@ -26,14 +26,18 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
         /// </summary>
         private JsonSerializerOptions Options { get; }
 
-        public string Serialize(Document? document)
+        public async Task<string> SerializeAsync(Document? document)
         {
-            byte[] buffer = JsonSerializer.SerializeToUtf8Bytes(document, Options);
+            MemoryStream jsonStream = new MemoryStream();
+            
+            await JsonSerializer.SerializeAsync(jsonStream, document, Options);
+
+            jsonStream.Seek(0, SeekOrigin.Begin);
 
             MemoryStream mem = new MemoryStream();
             using (GZipStream brotli = new GZipStream(mem, CompressionLevel.Optimal))
             {
-                new MemoryStream(buffer).CopyTo(brotli);
+                await jsonStream.CopyToAsync(brotli);
             }
 
             string result = Convert.ToBase64String(mem.ToArray());
@@ -41,7 +45,7 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
             return result;
         }
 
-        public Document? Deserialize(string input)
+        public async Task<Document?> DeserializeAsync(string input)
         {
             if (input == null)
             {
@@ -53,12 +57,12 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers
             MemoryStream mem = new MemoryStream();
             using (GZipStream brotli = new GZipStream(new MemoryStream(buffer), CompressionMode.Decompress))
             {
-                brotli.CopyTo(mem);
+                await brotli.CopyToAsync(mem);
             }
 
             mem.Seek(0, SeekOrigin.Begin);
 
-            return JsonSerializer.Deserialize<Document>(mem, Options);
+            return await JsonSerializer.DeserializeAsync<Document>(mem, Options);
         }
     }
 }

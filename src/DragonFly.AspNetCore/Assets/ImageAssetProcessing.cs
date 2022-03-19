@@ -17,7 +17,7 @@ public class ImageAssetProcessing : IAssetProcessing
 {
     public IEnumerable<string> SupportedMimetypes
     {
-        get => new[] { MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
+        get => new[] { MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
     }
 
     public async Task OnAssetChangedAsync(IAssetProcessingContext context)

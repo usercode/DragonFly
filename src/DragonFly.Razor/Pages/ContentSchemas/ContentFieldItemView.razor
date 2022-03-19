@@ -7,11 +7,11 @@
         <div>
             <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Up(Key)"><i class="fas fa-arrow-up"></i></BSButton>
             <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Down(Key)"><i class="fas fa-arrow-down"></i></BSButton>
-            <BSButton Color="BSColor.Light" OnClick="x => IsOpen = !IsOpen"><i class="fas fa-cog"></i></BSButton>
+            <BSButton Color="BSColor.Light" Target="@(Key + "collapsedDetails")"><i class="fas fa-cog"></i></BSButton>
             <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Schema.Fields.Remove(Key)"><i class="fas fa-times"></i></BSButton>
         </div>
     </div>
-    <BSCollapse IsOpen="IsOpen">
+    <BSCollapse DataId="@(Key + "collapsedDetails")">
         @if(Field.Options != null)
         {
             @ComponentManager.CreateComponent(Field.Options)
@@ -28,8 +28,6 @@
 
     [Parameter]
     public SchemaField Field { get; set; }
-
-    private bool IsOpen { get; set; }
 
     
 }

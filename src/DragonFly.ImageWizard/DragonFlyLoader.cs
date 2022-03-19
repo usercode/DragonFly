@@ -12,7 +12,7 @@ namespace DragonFly.ImageWizard
     /// <summary>
     /// DragonFlyLoader
     /// </summary>
-    public class DragonFlyLoader : DataLoader<DragonFlyLoaderOptions>
+    public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
     {
         public DragonFlyLoader(IAssetStorage storage, IOptions<DragonFlyLoaderOptions> options)
             : base(options)

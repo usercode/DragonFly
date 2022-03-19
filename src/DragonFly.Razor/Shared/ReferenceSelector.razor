@@ -1,7 +1,7 @@
 ﻿@inject NavigationManager NavigationManager
 
 
-    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
+    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" Size="Size.ExtraLarge" >
         <Header>Select asset</Header>
         <Content>
             <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>
@@ -10,7 +10,6 @@
             <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync() ">Ok</BSButton>
         </Footer>
     </BSModal>
-
 
     <div class="reference-selector">
         <BSListGroup>
@@ -44,7 +43,7 @@
                       <span>...</span>
                     }
 
-                    <div>
+                    <div class="options">
                         @if (ContentItem != null)
                         {
                             <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>                        

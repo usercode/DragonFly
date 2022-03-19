@@ -16,12 +16,12 @@
 	[Parameter]
 	public Document Document { get; set; }
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		base.OnInitialized();
+		await base.OnInitializedAsync();
 
-		ContentItemDetail.Saving += (obj, args) => { Field.Value = DocumentSerializer.Serialize(Document); };
+		ContentItemDetail.Saving += async () => { Field.Value = await DocumentSerializer.SerializeAsync(Document); };
 
-		Document = DocumentSerializer.Deserialize(Field.Value);
+		Document = await DocumentSerializer.DeserializeAsync(Field.Value);
 	}
 }

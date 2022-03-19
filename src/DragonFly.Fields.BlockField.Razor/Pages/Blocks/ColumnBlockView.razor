@@ -3,7 +3,7 @@
 
 <div class="block-layout">
 	<BSRow>
-		<BSCol LG="auto">
+		<BSCol ColumnLarge="auto">
 			<BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(0)" title="Insert column"><i class="fas fa-plus"></i></BSButton>
 		</BSCol>
 		@for (int i = 0; i < Block.Columns.Count; i++)
@@ -13,7 +13,7 @@
 
 			<BSCol>
 				<div class="column-content">
-					<div class="hstack gap-2 column-action">
+					<div class="column-action options">
 						<BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveUp(index)" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
 						<BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" title="Remove column"><i class="fas fa-minus"></i></BSButton>						
 						<BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
@@ -21,7 +21,7 @@
 					<BlocksView Blocks="column.Blocks" />
 				</div>
 			</BSCol>
-			<BSCol LG="auto">
+			<BSCol ColumnLarge="auto">
 				<BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(index+1)" title="Insert column"><i class="fas fa-plus"></i></BSButton>				
 			</BSCol>
 		}

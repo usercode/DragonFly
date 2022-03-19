@@ -9,8 +9,6 @@
 
     @*@bind:event="oninput"*@
     <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
-
-    <hr />
 </div>
 <div class="scroll-content">
     <EditForm Model="this">

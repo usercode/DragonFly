@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DragonFly.ImageWizard
 {
-    public class DragonFlyLoaderOptions : DataLoaderOptions
+    public class DragonFlyLoaderOptions : LoaderOptions
     {
         public DragonFlyLoaderOptions()
         {
-            RefreshMode = DataLoaderRefreshMode.None;
+            RefreshMode = LoaderRefreshMode.None;
         }
     }
 }

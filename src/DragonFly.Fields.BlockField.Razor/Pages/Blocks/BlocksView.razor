@@ -1,9 +1,8 @@
 ﻿@inject ComponentManager ComponentManager
 @inject BlockFieldManager BlockFieldManager
 
-@if (ShowModal)
-{
-	<BSModal IsFullScreen="true" IsOpen="true" DisableAnimations="true" Style="display:block">
+
+	<BSModal @ref="Modal" IsFullScreen="true" Size="Size.ExtraLarge">
 		<Header>Select asset</Header>
 		<Content>
 			@foreach (Block block in BlockFieldManager.GetAllBlocks())
@@ -14,10 +13,10 @@
 			}
 		</Content>
 		<Footer>
-			<BSButton Color="BSColor.Primary" @onclick="@(() => ShowModal = false)">Ok</BSButton>
+			<BSButton Color="BSColor.Primary" @onclick="@(() => Modal.HideAsync())">Ok</BSButton>
 		</Footer>
 	</BSModal>
-}
+
 
 @if (Blocks != null)
 {
@@ -54,23 +53,24 @@
 }
 
 @code {
-	public bool ShowModal { get; set; }
 
 	public int Position { get; set; }
+
+	public BSModal Modal { get; set; }
 
 	[Parameter]
 	public IList<Block> Blocks { get; set; }
 
-	public void OpenModal(int position)
+	public async Task OpenModal(int position)
 	{
 		Position = position;
 
-		ShowModal = true;
+		await Modal.ShowAsync();
 	}
 
-	private void Add(Block element)
+	private async Task Add(Block element)
 	{
-		ShowModal = false;
+		await Modal.HideAsync();
 
 		Blocks.Insert(Position, element);
 	}

@@ -6,7 +6,7 @@
 html {
     height: 100%;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 body {
@@ -29,8 +29,8 @@ button {
     flex-wrap: wrap;
 }
 
-.alert {
-    padding: .25rem 0rem;
+.alert {    
+    padding: 0px;
     margin-bottom: 0rem;
     border: none;
 }
@@ -43,8 +43,12 @@ form {
     flex: 1;
 }
 
-.form-group .alert {
-    padding: 0rem;
+.form-group {
+    padding: .125rem 0rem;
+    margin-bottom: 0rem;
+}
+
+.form-group .alert {    
     margin-bottom: 0px;
 }
 
@@ -59,25 +63,17 @@ form {
     width: 100%;
 }
 
-.bool-field-view {
+.options {
     display: flex;
+    gap: 0.25rem;
 }
-
-    .bool-field-view .btn {
-        display: block;
-        margin-right: 0.25rem;
-    }
 
 .toolbar {
     display: flex;
+    gap: 0.25rem;
     border: solid 1px #cfcfcf;
     padding: 5px;
     margin-bottom: 12px;
-}
-
-.toolbar .toolbar-item {
-    margin-right: 4px;
-
 }
 
 .toolbar .toolbar-item .icon {
@@ -124,16 +120,12 @@ app {
     text-align: right;
 }
 
-.form-group {
-    margin-bottom: 0.25rem;
-}
-
 .add-field {
     margin-bottom: 0.25rem;
 }
 
 .form-control {
-    padding: .2rem .75rem;
+    padding: .25rem .75rem;
 }
 
 .col-form-label {

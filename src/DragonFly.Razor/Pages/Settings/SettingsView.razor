@@ -3,7 +3,7 @@
 
 <div class="settings">
 <BSRow>
-	<BSCol LG="3">
+	<BSCol ColumnLarge="3">
 		<BSListGroup>
 			@foreach (SettingsItem c in Api.Settings().Items.OrderBy(x=> x.Name))
 			{
@@ -13,7 +13,7 @@
 			}
 		</BSListGroup>
 	</BSCol>
-	<BSCol LG="9">
+	<BSCol ColumnLarge="9">
 		@if (SelectedComponent != null)
 		{
 			@CreateComponent()

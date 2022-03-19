@@ -1,37 +1,37 @@
 ﻿@inherits AssetMetadataComponent<PdfMetadata>
 
-<BSFormGroup>
+<div class="form-group">
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
             Pages
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.CountPages" IsReadonly="true" />
+            <input type="text" class="form-control" @bind-value="@Metadata.CountPages" readonly />
         </div>
     </BSRow>
-</BSFormGroup>
+</div>
 
-<BSFormGroup>
+<div class="form-group">
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
             PDF version
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.PdfVersion" IsReadonly="true" />
+            <input type="text" class="form-control" @bind-value="@Metadata.PdfVersion" readonly />
         </div>
     </BSRow>
-</BSFormGroup>
+</div>
 
-<BSFormGroup>
+<div class="form-group">
     <BSRow>
         <BSLabel class="col-sm-2 col-form-label">
             Encrypted
         </BSLabel>
         <div class="col-sm-10">
-            <BSInput InputType="InputType.Text" @bind-Value="@Metadata.IsEncrypted" IsReadonly="true" />
+            <input type="text" class="form-control" @bind-value="@Metadata.IsEncrypted" readonly />
         </div>
     </BSRow>
-</BSFormGroup>
+</div>
 
 @code {
 

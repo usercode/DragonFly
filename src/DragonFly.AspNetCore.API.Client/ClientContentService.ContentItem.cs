@@ -93,7 +93,7 @@ namespace DragonFly.Client
 
         public async Task PublishQueryAsync(ContentItemQuery query)
         {
-            var response = await Client.PostAsJsonAsync($"api/content/publish", query);
+            var response = await Client.PostAsJsonAsync($"api/content/publish", query, JsonSerializerDefault.Options);
 
             response.EnsureSuccessStatusCode();
         }

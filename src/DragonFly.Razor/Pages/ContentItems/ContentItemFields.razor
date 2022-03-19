@@ -5,22 +5,22 @@
            .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
            .ToList())
 {
-    <div>
         <BSAlert Color="GetFieldColor(part.FieldName)">
-            <BSRow>
-                <BSCol Column="2">
-                    <BSLabel class="field-label">
-                @part.FieldName
-            </BSLabel>
-                </BSCol>
-                <BSCol Column="10">
-                     <div class="field">
-                @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
+            <div class="form-group">
+                <BSRow>
+                    <BSCol Column="2">
+                        <BSLabel class="field-label">
+                    @part.FieldName
+                </BSLabel>
+                    </BSCol>
+                    <BSCol Column="10">
+                         <div class="field">
+                            @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
+                        </div>
+                    </BSCol>
+                </BSRow>
             </div>
-                </BSCol>
-            </BSRow>
         </BSAlert>
-    </div>
 }
 
 @code {
