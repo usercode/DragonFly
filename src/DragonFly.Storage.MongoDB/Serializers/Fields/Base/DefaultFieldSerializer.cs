@@ -11,7 +11,7 @@ using MongoDB.Bson.Serialization;
 namespace DragonFly.Storage.MongoDB.Fields;
 
 public class DefaultFieldSerializer<TContentField> : FieldSerializer<TContentField>
-    where TContentField : ContentField, new()
+    where TContentField : IContentField, new()
 {
     public override TContentField Read(SchemaField schemaField, BsonValue bsonValue)
     {

@@ -8,7 +8,7 @@ namespace DragonFly.Content;
 
 public class SlugFieldOptions : StringFieldOptions
 {
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new SlugField(DefaultValue);
     }

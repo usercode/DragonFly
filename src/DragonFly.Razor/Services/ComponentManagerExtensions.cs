@@ -26,7 +26,7 @@ public static class ComponentManagerExtensions
         componentManager.Register(fieldType, typeof(TFieldComponent));
     }
 
-    public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, ContentFieldOptions? options)
+    public static RenderFragment CreateComponent(this ComponentManager componentManager, IContentField contentField, ContentFieldOptions? options)
     {
         Type componentType = componentManager.GetComponentType(contentField.GetType());
 

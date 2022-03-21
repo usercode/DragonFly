@@ -11,7 +11,7 @@ public class FloatFieldOptions : SingleValueContentFieldOptions<double>
     public double? MinValue { get; set; }
     public double? MaxValue { get; set; }
 
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new FloatField(DefaultValue);
     }

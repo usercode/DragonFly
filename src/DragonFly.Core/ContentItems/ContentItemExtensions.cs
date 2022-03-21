@@ -12,9 +12,9 @@ namespace DragonFly.Content;
 /// </summary>
 public static class ContentItemExtensions
 {
-    public static ContentField GetField(this IContentElement contentItem, string name)
+    public static IContentField GetField(this IContentElement contentItem, string name)
     {
-        if (contentItem.TryGetField(name, out ContentField? contentField) == false)
+        if (contentItem.TryGetField(name, out IContentField? contentField) == false)
         {
             throw new Exception($"The field '{name}' was not found.");
         }
@@ -23,12 +23,12 @@ public static class ContentItemExtensions
     }
 
     public static T GetField<T>(this IContentElement contentItem, string name)
-       where T : ContentField
+       where T : IContentField
     {
         return (T)GetField(contentItem, name);
     }
 
-    public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
+    public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out IContentField? contentField)
     {
         if (contentElement.Fields.TryGetValue(name, out contentField) == false)
         {
@@ -38,7 +38,7 @@ public static class ContentItemExtensions
         return true;
     }
 
-    public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+    public static bool TrySetField(this IContentElement contentElement, string fieldName, IContentField contentField)
     {
         if (contentElement.Fields.ContainsKey(fieldName) == false)
         {
@@ -144,7 +144,7 @@ public static class ContentItemExtensions
         {
             if (contentItem.Fields.ContainsKey(field.Key) == false)
             {
-                ContentField? contentField;
+                IContentField? contentField;
 
                 if (field.Value.Options != null)
                 {

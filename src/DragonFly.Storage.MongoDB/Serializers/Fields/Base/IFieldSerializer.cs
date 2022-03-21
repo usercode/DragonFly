@@ -23,12 +23,12 @@ public interface IFieldSerializer
     /// </summary>
     /// <param name="bsonValue"></param>
     /// <returns></returns>
-    ContentField Read(SchemaField schemaField, BsonValue bsonValue);
+    IContentField Read(SchemaField schemaField, BsonValue bsonValue);
 
     /// <summary>
     /// Write
     /// </summary>
     /// <param name="contentField"></param>
     /// <returns></returns>
-    BsonValue Write(ContentField contentField);
+    BsonValue Write(IContentField contentField);
 }

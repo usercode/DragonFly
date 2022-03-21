@@ -28,7 +28,7 @@ public class TextAreaFieldOptions : ContentFieldOptions
     /// </summary>
     public int MaxLength { get; set; }
 
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new TextAreaField(DefaultValue);
     }

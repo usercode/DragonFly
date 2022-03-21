@@ -14,7 +14,7 @@ public class DateFieldOptions : ContentFieldOptions
     {
     }
 
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new DateField();
     }

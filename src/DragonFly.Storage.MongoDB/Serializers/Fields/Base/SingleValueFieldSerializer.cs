@@ -14,7 +14,7 @@ namespace DragonFly.Storage.MongoDB.Fields;
 /// </summary>
 /// <typeparam name="TContentField"></typeparam>
 public class SingleValueFieldSerializer<TContentField> : FieldSerializer<TContentField>
-    where TContentField : ContentField, ISingleValueContentField, new()
+    where TContentField : IContentField, ISingleValueContentField, new()
 {
     public override TContentField Read(SchemaField schemaField,  BsonValue bsonValue)
     {

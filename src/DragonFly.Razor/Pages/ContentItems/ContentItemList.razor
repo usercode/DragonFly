@@ -55,7 +55,7 @@
                                         <div class="col-lg-2">
                                             <div style="white-space: nowrap; overflow: hidden;">
                                                 @{
-                                                    ContentField column = contentItem.Fields[field];
+                                                    IContentField column = contentItem.Fields[field];
                                                 }
 
                                                 @if (column is ISingleValueContentField singleValueField)

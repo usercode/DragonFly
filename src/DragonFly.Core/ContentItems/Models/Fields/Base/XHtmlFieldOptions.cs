@@ -28,7 +28,7 @@ public class XHtmlFieldOptions : ContentFieldOptions
     /// </summary>
     public int MaxLength { get; set; }
 
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new XHtmlField(DefaultValue);
     }

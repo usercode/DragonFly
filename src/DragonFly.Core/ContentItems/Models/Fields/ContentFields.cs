@@ -4,6 +4,6 @@ using System.Text;
 
 namespace DragonFly.Content;
 
-public class ContentFields : Dictionary<string, ContentField>
+public class ContentFields : Dictionary<string, IContentField>
 {
 }

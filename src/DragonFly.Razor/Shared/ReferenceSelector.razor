@@ -22,7 +22,7 @@
 
                         @foreach (string field in ContentItem.Schema.ReferenceFields)
                         {
-                            if (ContentItem.TryGetField(field, out ContentField column))
+                            if (ContentItem.TryGetField(field, out IContentField column))
                             {
                                 @if (column is ISingleValueContentField singleValueField)
                                 {

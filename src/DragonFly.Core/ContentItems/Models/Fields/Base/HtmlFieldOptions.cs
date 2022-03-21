@@ -14,7 +14,7 @@ public class HtmlFieldOptions : ContentFieldOptions
     {
     }
 
-    public override ContentField CreateContentField()
+    public override IContentField CreateContentField()
     {
         return new HtmlField();
     }

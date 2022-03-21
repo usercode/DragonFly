@@ -30,7 +30,8 @@ public class BlockFieldManager
                 _default.Add<AssetBlock>();
                 _default.Add<TextBlock>();
                 _default.Add<HtmlBlock>();
-                _default.Add<UnknownBlock>();
+                _default.Add<YouTubeBlock>();
+                _default.Add<UnknownBlock>();                
             }
 
             return _default;

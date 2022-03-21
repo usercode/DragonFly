@@ -13,7 +13,7 @@ namespace DragonFly.Storage.Abstractions;
 /// </summary>
 /// <typeparam name="TContentField"></typeparam>
 public abstract class FieldSerializer<TContentField> : IFieldSerializer
-    where TContentField : ContentField
+    where TContentField : IContentField
 {
     public Type FieldType => typeof(TContentField);
 
@@ -21,12 +21,12 @@ public abstract class FieldSerializer<TContentField> : IFieldSerializer
 
     public abstract BsonValue Write(TContentField contentField);
 
-    public BsonValue Write(ContentField contentField)
+    public BsonValue Write(IContentField contentField)
     {
         return Write((TContentField)contentField);
     }
 
-    ContentField IFieldSerializer.Read(SchemaField definition, BsonValue bsonvalue)
+    IContentField IFieldSerializer.Read(SchemaField definition, BsonValue bsonvalue)
     {
         return Read(definition, bsonvalue);
     }

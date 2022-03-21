@@ -45,13 +45,13 @@ public class MongoIndexManager
     public IDictionary<Type, FieldIndex> Fields { get; set; }
 
     public void Register<TField>(string? name, bool unique = false)
-        where TField : ContentField
+        where TField : IContentField
     {
         Fields[typeof(TField)] = new FieldIndex(name, unique);
     }
 
     public void Register<TField>(bool unique = false)
-        where TField : ContentField, ISingleValueContentField
+        where TField : IContentField, ISingleValueContentField
     {
         Register<TField>(null, unique);
     }

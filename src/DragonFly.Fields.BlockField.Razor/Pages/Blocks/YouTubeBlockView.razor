@@ -1,0 +1,32 @@
+﻿@inherits BlockComponent<YouTubeBlock>
+
+<div class="youtube-block">
+	<input type="text" class="form-control" value="@Block.VideoId" @onchange="@(e => { Block.VideoId = e.Value.ToString(); CreateThumbnailUrl();  })"/>
+
+    <img src="@Url" style="max-height:200px;margin-top:10px" />
+</div>
+
+@code {
+    public string Url { get; set; }
+
+    private void CreateThumbnailUrl()
+    {
+        if (string.IsNullOrEmpty(Block.VideoId) == false)
+        {
+            Url = $"https://i.ytimg.com/vi/{Block.VideoId}/maxresdefault.jpg";
+        }
+        else
+        {
+            Url = null;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        CreateThumbnailUrl();
+    }
+}
+
+

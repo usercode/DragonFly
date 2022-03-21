@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Razor.Pages.ContentItems.Fields;
 
 public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent
-    where TField : ContentField
+    where TField : IContentField
     where TFieldOptions : ContentFieldOptions
 {
     [Parameter]
@@ -18,7 +18,7 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
     [Parameter]
     public TFieldOptions Options { get; set; }
 
-    ContentField IFieldComponent.Field => Field;
+    IContentField IFieldComponent.Field => Field;
 
     ContentFieldOptions IFieldComponent.Options => Options;
 }

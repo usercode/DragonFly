@@ -26,7 +26,7 @@ public static class ContentSchemaExtensions
     }
 
     public static ISchemaElement AddField<TField>(this ISchemaElement schema, string name, ContentFieldOptions? options = null, int sortkey = 0)
-        where TField : ContentField
+        where TField : IContentField
     {
         return AddField(schema, name, typeof(TField), options, sortkey);
     }
