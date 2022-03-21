@@ -3,29 +3,28 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// AssetField
+/// </summary>
+[FieldOptions(typeof(AssetFieldOptions))]
+[FieldQuery(typeof(AssetFieldQuery))]
+public class AssetField : ContentField
 {
-    /// <summary>
-    /// AssetField
-    /// </summary>
-    [FieldOptions(typeof(AssetFieldOptions))]
-    [FieldQuery(typeof(AssetFieldQuery))]
-    public class AssetField : ContentField
+    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+        if (options is AssetFieldOptions fieldOptions)
         {
-            if (options is AssetFieldOptions fieldOptions)
+            if (fieldOptions.IsRequired && Asset == null)
             {
-                if (fieldOptions.IsRequired && Asset == null)
-                {
-                    context.AddRequireValidation(fieldName);
-                }
+                context.AddRequireValidation(fieldName);
             }
         }
-
-        /// <summary>
-        /// Asset
-        /// </summary>
-        public Asset? Asset { get; set; }
     }
+
+    /// <summary>
+    /// Asset
+    /// </summary>
+    public Asset? Asset { get; set; }
 }

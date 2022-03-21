@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
-{
-    public interface IContentNodeTarget
-    {
+namespace DragonFly.Content;
 
-    }
+public interface IContentNodeTarget
+{
+
 }

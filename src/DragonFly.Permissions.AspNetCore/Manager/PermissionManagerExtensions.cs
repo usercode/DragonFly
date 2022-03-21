@@ -6,25 +6,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Permissions
+namespace DragonFly.Core.Permissions;
+
+public static class PermissionManagerExtensions
 {
-    public static class PermissionManagerExtensions
+    public static void Traverse(this IEnumerable<Permission> permissions, Action<TraverseNode> action)
     {
-        public static void Traverse(this IEnumerable<Permission> permissions, Action<TraverseNode> action)
+        TraverseInternal(permissions, new List<Permission>(), action);
+    }
+
+    private static void TraverseInternal(IEnumerable<Permission> items, IList<Permission> path, Action<TraverseNode> action)
+    {
+        foreach (Permission item in items)
         {
-            TraverseInternal(permissions, new List<Permission>(), action);
-        }
+            IList<Permission> subPath = path.Concat(new[] { item }).ToList();
 
-        private static void TraverseInternal(IEnumerable<Permission> items, IList<Permission> path, Action<TraverseNode> action)
-        {
-            foreach (Permission item in items)
-            {
-                IList<Permission> subPath = path.Concat(new[] { item }).ToList();
+            action(new TraverseNode(item, subPath));
 
-                action(new TraverseNode(item, subPath));
-
-                TraverseInternal(item.Childs, subPath, action);
-            }
+            TraverseInternal(item.Childs, subPath, action);
         }
     }
 }

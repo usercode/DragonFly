@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+public static class DragonFlyApiExtensions
 {
-    public static class DragonFlyApiExtensions
+    public static MongoIndexManager Index(this IDragonFlyApi api)
     {
-        public static MongoIndexManager Index(this IDragonFlyApi api)
-        {
-            return MongoIndexManager.Default;
-        }
+        return MongoIndexManager.Default;
     }
 }

@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Contents.ContentItems
+namespace DragonFly.Client.Core.Contents.ContentItems;
+
+public interface IContentItemAction
 {
-    public interface IContentItemAction
-    {
-        string Name { get; }
+    string Name { get; }
 
-        bool CanUse(ContentItemDetailBase contentItemDetail);
+    bool CanUse(ContentItemDetailBase contentItemDetail);
 
-        Task Execute(ContentItemDetailBase contentItemBase);
-    }
+    Task Execute(ContentItemDetailBase contentItemBase);
 }

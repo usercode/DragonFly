@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Security
-{
-    /// <summary>
-    /// ILoginService
-    /// </summary>
-    public interface ILoginService
-    {
-        Task<bool> LoginAsync(string username, string password, bool isPersistent);
+namespace DragonFly.Security;
 
-        Task Logout();
-    }
+/// <summary>
+/// ILoginService
+/// </summary>
+public interface ILoginService
+{
+    Task<bool> LoginAsync(string username, string password, bool isPersistent);
+
+    Task Logout();
 }

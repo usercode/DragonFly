@@ -8,13 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+public static class SettingsManagerExtensions
 {
-    public static class SettingsManagerExtensions
+    public static SettingsManager Settings(this IDragonFlyApi api)
     {
-        public static SettingsManager Settings(this IDragonFlyApi api)
-        {
-            return SettingsManager.Default;
-        }       
-    }
+        return SettingsManager.Default;
+    }       
 }

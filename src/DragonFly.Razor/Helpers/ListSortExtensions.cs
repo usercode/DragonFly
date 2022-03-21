@@ -4,44 +4,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Helpers
+namespace DragonFly.Razor.Helpers;
+
+public static class ListSortExtensions
 {
-    public static class ListSortExtensions
+    public static void MoveUp<T>(this IList<T> sourceList, int pos)
     {
-        public static void MoveUp<T>(this IList<T> sourceList, int pos)
+        MoveUp(sourceList, sourceList[pos]);
+    }
+
+    public static void MoveUp<T>(this IList<T> sourceList, T item)
+    {
+        int pos = sourceList.IndexOf(item);
+
+        if (pos == 0)
         {
-            MoveUp(sourceList, sourceList[pos]);
+            return;
         }
 
-        public static void MoveUp<T>(this IList<T> sourceList, T item)
+        sourceList.RemoveAt(pos);
+        sourceList.Insert(pos - 1, item);
+    }
+
+    public static void MoveDown<T>(this IList<T> sourceList, int pos)
+    {
+        MoveDown(sourceList, sourceList[pos]);
+    }
+
+    public static void MoveDown<T>(this IList<T> sourceList, T item)
+    {
+        int pos = sourceList.IndexOf(item);
+
+        if (pos == sourceList.Count - 1)
         {
-            int pos = sourceList.IndexOf(item);
-
-            if (pos == 0)
-            {
-                return;
-            }
-
-            sourceList.RemoveAt(pos);
-            sourceList.Insert(pos - 1, item);
+            return;
         }
 
-        public static void MoveDown<T>(this IList<T> sourceList, int pos)
-        {
-            MoveDown(sourceList, sourceList[pos]);
-        }
-
-        public static void MoveDown<T>(this IList<T> sourceList, T item)
-        {
-            int pos = sourceList.IndexOf(item);
-
-            if (pos == sourceList.Count - 1)
-            {
-                return;
-            }
-
-            sourceList.RemoveAt(pos);
-            sourceList.Insert(pos + 1, item);
-        }
+        sourceList.RemoveAt(pos);
+        sourceList.Insert(pos + 1, item);
     }
 }

@@ -6,14 +6,13 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.SchemaBuilder
+namespace DragonFly.AspNetCore.SchemaBuilder;
+
+/// <summary>
+/// ContentSchemaBuilder
+/// </summary>
+public interface IContentSchemaBuilder
 {
-    /// <summary>
-    /// ContentSchemaBuilder
-    /// </summary>
-    public interface IContentSchemaBuilder
-    {
-        Task BuildAsync<T>();
-        
-    }
+    Task BuildAsync<T>();
+    
 }

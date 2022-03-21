@@ -9,36 +9,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.ApiKeys.Razor.Components
+namespace DragonFly.ApiKeys.Razor.Components;
+
+public class ApiKeyListBase : EntityListComponent<ApiKey>
 {
-    public class ApiKeyListBase : EntityListComponent<ApiKey>
+    public ApiKeyListBase()
     {
-        public ApiKeyListBase()
-        {
-            Items = new List<ApiKey>();
-        }
+        Items = new List<ApiKey>();
+    }
 
-        [Inject]
-        public IApiKeyService ApiKeyService { get; set; }
+    [Inject]
+    public IApiKeyService ApiKeyService { get; set; }
 
-        public IEnumerable<ApiKey> Items { get; set; }    
+    public IEnumerable<ApiKey> Items { get; set; }    
 
-        protected override string GetNavigationPath(ApiKey entity)
-        {
-            return $"settings/apikey/{entity.Id}";
-        }
+    protected override string GetNavigationPath(ApiKey entity)
+    {
+        return $"settings/apikey/{entity.Id}";
+    }
 
-        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
-        {
-            base.BuildToolbarItems(toolbarItems);
+    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+        base.BuildToolbarItems(toolbarItems);
 
-            toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
-            toolbarItems.AddRefreshButton(this);
-        }
+        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
+        toolbarItems.AddRefreshButton(this);
+    }
 
-        protected override async Task RefreshActionAsync()
-        {
-            Items = await ApiKeyService.GetAllApiKeys();
-        }
+    protected override async Task RefreshActionAsync()
+    {
+        Items = await ApiKeyService.GetAllApiKeys();
     }
 }

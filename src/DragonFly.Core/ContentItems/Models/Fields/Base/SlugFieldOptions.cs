@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public class SlugFieldOptions : StringFieldOptions
 {
-    public class SlugFieldOptions : StringFieldOptions
+    public override ContentField CreateContentField()
     {
-        public override ContentField CreateContentField()
-        {
-            return new SlugField(DefaultValue);
-        }
+        return new SlugField(DefaultValue);
     }
 }

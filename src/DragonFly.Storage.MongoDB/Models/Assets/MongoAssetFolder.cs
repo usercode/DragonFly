@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Contents.Assets
-{
-    public class MongoAssetFolder : MongoContentBase
-    {
-        public string? Name { get; set; }
+namespace DragonFly.Contents.Assets;
 
-        public Guid? Parent { get; set; }
-    }
+public class MongoAssetFolder : MongoContentBase
+{
+    public string? Name { get; set; }
+
+    public Guid? Parent { get; set; }
 }

@@ -12,16 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.Middlewares
-{
-    internal static class Extensions
-    {
-        public static IDragonFlyEndpointRouteBuilder MapIdentityApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapUserApi();
-            endpoints.MapRoleApi();
+namespace DragonFly.AspNetCore.Identity.Middlewares;
 
-            return endpoints;
-        }
+internal static class Extensions
+{
+    public static IDragonFlyEndpointRouteBuilder MapIdentityApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapUserApi();
+        endpoints.MapRoleApi();
+
+        return endpoints;
     }
 }

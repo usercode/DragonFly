@@ -4,28 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Identity.Services
+namespace DragonFly.Identity.Services;
+
+public interface IIdentityService
 {
-    public interface IIdentityService
-    {
-        Task CreateUserAsync(IdentityUser user, string password);
+    Task CreateUserAsync(IdentityUser user, string password);
 
-        Task ChangePasswordAsync(Guid userId, string newPassword);
+    Task ChangePasswordAsync(Guid userId, string newPassword);
 
-        Task<IdentityUser> GetUserAsync(string username);
+    Task<IdentityUser> GetUserAsync(string username);
 
-        Task UpdateUserAsync(IdentityUser user);
+    Task UpdateUserAsync(IdentityUser user);
 
-        Task<IdentityUser> GetUserAsync(Guid id);
+    Task<IdentityUser> GetUserAsync(Guid id);
 
-        Task<IdentityRole> GetRoleAsync(Guid id);
+    Task<IdentityRole> GetRoleAsync(Guid id);
 
-        Task UpdateRoleAsync(IdentityRole role);
+    Task UpdateRoleAsync(IdentityRole role);
 
-        Task CreateRoleAsync(IdentityRole role);
+    Task CreateRoleAsync(IdentityRole role);
 
-        Task<IEnumerable<IdentityRole>> GetRolesAsync();
+    Task<IEnumerable<IdentityRole>> GetRolesAsync();
 
-        Task<IEnumerable<IdentityUser>> GetUsersAsync();
-    }
+    Task<IEnumerable<IdentityUser>> GetUsersAsync();
 }

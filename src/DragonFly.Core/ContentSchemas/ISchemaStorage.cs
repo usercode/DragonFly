@@ -5,27 +5,26 @@ using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// IMongoStore
+/// </summary>
+public interface ISchemaStorage
 {
-    /// <summary>
-    /// IMongoStore
-    /// </summary>
-    public interface ISchemaStorage
-    {
-        //Schema
-        Task<ContentSchema> GetSchemaAsync(Guid id);
+    //Schema
+    Task<ContentSchema> GetSchemaAsync(Guid id);
 
-        Task<ContentSchema> GetSchemaAsync(string name);
+    Task<ContentSchema> GetSchemaAsync(string name);
 
-        Task CreateAsync(ContentSchema contentType);
+    Task CreateAsync(ContentSchema contentType);
 
-        Task UpdateAsync(ContentSchema entity);
+    Task UpdateAsync(ContentSchema entity);
 
-        //IList<ContentSchema> QueryContentSchemas()
-        //{
-        //    return QueryContentSchemas(new QueryParameters());
-        //}
+    //IList<ContentSchema> QueryContentSchemas()
+    //{
+    //    return QueryContentSchemas(new QueryParameters());
+    //}
 
-        Task<QueryResult<ContentSchema>> QuerySchemasAsync();
-    }
+    Task<QueryResult<ContentSchema>> QuerySchemasAsync();
 }

@@ -4,52 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Helpers
+namespace DragonFly.Razor.Helpers;
+
+public static class SelectabledElementExtensions
 {
-    public static class SelectabledElementExtensions
+    public static SelectableElementTree<T> EnableActivePath<T>(this SelectableElementTree<T> selectableElement)
     {
-        public static SelectableElementTree<T> EnableActivePath<T>(this SelectableElementTree<T> selectableElement)
+        selectableElement.IsSelectedChanged += (element) =>
         {
-            selectableElement.IsSelectedChanged += (element) =>
+            //select parent elements
+            if (selectableElement.IsSelected == true)
             {
-                //select parent elements
-                if (selectableElement.IsSelected == true)
+                SelectableElementTree<T> parent = selectableElement.Parent;
+
+                if (parent != null)
                 {
-                    SelectableElementTree<T> parent = selectableElement.Parent;
-
-                    if (parent != null)
-                    {
-                        parent.IsSelected = true;
-                    }
+                    parent.IsSelected = true;
                 }
-                else
+            }
+            else
+            {
+                //deselect child elements
+                foreach (SelectableElementTree<T> child in selectableElement.Childs)
                 {
-                    //deselect child elements
-                    foreach (SelectableElementTree<T> child in selectableElement.Childs)
-                    {
-                        child.IsSelected = false;
-                    }
+                    child.IsSelected = false;
                 }
-            };
+            }
+        };
 
-            return selectableElement;
-        }
+        return selectableElement;
+    }
 
-        public static IEnumerable<T> ToFlatList<T>(this IEnumerable<SelectableElementTree<T>> items, bool isSelected = true)
+    public static IEnumerable<T> ToFlatList<T>(this IEnumerable<SelectableElementTree<T>> items, bool isSelected = true)
+    {
+        foreach (SelectableElementTree<T> p in items)
         {
-            foreach (SelectableElementTree<T> p in items)
+            if (p.IsSelected == isSelected)
             {
-                if (p.IsSelected == isSelected)
-                {
-                    yield return p.Element;
-                }
+                yield return p.Element;
+            }
 
-                IEnumerable<T> childs = ToFlatList(p.Childs, isSelected);
+            IEnumerable<T> childs = ToFlatList(p.Childs, isSelected);
 
-                foreach (T c in childs)
-                {
-                    yield return c;
-                }
+            foreach (T c in childs)
+            {
+                yield return c;
             }
         }
     }

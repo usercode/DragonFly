@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public interface IContentElement
 {
-    public interface IContentElement
-    {
-        ContentFields Fields { get; }
-    }
+    ContentFields Fields { get; }
 }

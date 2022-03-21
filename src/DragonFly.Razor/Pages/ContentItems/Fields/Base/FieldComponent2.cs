@@ -6,21 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.ContentItems.Fields
+namespace DragonFly.Razor.Pages.ContentItems.Fields;
+
+/// <summary>
+/// FieldComponent
+/// </summary>
+/// <typeparam name="TContentField"></typeparam>
+public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
+    where TField : ContentField
 {
-    /// <summary>
-    /// FieldComponent
-    /// </summary>
-    /// <typeparam name="TContentField"></typeparam>
-    public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
-        where TField : ContentField
-    {
-        [Parameter]
-        public TField Field { get; set; }
+    [Parameter]
+    public TField Field { get; set; }
 
-        [Parameter]
-        public ContentFieldOptions Options { get; set; }
+    [Parameter]
+    public ContentFieldOptions Options { get; set; }
 
-        ContentField IFieldComponent.Field => Field;
-    }
+    ContentField IFieldComponent.Field => Field;
 }

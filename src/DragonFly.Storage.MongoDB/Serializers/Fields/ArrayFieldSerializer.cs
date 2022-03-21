@@ -8,59 +8,58 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Fields.Base
+namespace DragonFly.Storage.MongoDB.Fields.Base;
+
+/// <summary>
+/// ArrayFieldSerializer
+/// </summary>
+public class ArrayFieldSerializer : FieldSerializer<ArrayField>
 {
-    /// <summary>
-    /// ArrayFieldSerializer
-    /// </summary>
-    public class ArrayFieldSerializer : FieldSerializer<ArrayField>
+    public override ArrayField Read(SchemaField schemaField, BsonValue bsonvalue)
     {
-        public override ArrayField Read(SchemaField schemaField, BsonValue bsonvalue)
+        ArrayField contentField = new ArrayField();
+
+        if (bsonvalue is BsonArray bsonArray)
         {
-            ArrayField contentField = new ArrayField();
+            ArrayFieldOptions? arrayOptions = (ArrayFieldOptions?)schemaField.Options;
 
-            if (bsonvalue is BsonArray bsonArray)
+            if (arrayOptions == null)
             {
-                ArrayFieldOptions? arrayOptions = (ArrayFieldOptions?)schemaField.Options;
-
-                if (arrayOptions == null)
-                {
-                    throw new Exception("arrayfield options are not available.");
-                }
-
-                foreach (BsonDocument item in bsonArray)
-                {
-                    ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
-
-                    foreach (BsonElement subitem in item)
-                    {
-                        subitem.Value.ToModelValue(subitem.Name, arrayFieldItem, arrayOptions);
-                    }
-
-                    contentField.Items.Add(arrayFieldItem);
-                }
+                throw new Exception("arrayfield options are not available.");
             }
 
-            return contentField;
-        }
-
-        public override BsonValue Write(ArrayField contentField)
-        {
-            BsonArray bsonArray = new BsonArray();
-
-            foreach (ArrayFieldItem item in contentField.Items)
+            foreach (BsonDocument item in bsonArray)
             {
-                BsonDocument doc = new BsonDocument();
+                ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
 
-                foreach (var f in item.Fields)
+                foreach (BsonElement subitem in item)
                 {
-                    doc.Add(f.Key, f.Value.ToBsonValue());
+                    subitem.Value.ToModelValue(subitem.Name, arrayFieldItem, arrayOptions);
                 }
 
-                bsonArray.Add(doc);
+                contentField.Items.Add(arrayFieldItem);
+            }
+        }
+
+        return contentField;
+    }
+
+    public override BsonValue Write(ArrayField contentField)
+    {
+        BsonArray bsonArray = new BsonArray();
+
+        foreach (ArrayFieldItem item in contentField.Items)
+        {
+            BsonDocument doc = new BsonDocument();
+
+            foreach (var f in item.Fields)
+            {
+                doc.Add(f.Key, f.Value.ToBsonValue());
             }
 
-            return bsonArray;
+            bsonArray.Add(doc);
         }
+
+        return bsonArray;
     }
 }

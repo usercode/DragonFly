@@ -9,27 +9,26 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.Razor
+namespace DragonFly.AspNetCore.Identity.Razor;
+
+class LoginService : ILoginService
 {
-    class LoginService : ILoginService
+    public LoginService(HttpClient client)
     {
-        public LoginService(HttpClient client)
-        {
-            Client = client;
-        }
+        Client = client;
+    }
 
-        private HttpClient Client { get; }
+    private HttpClient Client { get; }
 
-        public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
-        {
-            HttpResponseMessage response = await Client.PostAsJsonAsync("login", new LoginData() { Username = username, Password = password, IsPersistent = isPersistent });
+    public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
+    {
+        HttpResponseMessage response = await Client.PostAsJsonAsync("login", new LoginData() { Username = username, Password = password, IsPersistent = isPersistent });
 
-            return response.IsSuccessStatusCode;
-        }
+        return response.IsSuccessStatusCode;
+    }
 
-        public async Task Logout()
-        {
-            await Client.PostAsync("Logout", new StringContent(string.Empty));
-        }
+    public async Task Logout()
+    {
+        await Client.PostAsync("Logout", new StringContent(string.Empty));
     }
 }

@@ -11,78 +11,77 @@ using DragonFly.Data.Models.Assets;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace DragonFly.Data
+namespace DragonFly.Data;
+
+/// <summary>
+/// MongoStore
+/// </summary>
+public partial class MongoStorage : ISchemaStorage
 {
-    /// <summary>
-    /// MongoStore
-    /// </summary>
-    public partial class MongoStorage : ISchemaStorage
+    public async Task CreateAsync(ContentSchema schema)
     {
-        public async Task CreateAsync(ContentSchema schema)
+        if (schema.Id == Guid.Empty)
         {
-            if (schema.Id == Guid.Empty)
-            {
-                schema.Id = Guid.NewGuid();
-            }
-
-            DateTime now = DateTimeService.Current();
-
-            schema.CreatedAt = now;
-            schema.ModifiedAt = now;
-
-            MongoContentSchema mongo = schema.ToMongo();
-
-            await ContentSchemas.InsertOneAsync(mongo);
-
-            schema.Id = mongo.Id;
+            schema.Id = Guid.NewGuid();
         }
 
-        public async Task UpdateAsync(ContentSchema entity)
-        {
-            entity.ModifiedAt = DateTimeService.Current();
+        DateTime now = DateTimeService.Current();
 
-            await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+        schema.CreatedAt = now;
+        schema.ModifiedAt = now;
+
+        MongoContentSchema mongo = schema.ToMongo();
+
+        await ContentSchemas.InsertOneAsync(mongo);
+
+        schema.Id = mongo.Id;
+    }
+
+    public async Task UpdateAsync(ContentSchema entity)
+    {
+        entity.ModifiedAt = DateTimeService.Current();
+
+        await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+    }
+
+    public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
+    {
+        return new QueryResult<ContentSchema>()
+        {
+            Items = ContentSchemas.AsQueryable()
+                    .OrderBy(x => x.Name)
+                    .ToList()
+                    .Select(x => x.ToModel())
+                    .ToList()
+        };
+    }
+
+    public async Task<ContentSchema> GetSchemaAsync(string? name)
+    {
+        if (name == null)
+        {
+            throw new ArgumentNullException(nameof(name));
         }
 
-        public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
+        MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name);
+
+        if (schema == null)
         {
-            return new QueryResult<ContentSchema>()
-            {
-                Items = ContentSchemas.AsQueryable()
-                        .OrderBy(x => x.Name)
-                        .ToList()
-                        .Select(x => x.ToModel())
-                        .ToList()
-            };
+            throw new Exception($"Schema was not found: {name}");
         }
 
-        public async Task<ContentSchema> GetSchemaAsync(string? name)
+        return schema.ToModel();
+    }
+
+    public async Task<ContentSchema> GetSchemaAsync(Guid id)
+    {
+        MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+        if (schema == null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name);
-
-            if (schema == null)
-            {
-                throw new Exception($"Schema was not found: {name}");
-            }
-
-            return schema.ToModel();
+            throw new Exception($"Schema was not found: {id}");
         }
 
-        public async Task<ContentSchema> GetSchemaAsync(Guid id)
-        {
-            MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id);
-
-            if (schema == null)
-            {
-                throw new Exception($"Schema was not found: {id}");
-            }
-
-            return schema.ToModel();
-        }
+        return schema.ToModel();
     }
 }

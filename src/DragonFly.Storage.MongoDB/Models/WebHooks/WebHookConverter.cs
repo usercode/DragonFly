@@ -7,38 +7,37 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Data.Models.WebHooks
+namespace DragonFly.Data.Models.WebHooks;
+
+static class WebHookConverter
 {
-    static class WebHookConverter
+    public static WebHook ToModel(this MongoWebHook mongoWebHook)
     {
-        public static WebHook ToModel(this MongoWebHook mongoWebHook)
-        {
-            WebHook webHook = new WebHook();
-            webHook.Id = mongoWebHook.Id;
-            webHook.Version = mongoWebHook.Version;
-            webHook.CreatedAt = mongoWebHook.CreatedAt;
-            webHook.ModifiedAt = mongoWebHook.ModifiedAt;
-            webHook.Name = mongoWebHook.Name;
-            webHook.Description = mongoWebHook.Description;
-            webHook.TargetUrl = mongoWebHook.TargetUrl;
-            webHook.EventName = mongoWebHook.EventName;
+        WebHook webHook = new WebHook();
+        webHook.Id = mongoWebHook.Id;
+        webHook.Version = mongoWebHook.Version;
+        webHook.CreatedAt = mongoWebHook.CreatedAt;
+        webHook.ModifiedAt = mongoWebHook.ModifiedAt;
+        webHook.Name = mongoWebHook.Name;
+        webHook.Description = mongoWebHook.Description;
+        webHook.TargetUrl = mongoWebHook.TargetUrl;
+        webHook.EventName = mongoWebHook.EventName;
 
-            return webHook;
-        }
+        return webHook;
+    }
 
-        public static MongoWebHook ToMongo(this WebHook webHook)
-        {
-            MongoWebHook mongoWebHook = new MongoWebHook();
-            mongoWebHook.Id = webHook.Id;
-            mongoWebHook.Version = webHook.Version;
-            mongoWebHook.CreatedAt = webHook.CreatedAt;
-            mongoWebHook.ModifiedAt = webHook.ModifiedAt;
-            mongoWebHook.Name = webHook.Name;
-            mongoWebHook.Description = webHook.Description;
-            mongoWebHook.TargetUrl = webHook.TargetUrl;
-            mongoWebHook.EventName = webHook.EventName;
+    public static MongoWebHook ToMongo(this WebHook webHook)
+    {
+        MongoWebHook mongoWebHook = new MongoWebHook();
+        mongoWebHook.Id = webHook.Id;
+        mongoWebHook.Version = webHook.Version;
+        mongoWebHook.CreatedAt = webHook.CreatedAt;
+        mongoWebHook.ModifiedAt = webHook.ModifiedAt;
+        mongoWebHook.Name = webHook.Name;
+        mongoWebHook.Description = webHook.Description;
+        mongoWebHook.TargetUrl = webHook.TargetUrl;
+        mongoWebHook.EventName = webHook.EventName;
 
-            return mongoWebHook;
-        }
+        return mongoWebHook;
     }
 }

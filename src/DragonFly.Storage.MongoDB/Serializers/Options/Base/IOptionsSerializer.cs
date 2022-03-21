@@ -6,17 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Serializers.Options
-{
-    /// <summary>
-    /// IOptionsSerializer
-    /// </summary>
-    public interface IOptionsSerializer
-    {
-        Type OptionsType { get; }
+namespace DragonFly.Storage.MongoDB.Serializers.Options;
 
-        ContentFieldOptions Read(BsonValue bsonvalue);
-        
-        BsonValue Write(ContentFieldOptions options);
-    }
+/// <summary>
+/// IOptionsSerializer
+/// </summary>
+public interface IOptionsSerializer
+{
+    Type OptionsType { get; }
+
+    ContentFieldOptions Read(BsonValue bsonvalue);
+    
+    BsonValue Write(ContentFieldOptions options);
 }

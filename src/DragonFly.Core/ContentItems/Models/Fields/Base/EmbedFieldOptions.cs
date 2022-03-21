@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public class EmbedFieldOptions : ContentFieldOptions
 {
-    public class EmbedFieldOptions : ContentFieldOptions
+    public override ContentField CreateContentField()
     {
-        public override ContentField CreateContentField()
-        {
-            return new EmbedField();
-        }
+        return new EmbedField();
     }
 }

@@ -17,45 +17,44 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
+namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures;
+
+static class ContentNodeApiExtensions
 {
-    static class ContentNodeApiExtensions
+    public static void MapContentNodeRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapContentNodeRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+        endpoints.MapPost("api/node/query/{structure:guid}", MapQuery);
+        endpoints.MapPost("api/node", MapCreate);
+    }
+
+    private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)
+    {
+        var parentIdQuery = context.Request.Query["parentId"];
+        Guid? parentId = null;
+
+        if (parentIdQuery.Any() && string.IsNullOrWhiteSpace(parentIdQuery.First()) == false)
         {
-            endpoints.MapPost("api/node/query/{structure:guid}", MapQuery);
-            endpoints.MapPost("api/node", MapCreate);
+            parentId = Guid.Parse(parentIdQuery.First());
         }
 
-        private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)
-        {
-            var parentIdQuery = context.Request.Query["parentId"];
-            Guid? parentId = null;
+        QueryResult<ContentNode> items = await storage
+                                                .QueryAsync(new NodesQuery() { Structure = structure, ParentId = parentId });
 
-            if (parentIdQuery.Any() && string.IsNullOrWhiteSpace(parentIdQuery.First()) == false)
-            {
-                parentId = Guid.Parse(parentIdQuery.First());
-            }
+        QueryResult<RestContentNode> restQueryResult = new QueryResult<RestContentNode>();
+        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
+        restQueryResult.Offset = items.Offset;
+        restQueryResult.Count = items.Count;
+        restQueryResult.TotalCount = items.TotalCount;
 
-            QueryResult<ContentNode> items = await storage
-                                                    .QueryAsync(new NodesQuery() { Structure = structure, ParentId = parentId });
+        return restQueryResult;
+    }
 
-            QueryResult<RestContentNode> restQueryResult = new QueryResult<RestContentNode>();
-            restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-            restQueryResult.Offset = items.Offset;
-            restQueryResult.Count = items.Count;
-            restQueryResult.TotalCount = items.TotalCount;
+    private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentNode input)
+    {
+        ContentNode m = input.ToModel();
 
-            return restQueryResult;
-        }
+        await storage.CreateAsync(m);
 
-        private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentNode input)
-        {
-            ContentNode m = input.ToModel();
-
-            await storage.CreateAsync(m);
-
-            return new ResourceCreated() { Id = m.Id };
-        }
+        return new ResourceCreated() { Id = m.Id };
     }
 }

@@ -6,28 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Serializers.Options
+namespace DragonFly.Storage.MongoDB.Serializers.Options;
+
+/// <summary>
+/// ArrayFieldOptionsSerializer
+/// </summary>
+public class ArrayFieldOptionsSerializer : OptionsSerializer<ArrayFieldOptions>
 {
-    /// <summary>
-    /// ArrayFieldOptionsSerializer
-    /// </summary>
-    public class ArrayFieldOptionsSerializer : OptionsSerializer<ArrayFieldOptions>
+    public override ArrayFieldOptions Read(BsonValue bsonValue)
     {
-        public override ArrayFieldOptions Read(BsonValue bsonValue)
+        ArrayFieldOptions options = new ArrayFieldOptions();
+
+        if (bsonValue is BsonDocument bsonDocument)
         {
-            ArrayFieldOptions options = new ArrayFieldOptions();
 
-            if (bsonValue is BsonDocument bsonDocument)
-            {
-
-            }
-
-            return options;
         }
 
-        public override BsonValue Write(ArrayFieldOptions options)
-        {
-            return options.ToMongo();
-        }
+        return options;
+    }
+
+    public override BsonValue Write(ArrayFieldOptions options)
+    {
+        return options.ToMongo();
     }
 }

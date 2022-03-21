@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.ImageWizard
+namespace DragonFly.ImageWizard;
+
+public class DragonFlyLoaderOptions : LoaderOptions
 {
-    public class DragonFlyLoaderOptions : LoaderOptions
+    public DragonFlyLoaderOptions()
     {
-        public DragonFlyLoaderOptions()
-        {
-            RefreshMode = LoaderRefreshMode.None;
-        }
+        RefreshMode = LoaderRefreshMode.None;
     }
 }

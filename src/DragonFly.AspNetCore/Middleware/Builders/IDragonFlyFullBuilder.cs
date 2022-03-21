@@ -6,14 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Middleware
+namespace DragonFly.AspNetCore.Middleware;
+
+public interface IDragonFlyFullBuilder
 {
-    public interface IDragonFlyFullBuilder
-    {
-        void Endpoints(Action<IDragonFlyEndpointRouteBuilder> endpoints);
+    void Endpoints(Action<IDragonFlyEndpointRouteBuilder> endpoints);
 
-        void PreAuthBuilder(Action<IDragonFlyApplicationBuilder> builder);
+    void PreAuthBuilder(Action<IDragonFlyApplicationBuilder> builder);
 
-        void Builder(Action<IDragonFlyApplicationBuilder> builder);
-    }
+    void Builder(Action<IDragonFlyApplicationBuilder> builder);
 }

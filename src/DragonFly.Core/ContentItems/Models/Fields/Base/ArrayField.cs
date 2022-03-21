@@ -4,37 +4,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ArrayField
+/// </summary>
+[FieldOptions(typeof(ArrayFieldOptions))]
+public class ArrayField : ContentField
 {
-    /// <summary>
-    /// ArrayField
-    /// </summary>
-    [FieldOptions(typeof(ArrayFieldOptions))]
-    public class ArrayField : ContentField
+    public ArrayField()
     {
-        public ArrayField()
-        {
-            Items = new List<ArrayFieldItem>();
-        }
+        Items = new List<ArrayFieldItem>();
+    }
 
-        /// <summary>
-        /// Items
-        /// </summary>
-        public IList<ArrayFieldItem> Items { get; set; }
+    /// <summary>
+    /// Items
+    /// </summary>
+    public IList<ArrayFieldItem> Items { get; set; }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    {
+        if (options is ArrayFieldOptions fieldOptions)
         {
-            if (options is ArrayFieldOptions fieldOptions)
+            if (fieldOptions.IsRequired && Items.Any() == false)
             {
-                if (fieldOptions.IsRequired && Items.Any() == false)
-                {
-                    context.AddRequireValidation(fieldName);
-                }
+                context.AddRequireValidation(fieldName);
+            }
 
-                if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
-                {
-                    context.AddRangeValidation(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
-                }
+            if (Items.Count < fieldOptions.MinItems || Items.Count > fieldOptions.MaxItems)
+            {
+                context.AddRangeValidation(fieldName, fieldOptions.MinItems, fieldOptions.MaxItems);
             }
         }
     }

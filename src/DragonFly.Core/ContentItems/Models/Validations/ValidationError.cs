@@ -4,32 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems.Models.Validations
+namespace DragonFly.Core.ContentItems.Models.Validations;
+
+/// <summary>
+/// ValidationError
+/// </summary>
+public class ValidationError
 {
-    /// <summary>
-    /// ValidationError
-    /// </summary>
-    public class ValidationError
+    public ValidationError()
     {
-        public ValidationError()
-        {
 
-        }
-
-        public ValidationError(string field, string message)
-        {
-            Field = field;
-            Message = message;
-        }
-
-        /// <summary>
-        /// Field
-        /// </summary>
-        public string? Field { get; set; }
-
-        /// <summary>
-        /// Message
-        /// </summary>
-        public string? Message { get; set; }
     }
+
+    public ValidationError(string field, string message)
+    {
+        Field = field;
+        Message = message;
+    }
+
+    /// <summary>
+    /// Field
+    /// </summary>
+    public string? Field { get; set; }
+
+    /// <summary>
+    /// Message
+    /// </summary>
+    public string? Message { get; set; }
 }

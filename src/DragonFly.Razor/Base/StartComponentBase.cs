@@ -8,94 +8,93 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Base
+namespace DragonFly.Client.Base;
+
+public class StartComponentBase : ComponentBase
 {
-    public class StartComponentBase : ComponentBase
+    public StartComponentBase()
     {
-        public StartComponentBase()
-        {
-            RebuildToolbar();
-        }
+        RebuildToolbar();
+    }
 
-        public async Task InitAsync()
-        {
-            await InitActionAsync();
-        }
+    public async Task InitAsync()
+    {
+        await InitActionAsync();
+    }
 
-        protected virtual async Task InitActionAsync()
-        {
+    protected virtual async Task InitActionAsync()
+    {
 
-        }
+    }
 
-        public Task RefreshAsync()
-        {
-            return RefreshAsync(true);
-        }
-         
-        public async Task RefreshAsync(bool stateHasChanged)
-        {
-            IsRefreshing = true;
+    public Task RefreshAsync()
+    {
+        return RefreshAsync(true);
+    }
+     
+    public async Task RefreshAsync(bool stateHasChanged)
+    {
+        IsRefreshing = true;
 
-            try
+        try
+        {
+            await RefreshActionAsync();
+
+            OnRefreshed();
+
+            if (stateHasChanged)
             {
-                await RefreshActionAsync();
-
-                OnRefreshed();
-
-                if (stateHasChanged)
-                {
-                    await InvokeAsync(StateHasChanged);
-                }
-            }
-            finally
-            {
-                IsRefreshing = false;
+                await InvokeAsync(StateHasChanged);
             }
         }
-
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
-
-        public IList<ToolbarItem> ToolbarItems { get; private set; }
-
-        public bool IsRefreshing { get; protected set; }
-
-        protected virtual async Task RefreshActionAsync()
+        finally
         {
-
+            IsRefreshing = false;
         }
+    }
 
-        protected override async Task OnParametersSetAsync()
-        {
-            await InitAsync();
-            await RefreshAsync(false);
-        }
+    [Inject]
+    public IJSRuntime JsRuntime { get; set; }
 
-        protected virtual void OnRefreshed()
-        {
-            RebuildToolbar();
-        }
+    public IList<ToolbarItem> ToolbarItems { get; private set; }
 
-        protected void RebuildToolbar()
-        {
-            List<ToolbarItem> list = new List<ToolbarItem>();
-            BuildToolbarItems(list);
-            ToolbarItems = list;
-        }
+    public bool IsRefreshing { get; protected set; }
 
-        protected virtual void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
-        {
+    protected virtual async Task RefreshActionAsync()
+    {
 
-        }
+    }
 
-        protected override async Task OnInitializedAsync()
-        {
-            await InitAsync();
-        }
+    protected override async Task OnParametersSetAsync()
+    {
+        await InitAsync();
+        await RefreshAsync(false);
+    }
 
-        public async Task NavigateToExternalUrl(string url)
-        {
-            await JsRuntime.InvokeAsync<object>("open", url, "_blank");
-        }
+    protected virtual void OnRefreshed()
+    {
+        RebuildToolbar();
+    }
+
+    protected void RebuildToolbar()
+    {
+        List<ToolbarItem> list = new List<ToolbarItem>();
+        BuildToolbarItems(list);
+        ToolbarItems = list;
+    }
+
+    protected virtual void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InitAsync();
+    }
+
+    public async Task NavigateToExternalUrl(string url)
+    {
+        await JsRuntime.InvokeAsync<object>("open", url, "_blank");
     }
 }

@@ -7,14 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Contents.ContentItems
+namespace DragonFly.Client.Core.Contents.ContentItems;
+
+public interface IContentItemAction<T>
 {
-    public interface IContentItemAction<T>
-    {
-        string Name { get; }
+    string Name { get; }
 
-        bool CanUse(T contentItemDetail);
+    bool CanUse(T contentItemDetail);
 
-        Task Execute(T contentItemBase);
-    }
+    Task Execute(T contentItemBase);
 }

@@ -7,71 +7,70 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// AssetMetadataManager
+/// </summary>
+public class AssetMetadataManager
 {
-    /// <summary>
-    /// AssetMetadataManager
-    /// </summary>
-    public class AssetMetadataManager
+    private IDictionary<string, Type> _byName;
+    private IDictionary<Type, string> _byType;
+
+    private static AssetMetadataManager? _default;
+
+    public static AssetMetadataManager Default
     {
-        private IDictionary<string, Type> _byName;
-        private IDictionary<Type, string> _byType;
-
-        private static AssetMetadataManager? _default;
-
-        public static AssetMetadataManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new AssetMetadataManager();
-                }
-
-                return _default;
-            }
-        }
-
-        private AssetMetadataManager()
-        {
-            _byName = new Dictionary<string, Type>();
-            _byType = new Dictionary<Type, string>();
-        }
-
-        public void Add<TMetadata>()
-            where TMetadata : AssetMetadata, new()
-        {
-            string typeName = new TMetadata().Type;
-
-            _byName[typeName] = typeof(TMetadata);
-            _byType[typeof(TMetadata)] = typeName;
-        }
-
-        public string GetMetadataName<T>()
-            where T : AssetMetadata
-        {
-            return GetMetadataName(typeof(T));
-        }
-
-        public string GetMetadataName(Type type)
-        {
-            if (_byType.TryGetValue(type, out string? name))
-            {
-                return name;
+                _default = new AssetMetadataManager();
             }
 
-            throw new Exception();
+            return _default;
         }
-
-        public Type GetMetadataType(string name)
-        {
-            if(_byName.TryGetValue(name, out Type? result))
-            {
-                return result;
-            }
-
-            throw new Exception();
-        }
-     
     }
+
+    private AssetMetadataManager()
+    {
+        _byName = new Dictionary<string, Type>();
+        _byType = new Dictionary<Type, string>();
+    }
+
+    public void Add<TMetadata>()
+        where TMetadata : AssetMetadata, new()
+    {
+        string typeName = new TMetadata().Type;
+
+        _byName[typeName] = typeof(TMetadata);
+        _byType[typeof(TMetadata)] = typeName;
+    }
+
+    public string GetMetadataName<T>()
+        where T : AssetMetadata
+    {
+        return GetMetadataName(typeof(T));
+    }
+
+    public string GetMetadataName(Type type)
+    {
+        if (_byType.TryGetValue(type, out string? name))
+        {
+            return name;
+        }
+
+        throw new Exception();
+    }
+
+    public Type GetMetadataType(string name)
+    {
+        if(_byName.TryGetValue(name, out Type? result))
+        {
+            return result;
+        }
+
+        throw new Exception();
+    }
+ 
 }

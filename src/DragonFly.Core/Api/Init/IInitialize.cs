@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// IInitialize
+/// </summary>
+public interface IInitialize
 {
-    /// <summary>
-    /// IInitialize
-    /// </summary>
-    public interface IInitialize
-    {
-        Task ExecuteAsync(IDragonFlyApi api);
-    }
+    Task ExecuteAsync(IDragonFlyApi api);
 }

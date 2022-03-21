@@ -5,22 +5,21 @@ using System.Resources;
 using System.Threading.Tasks;
 using DragonFly.Core.ContentItems.Models.Validations;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ContentField
+/// </summary>
+public abstract class ContentField
 {
-    /// <summary>
-    /// ContentField
-    /// </summary>
-    public abstract class ContentField
+    public ContentField()
     {
-        public ContentField()
-        {
 
-        }
+    }
 
-        public virtual bool CanSorting => false;
+    public virtual bool CanSorting => false;
 
-        public virtual void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
-        {
-        }
+    public virtual void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    {
     }
 }

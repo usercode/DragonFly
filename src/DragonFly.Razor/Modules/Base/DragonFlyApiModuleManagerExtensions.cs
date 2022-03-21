@@ -6,13 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+public static class DragonFlyApiModuleManagerExtensions
 {
-    public static class DragonFlyApiModuleManagerExtensions
+    public static ModuleManager Module(this IDragonFlyApi api)
     {
-        public static ModuleManager Module(this IDragonFlyApi api)
-        {
-            return ModuleManager.Default;
-        }
+        return ModuleManager.Default;
     }
 }

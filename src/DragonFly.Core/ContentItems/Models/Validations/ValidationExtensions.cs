@@ -6,28 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ValidationExtensions
+/// </summary>
+public static class ValidationExtensions
 {
-    /// <summary>
-    /// ValidationExtensions
-    /// </summary>
-    public static class ValidationExtensions
+    public static ValidationContext Validate(this ContentItem contentItem)
     {
-        public static ValidationContext Validate(this ContentItem contentItem)
+        ValidationContext validationContext = new ValidationContext();
+
+        foreach (var field in contentItem.Fields)
         {
-            ValidationContext validationContext = new ValidationContext();
+            SchemaField f = contentItem.Schema.Fields[field.Key];
 
-            foreach (var field in contentItem.Fields)
+            if (f.Options != null)
             {
-                SchemaField f = contentItem.Schema.Fields[field.Key];
-
-                if (f.Options != null)
-                {
-                    field.Value.Validate(field.Key, f.Options, validationContext);
-                }
+                field.Value.Validate(field.Key, f.Options, validationContext);
             }
-
-            return validationContext;
         }
+
+        return validationContext;
     }
 }

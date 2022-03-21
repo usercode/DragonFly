@@ -4,29 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Events
+namespace DragonFly.Core.Events;
+
+/// <summary>
+/// EventManager
+/// </summary>
+public class EventManager
 {
+    public static EventManager? _default;
+
     /// <summary>
-    /// EventManager
+    /// Default
     /// </summary>
-    public class EventManager
+    public static EventManager Default
     {
-        public static EventManager? _default;
-
-        /// <summary>
-        /// Default
-        /// </summary>
-        public static EventManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new EventManager();
-                }
-
-                return _default;
+                _default = new EventManager();
             }
+
+            return _default;
         }
     }
 }

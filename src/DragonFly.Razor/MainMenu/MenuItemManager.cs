@@ -4,38 +4,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.MainMenu
+namespace DragonFly.Razor.MainMenu;
+
+/// <summary>
+/// MenuItemManager
+/// </summary>
+public class MenuItemManager
 {
-    /// <summary>
-    /// MenuItemManager
-    /// </summary>
-    public class MenuItemManager
+    private static MenuItemManager _default;
+
+    public static MenuItemManager Default
     {
-        private static MenuItemManager _default;
-
-        public static MenuItemManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new MenuItemManager();
-                }
-
-                return _default;
+                _default = new MenuItemManager();
             }
-        }
 
-        public MenuItemManager()
-        {
-            Items = new List<MenuItem>();
+            return _default;
         }
+    }
 
-        public IList<MenuItem> Items { get; private set; }
+    public MenuItemManager()
+    {
+        Items = new List<MenuItem>();
+    }
 
-        public void Add(string title, string cssIcon, string route)
-        {
-            Items.Add(new MenuItem(title, cssIcon, route));
-        }
+    public IList<MenuItem> Items { get; private set; }
+
+    public void Add(string title, string cssIcon, string route)
+    {
+        Items.Add(new MenuItem(title, cssIcon, route));
     }
 }

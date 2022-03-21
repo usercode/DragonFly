@@ -15,82 +15,81 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Identity.Razor.Components.Roles
+namespace DragonFly.Identity.Razor.Components.Roles;
+
+public class RoleDetailBase : EntityDetailComponent<IdentityRole>
 {
-    public class RoleDetailBase : EntityDetailComponent<IdentityRole>
+    public RoleDetailBase()
     {
-        public RoleDetailBase()
+        Permissions = new List<SelectableElementTree<Permission>>();
+    }
+
+    [Inject]
+    public IIdentityService UserStore { get; set; }
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    [Inject]
+    public IPermissionService PermissionService { get; set; }
+
+    public IEnumerable<SelectableElementTree<Permission>> Permissions { get; set; }
+
+    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+        base.BuildToolbarItems(toolbarItems);
+
+        if (IsNewEntity)
         {
-            Permissions = new List<SelectableElementTree<Permission>>();
+            toolbarItems.AddCreateButton(this);
+        }
+        else
+        {
+            toolbarItems.AddRefreshButton(this);
+            toolbarItems.AddUpdateButton(this);
+            toolbarItems.AddDeleteButton(this);
+        }
+    }
+
+    protected override async Task RefreshActionAsync()
+    {
+        if (IsNewEntity)
+        {
+            Entity = new IdentityRole();
+        }
+        else
+        {
+            Entity = await UserStore.GetRoleAsync(EntityId);
         }
 
-        [Inject]
-        public IIdentityService UserStore { get; set; }
+        IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
-        [Inject]
-        public HttpClient Client { get; set; }
+        Permissions = permissions
+                                .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
+                                .ToList();
+    }
 
-        [Inject]
-        public IPermissionService PermissionService { get; set; }
+    protected override async Task CreateActionAsync()
+    {
+        await base.CreateActionAsync();
 
-        public IEnumerable<SelectableElementTree<Permission>> Permissions { get; set; }
+        await UserStore.CreateRoleAsync(Entity);
+    }
 
-        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
-        {
-            base.BuildToolbarItems(toolbarItems);
+    protected override async Task UpdateActionAsync()
+    {
+        await base.UpdateActionAsync();
 
-            if (IsNewEntity)
-            {
-                toolbarItems.AddCreateButton(this);
-            }
-            else
-            {
-                toolbarItems.AddRefreshButton(this);
-                toolbarItems.AddUpdateButton(this);
-                toolbarItems.AddDeleteButton(this);
-            }
-        }
+        await UserStore.UpdateRoleAsync(Entity);
+    }
 
-        protected override async Task RefreshActionAsync()
-        {
-            if (IsNewEntity)
-            {
-                Entity = new IdentityRole();
-            }
-            else
-            {
-                Entity = await UserStore.GetRoleAsync(EntityId);
-            }
+    protected override void OnSaving(SavingEventArgs args)
+    {
+        base.OnSaving(args);
 
-            IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
-
-            Permissions = permissions
-                                    .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
-                                    .ToList();
-        }
-
-        protected override async Task CreateActionAsync()
-        {
-            await base.CreateActionAsync();
-
-            await UserStore.CreateRoleAsync(Entity);
-        }
-
-        protected override async Task UpdateActionAsync()
-        {
-            await base.UpdateActionAsync();
-
-            await UserStore.UpdateRoleAsync(Entity);
-        }
-
-        protected override void OnSaving(SavingEventArgs args)
-        {
-            base.OnSaving(args);
-
-            Entity.Permissions = Permissions
-                                       .ToFlatList()
-                                       .Select(x => x.Name)
-                                       .ToList();
-        }
+        Entity.Permissions = Permissions
+                                   .ToFlatList()
+                                   .Select(x => x.Name)
+                                   .ToList();
     }
 }

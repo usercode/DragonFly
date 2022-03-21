@@ -5,71 +5,70 @@ using System.Threading.Tasks;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ContentSchema
+/// </summary>
+public class ContentSchema : ContentBase, ISchemaElement
 {
-    /// <summary>
-    /// ContentSchema
-    /// </summary>
-    public class ContentSchema : ContentBase, ISchemaElement
+    public ContentSchema()
     {
-        public ContentSchema()
-        {
-            _name = string.Empty;
-            _fields = new SchemaFields();
-            _listFields = new List<string>();
-            _referenceFields = new List<string>();
-            _queryFields = new List<string>();
-            _orderFields = new List<FieldOrder>();            
-        }
+        _name = string.Empty;
+        _fields = new SchemaFields();
+        _listFields = new List<string>();
+        _referenceFields = new List<string>();
+        _queryFields = new List<string>();
+        _orderFields = new List<FieldOrder>();            
+    }
 
-        public ContentSchema(string name)
-            : this()
-        {
-            _name = name;
-        }
+    public ContentSchema(string name)
+        : this()
+    {
+        _name = name;
+    }
 
-        private string _name;
+    private string _name;
 
-        /// <summary>
-        /// Name
-        /// </summary>
-        public virtual string Name { get => _name; set => _name = value; }
+    /// <summary>
+    /// Name
+    /// </summary>
+    public virtual string Name { get => _name; set => _name = value; }
 
-        private SchemaFields _fields;
+    private SchemaFields _fields;
 
-        /// <summary>
-        /// Fields
-        /// </summary>
-        public virtual SchemaFields Fields { get => _fields; set => _fields = value; }
+    /// <summary>
+    /// Fields
+    /// </summary>
+    public virtual SchemaFields Fields { get => _fields; set => _fields = value; }
 
-        private IList<string> _listFields;
+    private IList<string> _listFields;
 
-        /// <summary>
-        /// ListFields
-        /// </summary>
-        public virtual IList<string> ListFields { get => _listFields; set => _listFields = value; }
+    /// <summary>
+    /// ListFields
+    /// </summary>
+    public virtual IList<string> ListFields { get => _listFields; set => _listFields = value; }
 
-        private IList<string> _referenceFields;
+    private IList<string> _referenceFields;
 
-        /// <summary>
-        /// ReferenceFields
-        /// </summary>
-        public virtual IList<string> ReferenceFields { get => _referenceFields; set => _referenceFields = value; }
+    /// <summary>
+    /// ReferenceFields
+    /// </summary>
+    public virtual IList<string> ReferenceFields { get => _referenceFields; set => _referenceFields = value; }
 
-        private IList<FieldOrder> _orderFields;
+    private IList<FieldOrder> _orderFields;
 
-        /// <summary>
-        /// OrderFields
-        /// </summary>
-        public IList<FieldOrder> OrderFields { get => _orderFields; set => _orderFields = value; }
+    /// <summary>
+    /// OrderFields
+    /// </summary>
+    public IList<FieldOrder> OrderFields { get => _orderFields; set => _orderFields = value; }
 
-        private IList<string> _queryFields;
+    private IList<string> _queryFields;
 
-        public IList<string> QueryFields { get => _queryFields; set => _queryFields = value; }
+    public IList<string> QueryFields { get => _queryFields; set => _queryFields = value; }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+    public override string ToString()
+    {
+        return Name;
     }
 }

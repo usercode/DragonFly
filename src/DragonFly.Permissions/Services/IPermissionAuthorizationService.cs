@@ -5,13 +5,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions
+namespace DragonFly.Permissions;
+
+/// <summary>
+/// IAuthorizePermissionService
+/// </summary>
+public interface IPermissionAuthorizationService
 {
-    /// <summary>
-    /// IAuthorizePermissionService
-    /// </summary>
-    public interface IPermissionAuthorizationService
-    {
-        Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission);
-    }
+    Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission);
 }

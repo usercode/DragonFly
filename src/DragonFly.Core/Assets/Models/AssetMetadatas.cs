@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
-{
-    public class AssetMetadatas : Dictionary<string, AssetMetadata>
-    {
+namespace DragonFly.Content;
 
-    }
+public class AssetMetadatas : Dictionary<string, AssetMetadata>
+{
+
 }

@@ -7,21 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Middleware.Builders
+namespace DragonFly.AspNetCore.Middleware.Builders;
+
+class DragonFlyEndpointRouteBuilder : IDragonFlyEndpointRouteBuilder
 {
-    class DragonFlyEndpointRouteBuilder : IDragonFlyEndpointRouteBuilder
+    public DragonFlyEndpointRouteBuilder(IEndpointRouteBuilder endpointRouteBuilder)
     {
-        public DragonFlyEndpointRouteBuilder(IEndpointRouteBuilder endpointRouteBuilder)
-        {
-            EndpointRouteBuilder = endpointRouteBuilder;
-        }
-
-        private IEndpointRouteBuilder EndpointRouteBuilder { get; }
-
-        public IServiceProvider ServiceProvider => EndpointRouteBuilder.ServiceProvider;
-
-        public ICollection<EndpointDataSource> DataSources => EndpointRouteBuilder.DataSources;
-
-        public IApplicationBuilder CreateApplicationBuilder() => EndpointRouteBuilder.CreateApplicationBuilder();
+        EndpointRouteBuilder = endpointRouteBuilder;
     }
+
+    private IEndpointRouteBuilder EndpointRouteBuilder { get; }
+
+    public IServiceProvider ServiceProvider => EndpointRouteBuilder.ServiceProvider;
+
+    public ICollection<EndpointDataSource> DataSources => EndpointRouteBuilder.DataSources;
+
+    public IApplicationBuilder CreateApplicationBuilder() => EndpointRouteBuilder.CreateApplicationBuilder();
 }

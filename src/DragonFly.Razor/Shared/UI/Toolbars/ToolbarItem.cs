@@ -5,52 +5,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Shared.UI.Toolbars
+namespace DragonFly.Razor.Shared.UI.Toolbars;
+
+public class ToolbarItem
 {
-    public class ToolbarItem
+    public ToolbarItem(string name, BSColor color, Func<Task> action)
     {
-        public ToolbarItem(string name, BSColor color, Func<Task> action)
+        Name = name;
+        Color = color;
+        _action = action;
+    }
+
+    /// <summary>
+    /// Name
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// Color
+    /// </summary>
+    public BSColor Color { get; set; }
+
+    /// <summary>
+    /// IsRunning
+    /// </summary>
+    public bool IsRunning { get; private set; }
+
+    private Func<Task> _action;
+
+    /// <summary>
+    /// ExecuteAsync
+    /// </summary>
+    /// <returns></returns>
+    public async Task ExecuteAsync()
+    {
+        try
         {
-            Name = name;
-            Color = color;
-            _action = action;
+            IsRunning = true;
+
+            await _action();
+
+            await Task.Delay(TimeSpan.FromMilliseconds(400));
         }
-
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Color
-        /// </summary>
-        public BSColor Color { get; set; }
-
-        /// <summary>
-        /// IsRunning
-        /// </summary>
-        public bool IsRunning { get; private set; }
-
-        private Func<Task> _action;
-
-        /// <summary>
-        /// ExecuteAsync
-        /// </summary>
-        /// <returns></returns>
-        public async Task ExecuteAsync()
+        finally
         {
-            try
-            {
-                IsRunning = true;
-
-                await _action();
-
-                await Task.Delay(TimeSpan.FromMilliseconds(400));
-            }
-            finally
-            {
-                IsRunning = false;
-            }
+            IsRunning = false;
         }
     }
 }

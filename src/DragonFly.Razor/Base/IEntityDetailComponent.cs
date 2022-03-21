@@ -7,39 +7,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Base
+namespace DragonFly.Client.Base;
+
+public interface IEntityDetailComponent<T>
+    where T : Entity
 {
-    public interface IEntityDetailComponent<T>
-        where T : Entity
-    {
 
-        [Inject]
-        public ClientContentService ContentService { get; set; }
+    [Inject]
+    public ClientContentService ContentService { get; set; }
 
-        public virtual bool IsNewEntity => EntityId == Guid.Empty;
+    public virtual bool IsNewEntity => EntityId == Guid.Empty;
 
-        [Parameter]
-        public Guid EntityId { get; set; }
+    [Parameter]
+    public Guid EntityId { get; set; }
 
-        [Parameter]
-        public string EntityType { get; set; }
+    [Parameter]
+    public string EntityType { get; set; }
 
-        [Parameter]
-        public T Entity { get; set; }
+    [Parameter]
+    public T Entity { get; set; }
 
-        public ContentSchema Schema { get; set; }
+    public ContentSchema Schema { get; set; }
 
-        Task RefreshAsync();
+    Task RefreshAsync();
 
-        Task CreateAsync();
-        Task UpdateAsync();
-        Task SaveAsync();
+    Task CreateAsync();
+    Task UpdateAsync();
+    Task SaveAsync();
 
-        Task DeleteAsync();
+    Task DeleteAsync();
 
-        //Task PublishAsync();
+    //Task PublishAsync();
 
-        //Task UnpublishAsync();
-       
-    }
+    //Task UnpublishAsync();
+   
 }

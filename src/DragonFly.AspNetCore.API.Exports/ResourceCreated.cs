@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace DragonFly.AspNetCore.Exports
+namespace DragonFly.AspNetCore.Exports;
+
+public class ResourceCreated
 {
-    public class ResourceCreated
-    {
-        public Guid Id { get; set; }
-    }
+    public Guid Id { get; set; }
 }

@@ -9,17 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore
+namespace DragonFly.AspNetCore;
+
+public static class StartupExtensions
 {
-    public static class StartupExtensions
+    public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
-        {
-            builder.Services.AddSingleton<DocumentSerializer>();
+        builder.Services.AddSingleton<DocumentSerializer>();
 
-            builder.Init(api => api.ContentField().Add<BlockField>());
+        builder.Init(api => api.ContentField().Add<BlockField>());
 
-            return builder;
-        }
+        return builder;
     }
 }

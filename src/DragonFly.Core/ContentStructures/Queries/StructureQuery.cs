@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentStructures.Queries
+namespace DragonFly.Core.ContentStructures.Queries;
+
+public class StructureQuery
 {
-    public class StructureQuery
-    {
-    }
 }

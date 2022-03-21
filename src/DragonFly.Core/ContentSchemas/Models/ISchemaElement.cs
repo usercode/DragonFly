@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ISchemaElement
+/// </summary>
+public interface ISchemaElement
 {
     /// <summary>
-    /// ISchemaElement
+    /// Fields
     /// </summary>
-    public interface ISchemaElement
-    {
-        /// <summary>
-        /// Fields
-        /// </summary>
-        SchemaFields Fields { get; }
-    }
+    SchemaFields Fields { get; }
 }

@@ -9,20 +9,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore
+namespace DragonFly.Permissions.AspNetCore;
+
+internal static class Extensions
 {
-    internal static class Extensions
+    public static void MapPermissionItemApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapPermissionItemApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapPost("permission/query", MapQuery);
-        }
+        endpoints.MapPost("permission/query", MapQuery);
+    }
 
-        private static async Task MapQuery(HttpContext context, IDragonFlyApi api)
-        {
-            IEnumerable<Permission> items = api.Permission().Items;
+    private static async Task MapQuery(HttpContext context, IDragonFlyApi api)
+    {
+        IEnumerable<Permission> items = api.Permission().Items;
 
-            await context.Response.WriteAsJsonAsync(items);
-        }
+        await context.Response.WriteAsJsonAsync(items);
     }
 }

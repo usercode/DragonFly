@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.Services
+namespace DragonFly.Permissions.Services;
+
+public interface IPermissionService
 {
-    public interface IPermissionService
-    {
-        Task<IEnumerable<Permission>> GetPermissionsAsync();
-    }
+    Task<IEnumerable<Permission>> GetPermissionsAsync();
 }

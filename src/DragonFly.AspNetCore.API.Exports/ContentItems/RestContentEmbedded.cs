@@ -6,27 +6,25 @@ using DragonFly.AspNetCore.API.Models;
 using DragonFly.Content;
 using DragonFly.Contents.Content;
 
-namespace DragonFly.Models
+namespace DragonFly.Models;
+
+/// <summary>
+/// RestContentEmbedded
+/// </summary>
+public class RestContentEmbedded
 {
-    /// <summary>
-    /// RestContentEmbedded
-    /// </summary>
-    public class RestContentEmbedded
+    public RestContentEmbedded()
     {
-        public RestContentEmbedded()
-        {
-            Fields = new RestContentFields();
-        }
-
-        /// <summary>
-        /// Schema
-        /// </summary>
-        public RestContentSchema Schema { get; set; }
-
-        /// <summary>
-        /// Fields
-        /// </summary>
-        public RestContentFields Fields { get; set; }
+        Fields = new RestContentFields();
     }
+
+    /// <summary>
+    /// Schema
+    /// </summary>
+    public RestContentSchema Schema { get; set; }
+
+    /// <summary>
+    /// Fields
+    /// </summary>
+    public RestContentFields Fields { get; set; }
 }
- 

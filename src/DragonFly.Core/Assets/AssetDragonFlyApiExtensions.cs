@@ -6,24 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// AssetDragonFlyApiExtensions
+/// </summary>
+public static class AssetDragonFlyApiExtensions
 {
-    /// <summary>
-    /// AssetDragonFlyApiExtensions
-    /// </summary>
-    public static class AssetDragonFlyApiExtensions
+    public static AssetMetadataManager AssetMetadata(this IDragonFlyApi dragonFlyApi)
     {
-        public static AssetMetadataManager AssetMetadata(this IDragonFlyApi dragonFlyApi)
-        {
-            return AssetMetadataManager.Default;
-        }
+        return AssetMetadataManager.Default;
+    }
 
-        public static AssetMetadataManager AddDefaults(this AssetMetadataManager manager)
-        {
-            manager.Add<ImageMetadata>();
-            manager.Add<PdfMetadata>();
+    public static AssetMetadataManager AddDefaults(this AssetMetadataManager manager)
+    {
+        manager.Add<ImageMetadata>();
+        manager.Add<PdfMetadata>();
 
-            return manager;
-        }
+        return manager;
     }
 }

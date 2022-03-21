@@ -10,78 +10,77 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages
+namespace DragonFly.Client.Pages;
+
+public class ContentStructureDetailTreeBase : EntityDetailComponent<ContentStructure>
 {
-    public class ContentStructureDetailTreeBase : EntityDetailComponent<ContentStructure>
+    public ContentStructureDetailTreeBase()
     {
-        public ContentStructureDetailTreeBase()
+        Entity = new ContentStructure();
+        Nodes = new List<ContentNode>();
+    }
+
+    /// <summary>
+    /// Nodes
+    /// </summary>
+    public IList<ContentNode> Nodes { get; set; }
+
+    [Inject]
+    public IStructureStorage Storage { get; set; }
+
+    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+        base.BuildToolbarItems(toolbarItems);
+
+        if(IsNewEntity)
+        {
+            toolbarItems.AddCreateButton(this);
+        }
+        else
+        {
+            toolbarItems.AddRefreshButton(this);
+            toolbarItems.AddUpdateButton(this);
+            toolbarItems.AddDeleteButton(this);
+        }
+    }
+
+    protected override async Task RefreshActionAsync()
+    {
+        await base.RefreshActionAsync();
+
+        if (IsNewEntity)
         {
             Entity = new ContentStructure();
-            Nodes = new List<ContentNode>();
         }
-
-        /// <summary>
-        /// Nodes
-        /// </summary>
-        public IList<ContentNode> Nodes { get; set; }
-
-        [Inject]
-        public IStructureStorage Storage { get; set; }
-
-        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+        else
         {
-            base.BuildToolbarItems(toolbarItems);
+            Entity = await ContentService.GetStructureAsync(EntityId);
 
-            if(IsNewEntity)
-            {
-                toolbarItems.AddCreateButton(this);
-            }
-            else
-            {
-                toolbarItems.AddRefreshButton(this);
-                toolbarItems.AddUpdateButton(this);
-                toolbarItems.AddDeleteButton(this);
-            }
+            var nodesResult = await ContentService.QueryAsync(new NodesQuery() { Structure = Entity.Id, ParentId = null });
+
+            Nodes = nodesResult.Items;
         }
+    }
 
-        protected override async Task RefreshActionAsync()
-        {
-            await base.RefreshActionAsync();
+    protected override async Task CreateActionAsync()
+    {
+        await ContentService.CreateAsync(Entity);
 
-            if (IsNewEntity)
-            {
-                Entity = new ContentStructure();
-            }
-            else
-            {
-                Entity = await ContentService.GetStructureAsync(EntityId);
+        NavigationManager.NavigateTo($"structure/{Entity.Id}");
+    }
 
-                var nodesResult = await ContentService.QueryAsync(new NodesQuery() { Structure = Entity.Id, ParentId = null });
+    protected override async Task UpdateActionAsync()
+    {
+        await ContentService.UpdateAsync(Entity);
+    }
 
-                Nodes = nodesResult.Items;
-            }
-        }
+    public async Task AddContentAsync()
+    {
+        ContentNode contentNode = new ContentNode();
+        contentNode.Structure = Entity.Id;
 
-        protected override async Task CreateActionAsync()
-        {
-            await ContentService.CreateAsync(Entity);
+        await Storage.CreateAsync(contentNode);
 
-            NavigationManager.NavigateTo($"structure/{Entity.Id}");
-        }
-
-        protected override async Task UpdateActionAsync()
-        {
-            await ContentService.UpdateAsync(Entity);
-        }
-
-        public async Task AddContentAsync()
-        {
-            ContentNode contentNode = new ContentNode();
-            contentNode.Structure = Entity.Id;
-
-            await Storage.CreateAsync(contentNode);
-
-            Nodes.Add(contentNode);
-        }
+        Nodes.Add(contentNode);
     }
 }

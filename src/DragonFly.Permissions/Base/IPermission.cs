@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
-{
-    public interface IPermission
-    {
-        Permission Add(Permission permissionItem);
+namespace DragonFly;
 
-    }
+public interface IPermission
+{
+    Permission Add(Permission permissionItem);
+
 }

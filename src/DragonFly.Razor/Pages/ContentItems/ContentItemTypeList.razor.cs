@@ -7,19 +7,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages.ContentItems
+namespace DragonFly.Client.Pages.ContentItems;
+
+public class ContentItemTypeListBase : ContentSchemaListBase
 {
-    public class ContentItemTypeListBase : ContentSchemaListBase
+    public ContentItemTypeListBase()
     {
-        public ContentItemTypeListBase()
-        {
-
-        }
-
-        protected override string GetNavigationPath(ContentSchema entity)
-        {
-            return $"content/{entity.Name}";
-        }
 
     }
+
+    protected override string GetNavigationPath(ContentSchema entity)
+    {
+        return $"content/{entity.Name}";
+    }
+
 }

@@ -4,33 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public class XHtmlFieldOptions : ContentFieldOptions
 {
-    public class XHtmlFieldOptions : ContentFieldOptions
+    public XHtmlFieldOptions()
     {
-        public XHtmlFieldOptions()
-        {
-            DefaultValue = string.Empty;
-        }
+        DefaultValue = string.Empty;
+    }
 
-        /// <summary>
-        /// DefaultValue
-        /// </summary>
-        public string DefaultValue { get; set; }
+    /// <summary>
+    /// DefaultValue
+    /// </summary>
+    public string DefaultValue { get; set; }
 
-        /// <summary>
-        /// MinLength
-        /// </summary>
-        public int MinLength { get; set; }
+    /// <summary>
+    /// MinLength
+    /// </summary>
+    public int MinLength { get; set; }
 
-        /// <summary>
-        /// MaxLength
-        /// </summary>
-        public int MaxLength { get; set; }
+    /// <summary>
+    /// MaxLength
+    /// </summary>
+    public int MaxLength { get; set; }
 
-        public override ContentField CreateContentField()
-        {
-            return new XHtmlField(DefaultValue);
-        }
+    public override ContentField CreateContentField()
+    {
+        return new XHtmlField(DefaultValue);
     }
 }

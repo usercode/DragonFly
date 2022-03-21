@@ -4,39 +4,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Modules.Base
+namespace DragonFly.Razor.Modules.Base;
+
+/// <summary>
+/// ModuleManager
+/// </summary>
+public class ModuleManager
 {
-    /// <summary>
-    /// ModuleManager
-    /// </summary>
-    public class ModuleManager
+    private static ModuleManager _default;
+
+    public static ModuleManager Default
     {
-        private static ModuleManager _default;
-
-        public static ModuleManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new ModuleManager();
-                }
-
-                return _default;
+                _default = new ModuleManager();
             }
-        }
 
-        public ModuleManager()
-        {
-            Modules = new List<ClientModule>();
+            return _default;
         }
+    }
 
-        public IList<ClientModule> Modules { get; }
+    public ModuleManager()
+    {
+        Modules = new List<ClientModule>();
+    }
 
-        public void Add<TModule>()
-            where TModule : ClientModule, new()
-        {
-            Modules.Add(new TModule());
-        }
+    public IList<ClientModule> Modules { get; }
+
+    public void Add<TModule>()
+        where TModule : ClientModule, new()
+    {
+        Modules.Add(new TModule());
     }
 }

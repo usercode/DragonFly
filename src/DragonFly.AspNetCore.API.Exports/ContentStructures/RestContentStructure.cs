@@ -4,19 +4,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.AspNetCore.API.Models
+namespace DragonFly.AspNetCore.API.Models;
+
+public class RestContentStructure : RestContentBase
 {
-    public class RestContentStructure : RestContentBase
+    public RestContentStructure()
     {
-        public RestContentStructure()
-        {
-        }
-
-        /// <summary>
-        /// Name
-        /// </summary>
-        public string Name { get; set; }
-
-
     }
+
+    /// <summary>
+    /// Name
+    /// </summary>
+    public string Name { get; set; }
+
+
 }

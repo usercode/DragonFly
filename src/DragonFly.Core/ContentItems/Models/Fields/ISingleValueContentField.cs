@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
-{
-    public interface ISingleValueContentField
-    {
-        object? Value { get; }
+namespace DragonFly.Content;
 
-        bool HasValue { get; }
-    }
+public interface ISingleValueContentField
+{
+    object? Value { get; }
+
+    bool HasValue { get; }
 }

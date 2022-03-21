@@ -17,64 +17,63 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures
+namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures;
+
+static class ContentStructureApiExtensions
 {
-    static class ContentStructureApiExtensions
+    public static void MapContentStructureRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapContentStructureRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapPost("api/structure/query", MapQuery);
-            endpoints.MapGet("api/structure/{id:guid}", MapGetById);
-            endpoints.MapGet("api/structure/{name}", MapGetByName);
-            endpoints.MapPost("api/structure", MapCreate);
-            endpoints.MapPut("api/structure", MapUpdate);
-        }
+        endpoints.MapPost("api/structure/query", MapQuery);
+        endpoints.MapGet("api/structure/{id:guid}", MapGetById);
+        endpoints.MapGet("api/structure/{name}", MapGetByName);
+        endpoints.MapPost("api/structure", MapCreate);
+        endpoints.MapPut("api/structure", MapUpdate);
+    }
 
-        private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)
-        {
-            QueryResult<ContentStructure> items = await storage.QueryAsync(query);
+    private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)
+    {
+        QueryResult<ContentStructure> items = await storage.QueryAsync(query);
 
-            QueryResult<RestContentStructure> restQueryResult = new QueryResult<RestContentStructure>();
-            restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-            restQueryResult.Offset = items.Offset;
-            restQueryResult.Count = items.Count;
-            restQueryResult.TotalCount = items.TotalCount;
+        QueryResult<RestContentStructure> restQueryResult = new QueryResult<RestContentStructure>();
+        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
+        restQueryResult.Offset = items.Offset;
+        restQueryResult.Count = items.Count;
+        restQueryResult.TotalCount = items.TotalCount;
 
-           return restQueryResult;
-        }
+       return restQueryResult;
+    }
 
-        private static async Task<RestContentStructure> MapGetById(HttpContext context, IStructureStorage storage, Guid id)
-        {
-            ContentStructure entity = await storage.GetStructureAsync(id);
+    private static async Task<RestContentStructure> MapGetById(HttpContext context, IStructureStorage storage, Guid id)
+    {
+        ContentStructure entity = await storage.GetStructureAsync(id);
 
-            RestContentStructure restSchema = entity.ToRest();
+        RestContentStructure restSchema = entity.ToRest();
 
-            return restSchema;
-        }
+        return restSchema;
+    }
 
-        private static async Task<RestContentStructure> MapGetByName(HttpContext context, IStructureStorage storage, string name)
-        {
-            ContentStructure entity = await storage.GetStructureAsync(name);
-            
-            RestContentStructure restSchema = entity.ToRest();
+    private static async Task<RestContentStructure> MapGetByName(HttpContext context, IStructureStorage storage, string name)
+    {
+        ContentStructure entity = await storage.GetStructureAsync(name);
+        
+        RestContentStructure restSchema = entity.ToRest();
 
-           return restSchema;
-        }
+       return restSchema;
+    }
 
-        private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentStructure input)
-        {
-            ContentStructure m = input.ToModel();
+    private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentStructure input)
+    {
+        ContentStructure m = input.ToModel();
 
-            await storage.CreateAsync(m);
+        await storage.CreateAsync(m);
 
-            return new ResourceCreated() { Id = m.Id };
-        }
+        return new ResourceCreated() { Id = m.Id };
+    }
 
-        private static async Task MapUpdate(HttpContext context, IStructureStorage storage, RestContentStructure input)
-        {
-            ContentStructure m = input.ToModel();
+    private static async Task MapUpdate(HttpContext context, IStructureStorage storage, RestContentStructure input)
+    {
+        ContentStructure m = input.ToModel();
 
-            await storage.UpdateAsync(m);
-        }
+        await storage.UpdateAsync(m);
     }
 }

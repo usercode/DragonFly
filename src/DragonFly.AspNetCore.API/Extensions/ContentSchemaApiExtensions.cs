@@ -17,67 +17,66 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas
+namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
+
+static class ContentSchemaApiExtensions
 {
-    static class ContentSchemaApiExtensions
+    public static void MapContentSchemaRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapContentSchemaRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapPost("api/schema/query", MapQuery);
-            endpoints.MapGet("api/schema/{id:guid}", MapGetById);
-            endpoints.MapGet("api/schema/{name}", MapGetByName);            
-            endpoints.MapPost("api/schema", MapCreate);
-            endpoints.MapPut("api/schema", MapUpdate);
-        }
+        endpoints.MapPost("api/schema/query", MapQuery);
+        endpoints.MapGet("api/schema/{id:guid}", MapGetById);
+        endpoints.MapGet("api/schema/{name}", MapGetByName);            
+        endpoints.MapPost("api/schema", MapCreate);
+        endpoints.MapPut("api/schema", MapUpdate);
+    }
 
-        private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
-        {
-            QueryResult<ContentSchema> items = await storage
-                                                    .QuerySchemasAsync();
+    private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
+    {
+        QueryResult<ContentSchema> items = await storage
+                                                .QuerySchemasAsync();
 
-            QueryResult<RestContentSchema> restQueryResult = new QueryResult<RestContentSchema>();
-            restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-            restQueryResult.Offset = items.Offset;
-            restQueryResult.Count = items.Count;
-            restQueryResult.TotalCount = items.TotalCount;
+        QueryResult<RestContentSchema> restQueryResult = new QueryResult<RestContentSchema>();
+        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
+        restQueryResult.Offset = items.Offset;
+        restQueryResult.Count = items.Count;
+        restQueryResult.TotalCount = items.TotalCount;
 
-            return restQueryResult;
-        }
+        return restQueryResult;
+    }
 
-        private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)
-        {
-            ContentSchema schema = await storage.GetSchemaAsync(id);
+    private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)
+    {
+        ContentSchema schema = await storage.GetSchemaAsync(id);
 
-            RestContentSchema restSchema = schema.ToRest();
+        RestContentSchema restSchema = schema.ToRest();
 
-            return restSchema;
-        }
+        return restSchema;
+    }
 
-        private static async Task<RestContentSchema> MapGetByName(HttpContext context, ISchemaStorage storage, string name)
-        {
-            ContentSchema schema = await storage.GetSchemaAsync(name);
+    private static async Task<RestContentSchema> MapGetByName(HttpContext context, ISchemaStorage storage, string name)
+    {
+        ContentSchema schema = await storage.GetSchemaAsync(name);
 
-            RestContentSchema restSchema = schema.ToRest();
+        RestContentSchema restSchema = schema.ToRest();
 
-            return restSchema;
-        }
+        return restSchema;
+    }
 
-        private static async Task<ResourceCreated> MapCreate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
-        {
-            ContentSchema m = input.ToModel();
+    private static async Task<ResourceCreated> MapCreate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
+    {
+        ContentSchema m = input.ToModel();
 
-            await storage.CreateAsync(m);
+        await storage.CreateAsync(m);
 
-            var result = new ResourceCreated() { Id = m.Id };
+        var result = new ResourceCreated() { Id = m.Id };
 
-            return result;
-        }
+        return result;
+    }
 
-        private static async Task MapUpdate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
-        {
-            ContentSchema m = input.ToModel();
+    private static async Task MapUpdate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
+    {
+        ContentSchema m = input.ToModel();
 
-            await storage.UpdateAsync(m);
-        }
+        await storage.UpdateAsync(m);
     }
 }

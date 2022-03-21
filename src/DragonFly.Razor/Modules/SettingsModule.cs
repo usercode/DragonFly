@@ -5,24 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Modules
+namespace DragonFly.Razor.Modules;
+
+/// <summary>
+/// SettingsModule
+/// </summary>
+public class SettingsModule : ClientModule
 {
-    /// <summary>
-    /// SettingsModule
-    /// </summary>
-    public class SettingsModule : ClientModule
+    public override string Name => "Settings";
+
+    public override string Description => "Manage settings";
+
+    public override string Author => "DragonFly";
+
+    public override void Init(IDragonFlyApi api)
     {
-        public override string Name => "Settings";
+        api.MainMenu().Add("Settings", "fas fa-tools", "settings");
 
-        public override string Description => "Manage settings";
-
-        public override string Author => "DragonFly";
-
-        public override void Init(IDragonFlyApi api)
-        {
-            api.MainMenu().Add("Settings", "fas fa-tools", "settings");
-
-            api.Settings().Add<ClientModules>("Modules");
-        }
+        api.Settings().Add<ClientModules>("Modules");
     }
 }

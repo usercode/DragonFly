@@ -7,23 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages
+namespace DragonFly.Client.Pages;
+
+public class ContentSchemaListBase : EntityListComponent<ContentSchema>
 {
-    public class ContentSchemaListBase : EntityListComponent<ContentSchema>
+    public ContentSchemaListBase()
     {
-        public ContentSchemaListBase()
-        {
 
-        }
+    }
 
-        protected override string GetNavigationPath(ContentSchema entity)
-        {
-            return $"schema/{entity.Name}";
-        }
+    protected override string GetNavigationPath(ContentSchema entity)
+    {
+        return $"schema/{entity.Name}";
+    }
 
-        protected override async Task RefreshActionAsync()
-        {
-            SearchResult = await ContentService.QuerySchemasAsync();
-        }
+    protected override async Task RefreshActionAsync()
+    {
+        SearchResult = await ContentService.QuerySchemasAsync();
     }
 }

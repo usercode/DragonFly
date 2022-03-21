@@ -5,17 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.MongoDB.Models
+namespace DragonFly.AspNetCore.Identity.MongoDB.Models;
+
+class MongoIdentityRole : Entity
 {
-    class MongoIdentityRole : Entity
+    public MongoIdentityRole()
     {
-        public MongoIdentityRole()
-        {
-            Permissions = new List<string>();
-        }
-
-        public string Name { get; set; }
-
-        public IList<string> Permissions { get; set; }
+        Permissions = new List<string>();
     }
+
+    public string Name { get; set; }
+
+    public IList<string> Permissions { get; set; }
 }

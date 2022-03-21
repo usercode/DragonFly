@@ -13,37 +13,36 @@ using Microsoft.AspNetCore.Http.Json;
 using DragonFly.AspNetCore.API.Exports.Json;
 using System.Text.Json.Serialization;
 
-namespace DragonFly.AspNetCore
+namespace DragonFly.AspNetCore;
+
+public static class StartupExtensions
 {
-    public static class StartupExtensions
+    public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
+        builder.Services.Configure<JsonOptions>(opt =>
         {
-            builder.Services.Configure<JsonOptions>(opt =>
+            foreach (JsonConverter converter in JsonSerializerDefault.Options.Converters)
             {
-                foreach (JsonConverter converter in JsonSerializerDefault.Options.Converters)
-                {
-                    opt.SerializerOptions.Converters.Add(converter);
-                }
-            });
+                opt.SerializerOptions.Converters.Add(converter);
+            }
+        });
 
-            return builder;
-        }
+        return builder;
+    }
 
-        public static IDragonFlyFullBuilder MapRestApi(this IDragonFlyFullBuilder builder)
+    public static IDragonFlyFullBuilder MapRestApi(this IDragonFlyFullBuilder builder)
+    {
+        builder.Endpoints(endpoints =>
         {
-            builder.Endpoints(endpoints =>
-            {
-                endpoints.MapContentItemRestApi();
-                endpoints.MapContentSchemaRestApi();
-                endpoints.MapContentStructureRestApi();
-                endpoints.MapContentNodeRestApi();
-                endpoints.MapAssetRestApi();
-                endpoints.MapAssetFolderRestApi();
-                endpoints.MapWebHookRestApi();
-            });
+            endpoints.MapContentItemRestApi();
+            endpoints.MapContentSchemaRestApi();
+            endpoints.MapContentStructureRestApi();
+            endpoints.MapContentNodeRestApi();
+            endpoints.MapAssetRestApi();
+            endpoints.MapAssetFolderRestApi();
+            endpoints.MapWebHookRestApi();
+        });
 
-            return builder;
-        }
+        return builder;
     }
 }

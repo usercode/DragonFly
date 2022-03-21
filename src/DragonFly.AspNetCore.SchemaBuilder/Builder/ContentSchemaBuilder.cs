@@ -7,94 +7,93 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.SchemaBuilder
-{
-    /// <summary>
-    /// ContentSchemaBuilder
-    /// </summary>
-    public class ContentSchemaBuilder : IContentSchemaBuilder
-    {
-        public ContentSchemaBuilder(ISchemaStorage schemaStorage)
-        {
-            Storage = schemaStorage;
+namespace DragonFly.AspNetCore.SchemaBuilder;
 
-            _schema = new Dictionary<Type, ContentSchema>();
+/// <summary>
+/// ContentSchemaBuilder
+/// </summary>
+public class ContentSchemaBuilder : IContentSchemaBuilder
+{
+    public ContentSchemaBuilder(ISchemaStorage schemaStorage)
+    {
+        Storage = schemaStorage;
+
+        _schema = new Dictionary<Type, ContentSchema>();
+    }
+
+    /// <summary>
+    /// Schema
+    /// </summary>
+    private ISchemaStorage Storage { get; }
+
+    private IDictionary<Type, ContentSchema> _schema;
+
+    public async Task BuildAsync<T>()
+    {
+        Type type = typeof(T);
+
+        ContentSchemaAttribute? schemaAttribute = type.GetCustomAttribute<ContentSchemaAttribute>();
+
+        if (schemaAttribute == null)
+        {
+            throw new Exception($"The type {type.Name} needs the ContentSchemaAttribute.");
         }
 
-        /// <summary>
-        /// Schema
-        /// </summary>
-        private ISchemaStorage Storage { get; }
+        string schemaName = type.Name;
 
-        private IDictionary<Type, ContentSchema> _schema;
-
-        public async Task BuildAsync<T>()
+        if (schemaAttribute.SchemaName != null)
         {
-            Type type = typeof(T);
+            schemaName = schemaAttribute.SchemaName;
+        }
 
-            ContentSchemaAttribute? schemaAttribute = type.GetCustomAttribute<ContentSchemaAttribute>();
+        //load schema
+        ContentSchema schema = await Storage.GetSchemaAsync(schemaName);
 
-            if (schemaAttribute == null)
+        if (schema == null)
+        {
+            schema = new ContentSchema(type.Name);
+        }
+        else
+        {
+            schema.Fields.Clear();
+        }
+
+        IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
+
+        foreach (PropertyInfo property in type.GetProperties())
+        {
+            ContentFieldAttribute? fieldAttribute = property.GetCustomAttribute<ContentFieldAttribute>();
+
+            if (fieldAttribute == null)
             {
-                throw new Exception($"The type {type.Name} needs the ContentSchemaAttribute.");
+                continue;
             }
 
-            string schemaName = type.Name;
+            Type fieldType = property.PropertyType;
 
-            if (schemaAttribute.SchemaName != null)
+            if (fieldAttribute.FieldType != null)
             {
-                schemaName = schemaAttribute.SchemaName;
+                fieldType = fieldAttribute.FieldType;
             }
 
-            //load schema
-            ContentSchema schema = await Storage.GetSchemaAsync(schemaName);
-
-            if (schema == null)
+            if (allFieldTypes.Contains(fieldType))
             {
-                schema = new ContentSchema(type.Name);
+                schema.AddField(property.Name, property.PropertyType);
             }
-            else
-            {
-                schema.Fields.Clear();
-            }
+        }
 
-            IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
+        if (schema.IsNew())
+        {
+            await Storage.CreateAsync(schema);
+        }
+        else
+        {
+            await Storage.UpdateAsync(schema);
+        }
 
-            foreach (PropertyInfo property in type.GetProperties())
-            {
-                ContentFieldAttribute? fieldAttribute = property.GetCustomAttribute<ContentFieldAttribute>();
-
-                if (fieldAttribute == null)
-                {
-                    continue;
-                }
-
-                Type fieldType = property.PropertyType;
-
-                if (fieldAttribute.FieldType != null)
-                {
-                    fieldType = fieldAttribute.FieldType;
-                }
-
-                if (allFieldTypes.Contains(fieldType))
-                {
-                    schema.AddField(property.Name, property.PropertyType);
-                }
-            }
-
-            if (schema.IsNew())
-            {
-                await Storage.CreateAsync(schema);
-            }
-            else
-            {
-                await Storage.UpdateAsync(schema);
-            }
-
-            if (_schema.TryAdd(type, schema) == false)
-            {
-                throw new Exception($"The type '{type.Name}' already exists.");
-            }
+        if (_schema.TryAdd(type, schema) == false)
+        {
+            throw new Exception($"The type '{type.Name}' already exists.");
         }
     }
 }

@@ -6,15 +6,14 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor
-{
-    public static class DragonFlyBuilderExtensions
-    {
-        public static IDragonFlyBuilder AddRazorRouting(this IDragonFlyBuilder builder)
-        {
-            RazorRoutingManager.Default.Items.Add(Assembly.GetCallingAssembly());
+namespace DragonFly.Razor;
 
-            return builder;
-        }
+public static class DragonFlyBuilderExtensions
+{
+    public static IDragonFlyBuilder AddRazorRouting(this IDragonFlyBuilder builder)
+    {
+        RazorRoutingManager.Default.Items.Add(Assembly.GetCallingAssembly());
+
+        return builder;
     }
 }

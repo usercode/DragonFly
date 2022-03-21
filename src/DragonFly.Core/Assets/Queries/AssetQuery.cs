@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Assets.Queries
+namespace DragonFly.Core.Assets.Queries;
+
+public class AssetQuery
 {
-    public class AssetQuery
+    public AssetQuery()
     {
-        public AssetQuery()
-        {
-            Pattern = string.Empty;
-            Take = 50;
-        }
-
-        public int Skip { get; set; }
-
-        public int Take { get; set; }
-
-        public string Pattern { get; set; }
-
-        public Guid? Folder { get; set; }
+        Pattern = string.Empty;
+        Take = 50;
     }
+
+    public int Skip { get; set; }
+
+    public int Take { get; set; }
+
+    public string Pattern { get; set; }
+
+    public Guid? Folder { get; set; }
 }

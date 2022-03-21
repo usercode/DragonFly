@@ -4,16 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.AspNetCore.API.Models
+namespace DragonFly.AspNetCore.API.Models;
+
+public class RestContentNode : RestContentBase
 {
-    public class RestContentNode : RestContentBase
+    public RestContentNode()
     {
-        public RestContentNode()
-        {
-        }
-
-        public Guid? Structure { get; set; }
-
-        public RestContentNode Parent { get; set; }
     }
+
+    public Guid? Structure { get; set; }
+
+    public RestContentNode Parent { get; set; }
 }

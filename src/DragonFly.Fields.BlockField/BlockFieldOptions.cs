@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Fields.BlockField
+namespace DragonFly.Fields.BlockField;
+
+public class BlockFieldOptions : ContentFieldOptions
 {
-    public class BlockFieldOptions : ContentFieldOptions
+    public override ContentField CreateContentField()
     {
-        public override ContentField CreateContentField()
-        {
-            return new BlockField();
-        }
+        return new BlockField();
     }
 }

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public class ReferenceFieldOptions : ContentFieldOptions
 {
-    public class ReferenceFieldOptions : ContentFieldOptions
+
+
+    public override ContentField CreateContentField()
     {
-
-
-        public override ContentField CreateContentField()
-        {
-            return new ReferenceField();
-        }
+        return new ReferenceField();
     }
 }

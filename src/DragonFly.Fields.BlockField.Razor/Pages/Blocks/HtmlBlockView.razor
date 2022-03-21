@@ -1,6 +1,7 @@
 ﻿@inherits BlockComponent<HtmlBlock>
 
 	<TinyMCE.Blazor.Editor 
+			Field="() => Block.HtmlText"
 			@bind-Value="Block.HtmlText" 
 			Conf="editorConf"
 			style="width:100%; height:100%" />

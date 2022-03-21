@@ -8,100 +8,99 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Identity.AspNetCore.Authorization
+namespace DragonFly.Identity.AspNetCore.Authorization;
+
+/// <summary>
+/// IdentityStorageAuthorization
+/// </summary>
+class IdentityServiceAuthorization : IIdentityService
 {
-    /// <summary>
-    /// IdentityStorageAuthorization
-    /// </summary>
-    class IdentityServiceAuthorization : IIdentityService
+    public IdentityServiceAuthorization(
+        IIdentityService identityService,
+        IDragonFlyApi api
+        )
     {
-        public IdentityServiceAuthorization(
-            IIdentityService identityService,
-            IDragonFlyApi api
-            )
-        {
-            IdentityService = identityService;
-            Api = api;
-        }
+        IdentityService = identityService;
+        Api = api;
+    }
 
-        /// <summary>
-        /// IdentityService
-        /// </summary>
-        public IIdentityService IdentityService { get; }
+    /// <summary>
+    /// IdentityService
+    /// </summary>
+    public IIdentityService IdentityService { get; }
 
-        /// <summary>
-        /// PermissionService
-        /// </summary>
-        public IDragonFlyApi Api { get; }
+    /// <summary>
+    /// PermissionService
+    /// </summary>
+    public IDragonFlyApi Api { get; }
 
-        public async Task ChangePasswordAsync(Guid userId, string newPassword)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.PasswordChange);
+    public async Task ChangePasswordAsync(Guid userId, string newPassword)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.PasswordChange);
 
-            await IdentityService.ChangePasswordAsync(userId, newPassword);
-        }
+        await IdentityService.ChangePasswordAsync(userId, newPassword);
+    }
 
-        public async Task CreateRoleAsync(IdentityRole role)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.RoleCreate);
+    public async Task CreateRoleAsync(IdentityRole role)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.RoleCreate);
 
-            await IdentityService.CreateRoleAsync(role);
-        }
+        await IdentityService.CreateRoleAsync(role);
+    }
 
-        public async Task CreateUserAsync(IdentityUser user, string password)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.UserCreate);
+    public async Task CreateUserAsync(IdentityUser user, string password)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.UserCreate);
 
-            await IdentityService.CreateUserAsync(user, password);
-        }
+        await IdentityService.CreateUserAsync(user, password);
+    }
 
-        public async Task<IdentityRole> GetRoleAsync(Guid id)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.RoleRead);
+    public async Task<IdentityRole> GetRoleAsync(Guid id)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.RoleRead);
 
-            return await IdentityService.GetRoleAsync(id);
-        }
+        return await IdentityService.GetRoleAsync(id);
+    }
 
-        public async Task<IEnumerable<IdentityRole>> GetRolesAsync()
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.RoleQuery);
+    public async Task<IEnumerable<IdentityRole>> GetRolesAsync()
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.RoleQuery);
 
-            return await IdentityService.GetRolesAsync();
-        }
+        return await IdentityService.GetRolesAsync();
+    }
 
-        public async Task<IdentityUser> GetUserAsync(string username)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.UserRead);
+    public async Task<IdentityUser> GetUserAsync(string username)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.UserRead);
 
-            return await IdentityService.GetUserAsync(username);
-        }
+        return await IdentityService.GetUserAsync(username);
+    }
 
-        public async Task<IdentityUser> GetUserAsync(Guid id)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.UserRead);
+    public async Task<IdentityUser> GetUserAsync(Guid id)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.UserRead);
 
-            return await IdentityService.GetUserAsync(id);
-        }
+        return await IdentityService.GetUserAsync(id);
+    }
 
-        public async Task<IEnumerable<IdentityUser>> GetUsersAsync()
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.UserQuery);
+    public async Task<IEnumerable<IdentityUser>> GetUsersAsync()
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.UserQuery);
 
-            return await IdentityService.GetUsersAsync();
-        }
+        return await IdentityService.GetUsersAsync();
+    }
 
-        public async Task UpdateRoleAsync(IdentityRole role)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.RoleUpdate);
+    public async Task UpdateRoleAsync(IdentityRole role)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.RoleUpdate);
 
-            await IdentityService.UpdateRoleAsync(role);
-        }
+        await IdentityService.UpdateRoleAsync(role);
+    }
 
-        public async Task UpdateUserAsync(IdentityUser user)
-        {
-            await Api.AuthorizeAsync(IdentityPermissions.UserUpdate);
+    public async Task UpdateUserAsync(IdentityUser user)
+    {
+        await Api.AuthorizeAsync(IdentityPermissions.UserUpdate);
 
-            await IdentityService.UpdateUserAsync(user);
-        }
+        await IdentityService.UpdateUserAsync(user);
     }
 }

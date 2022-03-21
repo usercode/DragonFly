@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.Settings.Modules
+namespace DragonFly.Razor.Pages.Settings.Modules;
+
+public partial class ClientModules
 {
-    public partial class ClientModules
-    {
-        
-    }
+    
 }

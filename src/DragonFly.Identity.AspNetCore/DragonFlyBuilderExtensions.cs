@@ -25,59 +25,58 @@ using DragonFly.Permissions;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.API.Middlewares.Logins;
 
-namespace DragonFly.Identity.AspNetCore.MongoDB
+namespace DragonFly.Identity.AspNetCore.MongoDB;
+
+public static class DragonFlyBuilderExtensions
 {
-    public static class DragonFlyBuilderExtensions
+    public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
+        builder.Services.AddTransient<ILoginService, LoginService>();
+        builder.Services.AddTransient<IIdentityService, IdentityService>();
+
+        builder.Services.AddSingleton<IPermissionAuthorizationService, PermissionAuthorizationService>();
+        builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
+
+        builder.Services.AddSingleton<MongoIdentityStore>();
+
+        builder.Services
+                        .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                        .AddCookie();
+
+        builder.Services.AddAuthorization();
+
+        builder.Services.Decorate<IIdentityService, IdentityServiceAuthorization>();
+
+        builder.Init(api =>
         {
-            builder.Services.AddTransient<ILoginService, LoginService>();
-            builder.Services.AddTransient<IIdentityService, IdentityService>();
+            api.Permission()
+                            .Add("User", x => x
+                                            .Add(IdentityPermissions.UserRead, description: "Read user", sortkey: 0, childs: x => x
+                                                    .Add(IdentityPermissions.UserQuery, description: "Query user"))
+                                            .Add(IdentityPermissions.UserCreate, description: "Create user", sortkey: 1)
+                                            .Add(IdentityPermissions.UserUpdate, description: "Update user", sortkey: 2)
+                                            .Add(IdentityPermissions.UserDelete, description: "Delete user", sortkey: 3)
+                                            .Add(IdentityPermissions.PasswordChange, description: "Change password", sortkey: 4)
+                                            )
+                            .Add("Role", x => x
+                                            .Add(IdentityPermissions.RoleRead, description: "Read role", sortkey: 0, childs: x => x
+                                                    .Add(IdentityPermissions.RoleQuery, description: "Query role"))
+                                            .Add(IdentityPermissions.RoleCreate, description: "Create role", sortkey: 1)
+                                            .Add(IdentityPermissions.RoleUpdate, description: "Update role", sortkey: 2)
+                                            .Add(IdentityPermissions.RoleDelete, description: "Delete role", sortkey: 3)
+                            );
+        });
 
-            builder.Services.AddSingleton<IPermissionAuthorizationService, PermissionAuthorizationService>();
-            builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
+        builder.PostInit<SeedDataAction>();
 
-            builder.Services.AddSingleton<MongoIdentityStore>();
+        return builder;
+    }
 
-            builder.Services
-                            .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                            .AddCookie();
+    public static IDragonFlyFullBuilder MapIdentity(this IDragonFlyFullBuilder builder)
+    {
+        builder.PreAuthBuilder(x => x.UseMiddleware<LoginMiddleware>());
+        builder.Endpoints(x => x.MapIdentityApi());
 
-            builder.Services.AddAuthorization();
-
-            builder.Services.Decorate<IIdentityService, IdentityServiceAuthorization>();
-
-            builder.Init(api =>
-            {
-                api.Permission()
-                                .Add("User", x => x
-                                                .Add(IdentityPermissions.UserRead, description: "Read user", sortkey: 0, childs: x => x
-                                                        .Add(IdentityPermissions.UserQuery, description: "Query user"))
-                                                .Add(IdentityPermissions.UserCreate, description: "Create user", sortkey: 1)
-                                                .Add(IdentityPermissions.UserUpdate, description: "Update user", sortkey: 2)
-                                                .Add(IdentityPermissions.UserDelete, description: "Delete user", sortkey: 3)
-                                                .Add(IdentityPermissions.PasswordChange, description: "Change password", sortkey: 4)
-                                                )
-                                .Add("Role", x => x
-                                                .Add(IdentityPermissions.RoleRead, description: "Read role", sortkey: 0, childs: x => x
-                                                        .Add(IdentityPermissions.RoleQuery, description: "Query role"))
-                                                .Add(IdentityPermissions.RoleCreate, description: "Create role", sortkey: 1)
-                                                .Add(IdentityPermissions.RoleUpdate, description: "Update role", sortkey: 2)
-                                                .Add(IdentityPermissions.RoleDelete, description: "Delete role", sortkey: 3)
-                                );
-            });
-
-            builder.PostInit<SeedDataAction>();
-
-            return builder;
-        }
-
-        public static IDragonFlyFullBuilder MapIdentity(this IDragonFlyFullBuilder builder)
-        {
-            builder.PreAuthBuilder(x => x.UseMiddleware<LoginMiddleware>());
-            builder.Endpoints(x => x.MapIdentityApi());
-
-            return builder;
-        }
+        return builder;
     }
 }

@@ -3,44 +3,43 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// EmbedField
+/// </summary>
+[FieldOptions(typeof(EmbedFieldOptions))]
+public class EmbedField : ContentField
 {
-    /// <summary>
-    /// EmbedField
-    /// </summary>
-    [FieldOptions(typeof(EmbedFieldOptions))]
-    public class EmbedField : ContentField
+    public EmbedField()
     {
-        public EmbedField()
-        {
-        }
+    }
 
-        /// <summary>
-        /// ContentEmbedded
-        /// </summary>
-        public ContentEmbedded? ContentEmbedded { get; set; }
+    /// <summary>
+    /// ContentEmbedded
+    /// </summary>
+    public ContentEmbedded? ContentEmbedded { get; set; }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    {
+        if (options is EmbedFieldOptions fieldOptions)
         {
-            if (options is EmbedFieldOptions fieldOptions)
+            if (fieldOptions.IsRequired && ContentEmbedded == null)
             {
-                if (fieldOptions.IsRequired && ContentEmbedded == null)
-                {
-                    context.AddRequireValidation(fieldName);
-                }
+                context.AddRequireValidation(fieldName);
             }
         }
+    }
 
-        public override string ToString()
+    public override string ToString()
+    {
+        if (ContentEmbedded == null)
         {
-            if (ContentEmbedded == null)
-            {
-                return "no embedded content";
-            }
-            else
-            {
-                return $"{ContentEmbedded}";
-            }
+            return "no embedded content";
+        }
+        else
+        {
+            return $"{ContentEmbedded}";
         }
     }
 }

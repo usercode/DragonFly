@@ -7,45 +7,44 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DragonFly.ImageWizard
+namespace DragonFly.ImageWizard;
+
+/// <summary>
+/// DragonFlyLoader
+/// </summary>
+public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 {
-    /// <summary>
-    /// DragonFlyLoader
-    /// </summary>
-    public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
+    public DragonFlyLoader(IAssetStorage storage, IOptions<DragonFlyLoaderOptions> options)
+        : base(options)
     {
-        public DragonFlyLoader(IAssetStorage storage, IOptions<DragonFlyLoaderOptions> options)
-            : base(options)
+        Storage = storage;
+    }
+
+    /// <summary>
+    /// Storage
+    /// </summary>
+    private IAssetStorage Storage { get; }
+
+    public override async Task<OriginalData?> GetAsync(string source, ICachedData? existingCachedImage)
+    {
+        int pos = source.IndexOf("?");
+
+        Guid id;
+
+        //remove query parameter
+        if (pos != -1)
         {
-            Storage = storage;
+            id = Guid.Parse(source.AsSpan(0, pos));
         }
-
-        /// <summary>
-        /// Storage
-        /// </summary>
-        private IAssetStorage Storage { get; }
-
-        public override async Task<OriginalData?> GetAsync(string source, ICachedData? existingCachedImage)
+        else
         {
-            int pos = source.IndexOf("?");
+            id = Guid.Parse(source);
+        }            
 
-            Guid id;
+        Asset asset = await Storage.GetAssetAsync(id);
 
-            //remove query parameter
-            if (pos != -1)
-            {
-                id = Guid.Parse(source.AsSpan(0, pos));
-            }
-            else
-            {
-                id = Guid.Parse(source);
-            }            
+        Stream stream = await Storage.DownloadAsync(id);        
 
-            Asset asset = await Storage.GetAssetAsync(id);
-
-            Stream stream = await Storage.DownloadAsync(id);        
-
-            return new OriginalData(asset.MimeType, stream);
-        }
+        return new OriginalData(asset.MimeType, stream);
     }
 }

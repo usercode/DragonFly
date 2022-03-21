@@ -7,40 +7,39 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Json
+namespace DragonFly.Core.Json;
+
+public class QueryFieldJsonConverter : JsonConverter<FieldQuery>
 {
-    public class QueryFieldJsonConverter : JsonConverter<FieldQuery>
+    public override FieldQuery? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        public override FieldQuery? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (JsonDocument.TryParseValue(ref reader, out JsonDocument? doc))
         {
-            if (JsonDocument.TryParseValue(ref reader, out JsonDocument? doc))
+            if (doc.RootElement.TryGetProperty("Type", out JsonElement typeElement))
             {
-                if (doc.RootElement.TryGetProperty("Type", out JsonElement typeElement))
+                string? typeName = typeElement.GetString();
+
+                if (typeName == null)
                 {
-                    string? typeName = typeElement.GetString();
-
-                    if (typeName == null)
-                    {
-                        return null;
-                    }
-
-                    Type? contentFieldType = ContentFieldManager.Default.GetQueryByName(typeName);
-
-                    if (contentFieldType == null)
-                    {
-                        return null;
-                    }
-
-                    return (FieldQuery?)JsonSerializer.Deserialize(doc.RootElement, contentFieldType, options);
+                    return null;
                 }
-            }           
 
-            return null;
-        }
+                Type? contentFieldType = ContentFieldManager.Default.GetQueryByName(typeName);
 
-        public override void Write(Utf8JsonWriter writer, FieldQuery value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, value.GetType(), options);
-        }
+                if (contentFieldType == null)
+                {
+                    return null;
+                }
+
+                return (FieldQuery?)JsonSerializer.Deserialize(doc.RootElement, contentFieldType, options);
+            }
+        }           
+
+        return null;
+    }
+
+    public override void Write(Utf8JsonWriter writer, FieldQuery value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(writer, value, value.GetType(), options);
     }
 }

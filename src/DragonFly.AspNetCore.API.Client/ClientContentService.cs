@@ -15,23 +15,22 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client
+namespace DragonFly.Client;
+
+/// <summary>
+/// ContentService
+/// </summary>
+public partial class ClientContentService
 {
-    /// <summary>
-    /// ContentService
-    /// </summary>
-    public partial class ClientContentService
+    public ClientContentService(HttpClient httpClient)
     {
-        public ClientContentService(HttpClient httpClient)
-        {
-            Client = httpClient;
-        }
-
-        /// <summary>
-        /// Client
-        /// </summary>
-        public HttpClient Client { get; }
-
-        
+        Client = httpClient;
     }
+
+    /// <summary>
+    /// Client
+    /// </summary>
+    public HttpClient Client { get; }
+
+    
 }

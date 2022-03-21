@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.ContentItems
-{
-    public class ContentPermissions
-    {
-        public const string Content = "Content";
+namespace DragonFly.ContentItems;
 
-        public const string ContentRead = "ContentRead";
-        public const string ContentQuery = "ContentQuery";
-        public const string ContentCreate = "ContentCreate";
-        public const string ContentUpdate = "ContentUpdate";
-        public const string ContentDelete = "ContentDelete";
-        public const string ContentPublish = "ContentPublish";
-        public const string ContentUnpublish = "ContentUnpublish";
-    }
+public class ContentPermissions
+{
+    public const string Content = "Content";
+
+    public const string ContentRead = "ContentRead";
+    public const string ContentQuery = "ContentQuery";
+    public const string ContentCreate = "ContentCreate";
+    public const string ContentUpdate = "ContentUpdate";
+    public const string ContentDelete = "ContentDelete";
+    public const string ContentPublish = "ContentPublish";
+    public const string ContentUnpublish = "ContentUnpublish";
 }

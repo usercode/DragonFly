@@ -6,18 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.WebHooks
+namespace DragonFly.Core.WebHooks;
+
+public interface IWebHookStorage
 {
-    public interface IWebHookStorage
-    {
-        Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query);
+    Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query);
 
-        Task<WebHook> GetAsync(Guid id);
+    Task<WebHook> GetAsync(Guid id);
 
-        Task CreateAsync(WebHook webHook);
+    Task CreateAsync(WebHook webHook);
 
-        Task UpdateAsync(WebHook webHook);
+    Task UpdateAsync(WebHook webHook);
 
-        Task DeleteAsync(WebHook webHook);
-    }
+    Task DeleteAsync(WebHook webHook);
 }

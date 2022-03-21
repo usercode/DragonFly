@@ -6,12 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.ContentItems.Fields
-{
-    public interface IFieldComponent : IComponent
-    {
-        ContentField Field { get; }
+namespace DragonFly.Razor.Pages.ContentItems.Fields;
 
-        ContentFieldOptions Options { get; }
-    }
+public interface IFieldComponent : IComponent
+{
+    ContentField Field { get; }
+
+    ContentFieldOptions Options { get; }
 }

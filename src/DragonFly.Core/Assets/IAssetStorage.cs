@@ -7,29 +7,28 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage
+namespace DragonFly.Storage;
+
+/// <summary>
+/// IAssetStorage
+/// </summary>
+public interface IAssetStorage
 {
-    /// <summary>
-    /// IAssetStorage
-    /// </summary>
-    public interface IAssetStorage
-    {
-        Task<Asset> GetAssetAsync(Guid id);
+    Task<Asset> GetAssetAsync(Guid id);
 
-        Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery);
+    Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery);
 
-        Task CreateAsync(Asset asset);
+    Task CreateAsync(Asset asset);
 
-        Task UpdateAsync(Asset asset);
+    Task UpdateAsync(Asset asset);
 
-        Task DeleteAsync(Guid id);
+    Task DeleteAsync(Guid id);
 
-        Task PublishAsync(Guid id);
+    Task PublishAsync(Guid id);
 
-        Task UploadAsync(Guid id, string mimetype, Stream stream);
+    Task UploadAsync(Guid id, string mimetype, Stream stream);
 
-        Task<Stream> DownloadAsync(Guid id);
+    Task<Stream> DownloadAsync(Guid id);
 
-        Task ApplyMetadataAsync(Guid id);
-    }
+    Task ApplyMetadataAsync(Guid id);
 }

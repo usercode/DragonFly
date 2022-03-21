@@ -7,32 +7,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentStructures
+namespace DragonFly.Core.ContentStructures;
+
+/// <summary>
+/// IStructureStorage
+/// </summary>
+public interface IStructureStorage
 {
-    /// <summary>
-    /// IStructureStorage
-    /// </summary>
-    public interface IStructureStorage
-    {
-        //ContentStructure
+    //ContentStructure
 
-        Task CreateAsync(ContentStructure structure);
+    Task CreateAsync(ContentStructure structure);
 
-        Task UpdateAsync(ContentStructure structure);
+    Task UpdateAsync(ContentStructure structure);
 
-        Task<ContentStructure> GetStructureAsync(Guid id);
+    Task<ContentStructure> GetStructureAsync(Guid id);
 
-        Task<ContentStructure> GetStructureAsync(string name);
+    Task<ContentStructure> GetStructureAsync(string name);
 
-        Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query);
+    Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query);
 
-        
-        //ContentNodes
+    
+    //ContentNodes
 
-        Task CreateAsync(ContentNode node);
+    Task CreateAsync(ContentNode node);
 
-        Task UpdateAsync(ContentNode node);
+    Task UpdateAsync(ContentNode node);
 
-        Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query);
-    }
+    Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query);
 }

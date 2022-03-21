@@ -23,73 +23,72 @@ using System.Threading.Tasks;
 using DragonFly.Storage;
 using DragonFly.AspNetCore.API.Exports.Json;
 
-namespace DragonFly.Client
+namespace DragonFly.Client;
+
+/// <summary>
+/// ContentService
+/// </summary>
+public partial class ClientContentService : IAssetStorage
 {
-    /// <summary>
-    /// ContentService
-    /// </summary>
-    public partial class ClientContentService : IAssetStorage
+    public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
     {
-        public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
-        {
-            var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
+        var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
 
-            return await response.Content.ReadFromJsonAsync<QueryResult<Asset>>(JsonSerializerDefault.Options);
-        }
+        return await response.Content.ReadFromJsonAsync<QueryResult<Asset>>(JsonSerializerDefault.Options);
+    }
 
-        public async Task UploadAsync(Guid id, string mimetype, Stream stream)
-        {
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"api/asset/{id}/upload");
-            requestMessage.Content = new StreamContent(stream);
-            requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(mimetype);
+    public async Task UploadAsync(Guid id, string mimetype, Stream stream)
+    {
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"api/asset/{id}/upload");
+        requestMessage.Content = new StreamContent(stream);
+        requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(mimetype);
 
-            var response = await Client.SendAsync(requestMessage);
+        var response = await Client.SendAsync(requestMessage);
 
-            response.EnsureSuccessStatusCode();
-        }
+        response.EnsureSuccessStatusCode();
+    }
 
-        public async Task<Stream> DownloadAsync(Guid id)
-        {
-            return await Client.GetStreamAsync($"api/asset/{id}/download");
-        }
+    public async Task<Stream> DownloadAsync(Guid id)
+    {
+        return await Client.GetStreamAsync($"api/asset/{id}/download");
+    }
 
-        //assets
-        public async Task<Asset> GetAssetAsync(Guid id)
-        {
-            var response = await Client.GetAsync($"api/asset/{id}");
+    //assets
+    public async Task<Asset> GetAssetAsync(Guid id)
+    {
+        var response = await Client.GetAsync($"api/asset/{id}");
 
-            RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
+        RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
 
-            return restAsset.ToModel();
-        }
+        return restAsset.ToModel();
+    }
 
-        public async Task CreateAsync(Asset entity)
-        {
-            var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
+    public async Task CreateAsync(Asset entity)
+    {
+        var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
-            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
-            entity.Id = result.Id;
-        }
+        entity.Id = result.Id;
+    }
 
-        public async Task PublishAsync(Guid id)
-        {
-            await Client.PostAsync($"api/asset/{id}/publish", new StringContent(string.Empty));
-        }
+    public async Task PublishAsync(Guid id)
+    {
+        await Client.PostAsync($"api/asset/{id}/publish", new StringContent(string.Empty));
+    }
 
-        public async Task UpdateAsync(Asset entity)
-        {
-            await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
-        }
+    public async Task UpdateAsync(Asset entity)
+    {
+        await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
+    }
 
-        public async Task DeleteAsync(Guid id)
-        {
-            await Client.DeleteAsync($"api/asset/{id}");
-        }
+    public async Task DeleteAsync(Guid id)
+    {
+        await Client.DeleteAsync($"api/asset/{id}");
+    }
 
-        public async Task ApplyMetadataAsync(Guid id)
-        {
-            await Client.PostAsync($"api/asset/{id}/metadata", new StringContent(string.Empty));
-        }
+    public async Task ApplyMetadataAsync(Guid id)
+    {
+        await Client.PostAsync($"api/asset/{id}/metadata", new StringContent(string.Empty));
     }
 }

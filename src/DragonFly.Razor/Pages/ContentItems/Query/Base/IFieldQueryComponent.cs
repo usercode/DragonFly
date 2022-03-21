@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.ContentItems.Query
-{
-    public interface IFieldQueryComponent
-    {
-        SchemaField Field { get; }
+namespace DragonFly.Razor.Pages.ContentItems.Query;
 
-        FieldQuery Query { get; }
-    }
+public interface IFieldQueryComponent
+{
+    SchemaField Field { get; }
+
+    FieldQuery Query { get; }
 }

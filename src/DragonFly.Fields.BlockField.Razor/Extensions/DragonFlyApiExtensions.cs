@@ -14,19 +14,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// DragonFlyApiExtensions
+/// </summary>
+public static class DragonFlyApiExtensions
 {
-    /// <summary>
-    /// DragonFlyApiExtensions
-    /// </summary>
-    public static class DragonFlyApiExtensions
+    public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
+        where TBlock : Block, new()
+        where TBlockView : BlockComponent<TBlock>
     {
-        public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
-            where TBlock : Block, new()
-            where TBlockView : BlockComponent<TBlock>
-        {
-            api.BlockField().Add<TBlock>();
-            api.Component().RegisterBlock<TBlockView>();
-        }
+        api.BlockField().Add<TBlock>();
+        api.Component().RegisterBlock<TBlockView>();
     }
 }

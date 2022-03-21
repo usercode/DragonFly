@@ -5,33 +5,32 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor
+namespace DragonFly.Razor;
+
+/// <summary>
+/// RazorRoutingManager
+/// </summary>
+public class RazorRoutingManager
 {
-    /// <summary>
-    /// RazorRoutingManager
-    /// </summary>
-    public class RazorRoutingManager
+    private static RazorRoutingManager? _default;
+
+    public static RazorRoutingManager Default
     {
-        private static RazorRoutingManager? _default;
-
-        public static RazorRoutingManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new RazorRoutingManager();
-                }
-
-                return _default;
+                _default = new RazorRoutingManager();
             }
-        }
 
-        public RazorRoutingManager()
-        {
-            Items = new List<Assembly>();
+            return _default;
         }
-
-        public IList<Assembly> Items { get; }
     }
+
+    public RazorRoutingManager()
+    {
+        Items = new List<Assembly>();
+    }
+
+    public IList<Assembly> Items { get; }
 }

@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
-{
-    [AttributeUsage(AttributeTargets.Class)]
-    public class AssetMetadataAttribute : Attribute
-    {
-        public AssetMetadataAttribute(string name)
-        {
-            Name = name;
-        }
+namespace DragonFly.Content;
 
-        public string Name { get; set; }
+[AttributeUsage(AttributeTargets.Class)]
+public class AssetMetadataAttribute : Attribute
+{
+    public AssetMetadataAttribute(string name)
+    {
+        Name = name;
     }
+
+    public string Name { get; set; }
 }

@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content.Queries
+namespace DragonFly.Content.Queries;
+
+public enum QueryFieldType
 {
-    public enum QueryFieldType
-    {
-        String,
-        Double,
-        Guid
-    }
+    String,
+    Double,
+    Guid
 }

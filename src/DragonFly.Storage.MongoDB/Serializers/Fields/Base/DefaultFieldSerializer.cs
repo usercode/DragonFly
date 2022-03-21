@@ -8,24 +8,23 @@ using System.Threading.Tasks;
 using DragonFly.Storage.Abstractions;
 using MongoDB.Bson.Serialization;
 
-namespace DragonFly.Storage.MongoDB.Fields
+namespace DragonFly.Storage.MongoDB.Fields;
+
+public class DefaultFieldSerializer<TContentField> : FieldSerializer<TContentField>
+    where TContentField : ContentField, new()
 {
-    public class DefaultFieldSerializer<TContentField> : FieldSerializer<TContentField>
-        where TContentField : ContentField, new()
+    public override TContentField Read(SchemaField schemaField, BsonValue bsonValue)
     {
-        public override TContentField Read(SchemaField schemaField, BsonValue bsonValue)
+        if (bsonValue is BsonDocument bsonDocument)
         {
-            if (bsonValue is BsonDocument bsonDocument)
-            {
-                return BsonSerializer.Deserialize<TContentField>(bsonDocument);
-            }
-
-            return new TContentField();
+            return BsonSerializer.Deserialize<TContentField>(bsonDocument);
         }
 
-        public override BsonValue Write(TContentField contentField)
-        {
-            return contentField.ToBsonDocument(contentField.GetType());
-        }
+        return new TContentField();
+    }
+
+    public override BsonValue Write(TContentField contentField)
+    {
+        return contentField.ToBsonDocument(contentField.GetType());
     }
 }

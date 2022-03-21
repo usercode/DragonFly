@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public class ContentFields : Dictionary<string, ContentField>
 {
-    public class ContentFields : Dictionary<string, ContentField>
-    {
-    }
 }

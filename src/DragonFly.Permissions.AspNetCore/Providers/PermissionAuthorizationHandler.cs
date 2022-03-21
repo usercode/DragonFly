@@ -6,39 +6,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore.Providers
+namespace DragonFly.Permissions.AspNetCore.Providers;
+
+class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
-    class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+    public PermissionAuthorizationHandler(IEnumerable<IPermissionAuthorizationService> permissionServices)
     {
-        public PermissionAuthorizationHandler(IEnumerable<IPermissionAuthorizationService> permissionServices)
+        PermissionServices = permissionServices;
+    }
+
+    private IEnumerable<IPermissionAuthorizationService> PermissionServices { get; }
+
+    protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+    {
+        bool result = false;
+
+        foreach (IPermissionAuthorizationService permission in PermissionServices)
         {
-            PermissionServices = permissionServices;
-        }
-
-        private IEnumerable<IPermissionAuthorizationService> PermissionServices { get; }
-
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
-        {
-            bool result = false;
-
-            foreach (IPermissionAuthorizationService permission in PermissionServices)
-            {
-                result = await permission.AuthorizeAsync(context.User, requirement.Permission);
-
-                if (result == true)
-                {
-                    break;
-                }
-            }
+            result = await permission.AuthorizeAsync(context.User, requirement.Permission);
 
             if (result == true)
             {
-                context.Succeed(requirement);
+                break;
             }
-            else
-            {
-                context.Fail();
-            }
+        }
+
+        if (result == true)
+        {
+            context.Succeed(requirement);
+        }
+        else
+        {
+            context.Fail();
         }
     }
 }

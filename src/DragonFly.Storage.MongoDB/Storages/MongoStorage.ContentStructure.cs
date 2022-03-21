@@ -10,128 +10,127 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Data
+namespace DragonFly.Data;
+
+/// <summary>
+/// MongoStorage
+/// </summary>
+public partial class MongoStorage : IStructureStorage
 {
-    /// <summary>
-    /// MongoStorage
-    /// </summary>
-    public partial class MongoStorage : IStructureStorage
+    public MongoStorage()
     {
-        public MongoStorage()
+        
+    }
+
+    public async Task CreateAsync(ContentStructure structure)
+    {
+        if (structure.Id == Guid.Empty)
         {
-            
+            structure.Id = Guid.NewGuid();
         }
 
-        public async Task CreateAsync(ContentStructure structure)
+        DateTime now = DateTimeService.Current();
+
+        structure.CreatedAt = now;
+        structure.ModifiedAt = now;
+
+        MongoContentStructure mongo = structure.ToMongo();
+
+        await ContentStructures.InsertOneAsync(mongo);
+
+        structure.Id = mongo.Id;
+    }
+
+    public async Task UpdateAsync(ContentStructure entity)
+    {
+        entity.ModifiedAt = DateTimeService.Current();
+
+        await ContentStructures.FindOneAndReplaceAsync(Builders<MongoContentStructure>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+    }
+
+    public async Task<ContentStructure> GetStructureAsync(Guid id)
+    {
+        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+
+        if (structure == null)
         {
-            if (structure.Id == Guid.Empty)
-            {
-                structure.Id = Guid.NewGuid();
-            }
-
-            DateTime now = DateTimeService.Current();
-
-            structure.CreatedAt = now;
-            structure.ModifiedAt = now;
-
-            MongoContentStructure mongo = structure.ToMongo();
-
-            await ContentStructures.InsertOneAsync(mongo);
-
-            structure.Id = mongo.Id;
+            throw new Exception($"Structure not found {id}");
         }
 
-        public async Task UpdateAsync(ContentStructure entity)
-        {
-            entity.ModifiedAt = DateTimeService.Current();
+        return structure.ToModel();
+    }
 
-            await ContentStructures.FindOneAndReplaceAsync(Builders<MongoContentStructure>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+    public async Task<ContentStructure> GetStructureAsync(string name)
+    {
+        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
+
+        if (structure == null)
+        {
+            throw new Exception($"Structure not found {name}");
         }
 
-        public async Task<ContentStructure> GetStructureAsync(Guid id)
+        return structure.ToModel();
+    }
+
+    public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
+    {
+        IList<MongoContentStructure> result = await ContentStructures.AsQueryable()
+                                                                            .OrderBy(x => x.Name)
+                                                                            .ToListAsync();
+
+        return new QueryResult<ContentStructure>()
         {
-            MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            Items = result
+                        .Select(x => x.ToModel())
+                        .ToList()
+        };
+    }
 
-            if (structure == null)
-            {
-                throw new Exception($"Structure not found {id}");
-            }
+    public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
+    {
+        IMongoQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
+                                                            .Where(x => x.Structure == query.Structure);
 
-            return structure.ToModel();
+        if (query.ParentId != null)
+        {
+            q = q.Where(x => x.Parent == query.ParentId.Value);
+        }
+        else
+        {
+            q = q.Where(x => x.Parent == null);
         }
 
-        public async Task<ContentStructure> GetStructureAsync(string name)
+        var result = await q.ToListAsync();
+
+        return new QueryResult<ContentNode>()
         {
-            MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
+            Items = result
+                                        .Select(x => x.ToModel())
+                                        .ToList()
+        };
+    }
 
-            if (structure == null)
-            {
-                throw new Exception($"Structure not found {name}");
-            }
-
-            return structure.ToModel();
+    public async Task CreateAsync(ContentNode node)
+    {
+        if (node.Id == Guid.Empty)
+        {
+            node.Id = Guid.NewGuid();
         }
 
-        public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
-        {
-            IList<MongoContentStructure> result = await ContentStructures.AsQueryable()
-                                                                                .OrderBy(x => x.Name)
-                                                                                .ToListAsync();
+        DateTime now = DateTimeService.Current();
 
-            return new QueryResult<ContentStructure>()
-            {
-                Items = result
-                            .Select(x => x.ToModel())
-                            .ToList()
-            };
-        }
+        node.CreatedAt = now;
+        node.ModifiedAt = now;
 
-        public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
-        {
-            IMongoQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
-                                                                .Where(x => x.Structure == query.Structure);
+        MongoContentNode mongo = node.ToMongo();
 
-            if (query.ParentId != null)
-            {
-                q = q.Where(x => x.Parent == query.ParentId.Value);
-            }
-            else
-            {
-                q = q.Where(x => x.Parent == null);
-            }
+        await ContentNodes.InsertOneAsync(mongo);
 
-            var result = await q.ToListAsync();
+        node.Id = mongo.Id;
+    }
 
-            return new QueryResult<ContentNode>()
-            {
-                Items = result
-                                            .Select(x => x.ToModel())
-                                            .ToList()
-            };
-        }
-
-        public async Task CreateAsync(ContentNode node)
-        {
-            if (node.Id == Guid.Empty)
-            {
-                node.Id = Guid.NewGuid();
-            }
-
-            DateTime now = DateTimeService.Current();
-
-            node.CreatedAt = now;
-            node.ModifiedAt = now;
-
-            MongoContentNode mongo = node.ToMongo();
-
-            await ContentNodes.InsertOneAsync(mongo);
-
-            node.Id = mongo.Id;
-        }
-
-        public async Task UpdateAsync(ContentNode node)
-        {
-            
-        }
+    public async Task UpdateAsync(ContentNode node)
+    {
+        
     }
 }

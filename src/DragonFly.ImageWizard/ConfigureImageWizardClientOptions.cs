@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.ImageWizard
+namespace DragonFly.ImageWizard;
+
+public class ConfigureImageWizardClientOptions : IConfigureOptions<ImageWizardClientSettings>
 {
-    public class ConfigureImageWizardClientOptions : IConfigureOptions<ImageWizardClientSettings>
+    public ConfigureImageWizardClientOptions(IOptions<ImageWizardOptions> imageWizardOptions)
     {
-        public ConfigureImageWizardClientOptions(IOptions<ImageWizardOptions> imageWizardOptions)
-        {
-            ImageWizardOptions = imageWizardOptions.Value;
-        }
+        ImageWizardOptions = imageWizardOptions.Value;
+    }
 
-        private ImageWizardOptions ImageWizardOptions { get; }
+    private ImageWizardOptions ImageWizardOptions { get; }
 
-        public void Configure(ImageWizardClientSettings options)
-        {
-            options.Key = ImageWizardOptions.Key;
-        }
+    public void Configure(ImageWizardClientSettings options)
+    {
+        options.Key = ImageWizardOptions.Key;
     }
 }

@@ -18,83 +18,82 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares
+namespace DragonFly.AspNetCore.API.Middlewares;
+
+static class ContentItemApiExtensions
 {
-    static class ContentItemApiExtensions
+    public static void MapContentItemRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapContentItemRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+        endpoints.MapPost("api/content/query", MapQuery);
+        endpoints.MapGet("api/content/{schema}/{id:guid}", MapGet);
+        endpoints.MapPost("api/content", MapCreate);
+        endpoints.MapPut("api/content", MapUpdate);
+        endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
+        endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
+        endpoints.MapPost("api/content/publish", MapPublishQuery);
+    }
+
+    private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentItemQuery query)
+    {
+        QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
+
+        foreach (ContentItem contentItem in contentItems.Items)
         {
-            endpoints.MapPost("api/content/query", MapQuery);
-            endpoints.MapGet("api/content/{schema}/{id:guid}", MapGet);
-            endpoints.MapPost("api/content", MapCreate);
-            endpoints.MapPut("api/content", MapUpdate);
-            endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
-            endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
-            endpoints.MapPost("api/content/publish", MapPublishQuery);
+            contentItem.ApplySchema();
         }
 
-        private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentItemQuery query)
+        QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()
         {
-            QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
+            Offset = contentItems.Offset,
+            Count = contentItems.Count,
+            TotalCount = contentItems.TotalCount,
+            Items = contentItems.Items.Select(x => x.ToRest()).ToList()
+        };
 
-            foreach (ContentItem contentItem in contentItems.Items)
-            {
-                contentItem.ApplySchema();
-            }
+        return resultQuery;
+    }
 
-            QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()
-            {
-                Offset = contentItems.Offset,
-                Count = contentItems.Count,
-                TotalCount = contentItems.TotalCount,
-                Items = contentItems.Items.Select(x => x.ToRest()).ToList()
-            };
+    private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
+    {
+        ContentItem result = await contentStore.GetContentAsync(schema, id);
 
-            return resultQuery;
-        }
+        result.ApplySchema();
 
-        private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
-        {
-            ContentItem result = await contentStore.GetContentAsync(schema, id);
+        RestContentItem restModel = result.ToRest();
 
-            result.ApplySchema();
+        return restModel;
+    }
 
-            RestContentItem restModel = result.ToRest();
+    private static async Task<ResourceCreated> MapCreate(HttpContext context, IContentStorage contentStore, RestContentItem input)
+    {
+        ContentItem model = input.ToModel();
 
-            return restModel;
-        }
+        await contentStore.CreateAsync(model);
 
-        private static async Task<ResourceCreated> MapCreate(HttpContext context, IContentStorage contentStore, RestContentItem input)
-        {
-            ContentItem model = input.ToModel();
+        ResourceCreated result = new ResourceCreated() { Id = model.Id };
 
-            await contentStore.CreateAsync(model);
+        return result;
+    }
 
-            ResourceCreated result = new ResourceCreated() { Id = model.Id };
+    private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, RestContentItem input)
+    {
+        ContentItem model = input.ToModel();
 
-            return result;
-        }
+        await contentStore.UpdateAsync(model);
+    }
 
-        private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, RestContentItem input)
-        {
-            ContentItem model = input.ToModel();
+    private static async Task MapDelete(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    {
+        await contentStore.DeleteAsync(schema, id);
+    }
 
-            await contentStore.UpdateAsync(model);
-        }
+    private static async Task MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    {
+        await contentStore.PublishAsync(schema, id);
+    }
 
-        private static async Task MapDelete(HttpContext context, IContentStorage contentStore, string schema, Guid id)
-        {
-            await contentStore.DeleteAsync(schema, id);
-        }
-
-        private static async Task MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
-        {
-            await contentStore.PublishAsync(schema, id);
-        }
-
-        private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)
-        {
-            await contentStore.PublishQueryAsync(query);
-        }
+    private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)
+    {
+        await contentStore.PublishQueryAsync(query);
     }
 }

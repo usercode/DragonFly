@@ -6,26 +6,25 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Modules
+namespace DragonFly.Razor.Modules;
+
+public abstract class ClientModule : IDragonFlyModule
 {
-    public abstract class ClientModule : IDragonFlyModule
+    public ClientModule()
     {
-        public ClientModule()
-        {
-            Version = GetType().Assembly.GetName().Version;
-        }
+        Version = GetType().Assembly.GetName().Version;
+    }
 
-        public abstract string Name { get; }
+    public abstract string Name { get; }
 
-        public virtual string Description { get; }
+    public virtual string Description { get; }
 
-        public virtual string Author { get; }
+    public virtual string Author { get; }
 
-        public virtual Version Version { get; } 
+    public virtual Version Version { get; } 
 
-        public virtual void Init(IDragonFlyApi api)
-        {
+    public virtual void Init(IDragonFlyApi api)
+    {
 
-        }
     }
 }

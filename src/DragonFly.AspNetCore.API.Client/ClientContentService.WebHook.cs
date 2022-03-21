@@ -19,51 +19,50 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using DragonFly.AspNetCore.API.Exports;
 
-namespace DragonFly.Client
+namespace DragonFly.Client;
+
+/// <summary>
+/// ContentService
+/// </summary>
+public partial class ClientContentService : IWebHookStorage
 {
-    /// <summary>
-    /// ContentService
-    /// </summary>
-    public partial class ClientContentService : IWebHookStorage
+
+    public async Task<WebHook> GetAsync(Guid id)
     {
+        var response = await Client.GetAsync($"api/webhook/{id}");
 
-        public async Task<WebHook> GetAsync(Guid id)
-        {
-            var response = await Client.GetAsync($"api/webhook/{id}");
+        var e = await response.Content.ReadFromJsonAsync<RestWebHook>();
 
-            var e = await response.Content.ReadFromJsonAsync<RestWebHook>();
+        return e.ToModel();
+    }
 
-            return e.ToModel();
-        }
+    public async Task CreateAsync(WebHook entity)
+    {
+        var response = await Client.PostAsJsonAsync($"api/webhook", entity);
 
-        public async Task CreateAsync(WebHook entity)
-        {
-            var response = await Client.PostAsJsonAsync($"api/webhook", entity);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
-            var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        entity.Id = result.Id;
+    }
 
-            entity.Id = result.Id;
-        }
+    public async Task UpdateAsync(WebHook entity)
+    {
+        await Client.PutAsJsonAsync($"api/webhook/{entity.Id}", entity);
+    }
 
-        public async Task UpdateAsync(WebHook entity)
-        {
-            await Client.PutAsJsonAsync($"api/webhook/{entity.Id}", entity);
-        }
+    public async Task DeleteAsync(WebHook webHook)
+    {
+        await Client.DeleteAsync($"api/webhook/{webHook.Id}");
+    }
 
-        public async Task DeleteAsync(WebHook webHook)
-        {
-            await Client.DeleteAsync($"api/webhook/{webHook.Id}");
-        }
+    public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
+    {
+        var response = await Client.PostAsJsonAsync("api/webhook/query", query);
 
-        public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
-        {
-            var response = await Client.PostAsJsonAsync("api/webhook/query", query);
+        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>();
 
-            QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>();
+        IList<WebHook> items = result.Items.Select(x => x.ToModel()).ToList();
 
-            IList<WebHook> items = result.Items.Select(x => x.ToModel()).ToList();
-
-            return new QueryResult<WebHook>() { Items = items };
-        }
+        return new QueryResult<WebHook>() { Items = items };
     }
 }

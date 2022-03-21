@@ -5,163 +5,162 @@ using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Content;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ContentItemExtensions
+/// </summary>
+public static class ContentItemExtensions
 {
-    /// <summary>
-    /// ContentItemExtensions
-    /// </summary>
-    public static class ContentItemExtensions
+    public static ContentField GetField(this IContentElement contentItem, string name)
     {
-        public static ContentField GetField(this IContentElement contentItem, string name)
+        if (contentItem.TryGetField(name, out ContentField? contentField) == false)
         {
-            if (contentItem.TryGetField(name, out ContentField? contentField) == false)
+            throw new Exception($"The field '{name}' was not found.");
+        }
+
+        return contentField;
+    }
+
+    public static T GetField<T>(this IContentElement contentItem, string name)
+       where T : ContentField
+    {
+        return (T)GetField(contentItem, name);
+    }
+
+    public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
+    {
+        if (contentElement.Fields.TryGetValue(name, out contentField) == false)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+    {
+        if (contentElement.Fields.ContainsKey(fieldName) == false)
+        {
+            return false;
+        }
+
+        contentElement.Fields[fieldName] = contentField;
+
+        return true;
+    }
+
+    public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
+    {
+        return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
+    }
+
+    public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
+    {
+        ((SingleValueContentField<T>)contentItem.Fields[name]).Value = value;
+    }
+
+    public static ContentItem CreateContentItem(this ContentSchema schema)
+    {
+        ContentItem item = new ContentItem(schema);
+
+        ApplySchema(item, schema);
+
+        return item;
+    }
+
+    public static ContentEmbedded CreateContentEmbedded(this ContentSchema schema)
+    {
+        ContentEmbedded item = new ContentEmbedded(schema);
+
+        ApplySchema(item, schema);
+
+        return item;
+    }
+
+    public static ArrayFieldItem CreateArrayField(this ArrayFieldOptions options)
+    {
+        ArrayFieldItem item = new ArrayFieldItem();
+
+        ApplySchema(item, options);
+
+        return item;
+    }
+
+    public static void ApplySchema(this ContentItem? contentItem)
+    {
+        if (contentItem == null)
+        {
+            throw new ArgumentNullException(nameof(contentItem));
+        }
+
+        ApplySchema(contentItem, contentItem.Schema);
+
+        contentItem.SchemaVersion = contentItem.Schema.Version;
+    }
+
+    public static void ApplySchema(this IContentElement contentItem, ISchemaElement schema)
+    {
+        if (contentItem == null)
+        {
+            throw new ArgumentNullException(nameof(contentItem));
+        }
+
+        if (schema == null)
+        {
+            throw new ArgumentNullException(nameof(schema));
+        }
+
+        //remove content fields by schema
+        foreach (var field in contentItem.Fields.ToList())
+        {
+            if (schema.Fields.ContainsKey(field.Key) == false)
             {
-                throw new Exception($"The field '{name}' was not found.");
+                contentItem.Fields.Remove(field.Key);
             }
-
-            return contentField;
         }
 
-        public static T GetField<T>(this IContentElement contentItem, string name)
-           where T : ContentField
+        //apply schema to array fields
+        foreach (var field in contentItem.Fields)
         {
-            return (T)GetField(contentItem, name);
-        }
-
-        public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
-        {
-            if (contentElement.Fields.TryGetValue(name, out contentField) == false)
+            if (field.Value is ArrayField arrayField)
             {
-                return false;
-            }
+                ArrayFieldOptions? options = (ArrayFieldOptions?)schema.Fields[field.Key].Options;
 
-            return true;
-        }
-
-        public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
-        {
-            if (contentElement.Fields.ContainsKey(fieldName) == false)
-            {
-                return false;
-            }
-
-            contentElement.Fields[fieldName] = contentField;
-
-            return true;
-        }
-
-        public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
-        {
-            return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
-        }
-
-        public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
-        {
-            ((SingleValueContentField<T>)contentItem.Fields[name]).Value = value;
-        }
-
-        public static ContentItem CreateContentItem(this ContentSchema schema)
-        {
-            ContentItem item = new ContentItem(schema);
-
-            ApplySchema(item, schema);
-
-            return item;
-        }
-
-        public static ContentEmbedded CreateContentEmbedded(this ContentSchema schema)
-        {
-            ContentEmbedded item = new ContentEmbedded(schema);
-
-            ApplySchema(item, schema);
-
-            return item;
-        }
-
-        public static ArrayFieldItem CreateArrayField(this ArrayFieldOptions options)
-        {
-            ArrayFieldItem item = new ArrayFieldItem();
-
-            ApplySchema(item, options);
-
-            return item;
-        }
-
-        public static void ApplySchema(this ContentItem? contentItem)
-        {
-            if (contentItem == null)
-            {
-                throw new ArgumentNullException(nameof(contentItem));
-            }
-
-            ApplySchema(contentItem, contentItem.Schema);
-
-            contentItem.SchemaVersion = contentItem.Schema.Version;
-        }
-
-        public static void ApplySchema(this IContentElement contentItem, ISchemaElement schema)
-        {
-            if (contentItem == null)
-            {
-                throw new ArgumentNullException(nameof(contentItem));
-            }
-
-            if (schema == null)
-            {
-                throw new ArgumentNullException(nameof(schema));
-            }
-
-            //remove content fields by schema
-            foreach (var field in contentItem.Fields.ToList())
-            {
-                if (schema.Fields.ContainsKey(field.Key) == false)
+                if (options == null)
                 {
-                    contentItem.Fields.Remove(field.Key);
+                    throw new Exception("ArrayFieldOptions are not available.");
+                }
+
+                foreach (ArrayFieldItem item in arrayField.Items)
+                {
+                    ApplySchema(item, options);
                 }
             }
+        }
 
-            //apply schema to array fields
-            foreach (var field in contentItem.Fields)
+        //add content field by schema
+        foreach (var field in schema.Fields)
+        {
+            if (contentItem.Fields.ContainsKey(field.Key) == false)
             {
-                if (field.Value is ArrayField arrayField)
+                ContentField? contentField;
+
+                if (field.Value.Options != null)
                 {
-                    ArrayFieldOptions? options = (ArrayFieldOptions?)schema.Fields[field.Key].Options;
-
-                    if (options == null)
-                    {
-                        throw new Exception("ArrayFieldOptions are not available.");
-                    }
-
-                    foreach (ArrayFieldItem item in arrayField.Items)
-                    {
-                        ApplySchema(item, options);
-                    }
+                    contentField = field.Value.Options.CreateContentField();
                 }
-            }
-
-            //add content field by schema
-            foreach (var field in schema.Fields)
-            {
-                if (contentItem.Fields.ContainsKey(field.Key) == false)
+                else
                 {
-                    ContentField? contentField;
-
-                    if (field.Value.Options != null)
-                    {
-                        contentField = field.Value.Options.CreateContentField();
-                    }
-                    else
-                    {
-                        contentField = ContentFieldManager.Default.CreateField(field.Value.FieldType);
-                    }
-
-                    if (contentField == null)
-                    {
-                        throw new Exception($"Could not create the content item. {field.Key}");
-                    }
-
-                    contentItem.Fields.Add(field.Key, contentField);
+                    contentField = ContentFieldManager.Default.CreateField(field.Value.FieldType);
                 }
+
+                if (contentField == null)
+                {
+                    throw new Exception($"Could not create the content item. {field.Key}");
+                }
+
+                contentItem.Fields.Add(field.Key, contentField);
             }
         }
     }

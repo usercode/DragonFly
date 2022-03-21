@@ -8,29 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions
+namespace DragonFly.Permissions;
+
+/// <summary>
+/// DragonFlyApiExtensions
+/// </summary>
+public static class DragonFlyApiExtensions
 {
-    /// <summary>
-    /// DragonFlyApiExtensions
-    /// </summary>
-    public static class DragonFlyApiExtensions
+    public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
     {
-        public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
+        if (DisablePermissionState.Disabled.Value == true)
         {
-            if (DisablePermissionState.Disabled.Value == true)
-            {
-                return;
-            }
+            return;
+        }
 
-            IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
-            IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
+        IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
+        IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-            AuthorizationResult result = await permissionService.AuthorizeAsync(httpContextAccessor.HttpContext!.User, permission);
+        AuthorizationResult result = await permissionService.AuthorizeAsync(httpContextAccessor.HttpContext!.User, permission);
 
-            if (result.Succeeded == false)
-            {
-                throw new Exception($"Access denied: {permission}");
-            }
+        if (result.Succeeded == false)
+        {
+            throw new Exception($"Access denied: {permission}");
         }
     }
 }

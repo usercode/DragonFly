@@ -4,22 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Modules
+namespace DragonFly.Razor.Modules;
+
+/// <summary>
+/// WebHookModule
+/// </summary>
+public class WebHookModule : ClientModule
 {
-    /// <summary>
-    /// WebHookModule
-    /// </summary>
-    public class WebHookModule : ClientModule
+    public override string Name => "Webhook";
+
+    public override string Description => "Manage webhooks";
+
+    public override string Author => "DragonFly";
+
+    public override void Init(IDragonFlyApi api)
     {
-        public override string Name => "Webhook";
-
-        public override string Description => "Manage webhooks";
-
-        public override string Author => "DragonFly";
-
-        public override void Init(IDragonFlyApi api)
-        {
-            api.MainMenu().Add("Webhook", "oi oi-list-rich", "webhook");
-        }
+        api.MainMenu().Add("Webhook", "oi oi-list-rich", "webhook");
     }
 }

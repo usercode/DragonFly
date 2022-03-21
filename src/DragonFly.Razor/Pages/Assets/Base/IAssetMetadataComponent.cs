@@ -6,11 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Assets
-{
-    public interface IAssetMetadataComponent
-    {
+namespace DragonFly.Assets;
 
-        AssetMetadata Metadata { get; }
-    }
+public interface IAssetMetadataComponent
+{
+
+    AssetMetadata Metadata { get; }
 }

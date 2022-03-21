@@ -6,15 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
-{
-    public static class DragonFlyApiBuilder
-    {
-        public static IIdentityService Identity(this IDragonFlyApi api)
-        {
-            IIdentityService service = api.ServiceProvider.GetRequiredService<IIdentityService>();
+namespace DragonFly;
 
-            return service;
-        }
+public static class DragonFlyApiBuilder
+{
+    public static IIdentityService Identity(this IDragonFlyApi api)
+    {
+        IIdentityService service = api.ServiceProvider.GetRequiredService<IIdentityService>();
+
+        return service;
     }
 }

@@ -6,13 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+public static class MenuItemManagerExtensions
 {
-    public static class MenuItemManagerExtensions
+    public static MenuItemManager MainMenu(this IDragonFlyApi api)
     {
-        public static MenuItemManager MainMenu(this IDragonFlyApi api)
-        {
-            return MenuItemManager.Default;
-        }
+        return MenuItemManager.Default;
     }
 }

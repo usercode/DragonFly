@@ -6,16 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// DragonFLyApiExtensions
+/// </summary>
+public static class DragonFLyApiExtensions
 {
-    /// <summary>
-    /// DragonFLyApiExtensions
-    /// </summary>
-    public static class DragonFLyApiExtensions
+    public static BlockFieldManager BlockField(this IDragonFlyApi api)
     {
-        public static BlockFieldManager BlockField(this IDragonFlyApi api)
-        {
-            return BlockFieldManager.Default;
-        }
+        return BlockFieldManager.Default;
     }
 }

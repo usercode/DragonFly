@@ -6,41 +6,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Settings
+namespace DragonFly.Razor.Settings;
+
+public class SettingsManager
 {
-    public class SettingsManager
+    private static SettingsManager _default;
+
+    public static SettingsManager Default
     {
-        private static SettingsManager _default;
-
-        public static SettingsManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new SettingsManager();
-                }
-
-                return _default;
+                _default = new SettingsManager();
             }
-        }
 
-        public SettingsManager()
-        {
-            Items = new List<SettingsItem>();
+            return _default;
         }
+    }
 
-        public IList<SettingsItem> Items { get; }
+    public SettingsManager()
+    {
+        Items = new List<SettingsItem>();
+    }
 
-        public void Add<T>(string title)
-            where T : ComponentBase
-        {
-            Add(title, typeof(T));
-        }
+    public IList<SettingsItem> Items { get; }
 
-        public void Add(string title, Type componentType)
-        {
-            Items.Add(new SettingsItem(title, componentType));
-        }
+    public void Add<T>(string title)
+        where T : ComponentBase
+    {
+        Add(title, typeof(T));
+    }
+
+    public void Add(string title, Type componentType)
+    {
+        Items.Add(new SettingsItem(title, componentType));
     }
 }

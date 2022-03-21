@@ -13,65 +13,64 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Identity.AspNetCore.Services
+namespace DragonFly.Identity.AspNetCore.Services;
+
+class LoginService : ILoginService
 {
-    class LoginService : ILoginService
+    public LoginService(
+        MongoIdentityStore store,
+        IPasswordHashGenerator passwordHashGenerator,
+        IHttpContextAccessor httpcontextaccessor)
     {
-        public LoginService(
-            MongoIdentityStore store,
-            IPasswordHashGenerator passwordHashGenerator,
-            IHttpContextAccessor httpcontextaccessor)
+        Store = store;
+        PasswordHashGenerator = passwordHashGenerator;
+        HttpContextAccessor = httpcontextaccessor;
+    }
+
+    /// <summary>
+    /// Store
+    /// </summary>
+    public MongoIdentityStore Store { get; }
+
+    /// <summary>
+    /// PasswordGenerater
+    /// </summary>
+    public IPasswordHashGenerator PasswordHashGenerator { get; }
+
+    /// <summary>
+    /// HttpContextAccessor
+    /// </summary>
+    public IHttpContextAccessor HttpContextAccessor { get; }
+
+    public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
+    {
+        MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
+
+        if (user == null)
         {
-            Store = store;
-            PasswordHashGenerator = passwordHashGenerator;
-            HttpContextAccessor = httpcontextaccessor;
+            return false;
         }
 
-        /// <summary>
-        /// Store
-        /// </summary>
-        public MongoIdentityStore Store { get; }
+        string hashed = Convert.ToBase64String(PasswordHashGenerator.Generate(user.Username, Convert.FromBase64String(user.Salt), password));
 
-        /// <summary>
-        /// PasswordGenerater
-        /// </summary>
-        public IPasswordHashGenerator PasswordHashGenerator { get; }
-
-        /// <summary>
-        /// HttpContextAccessor
-        /// </summary>
-        public IHttpContextAccessor HttpContextAccessor { get; }
-
-        public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
+        if (user.Password != hashed)
         {
-            MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
-
-            if (user == null)
-            {
-                return false;
-            }
-
-            string hashed = Convert.ToBase64String(PasswordHashGenerator.Generate(user.Username, Convert.FromBase64String(user.Salt), password));
-
-            if (user.Password != hashed)
-            {
-                return false;
-            }
-
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim("UserId", user.Id.ToString()));
-            claims.Add(new Claim("Username", user.Username));
-
-            ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
-
-            await HttpContextAccessor.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
-
-            return true;
+            return false;
         }
 
-        public async Task Logout()
-        {
-            await HttpContextAccessor.HttpContext!.SignOutAsync();
-        }
+        List<Claim> claims = new List<Claim>();
+        claims.Add(new Claim("UserId", user.Id.ToString()));
+        claims.Add(new Claim("Username", user.Username));
+
+        ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
+
+        await HttpContextAccessor.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+
+        return true;
+    }
+
+    public async Task Logout()
+    {
+        await HttpContextAccessor.HttpContext!.SignOutAsync();
     }
 }

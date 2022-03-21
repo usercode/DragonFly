@@ -11,53 +11,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages
+namespace DragonFly.Client.Pages;
+
+public class AssetListBase : EntityListComponent<Asset>
 {
-    public class AssetListBase : EntityListComponent<Asset>
+    public AssetListBase()
     {
-        public AssetListBase()
+        Folders = new List<AssetFolder>();
+    }
+
+    [Inject]
+    public IAssetFolderStorage AssetFolderStore { get; set; }
+
+    /// <summary>
+    /// Folders
+    /// </summary>
+    public IEnumerable<AssetFolder> Folders { get; set; }
+
+    public AssetFolder SelectedFolder { get; set; }
+
+    protected override async Task RefreshActionAsync()
+    {
+        AssetFolderQuery query = new AssetFolderQuery();
+
+        if(SelectedFolder == null)
         {
-            Folders = new List<AssetFolder>();
+            query.RootOnly = true;
+        }
+        else
+        {
+            query.Parent = SelectedFolder.Id;
         }
 
-        [Inject]
-        public IAssetFolderStorage AssetFolderStore { get; set; }
+        Folders = await AssetFolderStore.GetAssetFoldersAsync(query);
 
-        /// <summary>
-        /// Folders
-        /// </summary>
-        public IEnumerable<AssetFolder> Folders { get; set; }
+        SearchResult = await ContentService.GetAssetsAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
+    }
 
-        public AssetFolder SelectedFolder { get; set; }
+    protected async Task OpenFolder(AssetFolder folder)
+    {
+        SelectedFolder = folder;
 
-        protected override async Task RefreshActionAsync()
-        {
-            AssetFolderQuery query = new AssetFolderQuery();
+        await RefreshAsync();
+    }
 
-            if(SelectedFolder == null)
-            {
-                query.RootOnly = true;
-            }
-            else
-            {
-                query.Parent = SelectedFolder.Id;
-            }
-
-            Folders = await AssetFolderStore.GetAssetFoldersAsync(query);
-
-            SearchResult = await ContentService.GetAssetsAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
-        }
-
-        protected async Task OpenFolder(AssetFolder folder)
-        {
-            SelectedFolder = folder;
-
-            await RefreshAsync();
-        }
-
-        protected override string GetNavigationPath(Asset entity)
-        {
-            return $"asset/{entity.Id}";
-        }
+    protected override string GetNavigationPath(Asset entity)
+    {
+        return $"asset/{entity.Id}";
     }
 }

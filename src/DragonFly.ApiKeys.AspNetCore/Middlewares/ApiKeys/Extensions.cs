@@ -8,44 +8,43 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFLy.ApiKeys.AspNetCore.Middlewares
+namespace DragonFLy.ApiKeys.AspNetCore.Middlewares;
+
+static class Extensions
 {
-    static class Extensions
+    public static void MapApiKeyApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapApiKeyApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapGet("apikey/{id:guid}", MapGet);
-            endpoints.MapPost("apikey/query", MapQuery);
-            endpoints.MapPost("apikey", MapCreate);
-            endpoints.MapPut("apikey", MapUpdate);
-        }
+        endpoints.MapGet("apikey/{id:guid}", MapGet);
+        endpoints.MapPost("apikey/query", MapQuery);
+        endpoints.MapPost("apikey", MapCreate);
+        endpoints.MapPut("apikey", MapUpdate);
+    }
 
-        private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
-        {
-            ApiKey entity = await service.GetApiKey(id);
+    private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
+    {
+        ApiKey entity = await service.GetApiKey(id);
 
-            await context.Response.WriteAsJsonAsync(entity);
-        }
+        await context.Response.WriteAsJsonAsync(entity);
+    }
 
-        private static async Task MapCreate(HttpContext context, IApiKeyService service)
-        {
-            ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+    private static async Task MapCreate(HttpContext context, IApiKeyService service)
+    {
+        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
 
-            await service.CreateApiKey(entity);
-        }
+        await service.CreateApiKey(entity);
+    }
 
-        private static async Task MapUpdate(HttpContext context, IApiKeyService service)
-        {
-            ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+    private static async Task MapUpdate(HttpContext context, IApiKeyService service)
+    {
+        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
 
-            await service.UpdateApiKey(entity);
-        }
+        await service.UpdateApiKey(entity);
+    }
 
-        private static async Task MapQuery(HttpContext context, IApiKeyService service)
-        {
-            IEnumerable<ApiKey> items = await service.GetAllApiKeys();
+    private static async Task MapQuery(HttpContext context, IApiKeyService service)
+    {
+        IEnumerable<ApiKey> items = await service.GetAllApiKeys();
 
-            await context.Response.WriteAsJsonAsync(items);
-        }
+        await context.Response.WriteAsJsonAsync(items);
     }
 }

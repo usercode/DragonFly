@@ -6,10 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.ContentSchemas.Fields
+namespace DragonFly.Razor.Pages.ContentSchemas.Fields;
+
+public interface IFieldOptionsComponent : IComponent
 {
-    public interface IFieldOptionsComponent : IComponent
-    {
-        public ContentFieldOptions Options { get; }
-    }
+    public ContentFieldOptions Options { get; }
 }

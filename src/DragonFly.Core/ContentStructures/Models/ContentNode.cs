@@ -5,26 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// ContentNode
+/// </summary>
+public class ContentNode : ContentBase
 {
     /// <summary>
-    /// ContentNode
+    /// StructureName
     /// </summary>
-    public class ContentNode : ContentBase
-    {
-        /// <summary>
-        /// StructureName
-        /// </summary>
-        public Guid? Structure { get; set; }
+    public Guid? Structure { get; set; }
 
-        /// <summary>
-        /// Parent
-        /// </summary>
-        public ContentNode? Parent { get; set; }
+    /// <summary>
+    /// Parent
+    /// </summary>
+    public ContentNode? Parent { get; set; }
 
-        /// <summary>
-        /// Target
-        /// </summary>
-        public IContentNodeTarget? Target { get; set; }
-    }
+    /// <summary>
+    /// Target
+    /// </summary>
+    public IContentNodeTarget? Target { get; set; }
 }

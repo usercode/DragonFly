@@ -6,29 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.Abstractions
+namespace DragonFly.Storage.Abstractions;
+
+/// <summary>
+/// FieldSerializer
+/// </summary>
+/// <typeparam name="TContentField"></typeparam>
+public abstract class FieldSerializer<TContentField> : IFieldSerializer
+    where TContentField : ContentField
 {
-    /// <summary>
-    /// FieldSerializer
-    /// </summary>
-    /// <typeparam name="TContentField"></typeparam>
-    public abstract class FieldSerializer<TContentField> : IFieldSerializer
-        where TContentField : ContentField
+    public Type FieldType => typeof(TContentField);
+
+    public abstract TContentField Read(SchemaField schemaField, BsonValue bsonValue);
+
+    public abstract BsonValue Write(TContentField contentField);
+
+    public BsonValue Write(ContentField contentField)
     {
-        public Type FieldType => typeof(TContentField);
+        return Write((TContentField)contentField);
+    }
 
-        public abstract TContentField Read(SchemaField schemaField, BsonValue bsonValue);
-
-        public abstract BsonValue Write(TContentField contentField);
-
-        public BsonValue Write(ContentField contentField)
-        {
-            return Write((TContentField)contentField);
-        }
-
-        ContentField IFieldSerializer.Read(SchemaField definition, BsonValue bsonvalue)
-        {
-            return Read(definition, bsonvalue);
-        }
+    ContentField IFieldSerializer.Read(SchemaField definition, BsonValue bsonvalue)
+    {
+        return Read(definition, bsonvalue);
     }
 }

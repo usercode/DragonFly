@@ -11,41 +11,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DragonFly.ImageWizard
+namespace DragonFly.ImageWizard;
+
+public static class DragonFlyBuilderExtensions
 {
-    public static class DragonFlyBuilderExtensions
+    public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder)
+        builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetDataUrlService>();
+        builder.Services.AddTransient<IConfigureOptions<ImageWizardClientSettings>, ConfigureImageWizardClientOptions>();
+
+        //ImageWizard
+        builder.Services.AddImageWizard()
+                                .AddDragonFly()
+                                .AddImageSharp()
+                                .AddSvgNet()
+                                .AddDocNET()
+                                .SetFileCache()
+                                ;
+
+        builder.Services.AddImageWizardClient(x => x.BaseUrl = "/dragonfly/image");
+
+        return builder;
+    }
+
+    public static IDragonFlyFullBuilder MapImageWizard(this IDragonFlyFullBuilder builder, bool requireAuthentication = true)
+    {
+        if (requireAuthentication)
         {
-            builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetDataUrlService>();
-            builder.Services.AddTransient<IConfigureOptions<ImageWizardClientSettings>, ConfigureImageWizardClientOptions>();
-
-            //ImageWizard
-            builder.Services.AddImageWizard()
-                                    .AddDragonFly()
-                                    .AddImageSharp()
-                                    .AddSvgNet()
-                                    .AddDocNET()
-                                    .SetFileCache()
-                                    ;
-
-            builder.Services.AddImageWizardClient(x => x.BaseUrl = "/dragonfly/image");
-
-            return builder;
+            builder.Builder(x => x.UseImageWizard());
+        }
+        else
+        {
+            builder.PreAuthBuilder(x => x.UseImageWizard());
         }
 
-        public static IDragonFlyFullBuilder MapImageWizard(this IDragonFlyFullBuilder builder, bool requireAuthentication = true)
-        {
-            if (requireAuthentication)
-            {
-                builder.Builder(x => x.UseImageWizard());
-            }
-            else
-            {
-                builder.PreAuthBuilder(x => x.UseImageWizard());
-            }
-
-            return builder;
-        }
+        return builder;
     }
 }

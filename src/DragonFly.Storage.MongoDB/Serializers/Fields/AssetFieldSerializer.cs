@@ -8,32 +8,31 @@ using System.Text;
 using System.Threading.Tasks;
 using DragonFly.Storage.Abstractions;
 
-namespace DragonFly.Storage.MongoDB.Fields.Base
+namespace DragonFly.Storage.MongoDB.Fields.Base;
+
+public class AssetFieldSerializer : FieldSerializer<AssetField>
 {
-    public class AssetFieldSerializer : FieldSerializer<AssetField>
+    public override AssetField Read(SchemaField schemaField, BsonValue bsonValue)
     {
-        public override AssetField Read(SchemaField schemaField, BsonValue bsonValue)
+        AssetField contentField = new AssetField();
+
+        if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
         {
-            AssetField contentField = new AssetField();
-
-            if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
-            {
-                contentField.Asset = ContentItemProxy.CreateAsset(bsonBinary.ToGuid());
-            }
-
-            return contentField;
+            contentField.Asset = ContentItemProxy.CreateAsset(bsonBinary.ToGuid());
         }
 
-        public override BsonValue Write(AssetField contentField)
+        return contentField;
+    }
+
+    public override BsonValue Write(AssetField contentField)
+    {
+        if (contentField.Asset != null)
         {
-            if (contentField.Asset != null)
-            {
-                return new BsonBinaryData(contentField.Asset.Id, GuidRepresentation.Standard);
-            }
-            else
-            {
-                return BsonNull.Value;
-            }
+            return new BsonBinaryData(contentField.Asset.Id, GuidRepresentation.Standard);
+        }
+        else
+        {
+            return BsonNull.Value;
         }
     }
 }

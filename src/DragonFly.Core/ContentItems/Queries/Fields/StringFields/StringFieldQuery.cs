@@ -4,26 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// StringFieldQuery
+/// </summary>
+public class StringFieldQuery : FieldQuery
 {
     /// <summary>
-    /// StringFieldQuery
+    /// Pattern
     /// </summary>
-    public class StringFieldQuery : FieldQuery
+    public string? Pattern { get; set; }
+
+    /// <summary>
+    /// PatternType
+    /// </summary>
+    public StringFieldQueryType PatternType { get; set; }
+
+    public override bool IsEmpty()
     {
-        /// <summary>
-        /// Pattern
-        /// </summary>
-        public string? Pattern { get; set; }
-
-        /// <summary>
-        /// PatternType
-        /// </summary>
-        public StringFieldQueryType PatternType { get; set; }
-
-        public override bool IsEmpty()
-        {
-            return string.IsNullOrWhiteSpace(Pattern);
-        }
+        return string.IsNullOrWhiteSpace(Pattern);
     }
 }

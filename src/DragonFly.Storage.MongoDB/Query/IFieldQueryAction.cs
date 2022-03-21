@@ -7,13 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Query
+namespace DragonFly.Storage.MongoDB.Query;
+
+/// <summary>
+/// IFieldQueryAction
+/// </summary>
+public interface IFieldQueryAction
 {
-    /// <summary>
-    /// IFieldQueryAction
-    /// </summary>
-    public interface IFieldQueryAction
-    {
-        void Apply(FieldQuery query, FieldQueryActionContext context);
-    }
+    void Apply(FieldQuery query, FieldQueryActionContext context);
 }

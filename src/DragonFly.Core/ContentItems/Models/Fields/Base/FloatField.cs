@@ -4,43 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// FloatField
+/// </summary>
+[FieldOptions(typeof(FloatFieldOptions))]
+public class FloatField : SingleValueContentField<double?>
 {
-    /// <summary>
-    /// FloatField
-    /// </summary>
-    [FieldOptions(typeof(FloatFieldOptions))]
-    public class FloatField : SingleValueContentField<double?>
+    public FloatField()
     {
-        public FloatField()
-        {
 
-        }
+    }
 
-        public FloatField(double? number)
-        {
-            Value = number;
-        }
+    public FloatField(double? number)
+    {
+        Value = number;
+    }
 
-        public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    {
+        if (options is FloatFieldOptions fieldOptions)
         {
-            if (options is FloatFieldOptions fieldOptions)
+            if (fieldOptions.IsRequired && HasValue == false)
             {
-                if (fieldOptions.IsRequired && HasValue == false)
-                {
-                    context.AddRequireValidation(fieldName);
-                }
+                context.AddRequireValidation(fieldName);
+            }
 
-                if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
-                {
-                    context.AddRangeValidation(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
-                }
+            if (Value < fieldOptions.MinValue || Value > fieldOptions.MaxValue)
+            {
+                context.AddRangeValidation(fieldName, fieldOptions.MinValue, fieldOptions.MaxValue);
             }
         }
+    }
 
-        public override string ToString()
-        {
-            return $"{Value}";
-        }
+    public override string ToString()
+    {
+        return $"{Value}";
     }
 }

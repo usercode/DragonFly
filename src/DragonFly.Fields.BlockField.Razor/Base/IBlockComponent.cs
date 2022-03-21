@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Fields.BlockField.Razor
-{
-    public interface IBlockComponent
-    {
-        Block Block { get; }
+namespace DragonFly.Fields.BlockField.Razor;
 
-    }
+public interface IBlockComponent
+{
+    Block Block { get; }
+
 }

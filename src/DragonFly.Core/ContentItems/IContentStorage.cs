@@ -6,27 +6,26 @@ using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
 
-namespace DragonFly.Storage
+namespace DragonFly.Storage;
+
+/// <summary>
+/// IContentStorage
+/// </summary>
+public interface IContentStorage
 {
-    /// <summary>
-    /// IContentStorage
-    /// </summary>
-    public interface IContentStorage
-    {
-        Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query);
-            
-        Task<ContentItem> GetContentAsync(string schema, Guid id);
+    Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query);
+        
+    Task<ContentItem> GetContentAsync(string schema, Guid id);
 
-        Task CreateAsync(ContentItem contentItem);
+    Task CreateAsync(ContentItem contentItem);
 
-        Task UpdateAsync(ContentItem entity);
+    Task UpdateAsync(ContentItem entity);
 
-        Task DeleteAsync(string schema, Guid id);
+    Task DeleteAsync(string schema, Guid id);
 
-        Task PublishQueryAsync(ContentItemQuery query);
+    Task PublishQueryAsync(ContentItemQuery query);
 
-        Task PublishAsync(string schema, Guid id);
+    Task PublishAsync(string schema, Guid id);
 
-        Task UnpublishAsync(string schema, Guid id);
-    }
+    Task UnpublishAsync(string schema, Guid id);
 }

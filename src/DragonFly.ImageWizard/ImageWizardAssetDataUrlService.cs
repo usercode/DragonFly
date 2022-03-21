@@ -8,41 +8,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.ImageWizard
+namespace DragonFly.ImageWizard;
+
+/// <summary>
+/// ImageWizardAssetDataUrlService
+/// </summary>
+public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
 {
-    /// <summary>
-    /// ImageWizardAssetDataUrlService
-    /// </summary>
-    public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
+    public ImageWizardAssetDataUrlService(IImageWizardUrlBuilder urlBuilder)
     {
-        public ImageWizardAssetDataUrlService(IImageWizardUrlBuilder urlBuilder)
+        UrlBuilder = urlBuilder;
+    }
+
+    /// <summary>
+    /// UrlBuilder
+    /// </summary>
+    private IImageWizardUrlBuilder UrlBuilder { get; }
+
+    public string CreateImageUrl(Asset asset, int width, int height)
+    {
+        if (asset.IsPdf())
         {
-            UrlBuilder = urlBuilder;
+            return UrlBuilder.Asset(asset).PageToImage(0).Resize(width, height).BuildUrl();
         }
-
-        /// <summary>
-        /// UrlBuilder
-        /// </summary>
-        private IImageWizardUrlBuilder UrlBuilder { get; }
-
-        public string CreateImageUrl(Asset asset, int width, int height)
+        else if (asset.IsSVG())
         {
-            if (asset.IsPdf())
-            {
-                return UrlBuilder.Asset(asset).PageToImage(0).Resize(width, height).BuildUrl();
-            }
-            else if (asset.IsSVG())
-            {
-                return UrlBuilder.Asset(asset).BuildUrl();
-            }
-            else if (asset.IsImage())
-            {
-                return UrlBuilder.Asset(asset).Resize(width, height).BuildUrl();
-            }            
-            else
-            {
-                return "";
-            }
+            return UrlBuilder.Asset(asset).BuildUrl();
+        }
+        else if (asset.IsImage())
+        {
+            return UrlBuilder.Asset(asset).Resize(width, height).BuildUrl();
+        }            
+        else
+        {
+            return "";
         }
     }
 }

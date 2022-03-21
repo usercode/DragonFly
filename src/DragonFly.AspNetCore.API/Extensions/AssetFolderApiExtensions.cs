@@ -12,32 +12,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders
+namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders;
+
+static class AssetFolderApiExtensions
 {
-    static class AssetFolderApiExtensions
+    public static void MapAssetFolderRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static void MapAssetFolderRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapPost("api/assetfolder/query", MapQuery);
-            endpoints.MapGet("api/assetfolder/{id:guid}", MapGet);
-        }
+        endpoints.MapPost("api/assetfolder/query", MapQuery);
+        endpoints.MapGet("api/assetfolder/{id:guid}", MapGet);
+    }
 
-        private static async Task<IEnumerable<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)
-        {
-            IEnumerable<AssetFolder> assets = await storage.GetAssetFoldersAsync(query);
+    private static async Task<IEnumerable<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)
+    {
+        IEnumerable<AssetFolder> assets = await storage.GetAssetFoldersAsync(query);
 
-            IEnumerable<RestAssetFolder> result = assets.Select(x => x.ToRest()).ToList();
+        IEnumerable<RestAssetFolder> result = assets.Select(x => x.ToRest()).ToList();
 
-            return result;
-        }
+        return result;
+    }
 
-        private static async Task<RestAssetFolder> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
-        {
-            AssetFolder entity = await storage.GetAssetFolderAsync(id);
+    private static async Task<RestAssetFolder> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
+    {
+        AssetFolder entity = await storage.GetAssetFolderAsync(id);
 
-            RestAssetFolder restAsset = entity.ToRest();
+        RestAssetFolder restAsset = entity.ToRest();
 
-           return restAsset;
-        }
+       return restAsset;
     }
 }

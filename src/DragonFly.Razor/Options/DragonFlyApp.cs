@@ -5,31 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor
+namespace DragonFly.Razor;
+
+public class DragonFlyApp
 {
-    public class DragonFlyApp
+    private static DragonFlyApp _default;
+
+    public static DragonFlyApp Default
     {
-        private static DragonFlyApp _default;
-
-        public static DragonFlyApp Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new DragonFlyApp();
-                }
-
-                return _default;
+                _default = new DragonFlyApp();
             }
+
+            return _default;
         }
-
-        public DragonFlyApp()
-        {
-        }
-
-        public Uri ApiBaseUrl { get; set; }
-
-        public Uri ClientBaseUrl { get; set; }
     }
+
+    public DragonFlyApp()
+    {
+    }
+
+    public Uri ApiBaseUrl { get; set; }
+
+    public Uri ClientBaseUrl { get; set; }
 }

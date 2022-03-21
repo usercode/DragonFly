@@ -13,56 +13,55 @@ using DragonFly.Data.Models.WebHooks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
-namespace DragonFly.Data
+namespace DragonFly.Data;
+
+/// <summary>
+/// MongoStore
+/// </summary>
+public partial class MongoStorage : IWebHookStorage
 {
-    /// <summary>
-    /// MongoStore
-    /// </summary>
-    public partial class MongoStorage : IWebHookStorage
+    public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
     {
-        public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
+        IQueryable<MongoWebHook> q = WebHooks.AsQueryable();
+
+        if (query.Event != null)
         {
-            IQueryable<MongoWebHook> q = WebHooks.AsQueryable();
-
-            if (query.Event != null)
-            {
-                q = q.Where(x => x.EventName == query.Event);
-            }
-
-            var items = q.ToList().Select(x => x.ToModel()).ToList();
-
-            return new QueryResult<WebHook>() { Items = items };
+            q = q.Where(x => x.EventName == query.Event);
         }
 
-        public async Task<WebHook> GetAsync(Guid id)
+        var items = q.ToList().Select(x => x.ToModel()).ToList();
+
+        return new QueryResult<WebHook>() { Items = items };
+    }
+
+    public async Task<WebHook> GetAsync(Guid id)
+    {
+        MongoWebHook? result = WebHooks.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+        if(result == null)
         {
-            MongoWebHook? result = WebHooks.AsQueryable().FirstOrDefault(x => x.Id == id);
-
-            if(result == null)
-            {
-                throw new Exception();
-            }
-
-            return result.ToModel();
+            throw new Exception();
         }
 
-        public async Task CreateAsync(WebHook webHook)
-        {
-            MongoWebHook m = webHook.ToMongo();
+        return result.ToModel();
+    }
 
-            await WebHooks.InsertOneAsync(m);
+    public async Task CreateAsync(WebHook webHook)
+    {
+        MongoWebHook m = webHook.ToMongo();
 
-            webHook.Id = m.Id;
-        }
+        await WebHooks.InsertOneAsync(m);
 
-        public async Task UpdateAsync(WebHook webHook)
-        {
-            await WebHooks.ReplaceOneAsync(Builders<MongoWebHook>.Filter.Eq(x=> x.Id, webHook.Id), webHook.ToMongo());
-        }
+        webHook.Id = m.Id;
+    }
 
-        public async Task DeleteAsync(WebHook webHook)
-        {
-            await WebHooks.DeleteOneAsync(Builders<MongoWebHook>.Filter.Eq(x => x.Id, webHook.Id));
-        }
+    public async Task UpdateAsync(WebHook webHook)
+    {
+        await WebHooks.ReplaceOneAsync(Builders<MongoWebHook>.Filter.Eq(x=> x.Id, webHook.Id), webHook.ToMongo());
+    }
+
+    public async Task DeleteAsync(WebHook webHook)
+    {
+        await WebHooks.DeleteOneAsync(Builders<MongoWebHook>.Filter.Eq(x => x.Id, webHook.Id));
     }
 }

@@ -23,58 +23,57 @@ using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using MongoDB.Driver.Linq;
 
-namespace DragonFly.Data
+namespace DragonFly.Data;
+
+/// <summary>
+/// MongoStore
+/// </summary>
+public partial class MongoStorage : IAssetFolderStorage
 {
-    /// <summary>
-    /// MongoStore
-    /// </summary>
-    public partial class MongoStorage : IAssetFolderStorage
+    public async Task<AssetFolder> GetAssetFolderAsync(Guid id)
     {
-        public async Task<AssetFolder> GetAssetFolderAsync(Guid id)
+        MongoAssetFolder? entity = AssetFolders.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+        if (entity == null)
         {
-            MongoAssetFolder? entity = AssetFolders.AsQueryable().FirstOrDefault(x => x.Id == id);
-
-            if (entity == null)
-            {
-                throw new Exception();
-            }
-
-            return entity.ToModel();
+            throw new Exception();
         }
 
-        public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery queryData)
+        return entity.ToModel();
+    }
+
+    public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery queryData)
+    {
+        var query = AssetFolders.AsQueryable();
+
+        if(queryData.RootOnly == true)
         {
-            var query = AssetFolders.AsQueryable();
-
-            if(queryData.RootOnly == true)
-            {
-                query = query.Where(x => x.Parent == null);
-            }
-
-            if (queryData.Parent != null)
-            {
-                query = query.Where(x => x.Parent == queryData.Parent.Value);
-            }
-
-            return query.OrderBy(x=> x.Name).ToList().Select(x => x.ToModel());
+            query = query.Where(x => x.Parent == null);
         }
 
-        public async Task CreateAsync(AssetFolder folder)
+        if (queryData.Parent != null)
         {
-            folder.CreatedAt = DateTimeService.Current();
-            folder.ModifiedAt = folder.CreatedAt;
-
-            MongoAssetFolder mongo = folder.ToMongo();
-
-            await AssetFolders.InsertOneAsync(mongo);
-
-            folder.Id = mongo.Id;
+            query = query.Where(x => x.Parent == queryData.Parent.Value);
         }
 
-        public async Task UpdateAsync(AssetFolder folder)
-        {
-            await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Where(x => x.Id == folder.Id), folder.ToMongo());
+        return query.OrderBy(x=> x.Name).ToList().Select(x => x.ToModel());
+    }
 
-        }
+    public async Task CreateAsync(AssetFolder folder)
+    {
+        folder.CreatedAt = DateTimeService.Current();
+        folder.ModifiedAt = folder.CreatedAt;
+
+        MongoAssetFolder mongo = folder.ToMongo();
+
+        await AssetFolders.InsertOneAsync(mongo);
+
+        folder.Id = mongo.Id;
+    }
+
+    public async Task UpdateAsync(AssetFolder folder)
+    {
+        await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Where(x => x.Id == folder.Id), folder.ToMongo());
+
     }
 }

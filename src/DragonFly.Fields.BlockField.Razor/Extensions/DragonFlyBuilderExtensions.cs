@@ -12,27 +12,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Fields.BlockField.Razor
+namespace DragonFly.Fields.BlockField.Razor;
+
+public static class DragonFlyBuilderExtensions
 {
-    public static class DragonFlyBuilderExtensions
+    public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
+        builder.Services.AddSingleton(BlockFieldManager.Default);
+        builder.Services.AddSingleton<DocumentSerializer>();
+
+        builder.Init(api =>
         {
-            builder.Services.AddSingleton(BlockFieldManager.Default);
-            builder.Services.AddSingleton<DocumentSerializer>();
+            api.RegisterField<BlockField, BlockFieldView>();
 
-            builder.Init(api =>
-            {
-                api.RegisterField<BlockField, BlockFieldView>();
+            api.RegisterBlock<ColumnBlock, ColumnBlockView>();
+            api.RegisterBlock<AssetBlock, AssetBlockView>();
+            api.RegisterBlock<TextBlock, TextBlockView>();
+            api.RegisterBlock<HtmlBlock, HtmlBlockView>();
+            api.RegisterBlock<UnknownBlock, UnknownBlockView>();
+        });           
 
-                api.RegisterBlock<ColumnBlock, ColumnBlockView>();
-                api.RegisterBlock<AssetBlock, AssetBlockView>();
-                api.RegisterBlock<TextBlock, TextBlockView>();
-                api.RegisterBlock<HtmlBlock, HtmlBlockView>();
-                api.RegisterBlock<UnknownBlock, UnknownBlockView>();
-            });           
-
-            return builder;
-        }
+        return builder;
     }
 }

@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Base
-{
-    public class SavingEventArgs : EventArgs
-    {
-        public SavingEventArgs()
-        {
-            CanSave = true;
-        }
+namespace DragonFly.Razor.Base;
 
-        public bool CanSave { get; set; }
+public class SavingEventArgs : EventArgs
+{
+    public SavingEventArgs()
+    {
+        CanSave = true;
     }
+
+    public bool CanSave { get; set; }
 }

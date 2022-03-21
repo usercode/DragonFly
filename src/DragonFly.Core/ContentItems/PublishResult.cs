@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.ContentItems
+namespace DragonFly.Core.ContentItems;
+
+public class PublishResult
 {
-    public class PublishResult
-    {
-        
-    }
+    
 }

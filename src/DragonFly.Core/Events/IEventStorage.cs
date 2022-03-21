@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Events
-{
-    public interface IEventStorage
-    {
-        Task<IEnumerable<EventEntry>> QueryAsync(EventEntryQuery query);
+namespace DragonFly.Core.Events;
 
-        Task SaveAsync(EventEntry dragonFlyEvent);
-    }
+public interface IEventStorage
+{
+    Task<IEnumerable<EventEntry>> QueryAsync(EventEntryQuery query);
+
+    Task SaveAsync(EventEntry dragonFlyEvent);
 }

@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Assets
+namespace DragonFly.Client.Core.Assets;
+
+public interface IAssetPreviewUrlService
 {
-    public interface IAssetPreviewUrlService
-    {
-        string CreateImageUrl(Asset asset, int width, int height);
-    }
+    string CreateImageUrl(Asset asset, int width, int height);
 }

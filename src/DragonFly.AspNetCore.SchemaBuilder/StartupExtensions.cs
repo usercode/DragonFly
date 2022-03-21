@@ -7,15 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore
-{
-    public static class StartupExtensions
-    {
-        public static IDragonFlyBuilder AddSchemaBuilder(this IDragonFlyBuilder builder)
-        {
-            builder.Services.AddSingleton<IContentSchemaBuilder, ContentSchemaBuilder>();
+namespace DragonFly.AspNetCore;
 
-            return builder;
-        }
+public static class StartupExtensions
+{
+    public static IDragonFlyBuilder AddSchemaBuilder(this IDragonFlyBuilder builder)
+    {
+        builder.Services.AddSingleton<IContentSchemaBuilder, ContentSchemaBuilder>();
+
+        return builder;
     }
 }

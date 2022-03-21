@@ -6,28 +6,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Serializers.Options
+namespace DragonFly.Storage.MongoDB.Serializers.Options;
+
+/// <summary>
+/// OptionsSerializer
+/// </summary>
+public abstract class OptionsSerializer<TOptions> : IOptionsSerializer
+    where TOptions : ContentFieldOptions
 {
-    /// <summary>
-    /// OptionsSerializer
-    /// </summary>
-    public abstract class OptionsSerializer<TOptions> : IOptionsSerializer
-        where TOptions : ContentFieldOptions
+    public Type OptionsType => typeof(TOptions);
+
+    public abstract TOptions Read(BsonValue bsonValue);
+    
+    public abstract BsonValue Write(TOptions options);
+
+    BsonValue IOptionsSerializer.Write(ContentFieldOptions options)
     {
-        public Type OptionsType => typeof(TOptions);
+        return Write((TOptions)options);
+    }
 
-        public abstract TOptions Read(BsonValue bsonValue);
-        
-        public abstract BsonValue Write(TOptions options);
-
-        BsonValue IOptionsSerializer.Write(ContentFieldOptions options)
-        {
-            return Write((TOptions)options);
-        }
-
-        ContentFieldOptions IOptionsSerializer.Read(BsonValue bsonvalue)
-        {
-            return Read(bsonvalue);
-        }
+    ContentFieldOptions IOptionsSerializer.Read(BsonValue bsonvalue)
+    {
+        return Read(bsonvalue);
     }
 }

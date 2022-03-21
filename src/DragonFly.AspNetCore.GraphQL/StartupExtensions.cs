@@ -9,37 +9,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore
+namespace DragonFly.AspNetCore;
+
+public static class StartupExtensions
 {
-    public static class StartupExtensions
+    public static IDragonFlyBuilder AddGraphQLApi(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddGraphQLApi(this IDragonFlyBuilder builder)
-        {
 
-            return builder;
-        }
+        return builder;
+    }
 
-        public static IDragonFlyApplicationBuilder UseGraphQLApi(this IDragonFlyApplicationBuilder builder)
+    public static IDragonFlyApplicationBuilder UseGraphQLApi(this IDragonFlyApplicationBuilder builder)
+    {
+        builder.Map("/graphql", x =>
         {
-            builder.Map("/graphql", x =>
+            x.UseRouting();
+            x.UseAuthentication();
+            x.UseAuthorization();
+
+            //x.UseGraphQL<>();
+            //x.UseGraphQLPlayground(new GraphQLPlaygroundOptions
+            //{
+            //    Path = "/ui/playground"                    
+            //});
+
+            x.UseEndpoints(endpoints =>
             {
-                x.UseRouting();
-                x.UseAuthentication();
-                x.UseAuthorization();
-
-                //x.UseGraphQL<>();
-                //x.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-                //{
-                //    Path = "/ui/playground"                    
-                //});
-
-                x.UseEndpoints(endpoints =>
-                {
-                    
-                });
+                
             });
+        });
 
-            return builder;
-        }
+        return builder;
     }
 }

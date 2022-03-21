@@ -14,21 +14,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.Razor
+namespace DragonFly.AspNetCore.Identity.Razor;
+
+public static class DragonFlyBuilderExtensions
 {
-    public static class DragonFlyBuilderExtensions
+    public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
     {
-        public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
-        {
-            builder.AddRazorRouting();
+        builder.AddRazorRouting();
 
-            builder.Services.AddTransient<ILoginService, LoginService>();
-            builder.Services.AddTransient<IIdentityService, IdentityService>();
-            builder.Services.AddTransient<IPermissionService, ClientPermissionService>();
+        builder.Services.AddTransient<ILoginService, LoginService>();
+        builder.Services.AddTransient<IIdentityService, IdentityService>();
+        builder.Services.AddTransient<IPermissionService, ClientPermissionService>();
 
-            builder.Init(api => api.Module().Add<Module>());
+        builder.Init(api => api.Module().Add<Module>());
 
-            return builder;
-        }
+        return builder;
     }
 }

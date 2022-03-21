@@ -11,16 +11,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// DragonFlyApiComponentManagerExtensions
+/// </summary>
+public static class DragonFlyApiComponentManagerExtensions
 {
-    /// <summary>
-    /// DragonFlyApiComponentManagerExtensions
-    /// </summary>
-    public static class DragonFlyApiComponentManagerExtensions
+    public static ComponentManager Component(this IDragonFlyApi api)
     {
-        public static ComponentManager Component(this IDragonFlyApi api)
-        {
-            return ComponentManager.Default;
-        }
+        return ComponentManager.Default;
     }
 }

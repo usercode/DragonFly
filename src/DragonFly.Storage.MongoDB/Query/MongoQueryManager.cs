@@ -6,60 +6,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Storage.MongoDB.Query
+namespace DragonFly.Storage.MongoDB.Query;
+
+/// <summary>
+/// MongoQueryManager
+/// </summary>
+public class MongoQueryManager
 {
-    /// <summary>
-    /// MongoQueryManager
-    /// </summary>
-    public class MongoQueryManager
+    private static MongoQueryManager? _default;
+
+    public static MongoQueryManager Default
     {
-        private static MongoQueryManager? _default;
-
-        public static MongoQueryManager Default
+        get
         {
-            get
+            if (_default == null)
             {
-                if (_default == null)
-                {
-                    _default = new MongoQueryManager();
+                _default = new MongoQueryManager();
 
-                    _default.Register<StringFieldQuery, StringFieldQueryAction>();
-                    _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
-                    _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
-                    _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
-                }
-
-                return _default;
-            }
-        }
-
-        private IDictionary<Type, IFieldQueryAction> _fields;
-
-        public MongoQueryManager()
-        {
-            _fields = new Dictionary<Type, IFieldQueryAction>();
-        }
-
-        public void Register(Type fieldType, IFieldQueryAction queryConverter)
-        {
-            _fields.Add(fieldType, queryConverter);
-        }
-
-        public void Register<TQuery, TQueryConverter>()
-            where TQuery : FieldQuery
-            where TQueryConverter : FieldQueryAction<TQuery>, new()
-        {
-            Register(typeof(TQuery), new TQueryConverter());
-        }
-
-        public IFieldQueryAction GetByType(Type fieldType)
-        {
-            if (_fields.TryGetValue(fieldType, out IFieldQueryAction? queryConverter))
-            {
-                return queryConverter;
+                _default.Register<StringFieldQuery, StringFieldQueryAction>();
+                _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
+                _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
+                _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
             }
 
-            throw new Exception($"Field serializer not found: {fieldType.Name}");
+            return _default;
         }
+    }
+
+    private IDictionary<Type, IFieldQueryAction> _fields;
+
+    public MongoQueryManager()
+    {
+        _fields = new Dictionary<Type, IFieldQueryAction>();
+    }
+
+    public void Register(Type fieldType, IFieldQueryAction queryConverter)
+    {
+        _fields.Add(fieldType, queryConverter);
+    }
+
+    public void Register<TQuery, TQueryConverter>()
+        where TQuery : FieldQuery
+        where TQueryConverter : FieldQueryAction<TQuery>, new()
+    {
+        Register(typeof(TQuery), new TQueryConverter());
+    }
+
+    public IFieldQueryAction GetByType(Type fieldType)
+    {
+        if (_fields.TryGetValue(fieldType, out IFieldQueryAction? queryConverter))
+        {
+            return queryConverter;
+        }
+
+        throw new Exception($"Field serializer not found: {fieldType.Name}");
     }
 }

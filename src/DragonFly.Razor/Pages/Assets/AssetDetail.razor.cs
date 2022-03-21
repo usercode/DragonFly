@@ -13,103 +13,102 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.Assets
+namespace DragonFly.Razor.Pages.Assets;
+
+public class AssetDetailBase : EntityDetailComponent<Asset>
 {
-    public class AssetDetailBase : EntityDetailComponent<Asset>
+    public AssetDetailBase()
     {
-        public AssetDetailBase()
-        {
 
+    }
+
+    [Inject]
+    public IAssetStorage AssetStore { get; set; }
+
+    private IBrowserFile SelectedFile { get; set; }
+
+    [Parameter]
+    public Guid? FolderId { get; set; }
+
+    public async Task PublishAsync()
+    {
+        await SaveAsync();
+
+        await ContentService.PublishAsync(Entity.Id);
+    }
+
+    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+        base.BuildToolbarItems(toolbarItems);
+
+        if (IsNewEntity)
+        {
+            toolbarItems.AddCreateButton(this);
         }
-
-        [Inject]
-        public IAssetStorage AssetStore { get; set; }
-
-        private IBrowserFile SelectedFile { get; set; }
-
-        [Parameter]
-        public Guid? FolderId { get; set; }
-
-        public async Task PublishAsync()
+        else
         {
-            await SaveAsync();
+            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
+            toolbarItems.AddRefreshButton(this);
+            toolbarItems.AddUpdateButton(this);
+            toolbarItems.AddDeleteButton(this);
+            toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Danger, () => ApplyMetadata()));
+        }            
+    }
 
-            await ContentService.PublishAsync(Entity.Id);
-        }
+    protected override async Task RefreshActionAsync()
+    {
+        await base.RefreshActionAsync();
 
-        protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+        if (IsNewEntity)
         {
-            base.BuildToolbarItems(toolbarItems);
+            Entity = new Asset();
 
-            if (IsNewEntity)
+            if (FolderId != null)
             {
-                toolbarItems.AddCreateButton(this);
-            }
-            else
-            {
-                toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
-                toolbarItems.AddRefreshButton(this);
-                toolbarItems.AddUpdateButton(this);
-                toolbarItems.AddDeleteButton(this);
-                toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Danger, () => ApplyMetadata()));
-            }            
-        }
-
-        protected override async Task RefreshActionAsync()
-        {
-            await base.RefreshActionAsync();
-
-            if (IsNewEntity)
-            {
-                Entity = new Asset();
-
-                if (FolderId != null)
-                {
-                    Entity.Folder = new AssetFolder(FolderId.Value);
-                }
-            }
-            else
-            {
-                Entity = await ContentService.GetAssetAsync(EntityId);
+                Entity.Folder = new AssetFolder(FolderId.Value);
             }
         }
-
-        protected override async Task CreateActionAsync()
+        else
         {
-            await ContentService.CreateAsync(Entity);
+            Entity = await ContentService.GetAssetAsync(EntityId);
+        }
+    }
 
-            NavigationManager.NavigateTo($"asset/{Entity.Id}");
+    protected override async Task CreateActionAsync()
+    {
+        await ContentService.CreateAsync(Entity);
+
+        NavigationManager.NavigateTo($"asset/{Entity.Id}");
+    }
+
+    protected override async Task UpdateActionAsync()
+    {
+        await ContentService.UpdateAsync(Entity);
+    }
+
+    protected override async Task DeleteActionAsync()
+    {
+        await AssetStore.DeleteAsync(Entity.Id);
+
+        NavigationManager.NavigateTo($"asset");
+    }
+
+    protected async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        SelectedFile = e.File;
+
+        using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
+        {
+            await ContentService.UploadAsync(Entity.Id, SelectedFile.ContentType, stream);
         }
 
-        protected override async Task UpdateActionAsync()
-        {
-            await ContentService.UpdateAsync(Entity);
-        }
+        await RefreshAsync();
+    }
 
-        protected override async Task DeleteActionAsync()
-        {
-            await AssetStore.DeleteAsync(Entity.Id);
+    public virtual async Task ApplyMetadata()
+    {
+        await ContentService.ApplyMetadataAsync(EntityId);
 
-            NavigationManager.NavigateTo($"asset");
-        }
-
-        protected async Task OnInputFileChange(InputFileChangeEventArgs e)
-        {
-            SelectedFile = e.File;
-
-            using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
-            {
-                await ContentService.UploadAsync(Entity.Id, SelectedFile.ContentType, stream);
-            }
-
-            await RefreshAsync();
-        }
-
-        public virtual async Task ApplyMetadata()
-        {
-            await ContentService.ApplyMetadataAsync(EntityId);
-
-            await RefreshAsync();
-        }
+        await RefreshAsync();
     }
 }

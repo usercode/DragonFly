@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+/// <summary>
+/// TextField
+/// </summary>
+public abstract class TextBaseField : SingleValueContentField<string>
 {
-    /// <summary>
-    /// TextField
-    /// </summary>
-    public abstract class TextBaseField : SingleValueContentField<string>
+    public TextBaseField()
     {
-        public TextBaseField()
-        {
-        }
+    }
 
-        public TextBaseField(string text)
-        {
-            Value = text;
-        }
+    public TextBaseField(string text)
+    {
+        Value = text;
+    }
 
-        public override string ToString()
-        {
-            return $"{Value}";
-        }
+    public override string ToString()
+    {
+        return $"{Value}";
+    }
 
-        protected override void OnValueChanging(ref string? newValue)
+    protected override void OnValueChanging(ref string? newValue)
+    {
+        if(string.IsNullOrWhiteSpace(newValue))
         {
-            if(string.IsNullOrWhiteSpace(newValue))
-            {
-                newValue = null;
-            }
+            newValue = null;
         }
     }
 }

@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public abstract class AssetMetadata
 {
-    public abstract class AssetMetadata
-    {
-        public abstract string Type { get; }
-    }
+    public abstract string Type { get; }
 }

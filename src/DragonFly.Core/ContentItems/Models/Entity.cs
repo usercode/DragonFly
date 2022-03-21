@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content
+namespace DragonFly.Content;
+
+public abstract class Entity
 {
-    public abstract class Entity
-    {
-        protected Guid _id;
+    protected Guid _id;
 
-        /// <summary>
-        /// Id
-        /// </summary>
-        public virtual Guid Id { get => _id; set => _id = value; }
+    /// <summary>
+    /// Id
+    /// </summary>
+    public virtual Guid Id { get => _id; set => _id = value; }
 
-        public virtual bool IsNew() => Id == Guid.Empty;
-    }
+    public virtual bool IsNew() => Id == Guid.Empty;
 }

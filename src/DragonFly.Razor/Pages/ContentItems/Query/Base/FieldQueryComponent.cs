@@ -6,16 +6,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Razor.Pages.ContentItems.Query
+namespace DragonFly.Razor.Pages.ContentItems.Query;
+
+public abstract class FieldQueryComponent<TQuery> : ComponentBase, IFieldQueryComponent
+    where TQuery : FieldQuery
 {
-    public abstract class FieldQueryComponent<TQuery> : ComponentBase, IFieldQueryComponent
-        where TQuery : FieldQuery
-    {
-        public SchemaField Field { get; set; }
+    public SchemaField Field { get; set; }
 
-        [Parameter]
-        public TQuery Query { get; set; }
+    [Parameter]
+    public TQuery Query { get; set; }
 
-        FieldQuery IFieldQueryComponent.Query => Query;
-    }
+    FieldQuery IFieldQueryComponent.Query => Query;
 }

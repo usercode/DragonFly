@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.API.Models.Assets
+namespace DragonFly.AspNetCore.API.Models.Assets;
+
+public class RestAssetFolder : RestContentBase
 {
-    public class RestAssetFolder : RestContentBase
-    {
-        /// <summary>
-        /// Name
-        /// </summary>
-        public virtual string Name { get; set; }
-    }
+    /// <summary>
+    /// Name
+    /// </summary>
+    public virtual string Name { get; set; }
 }

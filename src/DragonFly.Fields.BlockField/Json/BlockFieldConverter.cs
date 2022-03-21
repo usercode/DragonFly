@@ -6,36 +6,35 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DragonFly.Fields.BlockField.Json
+namespace DragonFly.Fields.BlockField.Json;
+
+class BlockFieldConverter : JsonConverter<Block>
 {
-    class BlockFieldConverter : JsonConverter<Block>
+    public override Block? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        public override Block? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        if (JsonDocument.TryParseValue(ref reader, out JsonDocument? doc))
         {
-            if (JsonDocument.TryParseValue(ref reader, out JsonDocument? doc))
+            if (doc.RootElement.TryGetProperty("Type", out JsonElement typeElement))
             {
-                if (doc.RootElement.TryGetProperty("Type", out JsonElement typeElement))
+                string? typeName = typeElement.GetString();
+
+                if (typeName == null)
                 {
-                    string? typeName = typeElement.GetString();
+                    return null;
+                }
 
-                    if (typeName == null)
-                    {
-                        return null;
-                    }
-
-                    if (BlockFieldManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
-                    {
-                        return (Block?)JsonSerializer.Deserialize(doc.RootElement, blockType, options);
-                    }
+                if (BlockFieldManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
+                {
+                    return (Block?)JsonSerializer.Deserialize(doc.RootElement, blockType, options);
                 }
             }
-
-            return null;
         }
 
-        public override void Write(Utf8JsonWriter writer, Block value, JsonSerializerOptions options)
-        {
-            JsonSerializer.Serialize(writer, value, value.GetType(), options);
-        }
+        return null;
+    }
+
+    public override void Write(Utf8JsonWriter writer, Block value, JsonSerializerOptions options)
+    {
+        JsonSerializer.Serialize(writer, value, value.GetType(), options);
     }
 }

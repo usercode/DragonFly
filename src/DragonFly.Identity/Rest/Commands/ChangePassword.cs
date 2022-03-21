@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Identity.Commands
-{
-    public class ChangePassword
-    {
-        public Guid UserId { get; set; }
+namespace DragonFly.Identity.Commands;
 
-        public string NewPassword { get; set; }
-    }
+public class ChangePassword
+{
+    public Guid UserId { get; set; }
+
+    public string NewPassword { get; set; }
 }

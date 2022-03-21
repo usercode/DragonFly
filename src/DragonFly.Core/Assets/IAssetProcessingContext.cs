@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly
+namespace DragonFly;
+
+/// <summary>
+/// IAssetProcessingContext
+/// </summary>
+public interface IAssetProcessingContext
 {
     /// <summary>
-    /// IAssetProcessingContext
+    /// Asset
     /// </summary>
-    public interface IAssetProcessingContext
-    {
-        /// <summary>
-        /// Asset
-        /// </summary>
-        Asset Asset { get; }
+    Asset Asset { get; }
 
-        Task AddMetadataAsync(AssetMetadata metadata);
+    Task AddMetadataAsync(AssetMetadata metadata);
 
-        Task<Stream> OpenAssetStreamAsync();
-    }
+    Task<Stream> OpenAssetStreamAsync();
 }

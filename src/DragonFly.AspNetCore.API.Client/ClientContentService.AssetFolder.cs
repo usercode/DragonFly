@@ -21,37 +21,36 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DragonFly.Storage;
 
-namespace DragonFly.Client
+namespace DragonFly.Client;
+
+/// <summary>
+/// ContentService
+/// </summary>
+public partial class ClientContentService : IAssetFolderStorage
 {
-    /// <summary>
-    /// ContentService
-    /// </summary>
-    public partial class ClientContentService : IAssetFolderStorage
+    public Task CreateAsync(AssetFolder folder)
     {
-        public Task CreateAsync(AssetFolder folder)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        public Task<AssetFolder> GetAssetFolderAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+    public Task<AssetFolder> GetAssetFolderAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 
-        public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery query)
-        {
-            var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
+    public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery query)
+    {
+        var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
 
-            response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode();
 
-            IEnumerable<RestAssetFolder> result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
+        IEnumerable<RestAssetFolder> result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
 
-            return result.Select(x => x.ToModel()).ToList();
-        }
+        return result.Select(x => x.ToModel()).ToList();
+    }
 
-        public Task UpdateAsync(AssetFolder folder)
-        {
-            throw new NotImplementedException();
-        }
+    public Task UpdateAsync(AssetFolder folder)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -10,46 +10,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Identity.Middlewares.Roles
+namespace DragonFly.AspNetCore.Identity.Middlewares.Roles;
+
+internal static class RoleExtensions
 {
-    internal static class RoleExtensions
+    public static IDragonFlyEndpointRouteBuilder MapRoleApi(this IDragonFlyEndpointRouteBuilder endpoints)
     {
-        public static IDragonFlyEndpointRouteBuilder MapRoleApi(this IDragonFlyEndpointRouteBuilder endpoints)
-        {
-            endpoints.MapGet("identity/role/{id:guid}", MapGet);
-            endpoints.MapPost("identity/role", MapCreate);
-            endpoints.MapPut("identity/role", MapUpdate);            
-            endpoints.MapPost("identity/role/query", MapQuery);
+        endpoints.MapGet("identity/role/{id:guid}", MapGet);
+        endpoints.MapPost("identity/role", MapCreate);
+        endpoints.MapPut("identity/role", MapUpdate);            
+        endpoints.MapPost("identity/role/query", MapQuery);
 
-            return endpoints;
-        }
+        return endpoints;
+    }
 
-        private static async Task MapGet(HttpContext context, IIdentityService identityService, Guid id)
-        {
-            IdentityRole role = await identityService.GetRoleAsync(id);
+    private static async Task MapGet(HttpContext context, IIdentityService identityService, Guid id)
+    {
+        IdentityRole role = await identityService.GetRoleAsync(id);
 
-            await context.Response.WriteAsJsonAsync(role);
-        }
+        await context.Response.WriteAsJsonAsync(role);
+    }
 
-        private static async Task MapCreate(HttpContext context, IIdentityService identityService)
-        {
-            IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
+    private static async Task MapCreate(HttpContext context, IIdentityService identityService)
+    {
+        IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
 
-            await identityService.CreateRoleAsync(role);
-        }
+        await identityService.CreateRoleAsync(role);
+    }
 
-        private static async Task MapUpdate(HttpContext context, IIdentityService identityService)
-        {
-            IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
+    private static async Task MapUpdate(HttpContext context, IIdentityService identityService)
+    {
+        IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
 
-            await identityService.UpdateRoleAsync(role);
-        }
+        await identityService.UpdateRoleAsync(role);
+    }
 
-        private static async Task MapQuery(HttpContext context, IIdentityService identityService)
-        {
-            IEnumerable<IdentityRole> users = await identityService.GetRolesAsync();
+    private static async Task MapQuery(HttpContext context, IIdentityService identityService)
+    {
+        IEnumerable<IdentityRole> users = await identityService.GetRolesAsync();
 
-            await context.Response.WriteAsJsonAsync(users);
-        }
+        await context.Response.WriteAsJsonAsync(users);
     }
 }

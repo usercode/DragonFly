@@ -8,29 +8,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages.ContentItems
+namespace DragonFly.Client.Pages.ContentItems;
+
+public class WebHookListBase : EntityListComponent<WebHook>
 {
-    public class WebHookListBase : EntityListComponent<WebHook>
+    public WebHookListBase()
     {
-        public WebHookListBase()
-        {
-        }
+    }
 
-        /// <summary>
-        /// WebHookStore
-        /// </summary>
-        [Inject]
-        private IWebHookStorage WebHookStore { get; set; }
+    /// <summary>
+    /// WebHookStore
+    /// </summary>
+    [Inject]
+    private IWebHookStorage WebHookStore { get; set; }
 
-        protected override string GetNavigationPath(WebHook entity)
-        {
-            return $"webhook/{entity.Id}";
-        }
+    protected override string GetNavigationPath(WebHook entity)
+    {
+        return $"webhook/{entity.Id}";
+    }
 
-        protected override async Task RefreshActionAsync()
-        {
-          
-            SearchResult = await WebHookStore.QueryAsync(new WebHookQuery());
-        }
+    protected override async Task RefreshActionAsync()
+    {
+      
+        SearchResult = await WebHookStore.QueryAsync(new WebHookQuery());
     }
 }
