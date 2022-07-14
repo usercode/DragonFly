@@ -22,7 +22,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="TinyMCE.Blazor" Version="0.0.9" />
+		<PackageReference Include="TinyMCE.Blazor" Version="1.0.4" />
 	</ItemGroup>
 
 	<ItemGroup>

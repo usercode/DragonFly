@@ -290,7 +290,14 @@ public partial class MongoStorage : IContentStorage
         //execute interceptors
         foreach (IContentInterceptor interceptor in Interceptors)
         {
-            await interceptor.OnPublishedAsync(this, contentItem);
+            try
+            {
+                await interceptor.OnPublishedAsync(this, contentItem);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Publish interceptor failed.");
+            }
         }
 
         Logger.LogInformation($"Content was published: {schema}/{id}");
@@ -314,7 +321,14 @@ public partial class MongoStorage : IContentStorage
         //execute interceptors
         foreach (IContentInterceptor interceptor in Interceptors)
         {
-            await interceptor.OnUnpublishedAsync(this, contentItem);
+            try
+            {
+                await interceptor.OnUnpublishedAsync(this, contentItem);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Unpublish interceptor failed.");
+            }
         }
     }
 

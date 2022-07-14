@@ -1,6 +1,8 @@
 ﻿using DragonFly.Content;
 using DragonFly.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,19 @@ public class WebHookInterceptor : IContentInterceptor
         {
             Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
 
-            string url = $"{item.TargetUrl}?schema={contentItem.Schema.Name}&id={contentItem.Id}";
+            if (item.TargetUrl == null)
+            {
+                continue;
+            }
+
+            QueryString query = QueryString.Create(new KeyValuePair<string, StringValues>[]
+            {
+                new ("schema", new StringValues(contentItem.Schema.Name)),
+                new ("id", new StringValues(contentItem.Id.ToString())),
+                new ("publish", new StringValues("true"))
+            });
+
+            Uri url = new Uri(item.TargetUrl + query);
 
             HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(""));
 
@@ -72,7 +86,32 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnUnpublishedAsync(IDataStorage storage, ContentItem contentItem)
     {
-        
+        var result = await storage.QueryAsync(new WebHookQuery());
+
+        foreach (WebHook item in result.Items)
+        {
+            Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
+
+            if (item.TargetUrl == null)
+            {
+                continue;
+            }
+
+            QueryString query = QueryString.Create(new KeyValuePair<string, StringValues>[]
+            {
+                new ("schema", new StringValues(contentItem.Schema.Name)),
+                new ("id", new StringValues(contentItem.Id.ToString())),
+                new ("publish", new StringValues("false"))
+            });
+
+            Uri url = new Uri(item.TargetUrl + query);
+
+            HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(""));
+
+            Logger.LogInformation($"Webhook send to {url} with status code {response.StatusCode}");
+
+            string s = await response.Content.ReadAsStringAsync();
+        }
     }
 
     public async Task OnUpdatedAsync(IDataStorage storage, ContentItem contentItem)

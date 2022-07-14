@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
@@ -28,7 +28,7 @@ builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("Mon
 
 //ImageWizard
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
-builder.Services.Configure<FileCacheSettings>(builder.Configuration.GetSection("AssetCache"));
+builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
 
 //DragonFly
 builder.Services.AddDragonFly()

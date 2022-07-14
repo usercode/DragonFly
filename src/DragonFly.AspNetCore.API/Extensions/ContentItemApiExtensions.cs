@@ -30,6 +30,7 @@ static class ContentItemApiExtensions
         endpoints.MapPut("api/content", MapUpdate);
         endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
         endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
+        endpoints.MapPost("api/content/{schema}/{id:guid}/unpublish", MapUnpublish);
         endpoints.MapPost("api/content/publish", MapPublishQuery);
     }
 
@@ -90,6 +91,11 @@ static class ContentItemApiExtensions
     private static async Task MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
     {
         await contentStore.PublishAsync(schema, id);
+    }
+
+    private static async Task MapUnpublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    {
+        await contentStore.UnpublishAsync(schema, id);
     }
 
     private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)

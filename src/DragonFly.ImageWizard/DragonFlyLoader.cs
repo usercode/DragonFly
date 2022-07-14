@@ -25,7 +25,7 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
     /// </summary>
     private IAssetStorage Storage { get; }
 
-    public override async Task<OriginalData?> GetAsync(string source, ICachedData? existingCachedImage)
+    public override async Task<LoaderResult> GetAsync(string source, ICachedData? existingCachedImage)
     {
         int pos = source.IndexOf("?");
 
@@ -45,6 +45,6 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 
         Stream stream = await Storage.DownloadAsync(id);        
 
-        return new OriginalData(asset.MimeType, stream);
+        return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
     }
 }
