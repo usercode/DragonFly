@@ -19,9 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Castle.Core" Version="5.0.0" />
-		<PackageReference Include="MongoDB.Driver" Version="2.16.1" />
-		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.16.1" />
+		<PackageReference Include="Castle.Core" Version="5.1.0" />
+		<PackageReference Include="MongoDB.Driver" Version="2.17.1" />
+		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.17.1" />
 	</ItemGroup>
 
 	<ItemGroup>

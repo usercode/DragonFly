@@ -20,7 +20,7 @@ internal class MongoIdentityStore
         Options = options.Value;
 
         MongoClientSettings settings = new MongoClientSettings();
-        settings.Server = new MongoServerAddress(Options.Hostname);
+        settings.Server = new MongoServerAddress(Options.Hostname, Options.Port);
 
         if (string.IsNullOrEmpty(Options.Username) == false)
         {

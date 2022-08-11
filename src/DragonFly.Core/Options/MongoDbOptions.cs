@@ -16,6 +16,7 @@ public class MongoDbOptions
     {
         Database = "DragonFly_App";
         Hostname = "localhost";
+        Port = 27017;
         InitialUsername = DefaultSecurity.DefaultUsername;
         InitialPassword = DefaultSecurity.DefaultPassword;
     }
@@ -29,6 +30,11 @@ public class MongoDbOptions
     /// Hostname
     /// </summary>
     public string Hostname { get; set; }
+
+    /// <summary>
+    /// Port
+    /// </summary>
+    public int Port { get; set; }
 
     /// <summary>
     /// Username
