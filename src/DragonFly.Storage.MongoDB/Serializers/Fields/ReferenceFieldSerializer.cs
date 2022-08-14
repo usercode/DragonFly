@@ -23,7 +23,7 @@ public class ReferenceFieldSerializer : FieldSerializer<ReferenceField>
                 Guid targetId = bsonDocument[ReferenceField.IdField].AsGuid;
                 string targetType = bsonDocument[ReferenceField.SchemaField].AsString;
 
-                contentField.ContentItem = ContentItemProxy.CreateContentItem(targetId, targetType);
+                contentField.ContentItem = ContentItemProxy.CreateContentItem(targetType, targetId);
             }
         }
 

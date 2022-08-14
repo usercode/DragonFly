@@ -18,14 +18,12 @@ namespace DragonFly.AspNetCore;
 
 public static class StartupExtensions
 {
-    public static IDragonFlyBuilder AddMongoDbStorage(this IDragonFlyBuilder builder)
+    public static IDragonFlyBuilder AddMongoDbStorage(this IDragonFlyBuilder builder, Action<MongoDbOptions>? options = null)
     {
-        return AddMongoDbStorage(builder, x => { });
-    }
-
-    public static IDragonFlyBuilder AddMongoDbStorage(this IDragonFlyBuilder builder, Action<MongoDbOptions> options)
-    {
-        builder.Services.Configure(options);
+        if (options != null)
+        {
+            builder.Services.Configure(options);
+        }
 
         builder.Services.AddSingleton<MongoStorage>();
         builder.Services.AddSingleton<IDataStorage>(x => x.GetRequiredService<MongoStorage>());

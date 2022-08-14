@@ -14,7 +14,7 @@ public class ContentItemProxy
 {
     internal static ProxyGenerator Generator = new ProxyGenerator();
 
-    public static ContentItem CreateContentItem(Guid id, string schema)
+    public static ContentItem CreateContentItem(string schema, Guid id)
     {
         ContentSchema contentSchema = CreateContentSchema(schema);
         ContentItem contentItem = new ContentItem(id, contentSchema);

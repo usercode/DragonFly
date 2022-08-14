@@ -123,11 +123,6 @@ public class ContentFieldManager
         return CreateField(typeof(T));
     }
 
-    public IEnumerable<IContentField> CreateContentFields()
-    {
-        return GetAllFieldTypes().Select(x => CreateField(x)).ToList();
-    }
-
     public IContentField CreateField(Type t)
     {
         IContentField? field = (IContentField?)Activator.CreateInstance(t);
@@ -189,21 +184,21 @@ public class ContentFieldManager
         return null;
     }
 
-    public Type? GetQueryType(string? fieldTypeName)
+    public Type? GetQueryType(string? fieldType)
     {
-        if (fieldTypeName == null)
+        if (fieldType == null)
         {
-            throw new ArgumentNullException(nameof(fieldTypeName));
+            throw new ArgumentNullException(nameof(fieldType));
         }
 
-        Type? fieldType = GetContentFieldType(fieldTypeName);
+        Type? type = GetContentFieldType(fieldType);
 
         if (fieldType == null)
         {
             return null;
         }
 
-        if (_queryByField.TryGetValue(fieldType, out Type? queryType))
+        if (_queryByField.TryGetValue(type, out Type? queryType))
         {
             return queryType;
         }
@@ -221,9 +216,9 @@ public class ContentFieldManager
         return null;
     }
 
-    public FieldQuery? CreateQuery(string? fieldTypeName)
+    public FieldQuery? CreateQuery(string? fieldType)
     {
-        Type? type = GetQueryType(fieldTypeName);
+        Type? type = GetQueryType(fieldType);
 
         if (type == null)
         {
@@ -240,21 +235,21 @@ public class ContentFieldManager
         return instance;
     }
 
-    public ContentFieldOptions? CreateOptions(string? fieldTypeName)
+    public ContentFieldOptions? CreateOptions(string? fieldType)
     {
-        if (fieldTypeName == null)
+        if (fieldType == null)
         {
-            throw new ArgumentNullException(nameof(fieldTypeName));
+            throw new ArgumentNullException(nameof(fieldType));
         }
 
-        Type? fieldType = GetContentFieldType(fieldTypeName);
+        Type? type = GetContentFieldType(fieldType);
 
-        if (fieldType == null)
+        if (type == null)
         {
             return null;
         }
 
-        ContentFieldOptions? options = CreateOptions(fieldType);
+        ContentFieldOptions? options = CreateOptions(type);
 
         return options;
     }

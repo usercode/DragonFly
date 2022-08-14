@@ -40,7 +40,7 @@ class ContentSchemaInterceptor : IInterceptor
         {
             if (_isLoaded == false)
             {
-                LoadData(main).Wait();
+                LoadData(main).GetAwaiter().GetResult();
 
                 _isLoaded = true;
             }

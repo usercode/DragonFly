@@ -26,7 +26,7 @@ public class ReferenceField : ContentField
 
     public override string ToString()
     {
-        if(ContentItem == null)
+        if (ContentItem == null)
         {
             return "no reference";
         }
