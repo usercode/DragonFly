@@ -7,7 +7,7 @@
 		<PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 		<Description>Headless CMS based on ASP.NET Core and Blazor</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Version>0.3.1</Version>
+		<Version>0.3.2</Version>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<PackageIcon>logo.png</PackageIcon>
 		<PackageTags>cms</PackageTags>
