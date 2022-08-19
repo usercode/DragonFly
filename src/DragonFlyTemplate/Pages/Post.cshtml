@@ -1,0 +1,87 @@
+﻿@*@page
+@model SinglePostWithComments<BlogPost>
+@{
+    ViewBag.Title = Model.Data.Title;
+
+    var archive = await WebApp.Api.Pages.GetByIdAsync(Model.Data.BlogId);
+}
+
+<div class="container">
+    <article>
+        <header>
+            @if (Model.Data.PrimaryImage.HasValue && false)
+            {
+                if (Model.Data.PrimaryImage.Media.ContentType == MimeTypes.Svg)
+                {
+                    <img src="@Url.ImageWizard().Fetch(Model.Data.PrimaryImage).BuildUrl()">
+                }
+                else
+                {
+                    <img src="@Url.ImageWizard().Fetch(Model.Data.PrimaryImage).AsImage().Resize(930, 360).BuildUrl()">
+                }
+            }
+            <h1>@Model.Data.Title</h1>
+            <p class="post-meta">
+                <strong>In</strong> <a href="@archive.Permalink/category/@Model.Data.Category.Slug">@Model.Data.Category.Title</a>
+                <span class="sep">&#9670;</span>
+                <strong>Tags</strong>
+                @foreach (var tag in Model.Data.Tags)
+                {
+                    <span class="tag"><a href="@archive.Permalink/tag/@tag.Slug">#@tag.Title</a></span>
+                }
+                <span class="sep">&#9670;</span>
+                <strong>Published</strong>
+                @Model.Data.Published.Value.ToString("yyyy-MM-dd")
+            </p>
+        </header>
+        @Html.DisplayFor(m => m.Data.Blocks)
+
+    </article>
+</div>
+
+@if (Model.Data.EnableComments)
+{
+    <div id="comments" class="container comments">
+
+        @if (Model.Data.IsCommentsOpen)
+        {
+        <div class="card mt-4 mb-4">
+            
+            <div class="card-body">
+                    <form asp-page-handler="SaveComment" method="post">
+
+                        @Html.Hidden("Id", Model.Data.Id)
+                        <h3 class="card-title">Kommentar erstellen</h3>
+
+                        <p class="mb-4">
+                            Please note that we won't show your email to others, or use it for sending
+                            unwanted emails. We will only use it to render your Gravatar image and to
+                            validate you as a real person.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <input name="CommentAuthor" type="text" class="form-control" placeholder="Mein Name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <input name="CommentEmail" type="text" class="form-control" placeholder="Meine E-Mail-Adresse">
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input name="CommentUrl" type="text" class="form-control" placeholder="Meine Website (optional)">
+                        </div>
+                        <div class="input-group mb-3">
+                            <textarea name="CommentBody" rows="6" class="form-control" placeholder="Meine Nachricht"></textarea>
+                        </div>
+                        <div class="input-group mb-3 text-left">
+                            <button class="btn btn-success">Kommentar senden</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+        }
+
+        @Html.DisplayFor(m => m.Comments)
+    </div>}
+*@

@@ -25,14 +25,8 @@ using DragonFly.Storage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Client.Core;
 
@@ -51,6 +45,11 @@ public static class DragonFlyClientExtensions
 
         builder.AddRazorRouting();
 
+        builder.Services.AddBlazoredModal();
+        builder.Services.AddBlazoredToast();
+
+        builder.Services.AddBlazorStrap();
+
         DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
         DragonFlyApp.Default.ClientBaseUrl = clientBaseUrl;
 
@@ -60,11 +59,6 @@ public static class DragonFlyClientExtensions
         builder.Services.AddSingleton(ComponentManager.Default);
         builder.Services.AddSingleton(ContentFieldManager.Default);
         builder.Services.AddSingleton(AssetMetadataManager.Default);
-
-        builder.Services.AddBlazoredModal();
-        builder.Services.AddBlazoredToast();
-
-        builder.Services.AddBlazorStrap();
 
         builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
         builder.Services.AddTransient<ClientContentService>();

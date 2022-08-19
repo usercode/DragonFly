@@ -1,22 +1,10 @@
-﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
-using DragonFly.AspNetCore.Identity.MongoDB.Services;
-using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
-using DragonFly.ContentItems;
-using DragonFly.Core.Permissions;
+﻿using DragonFly.Core.Permissions;
 using DragonFly.Core.Security;
 using DragonFly.Identity;
-using DragonFly.Identity.Permissions;
-using DragonFly.Identity.Services;
 using DragonFly.MongoDB.Options;
-using DragonFly.Permissions;
-using DragonFly.Permissions.AspNetCore.Services;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.MongoDB;
@@ -54,7 +42,7 @@ class SeedDataAction : IPostInitialize
             return;
         }
 
-        using (new DisablePermissionState())
+        using (new PermissionState())
         {
             IdentityRole roleAdmin = new IdentityRole();
             roleAdmin.Name = "Administrators";

@@ -1,6 +1,6 @@
-﻿using DragonFly.AspNet.Options;
+﻿using DragonFly;
+using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore.Middleware;
-using DragonFly.Permissions.AspNetCore.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -34,14 +34,11 @@ class ApiKeyMiddleware
 
         if (requestApiKey != null)
         {
-            using (new DisablePermissionState())
-            {
-                ApiKey apiKey = await ApiKeyService.GetApiKey(requestApiKey);
+            ApiKey apiKey = await ApiKeyService.GetApiKey(requestApiKey);
 
-                if (apiKey != null)
-                {
-                    context.User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey"));
-                }
+            if (apiKey != null)
+            {
+                context.User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey"));
             }
         }
 

@@ -1,11 +1,7 @@
-﻿using DragonFly.Permissions.AspNetCore.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.Permissions;
@@ -17,7 +13,7 @@ public static class DragonFlyApiExtensions
 {
     public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
     {
-        if (DisablePermissionState.Disabled.Value == true)
+        if (PermissionState.IsEnabled == false)
         {
             return;
         }

@@ -1,0 +1,51 @@
+﻿@model BasePageModel
+@inject IWebHostEnvironment Environment
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/assets/css/style.min.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/prismjs/prism.css" asp-append-version="true" />
+
+    <title>@Model.PageTitle</title>
+
+    @RenderSection("head", required: false)
+</head>
+<body>
+    <header class="fixed-top">
+        <div class="container">
+            <div class="items">
+                <partial name="_Menu.cshtml" />
+
+                @*<img src="#" class="logo">*@
+                <i class="bi bi-globe" style="font-size:2rem"></i>
+
+            </div>
+        </div>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    @*<a href="~/impressum">Impressum</a>*@
+                </div>
+                <div class="col-sm">
+                    Copyright &copy; @DateTime.Today.Year
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("script", required: false)
+
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/lib/prismjs/prism.js" asp-append-version="true"></script>    
+</body>
+</html>

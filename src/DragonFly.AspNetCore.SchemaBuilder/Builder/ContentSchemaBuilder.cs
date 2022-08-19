@@ -28,41 +28,35 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
 
     private IDictionary<Type, ContentSchema> _schema;
 
-    public async Task BuildAsync<T>()
+    public async Task AddAsync(Type type)
     {
-        Type type = typeof(T);
+        SchemaAttribute? schemaAttribute = type.GetCustomAttribute<SchemaAttribute>();
 
-        ContentSchemaAttribute? schemaAttribute = type.GetCustomAttribute<ContentSchemaAttribute>();
+        string? schemaName = null;
 
-        if (schemaAttribute == null)
-        {
-            throw new Exception($"The type {type.Name} needs the ContentSchemaAttribute.");
-        }
-
-        string schemaName = type.Name;
-
-        if (schemaAttribute.SchemaName != null)
+        if (schemaAttribute?.SchemaName != null)
         {
             schemaName = schemaAttribute.SchemaName;
+        }        
+
+        if (schemaName == null)
+        {
+            schemaName = type.Name;
         }
 
         //load schema
-        ContentSchema schema = await Storage.GetSchemaAsync(schemaName);
+        ContentSchema? schema = await Storage.GetSchemaAsync(schemaName);
 
         if (schema == null)
         {
-            schema = new ContentSchema(type.Name);
-        }
-        else
-        {
-            schema.Fields.Clear();
+            schema = new ContentSchema(schemaName);
         }
 
         IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
 
         foreach (PropertyInfo property in type.GetProperties())
         {
-            ContentFieldAttribute? fieldAttribute = property.GetCustomAttribute<ContentFieldAttribute>();
+            FieldAttribute? fieldAttribute = property.GetCustomAttribute<FieldAttribute>();
 
             if (fieldAttribute == null)
             {
@@ -71,10 +65,10 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
 
             Type fieldType = property.PropertyType;
 
-            if (fieldAttribute.FieldType != null)
-            {
-                fieldType = fieldAttribute.FieldType;
-            }
+            //if (fieldAttribute.FieldType != null)
+            //{
+            //    fieldType = fieldAttribute.FieldType;
+            //}
 
             if (allFieldTypes.Contains(fieldType))
             {

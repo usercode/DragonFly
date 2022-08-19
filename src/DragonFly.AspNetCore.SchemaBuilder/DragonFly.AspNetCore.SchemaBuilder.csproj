@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Castle.Core" Version="5.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
   </ItemGroup>
   

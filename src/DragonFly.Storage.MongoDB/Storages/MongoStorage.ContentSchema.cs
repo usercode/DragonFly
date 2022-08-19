@@ -67,7 +67,7 @@ public partial class MongoStorage : ISchemaStorage
 
         if (schema == null)
         {
-            throw new Exception($"Schema was not found: {name}");
+            return null;
         }
 
         return schema.ToModel();

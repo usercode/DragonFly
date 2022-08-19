@@ -1,0 +1,22 @@
+﻿[
+  {
+    "outputFile": "assets/scss/base.css",
+    "inputFile": "assets/scss/base.scss"
+  },
+  {
+    "outputFile": "assets/scss/colors.css",
+    "inputFile": "assets/scss/colors.scss"
+  },
+  {
+    "outputFile": "assets/scss/project.css",
+    "inputFile": "assets/scss/project.scss"
+  },
+  {
+    "outputFile": "assets/scss/type.css",
+    "inputFile": "assets/scss/type.scss"
+  },
+  {
+    "outputFile": "assets/scss/style.css",
+    "inputFile": "assets/scss/style.scss"
+  }
+]

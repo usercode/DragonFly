@@ -29,6 +29,8 @@ class RequireAuthentificationMiddleware
         }
         else
         {
+            PermissionState.Enable();
+
             await _next(context);
         }
     }

@@ -1,0 +1,20 @@
+@page "/"
+@model BasePageModel
+
+<div class="container">
+    <h1>Start</h1>
+
+</div>
+
+@*@model DragonFlyPageModel<ProjectModel>
+@{
+    ViewBag.Title = Model.Data.Title;
+}
+
+<div class="container">
+    <h1>@Model.Data.Title</h1>
+
+    @Html.DisplayFor(m => m.Data.Blocks)
+</div>
+*@
+

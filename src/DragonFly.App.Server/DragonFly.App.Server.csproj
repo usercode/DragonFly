@@ -8,19 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="FileCache\**" />
-    <Compile Remove="Options\**" />
-    <Content Remove="FileCache\**" />
-    <Content Remove="Options\**" />
-    <EmbeddedResource Remove="FileCache\**" />
-    <EmbeddedResource Remove="Options\**" />
     <None Remove="FileCache\**" />
     <None Remove="Options\**" />
   </ItemGroup>
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.8" />
-	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.1" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 

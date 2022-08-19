@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Fields.BlockField.Blocks;
+namespace DragonFly.Fields.BlockField;
 
 public class YouTubeBlock : Block
 {

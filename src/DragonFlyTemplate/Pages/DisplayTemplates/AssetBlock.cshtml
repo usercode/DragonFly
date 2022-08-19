@@ -1,0 +1,9 @@
+@model AssetBlock
+@inject IDataStorage Storage
+
+@if (Model.AssetId != null)
+{
+    Asset asset = await Storage.GetAssetAsync(Model.AssetId.Value);
+
+    <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
+}

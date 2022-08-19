@@ -13,6 +13,6 @@ namespace DragonFly.AspNetCore.SchemaBuilder;
 /// </summary>
 public interface IContentSchemaBuilder
 {
-    Task BuildAsync<T>();
+    Task AddAsync(Type type);
     
 }

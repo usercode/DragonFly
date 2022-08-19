@@ -10,7 +10,8 @@ namespace DragonFly.Content;
 /// </summary>
 public static class ContentSchemaExtensions
 {
-    public static ISchemaElement AddField(this ISchemaElement schema, string name, Type fieldType, ContentFieldOptions? options = null, int sortkey = 0)
+    public static TContentSchema AddField<TContentSchema>(this TContentSchema schema, string name, Type fieldType, ContentFieldOptions? options = null, int sortkey = 0)
+        where TContentSchema : ISchemaElement
     {
         if (options == null)
         {
@@ -19,7 +20,7 @@ public static class ContentSchemaExtensions
 
         if (schema.Fields.TryAdd(name, new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options }) == false)
         {
-            throw new Exception($"The content schema already contains a field with the name '{name}'");
+            //throw new Exception($"The content schema already contains a field with the name '{name}'");
         }
 
         return schema;

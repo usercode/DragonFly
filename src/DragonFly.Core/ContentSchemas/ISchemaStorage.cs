@@ -13,9 +13,9 @@ namespace DragonFly.Content;
 public interface ISchemaStorage
 {
     //Schema
-    Task<ContentSchema> GetSchemaAsync(Guid id);
+    Task<ContentSchema?> GetSchemaAsync(Guid id);
 
-    Task<ContentSchema> GetSchemaAsync(string name);
+    Task<ContentSchema?> GetSchemaAsync(string name);
 
     Task CreateAsync(ContentSchema contentType);
 

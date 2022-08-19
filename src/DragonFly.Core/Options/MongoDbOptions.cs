@@ -17,6 +17,8 @@ public class MongoDbOptions
         Database = "DragonFly_App";
         Hostname = "localhost";
         Port = 27017;
+        Username = "root";
+        Password = "";
         InitialUsername = DefaultSecurity.DefaultUsername;
         InitialPassword = DefaultSecurity.DefaultPassword;
     }

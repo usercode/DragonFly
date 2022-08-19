@@ -1,24 +1,13 @@
-﻿using DragonFly.AspNet.Middleware;
-using DragonFly.AspNetCore.Content;
+﻿using DragonFly.AspNetCore.Content;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.Content;
-using DragonFly.ContentItems;
 using DragonFly.Core.Builders;
-using DragonFly.Core.Permissions;
-using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
 using DragonFly.Permissions.AspNetCore.Content;
 using DragonFly.Permissions.AspNetCore.Providers;
-using DragonFly.Permissions.AspNetCore.Services;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore;
 

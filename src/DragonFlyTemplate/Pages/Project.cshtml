@@ -1,0 +1,45 @@
+@page
+@model DragonFlyPageModel<ProjectModel>
+
+@{
+    ViewBag.Title = Model.Entity.Title.Value;
+}
+
+<div class="container">
+    <h1>@Model.Entity.Title</h1>  
+    <div>
+        @foreach (Project project in Model.Data.Projects)
+        {
+            <div class="project-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        @if (project.PrimaryImage.HasValue)
+                        {
+                            <img src="@Url.ImageWizard().Fetch(project.PrimaryImage).AsImage().Resize(800,800).BuildUrl()" class="auto-scale" />
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <h2 class="title">@project.Title.Value</h2>
+                        @if (project.SubTitle != null)
+                        {
+                            <p class="subtitle">@project.SubTitle.Value</p>
+                        }
+
+                        @if (string.IsNullOrWhiteSpace(project.URL?.Value) == false)
+                        {
+                            <a class="link" href="@project.URL.Value" target="_blank">@project.URL.Value</a>
+                        }
+
+                        <div class="description">
+                            @Html.Raw(project.Body)
+                        </div>
+                        @*<small>Zeitraum: @project.Project.From.Value.Value.Year bis @project.Project.To.Value.Value.Year</small>*@
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        @Html.DisplayFor(m => m.Data.Blocks)
+    </div>
+       

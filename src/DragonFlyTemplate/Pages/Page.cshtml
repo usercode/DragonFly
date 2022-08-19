@@ -1,0 +1,13 @@
+@page
+@model SinglePage<StandardPage>
+@{
+    ViewBag.Title = Model.Data.Title;
+}
+
+<main>
+    <div class="container">
+        <h1>@Model.Data.Title</h1>
+
+        @Html.DisplayFor(m => m.Data.Blocks)
+    </div>
+</main>

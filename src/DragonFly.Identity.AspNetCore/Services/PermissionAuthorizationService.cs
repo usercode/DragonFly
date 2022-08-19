@@ -1,16 +1,12 @@
 ﻿using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.Permissions;
-using DragonFly.Permissions.AspNetCore;
-using DragonFly.Permissions.AspNetCore.Services;
-using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.Identity.AspNetCore.Permissions;
@@ -40,7 +36,7 @@ class PermissionAuthorizationService : IPermissionAuthorizationService
 
     public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
     {
-        using (new DisablePermissionState())
+        using (new PermissionState())
         {
             Claim? claim = principal.FindFirst("UserId");
 

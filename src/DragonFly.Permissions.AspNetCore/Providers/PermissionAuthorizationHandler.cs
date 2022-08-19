@@ -1,9 +1,5 @@
-﻿using DragonFly.Permissions.AspNetCore.Services;
-using Microsoft.AspNetCore.Authorization;
-using System;
+﻿using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.Permissions.AspNetCore.Providers;

@@ -1,0 +1,162 @@
+﻿img {
+  max-width: 100%;
+}
+
+.container {
+  max-width: 960px;
+}
+
+.sep {
+  color: #D54949;
+  padding: 0 5px;
+}
+
+body > header {
+  box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+body > header .items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+body > header .logo {
+  height: 1.8rem;
+}
+body > header .navbar {
+  padding: 1rem 0;
+  font-size: 1rem;
+}
+body > header .navbar.navbar-toggleable-sm {
+  margin-left: 0;
+}
+body > header .navbar .nav-item.active a {
+  color: #000;
+  font-weight: 400;
+  text-decoration: none;
+  background-color: #f5f5f5;
+}
+body > header .navbar .nav-item:hover a {
+  text-decoration: none;
+  background-color: #fafafa;
+}
+body > header .navbar-nav .nav-item.active {
+  color: #000;
+  font-weight: 400;
+}
+body > header .navbar-toggler {
+  background: #333;
+  width: 2.3rem;
+  height: 2.3rem;
+  padding: 0.25rem 0;
+  border-radius: 1.15rem;
+}
+body > header .navbar-toggler .navbar-toggler-icon {
+  color: #fff;
+}
+body > header .buttons {
+  padding: 1.5rem 0;
+}
+body > header .buttons a {
+  padding-left: 0.5rem;
+  opacity: 0.75;
+  transition: opacity ease-in-out 0.1s;
+}
+body > header .buttons a img {
+  height: 20px;
+}
+body > header .buttons a:hover {
+  opacity: 1;
+  transition: opacity ease-in-out 0.1s;
+}
+body > header .title h1 {
+  font-size: 2rem;
+  color: #333;
+  margin: 14px;
+}
+body > header .title h1 small {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  padding-left: 1rem;
+  color: #999;
+}
+body > header .title img {
+  background: #fff;
+  height: 100px;
+  padding: 10px;
+  border: solid 1px #e2e2e2;
+  float: right;
+  margin: -0.5rem 0 -1rem;
+  border-radius: 50px;
+}
+
+.btn-link {
+  color: #333;
+  border: solid 1px #D54949;
+  padding: 0.375rem 1.5rem;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.btn-link:hover {
+  background: #D54949;
+  color: #fff;
+  border: solid 1px #D54949;
+  text-decoration: none;
+}
+
+.archive h2 {
+  margin-top: 0px;
+}
+.archive article {
+  padding: 2rem 0 1rem;
+  border-bottom: solid 1px #e2e2e2;
+}
+.archive article:first-child {
+  padding-top: 0;
+}
+.archive article:last-child {
+  border-bottom: 0 none;
+}
+
+article .image-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+article .image {
+  margin-bottom: 1rem;
+}
+article header img {
+  border-radius: 0.5rem;
+  margin: 0;
+}
+article .ingress {
+  padding: 0.5rem 0;
+}
+
+.pagination {
+  margin: 2rem 0 0;
+}
+.pagination .page-item {
+  margin: 0 0.4rem;
+}
+.pagination .page-item .page-link {
+  background: #ccc;
+  border-color: #ccc;
+  color: #fff;
+  width: 2.5rem;
+  height: 2.5rem;
+  text-align: center;
+  border-radius: 1.25rem;
+  transition: background ease-in-out 0.2s;
+}
+.pagination .page-item .page-link:hover {
+  background: #aaa;
+  transition: background ease-in-out 0.2s;
+}
+.pagination .page-item.active .page-link {
+  background: #D54949;
+  border-color: #D54949;
+}

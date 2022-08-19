@@ -1,0 +1,25 @@
+@page "/projekte"
+@model ProjectsPage
+
+<div class="container">
+    <h1>Projekte</h1>
+
+    @foreach(var project in Model.Result.Items)
+    {
+        <p>@project.GetString("Title")</p>
+    }
+
+</div>
+
+@*@model DragonFlyPageModel<ProjectModel>
+@{
+    ViewBag.Title = Model.Data.Title;
+}
+
+<div class="container">
+    <h1>@Model.Data.Title</h1>
+
+    @Html.DisplayFor(m => m.Data.Blocks)
+</div>
+*@
+
