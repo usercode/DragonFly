@@ -4,7 +4,9 @@ using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
 using DragonFly.MongoDB.Options;
+using DragonFlyTemplate.Extensions;
 using DragonFlyTemplate.Models;
+using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
 
@@ -29,18 +31,25 @@ builder.Services.AddDragonFly()
                     .AddSchemaBuilder(options => 
                     {
                         options.AddType<StandardPageModel>();
-                        options.AddType<BlogEntryModel>();    
+                        options.AddType<BlogEntryModel>();
+                        options.AddType<ProjectModel>();
                     })
                     .AddPermissions()
                     ;
 
 builder.Services.AddRazorPages();
 
+builder.Services.AddSingleton<DataSeeding>();
+builder.Services.AddSingleton<MyRazorPageRouting>();
+
 var app = builder.Build();
 
 //Init DragonFly CMS
 IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
 await api.InitAsync();
+
+var seeding = app.Services.GetRequiredService<DataSeeding>();
+await seeding.StartAsync();
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
@@ -51,7 +60,6 @@ if (env.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
 app.UseDragonFly(x =>
 {
     x.MapImageWizard(requireAuthentication: false);
@@ -60,6 +68,7 @@ app.UseDragonFly(x =>
     x.MapPermission();
 });
 app.UseDragonFlyManager();
+app.UseStaticFiles();
 app.MapRazorPages();
-
+//app.MapDynamicPageRoute<MyRazorPageRouting>("{*path}");
 app.Run();

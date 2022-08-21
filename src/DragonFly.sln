@@ -94,6 +94,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFlyTemplate.Client", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFlyTemplate", "DragonFlyTemplate\DragonFlyTemplate.csproj", "{9CD4729F-4284-4879-AED2-5FA437D4AF04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.AspNetCore.SchemaBuilder.Attributes", "DragonFly.AspNetCore.SchemaBuilder.Attributes\DragonFly.AspNetCore.SchemaBuilder.Attributes.csproj", "{A21D0C0A-2D87-4087-A1FD-B2268B3AF206}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -220,6 +222,10 @@ Global
 		{9CD4729F-4284-4879-AED2-5FA437D4AF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CD4729F-4284-4879-AED2-5FA437D4AF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CD4729F-4284-4879-AED2-5FA437D4AF04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,6 +264,7 @@ Global
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1} = {551D7A23-7864-4CA8-B1F1-A58B25EA210E}
 		{FCC19D56-78D3-4576-A498-72E0377F3FD5} = {5B8FE697-3B5E-4BE7-A790-89A13DC2156D}
 		{9CD4729F-4284-4879-AED2-5FA437D4AF04} = {5B8FE697-3B5E-4BE7-A790-89A13DC2156D}
+		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206} = {91ADE257-5696-4B85-BADA-7638271C971B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069E83C9-3430-4D62-843B-B52982C42093}

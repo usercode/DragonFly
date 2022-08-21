@@ -8,15 +8,18 @@ namespace DragonFly.Content;
 
 public class StringFieldOptions : ContentFieldOptions
 {
+    public const int DefaultMaxLength = 2048;
+
     public StringFieldOptions()
     {
-        DefaultValue = string.Empty;
+        MinLength = 0;
+        MaxLength = DefaultMaxLength;
     }
 
     /// <summary>
     /// DefaultValue
     /// </summary>
-    public string DefaultValue { get; set; }
+    public string? DefaultValue { get; set; }
 
     /// <summary>
     /// MinLength

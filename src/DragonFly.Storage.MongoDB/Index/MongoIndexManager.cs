@@ -28,7 +28,7 @@ public class MongoIndexManager
                 _default.Register<BoolField>();
                 _default.Register<IntegerField>();
                 _default.Register<FloatField>();
-                _default.Register<DateField>();
+                _default.Register<DateTimeField>();
                 //_default.Register<AssetField>(null);
                 //_default.Register<ReferenceField>(ReferenceField.IdField);
             }

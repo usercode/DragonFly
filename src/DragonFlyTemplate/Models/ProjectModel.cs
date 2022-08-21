@@ -7,9 +7,23 @@ namespace DragonFlyTemplate.Models;
 [Schema("Project")]
 public class ProjectModel
 {
+    [StringField]
     public virtual StringField Title { get; set; }
 
-    public virtual BlockField Blocks { get; set; }
+    [StringField]
+    public virtual StringField SubTitle { get; set; }
+
+    [SlugField]
+    public virtual SlugField Slug { get; set; }
+
+    [AssetField]
+    public virtual AssetField Image { get; set; }    
+
+    [StringField]
+    public virtual StringField Link { get; set; }
+
+    [HtmlField]
+    public virtual HtmlField Description { get; set; }
 
 
 

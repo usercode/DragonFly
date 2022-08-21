@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-	<Nullable>enable</Nullable>
+	  <Nullable>enable</Nullable>
     <Authors>usercode</Authors>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.3.2</Version>
+    <Version>0.4.0-alpha</Version>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
     <PackageTags>cms</PackageTags>
@@ -20,6 +20,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder.Attributes\DragonFly.AspNetCore.SchemaBuilder.Attributes.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
   </ItemGroup>
 
@@ -29,6 +30,10 @@
 
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attributes\" />
   </ItemGroup>
   
 </Project>

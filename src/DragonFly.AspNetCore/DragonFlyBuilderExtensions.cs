@@ -30,7 +30,7 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton(AssetMetadataManager.Default);
 
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
-        services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
+        services.AddTransient<IAssetProcessing, PdfAssetProcessing>(); 
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>

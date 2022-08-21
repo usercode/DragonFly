@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DragonFly.Core.ContentItems.Models.Validations;
 
 namespace DragonFly.Content;
 
 /// <summary>
-/// TextField
+/// XmlField
 /// </summary>
 [FieldOptions(typeof(XmlFieldOptions))]
 public class XmlField : TextBaseField
@@ -19,5 +20,10 @@ public class XmlField : TextBaseField
     public XmlField(string text)
     {
         Value = text;
+    }
+
+    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    {
+        base.Validate(fieldName, options, context);
     }
 }

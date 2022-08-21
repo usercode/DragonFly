@@ -60,26 +60,26 @@ public static class ContentSchemaFieldExtensions
         return schema;
     }
 
-    public static TContentSchema AddTextArea<TContentSchema>(this TContentSchema schema, string name, Action<TextAreaFieldOptions>? configOptions = null)
+    public static TContentSchema AddTextArea<TContentSchema>(this TContentSchema schema, string name, Action<TextFieldOptions>? configOptions = null)
         where TContentSchema : ISchemaElement
     {
-        TextAreaFieldOptions options = new TextAreaFieldOptions();
+        TextFieldOptions options = new TextFieldOptions();
 
         configOptions?.Invoke(options);
 
-        schema.AddField<TextAreaField>(name, options);
+        schema.AddField<TextField>(name, options);
 
         return schema;
     }
 
-    public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateFieldOptions>? configOptions = null)
+    public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateTimeFieldOptions>? configOptions = null)
         where TContentSchema : ISchemaElement
     {
-        DateFieldOptions options = new DateFieldOptions();
+        DateTimeFieldOptions options = new DateTimeFieldOptions();
 
         configOptions?.Invoke(options);
 
-        schema.AddField<DateField>(name, options);
+        schema.AddField<DateTimeField>(name, options);
 
         return schema;
     }

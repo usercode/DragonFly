@@ -8,15 +8,15 @@ namespace DragonFly.Content;
 /// <summary>
 /// TextField
 /// </summary>
-[FieldOptions(typeof(TextAreaFieldOptions))]
-public class TextAreaField : TextBaseField
+[FieldOptions(typeof(TextFieldOptions))]
+public class TextField : TextBaseField
 {
-    public TextAreaField()
+    public TextField()
     {
 
     }
 
-    public TextAreaField(string text)
+    public TextField(string text)
     {
         Value = text;
     }

@@ -34,12 +34,12 @@ public class ContentModule : ClientModule
         api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();
         api.RegisterField<ReferenceField, ReferenceFieldView, ReferenceFieldOptionsView, ReferenceFieldQueryView>();
         api.RegisterField<BoolField, BoolFieldView, BoolFieldOptionsView>();
-        api.RegisterField<DateField, DateTimeFieldView>();
+        api.RegisterField<DateTimeField, DateTimeFieldView>();
         api.RegisterField<StringField, StringFieldView, StringFieldOptionsView, StringFieldQueryView>();
         api.RegisterField<FloatField, FloatFieldView, FloatFieldOptionsView>();
         api.RegisterField<IntegerField, IntegerFieldView, IntegerFieldOptionsView, IntegerFieldQueryView>();
         api.RegisterField<SlugField, SlugFieldView>();
-        api.RegisterField<TextAreaField, TextAreaFieldView>();
+        api.RegisterField<TextField, TextFieldView>();
         api.RegisterField<HtmlField, HtmlFieldView>();
         api.RegisterField<XHtmlField, XHtmlFieldView>();
         api.RegisterField<XmlField, XmlFieldView>();

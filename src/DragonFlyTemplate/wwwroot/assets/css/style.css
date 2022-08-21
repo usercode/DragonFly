@@ -168,6 +168,7 @@ body > header .navbar .nav-item.active a {
 body > header .navbar .nav-item:hover a {
   text-decoration: none;
   background-color: #fafafa;
+  color: #000;
 }
 body > header .navbar-nav .nav-item.active {
   color: #000;
@@ -294,6 +295,9 @@ article .ingress {
   margin: 25px 0px;
   padding: 25px 0px;
   border-bottom: 2px solid #f5f5f5;
+}
+.project-item:last-child {
+  border-bottom: none;
 }
 .project-item .title {
   margin-bottom: 2px;

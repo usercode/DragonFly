@@ -1,9 +1,4 @@
-﻿using DragonFly.Content;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DragonFly.Content;
+﻿namespace DragonFly.Content;
 
 /// <summary>
 /// ContentSchemaExtensions
@@ -18,10 +13,12 @@ public static class ContentSchemaExtensions
             options = ContentFieldManager.Default.CreateOptions(fieldType);
         }
 
-        if (schema.Fields.TryAdd(name, new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options }) == false)
+        if (fieldType.IsSubclassOf(typeof(ContentField)) == false)
         {
-            //throw new Exception($"The content schema already contains a field with the name '{name}'");
+            throw new Exception($"FieldType isn't a valid: {fieldType.Name}");
         }
+
+        schema.Fields[name] = new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options };
 
         return schema;
     }

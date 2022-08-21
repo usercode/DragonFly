@@ -101,6 +101,11 @@ public partial class MongoStorage : IDataStorage
         Interceptors = interceptors;
     }
 
+    public async Task DeleteDatabaseAsync()
+    {
+        await Client.DropDatabaseAsync(Options.Database);
+    }
+
     public MongoDbOptions Options { get; }
 
     private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; }

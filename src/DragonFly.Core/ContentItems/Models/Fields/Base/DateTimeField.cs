@@ -5,15 +5,15 @@ using System.Text;
 
 namespace DragonFly.Content;
 
-[FieldOptions(typeof(DateFieldOptions))]
-public class DateField : SingleValueContentField<DateTime?>
+[FieldOptions(typeof(DateTimeFieldOptions))]
+public class DateTimeField : SingleValueContentField<DateTime?>
 {
-    public DateField()
+    public DateTimeField()
     {
 
     }
 
-    public DateField(DateTime? date)
+    public DateTimeField(DateTime? date)
     {
         Value = date;
     }

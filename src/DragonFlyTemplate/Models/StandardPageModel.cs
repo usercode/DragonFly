@@ -7,10 +7,13 @@ namespace DragonFlyTemplate.Models;
 [Schema("StandardPage")]
 public class StandardPageModel
 {
-    [Field]
+    [StringField]
     public virtual StringField Title { get; set; }
 
-    [Field]
-    public virtual BlockField Blocks { get; set; }
+    [SlugField]
+    public virtual SlugField Slug { get; set; }
+
+    [BlockField]
+    public virtual BlockField MainContent { get; set; }
 
 }

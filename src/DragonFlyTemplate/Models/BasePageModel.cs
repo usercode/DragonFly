@@ -5,5 +5,4 @@ namespace DragonFlyTemplate.Models;
 public class BasePageModel : PageModel
 {
     public string PageTitle { get; set; }
-
 }

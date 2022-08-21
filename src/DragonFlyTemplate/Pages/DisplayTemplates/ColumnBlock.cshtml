@@ -4,7 +4,7 @@
     @for (var n = 0; n < Model.Columns.Count; n++)
     {
         <div class="col-md">
-            @Html.DisplayFor(m => Model.Columns[n], Model.Columns[n].GetType().Name)
+            @Html.DisplayBlocks(Model.Columns[n])
         </div>
     }
 </div>

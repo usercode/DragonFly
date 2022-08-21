@@ -9,7 +9,7 @@ namespace DragonFly.Fields.BlockField;
 /// <summary>
 /// Column
 /// </summary>
-public class Column
+public class Column : IBlocksContent
 {
     public Column()
     {

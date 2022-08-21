@@ -1,0 +1,11 @@
+@page "/blog/{slug}"
+@model BlogEntryPage
+
+<div class="container">
+    <h1>@Model.Result.Title</h1>
+
+    <p class="date">@Model.Result.Date.Value.Value.ToLongDateString()</p>
+
+    @await Html.DisplayBlockFieldAsync(Model.Result.MainContent)
+ 
+</div>

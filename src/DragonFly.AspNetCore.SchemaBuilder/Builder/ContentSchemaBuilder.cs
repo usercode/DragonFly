@@ -1,4 +1,5 @@
 ﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
+using DragonFly.AspNetCore.SchemaBuilder.SchemaStates;
 using DragonFly.Content;
 using System;
 using System.Collections.Generic;
@@ -54,26 +55,18 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
 
         IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
 
+        int sort = 100;
+
         foreach (PropertyInfo property in type.GetProperties())
         {
-            FieldAttribute? fieldAttribute = property.GetCustomAttribute<FieldAttribute>();
+            BaseFieldAttribute? fieldAttribute = property.GetCustomAttribute<BaseFieldAttribute>(true);
 
             if (fieldAttribute == null)
             {
                 continue;
             }
 
-            Type fieldType = property.PropertyType;
-
-            //if (fieldAttribute.FieldType != null)
-            //{
-            //    fieldType = fieldAttribute.FieldType;
-            //}
-
-            if (allFieldTypes.Contains(fieldType))
-            {
-                schema.AddField(property.Name, property.PropertyType);
-            }
+            schema.AddField(property.Name, fieldAttribute.FieldType, options: fieldAttribute.CreateOptions(), sortkey: sort++);         
         }
 
         if (schema.IsNew())
@@ -84,6 +77,8 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
         {
             await Storage.UpdateAsync(schema);
         }
+
+        SchemaTypeManager.Default.Add(type, schema);
 
         if (_schema.TryAdd(type, schema) == false)
         {

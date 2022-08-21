@@ -10,5 +10,4 @@ namespace DragonFly.Storage;
 
 public interface IDataStorage : IContentStorage, ISchemaStorage, IAssetStorage, IWebHookStorage, IStructureStorage
 {
-    
 }

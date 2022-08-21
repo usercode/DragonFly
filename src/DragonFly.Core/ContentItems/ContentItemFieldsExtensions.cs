@@ -47,7 +47,7 @@ public static class ContentItemFieldsExtensions
 
     public static string? GetTextArea(this IContentElement contentItem, string name)
     {
-        TextAreaField field = contentItem.GetField<TextAreaField>(name);
+        TextField field = contentItem.GetField<TextField>(name);
 
         return field.Value;
     }
@@ -55,7 +55,7 @@ public static class ContentItemFieldsExtensions
     public static TContentItem SetTextArea<TContentItem>(this TContentItem contentItem, string name, string? value)
         where TContentItem : IContentElement
     {
-        TextAreaField field = contentItem.GetField<TextAreaField>(name);
+        TextField field = contentItem.GetField<TextField>(name);
 
         field.Value = value;
 
@@ -115,7 +115,7 @@ public static class ContentItemFieldsExtensions
 
     public static DateTime? GetDate(this IContentElement contentItem, string name)
     {
-        DateField field = contentItem.GetField<DateField>(name);
+        DateTimeField field = contentItem.GetField<DateTimeField>(name);
 
         return field.Value;
     }
@@ -123,7 +123,7 @@ public static class ContentItemFieldsExtensions
     public static TContentItem SetDate<TContentItem>(this TContentItem contentItem, string name, DateTime? value)
         where TContentItem : IContentElement
     {
-        DateField field = contentItem.GetField<DateField>(name);
+        DateTimeField field = contentItem.GetField<DateTimeField>(name);
 
         field.Value = value;
 

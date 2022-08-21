@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content;
 
-public class TextAreaFieldOptions : ContentFieldOptions
+public class TextFieldOptions : ContentFieldOptions
 {
-    public TextAreaFieldOptions()
+    public TextFieldOptions()
     {
         DefaultValue = string.Empty;
     }
@@ -30,6 +30,6 @@ public class TextAreaFieldOptions : ContentFieldOptions
 
     public override IContentField CreateContentField()
     {
-        return new TextAreaField(DefaultValue);
+        return new TextField(DefaultValue);
     }
 }

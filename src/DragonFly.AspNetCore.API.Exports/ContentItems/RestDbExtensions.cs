@@ -42,6 +42,13 @@ public static class RestDbExtensions
                         boolField.Value = boolValue;
                     }
                 }
+                else if (contentField is SingleValueContentField<DateTime?> dateField)
+                {
+                    if (jsonValue.TryGetValue(out DateTime? dateValue))
+                    {
+                        dateField.Value = dateValue;
+                    }
+                }
                 else if (contentField is SingleValueContentField<Guid?> guidField)
                 {
                     if (jsonValue.TryGetValue(out Guid? guidValue))

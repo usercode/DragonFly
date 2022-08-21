@@ -33,11 +33,11 @@ public class MongoFieldManager
                 _default.RegisterField<SingleValueFieldSerializer<SlugField>>();
                 _default.RegisterField<SingleValueFieldSerializer<IntegerField>>();
                 _default.RegisterField<SingleValueFieldSerializer<FloatField>>();
-                _default.RegisterField<SingleValueFieldSerializer<TextAreaField>>();
+                _default.RegisterField<SingleValueFieldSerializer<TextField>>();
                 _default.RegisterField<SingleValueFieldSerializer<HtmlField>>();
                 _default.RegisterField<SingleValueFieldSerializer<XHtmlField>>();
                 _default.RegisterField<SingleValueFieldSerializer<XmlField>>();
-                _default.RegisterField<SingleValueFieldSerializer<DateField>>();
+                _default.RegisterField<SingleValueFieldSerializer<DateTimeField>>();
             }
 
             return _default;

@@ -4,22 +4,20 @@
 <div class="container">
     <h1>Projekte</h1>
 
-    @foreach(var project in Model.Result.Items)
+    @foreach (ProjectModel project in Model.Result.Items)
     {
-        <p>@project.GetString("Title")</p>
+        <div class="project-item">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="@Url.ImageWizard().Asset(project.Image.Asset).AsImage().Resize(1200,900).BuildUrl()">
+                </div>
+                <div class="col-md-8">
+                    <h2>@project.Title</h2>
+                    <p class="subtitle">@project.SubTitle.Value</p>
+                    <a class="link" href="@project.Link.Value" target="_blank">@project.Link.Value</a>
+                    @Html.Raw(project.Description.Value)                    
+                </div>
+            </div>
+        </div>
     }
-
 </div>
-
-@*@model DragonFlyPageModel<ProjectModel>
-@{
-    ViewBag.Title = Model.Data.Title;
-}
-
-<div class="container">
-    <h1>@Model.Data.Title</h1>
-
-    @Html.DisplayFor(m => m.Data.Blocks)
-</div>
-*@
-

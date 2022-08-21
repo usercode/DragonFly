@@ -1,5 +1,6 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.SchemaBuilder.Proxies;
+using DragonFly.AspNetCore.SchemaBuilder.SchemaStates;
 using DragonFly.Content;
 using DragonFly.Content.Queries;
 using DragonFly.Storage;
@@ -14,12 +15,9 @@ namespace DragonFly.AspNetCore.SchemaBuilder;
 public static class ContentSchemaBuilderExtensions
 {
     public static T ToModel<T>(this ContentItem contentItem)
+        where T : class
     {
-        T instance = Activator.CreateInstance<T>();
-
-
-
-        return instance;
+        return ProxyBuilder.CreateProxy<T>(contentItem);
     }
 
     public static async Task<T> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
@@ -60,9 +58,10 @@ public static class ContentSchemaBuilderExtensions
 
     }
 
-    public static async Task<QueryResult<TContentType>> QueryResult<TContentType>(this IContentStorage storage, ContentItemQuery query)
+    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, ContentItemQuery query)
+        where TContentType : class
     {
-        
+        query.Schema = SchemaTypeManager.Default.Get<TContentType>().Name;
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 

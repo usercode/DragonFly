@@ -16,7 +16,6 @@ public static class DragonFlyBuilderExtensions
     public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
         builder.Services.AddSingleton(BlockFieldManager.Default);
-        builder.Services.AddSingleton<DocumentSerializer>();
 
         builder.Init(api =>
         {

@@ -22,7 +22,7 @@ public static class ContentItemDragonFlyApiExtensions
         manager.Add<ArrayField>();
         manager.Add<AssetField>();
         manager.Add<BoolField>();
-        manager.Add<DateField>();
+        manager.Add<DateTimeField>();
         manager.Add<EmbedField>();
         manager.Add<FloatField>();
         manager.Add<HtmlField>();
@@ -30,7 +30,7 @@ public static class ContentItemDragonFlyApiExtensions
         manager.Add<ReferenceField>();
         manager.Add<SlugField>();
         manager.Add<StringField>();
-        manager.Add<TextAreaField>();
+        manager.Add<TextField>();
         manager.Add<XHtmlField>();
         manager.Add<XmlField>();
 

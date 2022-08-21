@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
@@ -12,12 +8,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 [AttributeUsage(AttributeTargets.Class)]
 public class SchemaAttribute : Attribute
 {
-    public SchemaAttribute()
-    {
-
-    }
-
-    public SchemaAttribute(string schemaName)
+    public SchemaAttribute(string? schemaName = null)
     {
         SchemaName = schemaName;
     }

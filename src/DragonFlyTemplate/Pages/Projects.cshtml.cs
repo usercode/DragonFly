@@ -4,6 +4,7 @@ using DragonFly.Content;
 using DragonFly.Content.Queries;
 using DragonFly.Storage;
 using DragonFlyTemplate.Models;
+using DragonFly.AspNetCore.SchemaBuilder;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -16,13 +17,11 @@ public class ProjectsPage : BasePageModel
 
     public IContentStorage ContentStorage { get; }
 
-    public QueryResult<ContentItem> Result { get; private set; }
+    public QueryResult<ProjectModel> Result { get; private set; }
 
     public async Task OnGetAsync()
     {
-        var e = PermissionState.IsEnabled;
-
-        Result = await ContentStorage.QueryAsync(new ContentItemQuery());
+        Result = await ContentStorage.QueryAsync<ProjectModel>(new ContentItemQuery() {  Top = 100, Skip = 0});
 
 
     }
