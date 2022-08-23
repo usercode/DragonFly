@@ -10,7 +10,7 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 [AttributeUsage(AttributeTargets.Property)]
 public abstract class BaseFieldAttribute : Attribute
 {
-    public bool IsRequired { get; protected set; }
+    public bool IsRequired { get; set; }
 
     public abstract Type FieldType { get; }
 

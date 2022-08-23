@@ -9,9 +9,8 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class AssetFieldAttribute : BaseFieldAttribute
 {
-    public AssetFieldAttribute(bool isRequired = false)
+    public AssetFieldAttribute()
     {
-        IsRequired = isRequired;
     }
 
     public override Type FieldType => typeof(AssetField);

@@ -10,9 +10,8 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class BlockFieldAttribute : BaseFieldAttribute
 {
-    public BlockFieldAttribute(bool isRequired = false)
+    public BlockFieldAttribute()
     {
-        IsRequired = isRequired;
     }
 
     public override Type FieldType => typeof(BlockField);

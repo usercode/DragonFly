@@ -9,12 +9,9 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class StringFieldAttribute : BaseFieldAttribute
 {
-    public StringFieldAttribute(bool isRequired = false, string? defaultValue = null, int minLength = 0, int maxLength = StringFieldOptions.DefaultMaxLength)
+    public StringFieldAttribute()
     {
-        IsRequired = isRequired;
-        DefaultValue = defaultValue;
-        MinLength = minLength;
-        MaxLength = maxLength;
+        MaxLength = StringFieldOptions.DefaultMaxLength;
     }
 
     public string? DefaultValue { get; }

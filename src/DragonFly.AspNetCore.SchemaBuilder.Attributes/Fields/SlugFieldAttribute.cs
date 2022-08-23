@@ -9,9 +9,8 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class SlugFieldAttribute : BaseFieldAttribute
 {
-    public SlugFieldAttribute(bool isRequired = false)
+    public SlugFieldAttribute()
     {
-        IsRequired = isRequired;
     }
 
     public override Type FieldType => typeof(SlugField);

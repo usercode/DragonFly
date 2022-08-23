@@ -9,9 +9,8 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class DateFieldAttribute : BaseFieldAttribute
 {
-    public DateFieldAttribute(bool isRequired = false)
+    public DateFieldAttribute()
     {
-        IsRequired = isRequired;
     }
 
     public override Type FieldType => typeof(DateTimeField);

@@ -9,9 +9,8 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 public class TextFieldAttribute : BaseFieldAttribute
 {
-    public TextFieldAttribute(bool isRequired = false)
+    public TextFieldAttribute()
     {
-        IsRequired = isRequired;
     }
 
     public override Type FieldType => typeof(TextField);

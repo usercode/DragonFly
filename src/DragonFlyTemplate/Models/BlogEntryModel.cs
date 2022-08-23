@@ -7,16 +7,16 @@ namespace DragonFlyTemplate.Models;
 [ContentItem("BlogEntry")]
 public class BlogEntryModel
 {
-    [DateField(isRequired: true)]
+    [DateField(IsRequired = true)]
     public virtual DateTime? Date { get; set; }
 
-    [StringField(isRequired: true)]
+    [StringField(IsRequired = true)]
     public virtual string Title { get; set; }
 
     [TextField]
     public virtual string ShortDescription { get; set; }
 
-    [SlugField(isRequired: true)]
+    [SlugField(IsRequired = true)]
     public virtual string Slug { get; set; }
 
     [AssetField]
