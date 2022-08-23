@@ -3,12 +3,12 @@
 namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
 /// <summary>
-/// SchemaAttribute
+/// ContentItemAttribute
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class SchemaAttribute : Attribute
+public class ContentItemAttribute : Attribute
 {
-    public SchemaAttribute(string? schemaName = null)
+    public ContentItemAttribute(string? schemaName = null)
     {
         SchemaName = schemaName;
     }

@@ -4,7 +4,7 @@ using DragonFly.Fields.BlockField;
 
 namespace DragonFlyTemplate.Models;
 
-[Schema("Project")]
+[ContentItem("Project")]
 public class ProjectModel
 {
     [StringField(isRequired: true)]

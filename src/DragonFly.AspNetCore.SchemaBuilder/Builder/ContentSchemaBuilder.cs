@@ -45,7 +45,7 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
 
     public async Task AddAsync(Type type)
     {
-        SchemaAttribute? schemaAttribute = type.GetCustomAttribute<SchemaAttribute>();
+        ContentItemAttribute? schemaAttribute = type.GetCustomAttribute<ContentItemAttribute>();
 
         string? schemaName = null;
 

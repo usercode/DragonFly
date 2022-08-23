@@ -4,7 +4,7 @@ using DragonFly.Fields.BlockField;
 
 namespace DragonFlyTemplate.Models;
 
-[Schema("BlogEntry")]
+[ContentItem("BlogEntry")]
 public class BlogEntryModel
 {
     [DateField(isRequired: true)]

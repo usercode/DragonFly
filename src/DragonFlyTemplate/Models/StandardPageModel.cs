@@ -4,7 +4,7 @@ using DragonFly.Fields.BlockField;
 
 namespace DragonFlyTemplate.Models;
 
-[Schema("StandardPage")]
+[ContentItem("StandardPage")]
 public class StandardPageModel
 {
     [StringField]
