@@ -13,6 +13,8 @@ public class ProjectsPage : BasePageModel
     public ProjectsPage(IContentStorage contentStorage)
     {
         ContentStorage = contentStorage;
+
+        PageTitle = "Projekte";
     }
 
     public IContentStorage ContentStorage { get; }

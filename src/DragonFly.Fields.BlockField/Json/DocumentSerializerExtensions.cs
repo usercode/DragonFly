@@ -13,4 +13,9 @@ public static class DocumentSerializerExtensions
     {
         return await DocumentSerializer.DeserializeAsync(blockField.Value);
     }
+
+    public static async Task SetDocumentAsync(this BlockField blockField, Document document)
+    {
+        blockField.Value = await DocumentSerializer.SerializeAsync(document);
+    }
 }

@@ -10,13 +10,20 @@ namespace DragonFly;
 
 public static class ProxyExtensions
 {
-    public static T ToModel<T>(this ContentItem contentItem) where T : class
+    public static T ToModel<T>(this ContentItem contentItem)
+        where T : class
     {
         return ProxyBuilder.CreateProxy<T>(contentItem);
     }
 
-    public static ContentItem ToContentItem<T>(this T item)
+    public static ContentItem ToContentItem<T>(this T obj)
+        where T : class
     {
-        throw new Exception();
+        if (obj is IContentItemProxy proxy)
+        {
+            return proxy.ContentItem;
+        }
+
+        throw new Exception("No valid ContentItem.");
     }
 }

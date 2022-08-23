@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: DragonFly.App.Server/Dockerfile
+
+  dragonflytemplate:
+    image: ${DOCKER_REGISTRY-}dragonflytemplate
+    build:
+      context: .
+      dockerfile: DragonFlyTemplate/Dockerfile
+

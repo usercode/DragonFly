@@ -13,6 +13,8 @@ public class BlogPage : BasePageModel
     public BlogPage(IContentStorage contentStorage)
     {
         ContentStorage = contentStorage;
+
+        PageTitle = "Blog";
     }
 
     public IContentStorage ContentStorage { get; }

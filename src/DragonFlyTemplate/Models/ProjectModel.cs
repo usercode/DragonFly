@@ -7,16 +7,13 @@ namespace DragonFlyTemplate.Models;
 [Schema("Project")]
 public class ProjectModel
 {
-    [StringField]
+    [StringField(isRequired: true)]
     public virtual StringField Title { get; set; }
 
     [StringField]
     public virtual StringField SubTitle { get; set; }
 
-    [SlugField]
-    public virtual SlugField Slug { get; set; }
-
-    [AssetField]
+    [AssetField(isRequired: true)]
     public virtual AssetField Image { get; set; }    
 
     [StringField]
@@ -24,8 +21,5 @@ public class ProjectModel
 
     [HtmlField]
     public virtual HtmlField Description { get; set; }
-
-
-
     
 }

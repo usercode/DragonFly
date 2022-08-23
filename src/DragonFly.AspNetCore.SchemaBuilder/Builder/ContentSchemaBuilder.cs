@@ -1,4 +1,5 @@
 ﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
+using DragonFly.AspNetCore.SchemaBuilder.Proxies;
 using DragonFly.AspNetCore.SchemaBuilder.SchemaStates;
 using DragonFly.Content;
 using System;
@@ -28,6 +29,19 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
     private ISchemaStorage Storage { get; }
 
     private IDictionary<Type, ContentSchema> _schema;
+
+    public ContentSchema GetSchemaByType(Type type)
+    {
+        return _schema[type];
+    }
+
+    public T CreateProxy<T>()
+        where T : class
+    {
+        ContentSchema schema = _schema[typeof(T)];
+
+        return ProxyBuilder.CreateProxy<T>(schema.CreateContentItem());
+    }
 
     public async Task AddAsync(Type type)
     {

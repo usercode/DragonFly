@@ -26,7 +26,7 @@ public abstract class TextBaseField : SingleValueContentField<string>
 
     protected override void OnValueChanging(ref string? newValue)
     {
-        if(string.IsNullOrWhiteSpace(newValue))
+        if (string.IsNullOrWhiteSpace(newValue))
         {
             newValue = null;
         }

@@ -7,9 +7,9 @@ using DragonFly.Content;
 
 namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 
-public class TextAreaFieldAttribute : BaseFieldAttribute
+public class TextFieldAttribute : BaseFieldAttribute
 {
-    public TextAreaFieldAttribute(bool isRequired = false)
+    public TextFieldAttribute(bool isRequired = false)
     {
         IsRequired = isRequired;
     }
@@ -18,8 +18,9 @@ public class TextAreaFieldAttribute : BaseFieldAttribute
 
     public override ContentFieldOptions CreateOptions()
     {
-        return new TextFieldOptions() 
+        return new TextFieldOptions()
         {
+            IsRequired = IsRequired
         };
     }
 }

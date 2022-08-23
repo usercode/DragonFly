@@ -9,18 +9,18 @@
 
 @code {
 
-	[CascadingParameter]
-	public ContentItemDetailBase ContentItemDetail {get; set; }
+    [CascadingParameter]
+    public ContentItemDetailBase ContentItemDetail {get; set; }
 
-	[Parameter]
-	public Document Document { get; set; }
+    [Parameter]
+    public Document Document { get; set; }
 
-	protected override async Task OnInitializedAsync()
-	{
-		await base.OnInitializedAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
 
-		ContentItemDetail.Saving += async () => { Field.Value = await DocumentSerializer.SerializeAsync(Document); };
+        ContentItemDetail.Saving += async () => await Field.SetDocumentAsync(Document);
 
-		Document = await DocumentSerializer.DeserializeAsync(Field.Value);
-	}
+        Document = await Field.GetDocumentAsync();
+    }
 }

@@ -14,14 +14,10 @@ namespace DragonFly.AspNetCore.SchemaBuilder;
 
 public static class ContentSchemaBuilderExtensions
 {
-    public static T ToModel<T>(this ContentItem contentItem)
-        where T : class
-    {
-        return ProxyBuilder.CreateProxy<T>(contentItem);
-    }
+   
 
     public static async Task<T> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
-        where T : class, new()
+        where T : class
     {
         ContentItem content = await storage.GetContentAsync(schema, id);
 
@@ -31,7 +27,7 @@ public static class ContentSchemaBuilderExtensions
     public static async Task CreateAsync<TContentType>(this IContentStorage storage, TContentType entity)
         where TContentType : class
     {
-        //await storage.CreateAsync(entity.GetContentItem<TContentType>());
+        await storage.CreateAsync(entity.ToContentItem());
     }
 
     public static async Task UpdateAsync<TContentType>(this IContentStorage storage, TContentType entity)

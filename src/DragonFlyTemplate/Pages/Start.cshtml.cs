@@ -10,6 +10,8 @@ public class StartPage : BasePageModel
     public StartPage(IContentStorage contentStorage)
     {
         ContentStorage = contentStorage;
+
+        PageTitle = "Start";
     }
 
     public IContentStorage ContentStorage { get; }

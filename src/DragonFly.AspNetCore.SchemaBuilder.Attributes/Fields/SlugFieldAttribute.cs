@@ -18,8 +18,9 @@ public class SlugFieldAttribute : BaseFieldAttribute
 
     public override ContentFieldOptions CreateOptions()
     {
-        return new SlugFieldOptions() 
+        return new SlugFieldOptions()
         {
+            IsRequired = IsRequired
         };
     }
 }

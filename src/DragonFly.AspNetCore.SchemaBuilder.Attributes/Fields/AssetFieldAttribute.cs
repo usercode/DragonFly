@@ -18,8 +18,9 @@ public class AssetFieldAttribute : BaseFieldAttribute
 
     public override ContentFieldOptions CreateOptions()
     {
-        return new AssetFieldOptions() 
+        return new AssetFieldOptions()
         {
+            IsRequired = IsRequired
         };
     }
 }

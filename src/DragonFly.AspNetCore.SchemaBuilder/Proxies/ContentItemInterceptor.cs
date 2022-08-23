@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using Castle.DynamicProxy;
 using DragonFly.Content;
 
@@ -25,6 +22,25 @@ internal class ContentItemInterceptor : IInterceptor
 
             if (ContentItem.TryGetField(propertyName, out IContentField? field))
             {
+                if (field is ISingleValueContentField singleValueField)
+                {
+                    PropertyInfo? propertyInfo = invocation.TargetType.GetProperty(propertyName);
+
+                    if (propertyInfo == null)
+                    {
+                        throw new Exception($"Property not found: {propertyName}");
+                    }
+
+                    if (propertyInfo.PropertyType.IsPrimitive
+                        || propertyInfo.PropertyType == typeof(string)
+                        || (propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                    {
+                        invocation.ReturnValue = singleValueField.Value;
+
+                        return;
+                    }
+                }
+
                 invocation.ReturnValue = field;
 
                 return;
@@ -33,6 +49,27 @@ internal class ContentItemInterceptor : IInterceptor
         else if (invocation.Method.Name.StartsWith("set_"))
         {
             string propertyName = invocation.Method.Name.Substring(4);
+
+            if (invocation.Arguments.Length > 0)
+            {
+                object value = invocation.Arguments[0];
+                Type valueType = value.GetType();
+
+                if (valueType.IsPrimitive 
+                    || valueType == typeof(string) 
+                    || (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                {
+                    if (ContentItem.TryGetField(propertyName, out IContentField? contentField))
+                    {
+                        if (contentField is ISingleValueContentField singleValueContentField)
+                        {
+                            singleValueContentField.Value = value;
+
+                            return;
+                        }
+                    }
+                }
+            }
 
             if (ContentItem.TrySetField(propertyName, (IContentField)invocation.Arguments[0]))
             {

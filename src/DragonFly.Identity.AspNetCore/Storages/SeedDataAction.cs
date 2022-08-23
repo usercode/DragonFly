@@ -53,7 +53,6 @@ class SeedDataAction : IPostInitialize
 
             IdentityUser admin = new IdentityUser();
             admin.Username = Options.InitialUsername;
-            admin.Email = DefaultSecurity.DefaultEmail;
             admin.Roles.Add(roleAdmin);
 
             await api.Identity().CreateUserAsync(admin, Options.InitialPassword);

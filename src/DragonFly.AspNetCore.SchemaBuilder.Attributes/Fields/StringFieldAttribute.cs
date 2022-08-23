@@ -29,6 +29,7 @@ public class StringFieldAttribute : BaseFieldAttribute
     {
         return new StringFieldOptions() 
         {  
+            IsRequired = IsRequired,
             DefaultValue = DefaultValue, 
             MinLength = MinLength, 
             MaxLength = MaxLength

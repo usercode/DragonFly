@@ -6,7 +6,7 @@ namespace DragonFly.Content;
 
 public interface ISingleValueContentField : IContentField
 {
-    object? Value { get; }
+    object? Value { get; set; }
 
     bool HasValue { get; }
 }

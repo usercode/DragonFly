@@ -13,7 +13,7 @@ namespace DragonFly.Fields.BlockField.Storage.Serializers;
 /// <summary>
 /// DocumentSerializer
 /// </summary>
-public class DocumentSerializer
+class DocumentSerializer
 {
     static DocumentSerializer()
     {
@@ -45,7 +45,7 @@ public class DocumentSerializer
         return result;
     }
 
-    public static async Task<Document?> DeserializeAsync(string? input)
+    public static async Task<Document> DeserializeAsync(string? input)
     {
         if (input == null)
         {

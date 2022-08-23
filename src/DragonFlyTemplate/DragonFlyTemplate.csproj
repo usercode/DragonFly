@@ -5,14 +5,8 @@
     <UserSecretsId>645b3885-7e6c-4586-a44b-8f211e9b7c16</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
-    <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
-  <ItemGroup>
-    <Content Remove="Pages\Archive.cshtml" />
-    <Content Remove="Pages\Page.cshtml" />
-    <Content Remove="Pages\Post.cshtml" />
-    <Content Remove="Pages\Project.cshtml" />
-  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="ImageWizard.Client" Version="3.7.1" />
@@ -39,6 +33,5 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\assets\css\" />
-    <Folder Include="wwwroot\assets\img\" />
   </ItemGroup>
 </Project>

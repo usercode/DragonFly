@@ -19,7 +19,7 @@ internal class ContentItemProxyInterceptor : IInterceptor
 
     public void Intercept(IInvocation invocation)
     {
-        if (invocation.Method.Name == nameof(IContentItemProxy.ContentItem))
+        if (invocation.Method.Name == $"get_{nameof(IContentItemProxy.ContentItem)}")
         {
             invocation.ReturnValue = ContentItem;
         }

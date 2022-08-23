@@ -5,5 +5,7 @@
 {
     Asset asset = await Storage.GetAssetAsync(Model.AssetId.Value);
 
-    <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
+    <div class="asset-block">
+        <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
+    </div>
 }

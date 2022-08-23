@@ -18,8 +18,9 @@ public class DateFieldAttribute : BaseFieldAttribute
 
     public override ContentFieldOptions CreateOptions()
     {
-        return new DateTimeFieldOptions() 
+        return new DateTimeFieldOptions()
         {
+            IsRequired = IsRequired
         };
     }
 }

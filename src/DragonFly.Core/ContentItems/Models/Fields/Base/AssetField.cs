@@ -12,6 +12,16 @@ namespace DragonFly.Content;
 [FieldQuery(typeof(AssetFieldQuery))]
 public class AssetField : ContentField
 {
+    public AssetField()
+    {
+
+    }
+
+    public AssetField(Asset asset)
+    {
+        Asset = asset;
+    }
+
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
         if (options is AssetFieldOptions fieldOptions)

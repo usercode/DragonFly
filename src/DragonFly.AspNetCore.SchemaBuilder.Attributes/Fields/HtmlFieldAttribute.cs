@@ -18,8 +18,9 @@ public class HtmlFieldAttribute : BaseFieldAttribute
 
     public override ContentFieldOptions CreateOptions()
     {
-        return new HtmlFieldOptions() 
+        return new HtmlFieldOptions()
         {
+            IsRequired = IsRequired
         };
     }
 }

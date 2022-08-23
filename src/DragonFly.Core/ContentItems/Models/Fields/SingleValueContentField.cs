@@ -36,7 +36,11 @@ public abstract class SingleValueContentField<T> : ContentField, ISingleValueCon
     [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
     public bool HasValue => Value != null;
 
-    object? ISingleValueContentField.Value => Value;
+    object? ISingleValueContentField.Value
+    {
+        get => _value;
+        set => _value = (T?)value;
+    }
 
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
