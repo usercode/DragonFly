@@ -23,16 +23,20 @@ builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("A
 
 //DragonFly
 builder.Services.AddDragonFly()
-                    .AddImageWizard()
+                    .AddImageWizard(x =>
+                    {
+                        x.AddYoutubeLoader();
+                        x.AddGravatarLoader();
+                    })
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddSchemaBuilder(options => 
+                    .AddSchemaBuilder(x => 
                     {
-                        options.AddType<StandardPageModel>();
-                        options.AddType<BlogEntryModel>();
-                        options.AddType<ProjectModel>();
+                        x.AddType<StandardPageModel>();
+                        x.AddType<BlogEntryModel>();
+                        x.AddType<ProjectModel>();
                     })
                     .AddPermissions()
                     ;

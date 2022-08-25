@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content;
 
-public class IntegerFieldOptions : SingleValueContentFieldOptions<long>
+public class IntegerFieldOptions : SingleValueFieldOptions<long>
 {
     public long? MinValue { get; set; }
     public long? MaxValue { get; set; }

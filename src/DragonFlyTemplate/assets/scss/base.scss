@@ -2,10 +2,9 @@
 
 img {
     max-width: 100%;
-}
-
-.container {
-    max-width: 960px;
+    max-height: 100%;
+    width: auto;
+    height: auto;
 }
 
 .sep {
@@ -207,3 +206,17 @@ article {
         }
     }
 }
+
+.zoom-item {
+    transition: all 0.05s ease;
+}
+
+.zoom-item:hover {
+    z-index: 100;
+    transform: scale(1.02);
+}
+
+.social-icon {
+    font-size: 1.2rem;
+}
+

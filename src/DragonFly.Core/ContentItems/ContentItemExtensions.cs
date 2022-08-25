@@ -52,12 +52,12 @@ public static class ContentItemExtensions
 
     public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
     {
-        return ((SingleValueContentField<T>)contentItem.Fields[name]).Value;
+        return ((SingleValueField<T>)contentItem.Fields[name]).Value;
     }
 
     public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
     {
-        ((SingleValueContentField<T>)contentItem.Fields[name]).Value = value;
+        ((SingleValueField<T>)contentItem.Fields[name]).Value = value;
     }
 
     public static ContentItem CreateContentItem(this ContentSchema schema)

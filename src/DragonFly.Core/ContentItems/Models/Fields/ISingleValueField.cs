@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DragonFly.Content;
 
-public interface ISingleValueContentField : IContentField
+public interface ISingleValueField : IContentField
 {
     object? Value { get; set; }
 

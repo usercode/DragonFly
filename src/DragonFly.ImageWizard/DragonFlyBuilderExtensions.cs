@@ -5,6 +5,7 @@ using ImageWizard;
 using ImageWizard.Caches;
 using ImageWizard.Client;
 using ImageWizard.DocNET;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
@@ -15,19 +16,24 @@ namespace DragonFly.ImageWizard;
 
 public static class DragonFlyBuilderExtensions
 {
-    public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder)
+    public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder, Action<IImageWizardBuilder>? action = null)
     {
-        builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetDataUrlService>();
+        builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetUrlService>();
         builder.Services.AddTransient<IConfigureOptions<ImageWizardClientSettings>, ConfigureImageWizardClientOptions>();
 
         //ImageWizard
-        builder.Services.AddImageWizard()
-                                .AddDragonFly()
-                                .AddImageSharp()
-                                .AddSvgNet()
-                                .AddDocNET()
-                                .SetFileCache()
-                                ;
+        IImageWizardBuilder imageWizardBuilder = builder.Services.AddImageWizard()                                                                    
+                                                                    .AddImageSharp()
+                                                                    .AddSvgNet()
+                                                                    .AddDocNET()
+                                                                    .AddDragonFlyLoader()
+                                                                    .SetFileCache()
+                                                                    ;
+
+        if (action != null)
+        {
+            action(imageWizardBuilder);
+        }
 
         builder.Services.AddImageWizardClient(x => x.BaseUrl = "/dragonfly/image");
 
@@ -38,11 +44,11 @@ public static class DragonFlyBuilderExtensions
     {
         if (requireAuthentication)
         {
-            builder.Builder(x => x.UseImageWizard());
+            builder.Builder(x => x.UseImageWizard("/image"));
         }
         else
         {
-            builder.PreAuthBuilder(x => x.UseImageWizard());
+            builder.PreAuthBuilder(x => x.UseImageWizard("/image"));
         }
 
         return builder;

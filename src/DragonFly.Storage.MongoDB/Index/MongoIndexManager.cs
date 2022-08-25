@@ -51,7 +51,7 @@ public class MongoIndexManager
     }
 
     public void Register<TField>(bool unique = false)
-        where TField : IContentField, ISingleValueContentField
+        where TField : IContentField, ISingleValueField
     {
         Register<TField>(null, unique);
     }

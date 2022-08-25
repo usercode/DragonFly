@@ -58,7 +58,7 @@
                                                     IContentField column = contentItem.Fields[field];
                                                 }
 
-                                                @if (column is ISingleValueContentField singleValueField)
+                                                @if (column is ISingleValueField singleValueField)
                                                 {
                                                     <span>@singleValueField.Value</span>
                                                 }

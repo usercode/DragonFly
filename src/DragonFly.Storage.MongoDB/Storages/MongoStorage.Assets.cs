@@ -35,7 +35,7 @@ public partial class MongoStorage : IAssetStorage
 
         if (previewService != null)
         {
-            asset.PreviewUrl = previewService.CreateImageUrl(asset, 800, 800);
+            asset.PreviewUrl = previewService.CreateUrl(asset, 800, 800);
         }
 
         return asset;

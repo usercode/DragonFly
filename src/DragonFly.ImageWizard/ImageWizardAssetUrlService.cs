@@ -2,20 +2,15 @@
 using DragonFly.Content;
 using ImageWizard;
 using ImageWizard.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.ImageWizard;
 
 /// <summary>
-/// ImageWizardAssetDataUrlService
+/// ImageWizardAssetUrlService
 /// </summary>
-public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
+public class ImageWizardAssetUrlService : IAssetPreviewUrlService
 {
-    public ImageWizardAssetDataUrlService(IImageWizardUrlBuilder urlBuilder)
+    public ImageWizardAssetUrlService(IImageWizardUrlBuilder urlBuilder)
     {
         UrlBuilder = urlBuilder;
     }
@@ -25,7 +20,7 @@ public class ImageWizardAssetDataUrlService : IAssetPreviewUrlService
     /// </summary>
     private IImageWizardUrlBuilder UrlBuilder { get; }
 
-    public string CreateImageUrl(Asset asset, int width, int height)
+    public string CreateUrl(Asset asset, int width, int height)
     {
         if (asset.IsPdf())
         {

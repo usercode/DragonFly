@@ -30,8 +30,4 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\assets\css\" />
-  </ItemGroup>
 </Project>

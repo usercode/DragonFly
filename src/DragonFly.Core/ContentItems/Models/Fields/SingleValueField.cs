@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace DragonFly.Content;
 
 /// <summary>
-/// SingleValueContentField
+/// SingleValueField
 /// </summary>
-public abstract class SingleValueContentField<T> : ContentField, ISingleValueContentField       
+public abstract class SingleValueField<T> : ContentField, ISingleValueField       
 {
-    public SingleValueContentField()
+    public SingleValueField()
     {
 
     }
@@ -36,7 +36,7 @@ public abstract class SingleValueContentField<T> : ContentField, ISingleValueCon
     [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
     public bool HasValue => Value != null;
 
-    object? ISingleValueContentField.Value
+    object? ISingleValueField.Value
     {
         get => _value;
         set => _value = (T?)value;

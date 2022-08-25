@@ -1,11 +1,41 @@
 @page "/blog/{slug}"
+@using Microsoft.AspNetCore.Http.Extensions
 @model BlogEntryPage
 
 <div class="container">
-    <h1>@Model.Result.Title</h1>
-
-    <p class="date">@Model.Result.Date.Value.ToLongDateString()</p>
-
-    @await Html.DisplayBlockFieldAsync(Model.Result.MainContent)
- 
+    <article>
+        <header>
+            <h1>@Model.Result.Title</h1>
+            <p class="post-meta"><i class="bi bi-calendar"></i> Published @Model.Result.Date.Value.ToShortDateString()</p>
+        </header>
+        <div class="row">
+            <dif class="col-lg-9">                
+                @await Html.DisplayBlockFieldAsync(Model.Result.MainContent)
+            </dif>
+            <div class="col-lg-3">
+                <div class="">
+                    <div>
+                        <a href="https://twitter.com/intent/tweet?url=@Request.GetEncodedUrl()">
+                            <i class="bi bi-twitter social-icon"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=@Request.GetEncodedUrl()">
+                            <i class="bi bi-facebook social-icon"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url=@Request.GetEncodedUrl()">
+                            <i class="bi bi-linkedin social-icon"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <a href="mailto:?body=@Request.GetEncodedUrl()">
+                            <i class="bi bi-envelope social-icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
 </div>

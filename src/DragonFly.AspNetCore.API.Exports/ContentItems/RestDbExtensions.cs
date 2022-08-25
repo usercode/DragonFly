@@ -28,63 +28,63 @@ public static class RestDbExtensions
             //value
             if (jsonNode is JsonValue jsonValue)
             {
-                if (contentField is SingleValueContentField<string> stringField)
+                if (contentField is SingleValueField<string> stringField)
                 {
                     if (jsonValue.TryGetValue(out string? stringValue))
                     {
                         stringField.Value = stringValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<bool?> boolField)
+                else if (contentField is SingleValueField<bool?> boolField)
                 {
                     if (jsonValue.TryGetValue(out bool? boolValue))
                     {
                         boolField.Value = boolValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<DateTime?> dateField)
+                else if (contentField is SingleValueField<DateTime?> dateField)
                 {
                     if (jsonValue.TryGetValue(out DateTime? dateValue))
                     {
                         dateField.Value = dateValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<Guid?> guidField)
+                else if (contentField is SingleValueField<Guid?> guidField)
                 {
                     if (jsonValue.TryGetValue(out Guid? guidValue))
                     {
                         guidField.Value = guidValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<long?> longField)
+                else if (contentField is SingleValueField<long?> longField)
                 {
                     if (jsonValue.TryGetValue(out long? longValue))
                     {
                         longField.Value = longValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<int?> intField)
+                else if (contentField is SingleValueField<int?> intField)
                 {
                     if (jsonValue.TryGetValue(out int? intValue))
                     {
                         intField.Value = intValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<short?> shortField)
+                else if (contentField is SingleValueField<short?> shortField)
                 {
                     if (jsonValue.TryGetValue(out short? shortValue))
                     {
                         shortField.Value = shortValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<float?> floatField)
+                else if (contentField is SingleValueField<float?> floatField)
                 {
                     if (jsonValue.TryGetValue(out float? floatValue))
                     {
                         floatField.Value = floatValue;
                     }
                 }
-                else if (contentField is SingleValueContentField<double?> doubleField)
+                else if (contentField is SingleValueField<double?> doubleField)
                 {
                     if (jsonValue.TryGetValue(out double? doubleValue))
                     {
@@ -177,7 +177,7 @@ public static class RestDbExtensions
     {
         JsonNode? bsonValue = null;
 
-        if (field is ISingleValueContentField singleValueField)
+        if (field is ISingleValueField singleValueField)
         {
             if (singleValueField.HasValue)
             {

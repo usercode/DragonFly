@@ -24,7 +24,7 @@
                         {
                             if (ContentItem.TryGetField(field, out IContentField column))
                             {
-                                @if (column is ISingleValueContentField singleValueField)
+                                @if (column is ISingleValueField singleValueField)
                                 {
                                     <span>@singleValueField.Value</span>
                                 }

@@ -22,7 +22,7 @@ internal class ContentItemInterceptor : IInterceptor
 
             if (ContentItem.TryGetField(propertyName, out IContentField? field))
             {
-                if (field is ISingleValueContentField singleValueField)
+                if (field is ISingleValueField singleValueField)
                 {
                     PropertyInfo? propertyInfo = invocation.TargetType.GetProperty(propertyName);
 
@@ -61,7 +61,7 @@ internal class ContentItemInterceptor : IInterceptor
                 {
                     if (ContentItem.TryGetField(propertyName, out IContentField? contentField))
                     {
-                        if (contentField is ISingleValueContentField singleValueContentField)
+                        if (contentField is ISingleValueField singleValueContentField)
                         {
                             singleValueContentField.Value = value;
 

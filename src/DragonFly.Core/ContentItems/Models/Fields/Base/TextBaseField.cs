@@ -8,7 +8,7 @@ namespace DragonFly.Content;
 /// <summary>
 /// TextField
 /// </summary>
-public abstract class TextBaseField : SingleValueContentField<string>
+public abstract class TextBaseField : SingleValueField<string>
 {
     public TextBaseField()
     {

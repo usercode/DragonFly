@@ -74,7 +74,7 @@ public class MongoFieldManager
             return fieldSerializer;
         }
 
-        if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueContentField)))
+        if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
         {
             //create SingleValueFieldSerializer
             fieldSerializer = (IFieldSerializer?)Activator.CreateInstance(typeof(SingleValueFieldSerializer<>).MakeGenericType(contentFieldType));

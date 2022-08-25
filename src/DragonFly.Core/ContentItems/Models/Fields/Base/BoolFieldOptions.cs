@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content;
 
-public class BoolFieldOptions : SingleValueContentFieldOptions<bool>
+public class BoolFieldOptions : SingleValueFieldOptions<bool>
 {
     public override IContentField CreateContentField()
     {

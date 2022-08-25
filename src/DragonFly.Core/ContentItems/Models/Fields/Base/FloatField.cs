@@ -10,7 +10,7 @@ namespace DragonFly.Content;
 /// FloatField
 /// </summary>
 [FieldOptions(typeof(FloatFieldOptions))]
-public class FloatField : SingleValueContentField<double?>
+public class FloatField : SingleValueField<double?>
 {
     public FloatField()
     {

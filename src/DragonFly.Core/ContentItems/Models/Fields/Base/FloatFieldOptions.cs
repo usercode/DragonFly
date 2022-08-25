@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content;
 
-public class FloatFieldOptions : SingleValueContentFieldOptions<double>
+public class FloatFieldOptions : SingleValueFieldOptions<double>
 {
     public double? MinValue { get; set; }
     public double? MaxValue { get; set; }

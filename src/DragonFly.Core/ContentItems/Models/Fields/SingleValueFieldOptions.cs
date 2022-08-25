@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Content;
 
-public abstract class SingleValueContentFieldOptions<T> : ContentFieldOptions
+public abstract class SingleValueFieldOptions<T> : ContentFieldOptions
     where T : struct
 { 
 
