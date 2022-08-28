@@ -16,7 +16,7 @@ public class XHtmlField : TextBaseField
 
     }
 
-    public XHtmlField(string text)
+    public XHtmlField(string? text)
     {
         Value = text;
     }

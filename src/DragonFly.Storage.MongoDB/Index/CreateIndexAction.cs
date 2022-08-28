@@ -49,6 +49,7 @@ class CreateIndexAction : IPostInitialize
         await MongoStorage.Events.Indexes.CreateOneAsync(new CreateIndexModel<MongoEvent>(Builders<MongoEvent>.IndexKeys.Ascending(x => x.Date)));
         await MongoStorage.Events.Indexes.CreateOneAsync(new CreateIndexModel<MongoEvent>(Builders<MongoEvent>.IndexKeys.Ascending(x => x.Name)));
 
+        //schema
         IList<MongoContentSchema> schemas = await MongoStorage.ContentSchemas.AsQueryable().ToListAsync();
 
         foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))

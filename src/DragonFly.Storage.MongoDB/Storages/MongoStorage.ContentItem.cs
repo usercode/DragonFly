@@ -68,7 +68,7 @@ public partial class MongoStorage : IContentStorage
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
     {
         ContentSchema schema = await GetSchemaAsync(query.Schema);
-        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name);
+        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name, query.Published);
 
         List<FilterDefinition<MongoContentItem>> filters = new List<FilterDefinition<MongoContentItem>>();
 

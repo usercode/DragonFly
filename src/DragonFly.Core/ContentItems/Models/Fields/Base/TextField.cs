@@ -16,7 +16,7 @@ public class TextField : TextBaseField
 
     }
 
-    public TextField(string text)
+    public TextField(string? text)
     {
         Value = text;
     }

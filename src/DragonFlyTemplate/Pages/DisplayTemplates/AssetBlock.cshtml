@@ -5,7 +5,14 @@
 {
     Asset asset = await Storage.GetAssetAsync(Model.AssetId.Value);
 
-    <div class="asset-block">
-        <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
+    <div class="block asset-block">
+        @if (asset.IsImage())
+        {
+            <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
+        }
+        else if(asset.IsPdf())
+        {
+            <img src="@Url.ImageWizard().Asset(asset).AsPdf().PageToImage(0).BuildUrl()">
+        }
     </div>
 }

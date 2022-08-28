@@ -19,6 +19,11 @@ public class ReferenceField : ContentField
     {
     }
 
+    public ReferenceField(ContentItem? contentItem)
+    {
+        ContentItem = contentItem;
+    }
+
     /// <summary>
     /// ContentItem
     /// </summary>

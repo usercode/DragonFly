@@ -22,6 +22,8 @@ public static class DragonFlyBuilderExtensions
             api.RegisterBlock<HtmlBlock, HtmlBlockView>();
             api.RegisterBlock<YouTubeBlock, YouTubeBlockView>();
             api.RegisterBlock<UnknownBlock, UnknownBlockView>();
+            api.RegisterBlock<SourceCodeBlock, SourceCodeBlockView>();
+            api.RegisterBlock<OpenGraphBlock, OpenGraphView>();
         });
 
         return builder;

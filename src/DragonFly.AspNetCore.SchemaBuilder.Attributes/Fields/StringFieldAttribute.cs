@@ -14,11 +14,13 @@ public class StringFieldAttribute : BaseFieldAttribute
         MaxLength = StringFieldOptions.DefaultMaxLength;
     }
 
-    public string? DefaultValue { get; }
+    public bool Index { get; set; }
 
-    public int MinLength { get; }
+    public string? DefaultValue { get; set; }
 
-    public int MaxLength { get; }
+    public int MinLength { get; set; }
+
+    public int MaxLength { get; set; }
 
     public override Type FieldType => typeof(StringField);
 
@@ -26,6 +28,7 @@ public class StringFieldAttribute : BaseFieldAttribute
     {
         return new StringFieldOptions() 
         {  
+            IsSearchable = Index,
             IsRequired = IsRequired,
             DefaultValue = DefaultValue, 
             MinLength = MinLength, 

@@ -80,7 +80,7 @@ public partial class MongoStorage : IDataStorage
             settings.Credential = MongoCredential.CreateCredential("admin", Options.Username, Options.Password);
         }
 
-        Client = new MongoClient(settings); // connect to localhost
+        Client = new MongoClient(settings);
 
         Database = Client.GetDatabase(Options.Database);
         

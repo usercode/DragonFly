@@ -1,0 +1,8 @@
+@model SourceCodeBlock
+
+@if(Model.SourceCode != null)
+{
+    <div class="block sourcecode-block">
+        <pre><code class="@Model.SourceCodeType.ToPrismCssClass()">@Model.SourceCode</code></pre>
+    </div>
+}

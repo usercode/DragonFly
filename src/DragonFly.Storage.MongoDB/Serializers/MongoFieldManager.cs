@@ -74,6 +74,7 @@ public class MongoFieldManager
             return fieldSerializer;
         }
 
+        //Build SingleValueSerializer?
         if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
         {
             //create SingleValueFieldSerializer
@@ -88,7 +89,18 @@ public class MongoFieldManager
 
             return fieldSerializer;
         }
+        else //Build DefaultFieldSerializer
+        {
+            fieldSerializer = (IFieldSerializer?)Activator.CreateInstance(typeof(DefaultFieldSerializer<>).MakeGenericType(contentFieldType));
 
-        throw new Exception($"Field serializer not found: {contentFieldType.Name}");
+            if (fieldSerializer == null)
+            {
+                throw new Exception($"Could not create FieldSerializer for {contentFieldType.Name}");
+            }
+
+            _fields.Add(contentFieldType, fieldSerializer);
+
+            return fieldSerializer;
+        }
     }
 }

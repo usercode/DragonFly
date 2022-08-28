@@ -30,7 +30,9 @@ public class BlockFieldManager
                 _default.Add<TextBlock>();
                 _default.Add<HtmlBlock>();
                 _default.Add<YouTubeBlock>();
-                _default.Add<UnknownBlock>();                
+                _default.Add<UnknownBlock>();
+                _default.Add<SourceCodeBlock>();
+                _default.Add<OpenGraphBlock>();
             }
 
             return _default;

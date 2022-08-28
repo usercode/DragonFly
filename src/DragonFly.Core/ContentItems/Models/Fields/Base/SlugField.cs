@@ -19,7 +19,7 @@ public class SlugField : TextBaseField
 
     public override bool CanSorting => true;
 
-    public SlugField(string text)
+    public SlugField(string? text)
     {
         Value = text;
     }

@@ -19,11 +19,11 @@ public class BlogPage : BasePageModel
 
     public IContentStorage ContentStorage { get; }
 
-    public QueryResult<BlogEntryModel> Result { get; private set; }
+    public QueryResult<BlogPostModel> Result { get; private set; }
 
     public async Task OnGetAsync()
     {
-        Result = await ContentStorage.QueryAsync<BlogEntryModel>(new ContentItemQuery() {  Top = 100, Skip = 0});
+        Result = await ContentStorage.QueryAsync<BlogPostModel>(new ContentItemQuery() {  Top = 100, Skip = 0, Published = true});
 
 
     }

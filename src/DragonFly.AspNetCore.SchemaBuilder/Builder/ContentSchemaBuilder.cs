@@ -67,8 +67,6 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
             schema = new ContentSchema(schemaName);
         }
 
-        IEnumerable<Type> allFieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
-
         int sort = 100;
 
         foreach (PropertyInfo property in type.GetProperties())

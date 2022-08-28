@@ -18,6 +18,7 @@ public class ContentItemQuery
         SearchPattern = string.Empty;
         Skip = 0;
         Top = 20;
+        Published = false;
 
         IncludeListFieldsOnly = false;
     }
@@ -57,4 +58,8 @@ public class ContentItemQuery
     /// </summary>
     public bool IncludeListFieldsOnly { get; set; }
 
+    /// <summary>
+    /// Published
+    /// </summary>
+    public bool Published { get; set; }
 }

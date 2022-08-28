@@ -7,10 +7,10 @@ namespace DragonFlyTemplate.Models;
 [ContentItem("StandardPage")]
 public class StandardPageModel
 {
-    [StringField]
+    [StringField(IsRequired = true)]
     public virtual StringField Title { get; set; }
 
-    [SlugField]
+    [SlugField(IsRequired = true, Index = true)]
     public virtual SlugField Slug { get; set; }
 
     [BlockField]

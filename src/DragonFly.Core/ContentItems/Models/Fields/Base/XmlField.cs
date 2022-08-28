@@ -17,7 +17,7 @@ public class XmlField : TextBaseField
 
     }
 
-    public XmlField(string text)
+    public XmlField(string? text)
     {
         Value = text;
     }

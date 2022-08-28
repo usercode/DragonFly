@@ -13,13 +13,16 @@ public class SlugFieldAttribute : BaseFieldAttribute
     {
     }
 
+    public bool Index { get; set; }
+
     public override Type FieldType => typeof(SlugField);
 
     public override ContentFieldOptions CreateOptions()
     {
         return new SlugFieldOptions()
         {
-            IsRequired = IsRequired
+            IsRequired = IsRequired,
+            IsSearchable = Index
         };
     }
 }

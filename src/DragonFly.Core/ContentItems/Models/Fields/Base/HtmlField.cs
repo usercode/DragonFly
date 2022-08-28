@@ -17,7 +17,7 @@ public class HtmlField : TextBaseField
 
     }
 
-    public HtmlField(string text)
+    public HtmlField(string? text)
     {
         Value = text;
     }

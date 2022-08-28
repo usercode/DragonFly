@@ -25,8 +25,7 @@ builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("A
 builder.Services.AddDragonFly()
                     .AddImageWizard(x =>
                     {
-                        x.AddYoutubeLoader();
-                        x.AddGravatarLoader();
+                        x.AddOpenGraphLoader();
                     })
                     .AddRestApi()
                     .AddMongoDbStorage()
@@ -35,7 +34,7 @@ builder.Services.AddDragonFly()
                     .AddSchemaBuilder(x => 
                     {
                         x.AddType<StandardPageModel>();
-                        x.AddType<BlogEntryModel>();
+                        x.AddType<BlogPostModel>();
                         x.AddType<ProjectModel>();
                     })
                     .AddPermissions()
@@ -48,10 +47,11 @@ builder.Services.AddSingleton<MyRazorPageRouting>();
 
 var app = builder.Build();
 
-//Init DragonFly CMS
+//init DragonFly CMS
 IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
 await api.InitAsync();
 
+//data seeding
 var seeding = app.Services.GetRequiredService<DataSeeding>();
 await seeding.StartAsync();
 

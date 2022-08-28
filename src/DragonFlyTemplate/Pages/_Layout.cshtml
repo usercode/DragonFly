@@ -14,6 +14,9 @@
     <title>@Model.PageTitle</title>
 
     @RenderSection("head", required: false)
+
+    <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
+    <script src="~/lib/prismjs/prism.js" defer asp-append-version="true"></script>
 </head>
 <body>
     <header class="fixed-top">
@@ -45,7 +48,5 @@
 
     @RenderSection("script", required: false)
 
-    <script src="~/lib/bootstrap/js/bootstrap.min.js" asp-append-version="true"></script>
-    <script src="~/lib/prismjs/prism.js" asp-append-version="true"></script>
 </body>
 </html>
