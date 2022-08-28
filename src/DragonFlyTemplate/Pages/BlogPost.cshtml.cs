@@ -4,6 +4,7 @@ using DragonFly.Storage;
 using DragonFlyTemplate.Models;
 using DragonFly.AspNetCore.SchemaBuilder;
 using Microsoft.AspNetCore.Mvc;
+using DragonFly.AspNetCore.API.Exports;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -23,7 +24,7 @@ public class BlogPostPage : BasePageModel
         var query = new ContentItemQuery() { Top = 1, Skip = 0, Published = true }
                         .AddStringQuery(nameof(BlogPostModel.Slug), slug);
 
-        var result = await ContentStorage.QueryAsync<BlogPostModel>(query);
+        QueryResult<BlogPostModel> result = await ContentStorage.QueryAsync<BlogPostModel>(query);
 
         if (result.Items.Count == 0)
         {

@@ -10,9 +10,9 @@ namespace DragonFly.AspNetCore.SchemaBuilder.Attributes;
 [AttributeUsage(AttributeTargets.Property)]
 public abstract class BaseFieldAttribute : Attribute
 {
-    public bool IsRequired { get; set; }
+    public bool Required { get; set; }
 
-    public abstract Type FieldType { get; }
+    public bool ListField { get; set; }
 
-    public abstract ContentFieldOptions CreateOptions();
+    public abstract void ApplySchema(string property, ContentSchema schema);
 }

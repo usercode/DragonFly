@@ -1,5 +1,8 @@
 @model TextBlock
 
-<div class="block text-block">
-    <p>@Model.Text</p>
-</div>
+@if(Model.Text != null)
+{
+    <div class="block text-block">
+        <p>@Model.Text</p>
+    </div>
+}

@@ -15,14 +15,22 @@ public class SlugFieldAttribute : BaseFieldAttribute
 
     public bool Index { get; set; }
 
-    public override Type FieldType => typeof(SlugField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new SlugFieldOptions()
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(SlugField),
+                                options: new SlugFieldOptions()
+                                {
+                                    IsRequired = Required,
+                                    IsSearchable = Index
+                                },
+                                sortkey: schema.Fields.Count
+                                );
+
+        if (ListField)
         {
-            IsRequired = IsRequired,
-            IsSearchable = Index
-        };
+            schema.ListFields.Add(property);
+        }
     }
 }

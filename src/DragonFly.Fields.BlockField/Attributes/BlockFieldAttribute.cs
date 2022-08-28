@@ -14,12 +14,15 @@ public class BlockFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public override Type FieldType => typeof(BlockField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new BlockFieldOptions() 
-        {
-        };
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(BlockField),
+                                options: new BlockFieldOptions()
+                                {
+                                },
+                                sortkey: schema.Fields.Count
+                                );
     }
 }

@@ -11,16 +11,19 @@ public class HtmlFieldAttribute : BaseFieldAttribute
 {
     public HtmlFieldAttribute(bool isRequired = false)
     {
-        IsRequired = isRequired;
+        Required = isRequired;
     }
 
-    public override Type FieldType => typeof(HtmlField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new HtmlFieldOptions()
-        {
-            IsRequired = IsRequired
-        };
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(HtmlField),
+                                options: new HtmlFieldOptions()
+                                {
+                                    IsRequired = Required
+                                },
+                                sortkey: schema.Fields.Count
+                                );
     }
 }

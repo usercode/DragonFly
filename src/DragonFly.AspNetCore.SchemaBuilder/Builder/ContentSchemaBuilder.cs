@@ -67,8 +67,6 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
             schema = new ContentSchema(schemaName);
         }
 
-        int sort = 100;
-
         foreach (PropertyInfo property in type.GetProperties())
         {
             BaseFieldAttribute? fieldAttribute = property.GetCustomAttribute<BaseFieldAttribute>(true);
@@ -78,7 +76,7 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
                 continue;
             }
 
-            schema.AddField(property.Name, fieldAttribute.FieldType, options: fieldAttribute.CreateOptions(), sortkey: sort++);         
+            fieldAttribute.ApplySchema(property.Name, schema);
         }
 
         if (schema.IsNew())

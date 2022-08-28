@@ -13,13 +13,21 @@ public class DateFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public override Type FieldType => typeof(DateTimeField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new DateTimeFieldOptions()
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(DateTimeField),
+                                options: new DateTimeFieldOptions()
+                                {
+                                    IsRequired = Required
+                                },
+                                sortkey: schema.Fields.Count
+                                );
+
+        if (ListField)
         {
-            IsRequired = IsRequired
-        };
+            schema.ListFields.Add(property);
+        }
     }
 }

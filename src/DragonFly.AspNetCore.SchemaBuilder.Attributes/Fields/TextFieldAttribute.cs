@@ -13,13 +13,16 @@ public class TextFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public override Type FieldType => typeof(TextField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new TextFieldOptions()
-        {
-            IsRequired = IsRequired
-        };
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(TextField),
+                                options: new TextFieldOptions()
+                                {
+                                    IsRequired = Required
+                                },
+                                sortkey: schema.Fields.Count
+                                );
     }
 }

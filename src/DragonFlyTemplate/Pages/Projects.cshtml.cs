@@ -23,7 +23,7 @@ public class ProjectsPage : BasePageModel
 
     public async Task OnGetAsync()
     {
-        Result = await ContentStorage.QueryAsync<ProjectModel>(new ContentItemQuery() {  Top = 100, Skip = 0});
+        Result = await ContentStorage.QueryAsync<ProjectModel>(new ContentItemQuery() {  Top = 100, Skip = 0, Published = true});
 
 
     }

@@ -6,13 +6,13 @@ namespace DragonFlyTemplate.Models;
 [ContentItem("Project")]
 public class ProjectModel
 {
-    [StringField(IsRequired = true)]
+    [StringField(Required = true, Index = true, ListField = true)]
     public virtual string Title { get; set; }
 
     [StringField]
     public virtual string SubTitle { get; set; }
 
-    [AssetField(IsRequired = true)]
+    [AssetField(Required = true, ShowPreview = true, ListField = true)]
     public virtual AssetField Image { get; set; }
 
     [StringField]

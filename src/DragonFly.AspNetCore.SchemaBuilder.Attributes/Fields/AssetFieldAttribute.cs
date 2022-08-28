@@ -13,13 +13,23 @@ public class AssetFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public override Type FieldType => typeof(AssetField);
+    public bool ShowPreview { get; set; }
 
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new AssetFieldOptions()
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(AssetField), 
+                                options: new AssetFieldOptions()
+                                {
+                                    IsRequired = Required,
+                                    ShowPreview = ShowPreview
+                                }, 
+                                sortkey: schema.Fields.Count);
+
+        if (ListField)
         {
-            IsRequired = IsRequired
-        };
+            schema.ListFields.Add(property);
+        }
     }
 }

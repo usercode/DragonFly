@@ -22,17 +22,25 @@ public class StringFieldAttribute : BaseFieldAttribute
 
     public int MaxLength { get; set; }
 
-    public override Type FieldType => typeof(StringField);
-
-    public override ContentFieldOptions CreateOptions()
+    public override void ApplySchema(string property, ContentSchema schema)
     {
-        return new StringFieldOptions() 
-        {  
-            IsSearchable = Index,
-            IsRequired = IsRequired,
-            DefaultValue = DefaultValue, 
-            MinLength = MinLength, 
-            MaxLength = MaxLength
-        };
+        schema.AddOrUpdateField(
+                                name: property,
+                                fieldType: typeof(StringField),
+                                options: new StringFieldOptions()
+                                {
+                                    IsSearchable = Index,
+                                    IsRequired = Required,
+                                    DefaultValue = DefaultValue,
+                                    MinLength = MinLength,
+                                    MaxLength = MaxLength
+                                },
+                                sortkey: schema.Fields.Count
+                                );
+
+        if (ListField)
+        {
+            schema.ListFields.Add(property);
+        }
     }
 }
