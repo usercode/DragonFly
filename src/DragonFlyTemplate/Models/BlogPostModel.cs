@@ -14,7 +14,7 @@ public class BlogPostModel
     public virtual string Title { get; set; }
 
     [TextField]
-    public virtual string ShortDescription { get; set; }
+    public virtual string Description { get; set; }
 
     [SlugField(Required = true, Index = true)]
     public virtual string Slug { get; set; }

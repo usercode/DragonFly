@@ -3,21 +3,28 @@
 
 <div class="container">
     <div class="archive">
-    @foreach (BlogPostModel blogEntry in Model.Result.Items)
-    {
-        <div class="">
-            <article>
-                <header>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h2><a href="~/blog/@blogEntry.Slug">@blogEntry.Title</a></h2>
+        @foreach (BlogPostModel blogEntry in Model.Result.Items)
+        {
+            <div class="">
+                <article>
+                    <header>
+                        <div class="row">
+                            <div class="col-lg-3">
+                                @if (blogEntry.Image.Asset != null)
+                                {
+                                    <img src="@Url.ImageWizard().Asset(blogEntry.Image.Asset).AsImage().Resize(800, 800).BuildUrl()" class="post-image" />
+                                }
+                            </div>
+                            <div class="col-md-9">
+                                <h2><a href="~/blog/@blogEntry.Slug">@blogEntry.Title</a></h2>
                                 <p class="post-meta"><i class="bi bi-calendar"></i> Published @blogEntry.Date.Value.ToShortDateString()</p>
-                            <a class="btn btn-link" href="~/blog/@blogEntry.Slug">Mehr</a>
+                                <p class="post-description">@blogEntry.Description</p>
+                                <a class="btn btn-link" href="~/blog/@blogEntry.Slug">Mehr</a>
+                            </div>
                         </div>
-                    </div>
-                </header>
-            </article>
-        </div>
-    }
+                    </header>
+                </article>
+            </div>
+        }
     </div>
 </div>

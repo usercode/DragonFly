@@ -6,7 +6,11 @@
     Asset asset = await Storage.GetAssetAsync(Model.AssetId.Value);
 
     <div class="block asset-block">
-        @if (asset.IsImage())
+        @if(asset.IsSVG())
+        {
+            <img src="@Url.ImageWizard().Asset(asset).AsSvg().BuildUrl()">
+        }
+        else if (asset.IsImage())
         {
             <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()">
         }

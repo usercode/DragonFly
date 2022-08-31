@@ -13,13 +13,14 @@ public class Column : IBlocksContent
 {
     public Column()
     {
+        Width = ColumnWidth.Max;
         Blocks = new List<Block>();
     }
 
     /// <summary>
     /// Width
     /// </summary>
-    public int? Width { get; set; }
+    public ColumnWidth Width { get; set; }
 
     /// <summary>
     /// Blocks

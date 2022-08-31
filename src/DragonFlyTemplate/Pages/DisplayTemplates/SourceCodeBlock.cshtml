@@ -2,6 +2,19 @@
 
 @if(Model.SourceCode != null)
 {
+    @*Stream resource = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream("DragonFlyTemplate.assets.prism.es5.min.js");
+    StreamReader reader = new StreamReader(resource, System.Text.Encoding.UTF8);
+
+    var engine = new Jurassic.ScriptEngine();
+    engine.Execute(reader.ReadToEnd());
+    engine.SetGlobalValue("input", Model.SourceCode);
+    engine.SetGlobalValue("lang", "csharp");
+    engine.Execute($"highlighted = Prism.highlight(input, Prism.languages.csharp, lang)");
+
+    string result = engine.Evaluate<string>("highlighted");*@
+
+    string result = Model.SourceCode;
+
     <div class="block sourcecode-block">
         <pre><code class="@Model.SourceCodeType.ToPrismCssClass()">@Model.SourceCode</code></pre>
     </div>

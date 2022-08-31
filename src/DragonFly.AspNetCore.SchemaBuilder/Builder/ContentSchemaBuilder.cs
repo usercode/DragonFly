@@ -3,10 +3,7 @@ using DragonFly.AspNetCore.SchemaBuilder.Proxies;
 using DragonFly.AspNetCore.SchemaBuilder.SchemaStates;
 using DragonFly.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.SchemaBuilder;
@@ -19,8 +16,6 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
     public ContentSchemaBuilder(ISchemaStorage schemaStorage)
     {
         Storage = schemaStorage;
-
-        _schema = new Dictionary<Type, ContentSchema>();
     }
 
     /// <summary>
@@ -28,17 +23,10 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
     /// </summary>
     private ISchemaStorage Storage { get; }
 
-    private IDictionary<Type, ContentSchema> _schema;
-
-    public ContentSchema GetSchemaByType(Type type)
-    {
-        return _schema[type];
-    }
-
     public T CreateProxy<T>()
         where T : class
     {
-        ContentSchema schema = _schema[typeof(T)];
+        ContentSchema schema = SchemaTypeManager.Default.Get(typeof(T));
 
         return ProxyBuilder.CreateProxy<T>(schema.CreateContentItem());
     }
@@ -67,6 +55,8 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
             schema = new ContentSchema(schemaName);
         }
 
+        schema.ListFields.Clear();
+
         foreach (PropertyInfo property in type.GetProperties())
         {
             BaseFieldAttribute? fieldAttribute = property.GetCustomAttribute<BaseFieldAttribute>(true);
@@ -89,10 +79,5 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
         }
 
         SchemaTypeManager.Default.Add(type, schema);
-
-        if (_schema.TryAdd(type, schema) == false)
-        {
-            throw new Exception($"The type '{type.Name}' already exists.");
-        }
     }
 }

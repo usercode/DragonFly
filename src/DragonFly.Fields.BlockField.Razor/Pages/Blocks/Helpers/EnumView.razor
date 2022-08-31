@@ -1,0 +1,36 @@
+﻿@typeparam TEnum
+
+<BSDropdown style="margin-bottom: 1rem">
+    <Toggler><BSToggle IsButton="true" Color="BSColor.Secondary" Size="Size.Small">@EnumValue</BSToggle></Toggler>
+    <Content>
+        @foreach(TEnum value in Enum.GetValues(typeof(TEnum)))
+            {
+            <BSDropdownItem @onclick="async e =>
+                {
+                    EnumValue = value;
+                
+                    await EnumValueChanged.InvokeAsync(_enumValue);
+                }">@value</BSDropdownItem>
+            }
+    </Content>
+</BSDropdown>
+
+
+@code {
+    private TEnum _enumValue;
+
+    [Parameter]
+    public TEnum EnumValue 
+    {
+        get => _enumValue;
+        set 
+        {
+            _enumValue = value;
+        }
+    }
+
+    [Parameter]
+    public EventCallback<TEnum> EnumValueChanged { get; set; }
+
+
+}

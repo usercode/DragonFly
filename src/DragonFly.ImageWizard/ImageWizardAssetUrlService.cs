@@ -24,15 +24,15 @@ public class ImageWizardAssetUrlService : IAssetPreviewUrlService
     {
         if (asset.IsPdf())
         {
-            return UrlBuilder.Asset(asset).PageToImage(0).Resize(width, height).BuildUrl();
+            return UrlBuilder.Asset(asset).AsPdf().PageToImage(0).Resize(width, height).BuildUrl();
         }
         else if (asset.IsSVG())
         {
-            return UrlBuilder.Asset(asset).BuildUrl();
+            return UrlBuilder.Asset(asset).AsSvg().BuildUrl();
         }
         else if (asset.IsImage())
         {
-            return UrlBuilder.Asset(asset).Resize(width, height).BuildUrl();
+            return UrlBuilder.Asset(asset).AsImage().Resize(width, height).BuildUrl();
         }            
         else
         {

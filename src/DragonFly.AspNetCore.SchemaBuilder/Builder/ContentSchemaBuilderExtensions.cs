@@ -5,17 +5,13 @@ using DragonFly.Content;
 using DragonFly.Content.Queries;
 using DragonFly.Storage;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.SchemaBuilder;
 
 public static class ContentSchemaBuilderExtensions
 {
-   
-
     public static async Task<T> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
         where T : class
     {
@@ -33,7 +29,7 @@ public static class ContentSchemaBuilderExtensions
     public static async Task UpdateAsync<TContentType>(this IContentStorage storage, TContentType entity)
         where TContentType : class
     {
-        //await storage.UpdateAsync(entity.GetContentItem());
+        await storage.UpdateAsync(entity.ToContentItem());
     }
 
     public static async Task DeleteAsync<TContentType>(this IContentStorage storage, Guid id)

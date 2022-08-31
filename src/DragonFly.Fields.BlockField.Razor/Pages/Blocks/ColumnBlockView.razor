@@ -1,4 +1,5 @@
-﻿@inherits BlockComponent<ColumnBlock>
+﻿
+@inherits BlockComponent<ColumnBlock>
 @inject ComponentManager ComponentManager
 
 <div class="block-layout">
@@ -11,12 +12,13 @@
 			int index = i;
 			Column column = Block.Columns[i];
 
-			<BSCol>
+            <BSCol>
 				<div class="column-content">
 					<div class="column-action options">
 						<BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveUp(index)" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
-						<BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" title="Remove column"><i class="fas fa-minus"></i></BSButton>						
-						<BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
+                        <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" title="Remove column"><i class="fas fa-times"></i></BSButton>
+                        <EnumView TEnum="ColumnWidth" @bind-EnumValue="@column.Width" />
+                        <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
 					</div>
 					<BlocksView Blocks="column.Blocks" />
 				</div>

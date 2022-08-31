@@ -13,7 +13,7 @@
     <PackageReference Include="ImageWizard.Core" Version="3.7.1" />
     <PackageReference Include="ImageWizard.ImageSharp" Version="3.7.1" />
     <PackageReference Include="ImageWizard.OpenGraph" Version="3.7.1" />
-    <PackageReference Include="ImageWizard.SvgNet" Version="3.7.1" />    
+    <PackageReference Include="ImageWizard.SvgNet" Version="3.7.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +27,7 @@
     <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFlyTemplate.Client\DragonFlyTemplate.Client.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
   </ItemGroup>
