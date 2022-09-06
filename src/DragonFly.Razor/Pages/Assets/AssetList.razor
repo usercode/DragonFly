@@ -1,15 +1,12 @@
 @page "/asset"
 @inherits AssetListBase
 
+<div style="flex-direction:column;flex: 1">
     <div class="content-header">
 
         @if (ListMode == EntityListMode.Default)
         {
-            <BSRow>
-                <div class="col-lg-12">
-                    <a href="asset/create/@SelectedFolder?.Id" class="btn btn-success">Create</a>
-                </div>
-            </BSRow>
+            <Toolbar Items="ToolbarItems" />
         }
 
         @*@bind:event="oninput"*@
@@ -71,3 +68,4 @@
             </BSCol>
         </BSRow>
     </div>
+</div>

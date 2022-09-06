@@ -1,11 +1,10 @@
-﻿using DragonFly.Content;
-using DragonFly.Storage;
+﻿using DragonFly.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core;
+namespace DragonFly;
 
 public interface IContentInterceptor
 {

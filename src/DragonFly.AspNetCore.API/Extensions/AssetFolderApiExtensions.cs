@@ -1,7 +1,7 @@
 ﻿using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.API.Models.Assets;
+using DragonFly.Assets.Query;
 using DragonFly.Content;
-using DragonFly.Core.Assets.Queries;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

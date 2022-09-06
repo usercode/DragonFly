@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Core.ContentItems.Models.Validations;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 /// <summary>
 /// XmlField

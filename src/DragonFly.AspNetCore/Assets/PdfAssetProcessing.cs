@@ -1,13 +1,6 @@
 ﻿using DragonFly.Assets;
-using DragonFly.Content;
 using DragonFly.Core;
-using SixLabors.ImageSharp;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using UglyToad.PdfPig;
 
 namespace DragonFly.AspNetCore;
@@ -40,6 +33,6 @@ public class PdfAssetProcessing : IAssetProcessing
             metadata.PdfVersion = document.Version.ToString(CultureInfo.InvariantCulture);
         }
 
-        await context.AddMetadataAsync(metadata);
+        await context.SetMetadataAsync(metadata);
     }
 }

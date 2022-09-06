@@ -1,5 +1,5 @@
-﻿using DragonFly.Content;
-using DragonFly.Models;
+﻿using DragonFly.Models;
+using DragonFly.Query;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;

@@ -1,10 +1,10 @@
 ﻿using DragonFly;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
-using DragonFly.Content.Queries;
 using DragonFly.Storage;
 using DragonFlyTemplate.Models;
 using DragonFly.AspNetCore.SchemaBuilder;
+using DragonFly.Query;
 
 namespace DragonFlyTemplate.Pages;
 

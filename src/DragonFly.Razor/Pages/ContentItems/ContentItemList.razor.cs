@@ -1,9 +1,6 @@
 ﻿using BlazorStrap;
 using DragonFly.Client.Base;
-using DragonFly.Content;
-using DragonFly.Content.Queries;
-using DragonFly.Models;
-using DragonFly.Razor.Services;
+using DragonFly.Query;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
 using System;

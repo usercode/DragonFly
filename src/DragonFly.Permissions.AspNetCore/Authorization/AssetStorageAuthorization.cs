@@ -1,6 +1,6 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
-using DragonFly.Core.Assets.Queries;
+using DragonFly.Assets.Query;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Authorization;
 using System;

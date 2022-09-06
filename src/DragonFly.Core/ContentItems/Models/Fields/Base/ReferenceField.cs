@@ -1,9 +1,9 @@
-﻿using DragonFly.Core.ContentItems.Models.Validations;
+﻿using DragonFly.Query;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 /// <summary>
 /// ReferenceField

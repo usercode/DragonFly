@@ -1,4 +1,4 @@
-﻿using DragonFly.Content.Queries;
+﻿using DragonFly.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;

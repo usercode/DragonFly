@@ -1,6 +1,5 @@
 ﻿using DragonFly.AspNetCore.API.Exports;
 using DragonFly.Content;
-using DragonFly.Content.Queries;
 using DragonFly.ContentItems;
 using DragonFly.Core.ContentItems;
 using DragonFly.Permissions;

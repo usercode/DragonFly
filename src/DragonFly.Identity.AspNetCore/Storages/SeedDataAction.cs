@@ -1,7 +1,6 @@
 ﻿using DragonFly.Core.Permissions;
-using DragonFly.Core.Security;
 using DragonFly.Identity;
-using DragonFly.MongoDB.Options;
+using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Linq;

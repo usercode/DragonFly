@@ -1,5 +1,4 @@
 ﻿using DragonFly.AspNetCore.Middleware;
-using DragonFly.Client.Core.Assets;
 using DragonFly.Core.Builders;
 using ImageWizard;
 using ImageWizard.Client;

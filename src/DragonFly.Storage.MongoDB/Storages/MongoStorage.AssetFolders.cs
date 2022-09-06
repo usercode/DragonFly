@@ -1,26 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using DragonFly.Content;
+using DragonFly.Assets.Query;
 using DragonFly.Contents.Assets;
-using DragonFly.ContentTypes;
-using DragonFly.Core;
-using DragonFly.Core.Assets;
-using DragonFly.Core.Assets.Queries;
-using DragonFly.Data.Content.ContentTypes;
 using DragonFly.Data.Models;
 using DragonFly.Data.Models.Assets;
-using DragonFly.Models;
 using DragonFly.Storage;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
 using MongoDB.Driver.Linq;
 
 namespace DragonFly.Data;

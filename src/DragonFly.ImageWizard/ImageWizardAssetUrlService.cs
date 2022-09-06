@@ -1,5 +1,4 @@
-﻿using DragonFly.Client.Core.Assets;
-using DragonFly.Content;
+﻿using DragonFly.Content;
 using ImageWizard;
 using ImageWizard.Client;
 

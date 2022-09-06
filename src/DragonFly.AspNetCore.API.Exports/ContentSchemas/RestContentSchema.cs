@@ -1,5 +1,5 @@
-﻿using DragonFly.Content.Queries;
-using DragonFly.Contents.Content;
+﻿using DragonFly.Contents.Content;
+using DragonFly.Query;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
-using DragonFly.MongoDB.Options;
+using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;

@@ -1,5 +1,4 @@
-﻿using DragonFly.Content;
-using DragonFly.Core.Assets.Queries;
+﻿using DragonFly.Assets.Query;
 using System;
 using System.Collections.Generic;
 using System.IO;

@@ -1,5 +1,4 @@
-﻿using DragonFly.Content;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DragonFly.Fields.BlockField;
 

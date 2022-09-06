@@ -3,7 +3,7 @@ using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
-using DragonFly.MongoDB.Options;
+using DragonFly.MongoDB;
 using DragonFlyTemplate.Extensions;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;

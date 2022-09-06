@@ -2,12 +2,9 @@
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.Content;
-using DragonFly.Data;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
-using DragonFly.Models;
-using DragonFly.MongoDB.Options;
+using DragonFly.MongoDB;
 using DragonFLy.ApiKeys;
 using ImageWizard;
 using ImageWizard.Caches;
@@ -16,8 +13,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using MongoDB.Bson;
-using MongoDB.Driver;
 
 var builder = WebApplication.CreateBuilder(args);
 

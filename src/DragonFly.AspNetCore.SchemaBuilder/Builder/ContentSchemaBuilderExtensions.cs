@@ -2,7 +2,7 @@
 using DragonFly.AspNetCore.SchemaBuilder.Proxies;
 using DragonFly.AspNetCore.SchemaBuilder.SchemaStates;
 using DragonFly.Content;
-using DragonFly.Content.Queries;
+using DragonFly.Query;
 using DragonFly.Storage;
 using System;
 using System.Linq;

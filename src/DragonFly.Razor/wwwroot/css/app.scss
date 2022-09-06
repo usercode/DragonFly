@@ -413,3 +413,9 @@ app {
 .tox-notifications-container {
     display: none;
 }
+
+.text-field {
+    textarea {
+        height: 200px;
+    }
+}

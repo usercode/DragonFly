@@ -3,15 +3,10 @@
 <BSDropdown style="margin-bottom: 1rem">
     <Toggler><BSToggle IsButton="true" Color="BSColor.Secondary" Size="Size.Small">@EnumValue</BSToggle></Toggler>
     <Content>
-        @foreach(TEnum value in Enum.GetValues(typeof(TEnum)))
-            {
-            <BSDropdownItem @onclick="async e =>
-                {
-                    EnumValue = value;
-                
-                    await EnumValueChanged.InvokeAsync(_enumValue);
-                }">@value</BSDropdownItem>
-            }
+        @foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
+        {
+            <BSDropdownItem @onclick="e => EnumValue = value">@value</BSDropdownItem>
+        }
     </Content>
 </BSDropdown>
 
@@ -20,17 +15,19 @@
     private TEnum _enumValue;
 
     [Parameter]
-    public TEnum EnumValue 
+    public TEnum EnumValue
     {
         get => _enumValue;
-        set 
+        set
         {
             _enumValue = value;
+
+            EnumValueChanged?.Invoke(_enumValue);
         }
     }
 
     [Parameter]
-    public EventCallback<TEnum> EnumValueChanged { get; set; }
+    public Action<TEnum> EnumValueChanged { get; set; }
 
 
 }

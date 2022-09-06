@@ -1,4 +1,4 @@
-﻿namespace DragonFly.Content;
+﻿namespace DragonFly;
 
 /// <summary>
 /// ContentSchemaExtensions

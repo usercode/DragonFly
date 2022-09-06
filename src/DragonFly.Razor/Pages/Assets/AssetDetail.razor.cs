@@ -1,8 +1,5 @@
 ﻿using BlazorStrap;
 using DragonFly.Client.Base;
-using DragonFly.Content;
-using DragonFly.Core;
-using DragonFly.Core.Assets;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Components;
@@ -10,7 +7,6 @@ using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DragonFly.Razor.Pages.Assets;

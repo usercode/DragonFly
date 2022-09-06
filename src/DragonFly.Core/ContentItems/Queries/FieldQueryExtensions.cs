@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace DragonFly.Content.Queries;
+namespace DragonFly.Query;
 
 public static class FieldQueryExtensions
 {

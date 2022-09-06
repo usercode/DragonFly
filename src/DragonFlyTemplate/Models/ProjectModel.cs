@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
-using DragonFly.Content;
+using DragonFly;
 
 namespace DragonFlyTemplate.Models;
 

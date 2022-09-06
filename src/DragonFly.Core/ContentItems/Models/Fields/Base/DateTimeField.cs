@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 [FieldOptions(typeof(DateTimeFieldOptions))]
 public class DateTimeField : SingleValueField<DateTime?>

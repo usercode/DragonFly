@@ -1,21 +1,18 @@
 ﻿using DragonFly.Fields.BlockField.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace DragonFly.Fields.BlockField.Storage.Serializers;
+namespace DragonFly.Fields.BlockField;
 
 /// <summary>
-/// DocumentSerializer
+/// BlockFieldSerializer
 /// </summary>
-class DocumentSerializer
+public class BlockFieldSerializer
 {
-    static DocumentSerializer()
+    static BlockFieldSerializer()
     {
         Options = new JsonSerializerOptions();
         Options.Converters.Add(new BlockFieldConverter());

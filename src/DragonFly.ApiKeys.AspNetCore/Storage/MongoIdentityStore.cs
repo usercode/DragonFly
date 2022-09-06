@@ -1,4 +1,4 @@
-﻿using DragonFly.MongoDB.Options;
+﻿using DragonFly.MongoDB;
 using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;

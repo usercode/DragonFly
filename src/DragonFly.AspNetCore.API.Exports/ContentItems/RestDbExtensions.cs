@@ -1,6 +1,6 @@
 ﻿using DragonFly.AspNetCore.API.Exports.Json;
 using DragonFly.AspNetCore.API.Models.Assets;
-using DragonFly.Client;
+using DragonFly.Assets.Query;
 using DragonFly.Content;
 using DragonFly.Contents.Content;
 using DragonFly.Data.Models;

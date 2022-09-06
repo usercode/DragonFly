@@ -1,27 +1,14 @@
-﻿using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.Exports;
-using DragonFly.AspNetCore.API.Exports;
-using DragonFly.AspNetCore.API.Models;
-using DragonFly.Content;
-using DragonFly.Contents.Content;
-using DragonFly.Core;
-using DragonFly.Core.WebHooks.Types;
-using DragonFly.Data;
+﻿using DragonFly.AspNetCore.Exports;
 using DragonFly.Data.Models;
 using DragonFly.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using DragonFly.Content.Queries;
 using DragonFly.Storage;
 using DragonFly.AspNetCore.API.Exports.Json;
+using DragonFly.Query;
 
 namespace DragonFly.Client;
 

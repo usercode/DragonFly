@@ -1,5 +1,4 @@
-﻿using DragonFly.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +17,16 @@ public interface IAssetProcessingContext
     /// </summary>
     Asset Asset { get; }
 
-    Task AddMetadataAsync(AssetMetadata metadata);
+    /// <summary>
+    /// SetMetadataAsync
+    /// </summary>
+    /// <param name="metadata"></param>
+    /// <returns></returns>
+    Task SetMetadataAsync(AssetMetadata metadata);
 
+    /// <summary>
+    /// OpenAssetStreamAsync
+    /// </summary>
+    /// <returns></returns>
     Task<Stream> OpenAssetStreamAsync();
 }

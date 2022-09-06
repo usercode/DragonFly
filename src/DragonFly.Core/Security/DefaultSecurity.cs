@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Security;
+namespace DragonFly.Security;
 
 public class DefaultSecurity
 {

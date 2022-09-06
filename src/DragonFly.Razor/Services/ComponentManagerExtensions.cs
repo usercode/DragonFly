@@ -1,5 +1,6 @@
 ﻿using DragonFly.Assets;
 using DragonFly.Content;
+using DragonFly.Query;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;

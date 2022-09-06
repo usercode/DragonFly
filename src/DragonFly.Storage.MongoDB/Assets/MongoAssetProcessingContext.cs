@@ -34,7 +34,7 @@ public class MongoAssetProcessingContext : IAssetProcessingContext
     private IMongoCollection<MongoAsset> Assets { get; }
     private IGridFSBucket AssetData { get; }
 
-    public async Task AddMetadataAsync(AssetMetadata metadata)
+    public async Task SetMetadataAsync(AssetMetadata metadata)
     {
         await Assets.UpdateOneAsync(
                                     Builders<MongoAsset>.Filter.Eq(x => x.Id, Asset.Id),

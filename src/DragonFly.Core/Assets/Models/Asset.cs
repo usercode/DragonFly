@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security;
 using System.Text;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 /// <summary>
 /// Asset

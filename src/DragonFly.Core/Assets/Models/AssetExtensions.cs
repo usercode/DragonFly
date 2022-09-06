@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 public static class AssetExtensions
 {

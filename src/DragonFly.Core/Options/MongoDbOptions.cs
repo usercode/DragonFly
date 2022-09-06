@@ -1,11 +1,11 @@
-﻿using DragonFly.Core.Security;
+﻿using DragonFly.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.MongoDB.Options;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// MongoDbOptions

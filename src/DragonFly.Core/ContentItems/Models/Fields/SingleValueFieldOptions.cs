@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 public abstract class SingleValueFieldOptions<T> : ContentFieldOptions
     where T : struct

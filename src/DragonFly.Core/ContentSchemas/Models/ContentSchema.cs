@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content;
-using DragonFly.Content.Queries;
+using DragonFly.Query;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 /// <summary>
 /// ContentSchema

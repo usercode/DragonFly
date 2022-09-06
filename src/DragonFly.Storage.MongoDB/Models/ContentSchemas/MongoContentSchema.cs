@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content.Queries;
 using DragonFly.Contents.Content;
 using DragonFly.Data.Content.ContentTypes;
+using DragonFly.Query;
 using MongoDB.Bson;
 
 namespace DragonFly.ContentTypes;

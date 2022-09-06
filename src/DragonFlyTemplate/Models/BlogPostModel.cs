@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
-using DragonFly.Content;
+using DragonFly;
 using DragonFly.Fields.BlockField;
 
 namespace DragonFlyTemplate.Models;

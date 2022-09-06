@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Content;
+namespace DragonFly;
 
 [AttributeUsage(AttributeTargets.Class)]
 public class AssetMetadataAttribute : Attribute

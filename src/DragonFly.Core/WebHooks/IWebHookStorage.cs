@@ -1,12 +1,10 @@
-﻿using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Content;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.WebHooks;
+namespace DragonFly;
 
 public interface IWebHookStorage
 {

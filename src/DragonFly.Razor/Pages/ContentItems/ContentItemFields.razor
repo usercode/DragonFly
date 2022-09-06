@@ -1,4 +1,4 @@
-﻿@inject ComponentManager FieldComponentManager
+﻿@inject ComponentManager ComponentManager
 
 @foreach (var part in Schema.Fields
            .OrderBy(x => x.Value.SortKey)
@@ -15,7 +15,7 @@
                     </BSCol>
                     <BSCol Column="10">
                          <div class="field">
-                            @FieldComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
+                            @ComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
                         </div>
                     </BSCol>
                 </BSRow>

@@ -3,7 +3,7 @@ using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.AspNetCore.Exports;
 using DragonFly.Content;
-using DragonFly.Core.Assets.Queries;
+using DragonFly.Assets.Query;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

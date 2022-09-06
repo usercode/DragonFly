@@ -1,9 +1,6 @@
-﻿using DragonFly.Client.Base;
-using DragonFly.Client.Pages.ContentItems;
-using DragonFly.Content;
-using DragonFly.Core;
-using DragonFly.Core.Assets;
-using DragonFly.Core.Assets.Queries;
+﻿using DragonFly.Assets.Query;
+using DragonFly.Client.Base;
+using DragonFly.Razor.Shared.UI.Toolbars;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -29,6 +26,11 @@ public class AssetListBase : EntityListComponent<Asset>
     public IEnumerable<AssetFolder> Folders { get; set; }
 
     public AssetFolder SelectedFolder { get; set; }
+
+    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
+    {
+        toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Danger, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
+    }
 
     protected override async Task RefreshActionAsync()
     {

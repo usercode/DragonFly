@@ -22,7 +22,7 @@
     @if (GetUnsedOrderFields().Any())
     {
         <BSDropdown>
-            <Toggler><BSToggle Color="BSColor.Light"></BSToggle></Toggler>
+            <Toggler><BSToggle IsButton="true" Color="BSColor.Light">Add field</BSToggle></Toggler>
             <Content>
                 @foreach (var field in GetUnsedOrderFields())
                 {
