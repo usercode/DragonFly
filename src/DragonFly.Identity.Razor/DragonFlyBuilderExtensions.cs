@@ -1,18 +1,11 @@
 ﻿using DragonFly.Core.Builders;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;
+using DragonFly.Permissions;
 using DragonFly.Permissions.Client;
-using DragonFly.Permissions.Services;
 using DragonFly.Razor;
-using DragonFly.Razor.Pages.Settings;
 using DragonFly.Security;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.Razor;
 

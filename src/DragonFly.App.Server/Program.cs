@@ -1,5 +1,4 @@
-﻿using System;
-using DragonFly;
+﻿using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;

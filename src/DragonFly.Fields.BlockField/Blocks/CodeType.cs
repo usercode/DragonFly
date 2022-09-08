@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Fields.BlockField;
 
-public enum SourceCodeType
+public enum CodeType
 {
     Plain,
     CSharp,

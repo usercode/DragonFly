@@ -1,6 +1,6 @@
 ﻿using DragonFly.Client.Base;
+using DragonFly.Permissions;
 using DragonFly.Permissions.Razor;
-using DragonFly.Permissions.Services;
 using DragonFly.Razor.Base;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;

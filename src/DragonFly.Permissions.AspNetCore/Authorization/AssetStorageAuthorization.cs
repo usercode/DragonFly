@@ -1,13 +1,7 @@
-﻿using DragonFly.AspNetCore.API.Exports;
-using DragonFly.Content;
-using DragonFly.Assets.Query;
+﻿using DragonFly.Assets.Query;
 using DragonFly.Storage;
-using Microsoft.AspNetCore.Authorization;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.Permissions.AspNetCore.Content;

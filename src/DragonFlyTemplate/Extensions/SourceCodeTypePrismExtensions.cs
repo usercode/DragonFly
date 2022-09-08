@@ -5,17 +5,17 @@ namespace DragonFly.AspNetCore;
 
 public static class SourceCodeTypePrismExtensions
 {
-    public static string ToPrismCssClass(this SourceCodeType type)
+    public static string ToPrismCssClass(this CodeType type)
     {
         string language = type switch
         {
-            SourceCodeType.CSharp => "csharp",
-            SourceCodeType.CSS => "css",
-            SourceCodeType.JavaScript => "javascript",
-            SourceCodeType.HTML => "html",
-            SourceCodeType.XML => "xml",
-            SourceCodeType.SQL => "sql",
-            SourceCodeType.SVG => "svg",
+            CodeType.CSharp => "csharp",
+            CodeType.CSS => "css",
+            CodeType.JavaScript => "javascript",
+            CodeType.HTML => "html",
+            CodeType.XML => "xml",
+            CodeType.SQL => "sql",
+            CodeType.SVG => "svg",
             _ => string.Empty
         };
 

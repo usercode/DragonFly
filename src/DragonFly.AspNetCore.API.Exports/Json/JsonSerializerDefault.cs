@@ -24,11 +24,8 @@ public class JsonSerializerDefault
             if (_options == null)
             {
                 _options = new JsonSerializerOptions();
-                _options.PropertyNameCaseInsensitive = true;
-                _options.WriteIndented = true;
                 _options.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
                 _options.Converters.Add(new ArrayOptionJsonConverter());
-                _options.Converters.Add(new AssetMetadataJsonConverter());
                 _options.Converters.Add(new QueryFieldJsonConverter());
             }
 

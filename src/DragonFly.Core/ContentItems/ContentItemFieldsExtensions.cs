@@ -44,14 +44,14 @@ public static class ContentItemFieldsExtensions
         return contentItem;
     }
 
-    public static string? GetTextArea(this IContentElement contentItem, string name)
+    public static string? GetText(this IContentElement contentItem, string name)
     {
         TextField field = contentItem.GetField<TextField>(name);
 
         return field.Value;
     }
 
-    public static TContentItem SetTextArea<TContentItem>(this TContentItem contentItem, string name, string? value)
+    public static TContentItem SetText<TContentItem>(this TContentItem contentItem, string name, string? value)
         where TContentItem : IContentElement
     {
         TextField field = contentItem.GetField<TextField>(name);

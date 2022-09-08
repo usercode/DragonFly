@@ -36,7 +36,7 @@ public class RandomData
                                         .SetBool("IsAvailable", true)
                                         .SetFloat("Price", 9.99)
                                         .SetAsset("Image", new Asset())
-                                        .SetTextArea("Description", "...")
+                                        .SetText("Description", "...")
                                         .AddArrayItem("Attributes", schemaProduct, item => item
                                                                                 .SetString("Name", "Size")
                                                                                 .SetString("Value", "M"));
@@ -50,7 +50,7 @@ public class RandomData
                             { 
                                 c.SetString("Name", f.Vehicle.Manufacturer());
                                 c.SetSlug("Slug", c.GetField<StringField>("Name").Value.ToSlug());
-                                c.SetTextArea("Description", f.Rant.Review());
+                                c.SetText("Description", f.Rant.Review());
                             })
                             .GenerateLazy(100);
 
@@ -61,7 +61,7 @@ public class RandomData
                                c.SetString("Name", f.Vehicle.Model());
                                c.SetSlug("Slug", c.GetField<StringField>("Name").Value.ToSlug());
                                c.SetBool("IsAvailable", f.Random.Bool(0.8f));
-                               c.SetTextArea("Description", f.Rant.Review());
+                               c.SetText("Description", f.Rant.Review());
                            })
                            .GenerateLazy(100);
 

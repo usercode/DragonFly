@@ -11,5 +11,15 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class UnknownBlock : Block
 {
-    
+    public UnknownBlock()
+    {
+
+    }
+
+    public UnknownBlock(string? content)
+    {
+        Content = content;
+    }
+
+    public string? Content { get; set; }
 }

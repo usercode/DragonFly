@@ -40,7 +40,14 @@ public class AssetMetadataManager
     public void Add<TMetadata>()
         where TMetadata : AssetMetadata, new()
     {
-        string typeName = new TMetadata().Type;
+        string typeName = typeof(TMetadata).Name;
+
+        string suffixMetadata = "Metadata";
+
+        if (typeName.EndsWith(suffixMetadata))
+        {
+            typeName = typeName[0..^suffixMetadata.Length];
+        }
 
         _byName[typeName] = typeof(TMetadata);
         _byType[typeof(TMetadata)] = typeName;

@@ -41,7 +41,7 @@ class SeedDataAction : IPostInitialize
             return;
         }
 
-        using (new PermissionState())
+        using (new DisablePermissions())
         {
             IdentityRole roleAdmin = new IdentityRole();
             roleAdmin.Name = "Administrators";

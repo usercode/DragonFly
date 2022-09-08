@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.Services;
+namespace DragonFly.Permissions;
 
 public interface IPermissionService
 {

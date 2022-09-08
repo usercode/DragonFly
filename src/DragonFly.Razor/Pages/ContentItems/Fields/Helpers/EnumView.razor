@@ -1,7 +1,7 @@
 ﻿@typeparam TEnum
 
 <BSDropdown style="margin-bottom: 1rem">
-    <Toggler><BSToggle IsButton="true" Color="BSColor.Secondary" Size="Size.Small">@EnumValue</BSToggle></Toggler>
+    <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@EnumValue</BSToggle></Toggler>
     <Content>
         @foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
         {

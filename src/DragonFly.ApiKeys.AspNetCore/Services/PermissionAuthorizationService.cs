@@ -26,7 +26,7 @@ internal class PermissionAuthorizationService : IPermissionAuthorizationService
 
     public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
     {
-        using (new PermissionState())
+        using (new DisablePermissions())
         {
             Claim? claim = principal.FindFirst("ApiKeyId");
 

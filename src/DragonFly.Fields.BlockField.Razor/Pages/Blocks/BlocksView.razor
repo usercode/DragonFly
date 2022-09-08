@@ -27,6 +27,11 @@
 		{
 			int curIndex = i;
 
+            if (Blocks[i] == null)
+            {
+                continue;
+            }
+
 			<div class="block-field">
 				<div class="block-field-options">
 					<span class="badge bg-secondary">@Blocks[curIndex].GetType().Name</span>

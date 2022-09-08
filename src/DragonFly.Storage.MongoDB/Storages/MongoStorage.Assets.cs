@@ -128,7 +128,7 @@ public partial class MongoStorage : IAssetStorage
 
         if (string.IsNullOrEmpty(assetQuery.Pattern) == false)
         {
-            query = query.Where(x => x.Name!.Contains(assetQuery.Pattern));
+            query = query.Where(x => x.Name!.Contains(assetQuery.Pattern) || x.Slug!.Contains(assetQuery.Pattern));
         }
 
         IList<MongoAsset> result = await query

@@ -3,7 +3,7 @@
 /// <summary>
 /// PermissionState
 /// </summary>
-public class PermissionState : IDisposable
+public class PermissionState
 {
     private static AsyncLocal<bool> Enabled = new AsyncLocal<bool>();
 
@@ -11,15 +11,5 @@ public class PermissionState : IDisposable
 
     public static void Enable() => Enabled.Value = true;
 
-    private bool _oldValue;
-
-    public PermissionState()
-    {
-        _oldValue = Enabled.Value;
-    }
-
-    public void Dispose()
-    {
-        Enabled.Value = _oldValue;
-    }
+    public static void Disable() => Enabled.Value = false;
 }

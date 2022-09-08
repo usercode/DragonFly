@@ -8,7 +8,7 @@ namespace DragonFly.Content;
 /// <summary>
 /// ContentField
 /// </summary>
-public class RestContentFields : Dictionary<string, JsonNode?>
+public class RestContentFields : Dictionary<string, JsonNode>
 {
     public RestContentFields()
     {

@@ -1,0 +1,23 @@
+@model HeadingBlock
+
+@if(Model.Text != null)
+{
+    <div class="block headline-block">
+        @if(Model.HeadingType == HeadingType.H1)
+        {
+            <h1>@Model.Text</h1>
+        }
+        else if (Model.HeadingType == HeadingType.H2)
+        {
+            <h2>@Model.Text</h2>
+        }
+        else if (Model.HeadingType == HeadingType.H3)
+        {
+            <h3>@Model.Text</h3>
+        }
+        else if (Model.HeadingType == HeadingType.H4)
+        {
+            <h4>@Model.Text</h4>
+        }
+    </div>
+}

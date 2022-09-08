@@ -9,8 +9,6 @@ namespace DragonFly.Assets;
 /// </summary>
 public class PdfMetadata : AssetMetadata
 {
-    public override string Type => "Pdf";
-
     /// <summary>
     /// CountPages
     /// </summary>

@@ -1,7 +1,5 @@
-﻿using DragonFly.ContentItems;
-using DragonFly.Core.Permissions;
+﻿using DragonFly.Core.Permissions;
 using DragonFly.Permissions;
-using DragonFly.Permissions.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +43,8 @@ public static class PermissionDragonFlyApiExtensions
                                 .Add(AssetPermissions.AssetDelete, description: "Delete asset", sortkey: 3)
                                 .Add(AssetPermissions.AssetUpload, description: "Upload asset", sortkey: 4)
                                 .Add(AssetPermissions.AssetDownload, description: "Download asset", sortkey: 5)
+                                .Add(AssetPermissions.AssetPublish, description: "Publish asset", sortkey: 6)
+                                .Add(AssetPermissions.AssetUnpublish, description: "Unpublish asset", sortkey: 7)
                                 ));
 
         return manager;

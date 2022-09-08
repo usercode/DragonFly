@@ -24,7 +24,20 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
 
-        return await response.Content.ReadFromJsonAsync<QueryResult<Asset>>(JsonSerializerDefault.Options);
+        var result = await response.Content.ReadFromJsonAsync<QueryResult<RestAsset>>();
+
+        if (result == null)
+        {
+            throw new Exception();
+        }
+
+        QueryResult<Asset> assetResult = new QueryResult<Asset>();
+        assetResult.Offset = result.Offset;
+        assetResult.Count = result.Count;
+        assetResult.TotalCount = result.TotalCount;
+        assetResult.Items = result.Items.Select(x => x.ToModel()).ToList();
+
+        return assetResult;
     }
 
     public async Task UploadAsync(Guid id, string mimetype, Stream stream)

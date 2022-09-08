@@ -18,19 +18,16 @@ class BlockFieldConverter : JsonConverter<Block>
             {
                 string? typeName = typeElement.GetString();
 
-                if (typeName == null)
-                {
-                    return null;
-                }
-
-                if (BlockFieldManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
+                if (typeName != null && BlockFieldManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
                 {
                     return (Block?)JsonSerializer.Deserialize(doc.RootElement, blockType, options);
                 }
+
+                return new UnknownBlock(doc.RootElement.ToString());
             }
         }
 
-        return null;
+        throw new Exception();
     }
 
     public override void Write(Utf8JsonWriter writer, Block value, JsonSerializerOptions options)

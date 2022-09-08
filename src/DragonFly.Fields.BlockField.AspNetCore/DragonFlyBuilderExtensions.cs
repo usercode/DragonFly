@@ -13,13 +13,6 @@ public static class DragonFlyBuilderExtensions
         builder.Init(api =>
         {
             api.ContentField().Add<BlockField>();
-
-            //api.RegisterBlock<ColumnBlock>();
-            //api.RegisterBlock<AssetBlock, AssetBlockView>();
-            //api.RegisterBlock<TextBlock, TextBlockView>();
-            //api.RegisterBlock<HtmlBlock, HtmlBlockView>();
-            //api.RegisterBlock<YouTubeBlock, YouTubeBlockView>();
-            //api.RegisterBlock<UnknownBlock, UnknownBlockView>();
         });
 
         return builder;

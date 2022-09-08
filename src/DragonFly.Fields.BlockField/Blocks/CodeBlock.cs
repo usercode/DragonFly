@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 namespace DragonFly.Fields.BlockField;
 
 /// <summary>
-/// SourceCodeBlock
+/// CodeBlock
 /// </summary>
-public class SourceCodeBlock : Block
+public class CodeBlock : Block
 {
     /// <summary>
-    /// SourceCodeType
+    /// CodeType
     /// </summary>
-    public SourceCodeType SourceCodeType { get; set; }
+    public CodeType CodeType { get; set; }
 
     /// <summary>
-    /// SourceCode
+    /// Content
     /// </summary>
-    public string? SourceCode { get; set; }
+    public string? Content { get; set; }
 }
