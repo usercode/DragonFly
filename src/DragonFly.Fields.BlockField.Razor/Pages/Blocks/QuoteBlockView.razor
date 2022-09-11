@@ -1,0 +1,19 @@
+﻿@inherits BlockComponent<QuoteBlock>
+
+<div class="quote-block">
+    <textarea class="form-control mb-3" @bind="@Block.Text" style="height:10rem" />
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">Caption</span>
+        <input type="text" class="form-control" @bind-value="@Block.Caption" />
+    </div>
+
+    <div class="input-group mb-3">
+        <span class="input-group-text">URL</span>
+        <input type="text" class="form-control" @bind-value="@Block.Url" />
+    </div>
+</div>
+
+@code {
+
+}

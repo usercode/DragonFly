@@ -1,9 +1,12 @@
 ﻿@inherits BlockComponent<HeadingBlock>
 
-<div class="input-group">
-    <EnumView TEnum="HeadingType" @bind-EnumValue="@Block.HeadingType" />
-    <input class="form-control" @bind="@Block.Text" />
+<div class="heading-block">
+    <div class="input-group">
+        <EnumView TEnum="HeadingType" @bind-EnumValue="@Block.HeadingType" />
+        <input class="form-control" @bind="@Block.Text" />
+    </div>
 </div>
+
 @code {
 
 }

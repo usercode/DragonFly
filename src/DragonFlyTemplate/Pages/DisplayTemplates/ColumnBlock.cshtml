@@ -1,12 +1,15 @@
 @model ColumnBlock
 
-<div class="block column-block">
-    <div class="row">
-        @for (var n = 0; n < Model.Columns.Count; n++)
-        {
-            <div class="@Model.Columns[n].Width.ToBootstrapCssClass()">
-                @Html.DisplayBlocks(Model.Columns[n])
-            </div>
-        }
+@if(Model.Columns.Count > 0)
+{
+    <div class="block column-block">
+        <div class="row">
+            @for (var n = 0; n < Model.Columns.Count; n++)
+            {
+                <div class="@Model.Columns[n].Width.ToBootstrapCssClass()">
+                    @Html.DisplayBlocks(Model.Columns[n])
+                </div>
+            }
+        </div>
     </div>
-</div>
+}

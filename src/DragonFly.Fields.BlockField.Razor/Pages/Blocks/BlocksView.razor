@@ -1,20 +1,17 @@
 ﻿@inject ComponentManager ComponentManager
 @inject BlockFieldManager BlockFieldManager
 
-<BSModal @ref="Modal" IsFullScreen="true" Size="Size.ExtraLarge">
-	<Header>Select asset</Header>
-	<Content>
-		@foreach (Block block in BlockFieldManager.GetAllBlocks())
-		{
-			<div>
-				<BSButton class="btn btn-light" OnClick="e => Add(block)">@block.GetType().Name</BSButton>
-			</div>
-		}
-	</Content>
-	<Footer>
-		<BSButton Color="BSColor.Primary" @onclick="@(() => Modal.HideAsync())">Ok</BSButton>
-	</Footer>
-</BSModal>
+<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+    <Header>Select block</Header>
+    <Content>
+        @foreach (Block block in BlockFieldManager.GetAllBlocks())
+        {
+            <div>
+                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</BSButton>
+            </div>
+        }
+    </Content>
+</BSOffCanvas>
 
 @if (Blocks != null)
 {
@@ -34,7 +31,7 @@
 
 			<div class="block-field">
 				<div class="block-field-options">
-					<span class="badge bg-secondary">@Blocks[curIndex].GetType().Name</span>
+                    <span class="block-label"><i class="@Blocks[curIndex].CssIcon" style="margin-right: 0.5rem;" /> @Blocks[curIndex].Name</span>
 					<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.MoveUp(Blocks[curIndex]); })" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
 					<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.MoveDown(Blocks[curIndex]); })" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
 					<BSButton Color="BSColor.Light" OnClick="@(e => { Blocks.Remove(Blocks[curIndex]); })" title="Remove"><i class="fas fa-times"></i></BSButton>
@@ -53,23 +50,29 @@
 
 @code {
 
-	public int Position { get; set; }
+    private BSOffCanvas? _offCanvas;
 
-	public BSModal Modal { get; set; }
+    public int Position { get; set; }
 
-	[Parameter]
-	public IList<Block> Blocks { get; set; }
+    public BSModal Modal { get; set; }
 
-	public async Task OpenModal(int position)
-	{
-		Position = position;
+    [Parameter]
+    public IList<Block> Blocks { get; set; }
 
-		await Modal.ShowAsync();
-	}
+    public async Task OpenModal(int position)
+    {
+        Position = position;
+
+        //await Modal.ShowAsync();
+
+        await _offCanvas.ToggleAsync();
+    }
 
 	private async Task Add(Block element)
 	{
-		await Modal.HideAsync();
+		//await Modal.HideAsync();
+
+        await _offCanvas.ToggleAsync();
 
 		Blocks.Insert(Position, element);
 	}

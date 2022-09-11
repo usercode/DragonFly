@@ -33,6 +33,7 @@ public class BlockFieldManager
                 _default.Add<CodeBlock>();
                 _default.Add<OpenGraphBlock>();
                 _default.Add<HeadingBlock>();
+                _default.Add<QuoteBlock>();
 
                 _default.Add<UnknownBlock>();
             }
@@ -57,7 +58,11 @@ public class BlockFieldManager
 
     public IEnumerable<Block> GetAllBlocks()
     {
-        return _elementsByType.Keys.Select(x => (Block?)Activator.CreateInstance(x)).ToList();
+        return _elementsByType.Keys
+                                    .Where(x => x != typeof(UnknownBlock))
+                                    .OrderBy(x => x.Name)
+                                    .Select(x => (Block?)Activator.CreateInstance(x))
+                                    .ToList();
     }
 
     /// <summary>

@@ -1,5 +1,8 @@
 @model HtmlBlock
 
-<div class="block html-block">
-    @Html.Raw(Model.HtmlText)
-</div>
+@if(Model.HtmlText != null)
+{
+    <div class="block html-block">
+        @Html.Raw(Model.HtmlText)
+    </div>
+}

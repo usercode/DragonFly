@@ -6,22 +6,22 @@ html {
 body {
     color: $text_regular;
     font-size: 1.0rem;
-    font-weight: 300;
+    font-weight: 400;
     height: 100%;
     display: flex;
     flex-direction: column;
     padding-top: 7rem;
 }
 
-header {
+body > header {
     flex: 0 1 auto;
 }
 
-main {
+body > main {
     flex: 1 0 auto;
 }
 
-footer {
+body > footer {
     flex: 0 1 auto;
     text-align: right;
     padding: 2rem 0;
@@ -35,7 +35,7 @@ footer {
     }
 }
 
-h1, h2, h3, h4, h5, h6, blockquote {
+h1, h2, h3, h4, h5, h6 {
     color: $text_strong;
     
 }
@@ -74,27 +74,6 @@ pre {
     border-radius: .2rem;
 }
 
-blockquote {
-    position: relative;
-    padding: 2rem 80px 1rem;
-    margin: 2rem 0;
-    border-top: solid 1px $border_color;
-    border-bottom: solid 1px $border_color;
-    font-size: 1.2rem;
-    font-weight: 400;
-
-    &:before {
-        content: "\201C";
-        position: absolute;
-        left: 0;
-        top: 0;
-        font-size: 8rem;
-        color: $border_color;
-        font-family: Georgia,"Times New Roman",Times,serif;
-        font-style: initial;
-    }
-}
-
 header {
     .navbar {
         a {
@@ -128,23 +107,6 @@ article {
         strong {
             color: $text_strong;
             font-weight: normal;
-        }
-    }
-}
-
-.blog-filter-header {
-    h1 {
-        font-size: 1rem;
-        text-transform: uppercase;
-        margin-bottom: -.5rem;
-
-        &::after {
-            content: " ";
-            display: block;
-            width: 3rem;
-            height: 0;
-            border-bottom: solid 1px $border_color;
-            margin-top: .5rem;
         }
     }
 }

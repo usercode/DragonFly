@@ -11,6 +11,8 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class CodeBlock : Block
 {
+    public override string CssIcon => "bi bi-code-square";
+
     /// <summary>
     /// CodeType
     /// </summary>

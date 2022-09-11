@@ -1,8 +1,9 @@
 ﻿@inherits BlockComponent<AssetBlock>
 @inject IAssetStorage AssetStorage
 
-<AssetSelector @bind-Asset="Asset" ShowPreview="true" />
-
+<div class="asset-block">
+    <AssetSelector @bind-Asset="Asset" ShowPreview="true" />
+</div>
 @code {
 
 	protected override async Task OnInitializedAsync()

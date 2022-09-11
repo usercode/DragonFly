@@ -6,9 +6,6 @@ using DragonFly.Core.Builders;
 using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using DragonFly.Content;
-using DragonFly.Core;
 using DragonFly.AspNetCore.Middleware.Builders;
 
 namespace DragonFly.AspNetCore;

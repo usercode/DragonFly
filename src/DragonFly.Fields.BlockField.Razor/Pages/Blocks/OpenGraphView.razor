@@ -1,6 +1,11 @@
 ﻿@inherits BlockComponent<OpenGraphBlock>
 
-<input type="text" class="form-control" @bind-value="@Block.Url" />
+<div class="opengraph-block">
+    <div class="input-group">
+        <span class="input-group-text">URL</span>
+        <input type="text" class="form-control" @bind-value="@Block.Url" spellcheck="false" />
+    </div>
+</div>
 
 @code {
 

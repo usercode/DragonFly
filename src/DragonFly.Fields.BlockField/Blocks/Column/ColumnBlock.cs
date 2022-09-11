@@ -12,6 +12,8 @@ public class ColumnBlock : Block
         Columns = new List<Column>();
     }
 
+    public override string CssIcon => "bi bi-layout-three-columns";
+
     /// <summary>
     /// Columns
     /// </summary>

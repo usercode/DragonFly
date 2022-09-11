@@ -1,8 +1,10 @@
 ﻿@inherits BlockComponent<YouTubeBlock>
 
 <div class="youtube-block">
-	<input type="text" class="form-control" value="@Block.VideoId" @onchange="@(e => { Block.VideoId = e.Value.ToString(); CreateThumbnailUrl();  })"/>
-
+    <div class="input-group">
+        <span class="input-group-text">Video-ID</span>
+        <input type="text" class="form-control" value="@Block.VideoId" spellcheck="false" @onchange="@(e => { Block.VideoId = e.Value.ToString(); CreateThumbnailUrl();  })" />
+    </div>
     <img src="@Url" style="max-height:200px;margin-top:10px" />
 </div>
 
@@ -28,5 +30,3 @@
         CreateThumbnailUrl();
     }
 }
-
-

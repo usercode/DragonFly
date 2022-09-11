@@ -11,5 +11,7 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class AssetBlock : Block
 {
+    public override string CssIcon => "bi bi-image";
+
     public Guid? AssetId { get; set; }
 }
