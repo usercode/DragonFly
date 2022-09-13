@@ -7,7 +7,7 @@ namespace DragonFly.Fields.BlockField;
 
 public class YouTubeBlock : Block
 {
-    public override string CssIcon => "bi bi-youtube";
+    public override string CssIcon => "fa-brands fa-youtube";
 
     public string? VideoId { get; set; }
 

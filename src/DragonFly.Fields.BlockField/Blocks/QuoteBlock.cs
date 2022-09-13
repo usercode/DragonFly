@@ -11,7 +11,7 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class QuoteBlock : Block
 {
-    public override string CssIcon => "bi bi-chat-square-quote";
+    public override string CssIcon => "fa-solid fa-quote-left";
 
     public string? Text { get; set; }
 

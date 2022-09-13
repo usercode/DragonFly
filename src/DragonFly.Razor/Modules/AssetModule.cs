@@ -21,7 +21,7 @@ public class AssetModule : ClientModule
 
     public override void Init(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Assets", "far fa-image", "asset");
+        api.MainMenu().Add("Assets", "fa-regular fa-image", "asset");
 
         api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
         api.RegisterMetadata<PdfMetadata, PdfMetadataView>();

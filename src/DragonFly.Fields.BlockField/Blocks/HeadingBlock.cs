@@ -11,7 +11,7 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class HeadingBlock : Block
 {
-    public override string CssIcon => "bi bi-card-heading";
+    public override string CssIcon => "fa-solid fa-heading";
 
     public string? Text { get; set; }
 

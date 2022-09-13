@@ -11,7 +11,7 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class OpenGraphBlock : Block
 {
-    public override string CssIcon => "bi bi-filetype-html";
+    public override string CssIcon => "fa-solid fa-globe";
 
     public string? Url { get; set; }
 }

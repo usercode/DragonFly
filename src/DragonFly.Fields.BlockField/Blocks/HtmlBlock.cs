@@ -11,7 +11,7 @@ namespace DragonFly.Fields.BlockField;
 /// </summary>
 public class HtmlBlock : Block
 {
-    public override string CssIcon => "bi bi-filetype-html";
+    public override string CssIcon => "fa-regular fa-file-code";
 
     public string? HtmlText { get; set; }
 }

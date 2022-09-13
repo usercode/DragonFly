@@ -20,7 +20,7 @@ public class SettingsModule : ClientModule
 
     public override void Init(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Settings", "fas fa-tools", "settings");
+        api.MainMenu().Add("Settings", "fa-solid fa-screwdriver-wrench", "settings");
 
         api.Settings().Add<ClientModules>("Modules");
     }

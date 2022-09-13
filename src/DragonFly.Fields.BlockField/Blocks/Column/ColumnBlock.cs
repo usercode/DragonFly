@@ -12,7 +12,7 @@ public class ColumnBlock : Block
         Columns = new List<Column>();
     }
 
-    public override string CssIcon => "bi bi-layout-three-columns";
+    public override string CssIcon => "fa-solid fa-table-columns";
 
     /// <summary>
     /// Columns
