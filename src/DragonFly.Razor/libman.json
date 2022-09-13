@@ -9,6 +9,10 @@
     {
       "library": "bootstrap-icons@1.9.1",
       "destination": "wwwroot/lib/bootstrap-icons/"
+    },
+    {
+      "library": "font-awesome@6.2.0",
+      "destination": "wwwroot/lib/font-awesome/"
     }
   ]
 }
