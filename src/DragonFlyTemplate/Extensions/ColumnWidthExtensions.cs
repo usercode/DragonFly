@@ -13,7 +13,7 @@ public static class ColumnWidthExtensions
     {
         if (width == ColumnWidth.Max)
         {
-            return "col";
+            return "col-lg";
         }
 
         if (width == ColumnWidth.Auto)
@@ -21,6 +21,6 @@ public static class ColumnWidthExtensions
             return $"col-auto";
         }
 
-        return $"col-{(int)width}";
+        return $"col-lg-{(int)width}";
     }
 }

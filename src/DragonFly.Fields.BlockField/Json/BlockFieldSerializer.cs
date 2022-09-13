@@ -67,8 +67,15 @@ public class BlockFieldSerializer
 
         mem.Seek(0, SeekOrigin.Begin);
 
-        string json = Encoding.UTF8.GetString(mem.ToArray());
+        //string json = Encoding.UTF8.GetString(mem.ToArray());
 
-        return await JsonSerializer.DeserializeAsync<Document>(mem, Options);
+        Document? result = await JsonSerializer.DeserializeAsync<Document>(mem, Options);
+
+        if (result == null)
+        {
+            throw new Exception();
+        }
+
+        return result;
     }
 }

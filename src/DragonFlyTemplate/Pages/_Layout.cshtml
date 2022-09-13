@@ -8,16 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="icon" href="favicon.svg" />  
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" asp-append-version="true" />    
-    <link rel="stylesheet" href="~/lib/prismjs/prism.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" asp-append-version="true" />    
+    <link rel="stylesheet" href="~/lib/prismjs/themes/prism.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/assets/css/style.min.css" asp-append-version="true">
-
     <title>@Model.PageTitle</title>
-
     @RenderSection("head", required: false)
-
     <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
     <script src="~/lib/prismjs/prism.js" defer asp-append-version="true"></script>
+    <script src="~/lib/prismjs/components/prism-csharp.js" defer asp-append-version="true"></script>
 </head>
 <body>
     <header class="fixed-top">
