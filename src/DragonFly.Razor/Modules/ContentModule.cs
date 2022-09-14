@@ -17,8 +17,8 @@ public class ContentModule : ClientModule
 
     public override void Init(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Schema", "fa-solid fa-list", "schema");
-        api.MainMenu().Add("Structure", "fa-solid fa-list", "structure");
+        api.MainMenu().Add("Schema", "fa-solid fa-layer-group", "schema");
+        api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
         api.MainMenu().Add("Content", "fa-solid fa-list", "content");
 
         api.RegisterField<ArrayField, ArrayFieldView, ArrayFieldOptionsView>();

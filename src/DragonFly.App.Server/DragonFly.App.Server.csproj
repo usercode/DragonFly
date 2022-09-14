@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <None Remove="FileCache\**" />
-    <None Remove="Options\**" />
   </ItemGroup>
 
   <ItemGroup>

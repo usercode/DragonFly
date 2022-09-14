@@ -7,7 +7,7 @@
             @for (var n = 0; n < Model.Columns.Count; n++)
             {
                 <div class="@Model.Columns[n].Width.ToBootstrapCssClass()">
-                    @Html.DisplayBlocks(Model.Columns[n])
+                    @Html.DisplayFor(m => Model.Columns[n].Blocks)
                 </div>
             }
         </div>

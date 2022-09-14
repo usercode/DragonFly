@@ -19,6 +19,6 @@ public class WebHookModule : ClientModule
 
     public override void Init(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Webhook", "fa-solid fa-list", "webhook");
+        api.MainMenu().Add("Webhook", "fa-solid fa-satellite-dish", "webhook");
     }
 }

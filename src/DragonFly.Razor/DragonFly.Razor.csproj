@@ -15,11 +15,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<SupportedPlatform Include="browser" />
+	  <Content Remove="compilerconfig.json" />
+	  <Content Remove="libman.json" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
-		<Content Remove="compilerconfig.json" />
+		<SupportedPlatform Include="browser" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,5 +42,7 @@
 	<ItemGroup>
 		<None Include="..\logo.png" Pack="true" PackagePath="" />
 		<None Include="compilerconfig.json" />
+		<None Include="libman.json" />
 	</ItemGroup>
+  
 </Project>

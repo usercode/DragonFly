@@ -4,6 +4,7 @@ using DragonFlyTemplate.Models;
 using DragonFly.AspNetCore.SchemaBuilder;
 using Microsoft.AspNetCore.Mvc;
 using DragonFly;
+using DragonFly.Fields.BlockField;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -18,6 +19,8 @@ public class BlogPostPage : BasePageModel
 
     public BlogPostModel Result { get; private set; }
 
+    public Document Document { get; private set; }
+
     public async Task<IActionResult> OnGetAsync(string slug)
     {
         var query = new ContentItemQuery() { Top = 1, Skip = 0, Published = true }
@@ -29,8 +32,9 @@ public class BlogPostPage : BasePageModel
         {
             return NotFound();
         }
-
         Result = result.Items[0];
+
+        Document = await Result.MainContent.GetDocumentAsync();
 
         return Page();
     }
