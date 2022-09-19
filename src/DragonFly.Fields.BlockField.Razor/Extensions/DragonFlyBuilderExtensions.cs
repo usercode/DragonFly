@@ -26,6 +26,7 @@ public static class DragonFlyBuilderExtensions
             api.RegisterBlock<OpenGraphBlock, OpenGraphView>();
             api.RegisterBlock<HeadingBlock, HeadingBlockView>();
             api.RegisterBlock<QuoteBlock, QuoteBlockView>();
+            api.RegisterBlock<ReferenceBlock, ReferenceBlockView>();
         });
 
         return builder;

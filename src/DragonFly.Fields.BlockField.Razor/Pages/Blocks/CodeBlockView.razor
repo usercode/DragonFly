@@ -1,7 +1,9 @@
 ﻿@inherits BlockComponent<CodeBlock>
 
 <div class="code-block">
-    <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
+    <div class="mb-1">
+        <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
+    </div>
     <textarea class="form-control" @bind="@Block.Content" spellcheck="false" style="width:100%; height:40rem" />
 </div>
 

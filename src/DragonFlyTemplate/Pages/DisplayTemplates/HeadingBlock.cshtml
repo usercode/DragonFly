@@ -2,7 +2,7 @@
 
 @if (Model.Text != null)
 {
-    <div class="block headline-block">
+    <div class="block heading-block">
         @if (Model.HeadingType == HeadingType.H1)
         {
             <h1><a id="@Slugify.ToSlug(Model.Text)">@Model.Text</a></h1>

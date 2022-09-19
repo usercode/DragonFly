@@ -17,6 +17,8 @@
 	<ItemGroup>
 	  <Content Remove="compilerconfig.json" />
 	  <Content Remove="libman.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="libman.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,8 +33,8 @@
 		<PackageReference Include="Blazored.Modal" Version="6.0.1" />
 		<PackageReference Include="Blazored.Toast" Version="3.2.2" />
 		<PackageReference Include="BlazorStrap" Version="5.0.106" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="6.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -40,9 +42,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\logo.png" Pack="true" PackagePath="" />
-		<None Include="compilerconfig.json" />
-		<None Include="libman.json" />
+		<None Include="..\logo.png" Pack="true" PackagePath="" />		
 	</ItemGroup>
   
 </Project>

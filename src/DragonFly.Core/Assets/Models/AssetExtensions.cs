@@ -9,12 +9,7 @@ public static class AssetExtensions
 {
     public static bool IsImage(this Asset asset)
     {
-        if (asset.MimeType == null)
-        {
-            return false;
-        }
-
-        return asset.MimeType.StartsWith("image/");
+        return asset.IsWebP() || asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
     }
 
     public static bool IsJpeg(this Asset asset)

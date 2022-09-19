@@ -26,7 +26,7 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
     public T CreateProxy<T>()
         where T : class
     {
-        ContentSchema schema = SchemaTypeManager.Default.Get(typeof(T));
+        ContentSchema schema = SchemaTypeManager.Default.GetSchemaByType(typeof(T));
 
         return ProxyBuilder.CreateProxy<T>(schema.CreateContentItem());
     }

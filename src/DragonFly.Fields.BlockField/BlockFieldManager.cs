@@ -34,6 +34,7 @@ public class BlockFieldManager
                 _default.Add<OpenGraphBlock>();
                 _default.Add<HeadingBlock>();
                 _default.Add<QuoteBlock>();
+                _default.Add<ReferenceBlock>();
 
                 _default.Add<UnknownBlock>();
             }

@@ -11,21 +11,28 @@ public class SchemaTypeManager
     public static SchemaTypeManager Default => _default;
     
     
-    private IDictionary<Type, ContentSchema> _schema = new Dictionary<Type, ContentSchema>();
+    private IDictionary<Type, ContentSchema> _schemaByType = new Dictionary<Type, ContentSchema>();
+    private IDictionary<ContentSchema, Type> _schemaBySchema = new Dictionary<ContentSchema, Type>();
 
     internal void Add(Type type, ContentSchema schema)
     {
-        _schema[type] = schema;
+        _schemaByType[type] = schema;
+        _schemaBySchema[schema] = type;
     }
 
-    public ContentSchema Get(Type type)
+    public ContentSchema GetSchemaByType(Type type)
     {
-        return _schema[type];
+        return _schemaByType[type];
+    }
+
+    public Type GetTypeBySchema(ContentSchema schema)
+    {
+        return _schemaBySchema[schema];
     }
 
     public ContentSchema Get<T>()
     {
-        return Get(typeof(T));
+        return GetSchemaByType(typeof(T));
     }
 
 }

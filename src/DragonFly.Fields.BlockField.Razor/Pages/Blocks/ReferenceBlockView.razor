@@ -1,0 +1,31 @@
+﻿@inherits BlockComponent<ReferenceBlock>
+@inject IContentStorage Storage
+
+<div class="asset-block">
+    <ContentSelector @bind-ContentItem="Content" />
+</div>
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Block.ContentId != null)
+        {
+            Content = await Storage.GetContentAsync(Block.ContentSchema, Block.ContentId.Value);
+        }
+    }
+
+    private ContentItem _content;
+
+    [Parameter]
+    public ContentItem Content 
+    {
+        get => _content;
+        set
+        {
+            _content = value;
+
+            Block.ContentId = _content?.Id;
+            Block.ContentSchema = _content?.Schema.Name;            
+        }
+	}
+}

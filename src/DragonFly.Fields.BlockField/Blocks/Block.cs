@@ -43,4 +43,9 @@ public abstract class Block
     }
 
     public virtual string CssIcon => "bi bi-app";
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

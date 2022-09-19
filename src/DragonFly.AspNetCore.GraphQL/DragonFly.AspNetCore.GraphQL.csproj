@@ -20,8 +20,8 @@
   
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="7.0.2" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.1.0" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.1.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="7.1.1" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="7.1.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,7 +18,7 @@ public class ContentSchema : ContentBase, ISchemaElement
         _listFields = new List<string>();
         _referenceFields = new List<string>();
         _queryFields = new List<string>();
-        _orderFields = new List<FieldOrder>();            
+        _orderFields = new List<FieldOrder>();
     }
 
     public ContentSchema(string name)

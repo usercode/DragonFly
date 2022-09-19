@@ -9,21 +9,21 @@
             <p class="post-meta"><i class="bi bi-calendar"></i> Published @Model.Result.Date.Value.ToShortDateString()</p>
         </header>
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div class="heading-index">
-                    <ol>
-                        @foreach (HeadingBlock heading in Model.Document.Blocks.OfType<HeadingBlock>())
-                        {
-                            <li><a href="#@Slugify.ToSlug(heading.Text)">@heading.Text</a></li>
-                        }
-                    </ol>
+                    <div class="list-group">
+                            @foreach (HeadingBlock heading in Model.Document.Blocks.OfType<HeadingBlock>())
+                            {
+                                <a href="#@Slugify.ToSlug(heading.Text)" class="list-group-item list-group-item-action">@heading.Text</a>
+                            }
+                    </div>
                 </div>
             </div>
             <dif class="col-lg-8">
                 @Html.DisplayFor(m => Model.Document.Blocks)
             </dif>
-            <div class="col-lg-2">
-                <div class="">
+            <div class="col-lg-1">
+                <div class="social-icons">
                     <div>
                         <a href="https://twitter.com/intent/tweet?url=@Request.GetEncodedUrl()">
                             <i class="bi bi-twitter social-icon"></i>

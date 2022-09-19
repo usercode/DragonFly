@@ -3,9 +3,13 @@
 @if(Model.Text != null)
 {
     <div class="block quote-block">
-        <blockquote class="blockquote" cite="@Model.Url">
-            <p>@Model.Text</p>
-            <footer class="blockquote-footer">@Model.Caption</footer>
-        </blockquote>
+        <figure class="text-center">        
+            <blockquote class="blockquote" cite="@Model.Url">
+                <p>@Model.Text</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+                @Model.Caption
+            </figcaption>
+        </figure>
     </div>
 }

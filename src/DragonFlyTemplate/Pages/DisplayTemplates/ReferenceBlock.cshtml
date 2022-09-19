@@ -1,0 +1,18 @@
+@model ReferenceBlock
+@inject IContentStorage Storage
+
+@if (Model.ContentId != null && Model.ContentSchema != null)
+{
+    ContentItem content = await Storage.GetContentAsync(Model.ContentSchema, Model.ContentId.Value);
+
+    <div class="block reference-block">
+        @{
+            object contentModel = content.ToModel();
+
+            if (contentModel is ProjectModel projectModel)
+            {
+                <p>@projectModel.Title (@projectModel.Link)</p>
+            }
+        }
+    </div>
+}
