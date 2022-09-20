@@ -1,5 +1,4 @@
-﻿using DragonFly;
-using DragonFly.BlockField.Razor.Pages;
+﻿using DragonFly.BlockField.Razor.Pages;
 using DragonFly.BlockField.Razor.Pages.Blocks;
 using DragonFly.Builders;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,13 +19,14 @@ public static class DragonFlyBuilderExtensions
             api.RegisterBlock<AssetBlock, AssetBlockView>();
             api.RegisterBlock<TextBlock, TextBlockView>();
             api.RegisterBlock<HtmlBlock, HtmlBlockView>();
-            api.RegisterBlock<YouTubeBlock, YouTubeBlockView>();
-            api.RegisterBlock<UnknownBlock, UnknownBlockView>();
+            api.RegisterBlock<YouTubeBlock, YouTubeBlockView>();            
             api.RegisterBlock<CodeBlock, CodeBlockView>();
             api.RegisterBlock<OpenGraphBlock, OpenGraphView>();
             api.RegisterBlock<HeadingBlock, HeadingBlockView>();
             api.RegisterBlock<QuoteBlock, QuoteBlockView>();
             api.RegisterBlock<ReferenceBlock, ReferenceBlockView>();
+
+            api.RegisterBlock<UnknownBlock, UnknownBlockView>();
         });
 
         return builder;

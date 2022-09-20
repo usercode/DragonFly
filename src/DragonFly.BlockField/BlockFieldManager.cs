@@ -23,17 +23,6 @@ public class BlockFieldManager
             {
                 _default = new BlockFieldManager();
 
-                _default.Add<ColumnBlock>();
-                _default.Add<AssetBlock>();
-                _default.Add<TextBlock>();
-                _default.Add<HtmlBlock>();
-                _default.Add<YouTubeBlock>();                
-                _default.Add<CodeBlock>();
-                _default.Add<OpenGraphBlock>();
-                _default.Add<HeadingBlock>();
-                _default.Add<QuoteBlock>();
-                _default.Add<ReferenceBlock>();
-
                 _default.Add<UnknownBlock>();
             }
 

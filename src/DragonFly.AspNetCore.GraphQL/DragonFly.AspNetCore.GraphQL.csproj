@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Authors>usercode</Authors>
+    <ImplicitUsings>true</ImplicitUsings>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
