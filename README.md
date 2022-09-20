@@ -12,6 +12,7 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.AspNetCore.API.Client  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.Client.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API.Client/) |
 | DragonFly.Razor                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
 | DragonFly.BlockField                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.BlockField.svg)](https://www.nuget.org/packages/DragonFly.BlockField/) |
+| DragonFly.Proxy                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Proxy.svg)](https://www.nuget.org/packages/DragonFly.Proxy/) |
 | DragonFly.ImageWizard            | [![NuGet](https://img.shields.io/nuget/v/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
 | DragonFly.MongoDB        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
 
