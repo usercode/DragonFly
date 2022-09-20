@@ -32,7 +32,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.API.Client\DragonFly.API.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
   </ItemGroup>
 

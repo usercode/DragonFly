@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
+    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.BlockField.AspNetCore\DragonFly.BlockField.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Identity.AspNetCore\DragonFly.Identity.AspNetCore.csproj" />

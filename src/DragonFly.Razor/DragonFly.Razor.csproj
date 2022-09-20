@@ -38,11 +38,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DragonFly.AspNetCore.API.Client\DragonFly.AspNetCore.API.Client.csproj" />
+		<None Include="..\logo.png" Pack="true" PackagePath="" />		
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\logo.png" Pack="true" PackagePath="" />		
+	  <ProjectReference Include="..\DragonFly.API.Client\DragonFly.API.Client.csproj" />
 	</ItemGroup>
   
 </Project>
