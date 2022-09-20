@@ -1,12 +1,12 @@
-﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
+﻿using DragonFly.Proxy.Attributes;
 using DragonFly;
 
 namespace DragonFlyTemplate.Models;
 
 [ContentItem("Project")]
-public class ProjectModel
+public class ProjectModel : EntityPageModel
 {
-    [StringField(Required = true, Index = true, ListField = true)]
+    [StringField(Required = true, Searchable = true, ListField = true)]
     public virtual string Title { get; set; }
 
     [StringField]

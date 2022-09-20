@@ -4,7 +4,7 @@ using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Services;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
 using DragonFly.AspNetCore.Middleware;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using DragonFly.Identity.AspNetCore.Authorization;
 using DragonFly.Identity.AspNetCore.Permissions;
 using DragonFly.Identity.AspNetCore.Services;

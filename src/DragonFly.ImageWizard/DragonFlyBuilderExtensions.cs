@@ -1,5 +1,5 @@
 ﻿using DragonFly.AspNetCore.Middleware;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using ImageWizard;
 using ImageWizard.Client;
 using Microsoft.Extensions.DependencyInjection;

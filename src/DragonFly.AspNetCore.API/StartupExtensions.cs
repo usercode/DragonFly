@@ -2,7 +2,7 @@
 using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
 using DragonFly.AspNetCore.API.Middlewares.Assets;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.Middleware;

@@ -7,9 +7,12 @@
             <blockquote class="blockquote" cite="@Model.Url">
                 <p>@Model.Text</p>
             </blockquote>
-            <figcaption class="blockquote-footer">
-                @Model.Caption
-            </figcaption>
+            @if (string.IsNullOrEmpty(Model.Caption) == false)
+            {
+                <figcaption class="blockquote-footer">
+                    @Model.Caption
+                </figcaption>
+            }
         </figure>
     </div>
 }

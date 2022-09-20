@@ -27,13 +27,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore.API\DragonFly.AspNetCore.API.csproj" />
-    <ProjectReference Include="..\DragonFly.AspNetCore.SchemaBuilder\DragonFly.AspNetCore.SchemaBuilder.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.Fields.BlockField.AspNetCore\DragonFly.Fields.BlockField.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.BlockField.AspNetCore\DragonFly.BlockField.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Identity.AspNetCore\DragonFly.Identity.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
+    <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.Storage.MongoDB\DragonFly.Storage.MongoDB.csproj" />
+    <ProjectReference Include="..\DragonFly.Proxy\DragonFly.Proxy.csproj" />
     <ProjectReference Include="..\DragonFlyTemplate.Client\DragonFlyTemplate.Client.csproj" />
   </ItemGroup>
   

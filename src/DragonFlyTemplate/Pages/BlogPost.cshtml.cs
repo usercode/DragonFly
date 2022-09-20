@@ -1,10 +1,10 @@
 ﻿using DragonFly.Query;
 using DragonFly.Storage;
 using DragonFlyTemplate.Models;
-using DragonFly.AspNetCore.SchemaBuilder;
 using Microsoft.AspNetCore.Mvc;
 using DragonFly;
-using DragonFly.Fields.BlockField;
+using DragonFly.Proxy;
+using DragonFly.BlockField;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -35,6 +35,8 @@ public class BlogPostPage : BasePageModel
         Result = result.Items[0];
 
         Document = await Result.MainContent.GetDocumentAsync();
+
+        PageTitle = Result.Title;
 
         return Page();
     }

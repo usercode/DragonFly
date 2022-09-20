@@ -1,16 +1,16 @@
-﻿using DragonFly.AspNetCore.SchemaBuilder.Attributes;
-using DragonFly;
-using DragonFly.Fields.BlockField;
+﻿using DragonFly;
+using DragonFly.BlockField;
+using DragonFly.Proxy.Attributes;
 
 namespace DragonFlyTemplate.Models;
 
 [ContentItem("BlogPost")]
-public class BlogPostModel
+public class BlogPostModel : EntityPageModel
 {
     [DateField(Required = true)]
     public virtual DateTime? Date { get; set; }
 
-    [StringField(Required = true, Index = true, ListField = true, MinLength = 8, MaxLength = 512)]
+    [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
     public virtual string Title { get; set; }
 
     [TextField]

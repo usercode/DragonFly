@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Authors>usercode</Authors>
+	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
+	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <Version>0.4.0-alpha</Version>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <PackageIcon>logo.png</PackageIcon>
+	  <PackageTags>cms</PackageTags>
+	  <IncludeSymbols>true</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<None Include="..\logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="TinyMCE.Blazor" Version="1.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
+	  <ProjectReference Include="..\DragonFly.Razor\DragonFly.Razor.csproj" />
+	</ItemGroup>
+	
+</Project>

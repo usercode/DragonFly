@@ -1,7 +1,7 @@
 ﻿using DragonFly.AspNetCore.Content;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.Content;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using DragonFly.Permissions.AspNetCore;
 using DragonFly.Permissions.AspNetCore.Content;
 using DragonFly.Permissions.AspNetCore.Providers;

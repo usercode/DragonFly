@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DragonFly.Core.Builders;
+namespace DragonFly.Builders;
 
 public interface IDragonFlyBuilder
 {

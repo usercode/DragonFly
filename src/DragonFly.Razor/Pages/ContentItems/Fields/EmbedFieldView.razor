@@ -4,7 +4,7 @@
 <BSModal @ref="LiveDemo" IsFullScreen="true">
     <Header>Modal title</Header>
     <Content>
-        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.HideAsync(); Field.ContentEmbedded = x.CreateContentEmbedded(); StateHasChanged(); }"></ContentItemTypeList>
+        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.HideAsync(); Field.ContentEmbedded = x.CreateEmbeddedContent(); StateHasChanged(); }"></ContentItemTypeList>
     </Content>
     <Footer>
         <BSButton Color="BSColor.Secondary" @onclick="@(() => LiveDemo.HideAsync())">Close</BSButton>

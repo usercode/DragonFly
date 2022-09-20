@@ -39,7 +39,7 @@ public static class RestContentItemConverter
             }
         }
 
-        ContentItem contentItem = schema.CreateContentItem();
+        ContentItem contentItem = schema.CreateContent();
 
         contentItem.Id = restContentItem.Id;
         contentItem.CreatedAt = restContentItem.CreatedAt;
@@ -60,7 +60,7 @@ public static class RestContentItemConverter
     {
         ContentSchema schema = restContentItem.Schema.ToModel();
 
-        ContentEmbedded contentItem = schema.CreateContentEmbedded();
+        ContentEmbedded contentItem = schema.CreateEmbeddedContent();
 
         foreach (var restField in restContentItem.Fields)
         {

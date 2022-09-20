@@ -1,4 +1,4 @@
-﻿using DragonFly.Core.Builders;
+﻿using DragonFly.Builders;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;
 using DragonFly.Permissions;

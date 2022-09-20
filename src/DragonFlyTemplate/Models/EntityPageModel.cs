@@ -2,8 +2,8 @@
 
 namespace DragonFlyTemplate.Models;
 
-public class EntityPageModel<T> : BasePageModel
+public class EntityPageModel : BasePageModel
 {
-    public T Entity { get; }
+    public virtual Guid Id { get; }
 
 }

@@ -1,7 +1,7 @@
-using DragonFly.ApiKeys.Razor;
+﻿using DragonFly.ApiKeys.Razor;
 using DragonFly.AspNetCore.Identity.Razor;
 using DragonFly.Client.Core;
-using DragonFly.Fields.BlockField.Razor;
+using DragonFly.BlockField.Razor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 

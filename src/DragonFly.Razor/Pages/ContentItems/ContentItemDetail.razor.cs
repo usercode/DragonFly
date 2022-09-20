@@ -70,7 +70,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         {
             Schema = await ContentService.GetSchemaAsync(EntityType);
 
-            Entity = Schema.CreateContentItem();
+            Entity = Schema.CreateContent();
 
             if(CloneFromEntityId != null)
             {

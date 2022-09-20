@@ -1,12 +1,11 @@
 ﻿using DragonFly;
-using DragonFly.AspNetCore.SchemaBuilder.Attributes;
-using DragonFly.Content;
-using DragonFly.Fields.BlockField;
+using DragonFly.Proxy.Attributes;
+using DragonFly.BlockField;
 
 namespace DragonFlyTemplate.Models;
 
 [ContentItem("StandardPage")]
-public class StandardPageModel
+public class StandardPageModel : EntityPageModel
 {
     [StringField(Required = true, ListField = true)]
     public virtual StringField Title { get; set; }

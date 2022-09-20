@@ -30,7 +30,7 @@ public class RandomData
                                                                                 .AddString("Value"));
 
         ContentItem contentProduct = schemaProduct
-                                        .CreateContentItem()
+                                        .CreateContent()
                                         .SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand))
                                         .SetString("Name", "ProductA")
                                         .SetBool("IsAvailable", true)
@@ -45,7 +45,7 @@ public class RandomData
 
 
         var schemas = new Faker<ContentItem>("de")
-                            .CustomInstantiator(x => schemaBrand.CreateContentItem())
+                            .CustomInstantiator(x => schemaBrand.CreateContent())
                             .FinishWith((f, c) => 
                             { 
                                 c.SetString("Name", f.Vehicle.Manufacturer());
@@ -55,7 +55,7 @@ public class RandomData
                             .GenerateLazy(100);
 
         var product = new Faker<ContentItem>("de")
-                           .CustomInstantiator(x => schemaProduct.CreateContentItem())
+                           .CustomInstantiator(x => schemaProduct.CreateContent())
                            .FinishWith((f, c) =>
                            {
                                c.SetString("Name", f.Vehicle.Model());

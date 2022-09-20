@@ -1,6 +1,6 @@
 ﻿using DragonFly.AspNetCore.GraphQL;
 using DragonFly.AspNet.Middleware;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
 using System;

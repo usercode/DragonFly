@@ -18,7 +18,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<SlugField>(name, options);
+        schema.AddField<SlugField>(name, options);
 
         return schema;
     }
@@ -30,7 +30,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<StringField>(name, options);
+        schema.AddField<StringField>(name, options);
 
         return schema;
     }
@@ -42,7 +42,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<HtmlField>(name, options);
+        schema.AddField<HtmlField>(name, options);
 
         return schema;
     }
@@ -54,7 +54,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<XmlField>(name, options);
+        schema.AddField<XmlField>(name, options);
 
         return schema;
     }
@@ -66,7 +66,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<TextField>(name, options);
+        schema.AddField<TextField>(name, options);
 
         return schema;
     }
@@ -78,7 +78,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<DateTimeField>(name, options);
+        schema.AddField<DateTimeField>(name, options);
 
         return schema;
     }
@@ -90,7 +90,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<FloatField>(name, options);
+        schema.AddField<FloatField>(name, options);
 
         return schema;
     }
@@ -102,7 +102,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<IntegerField>(name, options);
+        schema.AddField<IntegerField>(name, options);
 
         return schema;
     }
@@ -114,7 +114,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<BoolField>(name, options);
+        schema.AddField<BoolField>(name, options);
 
         return schema;
     }
@@ -126,7 +126,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<AssetField>(name, options);
+        schema.AddField<AssetField>(name, options);
 
         return schema;
     }
@@ -144,7 +144,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<ReferenceField>(name, options);
+        schema.AddField<ReferenceField>(name, options);
 
         return schema;
     }
@@ -156,7 +156,7 @@ public static class ContentSchemaFieldExtensions
 
         configOptions?.Invoke(options);
 
-        schema.AddOrUpdateField<ArrayField>(name, options);
+        schema.AddField<ArrayField>(name, options);
 
         return schema;
     }

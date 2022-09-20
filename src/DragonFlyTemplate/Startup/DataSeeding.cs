@@ -1,11 +1,7 @@
 ﻿using DragonFly;
 using DragonFly.Storage;
-using DragonFlyTemplate.Models;
-using DragonFly.AspNetCore.SchemaBuilder;
-using DragonFly.AspNetCore.SchemaBuilder.Proxies;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.FileProviders;
-using DragonFly.Core;
+using DragonFly.Proxy;
 
 namespace DragonFlyTemplate.Startup;
 

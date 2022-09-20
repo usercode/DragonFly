@@ -31,7 +31,7 @@ builder.Services.AddDragonFly()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddSchemaBuilder(x => 
+                    .AddProxies(x => 
                     {
                         x.AddType<StandardPageModel>();
                         x.AddType<BlogPostModel>();

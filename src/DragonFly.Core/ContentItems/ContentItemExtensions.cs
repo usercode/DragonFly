@@ -59,7 +59,7 @@ public static class ContentItemExtensions
         ((SingleValueField<T>)contentItem.Fields[name]).Value = value;
     }
 
-    public static ContentItem CreateContentItem(this ContentSchema schema)
+    public static ContentItem CreateContent(this ContentSchema schema)
     {
         ContentItem item = new ContentItem(schema);
 
@@ -68,7 +68,7 @@ public static class ContentItemExtensions
         return item;
     }
 
-    public static ContentEmbedded CreateContentEmbedded(this ContentSchema schema)
+    public static ContentEmbedded CreateEmbeddedContent(this ContentSchema schema)
     {
         ContentEmbedded item = new ContentEmbedded(schema);
 

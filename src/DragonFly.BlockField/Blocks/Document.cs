@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DragonFly.BlockField;
+
+/// <summary>
+/// Document
+/// </summary>
+public class Document : IBlocksContent
+{
+    public Document()
+    {
+        Blocks = new List<Block>();
+    }
+
+    /// <summary>
+    /// Blocks
+    /// </summary>
+    public IList<Block> Blocks { get; set; }
+}

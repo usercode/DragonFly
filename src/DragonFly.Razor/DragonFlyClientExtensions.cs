@@ -1,7 +1,7 @@
 ﻿using Blazored.Modal;
 using Blazored.Toast;
 using BlazorStrap;
-using DragonFly.Core.Builders;
+using DragonFly.Builders;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Razor;
 using DragonFly.Razor.Modules;
