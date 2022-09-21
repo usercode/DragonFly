@@ -24,7 +24,7 @@ jobs:
       run: dotnet pack --configuration Release "./src/DragonFly.sln"
     - name: Publish "DragonFly.AspNetCore" to nuget
       run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.API" to nuget
+    - name: Publish "DragonFly.API" to nuget
       run: dotnet nuget push "./src/DragonFly.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.API.Client" to nuget
       run: dotnet nuget push "./src/DragonFly.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
