@@ -6,12 +6,12 @@
 	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
 	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-	  <Version>0.4.1-alpha</Version>
 	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
 	  <PackageIcon>logo.png</PackageIcon>
 	  <PackageTags>cms</PackageTags>
 	  <IncludeSymbols>true</IncludeSymbols>
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
 	<ItemGroup>
@@ -26,4 +26,10 @@
 	  <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
 	</ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="4.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
 </Project>
