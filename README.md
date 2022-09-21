@@ -4,17 +4,17 @@ Headless CMS based on ASP.NET Core and Blazor
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Docker](https://img.shields.io/docker/pulls/usercode/dragonfly)](https://hub.docker.com/r/usercode/dragonfly)
 
-| Package                       | Release | 
-|-------------------------------|-----------------|
-| DragonFly.Core                   | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Core.svg)](https://www.nuget.org/packages/DragonFly.Core/) |
-| DragonFly.AspNetCore             | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
-| DragonFly.AspNetCore.API         | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API/) |
-| DragonFly.AspNetCore.API.Client  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.API.Client.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore.API.Client/) |
-| DragonFly.Razor                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
-| DragonFly.BlockField                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.BlockField.svg)](https://www.nuget.org/packages/DragonFly.BlockField/) |
-| DragonFly.Proxy                  | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Proxy.svg)](https://www.nuget.org/packages/DragonFly.Proxy/) |
-| DragonFly.ImageWizard            | [![NuGet](https://img.shields.io/nuget/v/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
-| DragonFly.MongoDB        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
+| Package                     | Release | 
+|-----------------------------|-----------------|
+| DragonFly.Core              | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Core.svg)](https://www.nuget.org/packages/DragonFly.Core/) |
+| DragonFly.AspNetCore        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
+| DragonFly.API               | [![NuGet](https://img.shields.io/nuget/v/DragonFly.API.svg)](https://www.nuget.org/packages/DragonFly.API/) |
+| DragonFly.API.Client        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.API.Client.svg)](https://www.nuget.org/packages/DragonFly.API.Client/) |
+| DragonFly.Razor             | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
+| DragonFly.BlockField        | [![NuGet](https://img.shields.io/nuget/v/DragonFly.BlockField.svg)](https://www.nuget.org/packages/DragonFly.BlockField/) |
+| DragonFly.Proxy             | [![NuGet](https://img.shields.io/nuget/v/DragonFly.Proxy.svg)](https://www.nuget.org/packages/DragonFly.Proxy/) |
+| DragonFly.ImageWizard       | [![NuGet](https://img.shields.io/nuget/v/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
+| DragonFly.MongoDB           | [![NuGet](https://img.shields.io/nuget/v/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
 
 
 ## DragonFly.Core
