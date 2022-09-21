@@ -25,21 +25,21 @@ jobs:
     - name: Publish "DragonFly.AspNetCore" to nuget
       run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.AspNetCore.API" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.API.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.API.Exports" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.API.Exports/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
+      run: dotnet nuget push "./src/DragonFly.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.API.Client" to nuget
+      run: dotnet nuget push "./src/DragonFly.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.API.Exports" to nuget
+      run: dotnet nuget push "./src/DragonFly.API.Exports/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
     - name: Publish "DragonFly.Core" to nuget
       run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.ImageWizard" to nuget
       run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Fields.BlockField" to nuget
-      run: dotnet nuget push "./src/DragonFly.Fields.BlockField/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Fields.BlockField.AspNetCore" to nuget
+      run: dotnet nuget push "./src/DragonFly.BlockField/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.BlockField.AspNetCore" to nuget
       run: dotnet nuget push "./src/DragonFly.Fields.BlockField.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Fields.BlockField.Razor" to nuget
-      run: dotnet nuget push "./src/DragonFly.Fields.BlockField.Razor/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
+    - name: Publish "DragonFly.BlockField.Razor" to nuget
+      run: dotnet nuget push "./src/DragonFly.BlockField.Razor/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
     - name: Publish "DragonFly.Razor" to nuget
       run: dotnet nuget push "./src/DragonFly.Razor/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
     - name: Publish "DragonFly.ApiKeys" to nuget
@@ -62,6 +62,6 @@ jobs:
       run: dotnet nuget push "./src/DragonFly.Permissions.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Permissions.Razor" to nuget
       run: dotnet nuget push "./src/DragonFly.Permissions.Razor/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}         
-    - name: Publish "DragonFly.Storage.MongoDB" to nuget
-      run: dotnet nuget push "./src/DragonFly.Storage.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.MongoDB" to nuget
+      run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
    
