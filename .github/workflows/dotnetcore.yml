@@ -34,7 +34,7 @@ jobs:
       run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.ImageWizard" to nuget
       run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Fields.BlockField" to nuget
+    - name: Publish "DragonFly.BlockField" to nuget
       run: dotnet nuget push "./src/DragonFly.BlockField/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.BlockField.AspNetCore" to nuget
       run: dotnet nuget push "./src/DragonFly.Fields.BlockField.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
