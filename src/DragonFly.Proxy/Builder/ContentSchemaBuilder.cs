@@ -20,14 +20,6 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
     /// </summary>
     private ISchemaStorage Storage { get; }
 
-    public T CreateProxy<T>()
-        where T : class
-    {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchemaByType(typeof(T));
-
-        return ProxyBuilder.CreateProxy<T>(schema.CreateContent());
-    }
-
     public async Task AddAsync(Type type)
     {
         ContentItemAttribute? schemaAttribute = type.GetCustomAttribute<ContentItemAttribute>();

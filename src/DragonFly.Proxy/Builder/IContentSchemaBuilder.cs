@@ -13,8 +13,6 @@ namespace DragonFly.Proxy;
 /// </summary>
 public interface IContentSchemaBuilder
 {
-    T CreateProxy<T>() where T : class;
-
     Task AddAsync(Type type);
     
 }
