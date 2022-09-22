@@ -34,6 +34,8 @@ jobs:
       run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Proxy" to nuget
       run: dotnet nuget push "./src/DragonFly.Proxy/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
+    - name: Publish "DragonFly.Proxy.Attributes" to nuget
+      run: dotnet nuget push "./src/DragonFly.Proxy.Attributes/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
     - name: Publish "DragonFly.ImageWizard" to nuget
       run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.BlockField" to nuget
