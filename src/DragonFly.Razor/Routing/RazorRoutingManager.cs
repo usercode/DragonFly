@@ -27,7 +27,7 @@ public class RazorRoutingManager
         }
     }
 
-    public RazorRoutingManager()
+    private RazorRoutingManager()
     {
         Items = new List<Assembly>();
     }

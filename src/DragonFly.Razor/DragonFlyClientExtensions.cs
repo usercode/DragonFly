@@ -1,5 +1,4 @@
-﻿using Blazored.Modal;
-using Blazored.Toast;
+﻿using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.Builders;
 using DragonFly.Core.ContentStructures;
@@ -30,7 +29,6 @@ public static class DragonFlyClientExtensions
 
         builder.AddRazorRouting();
 
-        builder.Services.AddBlazoredModal();
         builder.Services.AddBlazoredToast();
 
         builder.Services.AddBlazorStrap();
