@@ -52,7 +52,7 @@ public class BlockFieldSerializer
 
     public static async Task<Document> DeserializeAsync(string? input)
     {
-        if (input == null)
+        if (string.IsNullOrEmpty(input))
         {
             return new Document();
         }

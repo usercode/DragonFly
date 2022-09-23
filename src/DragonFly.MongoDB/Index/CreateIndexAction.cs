@@ -48,7 +48,7 @@ class CreateIndexAction : IPostInitialize
         {
             IMongoCollection<MongoContentItem> collection = MongoStorage.GetMongoCollection(schema);
 
-            await collection.Indexes.DropAllAsync();
+            //await collection.Indexes.DropAllAsync();
 
             ////remove unused indices
             //var existingIndices = await collection.Indexes.ListAsync();
