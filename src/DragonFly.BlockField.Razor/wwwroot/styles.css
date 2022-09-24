@@ -55,3 +55,15 @@
     display: inline-block;
     padding: 0.275rem 0.75rem;
 }
+
+.tox-tinymce {
+    border-radius: 0px !important;
+}
+
+.tox-statusbar__branding {
+    display: none;
+}
+
+.tox-notifications-container {
+    display: none;
+}

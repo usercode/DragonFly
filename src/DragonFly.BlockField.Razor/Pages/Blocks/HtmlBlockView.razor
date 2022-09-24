@@ -2,19 +2,7 @@
 
 <div class="html-block">
 	<TinyMCE.Blazor.Editor 
-			Field="() => Block.HtmlText"
-			@bind-Value="Block.HtmlText" 
-			Conf="editorConf"
-			/>
+			                Field="() => Block.HtmlText"
+			                @bind-Value="Block.HtmlText"
+                            Conf="TinyMceConfiguration.Editor" />
 </div>
-
-@code {
-
-	private Dictionary<string, object> editorConf = new Dictionary<string, object>{
-   { "menubar", true },
-   { "plugins", "link image code table checklist autoresize" },
-   { "toolbar", "undo redo | styleselect | forecolor | checklist | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link image | code" },
-   { "height", "500" },
-   { "invalid_styles", "width height"}
- };
-}
