@@ -56,6 +56,11 @@
     padding: 0.275rem 0.75rem;
 }
 
+.container-block {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
 .tox-tinymce {
     border-radius: 0px !important;
 }

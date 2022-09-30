@@ -5,10 +5,11 @@ namespace DragonFly.BlockField;
 /// <summary>
 /// ColumnBlock
 /// </summary>
-public class ColumnBlock : Block
+public class ColumnBlock : Block, IChildBlocks
 {
     public ColumnBlock()
     {
+        HorizontalAlignment = HorizontalAlignment.Start;
         Columns = new List<Column>();
     }
 
@@ -18,4 +19,14 @@ public class ColumnBlock : Block
     /// Columns
     /// </summary>
     public IList<Column> Columns { get; set; }
+
+    /// <summary>
+    /// HorizontalAlignment
+    /// </summary>
+    public HorizontalAlignment HorizontalAlignment { get; set; }
+
+    public IEnumerable<Block> GetBlocks()
+    {
+        return Columns.SelectMany(x => x.Blocks);
+    }
 }

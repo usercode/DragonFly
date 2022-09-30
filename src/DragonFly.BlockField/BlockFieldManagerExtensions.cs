@@ -19,6 +19,7 @@ public static class BlockFieldManagerExtensions
         manager.Add<HeadingBlock>();
         manager.Add<QuoteBlock>();
         manager.Add<ReferenceBlock>();
+        manager.Add<ContainerBlock>();
 
         manager.Add<UnknownBlock>();
     }

@@ -2,6 +2,7 @@
   <PropertyGroup>
 	  <TargetFramework>net6.0</TargetFramework>
 	  <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
 	  <Authors>usercode</Authors>
 	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>

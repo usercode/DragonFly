@@ -7,18 +7,17 @@ using System.Threading.Tasks;
 namespace DragonFly.BlockField;
 
 /// <summary>
-/// Document
+/// ContainerBlock
 /// </summary>
-public class Document : IChildBlocks
+public class ContainerBlock : Block, IChildBlocks
 {
-    public Document()
+    public ContainerBlock()
     {
         Blocks = new List<Block>();
     }
 
-    /// <summary>
-    /// Blocks
-    /// </summary>
+    public override string CssIcon => "fa-regular fa-square";
+
     public IList<Block> Blocks { get; set; }
 
     public IEnumerable<Block> GetBlocks()

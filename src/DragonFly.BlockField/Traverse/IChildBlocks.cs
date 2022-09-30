@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.BlockField;
 
-public interface IBlocksContent
+public interface IChildBlocks
 {
-    IList<Block> Blocks { get; }
+    IEnumerable<Block> GetBlocks();
 }
