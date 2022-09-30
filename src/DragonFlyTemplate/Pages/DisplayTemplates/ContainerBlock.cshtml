@@ -1,0 +1,8 @@
+@model ContainerBlock
+
+@if(Model.Blocks.Any())
+{
+    <div class="block container-block">
+         @Html.DisplayFor(m => Model.Blocks)
+    </div>
+}
