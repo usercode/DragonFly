@@ -165,6 +165,8 @@ services:
       - MongoDB__Hostname=catalog_db      
       - MongoDB__Username=root
       - MongoDB__Password=YOUR_PASSWORD
+      - MongoDB__InitialUsername=admin
+      - MongoDB__InitialPassword=#Password123
       - AssetCache__Folder=/cache
       - ImageWizard__Key=YOUR_IMAGEWIZARD_KEY
     depends_on:
