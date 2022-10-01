@@ -10,8 +10,8 @@ public class TinyMceConfiguration
 {
     public static Dictionary<string, object> Editor = new Dictionary<string, object>
     {
-        { "menubar", true },
+        { "menubar", false },
         { "plugins", "link image code table lists autoresize" },
-        { "toolbar", "undo redo | forecolor | numlist bullist | bold italic | alignleft aligncenter alignright alignjustify | link image" }
+        { "toolbar", "bold italic forecolor alignleft aligncenter alignright bullist removeformat code" }
     };
 }

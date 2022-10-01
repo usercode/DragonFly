@@ -1,9 +1,9 @@
 @model ColumnBlock
 
-@if(Model.Columns.Count > 0)
+@if(Model.Columns.Any())
 {
     <div class="block column-block">
-        <div class="row">
+        <div class="row @Model.HorizontalAlignment.ToBootstrapCssClass()">
             @for (var n = 0; n < Model.Columns.Count; n++)
             {
                 <div class="@Model.Columns[n].Width.ToBootstrapCssClass()">

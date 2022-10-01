@@ -23,4 +23,18 @@ public static class ColumnWidthExtensions
 
         return $"col-lg-{(int)width}";
     }
+
+    public static string ToBootstrapCssClass(this HorizontalAlignment alignment)
+    {
+        return alignment switch
+        {
+            HorizontalAlignment.Start => "justify-content-start",
+            HorizontalAlignment.Center => "justify-content-center",
+            HorizontalAlignment.End => "justify-content-end",
+            HorizontalAlignment.Around => "justify-content-around",
+            HorizontalAlignment.Between => "justify-content-between",
+            HorizontalAlignment.Evenly => "justify-content-evenly",
+            _ => string.Empty
+        };
+    }
 }
