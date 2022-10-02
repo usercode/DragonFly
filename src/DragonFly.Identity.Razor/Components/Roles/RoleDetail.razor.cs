@@ -1,4 +1,8 @@
-﻿using DragonFly.Client.Base;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Permissions;
 using DragonFly.Permissions.Razor;

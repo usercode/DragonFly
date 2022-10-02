@@ -1,4 +1,8 @@
-﻿using DragonFly.BlockField;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.BlockField;
 using DragonFly.BlockField.Razor;
 
 namespace DragonFly;

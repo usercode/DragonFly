@@ -1,4 +1,8 @@
-﻿using DragonFly.Core.Permissions;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Core.Permissions;
 using DragonFly.Identity;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;

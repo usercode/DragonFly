@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Routing;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace DragonFlyTemplate.Extensions;
 

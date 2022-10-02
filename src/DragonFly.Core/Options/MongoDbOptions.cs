@@ -1,4 +1,8 @@
-﻿using DragonFly.Security;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Security;
 
 namespace DragonFly.MongoDB;
 

@@ -1,4 +1,8 @@
-﻿using DragonFly;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly;
 using DragonFly.Storage;
 using Microsoft.Extensions.FileProviders;
 using DragonFly.Proxy;

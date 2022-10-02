@@ -1,4 +1,8 @@
-﻿using DragonFly.Razor;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Razor;
 using DragonFly.Razor.MainMenu;
 using System;
 using System.Collections.Generic;

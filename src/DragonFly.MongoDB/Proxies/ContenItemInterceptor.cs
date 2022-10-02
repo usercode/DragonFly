@@ -1,4 +1,8 @@
-﻿using Castle.DynamicProxy;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Castle.DynamicProxy;
 using DragonFly.Core;
 using DragonFly.Models;
 using System;

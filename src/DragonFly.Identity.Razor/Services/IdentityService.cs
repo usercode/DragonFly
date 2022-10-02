@@ -1,4 +1,8 @@
-﻿using DragonFly.Identity.Commands;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Identity.Commands;
 using DragonFly.Identity.Rest.Commands;
 using DragonFly.Identity.Services;
 using System;

@@ -1,4 +1,8 @@
-﻿using DragonFly.MongoDB.Proxies;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.MongoDB.Proxies;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,8 @@
-﻿using DragonFly.ApiKeys.Razor;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.ApiKeys.Razor;
 using DragonFly.AspNetCore.Identity.Razor;
 using DragonFly.Client.Core;
 using DragonFly.BlockField.Razor;

@@ -1,4 +1,8 @@
-﻿using DragonFly.Assets;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Assets;
 using DragonFly.Core;
 using System.Globalization;
 using UglyToad.PdfPig;

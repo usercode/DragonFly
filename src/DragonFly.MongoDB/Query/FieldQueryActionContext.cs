@@ -1,4 +1,8 @@
-﻿using DragonFly.Models;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Models;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

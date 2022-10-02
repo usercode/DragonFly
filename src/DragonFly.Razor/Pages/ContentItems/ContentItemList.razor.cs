@@ -1,4 +1,8 @@
-﻿using BlazorStrap;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using BlazorStrap;
 using DragonFly.Client.Base;
 using DragonFly.Query;
 using DragonFly.Razor.Shared.UI.Toolbars;

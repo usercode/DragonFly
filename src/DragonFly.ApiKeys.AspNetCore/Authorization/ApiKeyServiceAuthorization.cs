@@ -1,4 +1,8 @@
-﻿using DragonFly.Permissions;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Permissions;
 using DragonFly.Permissions.AspNetCore;
 using DragonFLy.ApiKeys;
 using DragonFLy.ApiKeys.Permissions;

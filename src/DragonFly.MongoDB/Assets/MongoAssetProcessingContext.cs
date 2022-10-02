@@ -1,4 +1,8 @@
-﻿using MongoDB.Driver;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using System.IO;
 using System.Linq;

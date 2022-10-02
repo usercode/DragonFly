@@ -1,4 +1,8 @@
-﻿using DragonFly.Razor.Pages.Settings;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Razor.Pages.Settings;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

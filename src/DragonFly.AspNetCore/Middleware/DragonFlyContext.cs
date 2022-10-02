@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNet.Options;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNet.Options;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;

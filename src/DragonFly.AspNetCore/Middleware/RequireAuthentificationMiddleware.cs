@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Microsoft.AspNetCore.Http;
 
 namespace DragonFly.AspNet.Middleware;
 

@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.GraphQL;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.GraphQL;
 using DragonFly.AspNet.Middleware;
 using DragonFly.Builders;
 using GraphQL.Server.Ui.Playground;

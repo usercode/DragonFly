@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNet.Middleware;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNet.Middleware;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;

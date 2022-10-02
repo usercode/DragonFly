@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.Exports;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNet.Options;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;

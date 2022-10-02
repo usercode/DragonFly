@@ -1,4 +1,8 @@
-﻿namespace DragonFly.BlockField;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+namespace DragonFly.BlockField;
 
 /// <summary>
 /// HeadlineType

@@ -1,4 +1,8 @@
-﻿using DragonFly.Builders;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;

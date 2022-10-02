@@ -1,4 +1,8 @@
-﻿using DragonFly.Proxy;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Proxy;
 
 namespace DragonFly;
 

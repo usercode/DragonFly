@@ -1,4 +1,8 @@
-﻿using DragonFly.Core.Events;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Core.Events;
 using DragonFly.Core.Events.Queries;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;

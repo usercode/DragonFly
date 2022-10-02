@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using System.Collections.Generic;
 
 namespace DragonFly.Razor.Helpers;
 

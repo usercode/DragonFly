@@ -1,4 +1,8 @@
-﻿using System;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using System;
 using DragonFly.Content;
 using ImageWizard.Client;
 

@@ -1,4 +1,8 @@
-﻿using DragonFly.BlockField.Json;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.BlockField.Json;
 using System;
 using System.IO;
 using System.IO.Compression;

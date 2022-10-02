@@ -1,4 +1,8 @@
-﻿using DragonFly.Razor.Pages.ContentItems.Fields;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
 

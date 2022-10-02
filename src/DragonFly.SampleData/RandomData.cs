@@ -1,4 +1,8 @@
-﻿using Bogus;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Bogus;
 using DragonFly.Core;
 using DragonFly.Storage;
 using System;

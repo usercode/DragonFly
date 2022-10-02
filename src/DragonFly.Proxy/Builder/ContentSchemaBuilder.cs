@@ -1,4 +1,8 @@
-﻿using DragonFly.Proxy.Attributes;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Proxy.Attributes;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;

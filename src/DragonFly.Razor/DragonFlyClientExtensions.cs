@@ -1,4 +1,8 @@
-﻿using Blazored.Toast;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.Builders;
 using DragonFly.Core.ContentStructures;

@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.Exports;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Data.Models;

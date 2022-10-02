@@ -1,4 +1,8 @@
-﻿using DragonFly.Identity.Razor.Components;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Identity.Razor.Components;
 using DragonFly.Identity.Razor.Components.Roles;
 using DragonFly.Identity.Razor.Components.Users;
 using DragonFly.Razor.Modules;

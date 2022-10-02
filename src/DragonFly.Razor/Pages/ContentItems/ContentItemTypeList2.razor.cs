@@ -1,4 +1,8 @@
-﻿using DragonFly.Client.Base;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Client.Base;
 using DragonFly.Razor.Pages.ContentItems;
 using DragonFly.Models;
 using Microsoft.AspNetCore.Components;

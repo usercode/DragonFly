@@ -1,4 +1,8 @@
-﻿using MongoDB.Bson;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using System;
 using System.Linq;

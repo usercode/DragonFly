@@ -1,4 +1,8 @@
-﻿using DragonFly.Razor.MainMenu;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Razor.MainMenu;
 using DragonFly.Razor.Pages.Settings;
 using DragonFly.Razor.Settings;
 using Microsoft.AspNetCore.Components;

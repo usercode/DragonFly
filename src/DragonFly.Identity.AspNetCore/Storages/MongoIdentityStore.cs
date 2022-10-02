@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.Identity.MongoDB.Models;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;

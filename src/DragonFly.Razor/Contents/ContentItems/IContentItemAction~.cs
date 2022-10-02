@@ -1,4 +1,7 @@
-﻿
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
 using DragonFly.Client.Pages.ContentItems;
 using DragonFly.Models;
 using System;

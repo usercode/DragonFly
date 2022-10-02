@@ -1,4 +1,8 @@
-﻿using ImageWizard;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using ImageWizard;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;

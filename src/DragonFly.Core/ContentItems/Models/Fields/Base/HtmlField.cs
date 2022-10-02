@@ -1,4 +1,8 @@
-﻿using DragonFly.Core.ContentItems.Models.Validations;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Core.ContentItems.Models.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

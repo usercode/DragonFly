@@ -1,4 +1,8 @@
-﻿using Castle.DynamicProxy;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Castle.DynamicProxy;
 
 namespace DragonFly.Proxy;
 

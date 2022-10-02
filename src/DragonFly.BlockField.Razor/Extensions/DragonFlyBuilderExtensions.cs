@@ -1,4 +1,8 @@
-﻿using DragonFly.BlockField.Razor.Pages;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.BlockField.Razor.Pages;
 using DragonFly.BlockField.Razor.Pages.Blocks;
 using DragonFly.Builders;
 using Microsoft.Extensions.DependencyInjection;

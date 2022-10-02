@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.API.Middlewares.Logins;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNetCore.Identity.Middlewares;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Services;

@@ -70,6 +70,7 @@ dotnet_naming_symbols.constant_fields.required_modifiers          = const
 # C# Coding Conventions       #
 ###############################
 [*.cs]
+file_header_template = Copyright (c) usercode\nhttps://github.com/usercode/DragonFly\nMIT License
 # var preferences
 csharp_style_var_for_built_in_types = true:silent
 csharp_style_var_when_type_is_apparent = true:silent

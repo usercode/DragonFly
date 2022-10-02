@@ -1,4 +1,8 @@
-﻿using DragonFly.Core.ContentStructures.Queries;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Core.ContentStructures.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;

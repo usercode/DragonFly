@@ -1,4 +1,8 @@
-﻿using DragonFly.Storage;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;

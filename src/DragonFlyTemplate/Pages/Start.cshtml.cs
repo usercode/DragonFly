@@ -1,4 +1,8 @@
-﻿using DragonFly.Storage;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Storage;
 using DragonFlyTemplate.Models;
 
 namespace DragonFlyTemplate.Pages;

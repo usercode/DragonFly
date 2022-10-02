@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNetCore.API.Middlewares;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNetCore.API.Middlewares;
 using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
 using DragonFly.AspNetCore.API.Middlewares.Assets;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;

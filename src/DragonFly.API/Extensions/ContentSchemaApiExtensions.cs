@@ -1,4 +1,8 @@
-﻿using DragonFly.AspNet.Middleware;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Middlewares;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;

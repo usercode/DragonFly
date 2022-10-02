@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

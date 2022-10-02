@@ -1,4 +1,8 @@
-﻿using DragonFly.Assets.Query;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Assets.Query;
 using DragonFly.Storage;
 using System;
 using System.IO;

@@ -1,4 +1,8 @@
-﻿using DragonFly.Core;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly;

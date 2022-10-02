@@ -1,4 +1,8 @@
-﻿using DragonFly.Content;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Content;
 using DragonFly.Data;
 using DragonFly.Data.Models;
 using MongoDB.Bson;

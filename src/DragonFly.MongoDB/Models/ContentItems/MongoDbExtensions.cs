@@ -1,4 +1,8 @@
-﻿using DragonFly.Storage.Abstractions;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.Storage.Abstractions;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using System;

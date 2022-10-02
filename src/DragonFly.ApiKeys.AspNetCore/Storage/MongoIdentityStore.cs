@@ -1,4 +1,8 @@
-﻿using DragonFly.MongoDB;
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using DragonFly.MongoDB;
 using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
