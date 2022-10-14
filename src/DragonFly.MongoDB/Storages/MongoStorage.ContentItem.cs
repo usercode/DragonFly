@@ -144,6 +144,21 @@ public partial class MongoStorage : IContentStorage
 
         filters.AddRange(converterContext.Filters);
 
+        //used assets
+        if (query.UsedAsset != null)
+        {
+            string assetFieldName = ContentFieldManager.Default.GetContentFieldName<AssetField>();
+
+            List<FilterDefinition<MongoContentItem>> assetQueries = new List<FilterDefinition<MongoContentItem>>();
+
+            foreach (var assetField in schema.Fields.Where(x=> x.Value.FieldType == assetFieldName))
+            {
+                assetQueries.Add(Builders<MongoContentItem>.Filter.Eq($"{nameof(MongoContentItem.Fields)}.{assetField.Key}", query.UsedAsset.Value));
+            }
+
+            filters.Add(Builders<MongoContentItem>.Filter.Or(assetQueries));
+        }
+
         //bundle filter definitions
         FilterDefinition<MongoContentItem> q;
 

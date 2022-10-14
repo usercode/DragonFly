@@ -5,17 +5,13 @@
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
+using DragonFly.AspNetCore.Identity.MongoDB.Storages.Models;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Identity.AspNetCore.Services;
 
@@ -76,5 +72,27 @@ class LoginService : ILoginService
     public async Task Logout()
     {
         await HttpContextAccessor.HttpContext!.SignOutAsync();
+    }
+
+    public async Task<IdentityUser?> GetCurrentUserAsync()
+    {
+        if (HttpContextAccessor.HttpContext!.User.Identity is ClaimsIdentity claimsIdentity)
+        {
+            Claim? claimUserId = claimsIdentity.Claims.FirstOrDefault(x => x.Type == "UserId");
+
+            if (claimUserId != null)
+            {
+                Guid userIdGuid = Guid.Parse(claimUserId.Value);
+
+                MongoIdentityUser? currentUser = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == userIdGuid);
+
+                if (currentUser != null)
+                {
+                    return currentUser.ToModel(Store);
+                }
+            }
+        }
+
+        return null;
     }
 }

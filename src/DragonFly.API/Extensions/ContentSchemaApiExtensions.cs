@@ -3,23 +3,12 @@
 // MIT License
 
 using DragonFly.AspNet.Middleware;
-using DragonFly.AspNetCore.API.Exports;
-using DragonFly.AspNetCore.API.Middlewares;
-using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.AspNetCore.API.Models;
 using DragonFly.AspNetCore.Exports;
-using DragonFly.Content;
-using DragonFly.Builders;
 using DragonFly.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 
@@ -32,6 +21,7 @@ static class ContentSchemaApiExtensions
         endpoints.MapGet("api/schema/{name}", MapGetByName);            
         endpoints.MapPost("api/schema", MapCreate);
         endpoints.MapPut("api/schema", MapUpdate);
+        endpoints.MapDelete("api/schema/{id:guid}", MapDelete);
     }
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
@@ -82,5 +72,12 @@ static class ContentSchemaApiExtensions
         ContentSchema m = input.ToModel();
 
         await storage.UpdateAsync(m);
+    }
+
+    private static async Task MapDelete(HttpContext context, ISchemaStorage storage, Guid id)
+    {
+        ContentSchema schema = await storage.GetSchemaAsync(id);
+
+        await storage.DeleteAsync(schema);
     }
 }

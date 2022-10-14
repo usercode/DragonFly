@@ -63,6 +63,11 @@ public class ContentItemQuery
     public bool IncludeListFieldsOnly { get; set; }
 
     /// <summary>
+    /// UsedAsset
+    /// </summary>
+    public Guid? UsedAsset { get; set; }
+
+    /// <summary>
     /// Published
     /// </summary>
     public bool Published { get; set; }

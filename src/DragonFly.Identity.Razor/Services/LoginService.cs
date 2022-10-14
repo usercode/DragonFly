@@ -3,15 +3,10 @@
 // MIT License
 
 using DragonFly.AspNetCore.Exports;
-using DragonFly.Client;
+using DragonFly.Identity;
 using DragonFly.Security;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.Razor;
 
@@ -34,5 +29,17 @@ class LoginService : ILoginService
     public async Task Logout()
     {
         await Client.PostAsync("Logout", new StringContent(string.Empty));
+    }
+
+    public async Task<IdentityUser?> GetCurrentUserAsync()
+    {
+        HttpResponseMessage response = await Client.GetAsync("identity/CurrentUser");
+
+        if (response.IsSuccessStatusCode == false)
+        {
+            return null;
+        }
+
+        return await response.Content.ReadFromJsonAsync<IdentityUser>();
     }
 }

@@ -2,24 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Exports;
-using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models;
-using DragonFly.Content;
-using DragonFly.Contents.Content;
-using DragonFly.Core;
-using DragonFly.Data;
 using DragonFly.Data.Models;
-using DragonFly.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
 
 namespace DragonFly.Client;
 
@@ -61,6 +48,11 @@ public partial class ClientContentService : ISchemaStorage
         string type = entity.GetType().Name;
 
         await Client.PutAsJsonAsync($"api/schema", entity.ToRest());
+    }
+
+    public async Task DeleteAsync(ContentSchema entity)
+    {
+        await Client.DeleteAsync($"api/schema/{entity.Id}");
     }
 
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()

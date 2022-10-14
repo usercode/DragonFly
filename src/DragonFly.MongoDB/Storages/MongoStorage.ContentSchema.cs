@@ -43,6 +43,11 @@ public partial class MongoStorage : ISchemaStorage
         await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
     }
 
+    public async Task DeleteAsync(ContentSchema entity)
+    {
+        await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id));
+    }
+
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
     {
         return new QueryResult<ContentSchema>()

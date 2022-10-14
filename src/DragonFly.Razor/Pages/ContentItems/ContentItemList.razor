@@ -1,4 +1,4 @@
-@page "/content/{EntityType}"
+@page "/content/{SchemaName}"
 @inherits ContentItemListBase
 
 <div class="content-header">
@@ -79,7 +79,7 @@
                                                 }
                                                 else if (column is AssetField assetField)
                                                 {
-                                                    @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                                    @if (assetField.Asset != null && (assetField.Asset.IsImage() || assetField.Asset.IsSVG()))
                                                     {
                                                         <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
                                                     }
@@ -97,7 +97,7 @@
     </BSRow>
     </EditForm>
 </div>
-<div class="flex:0">
+<div>
     @if (SearchResult != null)
     {
         <BSPagination>

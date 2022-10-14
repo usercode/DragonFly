@@ -23,6 +23,8 @@ public interface ISchemaStorage
 
     Task UpdateAsync(ContentSchema entity);
 
+    Task DeleteAsync(ContentSchema entity);
+
     //IList<ContentSchema> QueryContentSchemas()
     //{
     //    return QueryContentSchemas(new QueryParameters());

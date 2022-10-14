@@ -6,24 +6,27 @@
 @inject IOptions<GeneralOptions> Options
 @inject IDragonFlyApi Api
 
-<div style="display:flex; flex: 1; justify-content:center">
+@if (ShowLoginPage)
+{
+    <div style="display:flex; flex: 1; justify-content:center">
         <div class="form-signin" style="width: 100%; max-width: 350px; padding: 15px; margin: auto;">
             <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
-        
+
             <div class="form-floating mb-3">
-              <input @bind-value="Username" type="email" class="form-control" id="floatingInput" placeholder="Username">
-              <label for="floatingInput">Username</label>
+                <input @bind-value="Username" type="email" class="form-control" id="floatingInput" placeholder="Username">
+                <label for="floatingInput">Username</label>
             </div>
             <div class="form-floating">
-              <input @bind-value="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-              <label for="floatingPassword">Password</label>
+                <input @bind-value="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
             </div>
-        
+
             <button class="btn btn-lg btn-primary btn-block mt-3" @onclick="x => LoginAsync()">Login</button>
             <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>           
 
         </div>
-</div>
+    </div>
+}
 
 <p style="text-align:center">Version: @Api.GetVersion()</p>
 
@@ -34,6 +37,8 @@
 
     [Parameter]
     public string Password { get; set; }
+
+    public bool ShowLoginPage { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -46,10 +51,21 @@
         //    return;
         //}
 
-        #if DEBUG
-        Username = DefaultSecurity.DefaultUsername;
-        Password = DefaultSecurity.DefaultPassword;
-        #endif
+#if DEBUG
+    Username = DefaultSecurity.DefaultUsername;
+    Password = DefaultSecurity.DefaultPassword;
+#endif
+
+        IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
+
+        if (currentUser != null)
+        {
+            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
+
+            NavigationManager.NavigateTo(".");
+        }
+
+        ShowLoginPage = true;
     }
 
     public async Task LoginAsync()
@@ -58,9 +74,9 @@
 
         if (result)
         {
-            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated("Test");
+            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
 
-            NavigationManager.NavigateTo("./");
+            NavigationManager.NavigateTo(".");
         }
         else
         {

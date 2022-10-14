@@ -66,4 +66,11 @@ public class SchemaStorageAuthorization : ISchemaStorage
 
         await Storage.UpdateAsync(entity);
     }
+
+    public async Task DeleteAsync(ContentSchema entity)
+    {
+        await Api.AuthorizeAsync(SchemaPermissions.SchemaDelete);
+
+        await Storage.DeleteAsync(entity);
+    }
 }

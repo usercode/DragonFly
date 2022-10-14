@@ -7,7 +7,6 @@ using DragonFly.Client.Base;
 using DragonFly.Query;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +20,12 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         OrderFields = new List<FieldOrder>();
         QueryFields = new List<FieldQuery>();
     }
+
+    [Parameter]
+    public string SchemaName { get; set; }
+
+    [Parameter]
+    public Asset UsedAsset { get; set; }
 
     [Inject]
     public ContentFieldManager ContentFieldManager { get; set; }
@@ -44,16 +49,16 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{EntityType}/create")));
+        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
         toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, async () => await PublishQueryAsync()));
-        toolbarItems.AddRefreshButton(this);            
+        toolbarItems.AddRefreshButton(this);
     }
 
     protected override async Task RefreshActionAsync()
     {
-        if (EntityType != null)
+        if (SchemaName != null)
         {
-            Schema = await ContentService.GetSchemaAsync(EntityType);
+            Schema = await ContentService.GetSchemaAsync(SchemaName);
 
             if (OrderFields.Any() == false)
             {
@@ -105,7 +110,8 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         }
 
         query.Schema = Schema.Name;
-
+        query.UsedAsset = UsedAsset?.Id;
+        
         return query;
     }
 
@@ -123,7 +129,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
 
     public async Task RefreshAsync(string schema)
     {
-        EntityType = schema;
+        SchemaName = schema;
 
         await RefreshAsync();
     }

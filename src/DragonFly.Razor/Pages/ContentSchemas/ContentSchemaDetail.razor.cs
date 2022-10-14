@@ -62,4 +62,11 @@ public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
     {
         await ContentService.UpdateAsync(Entity);
     }
+
+    protected override async Task DeleteActionAsync()
+    {
+        await ContentService.DeleteAsync(Entity);
+
+        NavigationManager.NavigateTo($"schema");
+    }
 }

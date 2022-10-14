@@ -1,6 +1,12 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+RUN sed -i'.bak' 's/$/ contrib/' /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y ttf-mscorefonts-installer fontconfig
+RUN apt-get install -y --no-install-recommends libgdiplus libc6-dev \
+   && apt-get clean \
+   && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443

@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.BlockField;
+
 public static class BlockFieldManagerExtensions
 {
     public static void AddDefaults(this BlockFieldManager manager)

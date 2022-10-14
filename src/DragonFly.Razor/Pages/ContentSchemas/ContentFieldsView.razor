@@ -17,9 +17,6 @@
     [Parameter]
     public ISchemaElement Schema { get; set; }
 
-    [Parameter]
-    public string OptionIdSuffix { get; set; } = "option";
-
     bool IsOpen { get; set; }
 
     public ContentFieldSelector Selector { get; set; }
@@ -43,8 +40,8 @@
     public void Up(string key)
     {
         var list = Schema.Fields
-                                    .OrderBy(x => x.Value.SortKey)
-                                    .ToList();
+                                .OrderBy(x => x.Value.SortKey)
+                                .ToList();
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -65,8 +62,8 @@
     public void Down(string key)
     {
         var list = Schema.Fields
-                                    .OrderBy(x => x.Value.SortKey)
-                                    .ToList();
+                                .OrderBy(x => x.Value.SortKey)
+                                .ToList();
 
         for (int i = 0; i < list.Count; i++)
         {
@@ -81,6 +78,13 @@
                 list[i].Value.SortKey = i;
             }
         }
+
+        StateHasChanged();
+    }
+
+    public void Remove(string key)
+    {
+        Schema.Fields.Remove(key);
 
         StateHasChanged();
     }

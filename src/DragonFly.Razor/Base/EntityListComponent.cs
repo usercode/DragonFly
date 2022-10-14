@@ -24,10 +24,7 @@ public abstract class EntityListComponent<T> : StartComponentBase
     }
 
     [Parameter]
-    public EntityListMode ListMode { get; set; }
-
-    [Parameter]
-    public string EntityType { get; set; }
+    public EntityListMode ListMode { get; set; }   
 
     [Inject]
     public ClientContentService ContentService { get; set; }

@@ -25,9 +25,9 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
         return new AuthenticationState(ClaimsPrincipal);
     }
 
-    public void MarkUserAsAuthenticated(string email)
+    public void MarkUserAsAuthenticated()
     {
-        ClaimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "password"));
+        ClaimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new Claim[] { }, "password"));
         var authState = Task.FromResult(new AuthenticationState(ClaimsPrincipal));
 
         NotifyAuthenticationStateChanged(authState);
