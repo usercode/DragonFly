@@ -2,18 +2,12 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using BlazorStrap;
 using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using DragonFly.Razor.Base;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Identity.Razor.Components.Users;
 

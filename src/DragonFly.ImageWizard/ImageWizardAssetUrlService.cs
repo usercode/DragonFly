@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Content;
-using ImageWizard;
 using ImageWizard.Client;
 
 namespace DragonFly.ImageWizard;

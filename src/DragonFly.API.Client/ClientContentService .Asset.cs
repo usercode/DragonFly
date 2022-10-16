@@ -3,18 +3,11 @@
 // MIT License
 
 using DragonFly.AspNetCore.Exports;
-using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Data.Models;
-using System;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using DragonFly.Storage;
-using DragonFly.AspNetCore.API.Exports.Json;
 using DragonFly.Assets.Query;
 
 namespace DragonFly.Client;

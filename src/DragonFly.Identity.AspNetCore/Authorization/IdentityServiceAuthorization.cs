@@ -5,12 +5,6 @@
 using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
 using DragonFly.Permissions;
-using DragonFly.Permissions.AspNetCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Identity.AspNetCore.Authorization;
 

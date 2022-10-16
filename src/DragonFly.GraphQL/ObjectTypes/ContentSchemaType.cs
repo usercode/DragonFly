@@ -2,10 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Models;
 using GraphQL.Types;
-using System;
-using DragonFly.Content;
 
 namespace DragonFly.AspNetCore.GraphQL;
 

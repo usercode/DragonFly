@@ -2,17 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Content;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Core.WebHooks;
 

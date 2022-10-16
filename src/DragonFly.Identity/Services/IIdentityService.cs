@@ -2,10 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace DragonFly.Identity.Services;
 
 public interface IIdentityService

@@ -2,15 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Client.Base;
 using DragonFly.Razor.Pages.ContentItems;
-using DragonFly.Models;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Content;
 
 namespace DragonFly.Client.Pages.ContentItems;
 

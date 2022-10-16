@@ -3,10 +3,6 @@
 // MIT License
 
 using DragonFly.MongoDB.Proxies;
-using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DragonFly.MongoDB;
 

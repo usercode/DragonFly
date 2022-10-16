@@ -7,11 +7,7 @@ using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.Permissions;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace DragonFly.Identity.AspNetCore.Permissions;
 

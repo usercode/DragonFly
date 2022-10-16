@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Models;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB.Query;

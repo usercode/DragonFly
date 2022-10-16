@@ -4,8 +4,6 @@
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using System;
-using System.Linq;
 
 namespace DragonFly.MongoDB;
 

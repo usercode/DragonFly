@@ -5,7 +5,6 @@
 using DragonFly.AspNetCore.Exports;
 using DragonFly.Identity;
 using DragonFly.Security;
-using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace DragonFly.AspNetCore.Identity.Razor;

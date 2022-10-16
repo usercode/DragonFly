@@ -4,19 +4,11 @@
 
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.Identity.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
 using DragonFly.AspNetCore.Identity.MongoDB.Storages.Models;
-using DragonFly.Security;
 using DragonFly.Identity;
 
 namespace DragonFly.AspNetCore.Identity.MongoDB.Services;

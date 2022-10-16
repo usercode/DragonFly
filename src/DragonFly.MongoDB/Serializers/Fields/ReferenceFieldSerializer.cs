@@ -3,11 +3,6 @@
 // MIT License
 
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DragonFly.Storage.Abstractions;
 using DragonFly.MongoDB.Proxies;
 

@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-
 namespace DragonFly.Proxy.Attributes;
 
 /// <summary>

@@ -2,11 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using DragonFly.Query;
-using MongoDB.Bson;
 
 namespace DragonFly.MongoDB;
 

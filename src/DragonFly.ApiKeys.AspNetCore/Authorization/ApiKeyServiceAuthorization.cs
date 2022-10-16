@@ -3,13 +3,10 @@
 // MIT License
 
 using DragonFly.Permissions;
-using DragonFly.Permissions.AspNetCore;
 using DragonFLy.ApiKeys;
 using DragonFLy.ApiKeys.Permissions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DragonFly.ApiKeys.AspNetCore.Authorization;

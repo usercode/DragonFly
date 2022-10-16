@@ -3,12 +3,6 @@
 // MIT License
 
 using Castle.DynamicProxy;
-using DragonFly.Core;
-using DragonFly.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.MongoDB.Proxies;
 

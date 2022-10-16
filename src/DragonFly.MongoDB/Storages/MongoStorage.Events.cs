@@ -6,11 +6,6 @@ using DragonFly.Core.Events;
 using DragonFly.Core.Events.Queries;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.MongoDB;
 

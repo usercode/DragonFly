@@ -2,12 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Threading.Tasks;
 using DragonFly.Assets.Query;
 using DragonFly.Storage;
 using Microsoft.Extensions.DependencyInjection;

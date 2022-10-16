@@ -7,8 +7,6 @@ using DragonFly.Identity;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.Identity.MongoDB;
 

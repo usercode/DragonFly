@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Threading.Tasks;
 using DragonFly.Identity;
 
 namespace DragonFly.Security;

@@ -4,16 +4,13 @@
 
 using DragonFly;
 using DragonFly.ApiKeys.AspNetCore.Authorization;
-using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.Builders;
 using DragonFly.Permissions;
-using DragonFly.Permissions.AspNetCore;
 using DragonFLy.ApiKeys.AspNetCore.Middlewares;
 using DragonFLy.ApiKeys.AspNetCore.Services;
 using DragonFLy.ApiKeys.Permissions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 

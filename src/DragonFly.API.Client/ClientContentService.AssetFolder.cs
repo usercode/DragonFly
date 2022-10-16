@@ -2,26 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
-using DragonFly.AspNetCore.API.Models;
-using DragonFly.Content;
-using DragonFly.Contents.Content;
-using DragonFly.Core;
 using DragonFly.Assets.Query;
-using DragonFly.Data;
 using DragonFly.Data.Models;
-using DragonFly.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Http.Json;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using DragonFly.Storage;
 
 namespace DragonFly.Client;

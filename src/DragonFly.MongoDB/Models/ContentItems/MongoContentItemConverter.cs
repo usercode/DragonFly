@@ -2,16 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-
 namespace DragonFly.MongoDB;
 
 static class MongoContentItemConverter

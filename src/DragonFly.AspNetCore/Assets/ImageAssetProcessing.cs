@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.Assets;
-using DragonFly.Core;
 using SixLabors.ImageSharp;
 
 namespace DragonFly.AspNetCore;

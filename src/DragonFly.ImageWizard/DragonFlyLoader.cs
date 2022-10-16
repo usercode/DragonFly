@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Content;
 using DragonFly.Storage;
 using ImageWizard;
 using ImageWizard.Loaders;

@@ -10,13 +10,6 @@ using DragonFly.Razor.Base;
 using DragonFly.Razor.Helpers;
 using DragonFly.Razor.Shared.UI.Toolbars;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.Identity.Razor.Components.Roles;
 

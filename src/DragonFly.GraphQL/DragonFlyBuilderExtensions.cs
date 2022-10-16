@@ -2,16 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.GraphQL;
 using DragonFly.AspNet.Middleware;
 using DragonFly.Builders;
-using GraphQL.Server.Ui.Playground;
 using Microsoft.AspNetCore.Builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore;
 

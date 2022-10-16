@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
 using System.Reflection;
 using Castle.DynamicProxy;
 

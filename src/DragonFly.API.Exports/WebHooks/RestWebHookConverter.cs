@@ -2,14 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.API.Models;
-using DragonFly.Content;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DragonFly.AspNetCore.API.Models.WebHooks;
 
 public static class RestWebHookConverter

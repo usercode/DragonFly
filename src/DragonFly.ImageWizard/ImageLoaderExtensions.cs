@@ -3,7 +3,6 @@
 // MIT License
 
 using System;
-using DragonFly.Content;
 using ImageWizard.Client;
 
 namespace DragonFly.ImageWizard;

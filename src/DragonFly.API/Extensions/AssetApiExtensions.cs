@@ -3,22 +3,14 @@
 // MIT License
 
 using DragonFly.AspNet.Middleware;
-using DragonFly.AspNetCore.API.Exports;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.AspNetCore.Exports;
-using DragonFly.Content;
 using DragonFly.Assets.Query;
 using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DragonFly.AspNetCore.API.Middlewares.Assets;
 
@@ -71,7 +63,7 @@ static class AssetApiExtensions
     {
         Asset asset = restAsset.ToModel();
 
-        await storage.UpdateAsync(asset);            
+        await storage.UpdateAsync(asset);
     }
 
     private static async Task MapPublish(HttpContext context, IAssetStorage storage, Guid id)
