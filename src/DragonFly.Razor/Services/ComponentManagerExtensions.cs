@@ -2,8 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets;
 using DragonFly.Query;
+using DragonFly.Razor.Pages.Assets;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
@@ -64,26 +64,6 @@ public static class ComponentManagerExtensions
         {
             return builder => { builder.OpenElement(0, "p"); builder.AddContent(0, $"The view for {options.GetType().Name} is not available."); builder.CloseElement(); };
         }            
-    }
-
-    public static void RegisterAssetMetadata<TMetadataComponent>(this ComponentManager componentManager)
-      where TMetadataComponent : IAssetMetadataComponent
-    {
-        Type metadataType = typeof(TMetadataComponent).GetProperty(nameof(IAssetMetadataComponent.Metadata)).PropertyType;
-
-        componentManager.Register(metadataType, typeof(TMetadataComponent));
-    }
-
-    public static RenderFragment CreateComponent(this ComponentManager componentManager, AssetMetadata metadata)
-    {
-        Type componentType = componentManager.GetComponentType(metadata.GetType());
-
-        return builder =>
-        {
-            builder.OpenComponent(0, componentType);
-            builder.AddAttribute(0, nameof(IAssetMetadataComponent.Metadata), metadata);
-            builder.CloseComponent();
-        };
     }
 
     public static void RegisterQuery<TQueryView>(this ComponentManager componentManager)

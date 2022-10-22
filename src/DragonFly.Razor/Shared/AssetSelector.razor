@@ -13,8 +13,7 @@
 
 <div class="asset-selector">
     <BSListGroup>
-        <BSListGroupItem>
-            
+        <BSListGroupItem>            
             <div style="display:flex;justify-content:space-between;align-items:center"> 
                 @if (Asset != null)
                 {
@@ -81,7 +80,7 @@
 
     protected void Navigate()
     {
-        NavigationManager.NavigateTo($"asset/{Asset.Id}");
+        NavigationManager.NavigateToAsset(Asset);
     }
 
     protected void RemoveItem()

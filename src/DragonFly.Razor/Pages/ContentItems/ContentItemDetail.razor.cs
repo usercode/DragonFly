@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DragonFly.Razor.Extensions;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -96,7 +97,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         await ContentService.CreateAsync(Entity);
 
-        NavigationManager.NavigateTo($"content/{EntityType}/{Entity.Id}");
+        NavigationManager.NavigateToContent(Entity);
     }
 
     protected override async Task UpdateActionAsync()

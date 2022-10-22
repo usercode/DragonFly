@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets;
+using DragonFly.Razor.Pages.Assets;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;

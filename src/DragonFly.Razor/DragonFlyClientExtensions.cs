@@ -7,6 +7,7 @@ using BlazorStrap;
 using DragonFly.Builders;
 using DragonFly.Core.ContentStructures;
 using DragonFly.Razor;
+using DragonFly.Razor.Assets;
 using DragonFly.Razor.Modules;
 using DragonFly.Razor.Services;
 using DragonFly.Storage;
@@ -46,6 +47,7 @@ public static class DragonFlyClientExtensions
         builder.Services.AddSingleton(ComponentManager.Default);
         builder.Services.AddSingleton(ContentFieldManager.Default);
         builder.Services.AddSingleton(AssetMetadataManager.Default);
+        builder.Services.AddSingleton(AssetPreviewManager.Default);
 
         builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
         builder.Services.AddTransient<ClientContentService>();

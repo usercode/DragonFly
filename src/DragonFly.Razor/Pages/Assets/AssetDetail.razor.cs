@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using DragonFly.Razor.Extensions;
 
 namespace DragonFly.Razor.Pages.Assets;
 
@@ -78,7 +79,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     {
         await ContentService.CreateAsync(Entity);
 
-        NavigationManager.NavigateTo($"asset/{Entity.Id}");
+        NavigationManager.NavigateToAsset(Entity);
     }
 
     protected override async Task UpdateActionAsync()
@@ -90,7 +91,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     {
         await AssetStore.DeleteAsync(Entity.Id);
 
-        NavigationManager.NavigateTo($"asset");
+        NavigationManager.NavigateToAssets();
     }
 
     protected async Task OnInputFileChange(InputFileChangeEventArgs e)

@@ -4,7 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 
-namespace DragonFly.Assets;
+namespace DragonFly.Razor.Pages.Assets;
 
 public abstract class AssetMetadataComponent<T> : ComponentBase, IAssetMetadataComponent
     where T : AssetMetadata

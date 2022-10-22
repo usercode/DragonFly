@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Assets;
+namespace DragonFly.Razor.Pages.Assets;
 
 public interface IAssetMetadataComponent
 {

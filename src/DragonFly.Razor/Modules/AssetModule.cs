@@ -3,6 +3,8 @@
 // MIT License
 
 using DragonFly.Assets;
+using DragonFly.Razor.Pages.Assets.Metadata;
+using DragonFly.Razor.Pages.Assets.Preview;
 using DragonFly.Razor.Shared;
 
 namespace DragonFly.Razor.Modules;
@@ -24,5 +26,8 @@ public class AssetModule : ClientModule
 
         api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
         api.RegisterMetadata<PdfMetadata, PdfMetadataView>();
+
+        api.AssetPreview().Register<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
+        api.AssetPreview().Register<PdfPreviewView>(MimeTypes.Pdf);
     }
 }
