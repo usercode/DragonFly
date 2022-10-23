@@ -30,6 +30,7 @@ public static class ContentItemDragonFlyApiExtensions
         manager.Add<TextField>();
         manager.Add<XHtmlField>();
         manager.Add<XmlField>();
+        manager.Add<ColorField>();
 
         return manager;
     }
