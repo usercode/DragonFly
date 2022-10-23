@@ -56,7 +56,7 @@ IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
 await api.InitAsync();
 
 //data seeding
-var seeding = app.Services.GetRequiredService<DataSeeding>();
+DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
 await seeding.StartAsync();
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();

@@ -1,0 +1,96 @@
+﻿@inject ComponentManager ComponentManager
+@inject BlockFieldManager BlockFieldManager
+
+<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+    <Header>Select block</Header>
+    <Content>
+        @foreach (Block block in BlockFieldManager.GetAllBlocks())
+        {
+            <div>
+                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</BSButton>
+            </div>
+        }
+    </Content>
+</BSOffCanvas>
+
+@if (Blocks != null)
+{
+    <div>
+        <div class="mb-1">
+            <BSButton Color="BSColor.Light" OnClick="e => OpenModal(0)" title="Insert block">
+                <i class="fas fa-plus"></i> Add
+            </BSButton>
+        </div>
+
+        <BSRow>
+            <BSCol>
+                <BSListGroup>
+
+                    @for (int i = 0; i < Blocks.Count; i++)
+                    {
+                        int curIndex = i;
+                        Block block = Blocks[curIndex];
+
+                        <BSListGroupItem IsButton="true" OnClick="() => SelectedBlock = block">
+                            <div class="block-field-options">
+                                <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
+                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveUp(block))" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
+                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveDown(block))" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
+                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fas fa-times"></i></BSButton>
+                            </div>
+                            <div class="block-field-content">
+                            </div>
+                        </BSListGroupItem>
+                    }
+                </BSListGroup>
+            </BSCol>
+            <BSCol>
+                @if (SelectedBlock != null)
+                {
+                    @ComponentManager.CreateComponent(SelectedBlock)
+                }
+            </BSCol>
+        </BSRow>
+    </div>
+}
+
+@code {
+
+    private BSOffCanvas? _offCanvas;
+
+    public int Position { get; set; }
+
+    public BSModal Modal { get; set; }
+
+    [Parameter]
+    public IList<Block> Blocks { get; set; }
+
+    private Block _selectedBlock;
+
+    public Block SelectedBlock
+    {
+        get => _selectedBlock;
+        set
+        {
+            _selectedBlock = value;
+        }
+    }
+
+    public async Task OpenModal(int position)
+    {
+        Position = position;
+
+        //await Modal.ShowAsync();
+
+        await _offCanvas.ToggleAsync();
+    }
+
+    private async Task Add(Block element)
+    {
+        //await Modal.HideAsync();
+
+        await _offCanvas.ToggleAsync();
+
+        Blocks.Insert(Position, element);
+    }
+}

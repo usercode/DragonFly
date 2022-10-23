@@ -10,6 +10,7 @@ public static class BlockFieldManagerExtensions
     {
         manager.Add<ColumnBlock>();
         manager.Add<AssetBlock>();
+        manager.Add<SlideshowBlock>();
         manager.Add<TextBlock>();
         manager.Add<HtmlBlock>();
         manager.Add<YouTubeBlock>();        

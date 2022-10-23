@@ -5,7 +5,6 @@
 using DragonFly.Assets;
 using DragonFly.Razor.Pages.Assets.Metadata;
 using DragonFly.Razor.Pages.Assets.Preview;
-using DragonFly.Razor.Shared;
 
 namespace DragonFly.Razor.Modules;
 

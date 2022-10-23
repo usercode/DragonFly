@@ -6,7 +6,7 @@ namespace DragonFly;
 
 public static class AssetDataUrlService
 {
-    public static string GetDataUrl(this Asset asset)
+    public static string GetPublicUrl(this Asset asset)
     {
         return $"/dragonfly/api/asset/{asset.Id}/download?v={asset.Hash}";
     }

@@ -17,5 +17,4 @@ public class BlockComponent<TBlock> : ComponentBase, IBlockComponent
     public TBlock Block { get; set; }
 
     Block IBlockComponent.Block => Block;
-
 }

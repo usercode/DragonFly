@@ -30,7 +30,7 @@
                         <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
                         @if (ShowDownloadButton)
                         {
-                            <BSButton Color="BSColor.Light" href="@Asset.GetDataUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                            <BSButton Color="BSColor.Light" href="@Asset.GetPublicUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
                         }
                         <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>               
                     }
