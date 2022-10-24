@@ -13,5 +13,7 @@ public interface IContentField
 {
     bool CanSorting { get; }
 
+    void Clear();
+
     void Validate(string fieldName, ContentFieldOptions options, ValidationContext context);
 }

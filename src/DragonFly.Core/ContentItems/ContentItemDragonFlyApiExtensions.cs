@@ -31,6 +31,7 @@ public static class ContentItemDragonFlyApiExtensions
         manager.Add<XHtmlField>();
         manager.Add<XmlField>();
         manager.Add<ColorField>();
+        manager.Add<GeolocationField>();
 
         return manager;
     }

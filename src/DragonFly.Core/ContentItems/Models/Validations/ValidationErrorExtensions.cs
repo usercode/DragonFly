@@ -19,6 +19,7 @@ public static class ValidationErrorExtensions
 
         return context;
     }
+
     public static ValidationContext AddMinimumValidation(this ValidationContext context, string field, double? value)
     {
         context.Errors.Add(new ValidationError(field, $"The field '{field}' must be at least {value} characters long."));
@@ -29,6 +30,13 @@ public static class ValidationErrorExtensions
     public static ValidationContext AddMaximumValidation(this ValidationContext context, string field, double? value)
     {
         context.Errors.Add(new ValidationError(field, $"The field '{field}' can't be longer than {value} characters."));
+
+        return context;
+    }
+
+    public static ValidationContext AddInvalidValidation(this ValidationContext context, string field)
+    {
+        context.Errors.Add(new ValidationError(field, $"The field '{field}' has no valid value!"));
 
         return context;
     }

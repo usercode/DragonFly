@@ -10,7 +10,7 @@ namespace DragonFly;
 /// <summary>
 /// SingleValueField
 /// </summary>
-public abstract class SingleValueField<T> : ContentField, ISingleValueField       
+public abstract class SingleValueField<T> : ContentField, ISingleValueField
 {
     public SingleValueField()
     {
@@ -40,6 +40,11 @@ public abstract class SingleValueField<T> : ContentField, ISingleValueField
     {
         get => _value;
         set => _value = (T?)value;
+    }
+
+    public override void Clear()
+    {
+        Value = default;
     }
 
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)

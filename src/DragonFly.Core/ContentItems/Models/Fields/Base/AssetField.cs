@@ -24,6 +24,11 @@ public class AssetField : ContentField
         Asset = asset;
     }
 
+    /// <summary>
+    /// Asset
+    /// </summary>
+    public Asset? Asset { get; set; }
+
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
         if (options is AssetFieldOptions fieldOptions)
@@ -35,8 +40,8 @@ public class AssetField : ContentField
         }
     }
 
-    /// <summary>
-    /// Asset
-    /// </summary>
-    public Asset? Asset { get; set; }
+    public override void Clear()
+    {
+        Asset = null;
+    }    
 }

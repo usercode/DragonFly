@@ -3,52 +3,52 @@
 @page "/content/{EntityType}/create/{CloneFromEntityId:guid}"
 @inherits ContentItemDetailBase
 
-    <CascadingValue Value="this" IsFixed="true">
-        @if (Entity != null)
-        {
-            <div class="content-header">
-                <h1>@Entity.Schema.Name</h1>
+<CascadingValue Value="this" IsFixed="true">
+    @if (Entity != null)
+    {
+        <div class="content-header">
+            <h1>@Entity.Schema.Name</h1>
 
-                <Toolbar Items="ToolbarItems"></Toolbar>
-            </div>
-            <div class="scroll-content">
-                @foreach (var validationResult in ValidationContext.Errors)
-                {
-                    <BSAlert Color="BSColor.Danger">
-                        @validationResult.Message
-                    </BSAlert>
-                }
+            <Toolbar Items="ToolbarItems"></Toolbar>
+        </div>
+        <div class="scroll-content">
+            @foreach (var validationResult in ValidationContext.Errors)
+            {
+                <BSAlert Color="BSColor.Danger">
+                    @validationResult.Message
+                </BSAlert>
+            }
 
-                <BSForm Model="Entity" style="flex: 1">
-                    <div class="form-group">
-                        <BSRow>
-                            <BSCol Column="2">
-                                <label class="field-label">ID</label>
-                            </BSCol>
-                            <BSCol Column="10">
-                                <div class="field">
-                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                                </div>
-                            </BSCol>
-                        </BSRow>
-                   </div>
+            <BSForm Model="Entity" style="flex: 1">
+                <div class="form-group">
+                    <BSRow>
+                        <BSCol Column="2">
+                            <label class="field-label">ID</label>
+                        </BSCol>
+                        <BSCol Column="10">
+                            <div class="field">
+                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                            </div>
+                        </BSCol>
+                    </BSRow>
+                </div>
 
-                    <ContentItemFields Content="Entity" Schema="Entity.Schema" />
-                </BSForm>
-            </div>
+                <ContentItemFields Content="Entity" Schema="Entity.Schema" />
+            </BSForm>
+        </div>
 
-            <div class="content-footer">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <p>Created: @Entity.CreatedAt</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p>Modified: @Entity.ModifiedAt</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <p>Published: @Entity.PublishedAt</p>
-                    </div>
+        <div class="content-footer">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>Created: @Entity.CreatedAt</p>
+                </div>
+                <div class="col-sm-4">
+                    <p>Modified: @Entity.ModifiedAt</p>
+                </div>
+                <div class="col-sm-4">
+                    <p>Published: @Entity.PublishedAt</p>
                 </div>
             </div>
-        }
-    </CascadingValue>
+        </div>
+    }
+</CascadingValue>

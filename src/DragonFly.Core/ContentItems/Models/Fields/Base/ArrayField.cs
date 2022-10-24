@@ -22,6 +22,11 @@ public class ArrayField : ContentField
     /// </summary>
     public IList<ArrayFieldItem> Items { get; set; }
 
+    public override void Clear()
+    {
+        Items.Clear();
+    }
+
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
         if (options is ArrayFieldOptions fieldOptions)

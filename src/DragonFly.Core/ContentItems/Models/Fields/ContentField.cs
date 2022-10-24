@@ -21,4 +21,9 @@ public abstract class ContentField : IContentField
     public virtual void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
     }
+
+    public virtual void Clear()
+    {
+
+    }
 }

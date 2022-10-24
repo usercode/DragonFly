@@ -4,6 +4,6 @@
     <div class="input-group">
         <span class="input-group-text">@Field.Value</span>
         <BSInput InputType="InputType.Color" @bind-Value="Field.Value" />
-        <BSButton Color="BSColor.Light" title="Clear" OnClick="x => Field.Value = null"><i class="fas fa-times"></i></BSButton>
+        <BSButton Color="BSColor.Light" title="Clear" OnClick="x => Field.Clear()"><i class="fas fa-times"></i></BSButton>
     </div>
 </div>

@@ -30,6 +30,11 @@ public class ReferenceField : ContentField
     /// </summary>
     public ContentItem? ContentItem { get; set; }
 
+    public override void Clear()
+    {
+        ContentItem = null;
+    }
+
     public override string ToString()
     {
         if (ContentItem == null)
