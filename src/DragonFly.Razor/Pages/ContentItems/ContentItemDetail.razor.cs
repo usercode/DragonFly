@@ -41,7 +41,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        if(IsNewEntity)
+        if (IsNewEntity)
         {
             toolbarItems.AddCreateButton(this);
         }
@@ -49,7 +49,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         {
             toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
             toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, () => UnpublishAsync()));
-            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, ()=> CloneAsync()));
+            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, () => CloneAsync()));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);
@@ -73,7 +73,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
             Entity = Schema.CreateContent();
 
-            if(CloneFromEntityId != null)
+            if (CloneFromEntityId != null)
             {
                 ContentItem original = await ContentService.GetContentAsync(EntityType, CloneFromEntityId.Value);
 
@@ -105,6 +105,13 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         await ContentService.UpdateAsync(Entity);
     }
 
+    protected override async Task DeleteActionAsync()
+    {
+        await ContentService.DeleteAsync(Entity);
+
+        NavigationManager.NavigateTo($"content/{EntityType}");
+    }
+
     protected override void OnSaving(SavingEventArgs args)
     {
         ValidationContext = Entity.Validate();
@@ -127,5 +134,5 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     public async Task UnpublishAsync()
     {
         await ContentService.UnpublishAsync(Entity.Schema.Name, Entity.Id);
-    }       
+    }
 }

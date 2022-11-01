@@ -242,6 +242,10 @@ body > header .title img {
   font-size: 1.25rem;
 }
 
+.carousel-item {
+  height: 200px;
+}
+
 .project-item {
   margin: 25px 0px;
   padding: 25px 0px;
@@ -271,5 +275,8 @@ body > header .title img {
 }
 
 .block {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+.block:last-child {
+  margin-bottom: 0px;
 }

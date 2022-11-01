@@ -1,9 +1,9 @@
 @model QuoteBlock
 
-@if(Model.Text != null)
+@if (Model.Text != null)
 {
     <div class="block quote-block">
-        <figure class="text-center">        
+        <figure class="text-center">
             <blockquote class="blockquote" cite="@Model.Url">
                 <p>@Model.Text</p>
             </blockquote>

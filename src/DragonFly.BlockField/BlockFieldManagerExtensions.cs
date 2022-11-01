@@ -20,6 +20,7 @@ public static class BlockFieldManagerExtensions
         manager.Add<QuoteBlock>();
         manager.Add<ReferenceBlock>();
         manager.Add<ContainerBlock>();
+        manager.Add<AlertBlock>();
 
         manager.Add<UnknownBlock>();
     }

@@ -31,6 +31,7 @@ public static class DragonFlyBuilderExtensions
             api.RegisterBlock<QuoteBlock, QuoteBlockView>();
             api.RegisterBlock<ReferenceBlock, ReferenceBlockView>();
             api.RegisterBlock<ContainerBlock, ContainerBlockView>();
+            api.RegisterBlock<AlertBlock, AlertBlockView>();
 
             api.RegisterBlock<UnknownBlock, UnknownBlockView>();
         });

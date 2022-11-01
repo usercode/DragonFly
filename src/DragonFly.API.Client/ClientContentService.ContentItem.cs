@@ -42,6 +42,11 @@ public partial class ClientContentService : IContentStorage
         await Client.PutAsJsonAsync($"api/content", entity.ToRest());
     }
 
+    public async Task DeleteAsync(ContentItem entity)
+    {
+        await Client.DeleteAsync($"api/content/{entity.Schema.Name}/{entity.Id}");
+    }
+
     public async Task PublishAsync(string schema, Guid id)
     {
         var response = await Client.PostAsync($"api/content/{schema}/{id}/publish", new StringContent(string.Empty));

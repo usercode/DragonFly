@@ -27,7 +27,7 @@
             {
                 <BSListGroup>
 
-                    @foreach (var contentItem in SearchResult.Items)
+                    @foreach (ContentItem contentItem in SearchResult.Items)
                     {
                         <button class="list-group-item list-group-item-action" @onclick="x => OpenItem(contentItem)">
                             <BSRow>

@@ -18,11 +18,11 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="ImageWizard.Client" Version="3.7.1" />
-    <PackageReference Include="ImageWizard.Core" Version="3.7.1" />
-    <PackageReference Include="ImageWizard.ImageSharp" Version="3.7.1" />
-    <PackageReference Include="ImageWizard.OpenGraph" Version="3.7.1" />
-    <PackageReference Include="ImageWizard.SvgNet" Version="3.7.1" />
+    <PackageReference Include="ImageWizard.Client" Version="3.7.3" />
+    <PackageReference Include="ImageWizard.Core" Version="3.7.3" />
+    <PackageReference Include="ImageWizard.ImageSharp" Version="3.7.3" />
+    <PackageReference Include="ImageWizard.OpenGraph" Version="3.7.3" />
+    <PackageReference Include="ImageWizard.SvgNet" Version="3.7.3" />
   </ItemGroup>
 
   <ItemGroup>

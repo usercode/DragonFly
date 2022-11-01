@@ -1,0 +1,10 @@
+@model AlertBlock
+
+@if (Model.Blocks.Any())
+{
+    <div class="block alert-block">
+        <div class="alert @Model.AlertType.ToBootstrapCssClass()">
+            @Html.DisplayFor(m => Model.Blocks)
+        </div>
+    </div>
+}
