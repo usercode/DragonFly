@@ -46,6 +46,8 @@ builder.Services.AddDragonFly()
                     .AddPermissions()
                     ;
 
+//builder.Services.AddHttpsRedirection(x => x.HttpsPort = 443);
+
 var app = builder.Build();
 
 IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();

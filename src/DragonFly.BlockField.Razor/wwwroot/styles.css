@@ -6,7 +6,6 @@
 .block-field {
     display: flex;
     flex-direction: column;
-    width: 100%;
     margin: 1rem 0px;
 }
 
@@ -57,8 +56,13 @@
 }
 
 .container-block {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.alert-block {
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 .tox-tinymce {

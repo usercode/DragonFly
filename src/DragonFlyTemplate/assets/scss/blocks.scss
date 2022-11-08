@@ -5,3 +5,10 @@
         margin-bottom: 0px;
     }
 }
+
+.html-block {
+    
+    & p:last-child{
+        margin-bottom: 0px;
+    }
+}

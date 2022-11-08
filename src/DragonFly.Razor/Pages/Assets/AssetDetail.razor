@@ -112,8 +112,10 @@
                         <div>
                             <InputFile OnChange="OnInputFileChange" />
                         </div>
-
-                        @AssetPreviewManager.CreateComponent(Entity)
+                        @if (Entity.Hash != null)
+                        {
+                            @AssetPreviewManager.CreateComponent(Entity)
+                        }
                     }
                 </div>
             </BSRow>

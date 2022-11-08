@@ -49,6 +49,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddSingleton<DataSeeding>();
 builder.Services.AddSingleton<MyRazorPageRouting>();
 
+//builder.Services.AddHttpsRedirection(x => x.HttpsPort = 443);
+
 var app = builder.Build();
 
 //init DragonFly CMS
