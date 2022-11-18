@@ -50,7 +50,8 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         base.BuildToolbarItems(toolbarItems);
 
         toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
-        toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, async () => await PublishQueryAsync()));
+        toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, PublishQueryAsync));
+        toolbarItems.Add(new ToolbarItem("Unpublish all", BSColor.Danger, UnpublishQueryAsync));
         toolbarItems.AddRefreshButton(this);
     }
 
@@ -120,6 +121,13 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         ContentItemQuery query = CreateQuery();
 
         await ContentService.PublishQueryAsync(query);
+    }
+
+    public async Task UnpublishQueryAsync()
+    {
+        ContentItemQuery query = CreateQuery();
+
+        await ContentService.UnpublishQueryAsync(query);
     }
 
     public async Task Search(string pattern)

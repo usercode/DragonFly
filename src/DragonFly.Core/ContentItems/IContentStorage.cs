@@ -13,7 +13,7 @@ public interface IContentStorage
 {
     Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query);
         
-    Task<ContentItem> GetContentAsync(string schema, Guid id);
+    Task<ContentItem?> GetContentAsync(string schema, Guid id);
 
     Task CreateAsync(ContentItem contentItem);
 
@@ -22,6 +22,8 @@ public interface IContentStorage
     Task DeleteAsync(string schema, Guid id);
 
     Task PublishQueryAsync(ContentItemQuery query);
+
+    Task UnpublishQueryAsync(ContentItemQuery query);
 
     Task PublishAsync(string schema, Guid id);
 

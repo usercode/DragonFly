@@ -37,13 +37,16 @@ class ContenItemInterceptor : IInterceptor
 
     private async Task LoadDataAsync(ContentItem main)
     {
-        ContentItem result = await MongoStorage.Default.GetContentAsync(main.Schema.Name, main.Id);
+        ContentItem? result = await MongoStorage.Default.GetContentAsync(main.Schema.Name, main.Id);
 
-        main.Id = result.Id;
-        main.Schema = result.Schema;
-        main.Fields = result.Fields;
-        main.CreatedAt = result.CreatedAt;
-        main.ModifiedAt = result.ModifiedAt;
-        main.PublishedAt = result.PublishedAt;
+        if (result != null)
+        {
+            main.Id = result.Id;
+            main.Schema = result.Schema;
+            main.Fields = result.Fields;
+            main.CreatedAt = result.CreatedAt;
+            main.ModifiedAt = result.ModifiedAt;
+            main.PublishedAt = result.PublishedAt;
+        }
     }
 }

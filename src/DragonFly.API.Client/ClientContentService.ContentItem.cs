@@ -89,4 +89,11 @@ public partial class ClientContentService : IContentStorage
 
         response.EnsureSuccessStatusCode();
     }
+
+    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    {
+        var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, JsonSerializerDefault.Options);
+
+        response.EnsureSuccessStatusCode();
+    }
 }

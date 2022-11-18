@@ -70,6 +70,14 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.PublishQueryAsync(query);
     }
 
+    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    {
+        await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
+        await Api.AuthorizeAsync(ContentPermissions.ContentUnpublish);
+
+        await Storage.UnpublishQueryAsync(query);
+    }
+
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);

@@ -25,6 +25,6 @@ public static class NavigationManagerExtensions
 
     public static void NavigateToContent(this NavigationManager manager, ContentItem content)
     {
-        manager.NavigateTo($"content/{content.Schema.Name}/create/{content.Id}");
+        manager.NavigateTo($"content/{content.Schema.Name}/{content.Id}");
     }
 }

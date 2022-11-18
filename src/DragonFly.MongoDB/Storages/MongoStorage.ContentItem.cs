@@ -18,7 +18,7 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : IContentStorage
 {
-    public async Task<ContentItem> GetContentAsync(string schema, Guid id)
+    public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
         ContentSchema contentSchema = await GetSchemaAsync(schema);
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
@@ -27,7 +27,8 @@ public partial class MongoStorage : IContentStorage
 
         if (result == null)
         {
-            throw new Exception($"ContentItem '{schema}/{id}' not found");
+            return null;
+            //throw new Exception($"ContentItem '{schema}/{id}' not found");
         }
 
         return result.ToModel(contentSchema);
@@ -362,5 +363,30 @@ public partial class MongoStorage : IContentStorage
 
             query.Skip += pageSize;
         }            
+    }
+
+    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    {
+        int pageSize = 50;
+
+        query.Skip = 0;
+        query.Top = pageSize;
+
+        while (true)
+        {
+            var result = await QueryAsync(query);
+
+            if (result.Items.Count == 0)
+            {
+                break;
+            }
+
+            foreach (ContentItem contentItem in result.Items)
+            {
+                await UnpublishAsync(contentItem.Schema.Name, contentItem.Id);
+            }
+
+            query.Skip += pageSize;
+        }
     }
 }
