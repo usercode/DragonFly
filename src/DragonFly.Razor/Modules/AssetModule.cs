@@ -28,5 +28,6 @@ public class AssetModule : ClientModule
 
         api.AssetPreview().Register<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
         api.AssetPreview().Register<PdfPreviewView>(MimeTypes.Pdf);
+        api.AssetPreview().Register<SvgPreviewView>(MimeTypes.Svg);
     }
 }

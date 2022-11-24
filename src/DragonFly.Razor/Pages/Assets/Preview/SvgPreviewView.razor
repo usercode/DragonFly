@@ -1,0 +1,7 @@
+@inherits AssetPreviewComponent
+
+@if (string.IsNullOrEmpty(Asset.Hash) == false)
+{
+    <!-- image preview -->
+    <img src="@Asset.GetPublicUrl()" />
+}
