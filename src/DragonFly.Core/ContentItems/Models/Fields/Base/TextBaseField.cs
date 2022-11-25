@@ -9,6 +9,8 @@ namespace DragonFly;
 /// </summary>
 public abstract class TextBaseField : SingleValueField<string>
 {
+    public static bool AutoTrimValue = true;
+
     public TextBaseField()
     {
     }
@@ -28,6 +30,12 @@ public abstract class TextBaseField : SingleValueField<string>
         if (string.IsNullOrWhiteSpace(newValue))
         {
             newValue = null;
+        }
+
+        //auto trim
+        if (newValue != null)
+        {
+            newValue = newValue.Trim();
         }
     }
 }
