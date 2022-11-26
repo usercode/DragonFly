@@ -37,7 +37,7 @@ public class ImageWizardAssetUrlService : IAssetPreviewUrlService
         }            
         else
         {
-            return "";
+            return string.Empty;
         }
     }
 }

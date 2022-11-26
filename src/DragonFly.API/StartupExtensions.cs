@@ -13,6 +13,8 @@ using DragonFly.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Http.Json;
 using DragonFly.AspNetCore.API.Exports.Json;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.AspNetCore;
 
@@ -35,13 +37,15 @@ public static class StartupExtensions
     {
         builder.Endpoints(endpoints =>
         {
-            endpoints.MapContentItemRestApi();
-            endpoints.MapContentSchemaRestApi();
-            endpoints.MapContentStructureRestApi();
-            endpoints.MapContentNodeRestApi();
-            endpoints.MapAssetRestApi();
-            endpoints.MapAssetFolderRestApi();
-            endpoints.MapWebHookRestApi();
+            RouteGroupBuilder group = endpoints.MapGroup("api");
+
+            group.MapContentItemRestApi();
+            group.MapContentSchemaRestApi();
+            group.MapContentStructureRestApi();
+            group.MapContentNodeRestApi();
+            group.MapAssetRestApi();
+            group.MapAssetFolderRestApi();
+            group.MapWebHookRestApi();
         });
 
         return builder;

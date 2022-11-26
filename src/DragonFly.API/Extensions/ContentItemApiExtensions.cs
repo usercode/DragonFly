@@ -16,17 +16,19 @@ namespace DragonFly.AspNetCore.API.Middlewares;
 
 static class ContentItemApiExtensions
 {
-    public static void MapContentItemRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapContentItemRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/content/query", MapQuery);
-        endpoints.MapGet("api/content/{schema}/{id:guid}", MapGet);
-        endpoints.MapPost("api/content", MapCreate);
-        endpoints.MapPut("api/content", MapUpdate);
-        endpoints.MapDelete("api/content/{schema}/{id:guid}", MapDelete);
-        endpoints.MapPost("api/content/{schema}/{id:guid}/publish", MapPublish);
-        endpoints.MapPost("api/content/{schema}/{id:guid}/unpublish", MapUnpublish);
-        endpoints.MapPost("api/content/publish", MapPublishQuery);
-        endpoints.MapPost("api/content/unpublish", MapUnpublishQuery);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("content");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{schema}/{id:guid}", MapGet);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete);
+        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish);
+        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish);
+        groupRoute.MapPost("publish", MapPublishQuery);
+        groupRoute.MapPost("unpublish", MapUnpublishQuery);
     }
 
     private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentItemQuery query)
@@ -51,7 +53,7 @@ static class ContentItemApiExtensions
 
     private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
     {
-        ContentItem result = await contentStore.GetContentAsync(schema, id);
+        ContentItem? result = await contentStore.GetContentAsync(schema, id);
 
         result.ApplySchema();
 

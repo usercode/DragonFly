@@ -14,12 +14,14 @@ namespace DragonFly.AspNetCore.API.Middlewares;
 
 static class WebHookApiExtensions
 {
-    public static void MapWebHookRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapWebHookRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/webhook/query", MapQuery);
-        endpoints.MapGet("api/webhook/{id:guid}", MapGet);
-        endpoints.MapPost("api/webhook", MapCreate);
-        endpoints.MapPut("api/webhook", MapUpdate);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("webhook");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGet);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
     }
 
     private static async Task<QueryResult<RestWebHook>> MapQuery(HttpContext context, IWebHookStorage storage)

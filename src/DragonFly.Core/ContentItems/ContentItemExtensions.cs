@@ -29,12 +29,7 @@ public static class ContentItemExtensions
 
     public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out IContentField? contentField)
     {
-        if (contentElement.Fields.TryGetValue(name, out contentField) == false)
-        {
-            return false;
-        }
-
-        return true;
+        return contentElement.Fields.TryGetValue(name, out contentField);
     }
 
     public static bool TrySetField(this IContentElement contentElement, string fieldName, IContentField contentField)
@@ -51,8 +46,39 @@ public static class ContentItemExtensions
 
     public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
     {
-        return ((SingleValueField<T>)contentItem.Fields[name]).Value;
+        IContentField field = GetField(contentItem, name);
+
+        if (field is not SingleValueField<T> singleValueField)
+        {
+            throw new Exception($"The field '{name}' isn't a single value field.");
+        }
+
+        return singleValueField.Value;
     }
+
+    public static T GetRequiredSingleValue<T>(this IContentElement contentItem, string name)
+    {
+        T? value = GetSingleValue<T>(contentItem, name);
+
+        if (value == null)
+        {
+            throw new Exception($"The field '{name}' has no value.");
+        }
+
+        return value;
+    }
+
+    //public static T GetSingleValueOrDefault<T>(this IContentElement contentItem, string name) where T : struct
+    //{
+    //    T? value = GetSingleValue<T>(contentItem, name);
+
+    //    if (value == null)
+    //    {
+    //        return default;
+    //    }
+
+    //    return value;
+    //}
 
     public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
     {

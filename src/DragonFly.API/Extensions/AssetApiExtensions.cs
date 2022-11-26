@@ -16,16 +16,18 @@ namespace DragonFly.AspNetCore.API.Middlewares.Assets;
 
 static class AssetApiExtensions
 {
-    public static void MapAssetRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapAssetRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/asset/query", MapQuery);
-        endpoints.MapGet("api/asset/{id:guid}", MapGet);
-        endpoints.MapPost("api/asset", MapCreate);
-        endpoints.MapPut("api/asset", MapUpdate);
-        endpoints.MapPost("api/asset/{id:guid}/publish", MapPublish);
-        endpoints.MapGet("api/asset/{id:guid}/download", MapDownload);
-        endpoints.MapPost("api/asset/{id:guid}/upload", MapUpload);
-        endpoints.MapPost("api/asset/{id:guid}/metadata", MapRefreshMetadata);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGet);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapPost("{id:guid}/publish", MapPublish);
+        groupRoute.MapGet("{id:guid}/download", MapDownload);
+        groupRoute.MapPost("{id:guid}/upload", MapUpload);
+        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata);
     }
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)

@@ -14,10 +14,12 @@ namespace DragonFly.AspNetCore.API.Middlewares.AssetFolders;
 
 static class AssetFolderApiExtensions
 {
-    public static void MapAssetFolderRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapAssetFolderRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/assetfolder/query", MapQuery);
-        endpoints.MapGet("api/assetfolder/{id:guid}", MapGet);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("assetfolder");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGet);
     }
 
     private static async Task<IEnumerable<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)

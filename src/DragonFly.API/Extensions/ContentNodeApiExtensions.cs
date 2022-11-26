@@ -16,10 +16,12 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 
 static class ContentNodeApiExtensions
 {
-    public static void MapContentNodeRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapContentNodeRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/node/query/{structure:guid}", MapQuery);
-        endpoints.MapPost("api/node", MapCreate);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("node");
+
+        groupRoute.MapPost("query/{structure:guid}", MapQuery);
+        groupRoute.MapPost("", MapCreate);
     }
 
     private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)
@@ -27,9 +29,9 @@ static class ContentNodeApiExtensions
         var parentIdQuery = context.Request.Query["parentId"];
         Guid? parentId = null;
 
-        if (parentIdQuery.Any() && string.IsNullOrWhiteSpace(parentIdQuery.First()) == false)
+        if (parentIdQuery.Any() && parentIdQuery.First() is string stringParameter)
         {
-            parentId = Guid.Parse(parentIdQuery.First());
+            parentId = Guid.Parse(stringParameter);
         }
 
         QueryResult<ContentNode> items = await storage

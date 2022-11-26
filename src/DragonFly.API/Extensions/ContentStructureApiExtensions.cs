@@ -16,13 +16,15 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 
 static class ContentStructureApiExtensions
 {
-    public static void MapContentStructureRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapContentStructureRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/structure/query", MapQuery);
-        endpoints.MapGet("api/structure/{id:guid}", MapGetById);
-        endpoints.MapGet("api/structure/{name}", MapGetByName);
-        endpoints.MapPost("api/structure", MapCreate);
-        endpoints.MapPut("api/structure", MapUpdate);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("structure");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGetById);
+        groupRoute.MapGet("{name}", MapGetByName);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
     }
 
     private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)

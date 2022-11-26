@@ -14,14 +14,16 @@ namespace DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 
 static class ContentSchemaApiExtensions
 {
-    public static void MapContentSchemaRestApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapContentSchemaRestApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("api/schema/query", MapQuery);
-        endpoints.MapGet("api/schema/{id:guid}", MapGetById);
-        endpoints.MapGet("api/schema/{name}", MapGetByName);            
-        endpoints.MapPost("api/schema", MapCreate);
-        endpoints.MapPut("api/schema", MapUpdate);
-        endpoints.MapDelete("api/schema/{id:guid}", MapDelete);
+        RouteGroupBuilder groupRoute = endpoints.MapGroup("schema");
+
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGetById);
+        groupRoute.MapGet("{name}", MapGetByName);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{id:guid}", MapDelete);
     }
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
@@ -40,7 +42,7 @@ static class ContentSchemaApiExtensions
 
     private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)
     {
-        ContentSchema schema = await storage.GetSchemaAsync(id);
+        ContentSchema? schema = await storage.GetSchemaAsync(id);
 
         RestContentSchema restSchema = schema.ToRest();
 
@@ -49,7 +51,7 @@ static class ContentSchemaApiExtensions
 
     private static async Task<RestContentSchema> MapGetByName(HttpContext context, ISchemaStorage storage, string name)
     {
-        ContentSchema schema = await storage.GetSchemaAsync(name);
+        ContentSchema? schema = await storage.GetSchemaAsync(name);
 
         RestContentSchema restSchema = schema.ToRest();
 
@@ -76,7 +78,7 @@ static class ContentSchemaApiExtensions
 
     private static async Task MapDelete(HttpContext context, ISchemaStorage storage, Guid id)
     {
-        ContentSchema schema = await storage.GetSchemaAsync(id);
+        ContentSchema? schema = await storage.GetSchemaAsync(id);
 
         await storage.DeleteAsync(schema);
     }

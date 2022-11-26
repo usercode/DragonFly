@@ -29,10 +29,7 @@ public static class DragonFlyBuilderExtensions
                                                                     .SetFileCache()
                                                                     ;
 
-        if (action != null)
-        {
-            action(imageWizardBuilder);
-        }
+        action?.Invoke(imageWizardBuilder);
 
         builder.Services.AddImageWizardClient(x => x.BaseUrl = "/dragonfly/image");
 
