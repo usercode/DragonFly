@@ -8,11 +8,16 @@ using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
 using DragonFly.MongoDB;
+using DragonFly.Proxy;
+using DragonFly.Query;
+using DragonFly.Storage;
+using DragonFlyTemplate;
 using DragonFlyTemplate.Extensions;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
+using Microsoft.Extensions.Caching.Memory;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +45,7 @@ builder.Services.AddDragonFly()
                         x.AddType<StandardPageModel>();
                         x.AddType<BlogPostModel>();
                         x.AddType<ProjectModel>();
+                        x.AddType<PageElementModel>();
                     })
                     .AddPermissions()
                     ;
@@ -51,6 +57,10 @@ builder.Services.AddSingleton<MyRazorPageRouting>();
 
 //builder.Services.AddHttpsRedirection(x => x.HttpsPort = 443);
 
+DataCache cache = new DataCache();
+
+builder.Services.AddSingleton(cache);
+
 var app = builder.Build();
 
 //init DragonFly CMS
@@ -60,6 +70,10 @@ await api.InitAsync();
 //data seeding
 DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
 await seeding.StartAsync();
+
+IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
+
+cache.Elements = (await contentStorage.QueryAsync<PageElementModel>(new ContentItemQuery())).Items;
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 

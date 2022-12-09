@@ -1,5 +1,6 @@
 ﻿@model BasePageModel
 @inject IWebHostEnvironment Environment
+@inject DataCache DataCache
 
 <!doctype html>
 <html>
@@ -16,6 +17,11 @@
     <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
     <script src="~/lib/prismjs/prism.js" defer asp-append-version="true"></script>
     <script src="~/lib/prismjs/components/prism-csharp.js" defer asp-append-version="true"></script>
+
+    @foreach (PageElementModel element in DataCache.Elements)
+    {
+        @Html.Raw(element.Header)
+    }
 </head>
 <body>
     <header>
@@ -46,6 +52,11 @@
     </footer>
 
     @RenderSection("script", required: false)
+
+    @foreach(PageElementModel element in DataCache.Elements)
+    {
+        @Html.Raw(element.Footer)
+    }
 
 </body>
 </html>

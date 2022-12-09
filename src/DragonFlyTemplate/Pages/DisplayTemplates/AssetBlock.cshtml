@@ -12,7 +12,7 @@
         }
         else if (asset.IsSVG())
         {
-            <img src="@Url.ImageWizard().Asset(asset).AsSvg().BuildUrl()" alt="@asset.Name" />
+            <img src="@Url.ImageWizard().Asset(asset).AsSvg().BuildUrl()" class="svg" alt="@asset.Name" />
         }
         else if (asset.IsPdf())
         {

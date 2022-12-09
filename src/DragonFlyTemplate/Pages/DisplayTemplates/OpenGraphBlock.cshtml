@@ -1,5 +1,7 @@
 @model OpenGraphBlock
 
 <div class="block opengraph-block">
-    <img src="@Url.ImageWizard().OpenGraph(Model.Url).BuildUrl()" />
+    <a href="@Model.Url" target="_blank">
+        <img src="@Url.ImageWizard().OpenGraph(Model.Url).BuildUrl()" />
+    </a>
 </div>
