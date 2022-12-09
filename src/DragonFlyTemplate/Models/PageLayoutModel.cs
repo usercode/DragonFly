@@ -8,9 +8,12 @@ using DragonFly.BlockField;
 
 namespace DragonFlyTemplate.Models;
 
-[ContentItem("_PageElement")]
-public class PageElementModel : EntityPageModel
+[ContentItem("_PageLayout")]
+public class PageLayoutModel : EntityPageModel
 {
+    [StringField(Required = true, ListField = true, Searchable = true)]
+    public virtual string Name { get; set; }
+
     [HtmlField]
     public virtual HtmlField Header { get; set; }
 

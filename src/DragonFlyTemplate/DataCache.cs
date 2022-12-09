@@ -12,5 +12,5 @@ public class DataCache
     /// <summary>
     /// Elements
     /// </summary>
-    public IList<PageElementModel> Elements { get; set; } = new List<PageElementModel>();
+    public IList<PageLayoutModel> Elements { get; set; } = new List<PageLayoutModel>();
 }

@@ -45,7 +45,7 @@ builder.Services.AddDragonFly()
                         x.AddType<StandardPageModel>();
                         x.AddType<BlogPostModel>();
                         x.AddType<ProjectModel>();
-                        x.AddType<PageElementModel>();
+                        x.AddType<PageLayoutModel>();
                     })
                     .AddPermissions()
                     ;
@@ -73,7 +73,7 @@ await seeding.StartAsync();
 
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
-cache.Elements = (await contentStorage.QueryAsync<PageElementModel>(new ContentItemQuery())).Items;
+cache.Elements = (await contentStorage.QueryAsync<PageLayoutModel>(new ContentItemQuery())).Items;
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
