@@ -9,6 +9,7 @@ public enum CodeType
     Plain,
     CSharp,
     HTML,
+    HLSL,
     JavaScript,
     JSON,
     LaTeX,

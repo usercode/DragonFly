@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" asp-append-version="true" />    
     <link rel="stylesheet" href="~/lib/prismjs/themes/prism.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/assets/css/style.min.css" asp-append-version="true">
-    <title>@Model.PageTitle</title>
-    @RenderSection("head", required: false)
+    <title>@Model.PageTitle</title>    
     <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
-    <script src="~/lib/prismjs/prism.js" defer asp-append-version="true"></script>
-    <script src="~/lib/prismjs/components/prism-csharp.js" defer asp-append-version="true"></script>
+    @RenderSection("head", required: false)
 
     @foreach (PageLayoutModel element in DataCache.Elements)
     {

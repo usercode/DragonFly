@@ -12,19 +12,20 @@ using DragonFly.Proxy;
 using DragonFly.Query;
 using DragonFly.Storage;
 using DragonFlyTemplate;
-using DragonFlyTemplate.Extensions;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-
+//DragonFly
 builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
+
+//ASP.NET Core
+builder.Services.Configure<ForwardedHeadersOptions>(options => options.ForwardedHeaders = ForwardedHeaders.All);
 
 //ImageWizard
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
@@ -53,8 +54,6 @@ builder.Services.AddDragonFly()
 builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<DataSeeding>();
-builder.Services.AddSingleton<MyRazorPageRouting>();
-
 //builder.Services.AddHttpsRedirection(x => x.HttpsPort = 443);
 
 DataCache cache = new DataCache();
@@ -83,6 +82,7 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseDragonFly(x =>
 {
@@ -94,5 +94,4 @@ app.UseDragonFly(x =>
 app.UseDragonFlyManager();
 app.UseStaticFiles();
 app.MapRazorPages();
-//app.MapDynamicPageRoute<MyRazorPageRouting>("{*path}");
 app.Run();

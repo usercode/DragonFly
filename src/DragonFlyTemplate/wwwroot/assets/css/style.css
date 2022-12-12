@@ -15,6 +15,9 @@ body > header {
   flex: 0 1 auto;
   margin-bottom: 2rem;
 }
+body > header .navbar a {
+  color: #333;
+}
 
 body > main {
   flex: 1 0 auto;
@@ -54,24 +57,6 @@ a {
 a:hover {
   color: #D54949;
   text-decoration: underline;
-}
-
-code {
-  background: #f2f2f2;
-  color: #D54949;
-  padding: 0.1rem 0.2rem;
-  border-radius: 0.2rem;
-}
-
-pre {
-  background: #f2f2f2;
-  padding: 1rem;
-  font-size: 0.8rem;
-  border-radius: 0.2rem;
-}
-
-header .navbar a {
-  color: #333;
 }
 
 article header h1 a, article header h2 a {

@@ -16,6 +16,7 @@ public static class SourceCodeTypePrismExtensions
             CodeType.CSS => "css",
             CodeType.JavaScript => "javascript",
             CodeType.HTML => "html",
+            CodeType.HLSL => "hlsl",
             CodeType.XML => "xml",
             CodeType.SQL => "sql",
             CodeType.SVG => "svg",

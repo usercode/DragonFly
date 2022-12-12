@@ -15,6 +15,12 @@ body {
 body > header {
     flex: 0 1 auto;
     margin-bottom: 2rem;
+
+    .navbar {
+        a {
+            color: $text_regular;
+        }
+    }
 }
 
 body > main {
@@ -57,28 +63,6 @@ a {
     &:hover {
         color: $text_primary;
         text-decoration: underline;
-    }
-}
-
-code {
-    background: $code_bg;
-    color: $text_primary;
-    padding: .1rem .2rem;
-    border-radius: .2rem;
-}
-
-pre {
-    background: $code_bg;
-    padding: 1rem;
-    font-size: .8rem;
-    border-radius: .2rem;
-}
-
-header {
-    .navbar {
-        a {
-            color: $text_regular;
-        }
     }
 }
 

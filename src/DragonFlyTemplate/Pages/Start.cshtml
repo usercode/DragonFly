@@ -2,20 +2,8 @@
 @model StartPage
 
 <div class="container">
-    <h1>Start</h1>
-
-    @*@await Html.DisplayBlockFieldAsync(Model.Result.MainContent)*@
+    @if (Model.Document != null)
+    {
+        @Html.DisplayFor(m => Model.Document.Blocks)
+    }
 </div>
-
-@*@model DragonFlyPageModel<ProjectModel>
-@{
-    ViewBag.Title = Model.Data.Title;
-}
-
-<div class="container">
-    <h1>@Model.Data.Title</h1>
-
-    @Html.DisplayFor(m => m.Data.Blocks)
-</div>
-*@
-

@@ -27,15 +27,14 @@ public class BlogPostPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        var query = new ContentItemQuery() { Top = 1, Skip = 0, Published = true }
-                        .AddStringQuery(nameof(BlogPostModel.Slug), slug);
-
-        QueryResult<BlogPostModel> result = await ContentStorage.QueryAsync<BlogPostModel>(query);
+        QueryResult<BlogPostModel> result = await ContentStorage.QueryAsync<BlogPostModel>(new ContentItemQuery() { Top = 1, Skip = 0, Published = true }
+                                                                                            .AddSlugQuery(nameof(BlogPostModel.Slug), slug));
 
         if (result.Items.Count == 0)
         {
             return NotFound();
         }
+
         Result = result.Items[0];
 
         Document = await Result.MainContent.GetDocumentAsync();

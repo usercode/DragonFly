@@ -10,17 +10,12 @@ public static class ColumnWidthExtensions
 {
     public static string ToBootstrapCssClass(this ColumnWidth width)
     {
-        if (width == ColumnWidth.Max)
+        return width switch
         {
-            return "col-lg";
-        }
-
-        if (width == ColumnWidth.Auto)
-        {
-            return $"col-auto";
-        }
-
-        return $"col-lg-{(int)width}";
+            ColumnWidth.Max => "col-lg",
+            ColumnWidth.Auto => "col-auto",
+            _ => $"col-lg-{(int)width}"
+        };
     }
 
     public static string ToBootstrapCssClass(this HorizontalAlignment alignment)

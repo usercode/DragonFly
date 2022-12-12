@@ -22,6 +22,7 @@ public class MongoQueryManager
                 _default = new MongoQueryManager();
 
                 _default.Register<StringFieldQuery, StringFieldQueryAction>();
+                _default.Register<SlugFieldQuery, SlugFieldQueryAction>();
                 _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
                 _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
                 _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
