@@ -1,9 +1,0 @@
-@page "/"
-@model StartPage
-
-<div class="container">
-    @if (Model.Document != null)
-    {
-        @Html.DisplayFor(m => Model.Document.Blocks)
-    }
-</div>

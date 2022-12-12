@@ -1,0 +1,14 @@
+@page "/{slug?}"
+@model StandardPage
+
+<div class="container">
+    @if (Model.Result.IsStartPage == false)
+    {
+        <h1>@Model.Result.Title</h1>
+    }
+
+    @if (Model.Document != null)
+    {
+        @Html.DisplayFor(m => Model.Document.Blocks)
+    }
+</div>

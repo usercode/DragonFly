@@ -10,7 +10,12 @@ public class DataCache
 {
 
     /// <summary>
-    /// Elements
+    /// PageLayouts
     /// </summary>
-    public IList<PageLayoutModel> Elements { get; set; } = new List<PageLayoutModel>();
+    public IList<PageLayoutModel> PageLayouts { get; set; } = new List<PageLayoutModel>();
+
+    /// <summary>
+    /// FooterPages
+    /// </summary>
+    public IList<StandardPageModel> FooterPages { get; set; } = new List<StandardPageModel>();
 }

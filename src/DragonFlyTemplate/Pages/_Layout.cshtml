@@ -16,7 +16,7 @@
     <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
     @RenderSection("head", required: false)
 
-    @foreach (PageLayoutModel element in DataCache.Elements)
+    @foreach (PageLayoutModel element in DataCache.PageLayouts)
     {
         @Html.Raw(element.Header)
     }
@@ -38,20 +38,19 @@
     </main>
     <footer>
         <div class="container">
-            <div class="row">
-                <div class="col-sm">
-                    @*<a href="~/impressum">Impressum</a>*@
-                </div>
-                <div class="col-sm">
-                    Copyright &copy; @DateTime.Today.Year
-                </div>
+            <div class="footer-links">
+                @foreach (StandardPageModel footerPage in DataCache.FooterPages)
+                {
+                    <a href="~/@footerPage.Slug">@footerPage.Title</a>
+                }
+                <span>Copyright &copy; @DateTime.Today.Year</span>
             </div>
         </div>
     </footer>
 
     @RenderSection("script", required: false)
 
-    @foreach(PageLayoutModel element in DataCache.Elements)
+    @foreach(PageLayoutModel element in DataCache.PageLayouts)
     {
         @Html.Raw(element.Footer)
     }

@@ -29,15 +29,15 @@ body > main {
 
 body > footer {
     flex: 0 1 auto;
-    text-align: right;
     padding: 2rem 0;
     margin-top: 2rem;
-    font-size:0.8rem;
+    font-size:0.9rem;
     color: #fff;
     background-color: #222;
 
-    a {
-        font-weight: 400;
+    .footer-links {
+        display: flex;
+        justify-content:space-between;
     }
 }
 
