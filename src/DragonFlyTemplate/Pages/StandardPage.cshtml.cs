@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly;
 using DragonFly.BlockField;
 using DragonFly.Proxy;
 using DragonFly.Query;
@@ -26,18 +27,16 @@ public class StandardPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        ContentItemQuery query = new ContentItemQuery() { Top = 1 };
+        QueryResult<StandardPageModel> result;
 
         if (string.IsNullOrEmpty(slug))
         {
-            query.AddBoolQuery(nameof(StandardPageModel.IsStartPage), true);
+            result = await ContentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).Top(1).AddBoolQuery(nameof(StandardPageModel.IsStartPage), true));
         }
         else
         {
-            query.AddSlugQuery(nameof(StandardPageModel.Slug), slug);
-        }
-
-        var result = await ContentStorage.QueryAsync<StandardPageModel>(query);
+            result = await ContentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).Top(1).AddSlugQuery(nameof(StandardPageModel.Slug), slug));
+        }        
 
         if (result.Count == 0)
         {

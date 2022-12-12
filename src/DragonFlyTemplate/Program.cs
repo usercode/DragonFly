@@ -72,8 +72,8 @@ await seeding.StartAsync();
 
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
-cache.PageLayouts = (await contentStorage.QueryAsync<PageLayoutModel>(new ContentItemQuery())).Items;
-cache.FooterPages = (await contentStorage.QueryAsync<StandardPageModel>(new ContentItemQuery().AddBoolQuery(nameof(StandardPageModel.IsFooterPage), true))).Items;
+cache.PageLayouts = (await contentStorage.QueryAsync<PageLayoutModel>()).Items;
+cache.FooterPages = (await contentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).AddBoolQuery(nameof(StandardPageModel.IsFooterPage), true))).Items;
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 

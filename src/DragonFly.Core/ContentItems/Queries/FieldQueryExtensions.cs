@@ -13,5 +13,24 @@ public static class FieldQueryExtensions
         return queryParameters;
     }
 
+    public static ContentItemQuery Top(this ContentItemQuery query, int value)
+    {
+        query.Top = value;
 
+        return query;
+    }
+
+    public static ContentItemQuery Skip(this ContentItemQuery query, int value)
+    {
+        query.Skip = value;
+
+        return query;
+    }
+
+    public static ContentItemQuery Published(this ContentItemQuery query, bool value)
+    {
+        query.Published = value;
+
+        return query;
+    }
 }

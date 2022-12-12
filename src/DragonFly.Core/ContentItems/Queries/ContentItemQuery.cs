@@ -16,7 +16,7 @@ public class ContentItemQuery
 
         SearchPattern = string.Empty;
         Skip = 0;
-        Top = 20;
+        Top = 25;
         Published = false;
 
         IncludeListFieldsOnly = false;

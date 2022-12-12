@@ -25,7 +25,7 @@ public class BlogPage : BasePageModel
 
     public async Task OnGetAsync()
     {
-        Result = await ContentStorage.QueryAsync<BlogPostModel>(new ContentItemQuery() { Top = 100, Skip = 0, Published = true });
+        Result = await ContentStorage.QueryAsync<BlogPostModel>(x => x.Published(true).Top(100));
 
 
     }

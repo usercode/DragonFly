@@ -27,8 +27,7 @@ public class BlogPostPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        QueryResult<BlogPostModel> result = await ContentStorage.QueryAsync<BlogPostModel>(new ContentItemQuery() { Top = 1, Skip = 0, Published = true }
-                                                                                            .AddSlugQuery(nameof(BlogPostModel.Slug), slug));
+        QueryResult<BlogPostModel> result = await ContentStorage.QueryAsync<BlogPostModel>(x => x.Published(true).Top(1).AddSlugQuery(nameof(BlogPostModel.Slug), slug));
 
         if (result.Items.Count == 0)
         {

@@ -47,10 +47,13 @@ public static class ContentSchemaBuilderExtensions
 
     }
 
-    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, ContentItemQuery query)
+    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, Action<ContentItemQuery>? action = null)
         where TContentType : class
     {
+        ContentItemQuery query = new ContentItemQuery();
         query.Schema = ProxyTypeManager.Default.Get<TContentType>().Name;
+
+        action?.Invoke(query);
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
