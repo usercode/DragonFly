@@ -28,66 +28,24 @@ body > header {
     }
 
     .navbar {
-        padding: 1.0rem 0;
+        padding: 1rem 0;
         font-size: 1rem;
 
-        &.navbar-toggleable-sm {
-            margin-left: 0;
+        .nav-link {
+            padding: 0.5rem 1rem !important;
         }
 
-        .nav-item.active {
-            a {
+        .nav-link.active {           
                 color: #000;
                 font-weight: 400;
                 text-decoration: none;
-                background-color: #f5f5f5;
-            }
+                background-color: #f5f5f5;            
         }
 
-        .nav-item:hover {
-            a {
+        .nav-link:hover {            
                 text-decoration: none;
                 background-color: #fafafa;
-                color:#000;
-            }
-        }
-    }
-
-    .navbar-nav {
-        .nav-item.active {
-            color: #000;
-            font-weight: 400;
-        }
-    }
-
-    .navbar-toggler {
-        background: #333;
-        width: 2.3rem;
-        height: 2.3rem;
-        padding: .25rem 0;
-        border-radius: 1.15rem;
-
-        .navbar-toggler-icon {
-            color: #fff;
-        }
-    }
-
-    .buttons {
-        padding: 1.5rem 0;
-
-        a {
-            padding-left: .5rem;
-            opacity: .75;
-            transition: opacity ease-in-out 0.1s;
-
-            img {
-                height: 20px;
-            }
-
-            &:hover {
-                opacity: 1;
-                transition: opacity ease-in-out 0.1s;
-            }
+                color: #000;            
         }
     }
 

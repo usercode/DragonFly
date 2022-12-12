@@ -112,48 +112,19 @@ body > header .navbar {
   padding: 1rem 0;
   font-size: 1rem;
 }
-body > header .navbar.navbar-toggleable-sm {
-  margin-left: 0;
+body > header .navbar .nav-link {
+  padding: 0.5rem 1rem !important;
 }
-body > header .navbar .nav-item.active a {
+body > header .navbar .nav-link.active {
   color: #000;
   font-weight: 400;
   text-decoration: none;
   background-color: #f5f5f5;
 }
-body > header .navbar .nav-item:hover a {
+body > header .navbar .nav-link:hover {
   text-decoration: none;
   background-color: #fafafa;
   color: #000;
-}
-body > header .navbar-nav .nav-item.active {
-  color: #000;
-  font-weight: 400;
-}
-body > header .navbar-toggler {
-  background: #333;
-  width: 2.3rem;
-  height: 2.3rem;
-  padding: 0.25rem 0;
-  border-radius: 1.15rem;
-}
-body > header .navbar-toggler .navbar-toggler-icon {
-  color: #fff;
-}
-body > header .buttons {
-  padding: 1.5rem 0;
-}
-body > header .buttons a {
-  padding-left: 0.5rem;
-  opacity: 0.75;
-  transition: opacity ease-in-out 0.1s;
-}
-body > header .buttons a img {
-  height: 20px;
-}
-body > header .buttons a:hover {
-  opacity: 1;
-  transition: opacity ease-in-out 0.1s;
 }
 body > header .title h1 {
   font-size: 2rem;
