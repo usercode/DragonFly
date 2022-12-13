@@ -16,7 +16,7 @@ public abstract class ContentBase : Entity
 
     public override bool Equals(object? obj)
     {
-        if (obj is ContentBase other)
+        if (obj is ContentBase other && obj.GetType() == GetType())
         {
             return Id == other.Id;
         }
@@ -26,7 +26,7 @@ public abstract class ContentBase : Entity
 
     public override int GetHashCode()
     {
-        return Id.GetHashCode();
+        return HashCode.Combine(GetType(), Id);
     }
 
     public override string ToString()

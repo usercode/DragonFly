@@ -2,30 +2,19 @@
 @inject IAssetStorage AssetStorage
 
 <div class="asset-block">
-    <AssetSelector @bind-Asset="Asset" ShowPreview="true" />
+    <AssetSelector Asset="Asset" AssetChanged="x => { Asset = x; Block.AssetId = x?.Id; }" ShowPreview="true" />
 </div>
 
 @code {
 
-	protected override async Task OnInitializedAsync()
-	{
-		if (Block.AssetId != null)
-		{
-			Asset = await AssetStorage.GetAssetAsync(Block.AssetId.Value);
-		}
-	}
+    protected override async Task OnInitializedAsync()
+    {
+        if (Block.AssetId != null)
+        {
+            Asset = await AssetStorage.GetAssetAsync(Block.AssetId.Value);
+        }
+    }
 
-	private Asset _asset;
-
-	[Parameter]
-	public Asset Asset 
-	{
-		get => _asset;
-		set
-		{
-			_asset = value;
-
-			Block.AssetId = _asset?.Id;
-		}
-	}
+    [Parameter]
+    public Asset Asset { get; set; }
 }

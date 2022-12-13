@@ -12,3 +12,22 @@
         @Html.DisplayFor(m => Model.Document.Blocks)
     }
 </div>
+
+@section head {
+    @if (Model.Result.NoFollow == true || Model.Result.NoIndex == true)
+    {
+        List<string> robots = new List<string>(2);
+
+        if (Model.Result.NoIndex)
+        {
+            robots.Add("noindex");
+        }
+
+        if (Model.Result.NoFollow)
+        {
+            robots.Add("nofollow");
+        }
+
+        <meta name="robots" content="@string.Join(",", robots)">
+    }
+}

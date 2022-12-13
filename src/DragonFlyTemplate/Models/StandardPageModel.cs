@@ -18,6 +18,12 @@ public class StandardPageModel : EntityPageModel
     public virtual SlugField Slug { get; set; }
 
     [BoolField(Required = true, Index = true)]
+    public virtual bool NoFollow { get; set; }
+
+    [BoolField(Required = true, Index = true)]
+    public virtual bool NoIndex { get; set; }
+
+    [BoolField(Required = true, Index = true)]
     public virtual bool IsStartPage { get; set; }
 
     [BoolField(Required = true, Index = true)]
