@@ -247,9 +247,12 @@ body > header .title img {
 }
 
 .block {
-  margin-bottom: 1rem;
+  margin-bottom: var(--bs-gutter-x);
 }
 .block:last-child {
+  margin-bottom: 0px;
+}
+.block .alert {
   margin-bottom: 0px;
 }
 

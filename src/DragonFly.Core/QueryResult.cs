@@ -7,18 +7,18 @@ namespace DragonFly;
 /// <summary>
 /// QueryResult
 /// </summary>
-/// <typeparam name="T"></typeparam>
-public class QueryResult<T>
+/// <typeparam name="TModel"></typeparam>
+public class QueryResult<TModel>
 {
     public QueryResult()
     {
-        Items = new List<T>();
+        Items = new List<TModel>();
     }
     
     /// <summary>
     /// Items
     /// </summary>
-    public IList<T> Items { get; set; }
+    public IList<TModel> Items { get; set; }
 
     /// <summary>
     /// Offset

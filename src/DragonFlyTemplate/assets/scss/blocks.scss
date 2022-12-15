@@ -1,7 +1,11 @@
 ﻿.block {
-    margin-bottom: 1rem;
+    margin-bottom: var(--bs-gutter-x);
 
     &:last-child {
+        margin-bottom: 0px;
+    }
+
+    .alert {
         margin-bottom: 0px;
     }
 }

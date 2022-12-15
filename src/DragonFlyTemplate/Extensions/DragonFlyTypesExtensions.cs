@@ -20,7 +20,7 @@ public static class DragonFlyTypesExtensions
             ColorType.Info => "info",
             ColorType.Light => "light",
             ColorType.Dark => "dark",
-            _ => string.Empty
+            _ => null
         };
     }
 
@@ -38,13 +38,13 @@ public static class DragonFlyTypesExtensions
     {
         return alignment switch
         {
-            HorizontalAlignment.Start => "justify-content-start",
+            HorizontalAlignment.Start => null, // "justify-content-start",
             HorizontalAlignment.Center => "justify-content-center",
             HorizontalAlignment.End => "justify-content-end",
             HorizontalAlignment.Around => "justify-content-around",
             HorizontalAlignment.Between => "justify-content-between",
             HorizontalAlignment.Evenly => "justify-content-evenly",
-            _ => string.Empty
+            _ => null
         };
     }
 
@@ -52,10 +52,10 @@ public static class DragonFlyTypesExtensions
     {
         return alignment switch
         {
-            TextAlignment.Left => "text-start",
+            TextAlignment.Left => null, // "text-start",
             TextAlignment.Center => "text-center",
             TextAlignment.Right => "text-end",
-            _ => string.Empty
+            _ => null
         };
     }
 
@@ -71,7 +71,7 @@ public static class DragonFlyTypesExtensions
             CodeType.XML => "xml",
             CodeType.SQL => "sql",
             CodeType.SVG => "svg",
-            _ => string.Empty
+            _ => null
         };
 
         return $"language-{language}";
