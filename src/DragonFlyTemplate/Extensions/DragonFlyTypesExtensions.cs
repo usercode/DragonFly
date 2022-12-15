@@ -8,18 +8,18 @@ namespace DragonFly.AspNetCore;
 
 public static class DragonFlyTypesExtensions
 {
-    public static string ToBootstrapCssClass(this AlertType alertType)
+    public static string ToBootstrapCssClass(this ColorType alertType)
     {
         return alertType switch
         {
-            AlertType.Primary => "alert-primary",
-            AlertType.Secondary => "alert alert-secondary",
-            AlertType.Success => "alert-success",
-            AlertType.Danger => "alert-danger",
-            AlertType.Warning => "alert-warning",
-            AlertType.Info => "alert-info",
-            AlertType.Light => "alert-light",
-            AlertType.Dark => "alert-dark",
+            ColorType.Primary => "primary",
+            ColorType.Secondary => "secondary",
+            ColorType.Success => "success",
+            ColorType.Danger => "danger",
+            ColorType.Warning => "warning",
+            ColorType.Info => "info",
+            ColorType.Light => "light",
+            ColorType.Dark => "dark",
             _ => string.Empty
         };
     }

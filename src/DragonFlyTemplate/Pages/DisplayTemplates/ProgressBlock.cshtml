@@ -1,0 +1,7 @@
+@model ProgressBlock
+
+<div class="block progress-block">
+    <div class="progress">
+        <div class="progress-bar bg-@(Model.ColorType.ToBootstrapCssClass())" role="progressbar" style="width: @(Model.Value)%" aria-valuenow="@Model.Value" aria-valuemin="0" aria-valuemax="100">@(Model.Value)%</div>
+    </div>
+</div>

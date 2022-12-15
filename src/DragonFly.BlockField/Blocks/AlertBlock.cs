@@ -11,7 +11,7 @@ public class AlertBlock : Block, IChildBlocks
 {
     public AlertBlock()
     {
-        AlertType = AlertType.Info;
+        ColorType = ColorType.Info;
         Blocks = new List<Block>();
     }
 
@@ -19,7 +19,7 @@ public class AlertBlock : Block, IChildBlocks
 
     public IList<Block> Blocks { get; set; }
 
-    public AlertType AlertType { get; set; }
+    public ColorType ColorType { get; set; }
 
     public IEnumerable<Block> GetBlocks()
     {

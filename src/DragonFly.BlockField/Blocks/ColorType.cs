@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.BlockField;
 
-public enum AlertType
+public enum ColorType
 {
     Primary,
     Secondary,

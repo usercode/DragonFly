@@ -83,6 +83,10 @@ article .post-meta strong {
   font-size: 0.8rem;
 }
 
+.progress {
+  height: 1.5rem;
+}
+
 img {
   max-width: 100%;
   max-height: 100%;

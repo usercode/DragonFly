@@ -3,7 +3,7 @@
 @if (Model.Blocks.Any())
 {
     <div class="block alert-block">
-        <div class="alert @Model.AlertType.ToBootstrapCssClass()">
+        <div class="alert alert-@Model.ColorType.ToBootstrapCssClass()">
             @Html.DisplayFor(m => Model.Blocks)
         </div>
     </div>

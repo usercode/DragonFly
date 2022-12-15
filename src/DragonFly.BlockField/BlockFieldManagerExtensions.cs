@@ -21,6 +21,7 @@ public static class BlockFieldManagerExtensions
         manager.Add<ReferenceBlock>();
         manager.Add<ContainerBlock>();
         manager.Add<AlertBlock>();
+        manager.Add<ProgressBlock>();
 
         manager.Add<UnknownBlock>();
     }
