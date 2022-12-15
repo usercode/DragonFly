@@ -6,28 +6,32 @@ namespace DragonFly.Query;
 
 public static class FieldQueryExtensions
 {
-    public static ContentItemQuery AddFieldOrder(this ContentItemQuery queryParameters, string field, bool asc = true)
+    public static TContentQuery AddFieldOrder<TContentQuery>(this TContentQuery queryParameters, string field, bool asc = true)
+        where TContentQuery : IContentQuery
     {
         queryParameters.OrderFields.Add(new FieldOrder($"Fields.{field}", asc));
 
         return queryParameters;
     }
 
-    public static ContentItemQuery Top(this ContentItemQuery query, int value)
+    public static TContentQuery Top<TContentQuery>(this TContentQuery query, int value)
+        where TContentQuery : IContentQuery
     {
         query.Top = value;
 
         return query;
     }
 
-    public static ContentItemQuery Skip(this ContentItemQuery query, int value)
+    public static TContentQuery Skip<TContentQuery>(this TContentQuery query, int value)
+        where TContentQuery : IContentQuery
     {
         query.Skip = value;
 
         return query;
     }
 
-    public static ContentItemQuery Published(this ContentItemQuery query, bool value)
+    public static TContentQuery Published<TContentQuery>(this TContentQuery query, bool value)
+        where TContentQuery : IContentQuery
     {
         query.Published = value;
 

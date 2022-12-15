@@ -85,15 +85,15 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
                 }
             }
 
-            ContentItemQuery quey = CreateQuery();
+            ContentQuery quey = CreateQuery();
 
             SearchResult = await ContentService.QueryAsync(quey);
         }
     }
 
-    private ContentItemQuery CreateQuery()
+    private ContentQuery CreateQuery()
     {
-        ContentItemQuery query = new()
+        ContentQuery query = new()
         {
             SearchPattern = SearchPattern,
             Skip = Page * PageSize,
@@ -118,14 +118,14 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
 
     public async Task PublishQueryAsync()
     {
-        ContentItemQuery query = CreateQuery();
+        ContentQuery query = CreateQuery();
 
         await ContentService.PublishQueryAsync(query);
     }
 
     public async Task UnpublishQueryAsync()
     {
-        ContentItemQuery query = CreateQuery();
+        ContentQuery query = CreateQuery();
 
         await ContentService.UnpublishQueryAsync(query);
     }

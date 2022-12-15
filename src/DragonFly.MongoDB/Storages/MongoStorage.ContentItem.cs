@@ -58,7 +58,7 @@ public partial class MongoStorage : IContentStorage
         return items;
     }
 
-    public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
+    public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)
     {
         ContentSchema schema = await GetSchemaAsync(query.Schema);
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name, query.Published);
@@ -340,7 +340,7 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public async Task PublishQueryAsync(ContentItemQuery query)
+    public async Task PublishQueryAsync(ContentQuery query)
     {
         int pageSize = 50;
 
@@ -365,7 +365,7 @@ public partial class MongoStorage : IContentStorage
         }            
     }
 
-    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    public async Task UnpublishQueryAsync(ContentQuery query)
     {
         int pageSize = 50;
 

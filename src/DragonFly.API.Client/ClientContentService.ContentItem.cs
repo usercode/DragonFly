@@ -68,7 +68,7 @@ public partial class ClientContentService : IContentStorage
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery queryParameters)
+    public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery queryParameters)
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, JsonSerializerDefault.Options);
 
@@ -83,14 +83,14 @@ public partial class ClientContentService : IContentStorage
         };
     }
 
-    public async Task PublishQueryAsync(ContentItemQuery query)
+    public async Task PublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/publish", query, JsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    public async Task UnpublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, JsonSerializerDefault.Options);
 

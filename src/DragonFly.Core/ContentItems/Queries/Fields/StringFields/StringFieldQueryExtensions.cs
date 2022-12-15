@@ -9,10 +9,11 @@ namespace DragonFly.Query;
 /// </summary>
 public static class StringFieldQueryExtensions
 {
-    public static ContentItemQuery AddStringQuery(this ContentItemQuery queryParameters, string name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+    public static TContentQuery AddStringQuery<TContentQuery>(this TContentQuery query, string name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+        where TContentQuery : IContentQuery
     {
-        queryParameters.Fields.Add(new StringFieldQuery() { FieldName = name, Pattern = pattern, PatternType = type });
+        query.Fields.Add(new StringFieldQuery() { FieldName = name, Pattern = pattern, PatternType = type });
 
-        return queryParameters;
+        return query;
     }
 }

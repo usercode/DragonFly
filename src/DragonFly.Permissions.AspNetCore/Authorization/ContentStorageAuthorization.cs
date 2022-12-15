@@ -62,7 +62,7 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.PublishAsync(schema, id);
     }
 
-    public async Task PublishQueryAsync(ContentItemQuery query)
+    public async Task PublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
@@ -70,7 +70,7 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.PublishQueryAsync(query);
     }
 
-    public async Task UnpublishQueryAsync(ContentItemQuery query)
+    public async Task UnpublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentUnpublish);
@@ -78,7 +78,7 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.UnpublishQueryAsync(query);
     }
 
-    public async Task<QueryResult<ContentItem>> QueryAsync(ContentItemQuery query)
+    public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
 

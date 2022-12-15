@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Proxy.Query;
 using DragonFly.Query;
 using DragonFly.Storage;
 
@@ -47,11 +48,10 @@ public static class ContentSchemaBuilderExtensions
 
     }
 
-    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, Action<ContentItemQuery>? action = null)
+    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, Action<IContentQuery<TContentType>>? action = null)
         where TContentType : class
     {
-        ContentItemQuery query = new ContentItemQuery();
-        query.Schema = ProxyTypeManager.Default.Get<TContentType>().Name;
+        ContentQuery<TContentType> query = new ContentQuery<TContentType>();
 
         action?.Invoke(query);
 

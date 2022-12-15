@@ -9,6 +9,7 @@ using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
 using DragonFly.MongoDB;
 using DragonFly.Proxy;
+using DragonFly.Proxy.Query;
 using DragonFly.Query;
 using DragonFly.Storage;
 using DragonFlyTemplate;
@@ -25,7 +26,12 @@ builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("G
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
 
 //ASP.NET Core
-builder.Services.Configure<ForwardedHeadersOptions>(options => options.ForwardedHeaders = ForwardedHeaders.All);
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.All;
+    //options.KnownNetworks.Clear();
+    //options.KnownProxies.Clear();
+});
 
 //ImageWizard
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
@@ -73,7 +79,7 @@ await seeding.StartAsync();
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
 cache.PageLayouts = (await contentStorage.QueryAsync<PageLayoutModel>()).Items;
-cache.FooterPages = (await contentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).AddBoolQuery(nameof(StandardPageModel.IsFooterPage), true))).Items;
+cache.FooterPages = (await contentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).AddBoolQuery(x => x.IsFooterPage, true))).Items;
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 

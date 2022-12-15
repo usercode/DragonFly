@@ -5,11 +5,11 @@
 namespace DragonFly.Query;
 
 /// <summary>
-/// ContentItemQuery
+/// ContentQuery
 /// </summary>
-public class ContentItemQuery
+public class ContentQuery : IContentQuery
 {
-    public ContentItemQuery()
+    public ContentQuery()
     {
         Fields = new List<FieldQuery>();
         OrderFields = new List<FieldOrder>();

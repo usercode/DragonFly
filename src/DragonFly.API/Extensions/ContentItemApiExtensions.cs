@@ -31,7 +31,7 @@ static class ContentItemApiExtensions
         groupRoute.MapPost("unpublish", MapUnpublishQuery);
     }
 
-    private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentItemQuery query)
+    private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentQuery query)
     {
         QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
 
@@ -95,12 +95,12 @@ static class ContentItemApiExtensions
         await contentStore.UnpublishAsync(schema, id);
     }
 
-    private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)
+    private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
     {
         await contentStore.PublishQueryAsync(query);
     }
 
-    private static async Task MapUnpublishQuery(HttpContext context, IContentStorage contentStore, ContentItemQuery query)
+    private static async Task MapUnpublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
     {
         await contentStore.UnpublishQueryAsync(query);
     }

@@ -31,5 +31,4 @@ public class StandardPageModel : EntityPageModel
 
     [BlockField]
     public virtual BlockField MainContent { get; set; }
-
 }

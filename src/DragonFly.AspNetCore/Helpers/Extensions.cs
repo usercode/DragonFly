@@ -9,9 +9,9 @@ using Microsoft.Extensions.Primitives;
 namespace DragonFly.AspNetCore;
 public static class Extensions
 {
-    public static ContentItemQuery GetQuery(this HttpRequest request)
+    public static ContentQuery GetQuery(this HttpRequest request)
     {
-        ContentItemQuery result = new ContentItemQuery();
+        ContentQuery result = new ContentQuery();
 
         StringValues skip = request.Query["$skip"];
         StringValues top = request.Query["$top"];
