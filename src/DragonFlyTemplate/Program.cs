@@ -93,6 +93,7 @@ app.UseDragonFly(x =>
     x.MapPermission();
 });
 app.UseDragonFlyManager();
+app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 app.UseStaticFiles();
 app.MapRazorPages();
 app.Run();
