@@ -5,6 +5,7 @@
 using DragonFly;
 using DragonFly.BlockField;
 using DragonFly.Proxy;
+using DragonFly.Proxy.Query;
 using DragonFly.Query;
 using DragonFly.Storage;
 using DragonFlyTemplate.Models;
@@ -29,11 +30,11 @@ public class StandardPage : BasePageModel
     {
         if (string.IsNullOrEmpty(slug))
         {
-            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Published(true).AddBoolQuery(nameof(StandardPageModel.IsStartPage), true));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.AddBoolQuery(x => x.IsStartPage, true));
         }
         else
         {
-            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Published(true).AddSlugQuery(nameof(StandardPageModel.Slug), slug));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.AddSlugQuery(x => x.Slug, slug));
         }        
 
         if (Result == null)

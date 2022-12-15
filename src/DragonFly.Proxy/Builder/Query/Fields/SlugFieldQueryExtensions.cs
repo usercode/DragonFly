@@ -19,4 +19,11 @@ public static class SlugFieldQueryExtensions
 
         return query;
     }
+
+    public static IContentQuery<TModel> AddSlugQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, SlugField>> name, string value)
+    {
+        query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
+
+        return query;
+    }
 }

@@ -17,7 +17,7 @@ public class ContentQuery : IContentQuery
         SearchPattern = string.Empty;
         Skip = 0;
         Top = 25;
-        Published = false;
+        Published = true;
 
         IncludeListFieldsOnly = false;
     }

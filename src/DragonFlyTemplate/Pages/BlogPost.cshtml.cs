@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using DragonFly;
 using DragonFly.Proxy;
 using DragonFly.BlockField;
+using DragonFly.Proxy.Query;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -27,7 +28,7 @@ public class BlogPostPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.Published(true).AddSlugQuery(nameof(BlogPostModel.Slug), slug));
+        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.AddSlugQuery(x => x.Slug, slug));
 
         if (Result == null)
         {
