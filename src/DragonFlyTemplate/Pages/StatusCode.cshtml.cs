@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFlyTemplate.Models;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace DragonFlyTemplate.Pages;
 
@@ -13,5 +14,7 @@ public class StatusCodePage : BasePageModel
     public void OnGet(int statusCode)
     {
         PageStatusCode = statusCode;
+
+        PageTitle = ReasonPhrases.GetReasonPhrase(statusCode);
     }
 }
