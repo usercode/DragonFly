@@ -33,7 +33,7 @@ public static class ContentSchemaBuilderExtensions
     public static async Task DeleteAsync<TContentType>(this IContentStorage storage, Guid id)
         where TContentType : class
     {
-        
+
     }
 
     public static async Task PublishAsync<TContentType>(this IContentStorage storage, Guid id)
@@ -48,20 +48,39 @@ public static class ContentSchemaBuilderExtensions
 
     }
 
-    public static async Task<QueryResult<TContentType>> QueryAsync<TContentType>(this IContentStorage storage, Action<IContentQuery<TContentType>>? action = null)
-        where TContentType : class
+    public static async Task<TModel?> FirstOrDefaultAsync<TModel>(this IContentStorage storage, Action<IContentQuery<TModel>>? action = null)
+        where TModel : class
     {
-        ContentQuery<TContentType> query = new ContentQuery<TContentType>();
+        ContentQuery<TModel> query = new ContentQuery<TModel>();
+
+        action?.Invoke(query);
+
+        query.Top = 1;
+
+        QueryResult<ContentItem> result = await storage.QueryAsync(query);
+
+        if (result.Items.Count == 0)
+        {
+            return null;
+        }
+
+        return result.Items[0].ToModel<TModel>();
+    }
+
+    public static async Task<QueryResult<TModel>> QueryAsync<TModel>(this IContentStorage storage, Action<IContentQuery<TModel>>? action = null)
+        where TModel : class
+    {
+        ContentQuery<TModel> query = new ContentQuery<TModel>();
 
         action?.Invoke(query);
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
-        QueryResult<TContentType> result2 = new QueryResult<TContentType>();
+        QueryResult<TModel> result2 = new QueryResult<TModel>();
         result2.Offset = result.Offset;
         result2.TotalCount = result.TotalCount;
         result2.Count = result.Count;
-        result2.Items = result.Items.Select(x => x.ToModel<TContentType>()).ToList();
+        result2.Items = result.Items.Select(x => x.ToModel<TModel>()).ToList();
 
         return result2;
     }

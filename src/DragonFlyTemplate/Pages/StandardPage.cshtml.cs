@@ -27,23 +27,19 @@ public class StandardPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        QueryResult<StandardPageModel> result;
-
         if (string.IsNullOrEmpty(slug))
         {
-            result = await ContentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).Top(1).AddBoolQuery(nameof(StandardPageModel.IsStartPage), true));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Published(true).AddBoolQuery(nameof(StandardPageModel.IsStartPage), true));
         }
         else
         {
-            result = await ContentStorage.QueryAsync<StandardPageModel>(x => x.Published(true).Top(1).AddSlugQuery(nameof(StandardPageModel.Slug), slug));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Published(true).AddSlugQuery(nameof(StandardPageModel.Slug), slug));
         }        
 
-        if (result.Count == 0)
+        if (Result == null)
         {
             return NotFound();
         }
-
-        Result = result.Items[0];
 
         PageTitle = Result.Title.Value;
 
