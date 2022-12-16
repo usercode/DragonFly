@@ -12,8 +12,13 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/font/bootstrap-icons.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/prismjs/themes/prism.min.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/assets/css/style.min.css" asp-append-version="true">    
+    <link rel="stylesheet" href="~/assets/css/style.min.css" asp-append-version="true">
+    <script src="~/lib/prismjs/prism.js" defer asp-append-version="true"></script>
+    <script src="~/lib/prismjs/components/prism-c.js" defer asp-append-version="true"></script>
+    <script src="~/lib/prismjs/components/prism-csharp.js" defer asp-append-version="true"></script>
+    <script src="~/lib/prismjs/components/prism-hlsl.js" defer asp-append-version="true"></script>
     <script src="~/lib/bootstrap/js/bootstrap.min.js" defer asp-append-version="true"></script>
+
     @RenderSection("head", required: false)
 
     @foreach (PageLayoutModel element in DataCache.PageLayouts)

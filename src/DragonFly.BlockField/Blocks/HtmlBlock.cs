@@ -9,6 +9,16 @@ namespace DragonFly.BlockField;
 /// </summary>
 public class HtmlBlock : Block
 {
+    public HtmlBlock()
+    {
+    }
+
+    public HtmlBlock(string html)
+        : this()
+    {
+        HtmlText = html;
+    }
+
     public override string CssIcon => "fa-regular fa-file-code";
 
     public string? HtmlText { get; set; }

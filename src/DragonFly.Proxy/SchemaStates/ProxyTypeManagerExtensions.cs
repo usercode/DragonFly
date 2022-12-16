@@ -6,9 +6,9 @@ using DragonFly.Proxy;
 
 namespace DragonFly;
 
-public static class SchemaTypeManagerExtensions
+public static class ProxyTypeManagerExtensions
 {
-    public static ProxyTypeManager ProxyTypes(this IDragonFlyApi api)
+    public static ProxyTypeManager Proxy(this IDragonFlyApi api)
     {
         return ProxyTypeManager.Default;
     }

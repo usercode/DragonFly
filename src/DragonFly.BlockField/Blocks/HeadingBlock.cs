@@ -9,6 +9,18 @@ namespace DragonFly.BlockField;
 /// </summary>
 public class HeadingBlock : Block
 {
+    public HeadingBlock()
+    {
+        HeadingType = HeadingType.H1;
+    }
+
+    public HeadingBlock(HeadingType type, string text)
+        : this()
+    {
+        HeadingType = type;
+        Text = text;
+    }
+
     public override string CssIcon => "fa-solid fa-heading";
 
     public string? Text { get; set; }

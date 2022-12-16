@@ -30,9 +30,19 @@ public class ProxyTypeManager
         return _schemaBySchema[schema];
     }
 
-    public ContentSchema GetSchema<T>()
+    public ContentSchema GetSchema<TContentModel>()
+        where TContentModel : IContentModel
     {
-        return GetSchemaByType(typeof(T));
+        return GetSchemaByType(typeof(TContentModel));
     }
 
+    public TContentModel Create<TContentModel>()
+        where TContentModel : IContentModel
+    {
+        ContentSchema schema = GetSchema<TContentModel>();
+
+        ContentItem content = schema.CreateContent();
+
+        return content.ToModel<TContentModel>();
+    }
 }

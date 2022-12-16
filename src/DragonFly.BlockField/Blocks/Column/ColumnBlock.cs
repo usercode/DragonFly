@@ -15,6 +15,12 @@ public class ColumnBlock : Block, IChildBlocks
         Columns = new List<Column>();
     }
 
+    public ColumnBlock(params Column[] columns)
+        : this()
+    {
+        Columns = columns;
+    }
+
     public override string CssIcon => "fa-solid fa-table-columns";
 
     /// <summary>

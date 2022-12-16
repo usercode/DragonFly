@@ -9,6 +9,18 @@ namespace DragonFly.BlockField;
 /// </summary>
 public class CodeBlock : Block
 {
+    public CodeBlock()
+    {
+        CodeType = CodeType.Plain;
+    }
+
+    public CodeBlock(CodeType codeType, string content)
+        : this()
+    {
+        CodeType = codeType;
+        Content = content;
+    }
+
     public override string CssIcon => "fa-solid fa-code";
 
     /// <summary>

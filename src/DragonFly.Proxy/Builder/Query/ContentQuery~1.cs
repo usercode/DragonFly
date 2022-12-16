@@ -7,10 +7,11 @@ using DragonFly.Query;
 
 namespace DragonFly.Proxy.Query;
 
-public class ContentQuery<TModel> : ContentQuery, IContentQuery<TModel>
+public class ContentQuery<TContentModel> : ContentQuery, IContentQuery<TContentModel>
+    where TContentModel : IContentModel
 {
     public ContentQuery()
     {
-        Schema = ProxyTypeManager.Default.GetSchema<TModel>().Name;
+        Schema = ProxyTypeManager.Default.GetSchema<TContentModel>().Name;
     }
 }

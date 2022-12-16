@@ -11,7 +11,7 @@ namespace DragonFly.Proxy;
 public static class ContentSchemaBuilderExtensions
 {
     public static async Task<T?> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
-        where T : class
+        where T : class, IContentModel
     {
         ContentItem? content = await storage.GetContentAsync(schema, id);
 
@@ -23,46 +23,46 @@ public static class ContentSchemaBuilderExtensions
         return ProxyBuilder.CreateProxy<T>(content);
     }
 
-    public static async Task CreateAsync<TContentType>(this IContentStorage storage, TContentType entity)
-        where TContentType : class
+    public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
+        where TContentModel : IContentModel
     {
         await storage.CreateAsync(entity.ToContentItem());
     }
 
-    public static async Task UpdateAsync<TContentType>(this IContentStorage storage, TContentType entity)
-        where TContentType : class
+    public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
+        where TContentModel : IContentModel
     {
         await storage.UpdateAsync(entity.ToContentItem());
     }
 
-    public static async Task DeleteAsync<TContentType>(this IContentStorage storage, Guid id)
-        where TContentType : class
+    public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)
+        where TContentModel : IContentModel
     {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
-        await storage.DeleteAsync(schema.Name, id);
+        await storage.DeleteAsync(schema.Name, model.Id);
     }
 
-    public static async Task PublishAsync<TContentType>(this IContentStorage storage, Guid id)
-        where TContentType : class
+    public static async Task PublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
+        where TContentModel : IContentModel
     {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
-        await storage.PublishAsync(schema.Name, id);
+        await storage.PublishAsync(schema.Name, model.Id);
     }
 
-    public static async Task UnpublishAsync<TContentType>(this IContentStorage storage, Guid id)
-        where TContentType : class
+    public static async Task UnpublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
+        where TContentModel : IContentModel
     {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
-        await storage.UnpublishAsync(schema.Name, id);
+        await storage.UnpublishAsync(schema.Name, model.Id);
     }
 
-    public static async Task<TModel?> FirstOrDefaultAsync<TModel>(this IContentStorage storage, Action<IContentQuery<TModel>>? action = null)
-        where TModel : class
+    public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
+        where TContentModel : class, IContentModel
     {
-        ContentQuery<TModel> query = new ContentQuery<TModel>();
+        ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 
         action?.Invoke(query);
 
@@ -75,23 +75,23 @@ public static class ContentSchemaBuilderExtensions
             return null;
         }
 
-        return result.Items[0].ToModel<TModel>();
+        return result.Items[0].ToModel<TContentModel>();
     }
 
-    public static async Task<QueryResult<TModel>> QueryAsync<TModel>(this IContentStorage storage, Action<IContentQuery<TModel>>? action = null)
-        where TModel : class
+    public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
+        where TContentModel : IContentModel
     {
-        ContentQuery<TModel> query = new ContentQuery<TModel>();
+        ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 
         action?.Invoke(query);
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
-        QueryResult<TModel> result2 = new QueryResult<TModel>();
+        QueryResult<TContentModel> result2 = new QueryResult<TContentModel>();
         result2.Offset = result.Offset;
         result2.TotalCount = result.TotalCount;
         result2.Count = result.Count;
-        result2.Items = result.Items.Select(x => x.ToModel<TModel>()).ToList();
+        result2.Items = result.Items.Select(x => x.ToModel<TContentModel>()).ToList();
 
         return result2;
     }

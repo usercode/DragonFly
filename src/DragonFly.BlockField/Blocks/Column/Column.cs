@@ -15,6 +15,12 @@ public class Column
         Blocks = new List<Block>();
     }
 
+    public Column(params Block[] blocks)
+        : this()
+    {
+        Blocks = blocks;
+    }
+
     /// <summary>
     /// Width
     /// </summary>

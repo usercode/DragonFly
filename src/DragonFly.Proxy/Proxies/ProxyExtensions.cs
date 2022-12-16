@@ -13,10 +13,10 @@ public static class ProxyExtensions
         return ProxyBuilder.CreateProxy(contentItem, type);
     }
 
-    public static T ToModel<T>(this ContentItem contentItem)
-        where T : class
+    public static TContentModel ToModel<TContentModel>(this ContentItem contentItem)
+        where TContentModel : IContentModel
     {
-        return (T)ToModel(contentItem, typeof(T));
+        return (TContentModel)ToModel(contentItem, typeof(TContentModel));
     }
 
     public static object ToModel(this ContentItem contentItem)
@@ -26,8 +26,8 @@ public static class ProxyExtensions
         return ToModel(contentItem, type);
     }
 
-    public static ContentItem ToContentItem<T>(this T obj)
-        where T : class
+    public static ContentItem ToContentItem<TContentModel>(this TContentModel obj)
+        where TContentModel : IContentModel
     {
         if (obj is IContentItemProxy proxy)
         {

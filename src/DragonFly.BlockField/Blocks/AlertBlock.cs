@@ -15,6 +15,13 @@ public class AlertBlock : Block, IChildBlocks
         Blocks = new List<Block>();
     }
 
+    public AlertBlock(ColorType colorType, params Block[] blocks)
+        : this()
+    {
+        ColorType = colorType;
+        Blocks = blocks;
+    }
+
     public override string CssIcon => "fa-solid fa-circle-info";
 
     public IList<Block> Blocks { get; set; }
