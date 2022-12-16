@@ -91,7 +91,7 @@ public partial class MongoStorage : IContentStorage
             }
         }
 
-        var findOptions = new FindOptions<MongoContentItem>()
+        FindOptions<MongoContentItem> findOptions = new FindOptions<MongoContentItem>()
         {
             Limit = query.Top,
             Skip = query.Skip
@@ -103,23 +103,31 @@ public partial class MongoStorage : IContentStorage
             query.OrderFields = schema.OrderFields.ToList();
         }
 
-        //order
-        foreach (FieldOrder orderField in query.OrderFields)
+        //sort
+        if (query.OrderFields.Any())
         {
-            if (orderField.Asc)
+            IList<SortDefinition<MongoContentItem>> sorts = new List<SortDefinition<MongoContentItem>>();
+
+            //order
+            foreach (FieldOrder orderField in query.OrderFields)
             {
-                findOptions.Sort = Builders<MongoContentItem>.Sort.Ascending(orderField.Name);
+                if (orderField.Asc)
+                {
+                    sorts.Add(Builders<MongoContentItem>.Sort.Ascending(orderField.Name));
+                }
+                else
+                {
+                    sorts.Add(Builders<MongoContentItem>.Sort.Descending(orderField.Name));
+                }
             }
-            else
-            {
-                findOptions.Sort = Builders<MongoContentItem>.Sort.Descending(orderField.Name);
-            }
+
+            findOptions.Sort = Builders<MongoContentItem>.Sort.Combine(sorts);
         }
 
         //projection
         if (query.IncludeListFieldsOnly && schema.ListFields.Any())
         {
-            var p = Builders<MongoContentItem>.Projection.Include(x => x.Id);
+            ProjectionDefinition<MongoContentItem> p = Builders<MongoContentItem>.Projection.Include(x => x.Id);
 
             foreach (string field in schema.ListFields)
             {
@@ -129,14 +137,14 @@ public partial class MongoStorage : IContentStorage
             findOptions.Projection = p;
         }
 
-        //FieldQuery
+        //fields
         FieldQueryActionContext converterContext = new FieldQueryActionContext();
 
         foreach (FieldQuery f in query.Fields)
         {
-            IFieldQueryAction converter = MongoQueryManager.Default.GetByType(f.GetType());
+            IFieldQueryAction queryAction = MongoQueryManager.Default.GetByType(f.GetType());
 
-            converter.Apply(f, converterContext);
+            queryAction.Apply(f, converterContext);
         }
 
         filters.AddRange(converterContext.Filters);
@@ -157,7 +165,7 @@ public partial class MongoStorage : IContentStorage
         }
 
         //bundle filter definitions
-        FilterDefinition<MongoContentItem> q;
+        FilterDefinition<MongoContentItem> q = Builders<MongoContentItem>.Filter.Empty;
 
         if (filters.Count >= 2)
         {
@@ -166,10 +174,6 @@ public partial class MongoStorage : IContentStorage
         else if (filters.Count == 1)
         {
             q = filters.First();
-        }
-        else
-        {
-            q = Builders<MongoContentItem>.Filter.Empty;
         }
 
         findOptions.Collation = new Collation(locale: "en", strength: CollationStrength.Primary);

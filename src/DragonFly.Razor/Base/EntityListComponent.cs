@@ -16,7 +16,7 @@ public abstract class EntityListComponent<T> : StartComponentBase
     public EntityListComponent()
     {
         ListMode = EntityListMode.Default;
-        PageSize = 20;
+        PageSize = 25;
     }
 
     [Parameter]

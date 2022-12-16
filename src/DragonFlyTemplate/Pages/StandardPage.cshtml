@@ -7,9 +7,9 @@
         <h1>@Model.Result.Title</h1>
     }
 
-    @if (Model.Document != null)
+    @if (Model.MainContent != null)
     {
-        @Html.DisplayFor(m => Model.Document.Blocks)
+        @Html.DisplayFor(m => Model.MainContent.Blocks)
     }
 </div>
 

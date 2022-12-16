@@ -97,7 +97,8 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         {
             SearchPattern = SearchPattern,
             Skip = Page * PageSize,
-            Top = PageSize
+            Top = PageSize,
+            Published = false
         };
 
         foreach (FieldOrder f in OrderFields)

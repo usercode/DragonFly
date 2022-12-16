@@ -11,6 +11,6 @@ public class ContentQuery<TModel> : ContentQuery, IContentQuery<TModel>
 {
     public ContentQuery()
     {
-        Schema = ProxyTypeManager.Default.Get<TModel>().Name;
+        Schema = ProxyTypeManager.Default.GetSchema<TModel>().Name;
     }
 }

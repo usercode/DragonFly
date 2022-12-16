@@ -10,10 +10,15 @@ namespace DragonFly.Proxy;
 
 public static class ContentSchemaBuilderExtensions
 {
-    public static async Task<T> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
+    public static async Task<T?> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
         where T : class
     {
-        ContentItem content = await storage.GetContentAsync(schema, id);
+        ContentItem? content = await storage.GetContentAsync(schema, id);
+
+        if (content == null)
+        {
+            return null;
+        }
 
         return ProxyBuilder.CreateProxy<T>(content);
     }
@@ -33,19 +38,25 @@ public static class ContentSchemaBuilderExtensions
     public static async Task DeleteAsync<TContentType>(this IContentStorage storage, Guid id)
         where TContentType : class
     {
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
 
+        await storage.DeleteAsync(schema.Name, id);
     }
 
     public static async Task PublishAsync<TContentType>(this IContentStorage storage, Guid id)
         where TContentType : class
     {
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
 
+        await storage.PublishAsync(schema.Name, id);
     }
 
     public static async Task UnpublishAsync<TContentType>(this IContentStorage storage, Guid id)
         where TContentType : class
     {
+        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentType>();
 
+        await storage.UnpublishAsync(schema.Name, id);
     }
 
     public static async Task<TModel?> FirstOrDefaultAsync<TModel>(this IContentStorage storage, Action<IContentQuery<TModel>>? action = null)

@@ -8,9 +8,9 @@ namespace DragonFly.AspNetCore;
 
 public static class DragonFlyTypesExtensions
 {
-    public static string ToBootstrapCssClass(this ColorType alertType)
+    public static string ToBootstrapCssClass(this ColorType colorType)
     {
-        return alertType switch
+        return colorType switch
         {
             ColorType.Primary => "primary",
             ColorType.Secondary => "secondary",
@@ -29,7 +29,7 @@ public static class DragonFlyTypesExtensions
         return width switch
         {
             ColumnWidth.Max => "col-lg",
-            ColumnWidth.Auto => "col-auto",
+            ColumnWidth.Auto => "col-lg-auto",
             _ => $"col-lg-{(int)width}"
         };
     }

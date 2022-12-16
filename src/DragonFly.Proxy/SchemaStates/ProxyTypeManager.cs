@@ -30,7 +30,7 @@ public class ProxyTypeManager
         return _schemaBySchema[schema];
     }
 
-    public ContentSchema Get<T>()
+    public ContentSchema GetSchema<T>()
     {
         return GetSchemaByType(typeof(T));
     }

@@ -12,10 +12,10 @@ namespace DragonFlyTemplate.Models;
 public class StandardPageModel : EntityPageModel
 {
     [StringField(Required = true, ListField = true)]
-    public virtual StringField Title { get; set; }
+    public virtual string Title { get; set; }
 
     [SlugField(Required = true, Index = true)]
-    public virtual SlugField Slug { get; set; }
+    public virtual string Slug { get; set; }
 
     [BoolField(Required = true, Index = true)]
     public virtual bool NoFollow { get; set; }

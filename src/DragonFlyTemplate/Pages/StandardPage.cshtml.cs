@@ -24,7 +24,7 @@ public class StandardPage : BasePageModel
 
     public StandardPageModel Result { get; set; }
 
-    public Document Document { get; private set; }
+    public Document MainContent { get; private set; }
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
@@ -42,9 +42,9 @@ public class StandardPage : BasePageModel
             return NotFound();
         }
 
-        PageTitle = Result.Title.Value;
+        PageTitle = Result.Title;
 
-        Document = await Result.MainContent.GetDocumentAsync();
+        MainContent = await Result.MainContent.GetDocumentAsync();
 
         return Page();
     }
