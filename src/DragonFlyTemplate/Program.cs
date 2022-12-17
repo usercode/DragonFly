@@ -73,8 +73,8 @@ IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
 await api.InitAsync();
 
 //data seeding
-DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
-await seeding.StartAsync();
+//DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
+//await seeding.StartAsync();
 
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
@@ -101,5 +101,6 @@ app.UseDragonFly(x =>
 app.UseDragonFlyManager();
 app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 app.UseStaticFiles();
+app.UseRouting();
 app.MapRazorPages();
 app.Run();

@@ -15,15 +15,11 @@ public static class AssetFieldQueryExtensions
 {
     public static IContentQuery<TModel> AddAssetQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, AssetField>> name, Guid? id)
     {
-        query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
-
-        return query;
+        return query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
     }
 
     public static IContentQuery<TModel> AddAssetQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, Asset?>> name, Guid? id)
     {
-        query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
-
-        return query;
+        return query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
     }
 }

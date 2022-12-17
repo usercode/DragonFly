@@ -46,6 +46,7 @@ public class ContentSchemaBuilder : IContentSchemaBuilder
             schema = new ContentSchema(schemaName);
         }
 
+        schema.Fields.Clear();
         schema.ListFields.Clear();
 
         foreach (PropertyInfo property in type.GetProperties())

@@ -15,15 +15,11 @@ public static class IntegerFieldQueryExtensions
 {
     public static IContentQuery<TModel> AddIntegerQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, IntegerField>> name, int? value, int? minValue = null, int? maxValue = null)
     {
-        query.AddIntegerQuery(ReflectionHelper.GetPropertyName(name), value, minValue, maxValue);
-
-        return query;
+        return query.AddIntegerQuery(ReflectionHelper.GetPropertyName(name), value, minValue, maxValue);
     }
 
     public static IContentQuery<TModel> AddIntegerQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, long?>> name, int? value, int? minValue = null, int? maxValue = null)
     {
-        query.AddIntegerQuery(ReflectionHelper.GetPropertyName(name), value, minValue, maxValue);
-
-        return query;
+        return query.AddIntegerQuery(ReflectionHelper.GetPropertyName(name), value, minValue, maxValue);
     }
 }

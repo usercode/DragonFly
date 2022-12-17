@@ -15,15 +15,11 @@ public static class SlugFieldQueryExtensions
 {
     public static IContentQuery<TModel> AddSlugQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, SlugField>> name, string value)
     {
-        query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
-
-        return query;
+        return query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
     }
 
     public static IContentQuery<TModel> AddSlugQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, string?>> name, string value)
     {
-        query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
-
-        return query;
+        return query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
     }
 }

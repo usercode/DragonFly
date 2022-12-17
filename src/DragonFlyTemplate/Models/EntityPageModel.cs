@@ -6,7 +6,7 @@ using DragonFly.Proxy;
 
 namespace DragonFlyTemplate.Models;
 
-public class EntityPageModel : BasePageModel, IContentModel
+public class EntityPageModel : IContentModel
 {
     public virtual Guid Id { get; }
 
