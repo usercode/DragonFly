@@ -50,7 +50,8 @@
 
 .block-label {
     border: solid 1px #f8f9fa;
-    background-color: #fff3cd;
+    background-color: #4c4c4c;
+    color: #fff;
     display: inline-block;
     padding: 0.275rem 0.75rem;
 }
