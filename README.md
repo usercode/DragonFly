@@ -87,7 +87,7 @@ await contentStorage.CreateAsync(schemaProduct);
 
 //create product by schema
 ContentItem contentProduct = schemaProduct
-                            .CreateContentItem()
+                            .CreateContent()
                             .SetReference("Brand", new ContentItem(Guid.Parse(""), schemaBrand))
                             .SetString("Name", "ProductA")
                             .SetBool("IsAvailable", true)
@@ -185,7 +185,7 @@ services:
       - MongoDB__Username=root
       - MongoDB__Password=YOUR_PASSWORD
       - MongoDB__InitialUsername=admin
-      - MongoDB__InitialPassword=#Password123
+      - MongoDB__InitialPassword=Password123
       - AssetCache__Folder=/cache
       - ImageWizard__Key=YOUR_IMAGEWIZARD_KEY
     depends_on:
