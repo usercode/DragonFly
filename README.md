@@ -17,6 +17,22 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.MongoDB           | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
 
 
+## Getting started
+
+### Prerequisites
+
+* [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
+* Visual Studio 2022
+* MongoDB instance
+
+### Create a new project from templates
+
+To use our project templates you first need to download and install them from NuGet. 
+
+~~~ bash
+dotnet new -i DragonFly.Templates
+~~~
+
 ## DragonFly.Core
 
 ### Schema
