@@ -56,8 +56,6 @@ await api.InitAsync();
 DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
 await seeding.StartAsync();
 
-IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
-
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
 if (env.IsDevelopment())
