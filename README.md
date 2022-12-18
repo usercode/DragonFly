@@ -33,7 +33,7 @@ To use our project templates you first need to download and install them from Nu
 dotnet new -i DragonFly.Templates
 ~~~
 
-After this you can create the projects (Server and Client) with:
+After this you can create the project with:
 
 ~~~ bash
 dotnet new DragonFly
