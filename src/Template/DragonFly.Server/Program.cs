@@ -8,30 +8,17 @@ using DragonFly.AspNetCore;
 using DragonFly.Identity.AspNetCore.MongoDB;
 using DragonFly.ImageWizard;
 using DragonFly.MongoDB;
-using DragonFly.Proxy;
-using DragonFly.Proxy.Query;
-using DragonFly.Query;
 using DragonFly.Storage;
-using DragonFlyTemplate;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
-using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //DragonFly
 builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
-
-//ASP.NET Core
-builder.Services.Configure<ForwardedHeadersOptions>(options =>
-{
-    options.ForwardedHeaders = ForwardedHeaders.All;
-    //options.KnownNetworks.Clear();
-    //options.KnownProxies.Clear();
-});
 
 //ImageWizard
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
@@ -51,8 +38,6 @@ builder.Services.AddDragonFly()
                     {
                         x.AddType<StandardPageModel>();
                         x.AddType<BlogPostModel>();
-                        x.AddType<ProjectModel>();
-                        x.AddType<PageLayoutModel>();
                     })
                     .AddPermissions()
                     ;
@@ -60,11 +45,6 @@ builder.Services.AddDragonFly()
 builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<DataSeeding>();
-//builder.Services.AddHttpsRedirection(x => x.HttpsPort = 443);
-
-DataCache cache = new DataCache();
-
-builder.Services.AddSingleton(cache);
 
 var app = builder.Build();
 
@@ -73,13 +53,10 @@ IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
 await api.InitAsync();
 
 //data seeding
-//DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
-//await seeding.StartAsync();
+DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
+await seeding.StartAsync();
 
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
-
-cache.PageLayouts = (await contentStorage.QueryAsync<PageLayoutModel>()).Items;
-cache.FooterPages = (await contentStorage.QueryAsync<StandardPageModel>(x => x.AddBoolQuery(x => x.IsFooterPage, true))).Items;
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
@@ -89,8 +66,6 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
-app.UseForwardedHeaders();
-app.UseHttpsRedirection();
 app.UseDragonFly(x =>
 {
     x.MapImageWizard(requireAuthentication: false);

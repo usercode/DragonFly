@@ -8,6 +8,7 @@ using Microsoft.Extensions.FileProviders;
 using DragonFly.Proxy;
 using DragonFlyTemplate.Models;
 using DragonFly.BlockField;
+using DragonFly.Query;
 
 namespace DragonFlyTemplate.Startup;
 
@@ -36,6 +37,13 @@ public class DataSeeding
 
     public async Task StartAsync()
     {
+        StandardPageModel r = await DataStorage.FirstOrDefaultAsync<StandardPageModel>();
+
+        if (r != null)
+        {
+            return;
+        }
+
         StandardPageModel startPage = Api.Proxy().Create<StandardPageModel>();
         startPage.IsStartPage = true;
         startPage.Title = "Welcome To DragonFly CMS";
@@ -111,5 +119,4 @@ public class DataSeeding
 
         return asset;
     }
-
 }

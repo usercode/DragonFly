@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Client", "DragonFly.Client\DragonFly.Client.csproj", "{45CF147E-DB4D-423B-80CA-F2BB0E032D72}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Server", "DragonFly.Server\DragonFly.Server.csproj", "{F1C36196-6340-4AF0-89BB-E1D79A23E00A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45CF147E-DB4D-423B-80CA-F2BB0E032D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45CF147E-DB4D-423B-80CA-F2BB0E032D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45CF147E-DB4D-423B-80CA-F2BB0E032D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45CF147E-DB4D-423B-80CA-F2BB0E032D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1C36196-6340-4AF0-89BB-E1D79A23E00A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1C36196-6340-4AF0-89BB-E1D79A23E00A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1C36196-6340-4AF0-89BB-E1D79A23E00A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1C36196-6340-4AF0-89BB-E1D79A23E00A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CDDE0C6F-9855-4929-934D-3422E6B3F643}
+	EndGlobalSection
+EndGlobal

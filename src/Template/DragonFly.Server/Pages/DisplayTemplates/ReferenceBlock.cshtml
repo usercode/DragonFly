@@ -8,11 +8,7 @@
     <div class="block reference-block">
         @{
             object contentModel = content.ToModel();
-
-            if (contentModel is ProjectModel projectModel)
-            {
-                <p>@projectModel.Title (@projectModel.Link)</p>
-            }
+            
         }
     </div>
 }

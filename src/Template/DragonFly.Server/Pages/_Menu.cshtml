@@ -9,7 +9,6 @@
             <div class="navbar-nav">
                 <a class="nav-link @(Model is StandardPage standardPage && standardPage.Result.IsStartPage ? "active" : "")" href="/">Start</a>
                 <a class="nav-link @(Model is BlogPage or BlogPostPage ? "active" : "")" href="/blog">Blog</a>
-                <a class="nav-link @(Model is ProjectsPage ? "active" : "")" href="/projekte">Projekte</a>
             </div>
         </div>
     </div>

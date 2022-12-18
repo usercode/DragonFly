@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "usercode",
+  "classifications": [ "CMS" ],
+  "identity": "DragonFly",
+  "name": "DragonFly CMS",
+  "shortName": "DragonFly",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+   "sources": [
+    {
+      "modifiers": [
+        {
+          "exclude": [ "**/.vs/**", "**/lib/**", "**/Properties/**" ]
+        }
+      ]
+    }
+  ]
+}
