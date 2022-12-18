@@ -23,19 +23,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DragonFly.API\DragonFly.API.csproj" />
-    <ProjectReference Include="..\..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\DragonFly.BlockField.AspNetCore\DragonFly.BlockField.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\DragonFly.Identity.AspNetCore\DragonFly.Identity.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
-    <ProjectReference Include="..\..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
-    <ProjectReference Include="..\..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\DragonFly.Proxy\DragonFly.Proxy.csproj" />
+    <PackageReference Include="DragonFly.API" Version="0.8.2" />
+    <PackageReference Include="DragonFly.AspNetCore" Version="0.8.2" />
+    <PackageReference Include="DragonFly.ImageWizard" Version="0.8.2" />
+    <PackageReference Include="DragonFly.MongoDB" Version="0.8.2" />    
+    <PackageReference Include="DragonFly.Proxy" Version="0.8.2" />
+    <PackageReference Include="DragonFly.BlockField.AspNetCore" Version="0.8.2" />
+    <PackageReference Include="DragonFly.Identity.AspNetCore" Version="0.8.2" />
+    <PackageReference Include="DragonFly.Permissions.AspNetCore" Version="0.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
-  </ItemGroup>  
+  </ItemGroup>
+  
 </Project>
