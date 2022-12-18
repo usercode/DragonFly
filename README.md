@@ -42,13 +42,7 @@ dotnet new DragonFly
 
 ## DragonFly.Core
 
-### Schema
-
-![localhost_44383_manager_schema_a87bd85d-b243-46eb-9aa7-7f1f35456ddb(My) (3)](https://user-images.githubusercontent.com/2958488/135279414-34be752d-9443-46c7-9a05-f0383ce73783.png)
-
-### Content
-
-![localhost_44383_manager_schema_a87bd85d-b243-46eb-9aa7-7f1f35456ddb(My) (4)](https://user-images.githubusercontent.com/2958488/135279635-68e3234f-ede7-4611-a71e-4d145b6a8080.png)
+![grafik](https://user-images.githubusercontent.com/2958488/208325922-9e55b4d0-9e08-4e0a-96c1-855fe1361584.png)
 
 ### Supported fields
 - StringField
