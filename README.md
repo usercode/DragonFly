@@ -30,7 +30,7 @@ Headless CMS based on ASP.NET Core and Blazor
 To use our project templates you first need to download and install them from NuGet. 
 
 ~~~ bash
-dotnet new -i DragonFly.Templates
+dotnet new install DragonFly.Templates
 ~~~
 
 After this you can create the project with:
