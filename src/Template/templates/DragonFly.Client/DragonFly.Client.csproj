@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.ApiKeys.Razor" Version="0.8.2" />
-    <PackageReference Include="DragonFly.BlockField.Razor" Version="0.8.2" />
-    <PackageReference Include="DragonFly.Identity.Razor" Version="0.8.2" />
-    <PackageReference Include="DragonFly.Razor" Version="0.8.2" />
+    <PackageReference Include="DragonFly.ApiKeys.Razor" Version="0.8.3" />
+    <PackageReference Include="DragonFly.BlockField.Razor" Version="0.8.3" />
+    <PackageReference Include="DragonFly.Identity.Razor" Version="0.8.3" />
+    <PackageReference Include="DragonFly.Razor" Version="0.8.3" />
   </ItemGroup>
 
 </Project>

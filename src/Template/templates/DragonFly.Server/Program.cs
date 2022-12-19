@@ -26,15 +26,12 @@ builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("A
 
 //DragonFly
 builder.Services.AddDragonFly()
-                    .AddImageWizard(x =>
-                    {
-                        x.AddOpenGraphLoader();
-                    })
+                    .AddImageWizard()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddProxies(x => 
+                    .AddProxy(x => 
                     {
                         x.AddType<StandardPageModel>();
                         x.AddType<BlogPostModel>();
