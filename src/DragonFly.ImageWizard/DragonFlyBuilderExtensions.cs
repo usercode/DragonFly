@@ -20,12 +20,13 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddTransient<IConfigureOptions<ImageWizardClientSettings>, ConfigureImageWizardClientOptions>();
 
         //ImageWizard
-        IImageWizardBuilder imageWizardBuilder = builder.Services.AddImageWizard()                                                                    
+        IImageWizardBuilder imageWizardBuilder = builder.Services.AddImageWizard()
                                                                     .AddImageSharp()
                                                                     .AddSvgNet()
                                                                     .AddDocNET()
                                                                     .AddDragonFlyLoader()
                                                                     .AddYoutubeLoader()
+                                                                    .AddOpenGraphLoader()
                                                                     .SetFileCache()
                                                                     ;
 

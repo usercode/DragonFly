@@ -23,12 +23,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="ImageWizard.Core" Version="3.7.4" />		
-		<PackageReference Include="ImageWizard.DocNET" Version="3.7.4" />
-		<PackageReference Include="ImageWizard.ImageSharp" Version="3.7.4" />
+    <PackageReference Include="ImageWizard.Client" Version="3.7.4" />
+		<PackageReference Include="ImageWizard.Core" Version="3.7.4" />
+    <PackageReference Include="ImageWizard.ImageSharp" Version="3.7.4" />
+    <PackageReference Include="ImageWizard.DocNET" Version="3.7.4" />		
 		<PackageReference Include="ImageWizard.SvgNet" Version="3.7.4" />
-		<PackageReference Include="ImageWizard.Client" Version="3.7.4" />
-	</ItemGroup>
+    <PackageReference Include="ImageWizard.OpenGraph" Version="3.7.4" />
+  </ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
