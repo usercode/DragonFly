@@ -82,7 +82,7 @@ public class ContentFieldManager
 
     public IEnumerable<Type> GetAllFieldTypes()
     {
-        return _fieldByName.Select(x => x.Value).ToList();
+        return _fieldByName.Select(x => x.Value).OrderBy(x => x.Name).ToList();
     }
 
     public IEnumerable<Type> GetAllQueryTypes()

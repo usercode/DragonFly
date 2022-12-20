@@ -66,6 +66,7 @@ public static class ContentSchemaBuilderExtensions
 
         action?.Invoke(query);
 
+        query.Skip = 0;
         query.Top = 1;
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);

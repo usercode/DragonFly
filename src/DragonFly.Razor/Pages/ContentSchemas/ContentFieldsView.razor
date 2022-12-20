@@ -1,10 +1,38 @@
-﻿<BSButton Color="BSColor.Light" class="add-field" OnClick="x => ShowModalDialog = true"><i class="fas fa-plus"></i> Add Field</BSButton>
+﻿<BSButton Color="BSColor.Light" class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</BSButton>
 
-<ModalWindow Show="ShowModalDialog" Closed="ItemAdded">
-    <ContentFieldSelector @ref="Selector">
+<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+    <Header>Select block</Header>
+    <Content>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Name" />
+            </div>
+        </div>
 
-    </ContentFieldSelector>
-</ModalWindow>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Type</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    @foreach (Type p in ContentFieldManager.Default.GetAllFieldTypes())
+                    {
+                        <div class="col-lg-12">
+                            <BSButton OnClick="x => SelectedFieldType = p" Color="p == SelectedFieldType ? BSColor.Danger : BSColor.Light" style="width:100%; cursor:pointer;margin-bottom:1rem;">
+                                <div class="text-start">
+                                    @p.Name
+                                </div>
+                            </BSButton>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <BSButton OnClick="()=> { _offCanvas.ToggleAsync(); AddItem(); }" Color="BSColor.Primary">Create field</BSButton>
+        </div>
+    </Content>
+</BSOffCanvas>
 
 <BSListGroup>
     @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
@@ -14,27 +42,41 @@
 </BSListGroup>
 
 @code {
+    private BSOffCanvas _offCanvas;
+
     [Parameter]
     public ISchemaElement Schema { get; set; }
 
     bool IsOpen { get; set; }
 
-    public ContentFieldSelector Selector { get; set; }
+    public string Name { get; set; }
 
-    public bool ShowModalDialog { get; set; }
+    public Type SelectedFieldType { get; set; }
 
-    protected void ItemAdded(object sender, bool result)
+    public IEnumerable<Type> FieldTypes { get; private set; }
+
+    protected async Task OpenModalAsync()
     {
-        if (result)
-        {
-            var options = ContentFieldManager.Default.CreateOptions(Selector.ContentFieldType);
+        await _offCanvas.ToggleAsync();
 
-            Schema.Fields.Add(Selector.Name, new SchemaField(Selector.ContentFieldType.Name, options));
+        SelectedFieldType = FieldTypes.FirstOrDefault();
+    }
 
-            ShowModalDialog = false;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
 
-            StateHasChanged();
-        }
+        FieldTypes = ContentFieldManager.Default.GetAllFieldTypes();
+    }
+
+    protected void AddItem()
+    {
+        var options = ContentFieldManager.Default.CreateOptions(SelectedFieldType);
+
+        Schema.Fields.Add(Name, new SchemaField(SelectedFieldType.Name, options));
+
+        StateHasChanged();
+
     }
 
     public void Up(string key)

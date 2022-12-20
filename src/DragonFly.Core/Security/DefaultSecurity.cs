@@ -7,6 +7,5 @@ namespace DragonFly.Security;
 public class DefaultSecurity
 {
     public const string DefaultUsername = "admin";
-    public const string DefaultPassword = "#Password123";
-    public const string DefaultEmail = "info@domain.tld";
+    public const string DefaultPassword = "Password123";
 }

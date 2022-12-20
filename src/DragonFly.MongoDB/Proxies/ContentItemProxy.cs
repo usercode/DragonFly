@@ -6,7 +6,7 @@ using Castle.DynamicProxy;
 
 namespace DragonFly.MongoDB.Proxies;
 
-public class ContentItemProxy
+sealed class ContentItemProxy
 {
     internal static ProxyGenerator Generator = new ProxyGenerator();
 
