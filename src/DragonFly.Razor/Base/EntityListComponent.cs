@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DragonFly.Client.Base;
 
 public abstract class EntityListComponent<T> : StartComponentBase
-    where T : Entity
+    where T : IEntity
 {
     public EntityListComponent()
     {

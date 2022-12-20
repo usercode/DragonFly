@@ -6,9 +6,9 @@ using Castle.DynamicProxy;
 
 namespace DragonFly.Proxy;
 
-internal class ProxyBuilder
+static class ProxyBuilder
 {
-    internal static ProxyGenerator Generator = new ProxyGenerator();
+    private static ProxyGenerator Generator = new ProxyGenerator();
     
     public static object CreateProxy(ContentItem contentItem, Type type)
     {
@@ -22,7 +22,7 @@ internal class ProxyBuilder
     }
 
     public static T CreateProxy<T>(ContentItem contentItem)
-        where T : class
+        where T : class, IContentModel, new()
     {
         return (T)CreateProxy(contentItem, typeof(T));
     }

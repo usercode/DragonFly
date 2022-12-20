@@ -14,7 +14,7 @@ public class ContentSchemaBuilderOptions
     public IList<Type> Types { get; }
 
     public ContentSchemaBuilderOptions AddType<T>()
-        where T : class
+        where T : class, IContentModel, new()
     {
         Types.Add(typeof(T));
 

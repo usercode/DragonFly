@@ -11,7 +11,7 @@ namespace DragonFly.Proxy;
 public static class ContentSchemaBuilderExtensions
 {
     public static async Task<T?> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
-        where T : class, IContentModel
+        where T : class, IContentModel, new()
     {
         ContentItem? content = await storage.GetContentAsync(schema, id);
 
@@ -24,19 +24,19 @@ public static class ContentSchemaBuilderExtensions
     }
 
     public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         await storage.CreateAsync(entity.ToContentItem());
     }
 
     public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         await storage.UpdateAsync(entity.ToContentItem());
     }
 
     public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
@@ -44,7 +44,7 @@ public static class ContentSchemaBuilderExtensions
     }
 
     public static async Task PublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
@@ -52,7 +52,7 @@ public static class ContentSchemaBuilderExtensions
     }
 
     public static async Task UnpublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
 
@@ -60,7 +60,7 @@ public static class ContentSchemaBuilderExtensions
     }
 
     public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
-        where TContentModel : class, IContentModel
+        where TContentModel : class, IContentModel, new()
     {
         ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 
@@ -80,7 +80,7 @@ public static class ContentSchemaBuilderExtensions
     }
 
     public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel, new()
     {
         ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 

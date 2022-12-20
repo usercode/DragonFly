@@ -10,7 +10,7 @@ namespace DragonFly.Razor.Services;
 /// <summary>
 /// ComponentManager
 /// </summary>
-public class ComponentManager
+public sealed class ComponentManager
 {
     private static ComponentManager _default;
 

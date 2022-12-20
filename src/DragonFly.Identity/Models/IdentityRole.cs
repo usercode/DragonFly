@@ -7,7 +7,7 @@ namespace DragonFly.Identity;
 /// <summary>
 /// IdentityRole
 /// </summary>
-public class IdentityRole : Entity
+public class IdentityRole : Entity<IdentityRole>
 {
     public IdentityRole()
     {

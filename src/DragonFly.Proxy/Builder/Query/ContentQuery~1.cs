@@ -8,7 +8,7 @@ using DragonFly.Query;
 namespace DragonFly.Proxy.Query;
 
 public class ContentQuery<TContentModel> : ContentQuery, IContentQuery<TContentModel>
-    where TContentModel : IContentModel
+    where TContentModel : class, IContentModel
 {
     public ContentQuery()
     {

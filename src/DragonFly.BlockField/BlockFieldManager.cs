@@ -9,7 +9,7 @@ namespace DragonFly.BlockField;
 /// <summary>
 /// BlockFieldManager
 /// </summary>
-public class BlockFieldManager
+public sealed class BlockFieldManager
 {
     private static BlockFieldManager? _default;
 

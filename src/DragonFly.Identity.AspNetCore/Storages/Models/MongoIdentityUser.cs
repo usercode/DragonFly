@@ -4,7 +4,7 @@
 
 namespace DragonFly.AspNetCore.Identity.MongoDB.Models;
 
-class MongoIdentityUser : Entity
+class MongoIdentityUser : Entity<MongoIdentityUser>
 {
     public MongoIdentityUser()
     {

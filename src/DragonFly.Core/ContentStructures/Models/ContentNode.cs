@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentNode
 /// </summary>
-public class ContentNode : ContentBase
+public class ContentNode : ContentBase<ContentNode>
 {
     /// <summary>
     /// StructureName

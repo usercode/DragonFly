@@ -7,7 +7,7 @@ namespace DragonFly.Identity;
 /// <summary>
 /// IdentityUser
 /// </summary>
-public class IdentityUser : Entity
+public class IdentityUser : Entity<IdentityUser>
 {
     public IdentityUser()
     {

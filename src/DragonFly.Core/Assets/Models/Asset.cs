@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// Asset
 /// </summary>
-public class Asset : ContentBase
+public class Asset : ContentBase<Asset>
 {
     public Asset()
     {

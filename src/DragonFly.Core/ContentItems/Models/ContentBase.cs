@@ -4,7 +4,8 @@
 
 namespace DragonFly;
 
-public abstract class ContentBase : Entity
+public abstract class ContentBase<T> : Entity<T>
+    where T : IEntity
 {
     public virtual DateTime? CreatedAt { get; set; }
 
@@ -14,23 +15,4 @@ public abstract class ContentBase : Entity
 
     public virtual int Version { get; set; }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is ContentBase other && obj.GetType() == GetType())
-        {
-            return Id == other.Id;
-        }
-
-        return base.Equals(obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return HashCode.Combine(GetType(), Id);
-    }
-
-    public override string ToString()
-    {
-        return Id.ToString();
-    }
 }

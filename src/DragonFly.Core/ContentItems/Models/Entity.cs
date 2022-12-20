@@ -4,7 +4,8 @@
 
 namespace DragonFly;
 
-public abstract class Entity
+public abstract class Entity<T> : IEntity
+    where T : IEntity
 {
     protected Guid _id;
 
@@ -14,4 +15,24 @@ public abstract class Entity
     public virtual Guid Id { get => _id; set => _id = value; }
 
     public virtual bool IsNew() => Id == Guid.Empty;
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is T other)
+        {
+            return Id == other.Id;
+        }
+
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(typeof(T), Id);
+    }
+
+    public override string ToString()
+    {
+        return Id.ToString();
+    }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models;
 
-class MongoApiKey : Entity
+class MongoApiKey : Entity<MongoApiKey>
 {
     public MongoApiKey()
     {

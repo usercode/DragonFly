@@ -10,7 +10,7 @@ namespace DragonFLy.ApiKeys;
 /// <summary>
 /// ApiKey
 /// </summary>
-public class ApiKey : Entity
+public class ApiKey : Entity<ApiKey>
 {
     public ApiKey()
     {

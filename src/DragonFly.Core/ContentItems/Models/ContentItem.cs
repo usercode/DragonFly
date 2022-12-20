@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentItem
 /// </summary>
-public class ContentItem : ContentBase, IContentElement
+public class ContentItem : ContentBase<ContentItem>, IContentElement
 {
     public ContentItem(ContentSchema schema)
     {

@@ -12,7 +12,7 @@ public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptions
 /// <summary>
 /// ContentFieldManager
 /// </summary>
-public class ContentFieldManager
+public sealed class ContentFieldManager
 {
     private static ContentFieldManager? _default;
 

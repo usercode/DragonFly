@@ -21,25 +21,25 @@ public static class ToolbarItemExtensions
     }
 
     public static void AddSaveButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
-        where T : Entity
+        where T : IEntity
     {
         items.Add(new ToolbarItem("Save", BSColor.Success, () => component.SaveAsync()));
     }
 
     public static void AddCreateButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
-        where T : Entity
+        where T : IEntity
     {
         items.Add(new ToolbarItem("Create", BSColor.Success, () => component.SaveAsync()));
     }
 
     public static void AddUpdateButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
-        where T : Entity
+        where T : IEntity
     {
         items.Add(new ToolbarItem("Update", BSColor.Success, () => component.SaveAsync()));
     }
 
     public static void AddDeleteButton<T>(this IList<ToolbarItem> items, IEntityDetailComponent<T> component)
-       where T : Entity
+       where T : IEntity
     {
         items.Add(new ToolbarItem("Delete", BSColor.Danger, () => component.DeleteAsync()));
     }

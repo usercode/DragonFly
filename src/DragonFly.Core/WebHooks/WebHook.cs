@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class WebHook : ContentBase
+public class WebHook : ContentBase<WebHook>
 {
     public virtual string? Name { get; set; }
 

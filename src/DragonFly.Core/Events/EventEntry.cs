@@ -7,7 +7,7 @@ namespace DragonFly.Core.Events;
 /// <summary>
 /// EventEntry
 /// </summary>
-public class EventEntry : ContentBase
+public class EventEntry : ContentBase<EventEntry>
 {
     public EventEntry(string name, string type)
     {

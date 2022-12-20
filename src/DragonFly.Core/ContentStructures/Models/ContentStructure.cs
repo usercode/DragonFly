@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentStructure
 /// </summary>
-public class ContentStructure : ContentBase
+public class ContentStructure : ContentBase<ContentStructure>
 {
     public ContentStructure()
         : this(string.Empty)

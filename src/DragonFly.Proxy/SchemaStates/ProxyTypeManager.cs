@@ -4,7 +4,7 @@
 
 namespace DragonFly.Proxy;
 
-public class ProxyTypeManager
+public sealed class ProxyTypeManager
 {
     private static readonly ProxyTypeManager _default = new ProxyTypeManager();
 
@@ -31,13 +31,13 @@ public class ProxyTypeManager
     }
 
     public ContentSchema GetSchema<TContentModel>()
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel
     {
         return GetSchemaByType(typeof(TContentModel));
     }
 
     public TContentModel Create<TContentModel>()
-        where TContentModel : IContentModel
+        where TContentModel : class, IContentModel, new()
     {
         ContentSchema schema = GetSchema<TContentModel>();
 
