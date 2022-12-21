@@ -3,7 +3,7 @@
     {
         <div class="col-lg-2">
 
-            @if (ContentItem.TryGetField(field, out IContentField contentField))
+            @if (ContentItem.TryGetField(field, out ContentField contentField))
             {
                 @if (contentField is ISingleValueField singleValueField)
                 {

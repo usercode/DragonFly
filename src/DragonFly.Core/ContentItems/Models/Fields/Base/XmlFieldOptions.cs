@@ -26,7 +26,7 @@ public class XmlFieldOptions : ContentFieldOptions
     /// </summary>
     public int MaxLength { get; set; }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new XmlField(DefaultValue);
     }

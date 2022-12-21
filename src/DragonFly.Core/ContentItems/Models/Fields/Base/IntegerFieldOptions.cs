@@ -9,7 +9,7 @@ public class IntegerFieldOptions : SingleValueFieldOptions<long>
     public long? MinValue { get; set; }
     public long? MaxValue { get; set; }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new IntegerField(DefaultValue);
     }

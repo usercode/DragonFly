@@ -10,7 +10,7 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// MongoFieldManager
 /// </summary>
-public class MongoFieldManager
+public sealed class MongoFieldManager
 {
     private static MongoFieldManager? _default;
 

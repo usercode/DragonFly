@@ -20,13 +20,13 @@ public static class MongoDbExtensions
         {
             IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
 
-            IContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
+            ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
 
             contentItem.TrySetField(fieldName, contentField);
         }
     }
 
-    public static BsonValue ToBsonValue(this IContentField contentField)
+    public static BsonValue ToBsonValue(this ContentField contentField)
     {
         IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(contentField.GetType());
 

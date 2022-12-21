@@ -9,7 +9,7 @@ namespace DragonFly.MongoDB.Query;
 /// <summary>
 /// MongoQueryManager
 /// </summary>
-public class MongoQueryManager
+public sealed class MongoQueryManager
 {
     private static MongoQueryManager? _default;
 

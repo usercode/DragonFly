@@ -9,7 +9,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentField
 /// </summary>
-public abstract class ContentField : IContentField
+public abstract class ContentField
 {
     public ContentField()
     {

@@ -6,7 +6,7 @@ namespace DragonFly.BlockField;
 
 public class BlockFieldOptions : ContentFieldOptions
 {
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new BlockField();
     }

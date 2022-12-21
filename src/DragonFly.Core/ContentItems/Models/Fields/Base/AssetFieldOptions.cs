@@ -15,7 +15,7 @@ public class AssetFieldOptions : ContentFieldOptions
 
     public bool ShowPreview { get; set; }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new AssetField();
     }

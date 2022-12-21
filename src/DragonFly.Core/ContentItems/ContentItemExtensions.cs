@@ -11,9 +11,9 @@ namespace DragonFly;
 /// </summary>
 public static class ContentItemExtensions
 {
-    public static IContentField GetField(this IContentElement contentItem, string name)
+    public static ContentField GetField(this IContentElement contentItem, string name)
     {
-        if (contentItem.TryGetField(name, out IContentField? contentField) == false)
+        if (contentItem.TryGetField(name, out ContentField? contentField) == false)
         {
             throw new Exception($"The field '{name}' was not found.");
         }
@@ -22,17 +22,17 @@ public static class ContentItemExtensions
     }
 
     public static T GetField<T>(this IContentElement contentItem, string name)
-       where T : IContentField
+       where T : ContentField
     {
         return (T)GetField(contentItem, name);
     }
 
-    public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out IContentField? contentField)
+    public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
     {
         return contentElement.Fields.TryGetValue(name, out contentField);
     }
 
-    public static bool TrySetField(this IContentElement contentElement, string fieldName, IContentField contentField)
+    public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
     {
         if (contentElement.Fields.ContainsKey(fieldName) == false)
         {
@@ -46,7 +46,7 @@ public static class ContentItemExtensions
 
     public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
     {
-        IContentField field = GetField(contentItem, name);
+        ContentField field = GetField(contentItem, name);
 
         if (field is not SingleValueField<T> singleValueField)
         {
@@ -169,7 +169,7 @@ public static class ContentItemExtensions
         {
             if (contentItem.Fields.ContainsKey(field.Key) == false)
             {
-                IContentField? contentField;
+                ContentField? contentField;
 
                 if (field.Value.Options != null)
                 {

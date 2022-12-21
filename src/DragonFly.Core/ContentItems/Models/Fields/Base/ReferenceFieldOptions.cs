@@ -8,7 +8,7 @@ public class ReferenceFieldOptions : ContentFieldOptions
 {
 
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new ReferenceField();
     }

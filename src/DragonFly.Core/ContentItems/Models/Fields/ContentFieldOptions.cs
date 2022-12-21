@@ -21,5 +21,5 @@ public abstract class ContentFieldOptions
     /// </summary>
     public bool IsSearchable { get; set; }
 
-    public abstract IContentField CreateContentField();
+    public abstract ContentField CreateContentField();
 }

@@ -9,7 +9,7 @@ using MongoDB.Bson.Serialization;
 namespace DragonFly.Storage.MongoDB.Fields;
 
 public class DefaultFieldSerializer<TContentField> : FieldSerializer<TContentField>
-    where TContentField : IContentField, new()
+    where TContentField : ContentField, new()
 {
     public override TContentField Read(SchemaField schemaField, BsonValue bsonValue)
     {

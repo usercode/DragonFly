@@ -6,7 +6,7 @@ namespace DragonFly;
 
 public class EmbedFieldOptions : ContentFieldOptions
 {
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new EmbedField();
     }

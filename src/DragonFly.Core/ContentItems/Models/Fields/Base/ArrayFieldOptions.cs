@@ -29,7 +29,7 @@ public class ArrayFieldOptions : ContentFieldOptions, ISchemaElement
     /// </summary>
     public int? MaxItems { get; set; }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new ArrayField();
     }

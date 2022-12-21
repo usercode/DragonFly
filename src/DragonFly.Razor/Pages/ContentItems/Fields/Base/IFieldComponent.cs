@@ -8,7 +8,7 @@ namespace DragonFly.Razor.Pages.ContentItems.Fields;
 
 public interface IFieldComponent : IComponent
 {
-    IContentField Field { get; }
+    ContentField Field { get; }
 
     ContentFieldOptions Options { get; }
 }

@@ -29,7 +29,7 @@ public class StringFieldOptions : ContentFieldOptions
     /// </summary>
     public int? MaxLength { get; set; }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new StringField(DefaultValue);
     }

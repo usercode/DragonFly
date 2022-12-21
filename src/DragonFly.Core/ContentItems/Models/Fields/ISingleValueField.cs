@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public interface ISingleValueField : IContentField
+public interface ISingleValueField
 {
     object? Value { get; set; }
 

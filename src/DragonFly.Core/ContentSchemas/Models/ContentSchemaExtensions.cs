@@ -19,18 +19,12 @@ public static class ContentSchemaExtensions
 
         if (fieldType.IsSubclassOf(typeof(ContentField)) == false)
         {
-            throw new Exception($"FieldType isn't a valid: {fieldType.Name}");
+            throw new Exception($"The field type '{fieldType.Name}' isn't valid.");
         }
 
         schema.Fields[name] = new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options };
 
         return schema;
-    }
-
-    public static ISchemaElement AddField<TField>(this ISchemaElement schema, string name, ContentFieldOptions? options = null, int sortkey = 0)
-        where TField : IContentField
-    {
-        return AddField(schema, name, typeof(TField), options, sortkey);
     }
 
     public static TContentSchema RemoveField<TContentSchema>(this TContentSchema schema, string name)

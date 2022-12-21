@@ -47,7 +47,7 @@ public sealed class ContentFieldManager
     }
 
     public void Add<TField>()
-        where TField : IContentField
+        where TField : ContentField
     {
         Type contentFieldType = typeof(TField);
 
@@ -91,7 +91,7 @@ public sealed class ContentFieldManager
     }
 
     public string GetContentFieldName<T>()
-        where T : IContentField
+        where T : ContentField
     {
         return GetContentFieldName(typeof(T));
     }
@@ -116,15 +116,15 @@ public sealed class ContentFieldManager
         return null;
     }
 
-    public IContentField CreateField<T>()
-        where T : IContentField
+    public ContentField CreateField<T>()
+        where T : ContentField
     {
         return CreateField(typeof(T));
     }
 
-    public IContentField CreateField(Type t)
+    public ContentField CreateField(Type t)
     {
-        IContentField? field = (IContentField?)Activator.CreateInstance(t);
+        ContentField? field = (ContentField?)Activator.CreateInstance(t);
 
         if (field == null)
         {
@@ -134,7 +134,7 @@ public sealed class ContentFieldManager
         return field;
     }
 
-    public IContentField? CreateField(string? fieldName)
+    public ContentField? CreateField(string? fieldName)
     {
         if (fieldName == null)
         {
@@ -254,7 +254,7 @@ public sealed class ContentFieldManager
     }
 
     public ContentFieldOptions? CreateOptions<TField>()
-        where TField : IContentField
+        where TField : ContentField
     {
         return CreateOptions(typeof(TField));
     }

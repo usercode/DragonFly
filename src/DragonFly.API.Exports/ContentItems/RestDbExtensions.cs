@@ -19,7 +19,7 @@ public static class RestDbExtensions
             return;
         }
 
-        if (content.Fields.TryGetValue(fieldName, out IContentField? contentField))
+        if (content.Fields.TryGetValue(fieldName, out ContentField? contentField))
         {
             //value
             if (jsonNode is JsonValue jsonValue)
@@ -122,7 +122,7 @@ public static class RestDbExtensions
                 }
                 else
                 {
-                    IContentField? c = (IContentField?)jsonObject.Deserialize(contentField.GetType(), JsonSerializerDefault.Options);
+                    ContentField? c = (ContentField?)jsonObject.Deserialize(contentField.GetType(), JsonSerializerDefault.Options);
 
                     if (c != null)
                     {
@@ -164,12 +164,12 @@ public static class RestDbExtensions
         }
     }
 
-    public static JsonNode? ToRestValue(this IContentField field)
+    public static JsonNode? ToRestValue(this ContentField field)
     {
         return ToRestValue(field, true);
     }
 
-    public static JsonNode? ToRestValue(this IContentField field, bool includeNavigationProperties)
+    public static JsonNode? ToRestValue(this ContentField field, bool includeNavigationProperties)
     {
         JsonNode? bsonValue = null;
 

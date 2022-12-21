@@ -11,7 +11,7 @@ public class ColorFieldOptions : ContentFieldOptions
         
     }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new ColorField();
     }

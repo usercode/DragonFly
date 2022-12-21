@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 namespace DragonFly.Razor.Pages.ContentItems.Fields;
 
 public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent
-    where TField : IContentField
+    where TField : ContentField
     where TFieldOptions : ContentFieldOptions
 {
     [Parameter]
@@ -16,7 +16,7 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
     [Parameter]
     public TFieldOptions Options { get; set; }
 
-    IContentField IFieldComponent.Field => Field;
+    ContentField IFieldComponent.Field => Field;
 
     ContentFieldOptions IFieldComponent.Options => Options;
 }

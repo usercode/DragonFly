@@ -4,6 +4,6 @@
 
 namespace DragonFly;
 
-public class ContentFields : Dictionary<string, IContentField>
+public class ContentFields : Dictionary<string, ContentField>
 {
 }

@@ -11,7 +11,7 @@ namespace DragonFly.Razor.Pages.ContentItems.Fields;
 /// </summary>
 /// <typeparam name="TContentField"></typeparam>
 public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
-    where TField : IContentField
+    where TField : ContentField
 {
     [Parameter]
     public TField Field { get; set; }
@@ -19,5 +19,5 @@ public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
     [Parameter]
     public ContentFieldOptions Options { get; set; }
 
-    IContentField IFieldComponent.Field => Field;
+    ContentField IFieldComponent.Field => Field;
 }

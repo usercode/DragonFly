@@ -12,7 +12,7 @@ namespace DragonFly;
 public static class DragonFlyApiExtensions
 {
     public static void RegisterField<TField, TFieldView>(this IDragonFlyApi api)
-        where TField : IContentField
+        where TField : ContentField
         where TFieldView : IFieldComponent
     {
         api.ContentField().Add<TField>();
@@ -20,7 +20,7 @@ public static class DragonFlyApiExtensions
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView>(this IDragonFlyApi api)
-        where TField : IContentField, new()
+        where TField : ContentField, new()
         where TFieldView : IFieldComponent
         where TFieldOptionsView : IFieldOptionsComponent
     {
@@ -29,7 +29,7 @@ public static class DragonFlyApiExtensions
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView, TFieldQueryView>(this IDragonFlyApi api)
-        where TField : IContentField, new()
+        where TField : ContentField, new()
         where TFieldView : IFieldComponent
         where TFieldOptionsView : IFieldOptionsComponent
         where TFieldQueryView : IFieldQueryComponent

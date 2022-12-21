@@ -9,7 +9,7 @@ namespace DragonFly.MongoDB.Index;
 /// <summary>
 /// FieldIndexManager
 /// </summary>
-public class MongoIndexManager
+public sealed class MongoIndexManager
 {
     private static MongoIndexManager? _default;
 
@@ -43,13 +43,13 @@ public class MongoIndexManager
     public IDictionary<Type, FieldIndex> Fields { get; set; }
 
     public void Register<TField>(string? name, bool unique = false)
-        where TField : IContentField
+        where TField : ContentField
     {
         Fields[typeof(TField)] = new FieldIndex(name, unique);
     }
 
     public void Register<TField>(bool unique = false)
-        where TField : IContentField, ISingleValueField
+        where TField : ContentField, ISingleValueField
     {
         Register<TField>(null, unique);
     }

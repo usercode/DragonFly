@@ -13,7 +13,7 @@ public class DateTimeFieldOptions : ContentFieldOptions
     {
     }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new DateTimeField();
     }

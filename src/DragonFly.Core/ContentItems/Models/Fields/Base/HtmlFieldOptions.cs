@@ -13,7 +13,7 @@ public class HtmlFieldOptions : ContentFieldOptions
     {
     }
 
-    public override IContentField CreateContentField()
+    public override ContentField CreateContentField()
     {
         return new HtmlField();
     }

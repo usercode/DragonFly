@@ -16,66 +16,76 @@ internal class ContentItemInterceptor : IInterceptor
 
     private ContentItem ContentItem { get; }
 
+    private static bool IsPropertyContentField(string propertyName, IInvocation invocation)
+    {
+        PropertyInfo? propertyInfo = invocation.TargetType.GetProperty(propertyName);
+
+        if (propertyInfo == null)
+        {
+            throw new Exception($"Property not found: {propertyName}");
+        }
+
+        return propertyInfo.PropertyType.IsSubclassOf(typeof(ContentField));
+    }
+
     public void Intercept(IInvocation invocation)
     {
-        if (invocation.Method.Name.StartsWith("get_"))
+        string methodName = invocation.Method.Name;
+
+        if (methodName.StartsWith("get_") && invocation.Arguments.Length == 0)
         {
-            string propertyName = invocation.Method.Name.Substring(4);
+            string propertyName = methodName.Substring(4);
 
-            if (ContentItem.TryGetField(propertyName, out IContentField? field))
+            if (ContentItem.TryGetField(propertyName, out ContentField? field))
             {
-                if (field is ISingleValueField singleValueField)
+                if (IsPropertyContentField(propertyName, invocation) == false)
                 {
-                    PropertyInfo? propertyInfo = invocation.TargetType.GetProperty(propertyName);
-
-                    if (propertyInfo == null)
-                    {
-                        throw new Exception($"Property not found: {propertyName}");
-                    }
-
-                    if (propertyInfo.PropertyType.IsPrimitive
-                        || propertyInfo.PropertyType == typeof(string)
-                        || (propertyInfo.PropertyType.IsGenericType && propertyInfo.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                    if (field is ISingleValueField singleValueField)
                     {
                         invocation.ReturnValue = singleValueField.Value;
 
                         return;
                     }
+                    else
+                    {
+                        throw new Exception($"The content field '{propertyName}' isn't a SingleValueField. ");
+                    }
                 }
+                else
+                {
+                    invocation.ReturnValue = field;
 
-                invocation.ReturnValue = field;
-
-                return;
+                    return;
+                }
             }
         }
-        else if (invocation.Method.Name.StartsWith("set_"))
+        else if (methodName.StartsWith("set_") && invocation.Arguments.Length == 1)
         {
-            string propertyName = invocation.Method.Name.Substring(4);
+            string propertyName = methodName.Substring(4);
+            object propertyValue = invocation.Arguments[0];
 
-            if (invocation.Arguments.Length > 0)
+            if (IsPropertyContentField(propertyName, invocation) == false)
             {
-                object value = invocation.Arguments[0];
-                Type valueType = value.GetType();
-
-                if (valueType.IsPrimitive 
-                    || valueType == typeof(string) 
-                    || (valueType.IsGenericType && valueType.GetGenericTypeDefinition() == typeof(Nullable<>)))
+                if (ContentItem.TryGetField(propertyName, out ContentField? contentField))
                 {
-                    if (ContentItem.TryGetField(propertyName, out IContentField? contentField))
+                    if (contentField is ISingleValueField singleValueContentField)
                     {
-                        if (contentField is ISingleValueField singleValueContentField)
-                        {
-                            singleValueContentField.Value = value;
+                        singleValueContentField.Value = propertyValue;
 
-                            return;
-                        }
+                        return;
+                    }
+                    else
+                    {
+                        throw new Exception($"The content field '{propertyName}' isn't a SingleValueField. ");
                     }
                 }
             }
-
-            if (ContentItem.TrySetField(propertyName, (IContentField)invocation.Arguments[0]))
+            else
             {
-                return;
+                if (ContentItem.TrySetField(propertyName, (ContentField)propertyValue))
+                {
+                    return;
+                }
             }
         }
 
