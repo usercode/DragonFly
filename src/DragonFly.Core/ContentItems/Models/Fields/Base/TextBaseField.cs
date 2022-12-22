@@ -33,7 +33,7 @@ public abstract class TextBaseField : SingleValueField<string>
         }
 
         //auto trim
-        if (newValue != null)
+        if (AutoTrimValue && newValue != null)
         {
             newValue = newValue.Trim();
         }
