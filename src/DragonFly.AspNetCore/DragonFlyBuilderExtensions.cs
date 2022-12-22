@@ -11,6 +11,7 @@ using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore.Middleware.Builders;
+using Microsoft.Extensions.Hosting;
 
 namespace DragonFly.AspNetCore;
 
@@ -41,6 +42,12 @@ public static class DragonFlyBuilderExtensions
         });
 
         return builder;
+    }
+
+    public static async Task InitDragonFly(this IHost host)
+    {
+        IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
+        await api.InitAsync();
     }
 
     public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyFullBuilder> fullbuilder)

@@ -20,14 +20,14 @@ namespace DragonFly.Client;
 
 public static class DragonFlyClientExtensions
 {
-    public static IDragonFlyBuilder AddDragonFlyClient(this WebAssemblyHostBuilder builder)
+    public static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder builder)
     {
         var uri = new Uri(builder.HostEnvironment.BaseAddress);
 
-        return AddDragonFlyClient(builder, new Uri( $"{uri.Scheme}://{uri.Authority}/dragonfly/"), uri);
+        return AddDragonFly(builder, new Uri( $"{uri.Scheme}://{uri.Authority}/dragonfly/"), uri);
     }
 
-    private static IDragonFlyBuilder AddDragonFlyClient(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
+    private static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
     {
         DragonFlyBuilder builder = new DragonFlyBuilder(hostBuilder.Services);
 
@@ -72,7 +72,7 @@ public static class DragonFlyClientExtensions
         return builder;
     }
 
-    public static async Task UseDragonFlyClient(this WebAssemblyHost host)
+    public static async Task InitDragonFly(this WebAssemblyHost host)
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
         await api.InitAsync();

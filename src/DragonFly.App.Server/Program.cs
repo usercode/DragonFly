@@ -48,8 +48,7 @@ builder.Services.AddDragonFly()
 
 var app = builder.Build();
 
-IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
-await api.InitAsync();
+await app.InitDragonFly();
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
