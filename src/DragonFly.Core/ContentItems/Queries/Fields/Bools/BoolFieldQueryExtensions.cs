@@ -10,7 +10,7 @@ namespace DragonFly.Query;
 public static class BoolFieldQueryExtensions
 {
     public static TContentQuery AddBoolQuery<TContentQuery>(this TContentQuery query, string name, bool? value)
-        where TContentQuery : IContentQuery
+        where TContentQuery : ContentQuery
     {
         query.Fields.Add(new BoolFieldQuery() { FieldName = name, Value = value});
 

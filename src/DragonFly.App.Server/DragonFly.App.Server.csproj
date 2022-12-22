@@ -23,12 +23,10 @@
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.BlockField.AspNetCore\DragonFly.BlockField.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.GraphQL\DragonFly.GraphQL.csproj" />
     <ProjectReference Include="..\DragonFly.Identity.AspNetCore\DragonFly.Identity.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions.AspNetCore\DragonFly.Permissions.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.Proxy\DragonFly.Proxy.csproj" />
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
   </ItemGroup>
 

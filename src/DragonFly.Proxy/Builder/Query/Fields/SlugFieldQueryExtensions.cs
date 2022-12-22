@@ -13,12 +13,14 @@ namespace DragonFly.Proxy.Query;
 /// </summary>
 public static class SlugFieldQueryExtensions
 {
-    public static IContentQuery<TModel> AddSlugQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, SlugField>> name, string value)
+    public static ContentQuery<TContentModel> AddSlugQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, SlugField>> name, string value)
+        where TContentModel : class, IContentModel
     {
         return query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
     }
 
-    public static IContentQuery<TModel> AddSlugQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, string?>> name, string value)
+    public static ContentQuery<TContentModel> AddSlugQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, string?>> name, string value)
+        where TContentModel : class, IContentModel
     {
         return query.AddSlugQuery(ReflectionHelper.GetPropertyName(name), value);
     }

@@ -7,7 +7,7 @@ namespace DragonFly.Query;
 /// <summary>
 /// ContentQuery
 /// </summary>
-public class ContentQuery : IContentQuery
+public class ContentQuery
 {
     public ContentQuery()
     {

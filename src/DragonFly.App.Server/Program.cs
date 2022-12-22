@@ -37,14 +37,11 @@ builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("A
 builder.Services.AddDragonFly()
                     .AddImageWizard()
                     .AddRestApi()
-                    .AddGraphQLApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
-                    .AddProxy(o => { })
                     .AddBlockField()
                     .AddApiKeys()
-                    .AddPermissions()
-                    ;
+                    .AddPermissions();
 
 var app = builder.Build();
 
@@ -59,14 +56,12 @@ if (env.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseDragonFly(x =>
-                    {
-                        x.MapImageWizard();
-                        x.MapApiKey();
-                        x.MapIdentity();
-                        x.MapRestApi();
-                        x.MapPermission();
-                    });
+app.UseDragonFly(x => x
+                        .MapImageWizard()
+                        .MapApiKey()
+                        .MapIdentity()
+                        .MapRestApi()
+                        .MapPermission());
 app.UseDragonFlyManager();
 app.UseSwagger();
 app.UseSwaggerUI();

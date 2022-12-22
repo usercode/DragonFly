@@ -13,12 +13,14 @@ namespace DragonFly.Proxy.Query;
 /// </summary>
 public static class StringFieldQueryExtensions
 {
-    public static IContentQuery<TModel> AddStringQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, StringField>> name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+    public static ContentQuery<TContentModel> AddStringQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, StringField>> name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+        where TContentModel : class, IContentModel
     {
         return query.AddStringQuery(ReflectionHelper.GetPropertyName(name), pattern, type);
     }
 
-    public static IContentQuery<TModel> AddStringQuery<TModel>(this IContentQuery<TModel> query, Expression<Func<TModel, string?>> name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+    public static ContentQuery<TContentModel> AddStringQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, string?>> name, string pattern, StringFieldQueryType type = StringFieldQueryType.Equals)
+        where TContentModel : class, IContentModel
     {
         return query.AddStringQuery(ReflectionHelper.GetPropertyName(name), pattern, type);
     }    

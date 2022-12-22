@@ -14,8 +14,7 @@ builder.AddDragonFly()
             .AddRestApi()
             .AddBlockField()
             .AddIdentity()
-            .AddApiKeys()            
-            ;
+            .AddApiKeys();
 
 WebAssemblyHost host = builder.Build();
 

@@ -59,7 +59,7 @@ public static class ContentSchemaBuilderExtensions
         await storage.UnpublishAsync(schema.Name, model.Id);
     }
 
-    public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
+    public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel, new()
     {
         ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
@@ -79,7 +79,7 @@ public static class ContentSchemaBuilderExtensions
         return result.Items[0].ToModel<TContentModel>();
     }
 
-    public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<IContentQuery<TContentModel>>? action = null)
+    public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel, new()
     {
         ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
