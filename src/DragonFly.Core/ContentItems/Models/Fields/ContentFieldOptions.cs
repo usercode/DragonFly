@@ -9,8 +9,6 @@ namespace DragonFly;
 /// </summary>
 public abstract class ContentFieldOptions
 {
-    public string Type => GetType().Name;
-
     /// <summary>
     /// IsRequired
     /// </summary>

@@ -2,12 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.BlockField;
 using DragonFly.BlockField.Razor.Pages;
 using DragonFly.BlockField.Razor.Pages.Blocks;
 using DragonFly.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.BlockField.Razor;
+namespace DragonFly.Client;
 
 public static class DragonFlyBuilderExtensions
 {
@@ -17,7 +18,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.RegisterField<BlockField, BlockFieldView>();
+            api.RegisterField<BlockField.BlockField, BlockFieldView>();
 
             api.RegisterBlock<ColumnBlock, ColumnBlockView>();
             api.RegisterBlock<AssetBlock, AssetBlockView>();

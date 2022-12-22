@@ -28,10 +28,12 @@ public static class RestContentItemConverter
             {
                 RestContentSchema? restSchema = restContentItem.Schema.Deserialize<RestContentSchema>();
                 
-                if (restSchema != null)
+                if (restSchema == null)
                 {
-                    schema = restSchema.ToModel();
+                    throw new Exception("Unknown schema");
                 }
+
+                schema = restSchema.ToModel();
             }
         }
 

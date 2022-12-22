@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Razor.Assets;
 
-public class AssetPreviewManager
+public sealed class AssetPreviewManager
 {
     private static AssetPreviewManager _default;
 

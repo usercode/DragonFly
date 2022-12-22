@@ -5,19 +5,18 @@
 using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.Builders;
-using DragonFly.Core.ContentStructures;
 using DragonFly.Razor;
 using DragonFly.Razor.Assets;
 using DragonFly.Razor.Modules;
 using DragonFly.Razor.Services;
-using DragonFly.Storage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core;
+namespace DragonFly.Client;
 
 public static class DragonFlyClientExtensions
 {
@@ -35,7 +34,6 @@ public static class DragonFlyClientExtensions
         builder.AddRazorRouting();
 
         builder.Services.AddBlazoredToast();
-
         builder.Services.AddBlazorStrap();
 
         DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
@@ -50,12 +48,6 @@ public static class DragonFlyClientExtensions
         builder.Services.AddSingleton(AssetPreviewManager.Default);
 
         builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
-        builder.Services.AddTransient<ClientContentService>();
-        builder.Services.AddTransient<IContentStorage, ClientContentService>();
-        builder.Services.AddTransient<IStructureStorage, ClientContentService>();
-        builder.Services.AddTransient<IWebHookStorage, ClientContentService>();
-        builder.Services.AddTransient<IAssetStorage, ClientContentService>();
-        builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
@@ -69,17 +61,20 @@ public static class DragonFlyClientExtensions
             api.Module().Add<SettingsModule>();
         });
 
+        builder.Init(api =>
+        {
+            foreach (ClientModule module in api.Module().Modules)
+            {
+                module.Init(api);
+            }
+        });
+
         return builder;
     }
 
-    public static void UseDragonFlyClient(this WebAssemblyHost host)
+    public static async Task UseDragonFlyClient(this WebAssemblyHost host)
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
-        api.InitAsync().GetAwaiter().GetResult();
-
-        foreach (ClientModule module in api.Module().Modules)
-        {
-            module.Init(api);
-        }
+        await api.InitAsync();
     }
 }

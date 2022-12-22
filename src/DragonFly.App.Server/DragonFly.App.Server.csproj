@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.ApiKeys.AspNetCore\DragonFly.ApiKeys.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.ApiKeys.AspNetCore\DragonFly.ApiKeys.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />    
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.BlockField.AspNetCore\DragonFly.BlockField.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Identity.Razor;
 using DragonFly.Builders;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;
@@ -11,7 +12,7 @@ using DragonFly.Razor;
 using DragonFly.Security;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.AspNetCore.Identity.Razor;
+namespace DragonFly.Client;
 
 public static class DragonFlyBuilderExtensions
 {

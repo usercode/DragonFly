@@ -10,11 +10,6 @@ namespace DragonFly.Query;
 public abstract class FieldQuery
 {
     /// <summary>
-    /// Type
-    /// </summary>
-    public virtual string Type => GetType().Name;
-
-    /// <summary>
     /// FieldName
     /// </summary>
     public virtual string? FieldName { get; set; }

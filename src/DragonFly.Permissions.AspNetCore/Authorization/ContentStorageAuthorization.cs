@@ -48,7 +48,7 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.DeleteAsync(schema, id);
     }
 
-    public async Task<ContentItem> GetContentAsync(string schema, Guid id)
+    public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentRead);
 

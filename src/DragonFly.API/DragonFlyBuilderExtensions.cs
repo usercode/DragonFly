@@ -7,28 +7,28 @@ using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
 using DragonFly.AspNetCore.API.Middlewares.Assets;
 using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.Builders;
-using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.Middleware;
-using Microsoft.AspNetCore.Http.Json;
-using DragonFly.AspNetCore.API.Exports.Json;
-using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using DragonFly.API.Exports.Json;
+using Microsoft.AspNetCore.Http.Json;
+using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization;
+using DragonFly.AspNetCore.API.Exports.Json;
 
 namespace DragonFly.AspNetCore;
 
-public static class StartupExtensions
+public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
     {
         builder.Services.Configure<JsonOptions>(opt =>
         {
-            foreach (JsonConverter converter in JsonSerializerDefault.Options.Converters)
-            {
-                opt.SerializerOptions.Converters.Add(converter);
-            }
+            opt.SerializerOptions.TypeInfoResolver = JsonSerializerDefault.Options.TypeInfoResolver;
         });
+
+        builder.PostInit<JsonDerivedTypesAction>();
 
         return builder;
     }

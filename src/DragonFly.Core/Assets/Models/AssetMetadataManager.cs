@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// AssetMetadataManager
 /// </summary>
-public class AssetMetadataManager
+public sealed class AssetMetadataManager
 {
     private IDictionary<string, Type> _byName;
     private IDictionary<Type, string> _byType;

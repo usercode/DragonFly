@@ -7,8 +7,9 @@ using DragonFly.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFLy.ApiKeys;
 using DragonFly.ApiKeys.Razor.Services;
+using DragonFly.ApiKeys.Razor;
 
-namespace DragonFly.ApiKeys.Razor;
+namespace DragonFly.Client;
 
 public static class DragonFlyBuilderExtensions
 {
