@@ -15,7 +15,7 @@ namespace DragonFly.AspNetCore.Identity.Middlewares.Users;
 
 internal static class UserExtensions
 {
-    public static void MapUserApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapUserApi(this IDragonFlyEndpointBuilder endpoints)
     {
         endpoints.MapGet("identity/user/{id:guid}", MapGet);
         endpoints.MapPost("identity/user/query", MapQuery);

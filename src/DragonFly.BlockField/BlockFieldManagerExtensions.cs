@@ -13,7 +13,7 @@ public static class BlockFieldManagerExtensions
         manager.Add<SlideshowBlock>();
         manager.Add<TextBlock>();
         manager.Add<HtmlBlock>();
-        manager.Add<YouTubeBlock>();        
+        manager.Add<YouTubeBlock>();
         manager.Add<CodeBlock>();
         manager.Add<OpenGraphBlock>();
         manager.Add<HeadingBlock>();

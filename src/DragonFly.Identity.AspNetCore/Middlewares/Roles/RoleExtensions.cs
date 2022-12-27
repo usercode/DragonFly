@@ -13,7 +13,7 @@ namespace DragonFly.AspNetCore.Identity.Middlewares.Roles;
 
 internal static class RoleExtensions
 {
-    public static IDragonFlyEndpointRouteBuilder MapRoleApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static IDragonFlyEndpointBuilder MapRoleApi(this IDragonFlyEndpointBuilder endpoints)
     {
         endpoints.MapGet("identity/role/{id:guid}", MapGet);
         endpoints.MapPost("identity/role", MapCreate);

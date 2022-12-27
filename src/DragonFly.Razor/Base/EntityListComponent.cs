@@ -23,7 +23,7 @@ public abstract class EntityListComponent<T> : StartComponentBase
     public EntityListMode ListMode { get; set; }   
 
     [Inject]
-    public ClientContentService ContentService { get; set; }
+    public IDataStorage ContentService { get; set; }
 
     [Parameter]
     public Action<T> ItemSelected { get; set; }

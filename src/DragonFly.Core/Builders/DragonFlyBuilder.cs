@@ -20,5 +20,4 @@ public class DragonFlyBuilder : IDragonFlyBuilder
     /// Services
     /// </summary>
     public IServiceCollection Services { get; }
-
 }

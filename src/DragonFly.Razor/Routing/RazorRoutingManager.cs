@@ -10,22 +10,9 @@ namespace DragonFly.Razor;
 /// <summary>
 /// RazorRoutingManager
 /// </summary>
-public class RazorRoutingManager
+public sealed class RazorRoutingManager
 {
-    private static RazorRoutingManager? _default;
-
-    public static RazorRoutingManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new RazorRoutingManager();
-            }
-
-            return _default;
-        }
-    }
+    public static RazorRoutingManager Default { get; } = new RazorRoutingManager();
 
     private RazorRoutingManager()
     {

@@ -107,7 +107,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override async Task DeleteActionAsync()
     {
-        await ContentService.DeleteAsync(Entity);
+        await ContentService.DeleteAsync(Entity.Schema.Name, Entity.Id);
 
         NavigationManager.NavigateTo($"content/{EntityType}");
     }

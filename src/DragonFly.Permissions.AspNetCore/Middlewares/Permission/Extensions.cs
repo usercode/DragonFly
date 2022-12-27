@@ -13,7 +13,7 @@ namespace DragonFly.Permissions.AspNetCore;
 
 internal static class Extensions
 {
-    public static void MapPermissionItemApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapPermissionItemApi(this IDragonFlyEndpointBuilder endpoints)
     {
         endpoints.MapPost("permission/query", MapQuery);
     }

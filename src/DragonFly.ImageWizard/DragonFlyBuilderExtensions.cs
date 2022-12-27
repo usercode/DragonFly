@@ -4,16 +4,22 @@
 
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.Builders;
+using DragonFly.ImageWizard;
 using ImageWizard;
 using ImageWizard.Client;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using System;
 
-namespace DragonFly.ImageWizard;
+namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {
+    /// <summary>
+    /// Adds the ImageWizard service to transform assets like resizing images or converting pdf files to image.
+    /// <br /><br />
+    /// Default services:<br />
+    /// <see cref="IAssetPreviewUrlService"/> -> <see cref="ImageWizardAssetUrlService"/>
+    /// </summary>
     public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder, Action<IImageWizardBuilder>? action = null)
     {
         builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetUrlService>();
@@ -37,7 +43,7 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyFullBuilder MapImageWizard(this IDragonFlyFullBuilder builder, bool requireAuthentication = true)
+    public static IDragonFlyMiddlewareBuilder MapImageWizard(this IDragonFlyMiddlewareBuilder builder, bool requireAuthentication = true)
     {
         if (requireAuthentication)
         {

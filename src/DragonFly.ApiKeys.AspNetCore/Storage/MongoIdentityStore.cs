@@ -35,7 +35,6 @@ class MongoIdentityStore
         ApiKeys.Indexes.CreateOne(new CreateIndexModel<MongoApiKey>(Builders<MongoApiKey>.IndexKeys.Ascending(x => x.Name)));
         ApiKeys.Indexes.CreateOne(new CreateIndexModel<MongoApiKey>(Builders<MongoApiKey>.IndexKeys.Ascending(x => x.Value)));
         ApiKeys.Indexes.CreateOne(new CreateIndexModel<MongoApiKey>(Builders<MongoApiKey>.IndexKeys.Ascending(x => x.Permissions)));
-
     }
 
     public MongoDbOptions Options { get; }

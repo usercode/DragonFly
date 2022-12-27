@@ -8,7 +8,6 @@ using DragonFly.Builders;
 using DragonFly.Permissions.AspNetCore;
 using DragonFly.Permissions.AspNetCore.Content;
 using DragonFly.Permissions.AspNetCore.Providers;
-using DragonFly.Storage;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +18,13 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public static class DragonFlyBuilderExtensions
 {
+    /// <summary>
+    /// Adds a permission layer to storage services.
+    /// <br /><br />
+    /// Decorated services:
+    /// <br />
+    /// <see cref="ISchemaStorage"/> <see cref="IContentStorage"/>, <see cref="IAssetStorage"/>
+    /// </summary>
     public static IDragonFlyBuilder AddPermissions(this IDragonFlyBuilder builder)
     {
         builder.Services.Decorate<IContentStorage, ContentStorageAuthorization>();
@@ -36,7 +42,7 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyFullBuilder MapPermission(this IDragonFlyFullBuilder builder)
+    public static IDragonFlyMiddlewareBuilder MapPermission(this IDragonFlyMiddlewareBuilder builder)
     {
         builder.Endpoints(endpoints => endpoints.MapPermissionItemApi());
 

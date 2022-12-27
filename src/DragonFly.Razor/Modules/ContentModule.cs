@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Razor.Extensions;
 using DragonFly.Razor.Pages.ContentItems.Fields;
 using DragonFly.Razor.Pages.ContentItems.Query;
 using DragonFly.Razor.Pages.ContentSchemas.Fields;
@@ -29,6 +30,7 @@ public class ContentModule : ClientModule
         api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();
         api.RegisterField<ReferenceField, ReferenceFieldView, ReferenceFieldOptionsView, ReferenceFieldQueryView>();
         api.RegisterField<BoolField, BoolFieldView, BoolFieldOptionsView>();
+        api.RegisterField<ComponentField, ComponentFieldView, ComponentFieldOptionsView>();
         api.RegisterField<DateTimeField, DateTimeFieldView>();
         api.RegisterField<StringField, StringFieldView, StringFieldOptionsView, StringFieldQueryView>();
         api.RegisterField<FloatField, FloatFieldView, FloatFieldOptionsView>();

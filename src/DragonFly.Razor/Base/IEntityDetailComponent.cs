@@ -13,7 +13,7 @@ public interface IEntityDetailComponent<T>
 {
 
     [Inject]
-    public ClientContentService ContentService { get; set; }
+    public IDataStorage ContentService { get; set; }
 
     public virtual bool IsNewEntity => EntityId == Guid.Empty;
 

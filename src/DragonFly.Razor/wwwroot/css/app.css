@@ -4,6 +4,14 @@
   flex: 1;
 }
 
+.query-title {
+  margin-top: 1.5rem;
+}
+
+.query-title:first-child {
+  margin-top: 0px;
+}
+
 .asset-detail {
   display: flex;
   flex-direction: column;
@@ -262,11 +270,9 @@ app {
   .main .top-row:not(.auth) {
     display: none;
   }
-
   .main .top-row.auth {
     justify-content: space-between;
   }
-
   .main .top-row a, .main .top-row .btn-link {
     margin-left: 0;
   }
@@ -275,15 +281,12 @@ app {
   app {
     flex-direction: row;
   }
-
   .sidebar {
     flex: 0;
   }
-
   .navbar-toggler {
     display: none;
   }
-
   .sidebar .collapse {
     /* Never collapse the sidebar for wide screens */
     display: block;

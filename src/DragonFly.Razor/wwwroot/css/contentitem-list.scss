@@ -3,3 +3,11 @@
     flex-direction: column;
     flex: 1;
 }
+
+.query-title {
+    margin-top: 1.5rem;
+}
+
+.query-title:first-child {
+    margin-top: 0px;
+}

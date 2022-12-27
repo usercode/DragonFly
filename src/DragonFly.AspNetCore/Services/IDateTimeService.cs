@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.AspNetCore.Services;
+namespace DragonFly;
 
 public interface IDateTimeService
 {

@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.Identity.AspNetCore.MongoDB;
+namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {
@@ -67,7 +67,7 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyFullBuilder MapIdentity(this IDragonFlyFullBuilder builder)
+    public static IDragonFlyMiddlewareBuilder MapIdentity(this IDragonFlyMiddlewareBuilder builder)
     {
         builder.PreAuthBuilder(x => x.UseMiddleware<LoginMiddleware>());
         builder.Endpoints(x => x.MapIdentityApi());

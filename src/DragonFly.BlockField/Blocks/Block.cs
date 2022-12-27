@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Text.Json.Serialization;
+
 namespace DragonFly.BlockField;
 
 /// <summary>
@@ -9,6 +11,7 @@ namespace DragonFly.BlockField;
 /// </summary>
 public abstract class Block
 {
+    [JsonPropertyOrder(-1)]
     public virtual string Type => GetType().Name;
 
     private string? _name;

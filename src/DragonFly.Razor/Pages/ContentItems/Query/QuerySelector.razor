@@ -2,7 +2,7 @@
 
 @if (ContentItemList.Schema != null)
 {
-    <h4>Order</h4>
+    <h4 class="query-title">Order</h4>
 
     <BSListGroup>
     @foreach (FieldOrder field in ContentItemList.OrderFields)
@@ -32,7 +32,7 @@
         </BSDropdown>
     }
 
-    <h4>Filter</h4>
+    <h4 class="query-title">Filter</h4>
     <BSListGroup>
 	
     @foreach (var fieldQuery in ContentItemList.QueryFields)

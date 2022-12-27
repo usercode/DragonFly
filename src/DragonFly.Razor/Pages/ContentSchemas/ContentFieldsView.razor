@@ -1,7 +1,7 @@
 ﻿<BSButton Color="BSColor.Light" class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</BSButton>
 
 <BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
-    <Header>Select block</Header>
+    <Header>Add field</Header>
     <Content>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
@@ -17,7 +17,7 @@
                     @foreach (Type p in ContentFieldManager.Default.GetAllFieldTypes())
                     {
                         <div class="col-lg-12">
-                            <BSButton OnClick="x => SelectedFieldType = p" Color="p == SelectedFieldType ? BSColor.Danger : BSColor.Light" style="width:100%; cursor:pointer;margin-bottom:1rem;">
+                            <BSButton OnClick="x => SelectedFieldType = p" Color="p == SelectedFieldType ? BSColor.Danger : BSColor.Light" style="width:100%; cursor:pointer;margin-bottom:0.5rem;">
                                 <div class="text-start">
                                     @p.Name
                                 </div>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="mb-3">
-            <BSButton OnClick="()=> { _offCanvas.ToggleAsync(); AddItem(); }" Color="BSColor.Primary">Create field</BSButton>
+            <BSButton OnClick="()=> { _offCanvas.ToggleAsync(); AddItem(); }" Color="BSColor.Primary">Add field</BSButton>
         </div>
     </Content>
 </BSOffCanvas>

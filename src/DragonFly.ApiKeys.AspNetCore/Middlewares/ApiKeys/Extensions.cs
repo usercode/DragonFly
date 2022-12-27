@@ -14,7 +14,7 @@ namespace DragonFLy.ApiKeys.AspNetCore.Middlewares;
 
 static class Extensions
 {
-    public static void MapApiKeyApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static void MapApiKeyApi(this IDragonFlyEndpointBuilder endpoints)
     {
         endpoints.MapGet("apikey/{id:guid}", MapGet);
         endpoints.MapPost("apikey/query", MapQuery);

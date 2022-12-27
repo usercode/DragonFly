@@ -5,14 +5,12 @@
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.Identity.AspNetCore.MongoDB;
-using DragonFly.ImageWizard;
 using DragonFly.MongoDB;
-using DragonFLy.ApiKeys;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -26,14 +24,23 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddEndpointsApiExplorer();
 
+//DragonFly options
 builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
 
-//ImageWizard
+//ImageWizard options
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
 builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
 
-//DragonFly
+//ASP.NET
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.All;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
+//DragonFly services
 builder.Services.AddDragonFly()
                     .AddImageWizard()
                     .AddRestApi()
@@ -45,6 +52,7 @@ builder.Services.AddDragonFly()
 
 var app = builder.Build();
 
+//init DragonFly
 await app.InitDragonFly();
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
@@ -55,6 +63,7 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseDragonFly(x => x
                         .MapImageWizard()

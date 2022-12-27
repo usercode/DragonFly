@@ -4,7 +4,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly;
+namespace DragonFly.API;
 
 /// <summary>
 /// DragonFlyApi

@@ -2,23 +2,45 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.BlockField.Json;
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
+using DragonFly.BlockField.Json;
 
 namespace DragonFly.BlockField;
 
 /// <summary>
 /// BlockFieldSerializer
 /// </summary>
-public class BlockFieldSerializer
+public static class BlockFieldSerializer
 {
     static BlockFieldSerializer()
     {
         Options = new JsonSerializerOptions();
         Options.Converters.Add(new BlockFieldConverter());
         Options.Converters.Add(new JsonStringEnumConverter());
+
+        //JsonPolymorphismOptions optionsDerivedTypes = new JsonPolymorphismOptions() { TypeDiscriminatorPropertyName = "Type" };
+
+        //foreach (Type blockFieldType in BlockFieldManager.Default.GetAllBlockTypes())
+        //{
+        //    optionsDerivedTypes.DerivedTypes.Add(new JsonDerivedType(blockFieldType, blockFieldType.Name));
+        //}
+
+        //Options.TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+        //{
+        //    Modifiers =
+        //            {
+        //                (JsonTypeInfo typeInfo) =>
+        //                {
+        //                    if (typeInfo.Type == typeof(Block))
+        //                    {
+        //                        typeInfo.PolymorphismOptions = optionsDerivedTypes;
+        //                    }
+        //                }
+        //            }
+        //};
     }
 
     /// <summary>
@@ -34,7 +56,7 @@ public class BlockFieldSerializer
         }
 
         MemoryStream jsonStream = new MemoryStream();
-        
+
         await JsonSerializer.SerializeAsync(jsonStream, document, Options);
 
         jsonStream.Seek(0, SeekOrigin.Begin);
@@ -66,8 +88,6 @@ public class BlockFieldSerializer
         }
 
         mem.Seek(0, SeekOrigin.Begin);
-
-        //string json = Encoding.UTF8.GetString(mem.ToArray());
 
         Document? result = await JsonSerializer.DeserializeAsync<Document>(mem, Options);
 

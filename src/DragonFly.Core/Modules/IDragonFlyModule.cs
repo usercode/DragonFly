@@ -28,6 +28,4 @@ public interface IDragonFlyModule
     /// Version
     /// </summary>
     Version Version { get; }
-
-
 }

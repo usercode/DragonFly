@@ -11,11 +11,10 @@ using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using DragonFly.API.Exports.Json;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json.Serialization;
 using DragonFly.AspNetCore.API.Exports.Json;
+using DragonFly.API.Json;
 
 namespace DragonFly.AspNetCore;
 
@@ -28,12 +27,13 @@ public static class DragonFlyBuilderExtensions
             opt.SerializerOptions.TypeInfoResolver = JsonSerializerDefault.Options.TypeInfoResolver;
         });
 
-        builder.PostInit<JsonDerivedTypesAction>();
+        builder.Init(api => api.JsonField().AddDefaults());
+        builder.PostInit<CreateMissingJsonFieldSerializer>();
 
         return builder;
     }
 
-    public static IDragonFlyFullBuilder MapRestApi(this IDragonFlyFullBuilder builder)
+    public static IDragonFlyMiddlewareBuilder MapRestApi(this IDragonFlyMiddlewareBuilder builder)
     {
         builder.Endpoints(endpoints =>
         {

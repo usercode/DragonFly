@@ -5,7 +5,6 @@
 using DragonFly.AspNet.Middleware;
 using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Assets.Query;
-using DragonFly.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;

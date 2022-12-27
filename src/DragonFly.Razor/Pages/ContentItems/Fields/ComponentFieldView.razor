@@ -1,0 +1,49 @@
+﻿@inherits FieldComponent<ComponentField, ComponentFieldOptions>
+@inject NavigationManager NavigationManager
+
+<BSModal @ref="LiveDemo" IsFullScreen="true">
+    <Header>Modal title</Header>
+    <Content>
+        <ContentItemTypeList ListMode="EntityListMode.Single" ItemSelected="x => { LiveDemo.HideAsync(); Field.ContentComponent = x.CreateEmbeddedContent(); StateHasChanged(); }"></ContentItemTypeList>
+    </Content>
+    <Footer>
+        <BSButton Color="BSColor.Secondary" @onclick="@(() => LiveDemo.HideAsync())">Close</BSButton>
+        <BSButton Color="BSColor.Primary" @onclick="@(() => LiveDemo.HideAsync())">Save Changes</BSButton>
+    </Footer>
+</BSModal>
+
+<div class="embed-field">
+    <BSListGroup>
+        <BSListGroupItem>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                @if (Field.ContentComponent != null)
+                {
+                    <span class="badge badge-primary" style="margin-right:12px">@Field.ContentComponent.Schema.Name</span>
+                }
+                <BSButton Color="BSColor.Light" OnClick="e => OpenModal()"><i class="fas fa-plus"></i></BSButton>
+            </div>
+            <div>
+                @if (Field.ContentComponent != null)
+                {
+                    <div>
+                        <ContentItemFields Content="Field.ContentComponent" Schema="Field.ContentComponent.Schema" />
+                    </div>
+                }
+            </div>
+        </BSListGroupItem>
+    </BSListGroup>
+</div>
+
+@code {
+    private BSModal LiveDemo { get; set; }
+
+    protected void RemoveItem()
+    {
+        Field.ContentComponent = null;
+    }
+
+    public void OpenModal()
+    {
+        LiveDemo.ShowAsync();
+    }
+}

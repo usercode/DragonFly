@@ -11,25 +11,10 @@ namespace DragonFly.BlockField;
 /// </summary>
 public sealed class BlockFieldManager
 {
-    private static BlockFieldManager? _default;
-
     /// <summary>
     /// Default
     /// </summary>
-    public static BlockFieldManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new BlockFieldManager();
-
-                _default.Add<UnknownBlock>();
-            }
-
-            return _default;
-        }
-    }
+    public static BlockFieldManager Default { get; } = new BlockFieldManager();
 
     private IDictionary<string, Type> _elementsByName;
     private IDictionary<Type, string> _elementsByType;
@@ -61,7 +46,7 @@ public sealed class BlockFieldManager
     public void Add<TBlock>()
         where TBlock : Block, new()
     {
-        string typeName = new TBlock().Type;
+        string typeName = typeof(TBlock).Name;
 
         _elementsByName[typeName] = typeof(TBlock);
         _elementsByType[typeof(TBlock)] = typeName;

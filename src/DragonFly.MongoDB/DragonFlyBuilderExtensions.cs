@@ -7,6 +7,7 @@ using DragonFly.Core.ContentStructures;
 using DragonFly.MongoDB;
 using DragonFly.MongoDB.Index;
 using DragonFly.MongoDB.Query;
+using DragonFly.MongoDB.Serializers;
 using DragonFly.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
@@ -15,6 +16,17 @@ namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {
+    /// <summary>
+    /// Adds MongoDB storage service.<br />
+    /// <br />
+    /// Default services:<br />
+    /// <see cref="IDataStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="IContentStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="ISchemaStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="IAssetStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="IAssetFolderStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="IWebHookStorage"/> -> <see cref="MongoStorage"/><br />
+    /// </summary>
     public static IDragonFlyBuilder AddMongoDbStorage(this IDragonFlyBuilder builder, Action<MongoDbOptions>? options = null)
     {
         if (options != null)
@@ -38,6 +50,9 @@ public static class DragonFlyBuilderExtensions
         //fix for nested field options (inside ArrayFieldOptions)
         builder.PreInit(api => api.ContentField().Added += ContentFieldAdded);
 
+        builder.Init(api => api.MongoField().AddDefaults());
+
+        builder.PostInit<CreateMissingMongoFieldSerializer>();
         builder.PostInit<CreateIndexAction>();
 
         return builder;

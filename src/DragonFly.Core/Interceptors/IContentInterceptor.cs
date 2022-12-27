@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Storage;
-
 namespace DragonFly;
 
 public interface IContentInterceptor

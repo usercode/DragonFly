@@ -18,7 +18,7 @@ public static class MongoDbExtensions
 
         if (schema.Fields.TryGetValue(fieldName, out SchemaField? schemaField))
         {
-            IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
+            IMongoFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(ContentFieldManager.Default.GetContentFieldType(schemaField.FieldType));
 
             ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
 
@@ -28,7 +28,7 @@ public static class MongoDbExtensions
 
     public static BsonValue ToBsonValue(this ContentField contentField)
     {
-        IFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(contentField.GetType());
+        IMongoFieldSerializer fieldSerializer = MongoFieldManager.Default.GetByFieldType(contentField.GetType());
 
         return fieldSerializer.Write(contentField);
     }

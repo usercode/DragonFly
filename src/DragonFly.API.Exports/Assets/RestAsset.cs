@@ -14,7 +14,7 @@ public class RestAsset : RestContentBase
 {
     public RestAsset()
     {
-        _metaddata = new Dictionary<string, JsonNode>();
+        _metaddata = new JsonObject();
     }
 
     /// <summary>
@@ -62,10 +62,10 @@ public class RestAsset : RestContentBase
     /// </summary>
     public virtual RestAssetFolder Folder { get; set; }
 
-    private IDictionary<string, JsonNode> _metaddata;
+    private JsonObject _metaddata;
 
     /// <summary>
     /// Metaddata
     /// </summary>
-    public virtual IDictionary<string, JsonNode> Metaddata { get => _metaddata; set => _metaddata = value; }
+    public virtual JsonObject Metaddata { get => _metaddata; set => _metaddata = value; }
 }

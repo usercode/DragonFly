@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using Microsoft.Extensions.Options;
 
 namespace DragonFly.Proxy;

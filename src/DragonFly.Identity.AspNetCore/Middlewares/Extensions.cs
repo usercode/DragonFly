@@ -15,7 +15,7 @@ namespace DragonFly.AspNetCore.Identity.Middlewares;
 
 internal static class Extensions
 {
-    public static IDragonFlyEndpointRouteBuilder MapIdentityApi(this IDragonFlyEndpointRouteBuilder endpoints)
+    public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
     {
         endpoints.MapGet("identity/CurrentUser", CurrentUserAsync);
         endpoints.MapUserApi();

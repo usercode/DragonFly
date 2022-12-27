@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Assets;
+using DragonFly.Razor.Extensions;
 using DragonFly.Razor.Pages.Assets.Metadata;
 using DragonFly.Razor.Pages.Assets.Preview;
 

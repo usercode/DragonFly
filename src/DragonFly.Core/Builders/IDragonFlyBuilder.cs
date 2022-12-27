@@ -9,5 +9,4 @@ namespace DragonFly.Builders;
 public interface IDragonFlyBuilder
 {
     IServiceCollection Services { get; }
-
 }

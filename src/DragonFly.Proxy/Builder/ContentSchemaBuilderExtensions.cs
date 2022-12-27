@@ -3,8 +3,6 @@
 // MIT License
 
 using DragonFly.Proxy.Query;
-using DragonFly.Query;
-using DragonFly.Storage;
 
 namespace DragonFly.Proxy;
 

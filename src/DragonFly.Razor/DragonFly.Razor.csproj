@@ -43,14 +43,16 @@
 		<None Include="..\logo.png" Pack="true" PackagePath="" />		
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.API.Client\DragonFly.API.Client.csproj" />
-	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MinVer" Version="4.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
   </ItemGroup>
 </Project>

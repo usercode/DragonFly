@@ -4,7 +4,7 @@
 
 using DragonFly.Core.ContentStructures;
 
-namespace DragonFly.Storage;
+namespace DragonFly;
 
 public interface IDataStorage : IContentStorage, ISchemaStorage, IAssetStorage, IWebHookStorage, IStructureStorage
 {

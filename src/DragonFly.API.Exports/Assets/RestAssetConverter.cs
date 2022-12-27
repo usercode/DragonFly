@@ -65,7 +65,7 @@ public static class RestAssetConverter
             restAsset.Folder = asset.Folder.ToRest();
         }
 
-        foreach(var metadata in asset.Metaddata)
+        foreach (var metadata in asset.Metaddata)
         {
             restAsset.Metaddata.Add(metadata.Key, JsonSerializer.SerializeToNode(metadata.Value, metadata.Value.GetType()));
         }

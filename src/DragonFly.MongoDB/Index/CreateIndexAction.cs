@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB.Index;

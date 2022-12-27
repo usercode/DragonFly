@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using DragonFly.Core.Permissions;
 using DragonFly.Identity;
 using DragonFly.MongoDB;

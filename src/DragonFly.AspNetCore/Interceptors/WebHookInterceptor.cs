@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Storage;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
@@ -99,9 +98,9 @@ public class WebHookInterceptor : IContentInterceptor
 
             QueryString query = QueryString.Create(new KeyValuePair<string, StringValues>[]
             {
-                new ("schema", new StringValues(contentItem.Schema.Name)),
-                new ("id", new StringValues(contentItem.Id.ToString())),
-                new ("publish", new StringValues("false"))
+                new ("schema", contentItem.Schema.Name),
+                new ("id", contentItem.Id.ToString()),
+                new ("publish", "false")
             });
 
             Uri url = new Uri(item.TargetUrl + query);
