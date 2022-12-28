@@ -40,6 +40,17 @@ After this you can create the project with:
 dotnet new DragonFly
 ~~~
 
+If you have a remote MongoDB instance, you need to add some appsettings:
+
+~~~ json
+"MongoDB": {
+    "Hostname": "localhost",
+    "Database": "DragonFly_App",
+    "Port": 27017,
+    "Username": "admin",
+    "Password": "Password123"
+  },
+~~~
 
 ## DragonFly
 
@@ -143,7 +154,7 @@ app.UseRouting();
 app.Run();
 ```
 
-### DragonFly.Client (Blazor Client App)
+### DragonFly.Client (Blazor)
 
 ```csharp
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
