@@ -15,7 +15,9 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.Proxy             | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Proxy.svg)](https://www.nuget.org/packages/DragonFly.Proxy/) |
 | DragonFly.ImageWizard       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
 | DragonFly.MongoDB           | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
-
+| DragonFly.Identity       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Identity.svg)](https://www.nuget.org/packages/DragonFly.Identity/) |
+| DragonFly.ApiKeys       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.ApiKeys.svg)](https://www.nuget.org/packages/DragonFly.ApiKeys/) |
+| DragonFly.Permissions       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Permissions.svg)](https://www.nuget.org/packages/DragonFly.Permissions/) |
 
 ## Getting started
 
