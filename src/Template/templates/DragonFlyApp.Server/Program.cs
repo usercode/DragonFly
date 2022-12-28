@@ -6,6 +6,8 @@ using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
+using DragonFlyTemplate.Models;
+using DragonFlyTemplate.Pages;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
@@ -30,6 +32,9 @@ builder.Services.AddDragonFly()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
+                    .AddProxy(options => options
+                                            .AddType<StandardPageModel>()
+                                            .AddType<BlogPostModel>())
                     .AddApiKeys()
                     .AddPermissions();
 
