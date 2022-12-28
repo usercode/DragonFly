@@ -10,7 +10,7 @@ Headless CMS based on ASP.NET Core and Blazor
 | DragonFly.AspNetCore        | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.AspNetCore.svg)](https://www.nuget.org/packages/DragonFly.AspNetCore/) |
 | DragonFly.API               | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.API.svg)](https://www.nuget.org/packages/DragonFly.API/) |
 | DragonFly.API.Client        | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.API.Client.svg)](https://www.nuget.org/packages/DragonFly.API.Client/) |
-| DragonFly.Razor             | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Razor.svg)](https://www.nuget.org/packages/DragonFly.Razor/) |
+| DragonFly.Client            | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Client.svg)](https://www.nuget.org/packages/DragonFly.Client/) |
 | DragonFly.BlockField        | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.BlockField.svg)](https://www.nuget.org/packages/DragonFly.BlockField/) |
 | DragonFly.Proxy             | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Proxy.svg)](https://www.nuget.org/packages/DragonFly.Proxy/) |
 | DragonFly.ImageWizard       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.ImageWizard.svg)](https://www.nuget.org/packages/DragonFly.ImageWizard/) |
@@ -50,7 +50,7 @@ dotnet new DragonFly
 - BoolField
 - AssetField
 - ReferenceField
-- EmbedField
+- ComponentField
 - ArrayField
 - DateField
 - IntegerField
@@ -58,8 +58,8 @@ dotnet new DragonFly
 - GeoLocationField
 - SlugField
 - XmlField
-- XHtmlField
 - HtmlField
+- BlockField (HeadingBlock, TextBlock, HtmlBlock, CodeBlock, ContainerBlock, ColumnBlock, AssetBlock, ReferenceBlock,..)
 
 How to create new content schema and content item
 ```csharp
@@ -93,7 +93,7 @@ ContentItem contentProduct = schemaProduct
                             .SetBool("IsAvailable", true)
                             .SetFloat("Price", 9.99)
                             .SetTextArea("Description", "...")
-                            .AddArrayFieldItem("Attributes", schemaProduct, item => item
+                            .AddArrayItem("Attributes", schemaProduct, item => item
                                                                     .SetString("Name", "Size")
                                                                     .SetString("Value", "M"));
 
@@ -104,29 +104,23 @@ await contentStorage.CreateAsync(contentProduct);
 ### DragonFly.AspNetCore	
 
 ```csharp
- public void ConfigureServices(IServiceCollection services)
- {
-      services.Configure<DragonFlyOptions>(Configuration.GetSection("General"));
-      services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
+     builder.Services.Configure<DragonFlyOptions>(Configuration.GetSection("General"));
+     builder.Services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
 
-      //DragonFly
-      services.AddDragonFly()
-                  .AddImageWizard()
-                  .AddRestApi()
-                  .AddGraphQLApi()
-                  .AddMongoDbStorage()
-                  .AddMongoDbIdentity()
-                  .AddSchemaBuilder()
-                  .AddBlockField()
-                  .AddApiKeys()
-                  .AddPermissions()
- }
-```
+     //add DragonFly services
+     builder.Services.AddDragonFly()
+                        .AddImageWizard()
+                        .AddRestApi()
+                        .AddMongoDbStorage()
+                        .AddMongoDbIdentity()
+                        .AddBlockField()
+                        .AddApiKeys()
+                        .AddPermissions();
 
-```csharp
-public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonFlyApi api)
-{
-    api.Init();
+    var app = builder.Build();
+
+    //init DragonFly
+    await app.InitDragonFly();
 
     if (env.IsDevelopment())
     {
@@ -134,7 +128,6 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonF
         app.UseWebAssemblyDebugging();
     }
 
-    app.UseHttpsRedirection();
     app.UseDragonFly(
                    x =>
                    {
@@ -145,26 +138,27 @@ public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDragonF
                         x.MapPermission();
                    });
     app.UseDragonFlyManager();
- }
+    app.UseRouting();
+    app.Run();
 ```
 
 ### DragonFly.Razor (Blazor Client App)
 
 ```csharp
-public static async Task Main(string[] args)
-{
     var builder = WebAssemblyHostBuilder.CreateDefault(args);
     builder.RootComponents.Add<DragonFly.App.Client.App>("app");
 
     //Register DragonFly components
-    builder.AddDragonFlyClient();
+    builder.AddDragonFly()
+              .AddRestApi()
+              .AddBlockField()
+              .AddIdentity()
+              .AddApiKeys();
 
-    WebAssemblyHost build = builder.Build();
+    WebAssemblyHost host = builder.Build();
 
-    build.UseDragonFlyClient();
-
-    await build.RunAsync();
-}
+    await host.InitDragonFly();
+    await host.RunAsync();
 ```
 ## Docker
 ```yaml

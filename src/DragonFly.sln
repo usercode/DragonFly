@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.AspNetCore", "Dra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.GraphQL", "DragonFly.GraphQL\DragonFly.GraphQL.csproj", "{3B6A5D24-45FD-4B1F-B10F-4B87F309075A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Razor", "DragonFly.Razor\DragonFly.Razor.csproj", "{073480CD-6268-4400-B982-99C8FCB67E5B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Client", "DragonFly.Client\DragonFly.Client.csproj", "{073480CD-6268-4400-B982-99C8FCB67E5B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{B11DF721-439E-487C-A3ED-73BE6DBD5D1F}"
 EndProject
@@ -35,13 +35,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlockField", "BlockField", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.BlockField", "DragonFly.BlockField\DragonFly.BlockField.csproj", "{16623E6E-AD33-4D80-B0B4-C471308467F0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.BlockField.Razor", "DragonFly.BlockField.Razor\DragonFly.BlockField.Razor.csproj", "{0D3EDA02-877D-408F-93A2-6B764BB96ABB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.BlockField.Client", "DragonFly.BlockField.Client\DragonFly.BlockField.Client.csproj", "{0D3EDA02-877D-408F-93A2-6B764BB96ABB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{A246B1F9-8899-46A0-A551-46CAA8D4C62E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Identity", "DragonFly.Identity\DragonFly.Identity.csproj", "{877B3E58-49B2-4D84-9E0B-758AE24D84AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Identity.Razor", "DragonFly.Identity.Razor\DragonFly.Identity.Razor.csproj", "{3ED47640-8ED9-44D8-BBF3-469B4E9C403B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Identity.Client", "DragonFly.Identity.Client\DragonFly.Identity.Client.csproj", "{3ED47640-8ED9-44D8-BBF3-469B4E9C403B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Security", "Security", "{C6FCFE0D-07C3-4380-881E-EA87150E6C7F}"
 EndProject
@@ -61,11 +61,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys", "Dragon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.AspNetCore", "DragonFly.ApiKeys.AspNetCore\DragonFly.ApiKeys.AspNetCore.csproj", "{38D4D806-1FBD-4175-B7B4-2EC72CF131D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.Razor", "DragonFly.ApiKeys.Razor\DragonFly.ApiKeys.Razor.csproj", "{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.Client", "DragonFly.ApiKeys.Client\DragonFly.ApiKeys.Client.csproj", "{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Permissions.Client", "DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj", "{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Permissions.Razor", "DragonFly.Permissions.Razor\DragonFly.Permissions.Razor.csproj", "{B15DE6BD-E879-4DE4-8916-0B8A91791D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Permissions.Client", "DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj", "{B15DE6BD-E879-4DE4-8916-0B8A91791D8B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{551D7A23-7864-4CA8-B1F1-A58B25EA210E}"
 EndProject
@@ -88,7 +86,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.API.Exports", "Dr
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{62FD0D6F-5AA7-40C2-866B-93F962C0FB76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.Proxy.Tests", "DragonFly.Proxy.Tests\DragonFly.Proxy.Tests.csproj", "{CA8FEA67-C9C2-4B21-9FD9-31BF3A813122}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Proxy.Tests", "DragonFly.Proxy.Tests\DragonFly.Proxy.Tests.csproj", "{CA8FEA67-C9C2-4B21-9FD9-31BF3A813122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -176,10 +174,6 @@ Global
 		{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B15DE6BD-E879-4DE4-8916-0B8A91791D8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B15DE6BD-E879-4DE4-8916-0B8A91791D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B15DE6BD-E879-4DE4-8916-0B8A91791D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -243,7 +237,6 @@ Global
 		{9E38A748-673F-4C8D-BA8B-C66A0B299BDA} = {AB978E78-A6DD-41E4-A6E0-541F902B9B6A}
 		{38D4D806-1FBD-4175-B7B4-2EC72CF131D5} = {AB978E78-A6DD-41E4-A6E0-541F902B9B6A}
 		{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54} = {AB978E78-A6DD-41E4-A6E0-541F902B9B6A}
-		{1E69B07F-7AA6-47B6-A39B-D21DB5CE4981} = {A7CDEAE6-F0BC-4BE6-B689-768A7FE2EDA7}
 		{B15DE6BD-E879-4DE4-8916-0B8A91791D8B} = {A7CDEAE6-F0BC-4BE6-B689-768A7FE2EDA7}
 		{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1} = {0FF74E37-2946-4582-AA4F-EE44DD721F11}
 		{A21D0C0A-2D87-4087-A1FD-B2268B3AF206} = {91ADE257-5696-4B85-BADA-7638271C971B}

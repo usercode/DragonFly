@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
 	  <TargetFramework>net7.0</TargetFramework>
-	  <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
 	  <Authors>usercode</Authors>
 	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
 	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
@@ -13,20 +13,25 @@
 	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
-	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-	</ItemGroup>
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
   
 	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+	
+	<ItemGroup>
 		<None Include="..\logo.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
+		<PackageReference Include="TinyMCE.Blazor" Version="1.0.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
 	  <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
 	</ItemGroup>
 
@@ -35,5 +40,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
+  </ItemGroup>  
 </Project>
