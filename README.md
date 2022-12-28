@@ -26,9 +26,9 @@ Headless CMS based on ASP.NET Core and Blazor
 * Visual Studio 2022
 * MongoDB instance
 
-### Create a new project from templates
+### Create a new project from template
 
-To use the project templates you first need to download and install them from NuGet. 
+To use the project template you need first to download and install it from NuGet. 
 
 ~~~ bash
 dotnet new install DragonFly.Templates
