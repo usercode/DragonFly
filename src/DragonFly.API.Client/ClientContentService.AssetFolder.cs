@@ -2,12 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Assets.Query;
-using DragonFly.Data.Models;
 using System.Net.Http.Json;
 
-namespace DragonFly.Client;
+namespace DragonFly.API.Client;
 
 /// <summary>
 /// ContentService

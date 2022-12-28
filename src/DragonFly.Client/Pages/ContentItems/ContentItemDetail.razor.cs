@@ -5,7 +5,7 @@
 using BlazorStrap;
 using DragonFly.Client.Base;
 using DragonFly.Client.Core.Contents.ContentItems;
-using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Validations;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
 using System;

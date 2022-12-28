@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Client;
+namespace DragonFly.API.Client;
 
 /// <summary>
 /// ContentService

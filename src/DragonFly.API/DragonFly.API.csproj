@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\DragonFly.API.Exports\DragonFly.API.Exports.csproj" />
+		<ProjectReference Include="..\DragonFly.API.Core\DragonFly.API.Core.csproj" />
 		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	</ItemGroup>
 

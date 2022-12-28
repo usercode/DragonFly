@@ -3,7 +3,7 @@
 // MIT License
 
 using System.Text.RegularExpressions;
-using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Validations;
 
 namespace DragonFly;
 

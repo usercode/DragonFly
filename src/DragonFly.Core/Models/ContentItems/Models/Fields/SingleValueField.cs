@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Validations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DragonFly;

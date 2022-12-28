@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	  <TargetFramework>net7.0</TargetFramework>
+	  <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+	  <Authors>usercode</Authors>
+	  <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
+	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <PackageIcon>logo.png</PackageIcon>
+	  <PackageTags>cms</PackageTags>
+	  <IncludeSymbols>true</IncludeSymbols>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+  
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\logo.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MinVer" Version="4.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

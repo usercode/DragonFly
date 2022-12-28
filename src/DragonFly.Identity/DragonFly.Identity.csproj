@@ -15,10 +15,6 @@
     <MinVerTagPrefix>v</MinVerTagPrefix>
   </PropertyGroup>
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
-  
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
 	</ItemGroup>
@@ -26,9 +22,15 @@
 	<ItemGroup>
 		<None Include="..\logo.png" Pack="true" PackagePath="" />
 	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="MongoDB.Driver" Version="2.18.0" />
+	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+	  <ProjectReference Include="..\DragonFly.Identity.Core\DragonFly.Identity.Core.csproj" />
+	  <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

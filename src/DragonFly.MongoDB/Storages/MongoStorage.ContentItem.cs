@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.ContentItems.Models.Validations;
+using DragonFly.Validations;
 using DragonFly.MongoDB.Query;
 using DragonFly.Query;
 using DragonFly.Storage;

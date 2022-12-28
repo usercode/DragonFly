@@ -2,8 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using DragonFly.AspNet.Middleware;
-using DragonFly.AspNetCore.API.Models.Assets;
 using DragonFly.Assets.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;

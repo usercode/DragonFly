@@ -31,7 +31,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
+	  <ProjectReference Include="..\DragonFly.BlockField.Core\DragonFly.BlockField.Core.csproj" />
 	  <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
 	</ItemGroup>
 

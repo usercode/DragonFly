@@ -28,7 +28,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+	  <ProjectReference Include="..\DragonFly.Identity.Core\DragonFly.Identity.Core.csproj" />
 	  <ProjectReference Include="..\DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj" />
 	  <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
 	</ItemGroup>
