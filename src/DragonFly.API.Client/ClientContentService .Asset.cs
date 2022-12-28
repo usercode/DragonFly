@@ -45,7 +45,7 @@ public partial class ClientContentService : IAssetStorage
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<Stream> DownloadAsync(Guid id)
+    public async Task<Stream> GetStreamAsync(Guid id)
     {
         return await Client.GetStreamAsync($"api/asset/{id}/download");
     }

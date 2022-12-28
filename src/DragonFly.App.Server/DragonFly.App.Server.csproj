@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
-    <UserSecretsId>3c906573-393b-4c64-a23d-faa9b2a0f051</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,17 +15,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
-    <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
-    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />    
+    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />      
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
-    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+    <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />    
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
+    <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+    <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
     <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
   </ItemGroup>
-
 
 </Project>

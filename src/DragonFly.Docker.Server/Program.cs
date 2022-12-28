@@ -6,24 +6,39 @@ using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
-using DragonFlyTemplate.Models;
-using DragonFlyTemplate.Pages;
-using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//DragonFly
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi", Version = "v1" });
+});
+
+builder.Services.AddEndpointsApiExplorer();
+
+//DragonFly options
 builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
 builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
 
-//ImageWizard
+//ImageWizard options
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
 builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
 
-builder.Services.AddRazorPages();
-builder.Services.AddSingleton<DataSeeding>();
+//ASP.NET
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.All;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 //DragonFly services
 builder.Services.AddDragonFly()
@@ -32,9 +47,6 @@ builder.Services.AddDragonFly()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddProxy(x => x
-                                    .AddType<StandardPageModel>()
-                                    .AddType<BlogPostModel>())
                     .AddApiKeys()
                     .AddPermissions();
 
@@ -42,10 +54,6 @@ var app = builder.Build();
 
 //init DragonFly
 await app.InitDragonFly();
-
-//data seeding
-DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
-await seeding.StartAsync();
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
@@ -55,15 +63,16 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
+app.UseForwardedHeaders();
+app.UseHttpsRedirection();
 app.UseDragonFly(x => x
-                        .MapImageWizard(requireAuthentication: false)
+                        .MapImageWizard()
                         .MapApiKey()
                         .MapIdentity()
                         .MapRestApi()
                         .MapPermission());
 app.UseDragonFlyManager();
-app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
-app.UseStaticFiles();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseRouting();
-app.MapRazorPages();
 app.Run();

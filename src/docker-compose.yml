@@ -5,4 +5,4 @@ services:
     image: ${DOCKER_REGISTRY-}dragonfly
     build:
       context: .
-      dockerfile: DragonFly.App.Server/Dockerfile
+      dockerfile: DragonFly.Docker.Server/Dockerfile

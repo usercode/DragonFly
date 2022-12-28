@@ -75,7 +75,7 @@ static class AssetApiExtensions
     {
         Asset asset = await storage.GetAssetAsync(id);
 
-        using (Stream assetStream = await storage.DownloadAsync(id))
+        using (Stream assetStream = await storage.GetStreamAsync(id))
         {
             context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
             context.Response.GetTypedHeaders().ETag = new EntityTagHeaderValue($"\"{asset.Hash}\"");

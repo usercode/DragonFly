@@ -105,7 +105,7 @@ public partial class MongoStorage : IAssetStorage
         await ApplyMetadataAsync(asset.Id);
     }
 
-    public async Task<Stream> DownloadAsync(Guid id)
+    public async Task<Stream> GetStreamAsync(Guid id)
     {
         return await AssetData.OpenDownloadStreamByNameAsync(id.ToString());
     }

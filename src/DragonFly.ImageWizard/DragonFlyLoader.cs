@@ -42,7 +42,7 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 
         Asset asset = await Storage.GetAssetAsync(id);
 
-        Stream stream = await Storage.DownloadAsync(id);
+        Stream stream = await Storage.GetStreamAsync(id);
 
         return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
     }

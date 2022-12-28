@@ -53,11 +53,11 @@ class AssetStorageAuthorization : IAssetStorage
         await Storage.DeleteAsync(id);
     }
 
-    public async Task<Stream> DownloadAsync(Guid id)
+    public async Task<Stream> GetStreamAsync(Guid id)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetDownload);
 
-        return await Storage.DownloadAsync(id);
+        return await Storage.GetStreamAsync(id);
     }
 
     public async Task<Asset> GetAssetAsync(Guid id)

@@ -10,7 +10,6 @@ public static class DragonFlyApiExtensions
 {
     public static string GetVersion(this IDragonFlyApi api)
     {
-        return Assembly.GetExecutingAssembly()
-                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
+        return typeof(IDragonFlyApi).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()!.InformationalVersion;
     }
 }
