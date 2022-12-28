@@ -41,7 +41,7 @@ dotnet new DragonFly
 ~~~
 
 
-## DragonFly.Core
+## DragonFly
 
 ![grafik](https://user-images.githubusercontent.com/2958488/208325922-9e55b4d0-9e08-4e0a-96c1-855fe1361584.png)
 
