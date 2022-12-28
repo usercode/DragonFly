@@ -104,61 +104,61 @@ await contentStorage.CreateAsync(contentProduct);
 ### DragonFly.AspNetCore	
 
 ```csharp
-     builder.Services.Configure<DragonFlyOptions>(Configuration.GetSection("General"));
-     builder.Services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
+builder.Services.Configure<DragonFlyOptions>(Configuration.GetSection("General"));
+builder.Services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
 
-     //add DragonFly services
-     builder.Services.AddDragonFly()
-                        .AddImageWizard()
-                        .AddRestApi()
-                        .AddMongoDbStorage()
-                        .AddMongoDbIdentity()
-                        .AddBlockField()
-                        .AddApiKeys()
-                        .AddPermissions();
+//add DragonFly services
+builder.Services.AddDragonFly()
+                  .AddImageWizard()
+                  .AddRestApi()
+                  .AddMongoDbStorage()
+                  .AddMongoDbIdentity()
+                  .AddBlockField()
+                  .AddApiKeys()
+                  .AddPermissions();
 
-    var app = builder.Build();
+var app = builder.Build();
 
-    //init DragonFly
-    await app.InitDragonFly();
+//init DragonFly
+await app.InitDragonFly();
 
-    if (env.IsDevelopment())
-    {
-        app.UseDeveloperExceptionPage();
-        app.UseWebAssemblyDebugging();
-    }
+if (env.IsDevelopment())
+{
+  app.UseDeveloperExceptionPage();
+  app.UseWebAssemblyDebugging();
+}
 
-    app.UseDragonFly(
-                   x =>
-                   {
-                        x.MapImageWizard();
-                        x.MapApiKey();
-                        x.MapIdentity();
-                        x.MapRestApi();
-                        x.MapPermission();
-                   });
-    app.UseDragonFlyManager();
-    app.UseRouting();
-    app.Run();
+app.UseDragonFly(
+             x =>
+             {
+                  x.MapImageWizard();
+                  x.MapApiKey();
+                  x.MapIdentity();
+                  x.MapRestApi();
+                  x.MapPermission();
+             });
+app.UseDragonFlyManager();
+app.UseRouting();
+app.Run();
 ```
 
-### DragonFly.Razor (Blazor Client App)
+### DragonFly.Client (Blazor Client App)
 
 ```csharp
-    var builder = WebAssemblyHostBuilder.CreateDefault(args);
-    builder.RootComponents.Add<DragonFly.App.Client.App>("app");
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<DragonFly.App.Client.App>("app");
 
-    //Register DragonFly components
-    builder.AddDragonFly()
-              .AddRestApi()
-              .AddBlockField()
-              .AddIdentity()
-              .AddApiKeys();
+//Register DragonFly components
+builder.AddDragonFly()
+          .AddRestApi()
+          .AddBlockField()
+          .AddIdentity()
+          .AddApiKeys();
 
-    WebAssemblyHost host = builder.Build();
+WebAssemblyHost host = builder.Build();
 
-    await host.InitDragonFly();
-    await host.RunAsync();
+await host.InitDragonFly();
+await host.RunAsync();
 ```
 ## Docker
 ```yaml
