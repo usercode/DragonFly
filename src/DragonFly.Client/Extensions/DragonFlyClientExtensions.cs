@@ -5,7 +5,7 @@
 using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.API;
-using DragonFly.Builders;
+using DragonFly.Client.Builders;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

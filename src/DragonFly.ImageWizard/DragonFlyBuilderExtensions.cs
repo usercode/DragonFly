@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.AspNetCore.Middleware;
-using DragonFly.Builders;
+using DragonFly.AspNetCore.Builders;
 using DragonFly.ImageWizard;
 using ImageWizard;
 using ImageWizard.Client;

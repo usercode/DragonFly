@@ -24,6 +24,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	  <ProjectReference Include="..\DragonFly.BlockField.Core\DragonFly.BlockField.Core.csproj" />
 	</ItemGroup>
 

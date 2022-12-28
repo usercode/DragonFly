@@ -4,7 +4,7 @@
 
 using DragonFly.API.Client;
 using DragonFly.API;
-using DragonFly.Builders;
+using DragonFly.Client.Builders;
 using DragonFly.Core.ContentStructures;
 using Microsoft.Extensions.DependencyInjection;
 

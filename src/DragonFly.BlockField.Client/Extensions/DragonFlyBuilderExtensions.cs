@@ -5,7 +5,7 @@
 using DragonFly.BlockField;
 using DragonFly.BlockField.Client.Pages;
 using DragonFly.BlockField.Client.Pages.Blocks;
-using DragonFly.Builders;
+using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Client;

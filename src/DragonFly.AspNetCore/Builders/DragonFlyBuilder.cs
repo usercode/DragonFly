@@ -4,7 +4,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.Builders;
+namespace DragonFly.AspNetCore.Builders;
 
 /// <summary>
 /// DragonFlyBuilder

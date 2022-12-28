@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.AspNetCore.Identity.Razor;
-using DragonFly.Builders;
+using DragonFly.Client.Builders;
 using DragonFly.Identity.Client;
 using DragonFly.Identity.Razor.Services;
 using DragonFly.Identity.Services;

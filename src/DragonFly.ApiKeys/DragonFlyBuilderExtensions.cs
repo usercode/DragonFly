@@ -6,7 +6,7 @@ using DragonFly;
 using DragonFly.ApiKeys.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Middleware;
-using DragonFly.Builders;
+using DragonFly.AspNetCore.Builders;
 using DragonFly.Permissions;
 using DragonFLy.ApiKeys;
 using DragonFLy.ApiKeys.AspNetCore.Middlewares;
