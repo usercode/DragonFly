@@ -140,15 +140,12 @@ if (env.IsDevelopment())
   app.UseWebAssemblyDebugging();
 }
 
-app.UseDragonFly(
-             x =>
-             {
-                  x.MapImageWizard();
-                  x.MapApiKey();
-                  x.MapIdentity();
-                  x.MapRestApi();
-                  x.MapPermission();
-             });
+app.UseDragonFly(x => x             
+                  .MapImageWizard()
+                  .MapApiKey()
+                  .MapIdentity()
+                  .MapRestApi()
+                  .MapPermission());
 app.UseDragonFlyManager();
 app.UseRouting();
 app.Run();
