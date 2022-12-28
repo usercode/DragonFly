@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>0.9.0</PackageVersion>
+    <PackageVersion>0.9.1</PackageVersion>
     <PackageId>DragonFly.Templates</PackageId>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="templates\**\*" Exclude="**\bin\**;**\obj\**;**\Properties\**;**\lib\**;**\*.user;**\.vs\**" />
+    <Content Include="templates\**\*" Exclude="**\bin\**;**\obj\**;**\Properties\**;**\lib\**;**\*.user;**\.vs\**;**\*appsettings.development.json" />
     <Compile Remove="**\*" />
   </ItemGroup>
 
