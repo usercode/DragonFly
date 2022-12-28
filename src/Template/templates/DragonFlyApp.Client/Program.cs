@@ -2,23 +2,21 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Identity.Razor;
-using DragonFly.BlockField.Razor;
-using DragonFly.Client.Core;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using DragonFly.Client;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<DragonFly.Client.App>("app");
+builder.RootComponents.Add<DragonFlyApp.Client.App>("app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.AddDragonFlyClient()
+builder.AddDragonFly()
+            .AddRestApi()
             .AddBlockField()
             .AddIdentity()
-            ;
+            .AddApiKeys();
 
-WebAssemblyHost build = builder.Build();
+WebAssemblyHost host = builder.Build();
 
-build.UseDragonFlyClient();
-
-await build.RunAsync();
+await host.InitDragonFly();
+await host.RunAsync();

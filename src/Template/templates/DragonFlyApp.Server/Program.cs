@@ -5,11 +5,7 @@
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.Identity.AspNetCore.MongoDB;
-using DragonFly.ImageWizard;
 using DragonFly.MongoDB;
-using DragonFly.Storage;
-using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
@@ -24,30 +20,23 @@ builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("Mon
 builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
 builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
 
-//DragonFly
+builder.Services.AddRazorPages();
+builder.Services.AddSingleton<DataSeeding>();
+
+//DragonFly services
 builder.Services.AddDragonFly()
                     .AddImageWizard()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddProxy(x => 
-                    {
-                        x.AddType<StandardPageModel>();
-                        x.AddType<BlogPostModel>();
-                    })
-                    .AddPermissions()
-                    ;
-
-builder.Services.AddRazorPages();
-
-builder.Services.AddSingleton<DataSeeding>();
+                    .AddApiKeys()
+                    .AddPermissions();
 
 var app = builder.Build();
 
-//init DragonFly CMS
-IDragonFlyApi api = app.Services.GetRequiredService<IDragonFlyApi>();
-await api.InitAsync();
+//init DragonFly
+await app.InitDragonFly();
 
 //data seeding
 DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
@@ -61,13 +50,12 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
-app.UseDragonFly(x =>
-{
-    x.MapImageWizard(requireAuthentication: false);
-    x.MapIdentity();
-    x.MapRestApi();
-    x.MapPermission();
-});
+app.UseDragonFly(x => x
+                        .MapImageWizard()
+                        .MapApiKey()
+                        .MapIdentity()
+                        .MapRestApi()
+                        .MapPermission());
 app.UseDragonFlyManager();
 app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 app.UseStaticFiles();
