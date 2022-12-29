@@ -10,6 +10,7 @@ using DragonFly.Permissions.AspNetCore.Content;
 using DragonFly.Permissions.AspNetCore.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
+using AspNetCore.Decorator;
 
 namespace DragonFly.AspNetCore;
 

@@ -14,6 +14,7 @@ using DragonFLy.ApiKeys.AspNetCore.Services;
 using DragonFLy.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using AspNetCore.Decorator;
 
 namespace DragonFly.AspNetCore;
 

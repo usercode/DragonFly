@@ -19,6 +19,7 @@ using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using AspNetCore.Decorator;
 
 namespace DragonFly.AspNetCore;
 
