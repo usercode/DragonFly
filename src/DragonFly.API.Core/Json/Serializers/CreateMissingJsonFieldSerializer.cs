@@ -29,7 +29,7 @@ public class CreateMissingJsonFieldSerializer : IPostInitialize
                     throw new Exception($"Could not create single value field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.JsonField().RegisterField(fieldSerializer);
+                api.JsonField().Add(fieldSerializer);
             }
             else //build DefaultFieldSerializer
             {
@@ -40,7 +40,7 @@ public class CreateMissingJsonFieldSerializer : IPostInitialize
                     throw new Exception($"Could not create default field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.JsonField().RegisterField(fieldSerializer);
+                api.JsonField().Add(fieldSerializer);
             }
         }
     }

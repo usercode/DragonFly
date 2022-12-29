@@ -23,20 +23,17 @@ public sealed class JsonFieldManager
         _fields = new Dictionary<Type, IJsonFieldSerializer>();
     }
 
-    public void RegisterField(IJsonFieldSerializer fieldSerializer)
+    public void Add(IJsonFieldSerializer fieldSerializer)
     {
-        if (_fields.TryAdd(fieldSerializer.FieldType, fieldSerializer) == false)
-        {
-            _fields[fieldSerializer.FieldType] = fieldSerializer;
-        }
+        _fields[fieldSerializer.FieldType] = fieldSerializer;
     }
 
-    public void RegisterField<TSerializer>()
+    public void Add<TSerializer>()
         where TSerializer : IJsonFieldSerializer, new()
     {
         TSerializer serializer = new TSerializer();
 
-        RegisterField(serializer);
+        Add(serializer);
     }
 
     public IJsonFieldSerializer GetByFieldType(Type contentFieldType)

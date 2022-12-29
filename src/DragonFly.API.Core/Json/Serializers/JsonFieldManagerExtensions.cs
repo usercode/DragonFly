@@ -15,24 +15,24 @@ public static class JsonFieldManagerExtensions
 
     public static JsonFieldManager AddDefaults(this JsonFieldManager json)
     {
-        json.RegisterField<ArrayJsonFieldSerializer>();
-        json.RegisterField<AssetJsonFieldSerializer>();
-        json.RegisterField<ComponentJsonFieldSerializer>();
-        json.RegisterField<ReferenceJsonFieldSerializer>();
+        json.Add<ArrayJsonFieldSerializer>();
+        json.Add<AssetJsonFieldSerializer>();
+        json.Add<ComponentJsonFieldSerializer>();
+        json.Add<ReferenceJsonFieldSerializer>();
 
-        json.RegisterField<SingleValueJsonFieldSerializer<BoolField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<StringField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<SlugField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<ColorField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<IntegerField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<FloatField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<TextField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<HtmlField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<XHtmlField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<XmlField>>();
-        json.RegisterField<SingleValueJsonFieldSerializer<DateTimeField>>();
+        json.Add<SingleValueJsonFieldSerializer<BoolField>>();
+        json.Add<SingleValueJsonFieldSerializer<StringField>>();
+        json.Add<SingleValueJsonFieldSerializer<SlugField>>();
+        json.Add<SingleValueJsonFieldSerializer<ColorField>>();
+        json.Add<SingleValueJsonFieldSerializer<IntegerField>>();
+        json.Add<SingleValueJsonFieldSerializer<FloatField>>();
+        json.Add<SingleValueJsonFieldSerializer<TextField>>();
+        json.Add<SingleValueJsonFieldSerializer<HtmlField>>();
+        json.Add<SingleValueJsonFieldSerializer<XHtmlField>>();
+        json.Add<SingleValueJsonFieldSerializer<XmlField>>();
+        json.Add<SingleValueJsonFieldSerializer<DateTimeField>>();
 
-        json.RegisterField<DefaultJsonFieldSerializer<GeolocationField>>();
+        json.Add<DefaultJsonFieldSerializer<GeolocationField>>();
 
         return json;
     }
