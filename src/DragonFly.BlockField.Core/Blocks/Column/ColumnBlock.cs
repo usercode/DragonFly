@@ -11,7 +11,6 @@ public class ColumnBlock : Block, IChildBlocks
 {
     public ColumnBlock()
     {
-        HorizontalAlignment = HorizontalAlignment.Start;
         Columns = new List<Column>();
     }
 
@@ -31,7 +30,7 @@ public class ColumnBlock : Block, IChildBlocks
     /// <summary>
     /// HorizontalAlignment
     /// </summary>
-    public HorizontalAlignment HorizontalAlignment { get; set; }
+    public HorizontalAlignment? HorizontalAlignment { get; set; }
 
     public IEnumerable<Block> GetBlocks()
     {

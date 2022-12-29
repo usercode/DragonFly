@@ -1,17 +1,22 @@
 ﻿@typeparam TEnum
 
 <BSDropdown style="margin-bottom: 1rem">
-    <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@EnumValue</BSToggle></Toggler>
+    <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@(EnumValue is null ? Undefined : EnumValue)</BSToggle></Toggler>
     <Content>
-        @foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
+        @if (typeof(TEnum).IsGenericType)
+        {
+            <BSDropdownItem @onclick="e => EnumValue = default">@Undefined</BSDropdownItem>
+        }
+        @foreach (TEnum value in GetValues())
         {
             <BSDropdownItem @onclick="e => EnumValue = value">@value</BSDropdownItem>
         }
     </Content>
 </BSDropdown>
 
-
 @code {
+    private string Undefined = "...";
+
     private TEnum _enumValue;
 
     [Parameter]
@@ -24,6 +29,19 @@
 
             EnumValueChanged?.Invoke(_enumValue);
         }
+    }
+
+    private Array GetValues()
+    {
+        Type enumType = typeof(TEnum);
+
+        //is nullable type?
+        if (enumType.IsGenericType)
+        {
+            enumType = enumType.GenericTypeArguments[0];
+        }
+
+        return Enum.GetValues(enumType);
     }
 
     [Parameter]

@@ -34,11 +34,11 @@ public static class DragonFlyTypesExtensions
         };
     }
 
-    public static string ToBootstrapCssClass(this HorizontalAlignment alignment)
+    public static string ToBootstrapCssClass(this HorizontalAlignment? alignment)
     {
         return alignment switch
         {
-            HorizontalAlignment.Start => null, // "justify-content-start",
+            HorizontalAlignment.Start => "justify-content-start",
             HorizontalAlignment.Center => "justify-content-center",
             HorizontalAlignment.End => "justify-content-end",
             HorizontalAlignment.Around => "justify-content-around",
@@ -48,11 +48,11 @@ public static class DragonFlyTypesExtensions
         };
     }
 
-    public static string ToBootstrapCss(this TextAlignment alignment)
+    public static string ToBootstrapCss(this TextAlignment? alignment)
     {
         return alignment switch
         {
-            TextAlignment.Left => null, // "text-start",
+            TextAlignment.Left => "text-start",
             TextAlignment.Center => "text-center",
             TextAlignment.Right => "text-end",
             _ => null
