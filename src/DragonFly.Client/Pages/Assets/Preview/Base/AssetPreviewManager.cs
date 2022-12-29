@@ -32,7 +32,7 @@ public sealed class AssetPreviewManager
         _cache = new Dictionary<string, Type>();
     }
 
-    public void Register<TAssetPreview>(params string[] mimetypes)
+    public void Add<TAssetPreview>(params string[] mimetypes)
         where TAssetPreview : IAssetPreviewComponent
     {
         foreach (string mimetype in mimetypes)

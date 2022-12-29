@@ -27,8 +27,8 @@ public class AssetModule : ClientModule
         api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
         api.RegisterMetadata<PdfMetadata, PdfMetadataView>();
 
-        api.AssetPreview().Register<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
-        api.AssetPreview().Register<PdfPreviewView>(MimeTypes.Pdf);
-        api.AssetPreview().Register<SvgPreviewView>(MimeTypes.Svg);
+        api.AssetPreview().Add<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
+        api.AssetPreview().Add<PdfPreviewView>(MimeTypes.Pdf);
+        api.AssetPreview().Add<SvgPreviewView>(MimeTypes.Svg);
     }
 }
