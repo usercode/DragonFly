@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.AspNetCore.Builders;
-using DragonFly.Core.ContentStructures;
 using DragonFly.MongoDB;
 using DragonFly.MongoDB.Index;
 using DragonFly.MongoDB.Query;

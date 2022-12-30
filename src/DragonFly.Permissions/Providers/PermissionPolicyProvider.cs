@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore.Providers;
+namespace DragonFly.Permissions;
 
 class PermissionPolicyProvider : IAuthorizationPolicyProvider
 {

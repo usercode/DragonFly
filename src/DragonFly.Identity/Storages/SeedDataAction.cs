@@ -3,9 +3,9 @@
 // MIT License
 
 using DragonFly.API;
-using DragonFly.Core.Permissions;
 using DragonFly.Identity;
 using DragonFly.MongoDB;
+using DragonFly.Permissions;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

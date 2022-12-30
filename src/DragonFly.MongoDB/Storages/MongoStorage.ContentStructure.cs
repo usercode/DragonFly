@@ -2,8 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.ContentStructures;
-using DragonFly.Core.ContentStructures.Queries;
+using DragonFly.Query;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 

@@ -2,12 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.API.Middlewares;
-using DragonFly.AspNetCore.API.Middlewares.AssetFolders;
-using DragonFly.AspNetCore.API.Middlewares.Assets;
-using DragonFly.AspNetCore.API.Middlewares.ContentSchemas;
 using DragonFly.AspNetCore.Builders;
-using DragonFly.AspNetCore.API.Middlewares.ContentStructures;
 using DragonFly.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;

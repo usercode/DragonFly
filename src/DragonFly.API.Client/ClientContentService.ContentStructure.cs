@@ -4,8 +4,7 @@
 
 using System.Diagnostics;
 using System.Net.Http.Json;
-using DragonFly.Core.ContentStructures;
-using DragonFly.Core.ContentStructures.Queries;
+using DragonFly.Query;
 
 namespace DragonFly.API.Client;
 

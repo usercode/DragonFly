@@ -18,7 +18,7 @@ public static class AssetMetadataComponentManagerExtensions
     {
         Type metadataType = typeof(TMetadataComponent).GetProperty(nameof(IAssetMetadataComponent.Metadata)).PropertyType;
 
-        componentManager.Register(metadataType, typeof(TMetadataComponent));
+        componentManager.Add(metadataType, typeof(TMetadataComponent));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, AssetMetadata metadata)

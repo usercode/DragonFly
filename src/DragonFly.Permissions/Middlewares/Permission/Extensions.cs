@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore;
+namespace DragonFly.Permissions;
 
 internal static class Extensions
 {

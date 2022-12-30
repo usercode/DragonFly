@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore.Providers;
+namespace DragonFly.Permissions;
 
 class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {

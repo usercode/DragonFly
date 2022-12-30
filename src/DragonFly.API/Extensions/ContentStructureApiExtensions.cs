@@ -2,14 +2,12 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
-using DragonFly.Core.ContentStructures;
-using DragonFly.Core.ContentStructures.Queries;
+using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFly.AspNetCore.API.Middlewares.ContentStructures;
+namespace DragonFly.API;
 
 static class ContentStructureApiExtensions
 {

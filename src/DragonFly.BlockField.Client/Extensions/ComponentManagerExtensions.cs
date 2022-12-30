@@ -14,7 +14,7 @@ public static class ComponentManagerExtensions
     {
         Type? elementType = typeof(TBlockComponent).GetProperty(nameof(IBlockComponent.Block)).PropertyType;
 
-        component.Register(elementType, typeof(TBlockComponent));
+        component.Add(elementType, typeof(TBlockComponent));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, Block element)

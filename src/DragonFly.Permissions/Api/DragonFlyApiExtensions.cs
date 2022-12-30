@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions;
+namespace DragonFly;
 
 /// <summary>
 /// DragonFlyApiExtensions

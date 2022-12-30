@@ -19,7 +19,7 @@ public static class ComponentManagerExtensions
     {
         Type fieldType = typeof(TFieldComponent).GetProperty(nameof(IFieldComponent.Field)).PropertyType;
 
-        componentManager.Register(fieldType, typeof(TFieldComponent));
+        componentManager.Add(fieldType, typeof(TFieldComponent));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, ContentFieldOptions? options)
@@ -40,7 +40,7 @@ public static class ComponentManagerExtensions
     {
         Type fieldOptionsType = typeof(TFieldOptionsComponent).GetProperty(nameof(IFieldOptionsComponent.Options)).PropertyType;
 
-        componentManager.Register(fieldOptionsType, typeof(TFieldOptionsComponent));
+        componentManager.Add(fieldOptionsType, typeof(TFieldOptionsComponent));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentFieldOptions options)
@@ -67,7 +67,7 @@ public static class ComponentManagerExtensions
     {
         Type queryType = typeof(TQueryView).GetProperty(nameof(IFieldQueryComponent.Query)).PropertyType;
 
-        componentManager.Register(queryType, typeof(TQueryView));
+        componentManager.Add(queryType, typeof(TQueryView));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, FieldQuery fieldQuery)

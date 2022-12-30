@@ -34,7 +34,7 @@ public sealed class ComponentManager
         _cacheFieldView = new Dictionary<Type, Type>();
     }
 
-    public void Register(Type fieldType, Type componentType)
+    public void Add(Type fieldType, Type componentType)
     {
         _cacheFieldView[fieldType] = componentType;
     }

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Core.Events;
+namespace DragonFly;
 
 /// <summary>
 /// EventEntry

@@ -2,9 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.Events.Queries;
+using DragonFly.Query;
 
-namespace DragonFly.Core.Events;
+namespace DragonFly;
 
 public interface IEventStorage
 {

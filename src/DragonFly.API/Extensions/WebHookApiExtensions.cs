@@ -2,12 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFly.AspNetCore.API.Middlewares;
+namespace DragonFly.API;
 
 static class WebHookApiExtensions
 {

@@ -2,15 +2,12 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Content;
 using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Builders;
-using DragonFly.Permissions.AspNetCore;
-using DragonFly.Permissions.AspNetCore.Content;
-using DragonFly.Permissions.AspNetCore.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using AspNetCore.Decorator;
+using DragonFly.Permissions;
 
 namespace DragonFly.AspNetCore;
 

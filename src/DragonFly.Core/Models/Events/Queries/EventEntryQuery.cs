@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Core.Events.Queries;
+namespace DragonFly.Query;
 
 public class EventEntryQuery
 {

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Core.ContentStructures.Queries;
+namespace DragonFly.Query;
 
 public class NodesQuery
 {

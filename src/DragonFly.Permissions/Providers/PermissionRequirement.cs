@@ -4,7 +4,7 @@
 
 using Microsoft.AspNetCore.Authorization;
 
-namespace DragonFly.Permissions.AspNetCore.Providers;
+namespace DragonFly.Permissions;
 
 internal class PermissionRequirement : IAuthorizationRequirement
 {

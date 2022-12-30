@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.Events;
-
 namespace DragonFly.MongoDB;
 
 static class MongoEventExtensions

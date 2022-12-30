@@ -2,9 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.ContentStructures.Queries;
+using DragonFly.Query;
 
-namespace DragonFly.Core.ContentStructures;
+namespace DragonFly;
 
 /// <summary>
 /// IStructureStorage

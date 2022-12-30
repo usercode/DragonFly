@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 
-namespace DragonFly.AspNetCore.Content;
+namespace DragonFly.Permissions;
 
 /// <summary>
 /// ContentStorageAuthorization

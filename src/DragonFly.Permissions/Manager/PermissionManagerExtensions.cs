@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DragonFly.Core.Permissions;
+namespace DragonFly.Permissions;
 
 public static class PermissionManagerExtensions
 {

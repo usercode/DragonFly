@@ -2,15 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
-using DragonFly.AspNet.Middleware;
 using DragonFly.Assets.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
 
-namespace DragonFly.AspNetCore.API.Middlewares.Assets;
+namespace DragonFly.API;
 
 static class AssetApiExtensions
 {

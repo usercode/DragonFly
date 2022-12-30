@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.Client.Base;
-using DragonFly.Core.ContentStructures.Queries;
+using DragonFly.Query;
 using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages;

@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace DragonFly.Permissions.AspNetCore.Content;
+namespace DragonFly.Permissions;
 
 /// <summary>
 /// AssetStorageAuthorization
