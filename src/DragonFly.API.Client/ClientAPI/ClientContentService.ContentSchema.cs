@@ -11,7 +11,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-internal partial class ClientContentService : ISchemaStorage
+public partial class ClientContentService : ISchemaStorage
 {
 
     public async Task<ContentSchema> GetSchemaAsync(Guid id)

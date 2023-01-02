@@ -12,7 +12,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-internal partial class ClientContentService : IAssetStorage
+public partial class ClientContentService : IAssetStorage
 {
     public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
     {

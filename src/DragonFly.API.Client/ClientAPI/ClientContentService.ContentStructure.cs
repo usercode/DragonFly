@@ -11,7 +11,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-internal partial class ClientContentService : IStructureStorage
+public partial class ClientContentService : IStructureStorage
 {
 
     public async Task<ContentStructure> GetStructureAsync(Guid id)

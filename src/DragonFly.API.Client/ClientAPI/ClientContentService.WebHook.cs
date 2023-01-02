@@ -10,7 +10,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-internal partial class ClientContentService : IWebHookStorage
+public partial class ClientContentService : IWebHookStorage
 {
 
     public async Task<WebHook> GetAsync(Guid id)

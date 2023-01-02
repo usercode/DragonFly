@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DragonFly.Permissions;
 
-public class TraverseNode
+public sealed class TraverseNode
 {
     public TraverseNode(Permission permission, IList<Permission> path)
     {
@@ -26,20 +26,10 @@ public class TraverseNode
 /// </summary>
 public class PermissionManager : IPermission
 {
-    private static PermissionManager? _default;
-
-    public static PermissionManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new PermissionManager();
-            }
-
-            return _default;
-        }
-    }
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static PermissionManager Default { get; } = new PermissionManager();
 
     public PermissionManager()
     {

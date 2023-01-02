@@ -10,7 +10,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-internal partial class ClientContentService : IAssetFolderStorage
+public partial class ClientContentService : IAssetFolderStorage
 {
     public Task CreateAsync(AssetFolder folder)
     {
