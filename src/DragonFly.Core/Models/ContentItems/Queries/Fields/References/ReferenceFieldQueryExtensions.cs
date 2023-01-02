@@ -9,7 +9,7 @@ namespace DragonFly.Query;
 /// </summary>
 public static class ReferenceFieldQueryExtensions
 {
-    public static TContentQuery AddReferenceQuery<TContentQuery>(this TContentQuery query, string name, Guid? id)
+    public static TContentQuery ReferenceQuery<TContentQuery>(this TContentQuery query, string name, Guid? id)
         where TContentQuery : ContentQuery
     {
         query.Fields.Add(new ReferenceFieldQuery() { FieldName = name, ContentItemId = id });

@@ -5,6 +5,7 @@
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.API;
@@ -49,6 +50,11 @@ static class ContentItemApiExtensions
     private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
     {
         ContentItem? result = await contentStore.GetContentAsync(schema, id);
+
+        if(result == null)
+        {
+            throw new Exception($"Content item not found: {schema} / {id}");
+        }
 
         result.ApplySchema();
 

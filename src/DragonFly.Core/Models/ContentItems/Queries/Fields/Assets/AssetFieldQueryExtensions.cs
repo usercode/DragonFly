@@ -9,7 +9,7 @@ namespace DragonFly.Query;
 /// </summary>
 public static class AssetFieldQueryExtensions
 {
-    public static TContentQuery AddAssetQuery<TContentQuery>(this TContentQuery query, string name, Guid? id)
+    public static TContentQuery AssetQuery<TContentQuery>(this TContentQuery query, string name, Guid? id)
         where TContentQuery : ContentQuery
     {
         query.Fields.Add(new AssetFieldQuery() { FieldName = name, AssetId = id });

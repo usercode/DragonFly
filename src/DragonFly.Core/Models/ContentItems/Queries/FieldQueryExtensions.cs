@@ -6,7 +6,7 @@ namespace DragonFly.Query;
 
 public static class FieldQueryExtensions
 {
-    public static TContentQuery AddFieldOrder<TContentQuery>(this TContentQuery queryParameters, string field, bool asc = true)
+    public static TContentQuery FieldOrder<TContentQuery>(this TContentQuery queryParameters, string field, bool asc = true)
         where TContentQuery : ContentQuery
     {
         queryParameters.OrderFields.Add(new FieldOrder($"Fields.{field}", asc));

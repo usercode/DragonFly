@@ -13,15 +13,15 @@ namespace DragonFly.Query;
 /// </summary>
 public static class AssetFieldQueryExtensions
 {
-    public static ContentQuery<TContentModel> AddAssetQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, AssetField>> name, Guid? id)
+    public static ContentQuery<TContentModel> AssetQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, AssetField>> name, Guid? id)
         where TContentModel : class, IContentModel
     {
-        return query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
+        return query.AssetQuery(ReflectionHelper.GetPropertyName(name), id);
     }
 
-    public static ContentQuery<TContentModel> AddAssetQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, Asset?>> name, Guid? id)
+    public static ContentQuery<TContentModel> AssetQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, Asset?>> name, Guid? id)
         where TContentModel : class, IContentModel
     {
-        return query.AddAssetQuery(ReflectionHelper.GetPropertyName(name), id);
+        return query.AssetQuery(ReflectionHelper.GetPropertyName(name), id);
     }
 }

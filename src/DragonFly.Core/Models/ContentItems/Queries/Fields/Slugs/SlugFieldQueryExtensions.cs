@@ -9,7 +9,7 @@ namespace DragonFly.Query;
 /// </summary>
 public static class SlugFieldQueryExtensions
 {
-    public static TContentQuery AddSlugQuery<TContentQuery>(this TContentQuery query, string name, string value)
+    public static TContentQuery SlugQuery<TContentQuery>(this TContentQuery query, string name, string value)
         where TContentQuery : ContentQuery
     {
         query.Fields.Add(new SlugFieldQuery() { FieldName = name, Value = value });
