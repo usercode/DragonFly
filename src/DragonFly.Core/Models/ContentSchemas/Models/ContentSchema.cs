@@ -11,20 +11,14 @@ namespace DragonFly;
 /// </summary>
 public class ContentSchema : ContentBase<ContentSchema>, ISchemaElement
 {
-    public ContentSchema()
+    public ContentSchema(string name)
     {
-        _name = string.Empty;
+        _name = name;
         _fields = new SchemaFields();
         _listFields = new List<string>();
         _referenceFields = new List<string>();
         _queryFields = new List<string>();
         _orderFields = new List<FieldOrder>();
-    }
-
-    public ContentSchema(string name)
-        : this()
-    {
-        _name = name;
     }
 
     private string _name;

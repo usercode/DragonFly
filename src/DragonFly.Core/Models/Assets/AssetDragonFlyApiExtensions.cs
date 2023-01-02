@@ -11,7 +11,7 @@ namespace DragonFly;
 /// </summary>
 public static class AssetDragonFlyApiExtensions
 {
-    public static AssetMetadataManager AssetMetadata(this IDragonFlyApi dragonFlyApi)
+    public static AssetMetadataManager AssetMetadatas(this IDragonFlyApi dragonFlyApi)
     {
         return AssetMetadataManager.Default;
     }

@@ -4,7 +4,7 @@
 
 namespace DragonFly.Proxy;
 
-public interface IContentItemProxy
+public interface IContentProxy
 {
     ContentItem ContentItem { get; }
 }

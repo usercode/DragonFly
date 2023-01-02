@@ -13,7 +13,7 @@ public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
 {
     public ContentSchemaDetailBase()
     {
-        Entity = new ContentSchema();
+        Entity = new ContentSchema(string.Empty);
     }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -38,7 +38,7 @@ public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
 
         if (IsNewEntity)
         {
-            Entity = new ContentSchema();
+            Entity = new ContentSchema(string.Empty);
         }
         else
         {

@@ -2,8 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API.Client;
 using DragonFly.API;
+using DragonFly.API.Client;
 using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,8 +21,7 @@ public static class StartupExtensions
         builder.Services.AddTransient<IAssetStorage, ClientContentService>();
         builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
 
-        builder.Init(api => api.JsonField().AddDefaults());
-        builder.PostInit<CreateMissingJsonFieldSerializer>();
+        builder.Init(api => api.JsonFields().AddDefaults());
 
         return builder;
     }

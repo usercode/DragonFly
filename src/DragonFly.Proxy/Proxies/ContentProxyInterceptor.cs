@@ -6,9 +6,9 @@ using Castle.DynamicProxy;
 
 namespace DragonFly.Proxy;
 
-internal class ContentItemProxyInterceptor : IInterceptor
+internal class ContentProxyInterceptor : IInterceptor
 {
-    public ContentItemProxyInterceptor(ContentItem contentItem)
+    public ContentProxyInterceptor(ContentItem contentItem)
     {
         ContentItem = contentItem;
     }
@@ -20,11 +20,8 @@ internal class ContentItemProxyInterceptor : IInterceptor
         if (invocation.Method.Name == $"get_{nameof(ContentItem.Id)}")
         {
             invocation.ReturnValue = ContentItem.Id;
-
-            return;
         }
-
-        if (invocation.Method.Name == $"get_{nameof(IContentItemProxy.ContentItem)}")
+        else if (invocation.Method.Name == $"get_{nameof(IContentProxy.ContentItem)}")
         {
             invocation.ReturnValue = ContentItem;
         }

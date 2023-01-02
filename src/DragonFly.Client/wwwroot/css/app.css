@@ -199,7 +199,7 @@ app {
 }
 
 .sidebar {
-  background-color: #222222;
+  background-color: #222;
   color: #fff;
 }
 
@@ -223,7 +223,7 @@ app {
 }
 
 .sidebar .nav-item a {
-  color: #d7d7d7;
+  color: #fff;
   border-radius: 0px;
   display: flex;
   line-height: 1.5rem;

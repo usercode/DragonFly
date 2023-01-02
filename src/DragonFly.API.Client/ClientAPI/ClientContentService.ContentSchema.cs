@@ -4,13 +4,14 @@
 
 using System.Diagnostics;
 using System.Net.Http.Json;
+using DragonFly.Query;
 
 namespace DragonFly.API.Client;
 
 /// <summary>
 /// ContentService
 /// </summary>
-public partial class ClientContentService : ISchemaStorage
+internal partial class ClientContentService : ISchemaStorage
 {
 
     public async Task<ContentSchema> GetSchemaAsync(Guid id)

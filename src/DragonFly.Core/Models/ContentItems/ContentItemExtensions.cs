@@ -11,11 +11,11 @@ namespace DragonFly;
 /// </summary>
 public static class ContentItemExtensions
 {
-    public static ContentField GetField(this IContentElement contentItem, string name)
+    public static ContentField GetField(this IContentElement contentItem, string fieldName)
     {
-        if (contentItem.TryGetField(name, out ContentField? contentField) == false)
+        if (contentItem.TryGetField(fieldName, out ContentField? contentField) == false)
         {
-            throw new Exception($"The field '{name}' was not found.");
+            throw new Exception($"The field '{fieldName}' doesn't exist.");
         }
 
         return contentField;
@@ -30,6 +30,14 @@ public static class ContentItemExtensions
     public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
     {
         return contentElement.Fields.TryGetValue(name, out contentField);
+    }
+
+    public static void SetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+    {
+        if (TrySetField(contentElement, fieldName, contentField) == false)
+        {
+            throw new Exception($"The field '{fieldName}' doesn't exist.");
+        }
     }
 
     public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)

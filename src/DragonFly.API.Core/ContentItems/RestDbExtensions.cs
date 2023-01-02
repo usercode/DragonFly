@@ -21,7 +21,7 @@ public static class RestDbExtensions
 
             ContentField field = fieldSerializer.Read(schemaField, jsonNode);
 
-            content.TrySetField(fieldName, field);
+            content.SetField(fieldName, field);
         }
     }
 

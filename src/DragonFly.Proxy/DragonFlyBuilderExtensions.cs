@@ -10,12 +10,12 @@ namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {
-    public static IDragonFlyBuilder AddProxy(this IDragonFlyBuilder builder, Action<ContentSchemaBuilderOptions> config)
+    public static IDragonFlyBuilder AddProxy(this IDragonFlyBuilder builder, Action<ContentProxyBuilderOptions> config)
     {
         builder.Services.Configure(config);
-        builder.Services.AddSingleton<IContentSchemaBuilder, ContentSchemaBuilder>();
+        builder.Services.AddSingleton<ContentProxyBuilder>();
 
-        builder.PostInit<ContentSchemaPostInitialize>();
+        builder.PostInit<ContentProxyPostInitialize>();
 
         return builder;
     }

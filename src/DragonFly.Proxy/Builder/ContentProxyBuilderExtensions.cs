@@ -2,11 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Proxy.Query;
+using DragonFly.Proxy;
 
-namespace DragonFly.Proxy;
+namespace DragonFly.Query;
 
-public static class ContentSchemaBuilderExtensions
+public static class ContentProxyBuilderExtensions
 {
     public static async Task<T?> GetContentAsync<T>(this IContentStorage storage, string schema, Guid id)
         where T : class, IContentModel, new()
@@ -18,19 +18,19 @@ public static class ContentSchemaBuilderExtensions
             return null;
         }
 
-        return ProxyBuilder.CreateProxy<T>(content);
+        return content.ToModel<T>();
     }
 
     public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
         where TContentModel : class, IContentModel
     {
-        await storage.CreateAsync(entity.ToContentItem());
+        await storage.CreateAsync(entity.GetContentItem());
     }
 
     public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
         where TContentModel : class, IContentModel
     {
-        await storage.UpdateAsync(entity.ToContentItem());
+        await storage.UpdateAsync(entity.GetContentItem());
     }
 
     public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)

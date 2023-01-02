@@ -11,20 +11,35 @@ public class ProxyTest
 {    
     public ProxyTest()
     {
-        
+        CustomerSchema = new ContentSchema("Customer");
+        CustomerSchema.AddString("Lastname");
+        CustomerSchema.AddString("Firstname");
+        CustomerSchema.AddBool("IsActive");
+        CustomerSchema.AddInteger("Value");
+        CustomerSchema.AddSlug("Slug");
+
+        ProxyTypeManager.Default.Add<Customer>(CustomerSchema);
+    }
+
+    private ContentSchema CustomerSchema { get; }
+
+    [Fact]
+    public void GetSuitableModelType()
+    {
+        ContentItem content = CustomerSchema.CreateContent();
+        content.SetString("Lastname", "Doe");
+        content.SetString("Firstname", "John");
+
+        IContentModel model = content.ToModel();
+
+        Assert.True(model is Customer);
     }
 
     [Fact]
     public void GetModelProperty()
     {
-        ContentSchema schema = new ContentSchema();
-        schema.AddString("Lastname");
-        schema.AddString("Firstname");
-        schema.AddBool("IsActive");
-        schema.AddInteger("Value");
-        schema.AddSlug("Slug");
-
-        ContentItem content = schema.CreateContent();
+        ContentItem content = CustomerSchema.CreateContent();
+        content.Id = Guid.NewGuid();
         content.SetString("Lastname", "Doe");
         content.SetString("Firstname", "John");
         content.SetBool("IsActive", true);
@@ -33,6 +48,7 @@ public class ProxyTest
 
         Customer customer = content.ToModel<Customer>();
 
+        Assert.Equal(content.Id, customer.Id);
         Assert.Equal("Doe", customer.Lastname);
         Assert.Equal("John", customer.Firstname);
         Assert.True(customer.IsActive);
@@ -43,14 +59,7 @@ public class ProxyTest
     [Fact]
     public void SetModelProperty()
     {
-        ContentSchema schema = new ContentSchema();
-        schema.AddString("Lastname");
-        schema.AddString("Firstname");
-        schema.AddBool("IsActive");
-        schema.AddInteger("Value");
-        schema.AddSlug("Slug");
-
-        ContentItem content = schema.CreateContent();
+        ContentItem content = CustomerSchema.CreateContent();
 
         Customer customer = content.ToModel<Customer>();
         customer.Lastname = "Doe";
@@ -69,14 +78,10 @@ public class ProxyTest
     [Fact]
     public void IgnoreNotMappedPropery()
     {
-        ContentSchema schema = new ContentSchema();
-        schema.AddString("Firstname");
-
-        ContentItem content = schema.CreateContent();
+        ContentItem content = CustomerSchema.CreateContent();
 
         Customer customer = content.ToModel<Customer>();
         customer.Lastname = "Doe";
-
-        Assert.Throws<Exception>(() => content.GetString("Lastname"));
+        customer.Remark = "NotMapped";
     }
 }

@@ -47,8 +47,8 @@ If you have a remote MongoDB instance, you need to add some appsettings:
     "Hostname": "localhost",
     "Database": "DragonFly_App",
     "Port": 27017,
-    "Username": "admin",
-    "Password": "Password123"
+    "Username": "MY_MONGODB_USER",
+    "Password": "MY_MONGODB_PASSWORD"
   },
 ~~~
 

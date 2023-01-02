@@ -8,11 +8,11 @@ using System.Reflection;
 namespace DragonFly.Proxy;
 
 /// <summary>
-/// ContentSchemaBuilder
+/// ContentProxyBuilder
 /// </summary>
-public class ContentSchemaBuilder : IContentSchemaBuilder
+public class ContentProxyBuilder
 {
-    public ContentSchemaBuilder(ISchemaStorage schemaStorage)
+    public ContentProxyBuilder(ISchemaStorage schemaStorage)
     {
         Storage = schemaStorage;
     }

@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Client.Pages.ContentItems;
+using DragonFly.Query;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

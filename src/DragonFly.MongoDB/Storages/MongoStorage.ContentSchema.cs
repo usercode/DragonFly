@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Query;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 

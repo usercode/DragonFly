@@ -6,7 +6,6 @@ using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
 using DragonFly.MongoDB.Index;
 using DragonFly.MongoDB.Query;
-using DragonFly.MongoDB.Serializers;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 
@@ -46,11 +45,10 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton(MongoIndexManager.Default);
 
         //fix for nested field options (inside ArrayFieldOptions)
-        builder.PreInit(api => api.ContentField().Added += ContentFieldAdded);
+        builder.PreInit(api => api.ContentFields().Added += ContentFieldAdded);
 
-        builder.Init(api => api.MongoField().AddDefaults());
+        builder.Init(api => api.MongoFields().AddDefaults());
 
-        builder.PostInit<CreateMissingMongoFieldSerializer>();
         builder.PostInit<CreateIndexAction>();
 
         return builder;

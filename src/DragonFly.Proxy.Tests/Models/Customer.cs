@@ -2,12 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace DragonFly.Proxy.Tests.Models;
 
 public class Customer : IContentModel
@@ -29,4 +23,6 @@ public class Customer : IContentModel
     public virtual string? Street { get; set; }
 
     public virtual SlugField Slug { get; set; }
+
+    public string Remark { get; set; }
 }

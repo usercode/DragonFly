@@ -35,8 +35,6 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
-
         services.AddSingleton<DragonFlyContext>();
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         services.AddSingleton<IDateTimeService, LocalDateTimeService>();
@@ -47,11 +45,13 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
+        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
+
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
         {
-            api.ContentField().AddDefaults();
-            api.AssetMetadata().AddDefaults();
+            api.ContentFields().AddDefaults();
+            api.AssetMetadatas().AddDefaults();
         });
 
         return builder;

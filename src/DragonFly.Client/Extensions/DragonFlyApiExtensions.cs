@@ -12,8 +12,8 @@ public static class DragonFlyApiExtensions
         where TField : ContentField
         where TFieldView : IFieldComponent
     {
-        api.ContentField().Add<TField>();
-        api.Component().RegisterField<TFieldView>();
+        api.ContentFields().Add<TField>();
+        api.Components().RegisterField<TFieldView>();
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView>(this IDragonFlyApi api)
@@ -22,7 +22,7 @@ public static class DragonFlyApiExtensions
         where TFieldOptionsView : IFieldOptionsComponent
     {
         api.RegisterField<TField, TFieldView>();
-        api.Component().RegisterOptions<TFieldOptionsView>();
+        api.Components().RegisterOptions<TFieldOptionsView>();
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView, TFieldQueryView>(this IDragonFlyApi api)
@@ -32,14 +32,14 @@ public static class DragonFlyApiExtensions
         where TFieldQueryView : IFieldQueryComponent
     {
         api.RegisterField<TField, TFieldView, TFieldOptionsView>();
-        api.Component().RegisterQuery<TFieldQueryView>();
+        api.Components().RegisterQuery<TFieldQueryView>();
     }
 
     public static void RegisterMetadata<TMetadata, TMetadataView>(this IDragonFlyApi api)
         where TMetadata : AssetMetadata, new()
         where TMetadataView : IAssetMetadataComponent
     {
-        api.AssetMetadata().Add<TMetadata>();
-        api.Component().RegisterAssetMetadata<TMetadataView>();
+        api.AssetMetadatas().Add<TMetadata>();
+        api.Components().RegisterAssetMetadata<TMetadataView>();
     }
 }

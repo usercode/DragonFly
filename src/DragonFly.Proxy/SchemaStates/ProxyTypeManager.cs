@@ -6,10 +6,10 @@ namespace DragonFly.Proxy;
 
 public sealed class ProxyTypeManager
 {
-    private static readonly ProxyTypeManager _default = new ProxyTypeManager();
-
-    public static ProxyTypeManager Default => _default;
-
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static ProxyTypeManager Default { get; } = new ProxyTypeManager();
 
     private IDictionary<Type, ContentSchema> _schemaByType = new Dictionary<Type, ContentSchema>();
     private IDictionary<ContentSchema, Type> _schemaBySchema = new Dictionary<ContentSchema, Type>();
@@ -18,6 +18,11 @@ public sealed class ProxyTypeManager
     {
         _schemaByType[type] = schema;
         _schemaBySchema[schema] = type;
+    }
+
+    internal void Add<T>(ContentSchema schema)
+    {
+        Add(typeof(T), schema);
     }
 
     public ContentSchema GetSchemaByType(Type type)

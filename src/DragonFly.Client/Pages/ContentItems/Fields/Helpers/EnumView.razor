@@ -5,9 +5,9 @@
     <Content>
         @if (typeof(TEnum).IsGenericType)
         {
-            <BSDropdownItem @onclick="e => EnumValue = default">@Undefined</BSDropdownItem>
+            <BSDropdownItem @onclick="e => EnumValue = default">(none)</BSDropdownItem>
         }
-        @foreach (TEnum value in GetValues())
+        @foreach (TEnum value in Enum.GetValues(EnumType))
         {
             <BSDropdownItem @onclick="e => EnumValue = value">@value</BSDropdownItem>
         }
@@ -15,7 +15,23 @@
 </BSDropdown>
 
 @code {
-    private string Undefined = "...";
+    private string Undefined { get; set; }
+    private Type EnumType { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        EnumType = typeof(TEnum);
+
+        //is nullable type?
+        if (EnumType.IsGenericType)
+        {
+            EnumType = EnumType.GenericTypeArguments[0];
+        }
+
+        Undefined = EnumType.Name;
+    }
 
     private TEnum _enumValue;
 
@@ -31,21 +47,6 @@
         }
     }
 
-    private Array GetValues()
-    {
-        Type enumType = typeof(TEnum);
-
-        //is nullable type?
-        if (enumType.IsGenericType)
-        {
-            enumType = enumType.GenericTypeArguments[0];
-        }
-
-        return Enum.GetValues(enumType);
-    }
-
     [Parameter]
     public Action<TEnum> EnumValueChanged { get; set; }
-
-
 }

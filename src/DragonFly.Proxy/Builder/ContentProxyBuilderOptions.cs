@@ -4,16 +4,16 @@
 
 namespace DragonFly.Proxy;
 
-public class ContentSchemaBuilderOptions
+public class ContentProxyBuilderOptions
 {
-    public ContentSchemaBuilderOptions()
+    public ContentProxyBuilderOptions()
     {
         Types = new List<Type>();
     }
 
     public IList<Type> Types { get; }
 
-    public ContentSchemaBuilderOptions AddType<T>()
+    public ContentProxyBuilderOptions AddType<T>()
         where T : class, IContentModel, new()
     {
         Types.Add(typeof(T));

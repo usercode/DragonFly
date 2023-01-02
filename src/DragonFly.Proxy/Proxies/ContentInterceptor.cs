@@ -7,9 +7,9 @@ using Castle.DynamicProxy;
 
 namespace DragonFly.Proxy;
 
-internal class ContentItemInterceptor : IInterceptor
+internal class ContentInterceptor : IInterceptor
 {
-    public ContentItemInterceptor(ContentItem contentItem)
+    public ContentInterceptor(ContentItem contentItem)
     {
         ContentItem = contentItem;
     }

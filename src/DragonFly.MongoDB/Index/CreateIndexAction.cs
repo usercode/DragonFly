@@ -70,7 +70,7 @@ class CreateIndexAction : IPostInitialize
                     continue;
                 }
 
-                Type? fieldType = Api.ContentField().GetContentFieldType(field.Value.FieldType);
+                Type? fieldType = Api.ContentFields().GetContentFieldType(field.Value.FieldType);
 
                 if (fieldType == null)
                 {

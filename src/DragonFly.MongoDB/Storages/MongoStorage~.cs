@@ -3,6 +3,8 @@
 // MIT License
 
 using DragonFly.Storage;
+using DragonFly.Storage.Abstractions;
+using DragonFly.Storage.MongoDB.Fields;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
@@ -59,6 +61,8 @@ public partial class MongoStorage : IDataStorage
         Api = api;
         Options = options.Value;
 
+        CreateMissingFieldSerializers(api);
+
         MongoClientSettings settings = new MongoClientSettings();
         settings.Server = new MongoServerAddress(Options.Hostname, Options.Port);
 
@@ -86,6 +90,42 @@ public partial class MongoStorage : IDataStorage
         DateTimeService = dateTimeService;
         AssetProcessings = assetProcessings;
         Interceptors = interceptors;
+    }
+
+    public void CreateMissingFieldSerializers(IDragonFlyApi api)
+    {
+        foreach (Type contentFieldType in api.ContentFields().GetAllFieldTypes())
+        {
+            if (api.MongoFields().TryGetByFieldType(contentFieldType, out IMongoFieldSerializer? fieldSerializer))
+            {
+                continue;
+            }
+
+            //build SingleValueSerializer?
+            if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
+            {
+                //create SingleValueFieldSerializer
+                fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(SingleValueMongoFieldSerializer<>).MakeGenericType(contentFieldType));
+
+                if (fieldSerializer == null)
+                {
+                    throw new Exception($"Could not create single value field serializer for '{contentFieldType.Name}'.");
+                }
+
+                api.MongoFields().RegisterField(fieldSerializer);
+            }
+            else //build DefaultFieldSerializer
+            {
+                fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(DefaultMongoFieldSerializer<>).MakeGenericType(contentFieldType));
+
+                if (fieldSerializer == null)
+                {
+                    throw new Exception($"Could not create default field serializer for '{contentFieldType.Name}'.");
+                }
+
+                api.MongoFields().RegisterField(fieldSerializer);
+            }
+        }
     }
 
     public async Task DeleteDatabaseAsync()

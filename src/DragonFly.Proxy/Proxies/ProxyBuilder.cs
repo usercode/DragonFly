@@ -14,16 +14,10 @@ static class ProxyBuilder
     {
         return Generator.CreateClassProxy(
                                 type,
-                                new Type[] { typeof(IContentItemProxy) },
+                                new Type[] { typeof(IContentProxy) },
                                 new IInterceptor[] {
-                                    new ContentItemProxyInterceptor(contentItem),
-                                    new ContentItemInterceptor(contentItem)
+                                    new ContentProxyInterceptor(contentItem),
+                                    new ContentInterceptor(contentItem)
                                 });
-    }
-
-    public static T CreateProxy<T>(ContentItem contentItem)
-        where T : class, IContentModel, new()
-    {
-        return (T)CreateProxy(contentItem, typeof(T));
     }
 }

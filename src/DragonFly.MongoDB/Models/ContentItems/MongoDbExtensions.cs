@@ -22,7 +22,7 @@ public static class MongoDbExtensions
 
             ContentField contentField = fieldSerializer.Read(schemaField, bsonValue);
 
-            contentItem.TrySetField(fieldName, contentField);
+            contentItem.SetField(fieldName, contentField);
         }
     }
 

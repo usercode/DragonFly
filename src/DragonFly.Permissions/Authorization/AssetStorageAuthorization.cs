@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Assets.Query;
+using DragonFly.Query;
 using System;
 using System.IO;
 using System.Threading.Tasks;

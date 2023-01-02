@@ -4,6 +4,7 @@
 
 using System.Security.Cryptography;
 using DragonFly.Assets.Query;
+using DragonFly.Query;
 using DragonFly.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;

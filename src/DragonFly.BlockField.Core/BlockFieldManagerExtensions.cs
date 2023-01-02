@@ -6,6 +6,11 @@ namespace DragonFly.BlockField;
 
 public static class BlockFieldManagerExtensions
 {
+    public static BlockFieldManager BlockFields(this IDragonFlyApi api)
+    {
+        return BlockFieldManager.Default;
+    }
+
     public static void AddDefaults(this BlockFieldManager manager)
     {
         manager.Add<ColumnBlock>();

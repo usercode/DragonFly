@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace DragonFly.Proxy.Helpers;
 
-internal class ReflectionHelper
+static class ReflectionHelper
 {
     public static string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
     {

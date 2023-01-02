@@ -3,10 +3,10 @@
 // MIT License
 
 using System.Linq.Expressions;
+using DragonFly.Proxy;
 using DragonFly.Proxy.Helpers;
-using DragonFly.Query;
 
-namespace DragonFly.Proxy.Query;
+namespace DragonFly.Query;
 
 /// <summary>
 /// SlugFieldQueryExtensions

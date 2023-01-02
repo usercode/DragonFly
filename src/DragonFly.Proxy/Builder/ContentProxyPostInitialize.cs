@@ -7,17 +7,17 @@ using Microsoft.Extensions.Options;
 
 namespace DragonFly.Proxy;
 
-internal class ContentSchemaPostInitialize : IPostInitialize
+internal class ContentProxyPostInitialize : IPostInitialize
 {
-    public ContentSchemaPostInitialize(IContentSchemaBuilder builder, IOptions<ContentSchemaBuilderOptions> options)
+    public ContentProxyPostInitialize(ContentProxyBuilder builder, IOptions<ContentProxyBuilderOptions> options)
     {
         Builder = builder;
         Options = options.Value;
     }
 
-    public IContentSchemaBuilder Builder { get; }
+    public ContentProxyBuilder Builder { get; }
 
-    public ContentSchemaBuilderOptions Options { get; }
+    public ContentProxyBuilderOptions Options { get; }
 
     public async Task ExecuteAsync(IDragonFlyApi api)
     {

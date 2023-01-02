@@ -25,9 +25,8 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.BlockField().AddDefaults();
-
-            api.ContentField().Add<BlockField.BlockField>();
+            api.BlockFields().AddDefaults();
+            api.ContentFields().Add<BlockField.BlockField>();
         });
 
         return builder;

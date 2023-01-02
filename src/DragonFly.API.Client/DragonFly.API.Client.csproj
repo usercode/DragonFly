@@ -21,14 +21,14 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+  </ItemGroup> 
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.API.Core\DragonFly.API.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DragonFly.API.Core\DragonFly.API.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,8 +21,7 @@ public static class DragonFlyBuilderExtensions
             opt.SerializerOptions.TypeInfoResolver = JsonSerializerDefault.Options.TypeInfoResolver;
         });
 
-        builder.Init(api => api.JsonField().AddDefaults());
-        builder.PostInit<CreateMissingJsonFieldSerializer>();
+        builder.Init(api => api.JsonFields().AddDefaults());
 
         return builder;
     }

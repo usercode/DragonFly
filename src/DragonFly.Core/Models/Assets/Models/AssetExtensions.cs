@@ -6,6 +6,16 @@ namespace DragonFly;
 
 public static class AssetExtensions
 {
+    public static string GetPublicUrl(this Asset asset)
+    {
+        return $"/dragonfly/api/asset/{asset.Id}/download?v={asset.Hash}";
+    }
+
+    public static string GetFileSize(this Asset asset)
+    {
+        return $"{(double)asset.Size / 1024:###,###,##0.00} KB";
+    }
+
     public static bool IsImage(this Asset asset)
     {
         return asset.IsWebP() || asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();

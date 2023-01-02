@@ -7,23 +7,10 @@ namespace DragonFly;
 /// <summary>
 /// EventManager
 /// </summary>
-public class EventManager
+public sealed class EventManager
 {
-    public static EventManager? _default;
-
     /// <summary>
     /// Default
     /// </summary>
-    public static EventManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new EventManager();
-            }
-
-            return _default;
-        }
-    }
+    public static EventManager Default { get; } = new EventManager();
 }

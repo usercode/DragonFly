@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Permissions;
+using DragonFly.Query;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
@@ -39,14 +40,14 @@ public class SchemaStorageAuthorization : ISchemaStorage
         await Storage.CreateAsync(contentType);
     }
 
-    public async Task<ContentSchema> GetSchemaAsync(Guid id)
+    public async Task<ContentSchema?> GetSchemaAsync(Guid id)
     {
         await Api.AuthorizeAsync(SchemaPermissions.SchemaRead);
 
         return await Storage.GetSchemaAsync(id);
     }
 
-    public async Task<ContentSchema> GetSchemaAsync(string name)
+    public async Task<ContentSchema?> GetSchemaAsync(string name)
     {
         await Api.AuthorizeAsync(SchemaPermissions.SchemaRead);
 

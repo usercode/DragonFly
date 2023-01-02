@@ -11,7 +11,7 @@ namespace DragonFly;
 /// </summary>
 public static class DragonFlyApiComponentManagerExtensions
 {
-    public static ComponentManager Component(this IDragonFlyApi api)
+    public static ComponentManager Components(this IDragonFlyApi api)
     {
         return ComponentManager.Default;
     }

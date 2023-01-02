@@ -2,10 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Net.Mime;
-using DragonFly.Query;
+using DragonFly.Proxy;
 
-namespace DragonFly.Proxy.Query;
+namespace DragonFly.Query;
 
 public class ContentQuery<TContentModel> : ContentQuery
     where TContentModel : class, IContentModel

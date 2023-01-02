@@ -5,14 +5,14 @@
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using DragonFly.Assets.Query;
-using DragonFly.API;
+using DragonFly.Query;
 
 namespace DragonFly.API.Client;
 
 /// <summary>
 /// ContentService
 /// </summary>
-public partial class ClientContentService : IAssetStorage
+internal partial class ClientContentService : IAssetStorage
 {
     public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
     {

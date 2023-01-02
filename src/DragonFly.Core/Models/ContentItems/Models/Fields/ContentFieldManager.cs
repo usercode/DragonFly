@@ -14,20 +14,7 @@ public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptions
 /// </summary>
 public sealed class ContentFieldManager
 {
-    private static ContentFieldManager? _default;
-
-    public static ContentFieldManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new ContentFieldManager();
-            }
-
-            return _default;
-        }
-    }
+    public static ContentFieldManager Default { get; } = new ContentFieldManager();
 
     private IDictionary<string, Type> _optionsByName;
     private IDictionary<Type, Type> _optionsByField;
@@ -49,30 +36,33 @@ public sealed class ContentFieldManager
     public void Add<TField>()
         where TField : ContentField
     {
-        Type contentFieldType = typeof(TField);
+        Add(typeof(TField));
+    }
 
+    public void Add(Type fieldType)
+    {
         //name
-        _fieldByName[contentFieldType.Name] = contentFieldType;
+        _fieldByName[fieldType.Name] = fieldType;
 
         //options
-        FieldOptionsAttribute? fieldOptionsAttribute = contentFieldType.GetCustomAttribute<FieldOptionsAttribute>();
+        FieldOptionsAttribute? fieldOptionsAttribute = fieldType.GetCustomAttribute<FieldOptionsAttribute>();
 
         if (fieldOptionsAttribute != null)
         {
             _optionsByName[fieldOptionsAttribute.OptionsType.Name] = fieldOptionsAttribute.OptionsType;
-            _optionsByField[typeof(TField)] = fieldOptionsAttribute.OptionsType;
+            _optionsByField[fieldType] = fieldOptionsAttribute.OptionsType;
         }
 
         //query
-        FieldQueryAttribute? fieldQueryAttribute = contentFieldType.GetCustomAttribute<FieldQueryAttribute>();
+        FieldQueryAttribute? fieldQueryAttribute = fieldType.GetCustomAttribute<FieldQueryAttribute>();
 
         if (fieldQueryAttribute != null)
         {
             _queryByName[fieldQueryAttribute.QueryType.Name] = fieldQueryAttribute.QueryType;
-            _queryByField[contentFieldType] = fieldQueryAttribute.QueryType;
+            _queryByField[fieldType] = fieldQueryAttribute.QueryType;
         }
 
-        Added?.Invoke(contentFieldType, fieldOptionsAttribute, fieldQueryAttribute);
+        Added?.Invoke(fieldType, fieldOptionsAttribute, fieldQueryAttribute);
     }
 
     public IEnumerable<Type> GetAllOptionsTypes()

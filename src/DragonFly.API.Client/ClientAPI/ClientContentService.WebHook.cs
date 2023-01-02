@@ -3,13 +3,14 @@
 // MIT License
 
 using System.Net.Http.Json;
+using DragonFly.Query;
 
 namespace DragonFly.API.Client;
 
 /// <summary>
 /// ContentService
 /// </summary>
-public partial class ClientContentService : IWebHookStorage
+internal partial class ClientContentService : IWebHookStorage
 {
 
     public async Task<WebHook> GetAsync(Guid id)
