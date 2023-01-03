@@ -7,6 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using DragonFly.Proxy;
 using DragonFlyTemplate.Models;
 using DragonFly.BlockField;
+using DragonFly.Query;
 
 namespace DragonFlyTemplate.Startup;
 

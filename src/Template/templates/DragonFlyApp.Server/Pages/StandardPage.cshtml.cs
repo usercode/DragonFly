@@ -4,10 +4,7 @@
 
 using DragonFly;
 using DragonFly.BlockField;
-using DragonFly.Proxy;
-using DragonFly.Proxy.Query;
 using DragonFly.Query;
-using DragonFly.Storage;
 using DragonFlyTemplate.Models;
 using Microsoft.AspNetCore.Mvc;
 

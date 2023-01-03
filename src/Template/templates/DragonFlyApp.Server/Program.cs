@@ -3,8 +3,8 @@
 // MIT License
 
 using DragonFly;
-using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
+using DragonFly.AspNet.Options;
 using DragonFly.MongoDB;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Pages;
@@ -31,12 +31,12 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
-                    .AddBlockField()
+                    .AddBlockField()                    
+                    .AddApiKeys()
+                    .AddPermissions()
                     .AddProxy(x => x
                                     .AddType<StandardPageModel>()
-                                    .AddType<BlogPostModel>())
-                    .AddApiKeys()
-                    .AddPermissions();
+                                    .AddType<BlogPostModel>());
 
 var app = builder.Build();
 
