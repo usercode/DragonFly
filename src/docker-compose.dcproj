@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
-    <ProjectGuid>62fd0d6f-5aa7-40c2-866b-93f962c0fb76</ProjectGuid>
+    <ProjectGuid>8d4355af-19a7-471a-aa20-42052fcd042a</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/manager</DockerServiceUrl>
     <DockerServiceName>dragonfly.app.server</DockerServiceName>
@@ -15,6 +15,4 @@
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
-  <Target Name="Pack">
-  </Target>
 </Project>

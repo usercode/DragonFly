@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Text.Json;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -34,6 +35,7 @@ static class ContentItemApiExtensions
         foreach (ContentItem contentItem in contentItems.Items)
         {
             contentItem.ApplySchema();
+            contentItem.Validate();
         }
 
         QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()

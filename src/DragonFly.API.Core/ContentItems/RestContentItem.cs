@@ -4,6 +4,7 @@
 
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using DragonFly.Validations;
 
 namespace DragonFly.API;
 
@@ -30,8 +31,15 @@ public class RestContentItem : RestContentBase
     public int SchemaVersion { get; set; }
 
     /// <summary>
+    /// ValidationContext
+    /// </summary>
+    [JsonPropertyOrder(4)]
+    public ValidationContext? ValidationContext { get; set; }
+
+    /// <summary>
     /// Fields
     /// </summary>
     [JsonPropertyOrder(30)]
     public JsonObject Fields { get; set; }
+
 }

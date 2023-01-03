@@ -219,15 +219,18 @@ public partial class MongoStorage : IContentStorage
 
     public async Task UpdateAsync(ContentItem contentItem)
     {
-        contentItem.ApplySchema();
+        ContentSchema schema = await GetSchemaAsync(contentItem.Schema.Name);
+
+
+        contentItem.ApplySchema(schema);
 
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(contentItem.Schema.Name);
 
-        ValidationContext validations = contentItem.Validate();
+        contentItem.Validate();
 
-        if (validations.Errors.Any())
+        if (contentItem.ValidationContext.State == ValidationState.Invalid)
         {
-            throw new Exception();
+            throw new Exception("Invalid state");
         }
 
         //update all fields, version

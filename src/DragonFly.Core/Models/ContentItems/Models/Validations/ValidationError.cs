@@ -23,10 +23,15 @@ public class ValidationError
     /// <summary>
     /// Field
     /// </summary>
-    public string? Field { get; set; }
+    public string Field { get; set; }
 
     /// <summary>
     /// Message
     /// </summary>
-    public string? Message { get; set; }
+    public string Message { get; set; }
+
+    public override string ToString()
+    {
+        return Message;
+    }
 }

@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.AspNet.Middleware;
-using DragonFly.Builders;
+using DragonFly.AspNetCore.Builders;
 using Microsoft.AspNetCore.Builder;
 
 namespace DragonFly.AspNetCore;

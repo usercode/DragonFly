@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Builders;
+using DragonFly.AspNetCore.Builders;
 using DragonFly.Proxy;
 using Microsoft.Extensions.DependencyInjection;
 

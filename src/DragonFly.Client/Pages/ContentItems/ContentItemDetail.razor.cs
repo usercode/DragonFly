@@ -20,20 +20,17 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 {
     public ContentItemDetailBase()
     {
-        ValidationContext = new ValidationContext();
     }
 
     [Inject]
     public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
-
-    public ValidationContext ValidationContext { get; set; }
 
     [Parameter]
     public Guid? CloneFromEntityId { get; set; }
 
     public bool IsFieldValid(string field)
     {
-        return ValidationContext.Errors.All(x => x.Field != field);
+        return Entity.ValidationContext.Errors.All(x => x.Field != field);
     }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -63,8 +60,6 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     protected override async Task RefreshActionAsync()
     {
         await base.RefreshActionAsync();
-
-        ValidationContext = new ValidationContext();
 
         if (IsNewEntity)
         {
@@ -113,9 +108,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override void OnSaving(SavingEventArgs args)
     {
-        ValidationContext = Entity.Validate();
-
-        if (ValidationContext.Errors.Any())
+        if(Entity.Validate() == false)
         {
             StateHasChanged();
 

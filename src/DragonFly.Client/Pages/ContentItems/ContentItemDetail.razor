@@ -11,15 +11,12 @@
 
             <Toolbar Items="ToolbarItems"></Toolbar>
         </div>
-        <div class="scroll-content">
-            @foreach (var validationResult in ValidationContext.Errors)
+        <div class="scroll-content">           
+            @foreach (var validationResult in Entity.ValidationContext.Errors)
             {
-                <BSAlert Color="BSColor.Danger">
-                    @validationResult.Message
-                </BSAlert>
+                <BSAlert Color="BSColor.Danger">@validationResult.Message</BSAlert>
             }
-
-            <BSForm Model="Entity" style="flex: 1">
+            <BSForm Model="Entity" class="entity-content">
                 <div class="form-group">
                     <BSRow>
                         <BSCol Column="2">
@@ -37,7 +34,7 @@
             </BSForm>
         </div>
 
-        <div class="content-footer">
+        <div class="footer-content">
             <div class="row">
                 <div class="col-sm-4">
                     <p>Created: @Entity.CreatedAt</p>

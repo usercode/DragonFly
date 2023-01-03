@@ -366,11 +366,15 @@ app {
   margin: 1rem;
 }
 
-.content-footer {
+.footer-content {
   flex: 0;
   background-color: #f5f5f5;
   padding: 12px;
   padding-bottom: 0px;
+}
+
+.entity-content {
+  flex: 1;
 }
 
 .settings {
