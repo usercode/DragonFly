@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>0.9.2</PackageVersion>
+    <PackageVersion>0.9.3</PackageVersion>
     <PackageId>DragonFly.Templates</PackageId>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>logo.png</PackageIcon>
     <Title>DragonFly CMS Templates</Title>
     <Authors>usercode</Authors>
     <Description>Templates to use when creating a DragonFly CMS app.</Description>
@@ -19,6 +21,11 @@
     <NoWarn>$(NoWarn);NU5128</NoWarn>
     <NoDefaultExcludes>true</NoDefaultExcludes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\logo.png" Pack="true" PackagePath="" />
+    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="templates\**\*" Exclude="**\bin\**;**\obj\**;**\Properties\**;**\lib\**;**\*.user;**\.vs\**;**\*appsettings.development.json" />

@@ -3,8 +3,9 @@
 // MIT License
 
 using DragonFly.Proxy;
+using DragonFly.Query;
 
-namespace DragonFly.Query;
+namespace DragonFly;
 
 public static class ContentProxyBuilderExtensions
 {
