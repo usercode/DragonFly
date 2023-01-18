@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNet.Middleware;
 using DragonFly.Identity;
 using DragonFly.Identity.Commands;
 using DragonFly.Identity.Rest.Commands;
@@ -11,17 +10,21 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFly.AspNetCore.Identity.Middlewares.Users;
+namespace DragonFly.AspNetCore.Identity;
 
 internal static class UserExtensions
 {
-    public static void MapUserApi(this IDragonFlyEndpointBuilder endpoints)
+    public static IEndpointRouteBuilder MapUserApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("identity/user/{id:guid}", MapGet);
-        endpoints.MapPost("identity/user/query", MapQuery);
-        endpoints.MapPost("identity/user", MapCreate);
-        endpoints.MapPut("identity/user", MapUpdate);
-        endpoints.MapPost("identity/user/change-password", MapChangePassword);
+        var group = endpoints.MapGroup("user");
+
+        group.MapGet("{id:guid}", MapGet);
+        group.MapPost("query", MapQuery);
+        group.MapPost("", MapCreate);
+        group.MapPut("", MapUpdate);
+        group.MapPost("change-password", MapChangePassword);
+
+        return endpoints;
     }
 
     private static async Task MapGet(HttpContext context, IIdentityService identityService, Guid id)

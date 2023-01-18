@@ -14,6 +14,7 @@ public static class BlockFieldManagerExtensions
     public static void AddDefaults(this BlockFieldManager manager)
     {
         manager.Add<ColumnBlock>();
+        manager.Add<GridBlock>();
         manager.Add<AssetBlock>();
         manager.Add<SlideshowBlock>();
         manager.Add<TextBlock>();

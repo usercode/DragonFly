@@ -30,7 +30,7 @@
                     <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
 					<BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveUp(block))" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
                     <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveDown(block))" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-					<BSButton Color="BSColor.Light" OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fas fa-times"></i></BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fa-solid fa-minus"></i></BSButton>
 				</div>
 				<div class="block-field-content">
                     @ComponentManager.CreateComponent(block)

@@ -90,7 +90,7 @@ public static class ContentItemExtensions
 
     public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
     {
-        ((SingleValueField<T>)contentItem.Fields[name]).Value = value;
+        ((SingleValueField<T>)contentItem.GetField(name)).Value = value;
     }
 
     public static ContentItem CreateContent(this ContentSchema schema)

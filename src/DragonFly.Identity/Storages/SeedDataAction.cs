@@ -24,6 +24,9 @@ class SeedDataAction : IPostInitialize
         Store = mongoStore;
     }
 
+    /// <summary>
+    /// Options
+    /// </summary>
     public MongoDbOptions Options { get; }
 
     /// <summary>

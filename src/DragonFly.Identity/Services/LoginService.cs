@@ -58,9 +58,11 @@ class LoginService : ILoginService
             return false;
         }
 
-        List<Claim> claims = new List<Claim>();
-        claims.Add(new Claim("UserId", user.Id.ToString()));
-        claims.Add(new Claim("Username", user.Username));
+        List<Claim> claims = new List<Claim>()
+        {
+            new Claim("UserId", user.Id.ToString()),
+            new Claim("Username", user.Username)
+        };
 
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 

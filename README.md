@@ -71,7 +71,7 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 - SlugField
 - XmlField
 - HtmlField
-- BlockField (HeadingBlock, TextBlock, HtmlBlock, CodeBlock, ContainerBlock, ColumnBlock, AssetBlock, ReferenceBlock,..)
+- BlockField (HeadingBlock, TextBlock, HtmlBlock, CodeBlock, ContainerBlock, ColumnBlock, AssetBlock, ReferenceBlock, GridBlock,..)
 
 How to create new content schema and content item
 ```csharp

@@ -21,6 +21,7 @@ public static class DragonFlyBuilderExtensions
             api.RegisterField<BlockField.BlockField, BlockFieldView>();
 
             api.RegisterBlock<ColumnBlock, ColumnBlockView>();
+            api.RegisterBlock<GridBlock, GridBlockView>();
             api.RegisterBlock<AssetBlock, AssetBlockView>();
             api.RegisterBlock<SlideshowBlock, SlideshowBlockView>();
             api.RegisterBlock<TextBlock, TextBlockView>();

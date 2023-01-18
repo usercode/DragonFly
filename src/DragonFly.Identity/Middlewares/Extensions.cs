@@ -3,8 +3,6 @@
 // MIT License
 
 using DragonFly.AspNet.Middleware;
-using DragonFly.AspNetCore.Identity.Middlewares.Roles;
-using DragonFly.AspNetCore.Identity.Middlewares.Users;
 using DragonFly.Identity;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Builder;
@@ -17,9 +15,11 @@ internal static class Extensions
 {
     public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
     {
-        endpoints.MapGet("identity/CurrentUser", CurrentUserAsync);
-        endpoints.MapUserApi();
-        endpoints.MapRoleApi();
+        var group = endpoints.MapGroup("identity");
+
+        group.MapGet("CurrentUser", CurrentUserAsync);
+        group.MapUserApi();
+        group.MapRoleApi();
 
         return endpoints;
     }

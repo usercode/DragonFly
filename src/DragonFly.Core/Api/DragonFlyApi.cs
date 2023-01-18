@@ -25,7 +25,7 @@ public class DragonFlyApi : IDragonFlyApi
     {
         if (_done)
         {
-            throw new Exception("The DragonFlyApi is already initialized.");
+            throw new Exception("The DragonFly API is already initialized.");
         }
 
         using IServiceScope scope = ServiceProvider.CreateScope();

@@ -1,0 +1,12 @@
+﻿<div style="display:flex; gap: 0.25rem; align-items: center; @(Vertical ? "flex-direction: column;" : "")">
+    <input class="form-control grid-unit-value" type="number" step="1" @bind-value="@Span.Value" />
+    <EnumView TEnum="GridUnit" @bind-EnumValue="@Span.Unit" />
+</div>
+@code {
+
+    [Parameter]
+    public GridSpan Span { get; set; }
+
+    [Parameter]
+    public bool Vertical { get; set; }
+}

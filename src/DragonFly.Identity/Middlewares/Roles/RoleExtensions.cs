@@ -2,23 +2,24 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNet.Middleware;
 using DragonFly.Identity;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFly.AspNetCore.Identity.Middlewares.Roles;
+namespace DragonFly.AspNetCore.Identity;
 
 internal static class RoleExtensions
 {
-    public static IDragonFlyEndpointBuilder MapRoleApi(this IDragonFlyEndpointBuilder endpoints)
+    public static IEndpointRouteBuilder MapRoleApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("identity/role/{id:guid}", MapGet);
-        endpoints.MapPost("identity/role", MapCreate);
-        endpoints.MapPut("identity/role", MapUpdate);            
-        endpoints.MapPost("identity/role/query", MapQuery);
+        var group = endpoints.MapGroup("role");
+
+        group.MapGet("{id:guid}", MapGet);
+        group.MapPost("", MapCreate);
+        group.MapPut("", MapUpdate);
+        group.MapPost("query", MapQuery);
 
         return endpoints;
     }

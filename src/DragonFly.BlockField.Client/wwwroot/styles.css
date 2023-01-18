@@ -61,9 +61,41 @@
     padding-right: 2rem;
 }
 
+.column-action {
+    justify-content: center;
+}
+
 .alert-block {
     padding-left: 2rem;
     padding-right: 2rem;
+}
+
+.grid-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-block-content {
+    flex: 1;
+    gap: 0.25rem;
+}
+
+.grid-item {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    border: 1px solid #ff5e47;
+    background-color: #fff;
+}
+
+.grid-unit-value {
+    width: 4rem;
+    text-align: right
+}
+
+.grid-span-item {
+    border: 2px solid #f5f5f5;
+    padding: 0.5rem;
 }
 
 .tox-tinymce {

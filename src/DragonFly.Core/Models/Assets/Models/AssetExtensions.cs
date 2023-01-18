@@ -21,6 +21,11 @@ public static class AssetExtensions
         return asset.IsWebP() || asset.IsJpeg() || asset.IsPng() || asset.IsGif() || asset.IsBmp();
     }
 
+    public static bool IsVideo(this Asset asset)
+    {
+        return asset.IsMp4() || asset.IsWebM();
+    }
+
     public static bool IsJpeg(this Asset asset)
     {
         return asset.MimeType == MimeTypes.Jpeg;
@@ -44,6 +49,16 @@ public static class AssetExtensions
     public static bool IsWebP(this Asset asset)
     {
         return asset.MimeType == MimeTypes.WebP;
+    }
+
+    public static bool IsMp4(this Asset asset)
+    {
+        return asset.MimeType == MimeTypes.Mp4;
+    }
+
+    public static bool IsWebM(this Asset asset)
+    {
+        return asset.MimeType == MimeTypes.WebM;
     }
 
     public static bool IsSVG(this Asset asset)
