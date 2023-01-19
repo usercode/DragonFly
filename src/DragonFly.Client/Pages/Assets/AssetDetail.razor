@@ -4,6 +4,7 @@
 @inherits AssetDetailBase
 @inject ComponentManager ComponentManager
 @inject AssetPreviewManager AssetPreviewManager
+@inject ISlugService SlugService
 
 @if (Entity != null)
 {
@@ -42,7 +43,7 @@
                         <BSRow>
                             <label class="col-sm-2 col-form-label">Slug</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" value="@Entity.Slug" @onchange="x => Entity.Slug = Slugify.ToSlug(x.Value.ToString())" />
+                                <input type="text" class="form-control" value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
                             </div>
                         </BSRow>
                     </div>

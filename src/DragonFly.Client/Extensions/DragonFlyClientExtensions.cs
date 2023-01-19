@@ -44,6 +44,8 @@ public static class DragonFlyClientExtensions
         builder.Services.AddSingleton(AssetMetadataManager.Default);
         builder.Services.AddSingleton(AssetPreviewManager.Default);
 
+        builder.Services.AddSingleton<ISlugService, SlugService>();
+
         builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
 
         builder.Services.AddAuthorizationCore();

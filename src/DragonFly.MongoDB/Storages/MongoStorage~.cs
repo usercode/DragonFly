@@ -35,6 +35,8 @@ public partial class MongoStorage : IDataStorage
 
     public IDateTimeService DateTimeService { get; }
 
+    public ISlugService SlugService { get; }
+
     private IDragonFlyApi Api { get; }
 
     public ILogger<MongoStorage> Logger { get; }
@@ -53,12 +55,14 @@ public partial class MongoStorage : IDataStorage
         IDragonFlyApi api,
         IEnumerable<IAssetProcessing> assetProcessings, 
         IEnumerable<IContentInterceptor> interceptors,
+        ISlugService slugService,
         ILogger<MongoStorage> logger)
     {
         Default = this;
 
         Logger = logger;
         Api = api;
+        SlugService = slugService;
         Options = options.Value;
 
         CreateMissingFieldSerializers(api);

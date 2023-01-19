@@ -49,7 +49,7 @@ public partial class MongoStorage : IAssetStorage
 
         if (string.IsNullOrWhiteSpace(asset.Slug) == true)
         {
-            asset.Slug = asset.Name.ToSlug();
+            asset.Slug = SlugService.Transform(asset.Name);
         }
 
         await Assets.InsertOneAsync(mongoAsset);
@@ -63,7 +63,7 @@ public partial class MongoStorage : IAssetStorage
                         Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
                         Builders<MongoAsset>.Update
                                                 .Set(x => x.Name, asset.Name)
-                                                .Set(x => x.Slug, asset.Slug.ToSlug())
+                                                .Set(x => x.Slug, SlugService.Transform(asset.Slug))
                                                 .Set(x => x.Alt, asset.Alt)
                                                 .Set(x => x.Description, asset.Description)
                                                 .Set(x => x.Folder, asset.Folder?.Id)

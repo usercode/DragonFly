@@ -1,10 +1,11 @@
 ﻿@inherits FieldComponent<SlugField, SlugFieldOptions>
+@inject ISlugService SlugService
 
 <div class="slug-field">
     <div class="input-group">
         <div class="input-group-prepend">
             <div class="input-group-text">@@</div>
         </div>
-        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = Slugify.ToSlug(x.Value.ToString())" />
+        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" />
     </div>
 </div>

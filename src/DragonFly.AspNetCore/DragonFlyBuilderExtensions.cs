@@ -45,6 +45,8 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
+        services.AddSingleton<ISlugService, SlugService>();
+
         services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);

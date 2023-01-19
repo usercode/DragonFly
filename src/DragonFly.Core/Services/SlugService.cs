@@ -6,9 +6,9 @@ using System.Text.RegularExpressions;
 
 namespace DragonFly;
 
-public static class Slugify
+public class SlugService : ISlugService
 {
-    public static string ToSlug(this string? phrase)
+    public string Transform(string? phrase)
     {
         if (phrase == null)
         {
