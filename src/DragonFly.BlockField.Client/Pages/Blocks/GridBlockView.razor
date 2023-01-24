@@ -99,7 +99,7 @@
         {
             GridItem currentItem = item;
 
-            <div class="grid-item" style="grid-column: @(item.ColumnStart * 2 - 1 + 3) / @(item.ColumnEnd * 2 - 1 + 3); grid-row: @(item.RowStart * 2 + 2) / @(item.RowEnd * 2 + 2)">
+            <div class="grid-item" style="grid-column: @(CalcPosStart(item.ColumnStart)) / @(CalcPosEnd(item.ColumnEnd)); grid-row: @(CalcPosStart(item.RowStart)) / @(CalcPosEnd(item.RowEnd))">
                 <div style="display:grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto 1fr auto; width: 100%; height: 100%;">
                     <!--left-->
                     <div style="display:flex; flex-direction: column; align-items: stretch; justify-content: center; grid-column: 1; grid-row: 2">
@@ -125,6 +125,10 @@
                     <div style="display:flex; grid-column: 3; grid-row: 1">
                         <BSButton Color="BSColor.Light" OnClick="x => Block.Items.Remove(currentItem)" title="Remove block"><i class="fas fa-times"></i></BSButton>
                     </div>
+                    <!--position-->
+                    <div style="display:flex; grid-column: 1; grid-row: 1; justify-content: center; align-items: center">
+                        <span>@item.ColumnStart / @item.ColumnEnd</span>
+                    </div>
                     <!--field-->
                     <div style="display:flex; grid-column: 2; grid-row: 2; align-items:center; justify-content: center">
                         @ComponentManager.CreateComponent(item.Block)
@@ -145,6 +149,16 @@
         base.OnInitialized();
 
 
+    }
+
+    private int CalcPosStart(int value)
+    {
+        return  value * 2 + 2;
+    }
+
+    private int CalcPosEnd(int value)
+    {
+        return value * 2 + 1;
     }
 
     private string GetTemplate(ICollection<GridSpan> spans)

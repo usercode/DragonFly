@@ -27,12 +27,7 @@ public class WebHookInterceptor : IContentInterceptor
     /// </summary>
     public HttpClient HttpClient { get; }
 
-    public ILogger<WebHookInterceptor> Logger { get; }
-
-    public async Task OnDeletedAsync(IDataStorage storage, ContentItem contentItem)
-    {
-        
-    }
+    public ILogger<WebHookInterceptor> Logger { get; }    
 
     public async Task OnPublishedAsync(IDataStorage storage, ContentItem contentItem)
     {
@@ -112,8 +107,18 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
+    public async Task OnCreatedAsync(IDataStorage storage, ContentItem contentItem)
+    {
+
+    }
+
     public async Task OnUpdatedAsync(IDataStorage storage, ContentItem contentItem)
     {
-        
+
+    }
+
+    public async Task OnDeletedAsync(IDataStorage storage, ContentItem contentItem)
+    {
+
     }
 }

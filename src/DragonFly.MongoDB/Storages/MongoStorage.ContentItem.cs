@@ -194,27 +194,33 @@ public partial class MongoStorage : IContentStorage
         return queryResult;
     }
 
-    public async Task CreateAsync(ContentItem contentItem)
+    public async Task CreateAsync(ContentItem content)
     {
-        if (contentItem.Id == Guid.Empty)
+        if (content.Id == Guid.Empty)
         {
-            contentItem.Id = Guid.NewGuid();
+            content.Id = Guid.NewGuid();
         }
 
         DateTime now = DateTimeService.Current();
 
-        contentItem.CreatedAt = now;
-        contentItem.ModifiedAt = now;
+        content.CreatedAt = now;
+        content.ModifiedAt = now;
 
-        var items = GetMongoCollection(contentItem.Schema.Name);
+        var items = GetMongoCollection(content.Schema.Name);
 
-        contentItem.Validate();
+        content.Validate();
 
-        MongoContentItem mongo = contentItem.ToMongo();
+        MongoContentItem mongo = content.ToMongo();
 
         await items.InsertOneAsync(mongo);
 
-        contentItem.Id = mongo.Id;
+        content.Id = mongo.Id;
+
+        //execute interceptors
+        foreach (IContentInterceptor interceptor in Interceptors)
+        {
+            await interceptor.OnCreatedAsync(this, content);
+        }
     }
 
     public async Task UpdateAsync(ContentItem contentItem)
