@@ -4,7 +4,7 @@
 
 using DragonFly.Query;
 
-namespace DragonFly.MongoDB.Query;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// MongoQueryManager

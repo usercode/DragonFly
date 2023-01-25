@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.MongoDB.Index;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// FieldIndex

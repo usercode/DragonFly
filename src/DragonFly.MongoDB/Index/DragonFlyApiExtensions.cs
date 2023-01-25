@@ -2,13 +2,14 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.MongoDB.Index;
+
+using DragonFly.MongoDB;
 
 namespace DragonFly;
 
 public static class DragonFlyApiExtensions
 {
-    public static MongoIndexManager Index(this IDragonFlyApi api)
+    public static MongoIndexManager MongoIndex(this IDragonFlyApi api)
     {
         return MongoIndexManager.Default;
     }

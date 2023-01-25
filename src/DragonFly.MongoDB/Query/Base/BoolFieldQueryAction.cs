@@ -5,7 +5,7 @@
 using DragonFly.Query;
 using MongoDB.Driver;
 
-namespace DragonFly.MongoDB.Query;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// BoolFieldQueryAction

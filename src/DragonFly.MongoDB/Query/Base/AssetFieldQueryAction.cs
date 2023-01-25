@@ -6,7 +6,7 @@ using DragonFly.Query;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace DragonFly.MongoDB.Query;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// AssetFieldQueryAction

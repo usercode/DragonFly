@@ -78,6 +78,7 @@
 .grid-block-content {
     flex: 1;
     gap: 0.25rem;
+    aspect-ratio: 1 / 1;
 }
 
 .grid-item {

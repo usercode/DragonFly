@@ -5,7 +5,7 @@
 using DragonFly.API;
 using MongoDB.Driver;
 
-namespace DragonFly.MongoDB.Index;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// CreateIndexAction
@@ -78,7 +78,7 @@ class CreateIndexAction : IPostInitialize
                 }
 
                 //add new indices
-                if (Api.Index().TryGetByType(fieldType, out FieldIndex? fieldIndex))
+                if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
                 {
                     await collection.Indexes.CreateOneAsync(
                         new CreateIndexModel<MongoContentItem>(Builders<MongoContentItem>.IndexKeys.Ascending(fieldIndex.CreateIndexPath(field.Key)),

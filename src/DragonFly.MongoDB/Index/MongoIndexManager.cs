@@ -4,7 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace DragonFly.MongoDB.Index;
+namespace DragonFly.MongoDB;
 
 /// <summary>
 /// FieldIndexManager

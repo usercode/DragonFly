@@ -4,8 +4,6 @@
 
 using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
-using DragonFly.MongoDB.Index;
-using DragonFly.MongoDB.Query;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 
