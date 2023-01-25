@@ -18,10 +18,12 @@ public class DataSeeding
 {
     public DataSeeding(
         IDataStorage dataStorage,
-        IDragonFlyApi api)
+        IDragonFlyApi api,
+        ISlugService slugService)
     {
         DataStorage = dataStorage;
         Api = api;
+        SlugService = slugService;
     }
 
     /// <summary>
@@ -33,6 +35,11 @@ public class DataSeeding
     /// Api
     /// </summary>
     private IDragonFlyApi Api { get; }
+
+    /// <summary>
+    /// SlugService
+    /// </summary>
+    private ISlugService SlugService { get; }
 
     public async Task StartAsync()
     {
@@ -108,7 +115,7 @@ public class DataSeeding
 
         Asset asset = new Asset();
         asset.Name = filename.Name;
-        asset.Slug = Slugify.ToSlug(asset.Name);
+        asset.Slug = SlugService.Transform(asset.Name);
 
         await DataStorage.CreateAsync(asset);
 

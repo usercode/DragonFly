@@ -27,7 +27,7 @@ public class BlogPostPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.AddSlugQuery(x => x.Slug, slug));
+        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.SlugQuery(x => x.Slug, slug));
 
         if (Result == null)
         {
