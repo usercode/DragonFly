@@ -256,6 +256,23 @@ body > header .title img {
   margin-bottom: 0px;
 }
 
-.html-block p:last-child {
-  margin-bottom: 0px;
+.grid-block {
+  display: grid;
+  gap: 1rem;
+}
+.grid-block .grid-item {
+  display: flex;
+  overflow: hidden;
+}
+.grid-block .block {
+  flex: 1;
+  margin: 0px;
+  padding: 0px;
+}
+.grid-block .asset-block > img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
 }

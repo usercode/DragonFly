@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -11,6 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Core" Version="0.9.5" />
+    <PackageReference Include="DragonFly.Core" Version="0.9.6" />
   </ItemGroup>
 </Project>
