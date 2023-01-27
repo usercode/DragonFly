@@ -78,14 +78,13 @@
 .grid-block-content {
     flex: 1;
     gap: 0.25rem;
-    aspect-ratio: 1 / 1;
 }
 
 .grid-item {
     display: flex;
     justify-content: stretch;
     align-items: stretch;
-    border: 1px solid #ff5e47;
+    border: 2px solid #ff9b8d;
     background-color: #fff;
 }
 

@@ -88,8 +88,11 @@
         {
             for (int k = 0; k < Block.Rows.Count; k++)
             {
+                int c = i + 1;
+                int r = k + 1;
+
                 <div class="grid-span-item" style="display:flex; justify-content: center; align-items: center; grid-column: @((i*2)+4); grid-row: @((k*2)+4)">
-                    <span>@(i + 1) / @(k + 1)</span>
+                    <BSButton Color="BSColor.Light" OnClick="e => OpenModal(c,r)" style="width:100%; height:100%; aspect-ratio: 1 / 1;">@c / @r</BSButton>
                 </div>
             }
         }
@@ -121,7 +124,7 @@
                         <BSButton Color="BSColor.Light" OnClick="x => currentItem.RowEnd++"><i class="fas fa-arrow-down"></i></BSButton>
                         <BSButton Color="BSColor.Light" OnClick="x => currentItem.RowEnd--"><i class="fas fa-arrow-up"></i></BSButton>
                     </div>
-                     <!--remove button-->
+                    <!--remove button-->
                     <div style="display:flex; grid-column: 3; grid-row: 1">
                         <BSButton Color="BSColor.Light" OnClick="x => Block.Items.Remove(currentItem)" title="Remove block"><i class="fas fa-times"></i></BSButton>
                     </div>
@@ -153,7 +156,7 @@
 
     private int CalcPosStart(int value)
     {
-        return  value * 2 + 2;
+        return value * 2 + 2;
     }
 
     private int CalcPosEnd(int value)
@@ -161,8 +164,10 @@
         return value * 2 + 1;
     }
 
-    private string GetTemplate(ICollection<GridSpan> spans)
+    private string GetTemplateColumns()
     {
+        var spans = Block.Columns;
+
         List<string> builder = new List<string>(spans.Count * 2 + 3);
 
         builder.Add("auto");
@@ -179,42 +184,60 @@
         return string.Join(' ', builder);
     }
 
-    private string GetTemplateColumns() => GetTemplate(Block.Columns);
-    private string GetTemplateRows() => GetTemplate(Block.Rows);
+
+    private string GetTemplateRows()
+    {
+        var spans = Block.Rows;
+
+        List<string> builder = new List<string>(spans.Count * 2 + 3);
+
+        builder.Add("auto");
+        builder.Add("auto");
+        builder.Add("auto");
+
+        foreach (GridSpan column in spans)
+        {
+            //builder.Add($"{column.Value}{column.Unit.ToCss()}");
+            builder.Add("auto");
+            builder.Add("auto");
+        }
+
+        return string.Join(' ', builder);
+    }
 
     private void AddColumn(int pos)
     {
         foreach (var item in Block.Items)
         {
-            if (item.ColumnStart >= pos)
+            if (item.ColumnStart > pos)
             {
                 item.ColumnStart++;
                 item.ColumnEnd++;
             }
         }
 
-        Block.Columns.Insert(pos, new GridSpan());
+        Block.Columns.Insert(pos, new GridSpan() { Value = 1, Unit = GridUnit.Fraction });
     }
 
     private void AddRow(int pos)
     {
         foreach (var item in Block.Items)
         {
-            if (item.RowStart >= pos)
+            if (item.RowStart > pos)
             {
                 item.RowStart++;
                 item.RowEnd++;
             }
         }
 
-        Block.Rows.Insert(pos, new GridSpan());
+        Block.Rows.Insert(pos, new GridSpan() { Value = 0, Unit = GridUnit.Auto});
     }
 
     private void RemoveColumn(int pos)
     {
         foreach (var item in Block.Items)
         {
-            if (item.ColumnStart >= pos)
+            if (item.ColumnStart > pos)
             {
                 item.ColumnStart--;
                 item.ColumnEnd--;
@@ -228,7 +251,7 @@
     {
         foreach (var item in Block.Items)
         {
-            if (item.RowStart >= pos)
+            if (item.RowStart > pos)
             {
                 item.RowStart--;
                 item.RowEnd--;
@@ -238,9 +261,15 @@
         Block.Rows.RemoveAt(pos);
     }
 
-    public async Task OpenModal()
+    private int NewItemColumn;
+    private int NewItemRow;
+
+    public async Task OpenModal(int column = 1, int row = 1)
     {
         _show = true;
+
+        NewItemColumn = column;
+        NewItemRow = row;
 
         await _offCanvas.ToggleAsync();
     }
@@ -251,7 +280,7 @@
 
         _show = true;
 
-        Block.Items.Insert(0, new GridItem() { Block = block });
+        Block.Items.Add(new GridItem() { Block = block, ColumnStart = NewItemColumn, ColumnEnd = NewItemColumn + 1, RowStart = NewItemRow, RowEnd = NewItemRow + 1 });
     }
 
 }

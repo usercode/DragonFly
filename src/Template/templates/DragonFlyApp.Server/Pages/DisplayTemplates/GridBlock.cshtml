@@ -1,0 +1,14 @@
+@*@model GridBlock
+
+@if (Model.Columns.Any() && Model.Rows.Any())
+{
+    <div class="block grid-block" style="grid-template-columns: @Model.Columns.ToGridTemplate(); grid-template-rows: @Model.Rows.ToGridTemplate()">
+        @foreach(GridItem item in Model.Items)
+        {
+            <div style="grid-column: @item.ColumnStart / @item.ColumnEnd; grid-row: @item.RowStart / @item.RowEnd">
+                @Html.DisplayFor(x => item.Block, item.Block.GetType().Name)
+            </div>
+        }
+    </div>
+}
+*@

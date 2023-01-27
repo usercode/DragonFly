@@ -17,7 +17,9 @@
             <div style="display:flex;justify-content:space-between;align-items:center"> 
                 @if (Asset != null)
                 {
-                    <a href="asset/@Asset.Id" class="link-dark"><span>@Asset.Name (@Asset.MimeType)</span></a>
+                    <a href="asset/@Asset.Id" class="link-dark">
+                        <span style="overflow-wrap: anywhere;">@Asset.Name (@Asset.MimeType)</span>
+                    </a>
                 }
                 else
                 {

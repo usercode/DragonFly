@@ -1,10 +1,16 @@
 ﻿<div style="display:flex; gap: 0.25rem; align-items: center; @(Vertical ? "flex-direction: column;" : "")">
-    <input class="form-control grid-unit-value" type="number" step="1" @bind-value="@Span.Value" />
+    @*@if (Span.Unit == GridUnit.Auto)
+    {
+        Span.Value = 0;
+    }
+    else
+    {*@
+        <input class="form-control grid-unit-value" type="number" step="1" @bind-value="@Span.Value" />
+    @*}*@
     <EnumView TEnum="GridUnit" @bind-EnumValue="@Span.Unit" />
 </div>
 
 @code {
-
     [Parameter]
     public GridSpan Span { get; set; }
 
