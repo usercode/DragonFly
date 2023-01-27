@@ -103,7 +103,7 @@
             GridItem currentItem = item;
 
             <div class="grid-item" style="grid-column: @(CalcPosStart(item.ColumnStart)) / @(CalcPosEnd(item.ColumnEnd)); grid-row: @(CalcPosStart(item.RowStart)) / @(CalcPosEnd(item.RowEnd))">
-                <div style="display:grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto 1fr auto; width: 100%; height: 100%;">
+                <div style="display:grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto 1fr auto; flex:1">
                     <!--left-->
                     <div style="display:flex; flex-direction: column; align-items: stretch; justify-content: center; grid-column: 1; grid-row: 2">
                         <BSButton Color="BSColor.Light" OnClick="x => currentItem.ColumnStart--"><i class="fas fa-arrow-left"></i></BSButton>
