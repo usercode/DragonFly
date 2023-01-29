@@ -22,7 +22,7 @@ class BlockFieldConverter : JsonConverter<Block>
                     return (Block?)JsonSerializer.Deserialize(doc.RootElement, blockType, options);
                 }
 
-                return new UnknownBlock(doc.RootElement.ToString());
+                return new UnknownBlock(doc.RootElement);
             }
         }
 
@@ -31,6 +31,13 @@ class BlockFieldConverter : JsonConverter<Block>
 
     public override void Write(Utf8JsonWriter writer, Block value, JsonSerializerOptions options)
     {
-        JsonSerializer.Serialize(writer, value, value.GetType(), options);
+        if (value is UnknownBlock unknownBlock)
+        {
+            unknownBlock.Node.WriteTo(writer);
+        }
+        else
+        {
+            JsonSerializer.Serialize(writer, value, value.GetType(), options);
+        }
     }
 }

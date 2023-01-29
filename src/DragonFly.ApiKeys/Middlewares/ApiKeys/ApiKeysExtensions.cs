@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace DragonFLy.ApiKeys.AspNetCore.Middlewares;
 
-static class Extensions
+static class ApiKeysExtensions
 {
     public static void MapApiKeyApi(this IDragonFlyEndpointBuilder endpoints)
     {

@@ -47,8 +47,8 @@ If you have a remote MongoDB instance, you need to add some appsettings:
     "Hostname": "localhost",
     "Database": "DragonFly_App",
     "Port": 27017,
-    "Username": "MY_MONGODB_USER",
-    "Password": "MY_MONGODB_PASSWORD"
+    "Username": "",
+    "Password": ""
   },
 ~~~
 
@@ -168,50 +168,4 @@ WebAssemblyHost host = builder.Build();
 
 await host.InitDragonFly();
 await host.RunAsync();
-```
-## Docker
-```yaml
-version: "2"
-
-services:
-  app:
-    image: usercode/dragonfly
-    container_name: catalog
-    restart: always
-    networks:
-      - default
-    volumes:
-      - catalog_cache:/cache
-    environment: 
-      - MongoDB__Database=DragonFly_App
-      - MongoDB__Hostname=catalog_db      
-      - MongoDB__Username=root
-      - MongoDB__Password=YOUR_PASSWORD
-      - MongoDB__InitialUsername=admin
-      - MongoDB__InitialPassword=Password123
-      - AssetCache__Folder=/cache
-      - ImageWizard__Key=YOUR_IMAGEWIZARD_KEY
-    depends_on:
-      - db
-  
-  db:
-    image: mongo:4.4
-    container_name: catalog_db
-    restart: always
-    networks:
-      - default
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=YOUR_PASSWORD      
-    volumes:
-      - catalog_db:/data/db
-      - catalog_configdb:/data/configdb
-
-volumes:
-  catalog_db:
-    external: true
-  catalog_configdb:
-    external: true
-  catalog_cache:
-    external: true
 ```

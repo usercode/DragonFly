@@ -30,6 +30,7 @@ public static class DragonFlyBuilderExtensions
     /// Default asset metadata: <br/>
     /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/><br /><br />
     /// Default services::<br/>
+    /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
     /// <see cref="IAssetProcessing"/> -> <see cref="ImageAssetProcessing"/>, <see cref="PdfAssetProcessing"/>
     /// </summary>

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Permissions;
 
-internal static class Extensions
+internal static class PermissionApiExtensions
 {
     public static void MapPermissionItemApi(this IDragonFlyEndpointBuilder endpoints)
     {

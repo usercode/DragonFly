@@ -2,6 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
 namespace DragonFly.BlockField;
 
 /// <summary>
@@ -14,10 +17,10 @@ public class UnknownBlock : Block
 
     }
 
-    public UnknownBlock(string? content)
+    public UnknownBlock(JsonElement node)
     {
-        Content = content;
+        Node = node;
     }
 
-    public string? Content { get; set; }
+    public JsonElement Node { get; set; }
 }

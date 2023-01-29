@@ -69,9 +69,12 @@
         get => _contentItem;
         set
         {
-            _contentItem = value;
+            if (_contentItem != value)
+            {
+                _contentItem = value;
 
-            ContentItemChanged?.Invoke(_contentItem);
+                ContentItemChanged?.Invoke(_contentItem);
+            }
         }
     }
 

@@ -16,6 +16,7 @@ public abstract class Block
 
     private string? _name;
 
+    [JsonIgnore]
     public string Name
     {
         get
@@ -43,7 +44,8 @@ public abstract class Block
         return name;
     }
 
-    public virtual string CssIcon => "bi bi-app";
+    [JsonIgnore]
+    public virtual string CssIcon => "fa-solid fa-question";
 
     public override string ToString()
     {

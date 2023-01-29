@@ -2,8 +2,9 @@
 @inject IContentStorage Storage
 
 <div class="asset-block">
-    <ContentSelector @bind-ContentItem="Content" />
+    <ContentSelector ContentItem="Content" ContentItemChanged="x => { Content = x;  Block.ContentId = x?.Id; Block.ContentSchema = x?.Schema.Name; }" />
 </div>
+
 @code {
 
     protected override async Task OnInitializedAsync()
@@ -14,18 +15,5 @@
         }
     }
 
-    private ContentItem _content;
-
-    [Parameter]
-    public ContentItem Content 
-    {
-        get => _content;
-        set
-        {
-            _content = value;
-
-            Block.ContentId = _content?.Id;
-            Block.ContentSchema = _content?.Schema.Name;            
-        }
-	}
+    private ContentItem Content { get; set; }
 }

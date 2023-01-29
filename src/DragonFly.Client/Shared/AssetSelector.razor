@@ -65,9 +65,12 @@
         get => _asset;
         set
         {
-            _asset = value;
+            if (_asset != value)
+            {
+                _asset = value;
 
-            AssetChanged?.Invoke(_asset);
+                AssetChanged?.Invoke(_asset);
+            }
         }
     }
 
