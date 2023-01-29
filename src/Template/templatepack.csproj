@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>0.9.7</PackageVersion>
+    <PackageVersion>0.9.8</PackageVersion>
     <PackageId>DragonFly.Templates</PackageId>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
