@@ -6,9 +6,11 @@
     {
         <Toolbar Items="ToolbarItems" />
     }
-
-    @*@bind:event="oninput"*@
-    <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
+    
+    <div style="display:flex; gap: 0.25rem;">
+        <input class="form-control" type="text" style="flex:1;" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
+        <BSButton Color="BSColor.Light" OnClick="NavigateAsync" ><i class="fa-solid fa-magnifying-glass"></i></BSButton>
+    </div>
 </div>
 <div class="scroll-content">
     <EditForm Model="this">

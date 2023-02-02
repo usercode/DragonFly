@@ -1,6 +1,6 @@
 ﻿@inherits BlockComponent<ProgressBlock>
 
-<div class="progess-block">
+<div class="block progess-block">
     <div class="input-group">
         <EnumView TEnum="ColorType" @bind-EnumValue="@Block.ColorType" />
         <input class="form-control" type="number" @bind="@Block.Value" min="0" max="100" step="1" />

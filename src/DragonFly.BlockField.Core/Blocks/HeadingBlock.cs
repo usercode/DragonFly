@@ -25,7 +25,5 @@ public class HeadingBlock : Block
 
     public string? Text { get; set; }
 
-    public TextAlignment? TextAlignment { get; set; }
-
     public HeadingType HeadingType { get; set; }
 }

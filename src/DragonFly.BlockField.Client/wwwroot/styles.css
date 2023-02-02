@@ -81,11 +81,24 @@
 }
 
 .grid-item {
+    position: relative;
     display: flex;
     justify-content: stretch;
     align-items: stretch;
-    border: 2px solid #ff9b8d;
+    border: 2px solid #ff806f;
     background-color: #fff;
+}
+
+    .grid-item .block {
+        flex: 1;
+        margin: 1rem;
+    }
+
+.grid-item-label {
+    position: absolute;
+    background-color: #ff806f;
+    color: #fff;
+    padding: 2px 8px;
 }
 
 .grid-unit-value {

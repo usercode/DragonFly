@@ -1,7 +1,7 @@
 ﻿@inherits BlockComponent<AssetBlock>
 @inject IAssetStorage AssetStorage
 
-<div class="asset-block">
+<div class="block asset-block">
     <AssetSelector Asset="Asset" AssetChanged="x => { Asset = x; Block.AssetId = x?.Id; }" ShowPreview="true" />
 </div>
 

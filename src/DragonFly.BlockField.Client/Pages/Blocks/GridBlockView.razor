@@ -17,7 +17,7 @@
     </BSOffCanvas>
 }
 
-<div class="grid-block">
+<div class="block grid-block">
 
     <div>
         <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => OpenModal()" title="Add block">
@@ -103,6 +103,9 @@
             GridItem currentItem = item;
 
             <div class="grid-item" style="grid-column: @(CalcPosStart(item.ColumnStart)) / @(CalcPosEnd(item.ColumnEnd)); grid-row: @(CalcPosStart(item.RowStart)) / @(CalcPosEnd(item.RowEnd))">
+                <!--block name-->
+                <span class="grid-item-label">@item.Block.Name</span>
+                
                 <div style="display:grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto 1fr auto; flex:1">
                     <!--left-->
                     <div style="display:flex; flex-direction: column; align-items: stretch; justify-content: center; grid-column: 1; grid-row: 2">
@@ -128,10 +131,7 @@
                     <div style="display:flex; grid-column: 3; grid-row: 1">
                         <BSButton Color="BSColor.Light" OnClick="x => Block.Items.Remove(currentItem)" title="Remove block"><i class="fas fa-times"></i></BSButton>
                     </div>
-                    <!--position-->
-                    <div style="display:flex; grid-column: 1; grid-row: 1; justify-content: center; align-items: center">
-                        <span>@item.ColumnStart / @item.ColumnEnd</span>
-                    </div>
+                   
                     <!--field-->
                     <div style="display:flex; grid-column: 2; grid-row: 2; align-items:center; justify-content: center">
                         @ComponentManager.CreateComponent(item.Block)

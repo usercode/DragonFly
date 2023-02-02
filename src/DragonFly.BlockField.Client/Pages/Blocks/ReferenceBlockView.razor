@@ -1,7 +1,7 @@
 ﻿@inherits BlockComponent<ReferenceBlock>
 @inject IContentStorage Storage
 
-<div class="asset-block">
+<div class="block asset-block">
     <ContentSelector ContentItem="Content" ContentItemChanged="x => { Content = x;  Block.ContentId = x?.Id; Block.ContentSchema = x?.Schema.Name; }" />
 </div>
 
