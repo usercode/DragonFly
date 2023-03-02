@@ -47,20 +47,25 @@ public static class BlockFieldSerializer
     /// </summary>
     private static JsonSerializerOptions Options { get; }
 
-    public static async Task<byte[]> SerializeBlockAsync(Block block)
+    public static async Task<byte[]> SerializeBlockAsync(IEnumerable<Block> blocks)
     {
         MemoryStream jsonStream = new MemoryStream();
 
-        await JsonSerializer.SerializeAsync(jsonStream, block, Options);
+        await JsonSerializer.SerializeAsync(jsonStream, blocks, Options);
 
         return jsonStream.ToArray();
     }
 
-    public static async Task<Block?> DeserializeBlockAsync(byte[] buffer)
+    public static async Task<Block[]> DeserializeBlockAsync(byte[] buffer)
     {
-        Block? block = await JsonSerializer.DeserializeAsync<Block>(new MemoryStream(buffer), Options);
+        Block[]? blocks = await JsonSerializer.DeserializeAsync<Block[]>(new MemoryStream(buffer), Options);
 
-        return block;
+        if (blocks == null)
+        {
+            return Array.Empty<Block>();
+        }
+
+        return blocks;
     }
 
     public static async Task<string?> SerializeAsync(Document document)

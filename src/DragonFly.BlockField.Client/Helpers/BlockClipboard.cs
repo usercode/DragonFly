@@ -10,15 +10,18 @@ public static class BlockClipboard
 
     public static bool HasData() => Data != null;
 
-    public static async Task CopyAsync(Block block)
+    public static async Task CopyAsync(IEnumerable<Block> block)
     {
         Data = await BlockFieldSerializer.SerializeBlockAsync(block);
     }
 
     public static async Task PasteAsync(int index, IList<Block> blocks)
     {
-        Block innerBlock = await BlockFieldSerializer.DeserializeBlockAsync(Data);
+        Block[] innerBlock = await BlockFieldSerializer.DeserializeBlockAsync(Data);
 
-        blocks.Insert(index, innerBlock);
+        for (int i = 0; i < innerBlock.Length; i++)
+        {
+            blocks.Insert(index + i, innerBlock[i]);
+        }
     }
 }
