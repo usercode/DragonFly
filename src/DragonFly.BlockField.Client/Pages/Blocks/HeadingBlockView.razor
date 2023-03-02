@@ -3,6 +3,7 @@
 <div class="block heading-block">
     <div class="input-group">
         <EnumView TEnum="HeadingType" @bind-EnumValue="@Block.HeadingType" />
+        <EnumView TEnum="TextAlignment?" @bind-EnumValue="@Block.TextAlignment" />
         <input class="form-control" @bind="@Block.Text" />
     </div>
 </div>
