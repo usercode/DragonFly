@@ -11,7 +11,6 @@ public class AssetFolder : ContentBase<AssetFolder>
 {
     public AssetFolder()
     {
-        Name = "Unknown";
     }
 
     public AssetFolder(Guid id)

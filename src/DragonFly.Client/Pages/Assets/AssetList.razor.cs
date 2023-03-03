@@ -45,9 +45,9 @@ public class AssetListBase : EntityListComponent<Asset>
             query.Parent = SelectedFolder.Id;
         }
 
-        Folders = await AssetFolderStore.GetAssetFoldersAsync(query);
+        Folders = await AssetFolderStore.QueryAsync(query);
 
-        SearchResult = await ContentService.GetAssetsAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
+        SearchResult = await ContentService.QueryAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
     }
 
     protected async Task OpenFolder(AssetFolder folder)

@@ -1,0 +1,19 @@
+@inherits AssetFolderSelectorBase
+
+<div style="flex-direction:column;flex: 1">
+    <div class="content-header">
+    </div>
+
+    <div class="scroll-content">
+        <BSRow>
+            <BSCol Column="6">
+                
+                    @foreach (AssetFolder folder in Folders)
+                    {
+                        <AssetFolderView Folder="folder" OnFolderClicked="x => FolderSelected?.Invoke(x)" />
+                    }
+
+            </BSCol>            
+        </BSRow>
+    </div>
+</div>

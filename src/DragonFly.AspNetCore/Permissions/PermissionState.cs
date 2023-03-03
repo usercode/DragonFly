@@ -9,7 +9,7 @@ namespace DragonFly;
 /// </summary>
 public class PermissionState
 {
-    private static AsyncLocal<bool> Enabled = new AsyncLocal<bool>();
+    private static readonly AsyncLocal<bool> Enabled = new AsyncLocal<bool>();
 
     public static bool IsEnabled => Enabled.Value;
 

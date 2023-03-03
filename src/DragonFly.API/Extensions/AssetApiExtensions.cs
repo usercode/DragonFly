@@ -29,7 +29,7 @@ static class AssetApiExtensions
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
     {
-        QueryResult<Asset> assets = await storage.GetAssetsAsync(query);
+        QueryResult<Asset> assets = await storage.QueryAsync(query);
 
         QueryResult<RestAsset> queryResult = new QueryResult<RestAsset>();
         queryResult.Offset = assets.Offset;

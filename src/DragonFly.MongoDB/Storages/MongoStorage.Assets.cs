@@ -111,7 +111,7 @@ public partial class MongoStorage : IAssetStorage
         return await AssetData.OpenDownloadStreamByNameAsync(id.ToString());
     }
 
-    public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
+    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
         IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
 

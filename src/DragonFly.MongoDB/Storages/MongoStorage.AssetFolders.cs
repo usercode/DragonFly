@@ -20,13 +20,13 @@ public partial class MongoStorage : IAssetFolderStorage
 
         if (entity == null)
         {
-            throw new Exception();
+            return null;
         }
 
         return entity.ToModel();
     }
 
-    public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery queryData)
+    public async Task<IEnumerable<AssetFolder>> QueryAsync(AssetFolderQuery queryData)
     {
         var query = AssetFolders.AsQueryable();
 
@@ -38,6 +38,10 @@ public partial class MongoStorage : IAssetFolderStorage
         if (queryData.Parent != null)
         {
             query = query.Where(x => x.Parent == queryData.Parent.Value);
+        }
+        else
+        {
+            query = query.Where(x => x.Parent == null);
         }
 
         return query.OrderBy(x=> x.Name).ToList().Select(x => x.ToModel());
@@ -57,7 +61,12 @@ public partial class MongoStorage : IAssetFolderStorage
 
     public async Task UpdateAsync(AssetFolder folder)
     {
-        await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Where(x => x.Id == folder.Id), folder.ToMongo());
+        await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id), folder.ToMongo());
 
+    }
+
+    public async Task DeleteAsync(AssetFolder folder)
+    {
+        await AssetFolders.DeleteOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id));
     }
 }

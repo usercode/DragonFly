@@ -13,9 +13,11 @@ public interface IAssetFolderStorage
 {
     Task<AssetFolder> GetAssetFolderAsync(Guid id);
 
-    Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery query);
+    Task<IEnumerable<AssetFolder>> QueryAsync(AssetFolderQuery query);
 
     Task CreateAsync(AssetFolder folder);
 
     Task UpdateAsync(AssetFolder folder);
+
+    Task DeleteAsync(AssetFolder folder);
 }

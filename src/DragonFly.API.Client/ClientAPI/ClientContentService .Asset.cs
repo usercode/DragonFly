@@ -14,7 +14,7 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IAssetStorage
 {
-    public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
+    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
 

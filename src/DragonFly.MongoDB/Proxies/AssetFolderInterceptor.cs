@@ -49,11 +49,14 @@ class AssetFolderInterceptor : IInterceptor
     {
         var result = await MongoStorage.Default.GetAssetFolderAsync(AssetFolderId);
 
-        main.Id = result.Id;
-        main.CreatedAt = result.CreatedAt;
-        main.ModifiedAt = result.ModifiedAt;
-        main.Version = result.Version;
-        main.Name = result.Name;
-        main.Parent = result.Parent;
+        if (result != null)
+        {
+            main.Id = result.Id;
+            main.CreatedAt = result.CreatedAt;
+            main.ModifiedAt = result.ModifiedAt;
+            main.Version = result.Version;
+            main.Name = result.Name;
+            main.Parent = result.Parent;
+        }
     }
 }

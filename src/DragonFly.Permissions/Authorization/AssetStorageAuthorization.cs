@@ -68,11 +68,11 @@ class AssetStorageAuthorization : IAssetStorage
         return await Storage.GetAssetAsync(id);
     }
 
-    public async Task<QueryResult<Asset>> GetAssetsAsync(AssetQuery assetQuery)
+    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetRead);
 
-        return await Storage.GetAssetsAsync(assetQuery);
+        return await Storage.QueryAsync(assetQuery);
     }
 
     public async Task PublishAsync(Guid id)

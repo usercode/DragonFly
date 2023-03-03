@@ -1,0 +1,56 @@
+@page "/assetfolder/{EntityId:guid}"
+@page "/assetfolder/create"
+@page "/assetfolder/create/{FolderId:guid}"
+@inherits AssetFolderDetailBase
+@inject ComponentManager ComponentManager
+@inject AssetPreviewManager AssetPreviewManager
+@inject ISlugService SlugService
+
+@if (Entity != null)
+{
+    <div class="content-header">
+        <h1>Asset</h1>
+
+        <Toolbar Items="ToolbarItems"></Toolbar>
+    </div>
+    <div class="scroll-content">
+        <EditForm Model="Entity">
+            <BSRow>
+                <div class="col-md-6">
+
+                    <!-- id -->
+                    <div class="form-group">
+                        <BSRow>
+                            <label class="col-sm-2 col-form-label">ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                            </div>
+                        </BSRow>
+                    </div>
+
+                    <!-- name -->
+                    <div class="form-group">
+                        <BSRow>
+                            <label class="col-sm-2 col-form-label">Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                            </div>
+                        </BSRow>
+                    </div>
+            </BSRow>
+        </EditForm>
+    </div>
+    <div class="footer-content">
+        <div class="row">
+            <div class="col-sm-4">
+                <p>Created: @Entity.CreatedAt</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Modified: @Entity.ModifiedAt</p>
+            </div>
+            <div class="col-sm-4">
+                <p>Published: @Entity.PublishedAt</p>
+            </div>
+        </div>
+    </div>
+}

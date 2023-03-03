@@ -22,7 +22,7 @@ public partial class ClientContentService : IAssetFolderStorage
         throw new NotImplementedException();
     }
 
-    public async Task<IEnumerable<AssetFolder>> GetAssetFoldersAsync(AssetFolderQuery query)
+    public async Task<IEnumerable<AssetFolder>> QueryAsync(AssetFolderQuery query)
     {
         var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
 
@@ -36,5 +36,12 @@ public partial class ClientContentService : IAssetFolderStorage
     public Task UpdateAsync(AssetFolder folder)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task DeleteAsync(AssetFolder folder)
+    {
+        var response = await Client.DeleteAsync($"api/assetfolder/{folder.Id}");
+
+        response.EnsureSuccessStatusCode();
     }
 }

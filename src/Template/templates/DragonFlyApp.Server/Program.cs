@@ -33,10 +33,11 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddBlockField()                    
                     .AddApiKeys()
-                    .AddPermissions()
                     .AddProxy(x => x
                                     .AddType<StandardPageModel>()
-                                    .AddType<BlogPostModel>());
+                                    .AddType<BlogPostModel>())
+                    .AddPermissions()
+                    ;
 
 var app = builder.Build();
 
