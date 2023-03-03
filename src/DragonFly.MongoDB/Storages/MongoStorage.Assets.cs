@@ -145,10 +145,12 @@ public partial class MongoStorage : IAssetStorage
     {
         Asset asset = await GetAssetAsync(id);
 
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
+
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnPublishedAsync(this, asset);
+            await interceptor.OnPublishedAsync(asset);
         }
     }
 
@@ -170,8 +172,10 @@ public partial class MongoStorage : IAssetStorage
 
         MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
 
+        var processings = Api.ServiceProvider.GetServices<IAssetProcessing>();
+
         //add metadata
-        foreach (IAssetProcessing processing in AssetProcessings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType) ))
+        foreach (IAssetProcessing processing in processings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType) ))
         {
             await processing.OnAssetChangedAsync(context);
         }

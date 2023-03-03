@@ -22,9 +22,6 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
-    [Inject]
-    public IDataStorage ContentService { get; set; }
-
     public virtual bool IsNewEntity => EntityId == Guid.Empty;
 
     [Parameter]

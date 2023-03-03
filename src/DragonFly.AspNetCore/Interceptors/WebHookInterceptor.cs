@@ -4,6 +4,7 @@
 
 using DragonFly.Query;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Primitives;
 
@@ -16,9 +17,11 @@ public class WebHookInterceptor : IContentInterceptor
 {
     public WebHookInterceptor(
         HttpClient httpClient,
+        IWebHookStorage webHookStorage,
         ILogger<WebHookInterceptor> logger)
     {
         HttpClient = httpClient;
+        WebHookStorage = webHookStorage;
         Logger = logger;
     }
 
@@ -27,13 +30,18 @@ public class WebHookInterceptor : IContentInterceptor
     /// </summary>
     public HttpClient HttpClient { get; }
 
-    public ILogger<WebHookInterceptor> Logger { get; }    
+    /// <summary>
+    /// Api
+    /// </summary>
+    public IWebHookStorage WebHookStorage { get; }
 
-    public async Task OnPublishedAsync(IDataStorage storage, ContentItem contentItem)
+    public ILogger<WebHookInterceptor> Logger { get; }
+
+    public async Task OnPublishedAsync(ContentItem contentItem)
     {
         using (new DisablePermissions())
         {
-            QueryResult<WebHook> result = await storage.QueryAsync(new WebHookQuery());
+            QueryResult<WebHook> result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
             foreach (WebHook item in result.Items)
             {
@@ -60,9 +68,9 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
-    public async Task OnPublishedAsync(IDataStorage storage, Asset asset)
+    public async Task OnPublishedAsync(Asset asset)
     {
-        var result = await storage.QueryAsync(new WebHookQuery());
+        var result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
         foreach (WebHook item in result.Items)
         {
@@ -72,14 +80,14 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
-    public async Task OnPublishingAsync(IDataStorage storage, ContentItem contentItem)
+    public async Task OnPublishingAsync(ContentItem contentItem)
     {
 
     }
 
-    public async Task OnUnpublishedAsync(IDataStorage storage, ContentItem contentItem)
+    public async Task OnUnpublishedAsync(ContentItem contentItem)
     {
-        var result = await storage.QueryAsync(new WebHookQuery());
+        var result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
         foreach (WebHook item in result.Items)
         {
@@ -107,17 +115,17 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
-    public async Task OnCreatedAsync(IDataStorage storage, ContentItem contentItem)
+    public async Task OnCreatedAsync(ContentItem contentItem)
     {
 
     }
 
-    public async Task OnUpdatedAsync(IDataStorage storage, ContentItem contentItem)
+    public async Task OnUpdatedAsync(ContentItem contentItem)
     {
 
     }
 
-    public async Task OnDeletedAsync(IDataStorage storage, ContentItem contentItem)
+    public async Task OnDeletedAsync(ContentItem contentItem)
     {
 
     }

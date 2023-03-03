@@ -15,7 +15,7 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// MongoStorage
 /// </summary>
-public partial class MongoStorage : IDataStorage
+public partial class MongoStorage
 {
     public IMongoClient Client { get; }
     public IMongoDatabase Database { get; }
@@ -28,17 +28,9 @@ public partial class MongoStorage : IDataStorage
     public IGridFSBucket AssetData { get; private set; }
     public IMongoCollection<MongoWebHook> WebHooks { get; }
     public IMongoCollection<MongoEvent> Events { get; }
-
-    private IEnumerable<IAssetProcessing> AssetProcessings { get; }
-
-    private IEnumerable<IContentInterceptor> Interceptors { get; }
-
     public IDateTimeService DateTimeService { get; }
-
     public ISlugService SlugService { get; }
-
     private IDragonFlyApi Api { get; }
-
     public ILogger<MongoStorage> Logger { get; }
 
     private static MongoStorage? _default;
@@ -53,8 +45,6 @@ public partial class MongoStorage : IDataStorage
         IDateTimeService dateTimeService,
         IOptions<MongoDbOptions> options, 
         IDragonFlyApi api,
-        IEnumerable<IAssetProcessing> assetProcessings, 
-        IEnumerable<IContentInterceptor> interceptors,
         ISlugService slugService,
         ILogger<MongoStorage> logger)
     {
@@ -92,8 +82,6 @@ public partial class MongoStorage : IDataStorage
         ContentItems = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 
         DateTimeService = dateTimeService;
-        AssetProcessings = assetProcessings;
-        Interceptors = interceptors;
     }
 
     public void CreateMissingFieldSerializers(IDragonFlyApi api)

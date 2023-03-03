@@ -18,6 +18,10 @@ public class ContentStructureDetailTreeBase : EntityDetailComponent<ContentStruc
         Nodes = new List<ContentNode>();
     }
 
+
+    [Inject]
+    public IStructureStorage ContentService { get; set; }
+
     /// <summary>
     /// Nodes
     /// </summary>

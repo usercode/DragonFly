@@ -20,6 +20,10 @@ public class AssetListBase : EntityListComponent<Asset>
     [Inject]
     public IAssetFolderStorage AssetFolderStore { get; set; }
 
+
+    [Inject]
+    public IAssetStorage AssetService { get; set; }
+
     /// <summary>
     /// Folders
     /// </summary>
@@ -47,7 +51,7 @@ public class AssetListBase : EntityListComponent<Asset>
 
         Folders = await AssetFolderStore.QueryAsync(query);
 
-        SearchResult = await ContentService.QueryAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
+        SearchResult = await AssetService.QueryAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
     }
 
     protected async Task OpenFolder(AssetFolder folder)

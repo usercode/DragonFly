@@ -11,19 +11,12 @@ namespace DragonFly.Client.Base;
 public interface IEntityDetailComponent<T>
     where T : IEntity
 {
-
-    [Inject]
-    public IDataStorage ContentService { get; set; }
-
     public virtual bool IsNewEntity => EntityId == Guid.Empty;
 
-    [Parameter]
     public Guid EntityId { get; set; }
 
-    [Parameter]
     public string EntityType { get; set; }
 
-    [Parameter]
     public T Entity { get; set; }
 
     public ContentSchema Schema { get; set; }
@@ -33,7 +26,6 @@ public interface IEntityDetailComponent<T>
     Task CreateAsync();
     Task UpdateAsync();
     Task SaveAsync();
-
     Task DeleteAsync();
 
     //Task PublishAsync();

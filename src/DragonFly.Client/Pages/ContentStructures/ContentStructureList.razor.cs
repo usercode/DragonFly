@@ -4,6 +4,7 @@
 
 using DragonFly.Client.Base;
 using DragonFly.Query;
+using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages;
@@ -14,6 +15,10 @@ public class ContentStructureListBase : EntityListComponent<ContentStructure>
     {
 
     }
+
+
+    [Inject]
+    public IStructureStorage ContentService { get; set; }
 
     protected override string GetNavigationPath(ContentStructure entity)
     {

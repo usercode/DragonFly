@@ -15,7 +15,6 @@ public static class DragonFlyBuilderExtensions
     /// Adds MongoDB storage service.<br />
     /// <br />
     /// Default services:<br />
-    /// <see cref="IDataStorage"/> -> <see cref="MongoStorage"/><br />
     /// <see cref="IContentStorage"/> -> <see cref="MongoStorage"/><br />
     /// <see cref="ISchemaStorage"/> -> <see cref="MongoStorage"/><br />
     /// <see cref="IAssetStorage"/> -> <see cref="MongoStorage"/><br />
@@ -30,7 +29,7 @@ public static class DragonFlyBuilderExtensions
         }
 
         builder.Services.AddSingleton<MongoStorage>();
-        builder.Services.AddSingleton<IDataStorage>(x => x.GetRequiredService<MongoStorage>());
+        //builder.Services.AddSingleton<IDataStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<IContentStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<ISchemaStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<IStructureStorage>(x => x.GetRequiredService<MongoStorage>());

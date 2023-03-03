@@ -13,9 +13,14 @@ public class ContentItemTypeListBase2 : ContentSchemaListBase
     {
 
     }
+
     [Parameter]
     public ContentItem SelectedContentItem { get; set; }
-   
+
+
+    [Inject]
+    public ISchemaStorage ContentService { get; set; }
+
     protected ContentItemList ContentItemList { get; set; }
 
     protected override async Task RefreshActionAsync()

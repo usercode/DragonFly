@@ -25,6 +25,14 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     [Inject]
     public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
 
+
+    [Inject]
+    public IContentStorage ContentService { get; set; }
+
+
+    [Inject]
+    public ISchemaStorage SchemaService { get; set; }
+
     [Parameter]
     public Guid? CloneFromEntityId { get; set; }
 
@@ -63,7 +71,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
         if (IsNewEntity)
         {
-            Schema = await ContentService.GetSchemaAsync(EntityType);
+            Schema = await SchemaService.GetSchemaAsync(EntityType);
 
             Entity = Schema.CreateContent();
 

@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Client.Base;
+using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages;
@@ -13,6 +14,10 @@ public class ContentSchemaListBase : EntityListComponent<ContentSchema>
     {
 
     }
+
+
+    [Inject]
+    public ISchemaStorage ContentService { get; set; }
 
     protected override string GetNavigationPath(ContentSchema entity)
     {

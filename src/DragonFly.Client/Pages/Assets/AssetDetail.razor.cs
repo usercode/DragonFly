@@ -30,6 +30,10 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     [Parameter]
     public Guid? FolderId { get; set; }
 
+
+    [Inject]
+    public IAssetStorage ContentService { get; set; }
+
     public async Task PublishAsync()
     {
         await SaveAsync();

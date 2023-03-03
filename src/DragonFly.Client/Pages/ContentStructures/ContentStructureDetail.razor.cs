@@ -16,6 +16,10 @@ public class ContentStructureDetailBase : EntityDetailComponent<ContentStructure
         Entity = new ContentStructure();
     }
 
+
+    [Inject]
+    public IStructureStorage ContentService { get; set; }
+
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
         base.BuildToolbarItems(toolbarItems);

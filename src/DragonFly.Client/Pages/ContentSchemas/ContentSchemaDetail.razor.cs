@@ -16,6 +16,10 @@ public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
         Entity = new ContentSchema(string.Empty);
     }
 
+
+    [Inject]
+    public ISchemaStorage ContentService { get; set; }
+
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
         base.BuildToolbarItems(toolbarItems);

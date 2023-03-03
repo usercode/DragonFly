@@ -56,8 +56,6 @@ var app = builder.Build();
 //init DragonFly
 await app.InitDragonFly();
 
-var storage = app.Services.GetService<IDataStorage>();
-
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
 if (env.IsDevelopment())

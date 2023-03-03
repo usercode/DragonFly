@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.MongoDB;
 
@@ -215,10 +216,12 @@ public partial class MongoStorage : IContentStorage
 
         content.Id = mongo.Id;
 
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
+
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnCreatedAsync(this, content);
+            await interceptor.OnCreatedAsync(content);
         }
     }
 
@@ -250,16 +253,24 @@ public partial class MongoStorage : IContentStorage
 
         ContentItem content = result.ToModel(contentItem.Schema);
 
+
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
+
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnUpdatedAsync(this, content);
+            await interceptor.OnUpdatedAsync(content);
         }
     }
 
     public async Task DeleteAsync(string schema, Guid id)
     {
-        ContentItem contentItem = await GetContentAsync(schema, id);
+        ContentItem? contentItem = await GetContentAsync(schema, id);
+
+        if (contentItem == null)
+        {
+            return;
+        }
 
         await UnpublishAsync(schema, id);
 
@@ -267,21 +278,31 @@ public partial class MongoStorage : IContentStorage
 
         await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));
 
+
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
+
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnDeletedAsync(this, contentItem);
+            await interceptor.OnDeletedAsync(contentItem);
         }
     }
 
     public async Task PublishAsync(string schema, Guid id)
     {
-        ContentItem contentItem = await GetContentAsync(schema, id);
+        ContentItem? contentItem = await GetContentAsync(schema, id);
+
+        if (contentItem == null)
+        {
+            throw new Exception("ContentItem not found.");
+        }
+
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnPublishingAsync(this, contentItem);
+            await interceptor.OnPublishingAsync(contentItem);
         }
 
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(schema, false);
@@ -307,12 +328,17 @@ public partial class MongoStorage : IContentStorage
         //refresh contentitem
         contentItem = await GetContentAsync(schema, id);
 
+        if (contentItem == null)
+        {
+            throw new Exception("ContentItem not found.");
+        }
+
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
             try
             {
-                await interceptor.OnPublishedAsync(this, contentItem);
+                await interceptor.OnPublishedAsync(contentItem);
             }
             catch (Exception ex)
             {
@@ -336,14 +362,16 @@ public partial class MongoStorage : IContentStorage
                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, id), 
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
-        ContentItem contentItem = await GetContentAsync(schema, id);
+        ContentItem? contentItem = await GetContentAsync(schema, id);
+
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
         //execute interceptors
-        foreach (IContentInterceptor interceptor in Interceptors)
+        foreach (IContentInterceptor interceptor in interceptors)
         {
             try
             {
-                await interceptor.OnUnpublishedAsync(this, contentItem);
+                await interceptor.OnUnpublishedAsync(contentItem);
             }
             catch (Exception ex)
             {

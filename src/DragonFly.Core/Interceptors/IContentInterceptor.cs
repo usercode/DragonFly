@@ -6,17 +6,17 @@ namespace DragonFly;
 
 public interface IContentInterceptor
 {
-    Task OnCreatedAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnCreatedAsync(ContentItem contentItem);
 
-    Task OnUpdatedAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnUpdatedAsync(ContentItem contentItem);
 
-    Task OnDeletedAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnDeletedAsync(ContentItem contentItem);
 
-    Task OnPublishingAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnPublishingAsync(ContentItem contentItem);
 
-    Task OnPublishedAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnPublishedAsync(ContentItem contentItem);
 
-    Task OnUnpublishedAsync(IDataStorage storage, ContentItem contentItem);
+    Task OnUnpublishedAsync(ContentItem contentItem);
 
-    Task OnPublishedAsync(IDataStorage storage, Asset asset);
+    Task OnPublishedAsync(Asset asset);
 }

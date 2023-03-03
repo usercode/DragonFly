@@ -14,8 +14,9 @@ public static class StartupExtensions
     public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
     {
         builder.Services.AddTransient<ClientContentService>();
-        builder.Services.AddTransient<IDataStorage, ClientContentService>();
+        //builder.Services.AddTransient<IDataStorage, ClientContentService>();
         builder.Services.AddTransient<IContentStorage, ClientContentService>();
+        builder.Services.AddTransient<ISchemaStorage, ClientContentService>();
         builder.Services.AddTransient<IStructureStorage, ClientContentService>();
         builder.Services.AddTransient<IWebHookStorage, ClientContentService>();
         builder.Services.AddTransient<IAssetStorage, ClientContentService>();

@@ -29,6 +29,14 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     [Inject]
     public ContentFieldManager ContentFieldManager { get; set; }
 
+
+    [Inject]
+    public IContentStorage ContentService { get; set; }
+
+
+    [Inject]
+    public ISchemaStorage SchemaService { get; set; }
+
     /// <summary>
     /// Schema
     /// </summary>
@@ -58,7 +66,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     {
         if (SchemaName != null)
         {
-            Schema = await ContentService.GetSchemaAsync(SchemaName);
+            Schema = await SchemaService.GetSchemaAsync(SchemaName);
 
             if (OrderFields.Any() == false)
             {

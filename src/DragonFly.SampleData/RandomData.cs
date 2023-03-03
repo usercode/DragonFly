@@ -10,7 +10,7 @@ namespace DragonFly.SampleData;
 
 public class RandomData
 {
-    public async Task CreateDataAsync(IDataStorage dataStorage)
+    public async Task CreateDataAsync()
     {
         ////create brand schema
         //ContentSchema schemaBrand = new ContentSchema("Brand")
