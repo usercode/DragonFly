@@ -11,7 +11,7 @@
     <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
         <Header>Select folder</Header>
         <Content>
-            <AssetFolderSelector OnFolderClicked="async x => await FolderSelected(x)" />
+            <AssetFolderSelector FolderClicked="async x => await FolderSelected(x)" />
         </Content>
         <Footer>
             <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync()">Ok</BSButton>
