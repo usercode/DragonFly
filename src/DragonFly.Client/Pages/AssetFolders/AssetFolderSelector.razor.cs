@@ -22,20 +22,12 @@ public class AssetFolderSelectorBase : StartComponentBase
     [Inject]
     public IAssetFolderStorage AssetFolderStore { get; set; }
 
-    /// <summary>
-    /// Folders
-    /// </summary>
     public IEnumerable<AssetFolder> Folders { get; set; } = Enumerable.Empty<AssetFolder>();
 
     public Stack<AssetFolder> SelectedFolders { get; set; }
 
     [Parameter]
     public Action<AssetFolder> FolderSelected { get; set; }
-
-    protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
-    {
-       // toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Danger, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
-    }
 
     protected override async Task RefreshActionAsync()
     {
