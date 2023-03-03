@@ -82,6 +82,11 @@ public static class RestAssetConverter
         folder.Version = restFolder.Version;
         folder.Name = restFolder.Name;
 
+        if (restFolder.Parent != null)
+        {
+            folder.Parent = new AssetFolder(restFolder.Parent.Value);
+        }
+
         return folder;
     }
 
@@ -93,6 +98,7 @@ public static class RestAssetConverter
         restFolder.ModifiedAt = folder.ModifiedAt;
         restFolder.Version = folder.Version;
         restFolder.Name = folder.Name;
+        restFolder.Parent = folder.Parent?.Id;
 
         return restFolder;
     }

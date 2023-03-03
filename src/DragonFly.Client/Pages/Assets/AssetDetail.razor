@@ -11,7 +11,7 @@
     <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
         <Header>Select folder</Header>
         <Content>
-            <AssetFolderSelector FolderSelected="async x => await FolderSelected(x)" />
+            <AssetFolderSelector OnFolderClicked="async x => await FolderSelected(x)" />
         </Content>
         <Footer>
             <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync()">Ok</BSButton>
@@ -93,15 +93,19 @@
                         <BSRow>
                             <label class="col-sm-2 col-form-label">Folder</label>
                             <div class="col-sm-10">
-                                @if (Entity.Folder != null)
-                                {
-                                    <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
-                                }
-                                else
-                                {
-                                    <input type="text" class="form-control" value="" readonly />
-                                }
-                                <BSButton Color="BSColor.Light" OnClick="x => Modal.ShowAsync()" >Select</BSButton>
+                                <div class="input-group">
+                                    @if (Entity.Folder != null)
+                                    {
+                                        <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" class="form-control" value="" readonly />
+                                    }
+                                   
+                                        <BSButton Color="BSColor.Light" OnClick="x => Modal.ShowAsync()" >...</BSButton>
+                                   
+                                </div>
                             </div>
                         </BSRow>
                     </div>

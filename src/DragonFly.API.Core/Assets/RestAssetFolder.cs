@@ -9,5 +9,10 @@ public class RestAssetFolder : RestContentBase
     /// <summary>
     /// Name
     /// </summary>
-    public virtual string Name { get; set; }
+    public virtual string? Name { get; set; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public virtual Guid? Parent { get; set; }
 }

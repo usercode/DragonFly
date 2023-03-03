@@ -44,7 +44,11 @@ public partial class MongoStorage : IAssetFolderStorage
             query = query.Where(x => x.Parent == null);
         }
 
-        return query.OrderBy(x=> x.Name).ToList().Select(x => x.ToModel());
+        return query
+            .ToList()
+            .OrderBy(x => x.Name)            
+            .Select(x => x.ToModel())
+            .ToList();
     }
 
     public async Task CreateAsync(AssetFolder folder)

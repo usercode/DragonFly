@@ -16,23 +16,7 @@
     <div class="scroll-content">
         <BSRow>
             <BSCol Column="3">
-                <div class="list-group">
-
-                    @if (SelectedFolder != null)
-                    {
-                        <div class="list-group-item list-group-item-action" @onclick="x => OpenFolder(SelectedFolder.Parent)" style="cursor:pointer">
-                            <span>...</span>
-                        </div>
-                    }
-
-                    @foreach (var folder in Folders)
-                    {
-                        <div class="list-group-item list-group-item-action @(SelectedFolder == folder ? "active" : "")" @onclick="x => OpenFolder(folder)" style="cursor:pointer">
-                            @folder.Name
-                        </div>
-
-                    }
-                </div>
+                <AssetFolderSelector FolderClicked="async x => await OpenFolder(x)" />
             </BSCol>
             <BSCol Column="9">
                 <div style="flex: 1">

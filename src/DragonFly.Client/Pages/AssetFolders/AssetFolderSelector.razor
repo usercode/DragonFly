@@ -1,19 +1,78 @@
-@inherits AssetFolderSelectorBase
+﻿@using DragonFly.Assets.Query;
+@inject IAssetFolderStorage Storage
 
-<div style="flex-direction:column;flex: 1">
-    <div class="content-header">
-    </div>
+<div>
+    @for(int i = 0; i < Folders.Count; i++)
+    {
+        int pos = i;
+        AssetFolderNode curFolder = Folders[i];
 
-    <div class="scroll-content">
-        <BSRow>
-            <BSCol Column="6">
-                
-                    @foreach (AssetFolder folder in Folders)
-                    {
-                        <AssetFolderView Folder="folder" OnFolderClicked="x => FolderSelected?.Invoke(x)" />
-                    }
-
-            </BSCol>            
-        </BSRow>
+        <div style="margin: 0.25rem">
+            <BSButton Color="BSColor.Light" OnClick="x => curFolder.IsExpanded = !curFolder.IsExpanded">
+                @if (curFolder.IsExpanded)
+                {
+                    <i class="fa-solid fa-folder-open"></i>
+                }
+                else
+                {
+                    <i class="fa-solid fa-folder"></i>
+                }
+            </BSButton>
+            <BSButton Color="BSColor.Light" OnClick="x => FolderClicked?.Invoke(curFolder.Folder)">
+                @curFolder.Folder.Name
+            </BSButton>
+        </div>
+        @if (curFolder.IsExpanded)
+        {
+            <div style="margin-left:2rem">
+                <AssetFolderSelector RootFolder="curFolder.Folder" FolderClicked="FolderClicked" />
+            </div>
+        }
+    }
+    <div style="margin: 0.25rem;display:flex;gap:0.25rem">
+        <BSButton Color="BSColor.Light" OnClick="async x => await CreateNewFolderAsync()" title="Create folder">
+            <i class="fa-solid fa-plus"></i>
+        </BSButton>
+        <input type="text" class="form-control" style="width:50%" placeholder="Folder name" @bind-value="NewFolderName">
     </div>
 </div>
+
+@code {
+
+    [Parameter]
+    public AssetFolder RootFolder { get; set; }
+
+    [Parameter]
+    public Action<AssetFolder> FolderClicked { get; set; }
+
+    public IList<AssetFolderNode> Folders { get; set; } = new List<AssetFolderNode>();
+
+    public string NewFolderName { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await RefreshAsync();
+    }
+
+    protected async Task RefreshAsync()
+    {
+        Folders = (await Storage.QueryAsync(new AssetFolderQuery() { Parent = RootFolder?.Id }))
+                            .Select(x => new AssetFolderNode(x))
+                            .ToList();
+    }
+
+    protected async Task CreateNewFolderAsync()
+    {
+        AssetFolder folder = new AssetFolder();
+        folder.Name = NewFolderName;
+        folder.Parent = RootFolder;
+
+        await Storage.CreateAsync(folder);
+
+        NewFolderName = string.Empty;
+
+        await RefreshAsync();
+    }
+}

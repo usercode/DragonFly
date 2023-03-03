@@ -58,32 +58,6 @@ await app.InitDragonFly();
 
 var storage = app.Services.GetService<IDataStorage>();
 
-{
-    var result = await storage.QueryAsync(new AssetFolderQuery());
-
-    foreach (var r in result)
-    {
-        await storage.DeleteAsync(r);
-    }
-}
-
-{
-    var result = await storage.QueryAsync(new AssetQuery());
-
-    foreach (var r in result.Items)
-    {
-        r.Folder = null;
-
-        await storage.UpdateAsync(r);
-    }
-}
-
-var folder1 = new AssetFolder() { Name = "Folder A" };
-
-await storage.CreateAsync(folder1);
-await storage.CreateAsync(new AssetFolder() { Name = "Folder B", Parent = folder1 });
-await storage.CreateAsync(new AssetFolder() { Name = "Folder C", Parent = folder1 });
-
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
 if (env.IsDevelopment())

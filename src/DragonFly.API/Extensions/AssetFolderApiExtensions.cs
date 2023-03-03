@@ -18,6 +18,8 @@ static class AssetFolderApiExtensions
         groupRoute.MapPost("query", MapQuery);
         groupRoute.MapGet("{id:guid}", MapGet);
         groupRoute.MapDelete("{id:guid}", MapDelete);
+
+        groupRoute.MapPost("", MapCreate);
     }
 
     private static async Task<IEnumerable<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)
@@ -36,6 +38,11 @@ static class AssetFolderApiExtensions
         RestAssetFolder restAsset = entity.ToRest();
 
        return restAsset;
+    }
+
+    private static async Task MapCreate(HttpContext context, IAssetFolderStorage storage, RestAssetFolder input)
+    {
+        await storage.CreateAsync(input.ToModel());
     }
 
     private static async Task MapDelete(HttpContext context, IAssetFolderStorage storage, Guid id)

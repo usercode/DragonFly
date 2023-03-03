@@ -12,9 +12,11 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IAssetFolderStorage
 {
-    public Task CreateAsync(AssetFolder folder)
+    public async Task CreateAsync(AssetFolder folder)
     {
-        throw new NotImplementedException();
+        var response = await Client.PostAsJsonAsync("api/assetfolder", folder.ToRest());
+
+        response.EnsureSuccessStatusCode();
     }
 
     public Task<AssetFolder> GetAssetFolderAsync(Guid id)
@@ -28,7 +30,7 @@ public partial class ClientContentService : IAssetFolderStorage
 
         response.EnsureSuccessStatusCode();
 
-        IEnumerable<RestAssetFolder> result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
+        IEnumerable<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
 
         return result.Select(x => x.ToModel()).ToList();
     }
