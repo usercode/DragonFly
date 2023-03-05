@@ -124,10 +124,18 @@ public partial class MongoStorage : IAssetStorage
             query = query.Where(x => x.Name!.Contains(assetQuery.Pattern) || x.Slug!.Contains(assetQuery.Pattern));
         }
 
-        IList<MongoAsset> result = await query
-                                            .OrderByDescending(x => x.Name)
-                                            .Take(assetQuery.Take)
-                                            .ToListAsync();
+        query = query.Take(assetQuery.Take);
+
+        if (assetQuery.Folder == null)
+        {
+            query = query.OrderByDescending(x => x.CreatedAt);
+        }
+        else
+        {
+            query = query.OrderBy(x => x.Name);
+        }
+
+        IList<MongoAsset> result = await query.ToListAsync();
 
         QueryResult<Asset> queryResult = new QueryResult<Asset>();
         queryResult.Items = result
