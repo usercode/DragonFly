@@ -59,15 +59,9 @@ public partial class ClientContentService : ISchemaStorage
         {
             var response = await Client.PostAsync("api/schema/query", new StringContent(""));
 
-            var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>();
+            QueryResult<RestContentSchema>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>();
 
-            QueryResult<ContentSchema> queryResult = new QueryResult<ContentSchema>();
-            queryResult.Offset = restQueryResult.Offset;
-            queryResult.Count = restQueryResult.Count;
-            queryResult.TotalCount = restQueryResult.TotalCount;
-            queryResult.Items = restQueryResult.Items.Select(x => x.ToModel()).ToList();
-
-            return queryResult;
+            return queryResult.Convert(x => x.ToModel());
         }
         catch(Exception ex)
         {

@@ -56,13 +56,7 @@ public partial class ClientContentService : IStructureStorage
 
             var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>();
 
-            QueryResult<ContentStructure> queryResult = new QueryResult<ContentStructure>();
-            queryResult.Offset = restQueryResult.Offset;
-            queryResult.Count = restQueryResult.Count;
-            queryResult.TotalCount = restQueryResult.TotalCount;
-            queryResult.Items = restQueryResult.Items.Select(x => x.ToModel()).ToList();
-
-            return queryResult;
+            return restQueryResult.Convert(x => x.ToModel());
         }
         catch(Exception ex)
         {
@@ -78,13 +72,7 @@ public partial class ClientContentService : IStructureStorage
 
         var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentNode>>();
 
-        QueryResult<ContentNode> queryResult = new QueryResult<ContentNode>();
-        queryResult.Offset = restQueryResult.Offset;
-        queryResult.Count = restQueryResult.Count;
-        queryResult.TotalCount = restQueryResult.TotalCount;
-        queryResult.Items = restQueryResult.Items.Select(x => x.ToModel()).ToList();
-
-        return queryResult;
+        return restQueryResult.Convert(x => x.ToModel());
     }
 
     public async Task CreateAsync(ContentNode node)
@@ -98,8 +86,6 @@ public partial class ClientContentService : IStructureStorage
 
     public async Task UpdateAsync(ContentNode node)
     {
-        string type = node.GetType().Name;
-
         await Client.PutAsJsonAsync($"api/node/{node.Id}", node);
     }
 }

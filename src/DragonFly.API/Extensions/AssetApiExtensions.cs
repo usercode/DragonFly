@@ -29,20 +29,14 @@ static class AssetApiExtensions
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
     {
-        QueryResult<Asset> assets = await storage.QueryAsync(query);
+        QueryResult<Asset> queryResult = await storage.QueryAsync(query);
 
-        QueryResult<RestAsset> queryResult = new QueryResult<RestAsset>();
-        queryResult.Offset = assets.Offset;
-        queryResult.Count = assets.Count;
-        queryResult.TotalCount = assets.TotalCount;
-        queryResult.Items = assets.Items.Select(x => x.ToRest()).ToList();
-
-        return queryResult;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<RestAsset> MapGet(HttpContext context, IAssetStorage storage, Guid id)
     {
-        Asset entity = await storage.GetAssetAsync(id);
+        Asset entity = await storage.GetRequiredAssetAsync(id);
 
         RestAsset restAsset = entity.ToRest();
 
@@ -67,31 +61,41 @@ static class AssetApiExtensions
 
     private static async Task MapPublish(HttpContext context, IAssetStorage storage, Guid id)
     {
-        await storage.PublishAsync(id);
+        Asset entity = await storage.GetRequiredAssetAsync(id);
+
+        await storage.PublishAsync(entity);
     }
 
     private static async Task MapDownload(HttpContext context, IAssetStorage storage, Guid id)
     {
-        Asset asset = await storage.GetAssetAsync(id);
+        Asset asset = await storage.GetRequiredAssetAsync(id);
 
-        using (Stream assetStream = await storage.GetStreamAsync(id))
-        {
-            context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
-            context.Response.GetTypedHeaders().ETag = new EntityTagHeaderValue($"\"{asset.Hash}\"");
-            context.Response.ContentType = asset.MimeType;
-            context.Response.ContentLength = assetStream.Length;
+        using Stream assetStream = await storage.GetStreamAsync(asset);
 
-            await assetStream.CopyToAsync(context.Response.Body);
-        }
+        context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
+        context.Response.GetTypedHeaders().ETag = new EntityTagHeaderValue($"\"{asset.Hash}\"");
+        context.Response.ContentType = asset.MimeType;
+        context.Response.ContentLength = assetStream.Length;
+
+        await assetStream.CopyToAsync(context.Response.Body);
     }
 
     private static async Task MapUpload(HttpContext context, IAssetStorage storage, Guid id)
     {
-        await storage.UploadAsync(id, context.Request.ContentType, context.Request.Body);
+        if (context.Request.ContentType == null)
+        {
+            throw new Exception("Content-type was not set.");
+        }
+
+        Asset asset = await storage.GetRequiredAssetAsync(id);
+
+        await storage.UploadAsync(asset, context.Request.ContentType, context.Request.Body);
     }
 
     private static async Task MapRefreshMetadata(HttpContext context, IAssetStorage storage, Guid id)
     {
-        await storage.ApplyMetadataAsync(id);
+        Asset asset = await storage.GetRequiredAssetAsync(id);
+
+        await storage.ApplyMetadataAsync(asset);
     }
 }

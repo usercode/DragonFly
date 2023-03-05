@@ -19,13 +19,13 @@ public interface IContentStorage
 
     Task UpdateAsync(ContentItem entity);
 
-    Task DeleteAsync(string schema, Guid id);
+    Task DeleteAsync(ContentItem entity);
 
     Task PublishQueryAsync(ContentQuery query);
 
     Task UnpublishQueryAsync(ContentQuery query);
 
-    Task PublishAsync(string schema, Guid id);
+    Task PublishAsync(ContentItem entity);
 
-    Task UnpublishAsync(string schema, Guid id);
+    Task UnpublishAsync(ContentItem entity);
 }

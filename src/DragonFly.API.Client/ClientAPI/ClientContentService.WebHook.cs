@@ -47,8 +47,6 @@ public partial class ClientContentService : IWebHookStorage
 
         QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>();
 
-        IList<WebHook> items = result.Items.Select(x => x.ToModel()).ToList();
-
-        return new QueryResult<WebHook>() { Items = items };
+        return result.Convert(x => x.ToModel());
     }
 }

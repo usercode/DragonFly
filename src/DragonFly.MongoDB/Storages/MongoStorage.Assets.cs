@@ -31,9 +31,14 @@ public partial class MongoStorage : IAssetStorage
         return asset;
     }
 
-    public async Task<Asset> GetAssetAsync(Guid id)
+    public async Task<Asset?> GetAssetAsync(Guid id)
     {
         MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+
+        if (asset == null)
+        {
+            return null;
+        }
 
         return SetPreviewUrl(asset.ToModel());
     }
@@ -72,13 +77,10 @@ public partial class MongoStorage : IAssetStorage
                                                 );
     }
 
-    public async Task UploadAsync(Guid id, string mimetype, Stream stream)
-    {
-        //get asset by id
-        Asset asset = await GetAssetAsync(id);
-        
+    public async Task UploadAsync(Asset asset, string mimetype, Stream stream)
+    {        
         //upload new stream to asset
-        await AssetData.UploadFromStreamAsync(id.ToString(), stream);
+        await AssetData.UploadFromStreamAsync(asset.Id.ToString(), stream);
 
         //refresh asset infos
         using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
@@ -89,12 +91,7 @@ public partial class MongoStorage : IAssetStorage
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
-            asset.Size = s.Length;
-            asset.Hash = hashString;                
-            asset.MimeType = mimetype;
-            asset.Metaddata.Clear();
-
-            await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id),
+            await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
                                         Builders<MongoAsset>.Update
                                                     .Set(x => x.Size, s.Length)
                                                     .Set(x => x.Hash, hashString)
@@ -103,12 +100,14 @@ public partial class MongoStorage : IAssetStorage
                                                     .Inc(x => x.Version, 1));
         }
 
-        await ApplyMetadataAsync(asset.Id);
+        asset = await this.GetRequiredAssetAsync(asset.Id);
+
+        await ApplyMetadataAsync(asset);
     }
 
-    public async Task<Stream> GetStreamAsync(Guid id)
+    public async Task<Stream> GetStreamAsync(Asset asset)
     {
-        return await AssetData.OpenDownloadStreamByNameAsync(id.ToString());
+        return await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString());
     }
 
     public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
@@ -126,7 +125,7 @@ public partial class MongoStorage : IAssetStorage
         }
 
         IList<MongoAsset> result = await query
-                                            .OrderByDescending(x => x.CreatedAt)
+                                            .OrderByDescending(x => x.Name)
                                             .Take(assetQuery.Take)
                                             .ToListAsync();
 
@@ -141,11 +140,9 @@ public partial class MongoStorage : IAssetStorage
         return queryResult;
     }
 
-    public async Task PublishAsync(Guid id)
+    public async Task PublishAsync(Asset asset)
     {
-        Asset asset = await GetAssetAsync(id);
-
-        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
+        IEnumerable<IContentInterceptor> interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in interceptors)
@@ -154,25 +151,23 @@ public partial class MongoStorage : IAssetStorage
         }
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Asset asset)
     {
-        var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, id.ToString()));
+        var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, asset.Id.ToString()));
 
         foreach (GridFSFileInfo f in await fileData.ToListAsync())
         {
             await AssetData.DeleteAsync(f.Id);
         }
 
-        await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, id));
+        await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id));
     }
 
-    public async Task ApplyMetadataAsync(Guid id)
+    public async Task ApplyMetadataAsync(Asset asset)
     {
-        Asset asset = await GetAssetAsync(id);
-
         MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
 
-        var processings = Api.ServiceProvider.GetServices<IAssetProcessing>();
+        IEnumerable<IAssetProcessing> processings = Api.ServiceProvider.GetServices<IAssetProcessing>();
 
         //add metadata
         foreach (IAssetProcessing processing in processings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType) ))

@@ -7,7 +7,7 @@ namespace DragonFly.API.Client;
 /// <summary>
 /// ContentService
 /// </summary>
-public partial class ClientContentService : IContentStorage, ISchemaStorage, IAssetStorage, IAssetFolderStorage, IWebHookStorage, IStructureStorage
+public partial class ClientContentService
 {
     public ClientContentService(HttpClient httpClient)
     {

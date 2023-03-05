@@ -12,21 +12,21 @@ namespace DragonFly;
 /// </summary>
 public interface IAssetStorage
 {
-    Task<Asset> GetAssetAsync(Guid id);
-
     Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery);
+
+    Task<Asset?> GetAssetAsync(Guid id);
 
     Task CreateAsync(Asset asset);
 
     Task UpdateAsync(Asset asset);
 
-    Task DeleteAsync(Guid id);
+    Task DeleteAsync(Asset asset);
 
-    Task PublishAsync(Guid id);
+    Task PublishAsync(Asset asset);
 
-    Task UploadAsync(Guid id, string mimetype, Stream stream);
+    Task UploadAsync(Asset asset, string mimetype, Stream stream);
 
-    Task<Stream> GetStreamAsync(Guid id);
+    Task<Stream> GetStreamAsync(Asset asset);
 
-    Task ApplyMetadataAsync(Guid id);
+    Task ApplyMetadataAsync(Asset asset);
 }

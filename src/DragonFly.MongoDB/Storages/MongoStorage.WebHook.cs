@@ -15,21 +15,23 @@ public partial class MongoStorage : IWebHookStorage
 {
     public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
     {
-        IQueryable<MongoWebHook> q = WebHooks.AsQueryable();
+        IMongoQueryable<MongoWebHook> q = WebHooks.AsQueryable();
 
         if (query.Event != null)
         {
             q = q.Where(x => x.EventName == query.Event);
         }
 
-        var items = q.ToList().Select(x => x.ToModel()).ToList();
+        var result = await q.ToListAsync();
+
+        var items = result.Select(x => x.ToModel()).ToList();
 
         return new QueryResult<WebHook>() { Items = items };
     }
 
     public async Task<WebHook> GetAsync(Guid id)
     {
-        MongoWebHook? result = WebHooks.AsQueryable().FirstOrDefault(x => x.Id == id);
+        MongoWebHook? result = await WebHooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         if(result == null)
         {

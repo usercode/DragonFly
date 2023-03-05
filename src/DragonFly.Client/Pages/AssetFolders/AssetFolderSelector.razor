@@ -1,15 +1,23 @@
 ﻿@using DragonFly.Assets.Query;
 @inject IAssetFolderStorage Storage
 
+<BSModal IsStaticBackdrop="true" @ref="DeletionModal">
+    <Header>Delete folder?</Header>
+    <Content>Are you sure you want to delete the folder?</Content>
+    <Footer Context="modal">
+        <BSButton Color="BSColor.Secondary" OnClick="DeletionModal.HideAsync">No</BSButton>
+        <BSButton Color="BSColor.Primary" OnClick="DeleteActionAsync">Yes</BSButton>
+    </Footer>
+</BSModal>
+
 <div>
     @for(int i = 0; i < Folders.Count; i++)
     {
-        int pos = i;
-        AssetFolderNode curFolder = Folders[i];
+        AssetFolderNode folderNode = Folders[i];
 
         <div style="margin: 0.25rem">
-            <BSButton Color="BSColor.Light" OnClick="x => curFolder.IsExpanded = !curFolder.IsExpanded">
-                @if (curFolder.IsExpanded)
+            <BSButton Color="BSColor.Light" OnClick="x => folderNode.IsExpanded = !folderNode.IsExpanded" title="Expand folder">
+                @if (folderNode.IsExpanded)
                 {
                     <i class="fa-solid fa-folder-open"></i>
                 }
@@ -18,14 +26,17 @@
                     <i class="fa-solid fa-folder"></i>
                 }
             </BSButton>
-            <BSButton Color="BSColor.Light" OnClick="x => FolderClicked?.Invoke(curFolder.Folder)">
-                @curFolder.Folder.Name
+            <BSButton Color="BSColor.Light" OnClick="x => FolderClicked?.Invoke(folderNode.Folder)">
+                @folderNode.Folder.Name
+            </BSButton>
+            <BSButton Color="BSColor.Light" OnClick="async x => await DeleteAsync(folderNode)" title="Delete folder">
+                <i class="fas fa-times"></i>
             </BSButton>
         </div>
-        @if (curFolder.IsExpanded)
+        @if (folderNode.IsExpanded)
         {
             <div style="margin-left:2rem">
-                <AssetFolderSelector RootFolder="curFolder.Folder" FolderClicked="FolderClicked" />
+                <AssetFolderSelector RootFolder="folderNode.Folder" FolderClicked="FolderClicked" />
             </div>
         }
     }
@@ -39,6 +50,8 @@
 
 @code {
 
+    private BSModal DeletionModal { get; set; }
+
     [Parameter]
     public AssetFolder RootFolder { get; set; }
 
@@ -48,6 +61,8 @@
     public IList<AssetFolderNode> Folders { get; set; } = new List<AssetFolderNode>();
 
     public string NewFolderName { get; set; }
+
+    public AssetFolderNode FolderToDelete { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,12 +74,34 @@
     protected async Task RefreshAsync()
     {
         Folders = (await Storage.QueryAsync(new AssetFolderQuery() { Parent = RootFolder?.Id }))
+                            .Items
                             .Select(x => new AssetFolderNode(x))
                             .ToList();
     }
 
+    protected async Task DeleteAsync(AssetFolderNode node)
+    {
+        await DeletionModal.ShowAsync();
+
+        FolderToDelete = node;
+    }
+
+    protected async Task DeleteActionAsync()
+    {
+        await DeletionModal.HideAsync();
+
+        await Storage.DeleteAsync(FolderToDelete.Folder);
+
+        Folders.Remove(FolderToDelete);
+    }
+
     protected async Task CreateNewFolderAsync()
     {
+        if (string.IsNullOrEmpty(NewFolderName))
+        {
+            return;
+        }
+
         AssetFolder folder = new AssetFolder();
         folder.Name = NewFolderName;
         folder.Parent = RootFolder;

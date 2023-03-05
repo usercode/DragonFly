@@ -30,23 +30,15 @@ static class ContentItemApiExtensions
 
     private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentQuery query)
     {
-        QueryResult<ContentItem> contentItems = await storage.QueryAsync(query);
+        QueryResult<ContentItem> queryResult = await storage.QueryAsync(query);
 
-        foreach (ContentItem contentItem in contentItems.Items)
+        foreach (ContentItem contentItem in queryResult.Items)
         {
             contentItem.ApplySchema();
             contentItem.Validate();
         }
 
-        QueryResult<RestContentItem> resultQuery = new QueryResult<RestContentItem>()
-        {
-            Offset = contentItems.Offset,
-            Count = contentItems.Count,
-            TotalCount = contentItems.TotalCount,
-            Items = contentItems.Items.Select(x => x.ToRest()).ToList()
-        };
-
-        return resultQuery;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<RestContentItem> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
@@ -85,17 +77,38 @@ static class ContentItemApiExtensions
 
     private static async Task MapDelete(HttpContext context, IContentStorage contentStore, string schema, Guid id)
     {
-        await contentStore.DeleteAsync(schema, id);
+        ContentItem? content = await contentStore.GetContentAsync(schema, id);
+
+        if (content == null)
+        {
+            throw new Exception("Content item was not found.");
+        }
+
+        await contentStore.DeleteAsync(content);
     }
 
     private static async Task MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
     {
-        await contentStore.PublishAsync(schema, id);
+        ContentItem? content = await contentStore.GetContentAsync(schema, id);
+
+        if (content == null)
+        {
+            throw new Exception("Content item was not found.");
+        }
+
+        await contentStore.PublishAsync(content);
     }
 
     private static async Task MapUnpublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
     {
-        await contentStore.UnpublishAsync(schema, id);
+        ContentItem? content = await contentStore.GetContentAsync(schema, id);
+
+        if (content == null)
+        {
+            throw new Exception("Content item was not found.");
+        }
+
+        await contentStore.UnpublishAsync(content);
     }
 
     private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)

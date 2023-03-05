@@ -40,7 +40,7 @@ public class AssetListBase : EntityListComponent<Asset>
     {
         AssetFolderQuery query = new AssetFolderQuery();
 
-        if(SelectedFolder == null)
+        if (SelectedFolder == null)
         {
             query.RootOnly = true;
         }
@@ -49,7 +49,7 @@ public class AssetListBase : EntityListComponent<Asset>
             query.Parent = SelectedFolder.Id;
         }
 
-        Folders = await AssetFolderStore.QueryAsync(query);
+        Folders = (await AssetFolderStore.QueryAsync(query)).Items;
 
         SearchResult = await AssetService.QueryAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
     }

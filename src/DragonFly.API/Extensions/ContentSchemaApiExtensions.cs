@@ -25,16 +25,10 @@ static class ContentSchemaApiExtensions
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
     {
-        QueryResult<ContentSchema> items = await storage
+        QueryResult<ContentSchema> queryResult = await storage
                                                 .QuerySchemasAsync();
 
-        QueryResult<RestContentSchema> restQueryResult = new QueryResult<RestContentSchema>();
-        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-        restQueryResult.Offset = items.Offset;
-        restQueryResult.Count = items.Count;
-        restQueryResult.TotalCount = items.TotalCount;
-
-        return restQueryResult;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)

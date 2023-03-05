@@ -25,6 +25,10 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     [Inject]
     public IAssetStorage AssetStore { get; set; }
 
+    [Inject]
+    public IAssetFolderStorage AssetFolderStore { get; set; }
+
+
     private IBrowserFile SelectedFile { get; set; }
 
     [Parameter]
@@ -38,7 +42,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     {
         await SaveAsync();
 
-        await ContentService.PublishAsync(Entity.Id);
+        await ContentService.PublishAsync(Entity);
     }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -69,7 +73,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
             if (FolderId != null)
             {
-                Entity.Folder = new AssetFolder(FolderId.Value);
+                Entity.Folder = await AssetFolderStore.GetAssetFolderAsync(FolderId.Value);
             }
         }
         else
@@ -92,7 +96,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
     protected override async Task DeleteActionAsync()
     {
-        await AssetStore.DeleteAsync(Entity.Id);
+        await AssetStore.DeleteAsync(Entity);
 
         NavigationManager.NavigateToAssets();
     }
@@ -103,7 +107,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
         using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
         {
-            await ContentService.UploadAsync(Entity.Id, SelectedFile.ContentType, stream);
+            await ContentService.UploadAsync(Entity, SelectedFile.ContentType, stream);
         }
 
         await RefreshAsync();
@@ -111,7 +115,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
     public virtual async Task ApplyMetadata()
     {
-        await ContentService.ApplyMetadataAsync(EntityId);
+        await ContentService.ApplyMetadataAsync(Entity);
 
         await RefreshAsync();
     }

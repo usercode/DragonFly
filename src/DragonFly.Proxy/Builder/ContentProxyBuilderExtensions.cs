@@ -36,26 +36,20 @@ public static class ContentProxyBuilderExtensions
 
     public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
-    {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
-
-        await storage.DeleteAsync(schema.Name, model.Id);
+    {        
+        await storage.DeleteAsync(model.GetContentItem());
     }
 
     public static async Task PublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
-
-        await storage.PublishAsync(schema.Name, model.Id);
+        await storage.PublishAsync(model.GetContentItem());
     }
 
     public static async Task UnpublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        ContentSchema schema = ProxyTypeManager.Default.GetSchema<TContentModel>();
-
-        await storage.UnpublishAsync(schema.Name, model.Id);
+        await storage.UnpublishAsync(model.GetContentItem());
     }
 
     public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)

@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Assets.Query;
+using DragonFly.Query;
 using System.Net.Http.Json;
 
 namespace DragonFly.API.Client;
@@ -19,20 +20,27 @@ public partial class ClientContentService : IAssetFolderStorage
         response.EnsureSuccessStatusCode();
     }
 
-    public Task<AssetFolder> GetAssetFolderAsync(Guid id)
+    public async Task<AssetFolder?> GetAssetFolderAsync(Guid id)
     {
-        throw new NotImplementedException();
+        RestAssetFolder? entity = await Client.GetFromJsonAsync<RestAssetFolder>($"api/assetfolder/{id}");
+
+        if (entity == null)
+        {
+            return null;
+        }
+
+        return entity.ToModel();
     }
 
-    public async Task<IEnumerable<AssetFolder>> QueryAsync(AssetFolderQuery query)
+    public async Task<QueryResult<AssetFolder>> QueryAsync(AssetFolderQuery query)
     {
         var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
 
         response.EnsureSuccessStatusCode();
 
-        IEnumerable<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<IEnumerable<RestAssetFolder>>();
+        QueryResult<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestAssetFolder>>();
 
-        return result.Select(x => x.ToModel()).ToList();
+        return result.Convert(x => x.ToModel());
     }
 
     public Task UpdateAsync(AssetFolder folder)

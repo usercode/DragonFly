@@ -2,9 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Permissions;
 using DragonFly.Query;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Threading.Tasks;
 
@@ -40,11 +38,18 @@ public class ContentStorageAuthorization : IContentStorage
         await Storage.CreateAsync(contentItem);
     }
 
-    public async Task DeleteAsync(string schema, Guid id)
+    public async Task UpdateAsync(ContentItem entity)
+    {
+        await Api.AuthorizeAsync(ContentPermissions.ContentUpdate);
+
+        await Storage.UpdateAsync(entity);
+    }
+
+    public async Task DeleteAsync(ContentItem content)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentDelete);
 
-        await Storage.DeleteAsync(schema, id);
+        await Storage.DeleteAsync(content);
     }
 
     public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
@@ -52,13 +57,6 @@ public class ContentStorageAuthorization : IContentStorage
         await Api.AuthorizeAsync(ContentPermissions.ContentRead);
 
         return await Storage.GetContentAsync(schema, id);
-    }
-
-    public async Task PublishAsync(string schema, Guid id)
-    {
-        await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
-
-        await Storage.PublishAsync(schema, id);
     }
 
     public async Task PublishQueryAsync(ContentQuery query)
@@ -83,18 +81,17 @@ public class ContentStorageAuthorization : IContentStorage
 
         return await Storage.QueryAsync(query);
     }
+    public async Task PublishAsync(ContentItem content)
+    {
+        await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
 
-    public async Task UnpublishAsync(string schema, Guid id)
+        await Storage.PublishAsync(content);
+    }
+
+    public async Task UnpublishAsync(ContentItem entity)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentUnpublish);
 
-        await Storage.UnpublishAsync(schema, id);
-    }
-
-    public async Task UpdateAsync(ContentItem entity)
-    {
-        await Api.AuthorizeAsync(ContentPermissions.ContentUpdate);
-
-        await Storage.UpdateAsync(entity);
+        await Storage.UnpublishAsync(entity);
     }
 }

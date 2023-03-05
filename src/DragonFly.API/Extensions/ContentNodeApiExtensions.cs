@@ -29,16 +29,10 @@ static class ContentNodeApiExtensions
             parentId = Guid.Parse(stringParameter);
         }
 
-        QueryResult<ContentNode> items = await storage
+        QueryResult<ContentNode> queryResult = await storage
                                                 .QueryAsync(new NodesQuery() { Structure = structure, ParentId = parentId });
 
-        QueryResult<RestContentNode> restQueryResult = new QueryResult<RestContentNode>();
-        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-        restQueryResult.Offset = items.Offset;
-        restQueryResult.Count = items.Count;
-        restQueryResult.TotalCount = items.TotalCount;
-
-        return restQueryResult;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentNode input)

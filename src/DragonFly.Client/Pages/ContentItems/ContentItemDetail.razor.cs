@@ -109,7 +109,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override async Task DeleteActionAsync()
     {
-        await ContentService.DeleteAsync(Entity.Schema.Name, Entity.Id);
+        await ContentService.DeleteAsync(Entity);
 
         NavigationManager.NavigateTo($"content/{EntityType}");
     }
@@ -128,11 +128,11 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         await SaveAsync();
 
-        await ContentService.PublishAsync(Entity.Schema.Name, Entity.Id);
+        await ContentService.PublishAsync(Entity);
     }
 
     public async Task UnpublishAsync()
     {
-        await ContentService.UnpublishAsync(Entity.Schema.Name, Entity.Id);
+        await ContentService.UnpublishAsync(Entity);
     }
 }

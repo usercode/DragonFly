@@ -263,20 +263,13 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public async Task DeleteAsync(string schema, Guid id)
+    public async Task DeleteAsync(ContentItem entity)
     {
-        ContentItem? contentItem = await GetContentAsync(schema, id);
+        await UnpublishAsync(entity);
 
-        if (contentItem == null)
-        {
-            return;
-        }
+        IMongoCollection<MongoContentItem> col = GetMongoCollection(entity.Schema.Name, false);
 
-        await UnpublishAsync(schema, id);
-
-        IMongoCollection<MongoContentItem> col = GetMongoCollection(schema, false);
-
-        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));
+        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, entity.Id));
 
 
         var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
@@ -284,19 +277,12 @@ public partial class MongoStorage : IContentStorage
         //execute interceptors
         foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnDeletedAsync(contentItem);
+            await interceptor.OnDeletedAsync(entity);
         }
     }
 
-    public async Task PublishAsync(string schema, Guid id)
+    public async Task PublishAsync(ContentItem contentItem)
     {
-        ContentItem? contentItem = await GetContentAsync(schema, id);
-
-        if (contentItem == null)
-        {
-            throw new Exception("ContentItem not found.");
-        }
-
         var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
         //execute interceptors
@@ -305,28 +291,28 @@ public partial class MongoStorage : IContentStorage
             await interceptor.OnPublishingAsync(contentItem);
         }
 
-        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(schema, false);
-        IMongoCollection<MongoContentItem> published = GetMongoCollection(schema, true);
+        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(contentItem.Schema.Name, false);
+        IMongoCollection<MongoContentItem> published = GetMongoCollection(contentItem.Schema.Name, true);
 
         //find contentitem
-        MongoContentItem found = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoContentItem found = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == contentItem.Id);
 
         if (found == null)
         {
-            throw new Exception($"Content item not found: {schema}/{id}");
+            throw new Exception($"Content item not found: {contentItem.Schema.Name}/{contentItem.Id}");
         }
 
         //add contentitem to published collection
         await published.ReplaceOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, id), found, new ReplaceOptions() { IsUpsert = true });
+                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id), found, new ReplaceOptions() { IsUpsert = true });
 
         //update publish date
         await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x=> x.Id, id), 
+                    Builders<MongoContentItem>.Filter.Eq(x=> x.Id, contentItem.Id), 
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
 
         //refresh contentitem
-        contentItem = await GetContentAsync(schema, id);
+        contentItem = await GetContentAsync(contentItem.Schema.Name, contentItem.Id);
 
         if (contentItem == null)
         {
@@ -346,23 +332,23 @@ public partial class MongoStorage : IContentStorage
             }
         }
 
-        Logger.LogInformation($"Content was published: {schema}/{id}");
+        Logger.LogInformation($"Content was published: {contentItem.Schema.Name}/{contentItem.Id}");
     }
 
-    public async Task UnpublishAsync(string schema, Guid id)
+    public async Task UnpublishAsync(ContentItem contentItem)
     {
-        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(schema, false);
-        IMongoCollection<MongoContentItem> published = GetMongoCollection(schema, true);
+        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(contentItem.Schema.Name, false);
+        IMongoCollection<MongoContentItem> published = GetMongoCollection(contentItem.Schema.Name, true);
 
         //delete published contentitem
-        await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, id));
+        await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id));
 
         //update publish date
         await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, id), 
+                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id), 
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
-        ContentItem? contentItem = await GetContentAsync(schema, id);
+        contentItem = await GetContentAsync(contentItem.Schema.Name, contentItem.Id);
 
         var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
@@ -398,11 +384,11 @@ public partial class MongoStorage : IContentStorage
 
             foreach (ContentItem contentItem in result.Items)
             {
-                await PublishAsync(contentItem.Schema.Name, contentItem.Id);
+                await PublishAsync(contentItem);
             }
 
             query.Skip += pageSize;
-        }            
+        }
     }
 
     public async Task UnpublishQueryAsync(ContentQuery query)
@@ -423,7 +409,7 @@ public partial class MongoStorage : IContentStorage
 
             foreach (ContentItem contentItem in result.Items)
             {
-                await UnpublishAsync(contentItem.Schema.Name, contentItem.Id);
+                await UnpublishAsync(contentItem);
             }
 
             query.Skip += pageSize;

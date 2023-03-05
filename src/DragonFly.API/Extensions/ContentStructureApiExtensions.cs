@@ -24,15 +24,9 @@ static class ContentStructureApiExtensions
 
     private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)
     {
-        QueryResult<ContentStructure> items = await storage.QueryAsync(query);
+        QueryResult<ContentStructure> queryResult = await storage.QueryAsync(query);
 
-        QueryResult<RestContentStructure> restQueryResult = new QueryResult<RestContentStructure>();
-        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-        restQueryResult.Offset = items.Offset;
-        restQueryResult.Count = items.Count;
-        restQueryResult.TotalCount = items.TotalCount;
-
-       return restQueryResult;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<RestContentStructure> MapGetById(HttpContext context, IStructureStorage storage, Guid id)

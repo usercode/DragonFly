@@ -23,16 +23,9 @@ static class WebHookApiExtensions
 
     private static async Task<QueryResult<RestWebHook>> MapQuery(HttpContext context, IWebHookStorage storage)
     {
-        QueryResult<WebHook> items = await storage
-                                                 .QueryAsync(new WebHookQuery());
+        QueryResult<WebHook> queryResult = await storage.QueryAsync(new WebHookQuery());
 
-        QueryResult<RestWebHook> restQueryResult = new QueryResult<RestWebHook>();
-        restQueryResult.Items = items.Items.Select(x => x.ToRest()).ToList();
-        restQueryResult.Offset = items.Offset;
-        restQueryResult.Count = items.Count;
-        restQueryResult.TotalCount = items.TotalCount;
-
-       return restQueryResult;
+        return queryResult.Convert(x => x.ToRest());
     }
 
     private static async Task<RestWebHook> MapGet(HttpContext context, IWebHookStorage storage, Guid id)

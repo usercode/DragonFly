@@ -13,15 +13,16 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IContentStorage
 {       
-    public async Task<ContentItem> GetContentAsync(string schema, Guid id)
+    public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
-        var response = await Client.GetAsync($"api/content/{schema}/{id}");
+        RestContentItem? entity = await Client.GetFromJsonAsync<RestContentItem>($"api/content/{schema}/{id}");
 
-        response.EnsureSuccessStatusCode();
+        if (entity == null)
+        {
+            return null;
+        }
 
-        var e = await response.Content.ReadFromJsonAsync<RestContentItem>();
-
-        return e.ToModel();
+        return entity.ToModel();
     }
 
     public async Task CreateAsync(ContentItem entity)
@@ -43,23 +44,16 @@ public partial class ClientContentService : IContentStorage
         await Client.DeleteAsync($"api/content/{entity.Schema.Name}/{entity.Id}");
     }
 
-    public async Task PublishAsync(string schema, Guid id)
+    public async Task PublishAsync(ContentItem entity)
     {
-        var response = await Client.PostAsync($"api/content/{schema}/{id}/publish", new StringContent(string.Empty));
+        var response = await Client.PostAsync($"api/content/{entity.Schema.Name}/{entity.Id}/publish", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task UnpublishAsync(string schema, Guid id)
+    public async Task UnpublishAsync(ContentItem entity)
     {
-        var response = await Client.PostAsync($"api/content/{schema}/{id}/unpublish", new StringContent(string.Empty));
-
-        response.EnsureSuccessStatusCode();
-    }
-
-    public async Task DeleteAsync(string schema, Guid id)
-    {
-        var response = await Client.DeleteAsync($"api/content/{schema}/{id}");
+        var response = await Client.PostAsync($"api/content/{entity.Schema.Name}/{entity.Id}/unpublish", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
     }
@@ -68,15 +62,9 @@ public partial class ClientContentService : IContentStorage
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, JsonSerializerDefault.Options);
 
-        var queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>();
+        QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>();
 
-        return new QueryResult<ContentItem>()
-        {
-            Offset = queryResult.Offset,
-            Count = queryResult.Count,
-            TotalCount = queryResult.TotalCount,
-            Items = queryResult.Items.Select(x => x.ToModel()).ToList()
-        };
+        return queryResult.Convert(x => x.ToModel());
     }
 
     public async Task PublishQueryAsync(ContentQuery query)

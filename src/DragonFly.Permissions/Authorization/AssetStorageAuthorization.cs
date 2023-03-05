@@ -33,11 +33,11 @@ class AssetStorageAuthorization : IAssetStorage
     /// </summary>
     public IDragonFlyApi Api { get; }
 
-    public async Task ApplyMetadataAsync(Guid id)
+    public async Task ApplyMetadataAsync(Asset asset)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetUpdate);
 
-        await Storage.ApplyMetadataAsync(id);
+        await Storage.ApplyMetadataAsync(asset);
     }
 
     public async Task CreateAsync(Asset asset)
@@ -47,21 +47,21 @@ class AssetStorageAuthorization : IAssetStorage
         await Storage.CreateAsync(asset);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Asset asset)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetDelete);
 
-        await Storage.DeleteAsync(id);
+        await Storage.DeleteAsync(asset);
     }
 
-    public async Task<Stream> GetStreamAsync(Guid id)
+    public async Task<Stream> GetStreamAsync(Asset asset)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetDownload);
 
-        return await Storage.GetStreamAsync(id);
+        return await Storage.GetStreamAsync(asset);
     }
 
-    public async Task<Asset> GetAssetAsync(Guid id)
+    public async Task<Asset?> GetAssetAsync(Guid id)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetRead);
 
@@ -75,11 +75,11 @@ class AssetStorageAuthorization : IAssetStorage
         return await Storage.QueryAsync(assetQuery);
     }
 
-    public async Task PublishAsync(Guid id)
+    public async Task PublishAsync(Asset asset)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetPublish);
 
-        await Storage.PublishAsync(id);
+        await Storage.PublishAsync(asset);
     }
 
     public async Task UpdateAsync(Asset asset)
@@ -89,10 +89,10 @@ class AssetStorageAuthorization : IAssetStorage
         await Storage.UpdateAsync(asset);
     }
 
-    public async Task UploadAsync(Guid id, string mimetype, Stream stream)
+    public async Task UploadAsync(Asset asset, string mimetype, Stream stream)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetUpload);
 
-        await Storage.UploadAsync(id, mimetype, stream);
+        await Storage.UploadAsync(asset, mimetype, stream);
     }
 }
