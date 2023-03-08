@@ -42,9 +42,13 @@ static class AssetFolderApiExtensions
         return entity.ToRest();
     }
 
-    private static async Task MapCreate(HttpContext context, IAssetFolderStorage storage, RestAssetFolder input)
+    private static async Task<ResourceCreated> MapCreate(HttpContext context, IAssetFolderStorage storage, RestAssetFolder input)
     {
-        await storage.CreateAsync(input.ToModel());
+        AssetFolder model = input.ToModel();
+
+        await storage.CreateAsync(model);
+
+        return new ResourceCreated() { Id = model.Id };
     }
 
     private static async Task MapDelete(HttpContext context, IAssetFolderStorage storage, Guid id)

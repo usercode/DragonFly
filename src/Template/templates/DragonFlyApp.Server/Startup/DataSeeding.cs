@@ -17,11 +17,13 @@ namespace DragonFlyTemplate.Startup;
 public class DataSeeding
 {
     public DataSeeding(
-        IDataStorage dataStorage,
+        IContentStorage contentStorage,
+        IAssetStorage assetStorage,
         IDragonFlyApi api,
         ISlugService slugService)
     {
-        DataStorage = dataStorage;
+        ContentStorage = contentStorage;
+        AssetStorage = assetStorage;
         Api = api;
         SlugService = slugService;
     }
@@ -29,7 +31,12 @@ public class DataSeeding
     /// <summary>
     /// DataStorage
     /// </summary>
-    private IDataStorage DataStorage { get; }
+    private IContentStorage ContentStorage { get; }
+
+    /// <summary>
+    /// AssetStorage
+    /// </summary>
+    private IAssetStorage AssetStorage { get; }
 
     /// <summary>
     /// Api
@@ -43,7 +50,7 @@ public class DataSeeding
 
     public async Task StartAsync()
     {
-        StandardPageModel r = await DataStorage.FirstOrDefaultAsync<StandardPageModel>();
+        StandardPageModel r = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>();
 
         if (r != null)
         {
@@ -102,26 +109,26 @@ public class DataSeeding
 
         await startPage.MainContent.SetDocumentAsync(document);
 
-        await DataStorage.CreateAsync(startPage);
-        await DataStorage.PublishAsync(startPage);
+        await ContentStorage.CreateAsync(startPage);
+        await ContentStorage.PublishAsync(startPage);
     }
 
     public async Task<Asset> CreateAssetAsync(IFileInfo filename)
     {
         if (filename.Exists == false)
         {
-            throw new Exception();
+            throw new Exception($"Asset not found: {filename}");
         }
 
         Asset asset = new Asset();
         asset.Name = filename.Name;
         asset.Slug = SlugService.Transform(asset.Name);
 
-        await DataStorage.CreateAsync(asset);
+        await AssetStorage.CreateAsync(asset);
 
         using Stream stream = filename.CreateReadStream();
 
-        await DataStorage.UploadAsync(asset.Id, MimeTypes.Jpeg, stream);
+        await AssetStorage.UploadAsync(asset, MimeTypes.Jpeg, stream);
 
         return asset;
     }

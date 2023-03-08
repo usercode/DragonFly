@@ -110,8 +110,6 @@ public class WebHookInterceptor : IContentInterceptor
             HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(""));
 
             Logger.LogInformation($"Webhook send to {url} with status code {response.StatusCode}");
-
-            string s = await response.Content.ReadAsStringAsync();
         }
     }
 

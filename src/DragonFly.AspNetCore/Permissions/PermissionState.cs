@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// PermissionState
 /// </summary>
-public class PermissionState
+public static class PermissionState
 {
     private static readonly AsyncLocal<bool> Enabled = new AsyncLocal<bool>();
 

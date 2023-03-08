@@ -7,9 +7,9 @@ namespace DragonFly;
 /// <summary>
 /// PermissionState
 /// </summary>
-public class DisablePermissions : IDisposable
+public sealed class DisablePermissions : IDisposable
 {
-    private bool _oldValue;
+    private readonly bool _oldValue;
 
     public DisablePermissions()
     {

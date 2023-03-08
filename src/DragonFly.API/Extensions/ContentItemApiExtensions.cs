@@ -63,9 +63,7 @@ static class ContentItemApiExtensions
 
         await contentStore.CreateAsync(model);
 
-        ResourceCreated result = new ResourceCreated() { Id = model.Id };
-
-        return result;
+        return new ResourceCreated() { Id = model.Id };
     }
 
     private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, RestContentItem input)

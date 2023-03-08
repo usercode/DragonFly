@@ -28,7 +28,7 @@
             Encrypted
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.IsEncrypted" readonly />
+            <input type="text" class="form-control" value="@Metadata.IsEncrypted?.ToString()" readonly />            
         </div>
     </BSRow>
 </div>

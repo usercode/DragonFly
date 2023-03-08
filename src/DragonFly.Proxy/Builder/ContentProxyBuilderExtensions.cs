@@ -81,12 +81,6 @@ public static class ContentProxyBuilderExtensions
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
-        QueryResult<TContentModel> result2 = new QueryResult<TContentModel>();
-        result2.Offset = result.Offset;
-        result2.TotalCount = result.TotalCount;
-        result2.Count = result.Count;
-        result2.Items = result.Items.Select(x => x.ToModel<TContentModel>()).ToList();
-
-        return result2;
+        return result.Convert(x => x.ToModel<TContentModel>());
     }
 }
