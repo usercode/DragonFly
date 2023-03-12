@@ -39,6 +39,7 @@ public static class DragonFlyBuilderExtensions
             group.MapAssetRestApi();
             group.MapAssetFolderRestApi();
             group.MapWebHookRestApi();
+            group.MapBackgroundTaskApi();
         });
 
         return builder;

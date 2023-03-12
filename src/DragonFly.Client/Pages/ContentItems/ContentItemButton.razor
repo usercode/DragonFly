@@ -1,0 +1,94 @@
+
+<button class="list-group-item list-group-item-action" @onclick="x => Navigate()">
+    <BSRow>
+        <div class="col-lg-1">
+            @if (ContentItem.PublishedAt != null)
+            {
+                <i class="far fa-check-square"></i>
+            }
+            else
+            {
+                <i class="far fa-check-square" style="visibility: hidden"></i>
+            }
+        </div>
+        <div class="col-lg-1">
+            @if (ShowValidationErrors && ContentItem.ValidationContext.State == Validations.ValidationState.Invalid)
+            {
+                <i class="fa-solid fa-triangle-exclamation" title="@ContentItem.ValidationContext.GetMessage()"></i>
+            }
+        </div>
+        @* no list fields available? Show id field only *@
+        @if (ContentItem.Schema.ListFields.Any() == false)
+        {
+            <div class="col-lg-10">
+                @ContentItem.Id
+            </div>
+        }
+        else
+        {
+            foreach (string field in ContentItem.Schema.ListFields.Take(5))
+            {
+                <div class="col-lg-2">
+                    <div style="white-space: nowrap; overflow: hidden;">
+                        @{
+                            ContentField column = ContentItem.Fields[field];
+                        }
+
+                        @if (column is ISingleValueField singleValueField)
+                        {
+                            <span>@singleValueField.Value</span>
+                        }
+
+                        else if (column is ReferenceField referenceField)
+                        {
+                            @if (referenceField.ContentItem != null)
+                            {
+                                <ReferenceFields ContentItem="@referenceField.ContentItem" />
+                            }
+                        }
+                        else if (column is ComponentField embedField)
+                        {
+                            @if (embedField.ContentComponent != null)
+                            {
+
+                            }
+                        }
+                        else if (column is AssetField assetField)
+                        {
+                            @if (assetField.Asset != null && (assetField.Asset.IsImage() || assetField.Asset.IsSVG()))
+                            {
+                                <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+    </BSRow>
+</button>
+
+@code{
+    [Parameter]
+    public ContentItem ContentItem { get; set; }
+
+    [Parameter]
+    public bool ShowValidationErrors { get; set; }
+
+    [Parameter]
+    public Action<ContentItem> Clicked { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private void Navigate()
+    {
+        if (Clicked != null)
+        {
+            Clicked(ContentItem);
+        }
+        else
+        {
+            NavigationManager.NavigateToContent(ContentItem);
+        }
+    }
+}

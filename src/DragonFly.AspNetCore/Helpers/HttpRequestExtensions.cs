@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
 namespace DragonFly.AspNetCore;
-public static class Extensions
+
+public static class HttpRequestExtensions
 {
     public static ContentQuery GetQuery(this HttpRequest request)
     {
@@ -16,12 +17,12 @@ public static class Extensions
         StringValues skip = request.Query["$skip"];
         StringValues top = request.Query["$top"];
 
-        if (skip.Count > 0)
+        if (skip.Any())
         {
             result.Skip = int.Parse(skip.First());
         }
 
-        if (top.Count > 0)
+        if (top.Any())
         {
             result.Top = int.Parse(top.First());
         }

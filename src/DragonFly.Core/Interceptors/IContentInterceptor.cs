@@ -12,8 +12,6 @@ public interface IContentInterceptor
 
     Task OnDeletedAsync(ContentItem contentItem);
 
-    Task OnPublishingAsync(ContentItem contentItem);
-
     Task OnPublishedAsync(ContentItem contentItem);
 
     Task OnUnpublishedAsync(ContentItem contentItem);

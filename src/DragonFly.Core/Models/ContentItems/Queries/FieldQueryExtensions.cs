@@ -6,12 +6,19 @@ namespace DragonFly.Query;
 
 public static class FieldQueryExtensions
 {
-    public static TContentQuery FieldOrder<TContentQuery>(this TContentQuery queryParameters, string field, bool asc = true)
+    public static TContentQuery OrderBy<TContentQuery>(this TContentQuery query, string field, bool asc = true, bool isCustomField = true)
         where TContentQuery : ContentQuery
     {
-        queryParameters.OrderFields.Add(new FieldOrder($"Fields.{field}", asc));
+        if (isCustomField)
+        {
+            query.OrderFields.Add(new FieldOrder($"Fields.{field}", asc));
+        }
+        else
+        {
+            query.OrderFields.Add(new FieldOrder(field, asc));
+        }
 
-        return queryParameters;
+        return query;
     }
 
     public static TContentQuery Top<TContentQuery>(this TContentQuery query, int value)

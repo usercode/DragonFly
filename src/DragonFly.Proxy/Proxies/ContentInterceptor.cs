@@ -48,7 +48,7 @@ internal class ContentInterceptor : IInterceptor
                     }
                     else
                     {
-                        throw new Exception($"The content field '{propertyName}' isn't a SingleValueField. ");
+                        throw new Exception($"The content field '{propertyName}' isn't a SingleValueField.");
                     }
                 }
                 else

@@ -9,6 +9,12 @@ namespace DragonFly.Query;
 /// </summary>
 public class ContentQuery
 {
+    public ContentQuery(string schema)
+        : this()
+    {
+        Schema = schema;
+    }
+
     public ContentQuery()
     {
         Fields = new List<FieldQuery>();

@@ -21,6 +21,7 @@ public static class StartupExtensions
         builder.Services.AddTransient<IWebHookStorage, ClientContentService>();
         builder.Services.AddTransient<IAssetStorage, ClientContentService>();
         builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
+        builder.Services.AddTransient<IBackgroundTaskService, ClientContentService>();
 
         builder.Init(api => api.JsonFields().AddDefaults());
 

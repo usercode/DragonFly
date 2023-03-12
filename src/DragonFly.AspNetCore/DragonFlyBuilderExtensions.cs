@@ -39,6 +39,7 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton<DragonFlyContext>();
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         services.AddSingleton<IDateTimeService, LocalDateTimeService>();
+        services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
 
         services.AddSingleton(ContentFieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
@@ -48,7 +49,7 @@ public static class DragonFlyBuilderExtensions
 
         services.AddSingleton<ISlugService, SlugService>();
 
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
+        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();        
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
@@ -67,6 +68,24 @@ public static class DragonFlyBuilderExtensions
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
         await api.InitAsync();
+
+        ////demo tasks
+        //IBackgroundTaskManager taskManager = host.Services.GetRequiredService<IBackgroundTaskManager>();
+        //taskManager.StartNew("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
+        //taskManager.StartNew("Import", static async ctx => 
+        //{
+        //    while (ctx.CancellationToken.IsCancellationRequested == false)
+        //    {
+        //        await Task.Delay(TimeSpan.FromSeconds(1));
+
+        //        ctx.Task.ProgressValue += 2;
+
+        //        if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
+        //        {
+        //            break;
+        //        }
+        //    }
+        //});
     }
 
     /// <summary>

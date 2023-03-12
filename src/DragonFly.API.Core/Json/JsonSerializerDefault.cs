@@ -8,7 +8,7 @@ using DragonFly.Query;
 
 namespace DragonFly.API;
 
-public class JsonSerializerDefault
+public static class JsonSerializerDefault
 {
     private static JsonSerializerOptions? _options;
 

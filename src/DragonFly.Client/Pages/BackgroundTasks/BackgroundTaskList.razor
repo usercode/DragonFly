@@ -1,0 +1,51 @@
+﻿@page "/tasks"
+@inherits BackgroundTaskListBase
+
+<div class="content-header">
+    <h1>Tasks</h1>
+
+    <Toolbar Items="ToolbarItems"></Toolbar>
+</div>
+<div class="scroll-content">
+    @if (Tasks != null)
+    {
+        <BSListGroup>
+            @foreach (BackgroundTaskInfo task in Tasks)
+            {
+                var t = task;
+
+                <button class="list-group-item list-group-item-action">
+                    <BSRow>
+                        <BSCol ColumnLarge="1">
+                            <span>@task.Id </span>
+                        </BSCol>
+                        <BSCol ColumnLarge="1">
+                            <span>@task.State </span>
+                        </BSCol>
+                        <BSCol ColumnLarge="1">
+                            <BSProgressBar Min="0" Max="task.ProgressMaxValue" Value="task.ProgressValue">@task.ProgressValue / @task.ProgressMaxValue</BSProgressBar>
+                        </BSCol>
+                        <BSCol ColumnLarge="4">
+                            <span>@task.Name </span>
+                        </BSCol>
+                        <BSCol>
+                            @if (task.State == BackgroundTaskState.Running)
+                            {
+                                <BSButton Color="BSColor.Light" OnClick="async x => await CancelTask(t)">Cancel</BSButton>
+                            }
+                        </BSCol>
+                    </BSRow>
+                </button>               
+            }
+        </BSListGroup>
+    }
+</div>
+
+<div class="footer-content">
+    <div class="row">
+    </div>
+</div>
+
+@code {
+
+}

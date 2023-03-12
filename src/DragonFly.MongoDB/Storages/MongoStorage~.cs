@@ -32,9 +32,14 @@ public partial class MongoStorage
     public ISlugService SlugService { get; }
     private IDragonFlyApi Api { get; }
     public ILogger<MongoStorage> Logger { get; }
+    public IBackgroundTaskManager BackgroundTaskService { get; }
+
 
     private static MongoStorage? _default;
 
+    /// <summary>
+    /// Default
+    /// </summary>
     public static MongoStorage Default
     {
         get => _default!;
@@ -45,6 +50,7 @@ public partial class MongoStorage
         IDateTimeService dateTimeService,
         IOptions<MongoDbOptions> options, 
         IDragonFlyApi api,
+        IBackgroundTaskManager backgroundTaskService,
         ISlugService slugService,
         ILogger<MongoStorage> logger)
     {
@@ -52,6 +58,7 @@ public partial class MongoStorage
 
         Logger = logger;
         Api = api;
+        BackgroundTaskService = backgroundTaskService;
         SlugService = slugService;
         Options = options.Value;
 

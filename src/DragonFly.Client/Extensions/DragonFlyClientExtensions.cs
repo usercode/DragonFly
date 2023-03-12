@@ -57,6 +57,7 @@ public static class DragonFlyClientExtensions
             api.Module().Add<ContentModule>();
             api.Module().Add<AssetModule>();
             api.Module().Add<WebHookModule>();
+            api.Module().Add<BackgroundTaskModule>();
             api.Module().Add<SettingsModule>();
         });
 

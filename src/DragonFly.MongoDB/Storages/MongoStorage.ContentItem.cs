@@ -71,8 +71,8 @@ public partial class MongoStorage : IContentStorage
             List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
 
             foreach (string field in schema.Fields
-                                    .Where(x=> x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
-                                    .Select(x=> x.Key))
+                                    .Where(x => x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
+                                    .Select(x => x.Key))
             {
                 patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.SearchPattern, "i")));
             }
@@ -156,7 +156,7 @@ public partial class MongoStorage : IContentStorage
 
             List<FilterDefinition<MongoContentItem>> assetQueries = new List<FilterDefinition<MongoContentItem>>();
 
-            foreach (var assetField in schema.Fields.Where(x=> x.Value.FieldType == assetFieldName))
+            foreach (var assetField in schema.Fields.Where(x => x.Value.FieldType == assetFieldName))
             {
                 assetQueries.Add(Builders<MongoContentItem>.Filter.Eq($"{nameof(MongoContentItem.Fields)}.{assetField.Key}", query.UsedAsset.Value));
             }
@@ -180,7 +180,7 @@ public partial class MongoStorage : IContentStorage
 
         //execute query
         var cursor = await collection.FindAsync(q, findOptions);
-        
+
         long totalCount = await collection.CountDocumentsAsync(q);
 
         IList<MongoContentItem> result = await cursor.ToListAsync();
@@ -283,14 +283,6 @@ public partial class MongoStorage : IContentStorage
 
     public async Task PublishAsync(ContentItem contentItem)
     {
-        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
-
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in interceptors)
-        {
-            await interceptor.OnPublishingAsync(contentItem);
-        }
-
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(contentItem.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(contentItem.Schema.Name, true);
 
@@ -308,7 +300,7 @@ public partial class MongoStorage : IContentStorage
 
         //update publish date
         await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x=> x.Id, contentItem.Id), 
+                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id),
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
 
         //refresh contentitem
@@ -318,6 +310,8 @@ public partial class MongoStorage : IContentStorage
         {
             throw new Exception("ContentItem not found.");
         }
+
+        var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in interceptors)
@@ -345,7 +339,7 @@ public partial class MongoStorage : IContentStorage
 
         //update publish date
         await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id), 
+                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, contentItem.Id),
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
         contentItem = await GetContentAsync(contentItem.Schema.Name, contentItem.Id);
@@ -366,53 +360,79 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public async Task PublishQueryAsync(ContentQuery query)
+    public Task PublishQueryAsync(ContentQuery query)
     {
-        int pageSize = 50;
-
-        query.Skip = 0;
-        query.Top = pageSize;
-
-        while (true)
-        {
-            var result = await QueryAsync(query);
-
-            if (result.Items.Count == 0)
+        BackgroundTaskService.StartNew($"Publish all {query.Schema}", 
+            query,
+            static async ctx =>
             {
-                break;
-            }
+                IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-            foreach (ContentItem contentItem in result.Items)
-            {
-                await PublishAsync(contentItem);
-            }
+                int pageSize = 50;
 
-            query.Skip += pageSize;
-        }
+                ctx.Input.Skip = 0;
+                ctx.Input.Top = pageSize;
+
+                while (true)
+                {
+                    QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
+
+                    if (result.Items.Count == 0)
+                    {
+                        break;
+                    }
+
+                    ctx.SetProgressMaxValue(result.TotalCount);
+
+                    foreach (ContentItem contentItem in result.Items)
+                    {
+                        await contentStorage.PublishAsync(contentItem);
+
+                        ctx.IncrementProgressValue();
+                    }
+
+                    ctx.Input.Skip += pageSize;
+                }
+            });
+
+        return Task.CompletedTask;
     }
 
-    public async Task UnpublishQueryAsync(ContentQuery query)
+    public Task UnpublishQueryAsync(ContentQuery query)
     {
-        int pageSize = 50;
-
-        query.Skip = 0;
-        query.Top = pageSize;
-
-        while (true)
-        {
-            var result = await QueryAsync(query);
-
-            if (result.Items.Count == 0)
+        BackgroundTaskService.StartNew($"Unpublish all {query.Schema}",
+            query,
+            static async ctx =>
             {
-                break;
-            }
+                IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-            foreach (ContentItem contentItem in result.Items)
-            {
-                await UnpublishAsync(contentItem);
-            }
+                int pageSize = 50;
 
-            query.Skip += pageSize;
-        }
+                ctx.Input.Skip = 0;
+                ctx.Input.Top = pageSize;
+
+                while (true)
+                {
+                    QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
+
+                    if (result.Items.Count == 0)
+                    {
+                        break;
+                    }
+
+                    ctx.SetProgressMaxValue(result.TotalCount);
+
+                    foreach (ContentItem contentItem in result.Items)
+                    {
+                        await contentStorage.UnpublishAsync(contentItem);
+
+                        ctx.IncrementProgressValue();
+                    }
+
+                    ctx.Input.Skip += pageSize;
+                }
+            });
+
+        return Task.CompletedTask;
     }
 }

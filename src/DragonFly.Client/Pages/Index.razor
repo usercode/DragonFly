@@ -1,8 +1,30 @@
 ﻿@page "/"
+@inherits IndexBase
 
 <div class="content-header">
     <div class="container">
-        <h1 class="display-4 text-center">Welcome to DragonFly!</h1>               
+        <h1 class="display-4 text-center">Welcome to DragonFly!</h1>
         <p class="text-center">Version: @DragonFly.GetVersion()</p>
     </div>
+</div>
+
+<div class="scroll-content">
+
+    @if (LatestContentItems != null)
+    {
+        <div class="row">
+        @foreach (var key in LatestContentItems)
+        {
+            <div class="col-lg-4">
+            
+                <h2>@key.Key.Name</h2>
+
+                @foreach (ContentItem contentItem in key.Value)
+                {
+                    <ContentItemButton ContentItem="contentItem" />
+                }
+            </div>
+        }
+        </div>
+    }
 </div>

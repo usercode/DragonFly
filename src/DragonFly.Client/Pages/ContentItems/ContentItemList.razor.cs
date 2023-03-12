@@ -110,7 +110,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
 
         foreach (FieldOrder f in OrderFields)
         {
-            query.FieldOrder(f.Name, f.Asc);
+            query.OrderBy(f.Name, f.Asc);
         }
 
         foreach (FieldQuery fieldQuery in QueryFields.Where(x => x.IsEmpty() == false))

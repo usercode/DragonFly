@@ -25,7 +25,13 @@ public static class DragonFlyApiExtensions
         IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
         IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        AuthorizationResult result = await permissionService.AuthorizeAsync(httpContextAccessor.HttpContext!.User, permission);
+        //temporary fix
+        if (httpContextAccessor.HttpContext == null)
+        {
+            return;
+        }
+
+        AuthorizationResult result = await permissionService.AuthorizeAsync(httpContextAccessor.HttpContext.User, permission);
 
         if (result.Succeeded == false)
         {
