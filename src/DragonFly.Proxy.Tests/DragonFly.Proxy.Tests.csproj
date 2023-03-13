@@ -16,8 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DragonFly.Proxy.Generators\DragonFly.Proxy.Generators.csproj"
-                      OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\DragonFly.Proxy\DragonFly.Proxy.csproj" />
   </ItemGroup>
 </Project>

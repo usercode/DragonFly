@@ -67,25 +67,7 @@ public static class DragonFlyBuilderExtensions
     public static async Task InitDragonFly(this IHost host)
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
-        await api.InitAsync();
-
-        ////demo tasks
-        //IBackgroundTaskManager taskManager = host.Services.GetRequiredService<IBackgroundTaskManager>();
-        //taskManager.StartNew("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
-        //taskManager.StartNew("Import", static async ctx => 
-        //{
-        //    while (ctx.CancellationToken.IsCancellationRequested == false)
-        //    {
-        //        await Task.Delay(TimeSpan.FromSeconds(1));
-
-        //        ctx.Task.ProgressValue += 2;
-
-        //        if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
-        //        {
-        //            break;
-        //        }
-        //    }
-        //});
+        await api.InitAsync();        
     }
 
     /// <summary>

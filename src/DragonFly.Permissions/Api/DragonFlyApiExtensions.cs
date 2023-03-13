@@ -25,7 +25,7 @@ public static class DragonFlyApiExtensions
         IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
         IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        //temporary fix
+        //temporary fix for background tasks
         if (httpContextAccessor.HttpContext == null)
         {
             return;

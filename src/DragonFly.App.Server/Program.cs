@@ -2,10 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System;
+using System.Threading.Tasks;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.Assets.Query;
 using DragonFly.MongoDB;
 using ImageWizard;
 using ImageWizard.Caches;
@@ -55,6 +56,24 @@ var app = builder.Build();
 
 //init DragonFly
 await app.InitDragonFly();
+
+//demo tasks
+IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
+taskManager.StartNew("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
+taskManager.StartNew("Import", static async ctx =>
+{
+    while (ctx.CancellationToken.IsCancellationRequested == false)
+    {
+        await Task.Delay(TimeSpan.FromSeconds(1));
+
+        ctx.Task.ProgressValue += 2;
+
+        if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
+        {
+            break;
+        }
+    }
+});
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 
