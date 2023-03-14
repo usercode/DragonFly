@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace DragonFly;
 
@@ -11,13 +11,14 @@ namespace DragonFly;
 /// </summary>
 public class BackgroundTask
 {
-    public BackgroundTask(long id, string name)
+    public BackgroundTask(long id, string name, ClaimsPrincipal? createdBy)
     {
         Id = id;        
         Name = name;
         ProgressValue = 0;
         ProgressMaxValue = 100;
         CreatedAt = DateTimeOffset.Now;
+        CreatedBy = createdBy;
         Status = string.Empty;
         State = BackgroundTaskState.Awaiting;
         CancellationTokenSource = new CancellationTokenSource();
@@ -37,6 +38,11 @@ public class BackgroundTask
     /// CreatedAt
     /// </summary>
     public DateTimeOffset? CreatedAt { get; }
+
+    /// <summary>
+    /// CreatedBy
+    /// </summary>
+    public ClaimsPrincipal? CreatedBy { get; }
 
     /// <summary>
     /// StartedAt
@@ -89,6 +95,11 @@ public class BackgroundTask
     /// <param name="exception"></param>
     public void SetException(Exception exception)
     {
+        if (State != BackgroundTaskState.Running)
+        {
+            throw new Exception();
+        }
+
         ExitAt = DateTimeOffset.Now;
         State = BackgroundTaskState.Failed;
         Exception = exception;
@@ -99,6 +110,11 @@ public class BackgroundTask
     /// </summary>
     public void SetCanceling()
     {
+        if (State != BackgroundTaskState.Running)
+        {
+            throw new Exception();
+        }
+
         State = BackgroundTaskState.Canceling;
         CancellationTokenSource.Cancel();
     }
@@ -108,6 +124,11 @@ public class BackgroundTask
     /// </summary>
     public void SetCanceled()
     {
+        if (State != BackgroundTaskState.Canceling)
+        {
+            throw new Exception();
+        }
+
         ExitAt = DateTimeOffset.Now;
         State = BackgroundTaskState.Canceled;
     }
@@ -117,6 +138,11 @@ public class BackgroundTask
     /// </summary>
     public void SetCompleted()
     {
+        if (State != BackgroundTaskState.Running)
+        {
+            throw new Exception();
+        }
+
         ExitAt = DateTimeOffset.Now;
         State = BackgroundTaskState.Completed;
         ProgressValue = ProgressMaxValue;

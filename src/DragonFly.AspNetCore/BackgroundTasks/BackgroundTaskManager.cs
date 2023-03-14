@@ -2,6 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Security.Claims;
+using DragonFly.AspNetCore;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace DragonFly;
@@ -11,11 +14,17 @@ namespace DragonFly;
 /// </summary>
 public class BackgroundTaskManager : IBackgroundTaskManager
 {
-    public BackgroundTaskManager(IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
+    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
     {
+        Hub = hub;
         ServiceProvider = serviceProvider;
         Logger = logger;
     }
+
+    /// <summary>
+    /// Hub
+    /// </summary>
+    public IHubContext<BackgroundTaskHub> Hub { get; }
 
     /// <summary>
     /// ServiceProvider
@@ -45,7 +54,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     {
         lock (_syncObject)
         {
-            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name);
+            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PermissionState.GetPrincipal());
 
             backgroundTask.Task = Task.Run(async () =>
             {
@@ -59,6 +68,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                     backgroundTask.State = BackgroundTaskState.Running;
 
                     BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
+                    ctx.StateChanged += () => Hub.Clients.All.SendAsync("TaskChanged");
 
                     await action(ctx);
 
@@ -83,6 +93,8 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                 {
                     Logger.LogInformation("Background task is exited: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
 
+                    await Hub.Clients.All.SendAsync("TaskChanged");
+
                     await Task.Delay(TimeSpan.FromMinutes(10));
 
                     lock (_syncObject)
@@ -98,31 +110,44 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         }
     }
 
+    private void Ctx_StateChanged()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<IEnumerable<BackgroundTaskInfo>> GetTasksAsync()
     {
-        return Task.FromResult<IEnumerable<BackgroundTaskInfo>>(
-                Tasks
-                .Values
-                .Select(x => new BackgroundTaskInfo() { 
-                                        Id = x.Id, 
-                                        Name = x.Name, 
-                                        ProgressValue = x.ProgressValue, 
-                                        ProgressMaxValue = x.ProgressMaxValue, 
-                                        Status = x.Status, 
-                                        State = x.State })
-                .ToList());
+        lock (_syncObject)
+        {
+            return Task.FromResult<IEnumerable<BackgroundTaskInfo>>(
+                    Tasks
+                    .Values
+                    .Select(x => new BackgroundTaskInfo()
+                    {
+                        Id = x.Id,
+                        CreatedAt = x.CreatedAt,
+                        CreatedBy = x.CreatedBy?.FindFirstValue("Name"),
+                        Name = x.Name,
+                        ProgressValue = x.ProgressValue,
+                        ProgressMaxValue = x.ProgressMaxValue,
+                        Status = x.Status,
+                        State = x.State,
+                        Exception = x.Exception?.Message
+                    })
+                    .ToList());
+        }
     }
 
     public Task CancelAsync(long id)
     {
-        if (Tasks.TryGetValue(id, out BackgroundTask? task))
+        lock (_syncObject)
         {
-            if (task.State != BackgroundTaskState.Canceling)
+            if (Tasks.TryGetValue(id, out BackgroundTask? task))
             {
                 task.SetCanceling();
             }
-        }
 
-        return Task.CompletedTask;
+            return Task.CompletedTask;
+        }
     }
 }

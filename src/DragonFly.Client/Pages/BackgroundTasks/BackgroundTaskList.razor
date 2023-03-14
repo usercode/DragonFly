@@ -28,7 +28,13 @@
                         <BSCol ColumnLarge="4">
                             <span>@task.Name </span>
                         </BSCol>
-                        <BSCol>
+                        <BSCol ColumnLarge="2">
+                            <span>@task.CreatedBy </span>
+                        </BSCol>
+                        <BSCol ColumnLarge="2">
+                            <span style="color:tomato">@task.Exception</span>
+                        </BSCol>
+                        <BSCol ColumnLarge="1">
                             @if (task.State == BackgroundTaskState.Running)
                             {
                                 <BSButton Color="BSColor.Light" OnClick="async x => await CancelTask(t)">Cancel</BSButton>

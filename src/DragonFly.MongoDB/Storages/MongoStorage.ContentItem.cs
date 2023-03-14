@@ -382,13 +382,13 @@ public partial class MongoStorage : IContentStorage
                         break;
                     }
 
-                    ctx.SetProgressMaxValue(result.TotalCount);
+                    await ctx.SetProgressMaxValueAsync(result.TotalCount);
 
                     foreach (ContentItem contentItem in result.Items)
                     {
                         await contentStorage.PublishAsync(contentItem);
 
-                        ctx.IncrementProgressValue();
+                        await ctx.IncrementProgressValueAsync();
                     }
 
                     ctx.Input.Skip += pageSize;
@@ -420,13 +420,13 @@ public partial class MongoStorage : IContentStorage
                         break;
                     }
 
-                    ctx.SetProgressMaxValue(result.TotalCount);
+                    await ctx.SetProgressMaxValueAsync(result.TotalCount);
 
                     foreach (ContentItem contentItem in result.Items)
                     {
                         await contentStorage.UnpublishAsync(contentItem);
 
-                        ctx.IncrementProgressValue();
+                        await ctx.IncrementProgressValueAsync();
                     }
 
                     ctx.Input.Skip += pageSize;

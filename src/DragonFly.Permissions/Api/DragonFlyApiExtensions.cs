@@ -3,9 +3,9 @@
 // MIT License
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DragonFly;
@@ -22,16 +22,16 @@ public static class DragonFlyApiExtensions
             return;
         }
 
-        IHttpContextAccessor httpContextAccessor = api.ServiceProvider.GetRequiredService<IHttpContextAccessor>();
-        IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
+        ClaimsPrincipal? principal = PermissionState.GetPrincipal();
 
-        //temporary fix for background tasks
-        if (httpContextAccessor.HttpContext == null)
+        if (principal == null)
         {
             return;
         }
+        
+        IAuthorizationService permissionService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        AuthorizationResult result = await permissionService.AuthorizeAsync(httpContextAccessor.HttpContext.User, permission);
+        AuthorizationResult result = await permissionService.AuthorizeAsync(principal, permission);
 
         if (result.Succeeded == false)
         {

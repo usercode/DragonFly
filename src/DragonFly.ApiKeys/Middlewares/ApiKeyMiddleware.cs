@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Security.Claims;
@@ -35,7 +36,7 @@ class ApiKeyMiddleware
 
             if (apiKey != null)
             {
-                context.User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey"));
+                PermissionState.SetPrincipal(new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("Name", $"apikey:{apiKey.Name}"), new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey")));
             }
         }
 

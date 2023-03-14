@@ -60,6 +60,7 @@ class LoginService : ILoginService
 
         List<Claim> claims = new List<Claim>()
         {
+            new Claim("Name", $"user:{user.Username}"),
             new Claim("UserId", user.Id.ToString()),
             new Claim("Username", user.Username)
         };
@@ -67,6 +68,8 @@ class LoginService : ILoginService
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 
         await HttpContextAccessor.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+
+        PermissionState.SetPrincipal(principal);
 
         return true;
     }
@@ -78,9 +81,9 @@ class LoginService : ILoginService
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        if (HttpContextAccessor.HttpContext!.User.Identity is ClaimsIdentity claimsIdentity)
+        if (PermissionState.GetPrincipal() is ClaimsPrincipal principal)
         {
-            Claim? claimUserId = claimsIdentity.Claims.FirstOrDefault(x => x.Type == "UserId");
+            Claim? claimUserId = principal.Claims.FirstOrDefault(x => x.Type == "UserId");
 
             if (claimUserId != null)
             {

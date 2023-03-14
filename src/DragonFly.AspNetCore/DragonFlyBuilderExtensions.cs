@@ -12,6 +12,7 @@ using DragonFly.AspNetCore.Middleware.Builders;
 using Microsoft.Extensions.Hosting;
 using DragonFly.API;
 using DragonFly.AspNetCore.Builders;
+using Microsoft.AspNetCore.Http;
 
 namespace DragonFly.AspNetCore;
 
@@ -49,7 +50,9 @@ public static class DragonFlyBuilderExtensions
 
         services.AddSingleton<ISlugService, SlugService>();
 
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();        
+        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
+
+        services.AddSignalR();
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder.Init(api =>
@@ -87,13 +90,29 @@ public static class DragonFlyBuilderExtensions
 
                                     end.PreAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
-                                    x.UseMiddleware<RequireAuthentificationMiddleware>();
+                                    //allows only requests from authenticated users
+                                    x.Use(async (context, next) =>
+                                    {
+                                        if (context.User.Identity?.IsAuthenticated == false)
+                                        {
+                                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                                        }
+                                        else
+                                        {
+                                            PermissionState.Enable();
+                                            PermissionState.SetPrincipal(context.User);
+
+                                            await next(context);
+                                        }
+                                    });
 
                                     end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseEndpoints(e =>
                                     {
                                         end.EndpointList.Foreach(a => a(new DragonFlyEndpointBuilder(e)));
+
+                                        e.MapHub<BackgroundTaskHub>("/taskhub");
                                     });
                                 }
             );

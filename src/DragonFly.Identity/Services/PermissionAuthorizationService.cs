@@ -36,24 +36,21 @@ class PermissionAuthorizationService : IPermissionAuthorizationService
 
     public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
     {
-        using (new DisablePermissions())
+        Claim? claim = principal.FindFirst("UserId");
+
+        if (claim == null)
         {
-            Claim? claim = principal.FindFirst("UserId");
-
-            if (claim == null)
-            {
-                return false;
-            }
-
-            Guid userId = Guid.Parse(claim.Value);
-
-            MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
-
-            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
-
-            bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
-
-            return found;
+            return false;
         }
+
+        Guid userId = Guid.Parse(claim.Value);
+
+        MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
+
+        IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+
+        bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
+
+        return found;
     }
 }

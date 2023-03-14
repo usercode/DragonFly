@@ -66,7 +66,7 @@ taskManager.StartNew("Import", static async ctx =>
     {
         await Task.Delay(TimeSpan.FromSeconds(1));
 
-        ctx.Task.ProgressValue += 2;
+        await ctx.IncrementProgressValueAsync();
 
         if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
         {

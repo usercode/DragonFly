@@ -12,6 +12,16 @@ public class BackgroundTaskInfo
     public long Id { get; set; }
 
     /// <summary>
+    /// CreatedAt
+    /// </summary>
+    public DateTimeOffset? CreatedAt { get; set; }
+
+    /// <summary>
+    /// CreatedBy
+    /// </summary>
+    public string? CreatedBy { get; set; }
+
+    /// <summary>
     /// Name
     /// </summary>
     public string? Name { get; set; }
@@ -35,4 +45,9 @@ public class BackgroundTaskInfo
     /// State
     /// </summary>
     public BackgroundTaskState State { get; set; }
+
+    /// <summary>
+    /// Exception
+    /// </summary>
+    public string? Exception { get; set; }
 }

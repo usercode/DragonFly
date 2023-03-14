@@ -5,22 +5,20 @@
 namespace DragonFly;
 
 /// <summary>
-/// PermissionState
+/// SuppressPermissions
 /// </summary>
-public sealed class DisablePermissions : IDisposable
+public struct SuppressPermissions : IDisposable
 {
-    private readonly bool _oldValue;
+    private readonly bool _restore;
 
-    public DisablePermissions()
+    internal SuppressPermissions(bool restore)
     {
-        _oldValue = PermissionState.IsEnabled;
-
-        PermissionState.Disable();
+        _restore = restore;
     }
 
     public void Dispose()
     {
-        if (_oldValue)
+        if (_restore)
         {
             PermissionState.Enable();
         }

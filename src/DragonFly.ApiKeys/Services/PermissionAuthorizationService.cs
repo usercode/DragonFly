@@ -30,24 +30,21 @@ internal class PermissionAuthorizationService : IPermissionAuthorizationService
 
     public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
     {
-        using (new DisablePermissions())
+        Claim? claim = principal.FindFirst("ApiKeyId");
+
+        if (claim == null)
         {
-            Claim? claim = principal.FindFirst("ApiKeyId");
-
-            if (claim == null)
-            {
-                return false;
-            }
-
-            Guid apikeyId = Guid.Parse(claim.Value);
-
-            MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
-
-            IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
-
-            bool found = permissions.All(p => apikey.Permissions.Contains(p));
-
-            return found;
+            return false;
         }
+
+        Guid apikeyId = Guid.Parse(claim.Value);
+
+        MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
+
+        IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+
+        bool found = permissions.All(p => apikey.Permissions.Contains(p));
+
+        return found;
     }
 }
