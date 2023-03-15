@@ -47,11 +47,11 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnPublishedAsync(ContentItem contentItem)
     {
-        BackgroundTaskManager.StartNew("WebHook.ContentPublished", contentItem, async ctx =>
+        await BackgroundTaskManager.StartNewAsync("WebHook.ContentPublished", contentItem, async ctx =>
         {
             QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
 
-            await ctx.SetProgressMaxValueAsync(result.TotalCount);
+            int counter = 0;
 
             foreach (WebHook item in result.Items)
             {
@@ -82,18 +82,18 @@ public class WebHookInterceptor : IContentInterceptor
                     Logger.LogError("Failed to send webhook for published content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
                 }
 
-                await ctx.IncrementProgressValueAsync();
+                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
             }
         });
     }
 
     public async Task OnPublishedAsync(Asset asset)
     {
-        BackgroundTaskManager.StartNew("WebHook.AssetPublished", asset, async ctx =>
+        await BackgroundTaskManager.StartNewAsync("WebHook.AssetPublished", asset, async ctx =>
         {
             QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
 
-            await ctx.SetProgressMaxValueAsync(result.TotalCount);
+            int counter = 0;
 
             foreach (WebHook item in result.Items)
             {
@@ -108,7 +108,7 @@ public class WebHookInterceptor : IContentInterceptor
                     Logger.LogError("Failed to send webhook for published asset: {asset} HTTP-Status:{status}", asset.Id, response.StatusCode);
                 }
 
-                await ctx.IncrementProgressValueAsync();
+                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
             }
         });
     }
@@ -120,11 +120,11 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnUnpublishedAsync(ContentItem contentItem)
     {
-        BackgroundTaskManager.StartNew("WebHook.ContentUnpublished", contentItem, async ctx =>
+        await BackgroundTaskManager.StartNewAsync("WebHook.ContentUnpublished", contentItem, async ctx =>
         {
             QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
 
-            await ctx.SetProgressMaxValueAsync(result.TotalCount);
+            int counter = 0;
 
             foreach (WebHook item in result.Items)
             {
@@ -155,7 +155,7 @@ public class WebHookInterceptor : IContentInterceptor
                     Logger.LogError("Failed to send webhook for unpublished content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
                 }
 
-                await ctx.IncrementProgressValueAsync();
+                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
             }
         });
     }

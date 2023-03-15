@@ -360,9 +360,9 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public Task PublishQueryAsync(ContentQuery query)
+    public async Task PublishQueryAsync(ContentQuery query)
     {
-        BackgroundTaskService.StartNew($"Publish all {query.Schema}", 
+        await BackgroundTaskService.StartNewAsync($"Publish all {query.Schema}", 
             query,
             static async ctx =>
             {
@@ -373,6 +373,8 @@ public partial class MongoStorage : IContentStorage
                 ctx.Input.Skip = 0;
                 ctx.Input.Top = pageSize;
 
+                int counter = 0;
+
                 while (true)
                 {
                     QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
@@ -381,26 +383,22 @@ public partial class MongoStorage : IContentStorage
                     {
                         break;
                     }
-
-                    await ctx.SetProgressMaxValueAsync(result.TotalCount);
 
                     foreach (ContentItem contentItem in result.Items)
                     {
                         await contentStorage.PublishAsync(contentItem);
 
-                        await ctx.IncrementProgressValueAsync();
+                        await ctx.UpdateAsync(contentItem.Id.ToString(), counter++, result.TotalCount);
                     }
 
                     ctx.Input.Skip += pageSize;
                 }
             });
-
-        return Task.CompletedTask;
     }
 
-    public Task UnpublishQueryAsync(ContentQuery query)
+    public async Task UnpublishQueryAsync(ContentQuery query)
     {
-        BackgroundTaskService.StartNew($"Unpublish all {query.Schema}",
+        await BackgroundTaskService.StartNewAsync($"Unpublish all {query.Schema}",
             query,
             static async ctx =>
             {
@@ -411,6 +409,8 @@ public partial class MongoStorage : IContentStorage
                 ctx.Input.Skip = 0;
                 ctx.Input.Top = pageSize;
 
+                int counter = 0;
+
                 while (true)
                 {
                     QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
@@ -420,19 +420,15 @@ public partial class MongoStorage : IContentStorage
                         break;
                     }
 
-                    await ctx.SetProgressMaxValueAsync(result.TotalCount);
-
                     foreach (ContentItem contentItem in result.Items)
                     {
                         await contentStorage.UnpublishAsync(contentItem);
 
-                        await ctx.IncrementProgressValueAsync();
+                        await ctx.UpdateAsync(contentItem.Id.ToString(), counter++, result.TotalCount);
                     }
 
                     ctx.Input.Skip += pageSize;
                 }
             });
-
-        return Task.CompletedTask;
     }
 }

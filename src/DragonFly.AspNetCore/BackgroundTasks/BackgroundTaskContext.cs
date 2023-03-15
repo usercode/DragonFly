@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 namespace DragonFly;
@@ -35,24 +36,24 @@ public class BackgroundTaskContext
 
     public event Func<Task>? StateChanged;
 
-    public async Task SetProgressAsync(long value)
+    public async Task UpdateAsync(string? status, long progressValue, long maxProgressValue)
     {
-        Task.ProgressValue = value;
+        Task.Status = status;
+        Task.ProgressValue = progressValue;
+        Task.ProgressMaxValue = maxProgressValue;
 
-        await StateChanged?.Invoke();
+        await StateHasChanged();
     }
 
-    public async Task IncrementProgressValueAsync()
+    public async Task UpdateAsync(Action<BackgroundTask> action)
     {
-        Task.ProgressValue++;
+        action(Task);
 
-        await StateChanged?.Invoke();
+        await StateHasChanged();
     }
 
-    public async Task SetProgressMaxValueAsync(long max)
+    private async Task StateHasChanged()
     {
-        Task.ProgressMaxValue = max;
-
         await StateChanged?.Invoke();
     }
 }

@@ -36,83 +36,97 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// </summary>
     private ILogger<BackgroundTaskManager> Logger { get; }
 
-    private readonly IDictionary<long, BackgroundTask> Tasks = new  Dictionary<long, BackgroundTask>();
+    private readonly IDictionary<long, BackgroundTask> Tasks = new Dictionary<long, BackgroundTask>();
 
     private long _nextId = 0;
     private object _syncObject = new object();
 
-    /// <summary>
-    /// StartNew
-    /// </summary>
-    /// <param name="task"></param>
-    public BackgroundTask StartNew(string name, Func<BackgroundTaskContext, Task> action)
+    private async Task TaskHasChangedAsnyc()
     {
-        return StartNew(name, 0, (ctx) => action(ctx));
+        await Hub.Clients.All.SendAsync("TaskChanged");
     }
 
-    public BackgroundTask StartNew<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action)
+    /// <summary>
+    /// StartNewAsync
+    /// </summary>
+    public Task<BackgroundTask> StartNewAsync(string name, Func<BackgroundTaskContext, Task> action)
     {
+        return StartNewAsync(name, 0, (ctx) => action(ctx));
+    }
+
+    /// <summary>
+    /// StartNewAsync
+    /// </summary>
+    public async Task<BackgroundTask> StartNewAsync<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action)
+    {
+        long id;
+
         lock (_syncObject)
         {
-            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PermissionState.GetPrincipal());
+            id = _nextId++;
+        }
 
-            backgroundTask.Task = Task.Run(async () =>
+        BackgroundTask backgroundTask = new BackgroundTask(id, name, PermissionState.GetPrincipal());
+
+        backgroundTask.Task = Task.Run(async () =>
+        {
+            BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
+            ctx.StateChanged += () => TaskHasChangedAsnyc();
+
+            try
             {
-                try
-                {
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                await Task.Delay(TimeSpan.FromSeconds(2));
 
-                    Logger.LogInformation("Background task is started: {name}", backgroundTask.Name);
+                Logger.LogInformation("Background task is started: {name}", backgroundTask.Name);
 
-                    backgroundTask.StartedAt = DateTimeOffset.Now;
-                    backgroundTask.State = BackgroundTaskState.Running;
+                backgroundTask.SetRunning();
 
-                    BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
-                    ctx.StateChanged += () => Hub.Clients.All.SendAsync("TaskChanged");
+                await TaskHasChangedAsnyc();
 
-                    await action(ctx);
+                await action(ctx);
 
-                    if (backgroundTask.State == BackgroundTaskState.Canceling)
-                    {
-                        backgroundTask.SetCanceled();
-                    }
-                    else
-                    {
-                        backgroundTask.SetCompleted();
-                    }
-                }
-                catch (TaskCanceledException)
+                if (backgroundTask.State == BackgroundTaskState.Canceling)
                 {
                     backgroundTask.SetCanceled();
                 }
-                catch (Exception ex)
+                else
                 {
-                    backgroundTask.SetException(ex);
+                    backgroundTask.SetCompleted();
                 }
-                finally
+            }
+            catch (TaskCanceledException)
+            {
+                backgroundTask.SetCanceled();
+            }
+            catch (Exception ex)
+            {
+                backgroundTask.SetException(ex);
+            }
+            finally
+            {
+                Logger.LogInformation("Background task is exited: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
+
+                await TaskHasChangedAsnyc();
+
+                await Task.Delay(TimeSpan.FromMinutes(10));
+
+                lock (_syncObject)
                 {
-                    Logger.LogInformation("Background task is exited: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
-
-                    await Hub.Clients.All.SendAsync("TaskChanged");
-
-                    await Task.Delay(TimeSpan.FromMinutes(10));
-
-                    lock (_syncObject)
-                    {
-                        Tasks.Remove(backgroundTask.Id);
-                    }
+                    Tasks.Remove(backgroundTask.Id);
                 }
-            });
 
+                await TaskHasChangedAsnyc();
+            }
+        });
+
+        lock (_syncObject)
+        {
             Tasks.Add(backgroundTask.Id, backgroundTask);
-
-            return backgroundTask;
         }
-    }
 
-    private void Ctx_StateChanged()
-    {
-        throw new NotImplementedException();
+        await TaskHasChangedAsnyc();
+
+        return backgroundTask;
     }
 
     public Task<IEnumerable<BackgroundTaskInfo>> GetTasksAsync()
@@ -134,6 +148,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                         State = x.State,
                         Exception = x.Exception?.Message
                     })
+                    .OrderBy(x => x.Id)
                     .ToList());
         }
     }

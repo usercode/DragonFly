@@ -36,7 +36,6 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
         await base.OnInitializedAsync();
 
         _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/taskhub")).Build();
-
         _hubConnection.On("TaskChanged", async () =>
         {
             await InvokeAsync(async () =>

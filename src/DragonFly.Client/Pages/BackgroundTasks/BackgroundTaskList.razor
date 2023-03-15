@@ -9,18 +9,24 @@
 <div class="scroll-content">
     @if (Tasks != null)
     {
-        <BSListGroup>
+        <ul class="list-group">
             @foreach (BackgroundTaskInfo task in Tasks)
             {
-                var t = task;
+                BackgroundTaskInfo t = task;
 
-                <button class="list-group-item list-group-item-action">
+                <li class="list-group-item @task.ToCss()">
                     <BSRow>
                         <BSCol ColumnLarge="1">
                             <span>@task.Id </span>
                         </BSCol>
                         <BSCol ColumnLarge="1">
-                            <span>@task.State </span>
+                            <span>
+                                @if (task.State == BackgroundTaskState.Running)
+                                {
+                                    <i class="fa-solid fa-sync fa-spin" style="margin-right: 0.5rem"></i>
+                                }
+                                @task.State
+                            </span>
                         </BSCol>
                         <BSCol ColumnLarge="1">
                             <BSProgressBar Min="0" Max="task.ProgressMaxValue" Value="task.ProgressValue">@task.ProgressValue / @task.ProgressMaxValue</BSProgressBar>
@@ -32,7 +38,14 @@
                             <span>@task.CreatedBy </span>
                         </BSCol>
                         <BSCol ColumnLarge="2">
-                            <span style="color:tomato">@task.Exception</span>
+                            @if (task.State == BackgroundTaskState.Running)
+                            {
+                                <span>@task.Status</span>
+                            }
+                            else
+                            {
+                                <span>@task.Exception</span>
+                            }
                         </BSCol>
                         <BSCol ColumnLarge="1">
                             @if (task.State == BackgroundTaskState.Running)
@@ -41,12 +54,11 @@
                             }
                         </BSCol>
                     </BSRow>
-                </button>               
+                </li>
             }
-        </BSListGroup>
+        </ul>
     }
 </div>
-
 <div class="footer-content">
     <div class="row">
     </div>

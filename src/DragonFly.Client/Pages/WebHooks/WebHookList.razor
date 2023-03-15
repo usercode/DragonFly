@@ -8,21 +8,23 @@
         </div>
     </div>
 </div>
-
-@if (SearchResult == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-<div class="list-group">
-
-    @foreach (var webHook in SearchResult.Items)
+<div class="scroll-content">
+    @if (SearchResult == null)
     {
-        <a class="list-group-item list-group-item-action" href="webhook/@webHook.Id">
-            <span class="oi oi-list-rich"></span> @webHook.Name
-        </a>
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="list-group">
+
+            @foreach (var webHook in SearchResult.Items)
+            {
+                <a class="list-group-item list-group-item-action" href="webhook/@webHook.Id">
+                    <span class="oi oi-list-rich"></span> @webHook.Name
+                </a>
+            }
+
+        </div>
     }
 
 </div>
-}

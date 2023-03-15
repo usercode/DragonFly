@@ -6,7 +6,7 @@ namespace DragonFly;
 
 public interface IBackgroundTaskManager : IBackgroundTaskService
 {
-    BackgroundTask StartNew(string name, Func<BackgroundTaskContext, Task> action);
+    Task<BackgroundTask> StartNewAsync(string name, Func<BackgroundTaskContext, Task> action);
 
-    BackgroundTask StartNew<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action);
+    Task<BackgroundTask> StartNewAsync<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action);
 }

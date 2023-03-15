@@ -13,7 +13,7 @@ public class BackgroundTask
 {
     public BackgroundTask(long id, string name, ClaimsPrincipal? createdBy)
     {
-        Id = id;        
+        Id = id;
         Name = name;
         ProgressValue = 0;
         ProgressMaxValue = 100;
@@ -47,12 +47,12 @@ public class BackgroundTask
     /// <summary>
     /// StartedAt
     /// </summary>
-    public DateTimeOffset? StartedAt { get; internal set; }
+    public DateTimeOffset? StartedAt { get; private set; }
 
     /// <summary>
     /// ExitAt
     /// </summary>
-    public DateTimeOffset? ExitAt { get; internal set; }
+    public DateTimeOffset? ExitAt { get; private set; }
 
     /// <summary>
     /// ProgressValue
@@ -67,7 +67,7 @@ public class BackgroundTask
     /// <summary>
     /// Status
     /// </summary>
-    public string Status { get; set; }
+    public string? Status { get; set; }
 
     /// <summary>
     /// Action
@@ -77,7 +77,7 @@ public class BackgroundTask
     /// <summary>
     /// State
     /// </summary>
-    public BackgroundTaskState State { get; internal set; }
+    public BackgroundTaskState State { get; private set; }
 
     /// <summary>
     /// CancellationToken
@@ -88,6 +88,15 @@ public class BackgroundTask
     /// Exception
     /// </summary>
     public Exception? Exception { get; private set; }
+
+    /// <summary>
+    /// SetRunning
+    /// </summary>
+    public void SetRunning()
+    {
+        StartedAt = DateTimeOffset.Now;
+        State = BackgroundTaskState.Running;
+    }
 
     /// <summary>
     /// SetException
