@@ -113,6 +113,41 @@ await contentStorage.CreateAsync(contentProduct);
 
 ```
 
+### Create typed content item
+
+```csharp
+[ContentItem("BlogPost")]
+public class BlogPostModel : EntityPageModel
+{
+    [DateField(Required = true)]
+    public virtual DateTime? Date { get; set; }
+
+    [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
+    public virtual string Title { get; set; }
+
+    [TextField]
+    public virtual string Description { get; set; }
+
+    [SlugField(Required = true, Index = true)]
+    public virtual string Slug { get; set; }
+
+    [AssetField(ListField = true, ShowPreview = true)]
+    public virtual AssetField Image { get; set; }
+
+    [BlockField]
+    public virtual BlockField MainContent { get; set; }
+}
+```
+
+#### How to create typed content query
+```csharp
+//get first item
+var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.SlugQuery(x => x.Slug, slug));
+
+//get all items
+var result ContentStorage.QueryAsync<BlogPostModel>();
+```
+
 ### DragonFly.AspNetCore	
 
 ```csharp
