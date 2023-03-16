@@ -145,7 +145,7 @@ public class BlogPostModel : EntityPageModel
 var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.SlugQuery(x => x.Slug, slug));
 
 //get all items
-var result ContentStorage.QueryAsync<BlogPostModel>();
+var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x.Published(true).Top(10).SlugQuery(x => x.Slug, slug));
 ```
 
 ### DragonFly.AspNetCore	
