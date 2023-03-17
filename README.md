@@ -113,7 +113,7 @@ await contentStorage.CreateAsync(contentProduct);
 
 ```
 
-### Create typed ContentItems
+### Create typed content
 
 ```csharp
 [ContentItem("BlogPost")]
@@ -138,20 +138,24 @@ public class BlogPostModel : EntityPageModel
     public virtual BlockField MainContent { get; set; }
 }
 ```
-#### Register typed ContentItem
+#### Register typed content
 
 ```csharp
 builder.Services.AddDragonFly()
                     .AddProxy(x => x.AddType<BlogPostModel>());                    
 ```
 
-#### How to create typed content query
+#### Use queries for typed content
 ```csharp
 //get first item
-var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.SlugQuery(x => x.Slug, slug));
+var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x
+                                    .SlugQuery(x => x.Slug, slug));
 
 //get all items
-var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x.Published(true).Top(10).SlugQuery(x => x.Slug, slug));
+var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x
+                                    .Published(true)
+                                    .Top(10)
+                                    .SlugQuery(x => x.Slug, slug));
 ```
 
 ### DragonFly.AspNetCore	
