@@ -113,7 +113,7 @@ await contentStorage.CreateAsync(contentProduct);
 
 ```
 
-### Create typed content item
+### Create typed ContentItems
 
 ```csharp
 [ContentItem("BlogPost")]
@@ -137,6 +137,12 @@ public class BlogPostModel : EntityPageModel
     [BlockField]
     public virtual BlockField MainContent { get; set; }
 }
+```
+#### Register typed ContentItem
+
+```csharp
+builder.Services.AddDragonFly()
+                    .AddProxy(x => x.AddType<BlogPostModel>());                    
 ```
 
 #### How to create typed content query
