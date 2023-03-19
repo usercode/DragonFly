@@ -4,8 +4,8 @@
 
 namespace DragonFly;
 
-public interface IPermission
+public interface IPermissionItem
 {
-    Permission Add(Permission permissionItem);
+    PermissionItem Add(PermissionItem permissionItem);
 
 }

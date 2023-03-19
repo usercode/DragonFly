@@ -6,9 +6,9 @@ namespace DragonFly.Client;
 
 public static class CssExtensions
 {
-    public static string ToCss(this BackgroundTaskInfo taskInfo)
+    public static string ToCss(this BackgroundTaskState state)
     {
-        return taskInfo.State switch
+        return state switch
         {
             BackgroundTaskState.Awaiting => null,
             BackgroundTaskState.Completed => "list-group-item-success",

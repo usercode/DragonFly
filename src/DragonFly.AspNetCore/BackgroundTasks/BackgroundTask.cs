@@ -11,7 +11,13 @@ namespace DragonFly;
 /// </summary>
 public class BackgroundTask
 {
-    public BackgroundTask(long id, string name, ClaimsPrincipal? createdBy)
+    private readonly static AsyncLocal<BackgroundTask?> _currentTask = new AsyncLocal<BackgroundTask?>();
+
+    public static BackgroundTask? GetCurrentTask() => _currentTask.Value;
+
+    public static void SetCurrentTask(BackgroundTask? task) => _currentTask.Value = task;
+
+    public BackgroundTask(long id, string name, ClaimsPrincipal? createdBy, BackgroundTask? parentTask)
     {
         Id = id;
         Name = name;
@@ -22,6 +28,7 @@ public class BackgroundTask
         Status = string.Empty;
         State = BackgroundTaskState.Awaiting;
         CancellationTokenSource = new CancellationTokenSource();
+        ParentTask = parentTask;
     }
 
     /// <summary>
@@ -88,6 +95,11 @@ public class BackgroundTask
     /// Exception
     /// </summary>
     public Exception? Exception { get; private set; }
+
+    /// <summary>
+    /// ParentTask
+    /// </summary>
+    public BackgroundTask? ParentTask { get; set; }
 
     /// <summary>
     /// SetRunning

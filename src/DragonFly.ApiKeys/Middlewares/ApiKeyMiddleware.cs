@@ -36,7 +36,7 @@ class ApiKeyMiddleware
 
             if (apiKey != null)
             {
-                PermissionState.SetPrincipal(new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("Name", $"apikey:{apiKey.Name}"), new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey")));
+                context.User = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim("Name", $"apikey:{apiKey.Name}"), new Claim("ApiKeyId", apiKey.Id.ToString()) }, "ApiKey"));
             }
         }
 

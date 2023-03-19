@@ -47,7 +47,7 @@ public class BackgroundTaskInfo
     public BackgroundTaskState State { get; set; }
 
     /// <summary>
-    /// Exception
+    /// ParentTaskId
     /// </summary>
-    public string? Exception { get; set; }
+    public long? ParentTaskId { get; set; }
 }

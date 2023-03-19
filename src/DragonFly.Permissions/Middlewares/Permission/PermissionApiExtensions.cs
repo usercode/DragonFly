@@ -20,7 +20,7 @@ internal static class PermissionApiExtensions
 
     private static async Task MapQuery(HttpContext context, IDragonFlyApi api)
     {
-        IEnumerable<Permission> items = api.Permission().Items;
+        IEnumerable<PermissionItem> items = api.Permission().Items;
 
         await context.Response.WriteAsJsonAsync(items);
     }

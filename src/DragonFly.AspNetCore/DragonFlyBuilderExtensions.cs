@@ -99,8 +99,8 @@ public static class DragonFlyBuilderExtensions
                                         }
                                         else
                                         {
-                                            PermissionState.Enable();
-                                            PermissionState.SetPrincipal(context.User);
+                                            Permission.Enable();
+                                            Permission.SetPrincipal(context.User);
 
                                             await next(context);
                                         }

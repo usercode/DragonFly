@@ -22,11 +22,11 @@ public partial class MongoStorage : IWebHookStorage
             q = q.Where(x => x.EventName == query.Event);
         }
 
-        var result = await q.ToListAsync();
+        IList<MongoWebHook> result = await q.ToListAsync();
 
         var items = result.Select(x => x.ToModel()).ToList();
 
-        return new QueryResult<WebHook>() { Items = items };
+        return new QueryResult<WebHook>() { Count = items.Count, TotalCount = items.Count, Items = items };
     }
 
     public async Task<WebHook> GetAsync(Guid id)

@@ -10,16 +10,16 @@ namespace DragonFly.Permissions;
 
 public static class PermissionManagerExtensions
 {
-    public static void Traverse(this IEnumerable<Permission> permissions, Action<TraverseNode> action)
+    public static void Traverse(this IEnumerable<PermissionItem> permissions, Action<TraverseNode> action)
     {
-        TraverseInternal(permissions, new List<Permission>(), action);
+        TraverseInternal(permissions, new List<PermissionItem>(), action);
     }
 
-    private static void TraverseInternal(IEnumerable<Permission> items, IList<Permission> path, Action<TraverseNode> action)
+    private static void TraverseInternal(IEnumerable<PermissionItem> items, IList<PermissionItem> path, Action<TraverseNode> action)
     {
-        foreach (Permission item in items)
+        foreach (PermissionItem item in items)
         {
-            IList<Permission> subPath = path.Concat(new[] { item }).ToList();
+            IList<PermissionItem> subPath = path.Concat(new[] { item }).ToList();
 
             action(new TraverseNode(item, subPath));
 

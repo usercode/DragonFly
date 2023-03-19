@@ -72,4 +72,9 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement
 
         return validationContext.State == ValidationState.Valid;
     }
+
+    public override string ToString()
+    {
+        return $"{Schema.Name}/{Id}";
+    }
 }

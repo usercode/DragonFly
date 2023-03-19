@@ -52,13 +52,6 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
         Tasks = await BackgroundTaskService.GetTasksAsync();
     }
 
-    protected async Task CancelTask(BackgroundTaskInfo task)
-    {
-        await BackgroundTaskService.CancelAsync(task.Id);
-
-        await RefreshAsync();
-    }
-
     public async ValueTask DisposeAsync()
     {
         if (_hubConnection is not null)

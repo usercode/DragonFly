@@ -4,7 +4,7 @@
 
 using System.Globalization;
 
-namespace DragonFly.BlockField.Css;
+namespace DragonFly.BlockField;
 
 public static class CssExtensions
 {

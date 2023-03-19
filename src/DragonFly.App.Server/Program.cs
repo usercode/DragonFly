@@ -59,8 +59,8 @@ await app.InitDragonFly();
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
-await taskManager.StartNewAsync("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
-await taskManager.StartNewAsync("Import", static async ctx =>
+await taskManager.StartAsync("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
+await taskManager.StartAsync("Import", static async ctx =>
 {
     int counter = 0;
 

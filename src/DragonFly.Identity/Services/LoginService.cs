@@ -69,8 +69,6 @@ class LoginService : ILoginService
 
         await HttpContextAccessor.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
 
-        PermissionState.SetPrincipal(principal);
-
         return true;
     }
 
@@ -81,7 +79,7 @@ class LoginService : ILoginService
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        if (PermissionState.GetPrincipal() is ClaimsPrincipal principal)
+        if (Permission.GetPrincipal() is ClaimsPrincipal principal)
         {
             Claim? claimUserId = principal.Claims.FirstOrDefault(x => x.Type == "UserId");
 

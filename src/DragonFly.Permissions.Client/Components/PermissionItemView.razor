@@ -15,7 +15,7 @@
     </div>
 
     <div style="margin-left: 1.5rem">
-        @foreach(SelectableElementTree<Permission> sub in Permission.Childs)
+        @foreach(SelectableElementTree<PermissionItem> sub in Permission.Childs)
         {
             <PermissionItemView Permission="sub" />
         }
@@ -31,5 +31,5 @@
     }
 
     [Parameter]
-    public SelectableElementTree<Permission> Permission { get; set; }
+    public SelectableElementTree<PermissionItem> Permission { get; set; }
 }

@@ -17,12 +17,12 @@ public static class DragonFlyApiExtensions
 {
     public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
     {
-        if (PermissionState.IsEnabled == false)
+        if (Permission.IsEnabled == false)
         {
             return;
         }
 
-        ClaimsPrincipal? principal = PermissionState.GetPrincipal();
+        ClaimsPrincipal? principal = Permission.GetPrincipal();
 
         if (principal == null)
         {

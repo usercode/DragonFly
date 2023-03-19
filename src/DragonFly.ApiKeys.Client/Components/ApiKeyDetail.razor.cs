@@ -20,7 +20,7 @@ public class ApiKeyDetailBase : EntityDetailComponent<ApiKey>
 {
     public ApiKeyDetailBase()
     {
-        Permissions = new List<SelectableElementTree<Permission>>();
+        Permissions = new List<SelectableElementTree<PermissionItem>>();
     }
 
     [Inject]
@@ -29,7 +29,7 @@ public class ApiKeyDetailBase : EntityDetailComponent<ApiKey>
     [Inject]
     public IPermissionService PermissionService { get; set; }
 
-    public IEnumerable<SelectableElementTree<Permission>> Permissions { get; set; }
+    public IEnumerable<SelectableElementTree<PermissionItem>> Permissions { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
@@ -58,7 +58,7 @@ public class ApiKeyDetailBase : EntityDetailComponent<ApiKey>
             Entity = await ApiKeyService.GetApiKey(EntityId);
         }
 
-        IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
+        IEnumerable<PermissionItem> permissions = await PermissionService.GetPermissionsAsync();
 
         Permissions = permissions
                                 .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))

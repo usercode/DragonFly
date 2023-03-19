@@ -9,5 +9,5 @@ namespace DragonFly.Permissions;
 
 public interface IPermissionService
 {
-    Task<IEnumerable<Permission>> GetPermissionsAsync();
+    Task<IEnumerable<PermissionItem>> GetPermissionsAsync();
 }

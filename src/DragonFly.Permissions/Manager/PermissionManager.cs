@@ -10,21 +10,21 @@ namespace DragonFly.Permissions;
 
 public sealed class TraverseNode
 {
-    public TraverseNode(Permission permission, IList<Permission> path)
+    public TraverseNode(PermissionItem permission, IList<PermissionItem> path)
     {
         Permission = permission;
         Path = path;
     }
 
-    public IList<Permission> Path;
+    public IList<PermissionItem> Path;
 
-    public Permission Permission;
+    public PermissionItem Permission;
 }
 
 /// <summary>
 /// PermissionManager
 /// </summary>
-public class PermissionManager : IPermission
+public class PermissionManager : IPermissionItem
 {
     /// <summary>
     /// Default
@@ -33,25 +33,25 @@ public class PermissionManager : IPermission
 
     public PermissionManager()
     {
-        Items = new List<Permission>();
+        Items = new List<PermissionItem>();
         Policies = new Dictionary<string, IList<string>>();
     }
 
-    public event Action<Permission> Added;
+    public event Action<PermissionItem> Added;
 
     /// <summary>
     /// Items
     /// </summary>
-    public IList<Permission> Items { get; }
+    public IList<PermissionItem> Items { get; }
 
-    public Permission Add(Permission permissionItem)
+    public PermissionItem Add(PermissionItem permissionItem)
     {
         if (_policyBuilt)
         {
             throw new InvalidOperationException("The PermissionManager is already fixed.");
         }
 
-        Permission? found = Items.FirstOrDefault(x => x.Name == permissionItem.Name);
+        PermissionItem? found = Items.FirstOrDefault(x => x.Name == permissionItem.Name);
 
         if (found != null)
         {

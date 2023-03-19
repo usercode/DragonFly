@@ -7,9 +7,9 @@ using System.Security.Claims;
 namespace DragonFly;
 
 /// <summary>
-/// PermissionState
+/// Permission
 /// </summary>
-public static class PermissionState
+public static class Permission
 {
     private static readonly AsyncLocal<bool> Enabled = new AsyncLocal<bool>();
     private static readonly AsyncLocal<ClaimsPrincipal?> Principal = new AsyncLocal<ClaimsPrincipal?>();
@@ -19,6 +19,7 @@ public static class PermissionState
     public static void Disable() => Enabled.Value = false;
     public static ClaimsPrincipal? GetPrincipal() => Principal.Value;
     public static void SetPrincipal(ClaimsPrincipal? principal) => Principal.Value = principal;
+    
     public static SuppressPermissions Suppress()
     {
         bool isEnabled = IsEnabled;

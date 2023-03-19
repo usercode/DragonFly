@@ -47,70 +47,56 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnPublishedAsync(ContentItem contentItem)
     {
-        await BackgroundTaskManager.StartNewAsync("WebHook.ContentPublished", contentItem, async ctx =>
+        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+
+        foreach (WebHook item in result.Items)
         {
-            QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+            Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
 
-            int counter = 0;
-
-            foreach (WebHook item in result.Items)
+            if (item.TargetUrl == null)
             {
-                Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
+                continue;
+            }
 
-                if (item.TargetUrl == null)
-                {
-                    continue;
-                }
-
-                QueryString query = QueryString.Create(new KeyValuePair<string, string?>[]
-                {
+            QueryString query = QueryString.Create(new KeyValuePair<string, string?>[]
+            {
                     new ("schema", contentItem.Schema.Name),
                     new ("id", contentItem.Id.ToString()),
                     new ("publish", "true")
-                });
+            });
 
-                Uri url = new Uri(item.TargetUrl + query);
+            Uri url = new Uri(item.TargetUrl + query);
 
-                HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(string.Empty));
+            HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(string.Empty));
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Logger.LogInformation("Sent webhook for published content successfully: {schema}/{id}", contentItem.Schema.Name, contentItem.Id);
-                }
-                else
-                {
-                    Logger.LogError("Failed to send webhook for published content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
-                }
-
-                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
+            if (response.IsSuccessStatusCode)
+            {
+                Logger.LogInformation("Sent webhook for published content successfully: {schema}/{id}", contentItem.Schema.Name, contentItem.Id);
             }
-        });
+            else
+            {
+                Logger.LogError("Failed to send webhook for published content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
+            }
+        }
     }
 
     public async Task OnPublishedAsync(Asset asset)
     {
-        await BackgroundTaskManager.StartNewAsync("WebHook.AssetPublished", asset, async ctx =>
+        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+
+        foreach (WebHook item in result.Items)
         {
-            QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+            HttpResponseMessage response = await HttpClient.PostAsync($"{item.TargetUrl}?asset={asset.Id}", new StringContent(""));
 
-            int counter = 0;
-
-            foreach (WebHook item in result.Items)
+            if (response.IsSuccessStatusCode == false)
             {
-                HttpResponseMessage response = await HttpClient.PostAsync($"{item.TargetUrl}?asset={asset.Id}", new StringContent(""));
-
-                if (response.IsSuccessStatusCode == false)
-                {
-                    Logger.LogInformation($"Sent webhook for published asset successfully.");
-                }
-                else
-                {
-                    Logger.LogError("Failed to send webhook for published asset: {asset} HTTP-Status:{status}", asset.Id, response.StatusCode);
-                }
-
-                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
+                Logger.LogInformation($"Sent webhook for published asset successfully.");
             }
-        });
+            else
+            {
+                Logger.LogError("Failed to send webhook for published asset: {asset} HTTP-Status:{status}", asset.Id, response.StatusCode);
+            }
+        }
     }
 
     public async Task OnPublishingAsync(ContentItem contentItem)
@@ -120,44 +106,37 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnUnpublishedAsync(ContentItem contentItem)
     {
-        await BackgroundTaskManager.StartNewAsync("WebHook.ContentUnpublished", contentItem, async ctx =>
+        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+
+        foreach (WebHook item in result.Items)
         {
-            QueryResult<WebHook> result = await PermissionState.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+            Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
 
-            int counter = 0;
-
-            foreach (WebHook item in result.Items)
+            if (item.TargetUrl == null)
             {
-                Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
+                continue;
+            }
 
-                if (item.TargetUrl == null)
-                {
-                    continue;
-                }
-
-                QueryString query = QueryString.Create(new KeyValuePair<string, string?>[]
-                {
+            QueryString query = QueryString.Create(new KeyValuePair<string, string?>[]
+            {
                 new ("schema", contentItem.Schema.Name),
                 new ("id", contentItem.Id.ToString()),
                 new ("publish", "false")
-                });
+            });
 
-                Uri url = new Uri(item.TargetUrl + query);
+            Uri url = new Uri(item.TargetUrl + query);
 
-                HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(string.Empty));
+            HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(string.Empty));
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Logger.LogInformation("Sent webhook for unpublished content successfully: {schema}/{id}", contentItem.Schema.Name, contentItem.Id);
-                }
-                else
-                {
-                    Logger.LogError("Failed to send webhook for unpublished content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
-                }
-
-                await ctx.UpdateAsync(item.Name, counter++, result.TotalCount);
+            if (response.IsSuccessStatusCode)
+            {
+                Logger.LogInformation("Sent webhook for unpublished content successfully: {schema}/{id}", contentItem.Schema.Name, contentItem.Id);
             }
-        });
+            else
+            {
+                Logger.LogError("Failed to send webhook for unpublished content: {schema}/{id} HTTP-Status:{status}", contentItem.Schema.Name, contentItem.Id, response.StatusCode);
+            }
+        }
     }
 
     public async Task OnCreatedAsync(ContentItem contentItem)

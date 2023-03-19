@@ -14,7 +14,7 @@ public static class PermissionDragonFlyApiExtensions
         return PermissionManager.Default;
     }
 
-    public static IPermission AddDefaults(this PermissionManager manager)
+    public static IPermissionItem AddDefaults(this PermissionManager manager)
     {
         manager
             .Add(GeneralPermissions.Admin, childs: x => x
@@ -49,9 +49,9 @@ public static class PermissionDragonFlyApiExtensions
         return manager;
     }
 
-    public static IPermission Add(this IPermission manager, string name, Action<IPermission>? childs = null, string description = "", int sortkey = 0)
+    public static IPermissionItem Add(this IPermissionItem manager, string name, Action<IPermissionItem>? childs = null, string description = "", int sortkey = 0)
     {
-        Permission p = new Permission(name);
+        PermissionItem p = new PermissionItem(name);
         p.Description = description;
         p.SortKey = sortkey;
 

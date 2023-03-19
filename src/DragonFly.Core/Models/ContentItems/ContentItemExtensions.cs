@@ -190,7 +190,7 @@ public static class ContentItemExtensions
 
                 if (contentField == null)
                 {
-                    throw new Exception($"Could not create the content item. {field.Key}");
+                    throw new Exception($"Could not create the content item: {field.Key}");
                 }
 
                 contentItem.Fields.Add(field.Key, contentField);

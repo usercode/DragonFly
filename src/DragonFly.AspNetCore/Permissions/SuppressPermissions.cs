@@ -20,7 +20,7 @@ public struct SuppressPermissions : IDisposable
     {
         if (_restore)
         {
-            PermissionState.Enable();
+            Permission.Enable();
         }
     }
 }

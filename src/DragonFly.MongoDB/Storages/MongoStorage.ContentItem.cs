@@ -362,73 +362,72 @@ public partial class MongoStorage : IContentStorage
 
     public async Task PublishQueryAsync(ContentQuery query)
     {
-        await BackgroundTaskService.StartNewAsync($"Publish all {query.Schema}", 
+        await BackgroundTaskService.StartAsync(
+            $"Publish all {query.Schema}", 
             query,
-            static async ctx =>
-            {
-                IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
-
-                int pageSize = 50;
-
-                ctx.Input.Skip = 0;
-                ctx.Input.Top = pageSize;
-
-                int counter = 0;
-
-                while (true)
-                {
-                    QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
-
-                    if (result.Items.Count == 0)
-                    {
-                        break;
-                    }
-
-                    foreach (ContentItem contentItem in result.Items)
-                    {
-                        await contentStorage.PublishAsync(contentItem);
-
-                        await ctx.UpdateAsync(contentItem.Id.ToString(), counter++, result.TotalCount);
-                    }
-
-                    ctx.Input.Skip += pageSize;
-                }
-            });
+            static async ctx => await InternalPublishUnpublishAsync(true, ctx));
     }
 
     public async Task UnpublishQueryAsync(ContentQuery query)
     {
-        await BackgroundTaskService.StartNewAsync($"Unpublish all {query.Schema}",
+        await BackgroundTaskService.StartAsync(
+            $"Unpublish all {query.Schema}",
             query,
-            static async ctx =>
+            static async ctx => await InternalPublishUnpublishAsync(false, ctx));
+    }
+
+    private static async Task InternalPublishUnpublishAsync(bool publish, BackgroundTaskContext<ContentQuery> ctx)
+    {
+        IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
+
+        int pageSize = 50;
+
+        ctx.Input.Skip = 0;
+        ctx.Input.Top = pageSize;
+
+        int counter = 0;
+        int counterSucceed = 0;
+        int counterFailed = 0;
+
+        while (true)
+        {
+            QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
+
+            if (result.Items.Count == 0)
             {
-                IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
+                break;
+            }
 
-                int pageSize = 50;
+            foreach (ContentItem contentItem in result.Items)
+            {
+                await ctx.UpdateAsync(contentItem.ToString(), counter, result.TotalCount);
 
-                ctx.Input.Skip = 0;
-                ctx.Input.Top = pageSize;
-
-                int counter = 0;
-
-                while (true)
+                try
                 {
-                    QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
-
-                    if (result.Items.Count == 0)
+                    if (publish)
                     {
-                        break;
+                        await contentStorage.PublishAsync(contentItem);
                     }
-
-                    foreach (ContentItem contentItem in result.Items)
+                    else
                     {
                         await contentStorage.UnpublishAsync(contentItem);
-
-                        await ctx.UpdateAsync(contentItem.Id.ToString(), counter++, result.TotalCount);
                     }
 
-                    ctx.Input.Skip += pageSize;
+                    counterSucceed++;
                 }
-            });
+                catch
+                {
+                    counterFailed++;
+                }
+                finally
+                {
+                    counter++;
+                }
+            }
+
+            ctx.Input.Skip += pageSize;
+        }
+
+        await ctx.UpdateAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
     }
 }

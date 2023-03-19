@@ -49,15 +49,15 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// <summary>
     /// StartNewAsync
     /// </summary>
-    public Task<BackgroundTask> StartNewAsync(string name, Func<BackgroundTaskContext, Task> action)
+    public Task<BackgroundTask> StartAsync(string name, Func<BackgroundTaskContext, Task> action)
     {
-        return StartNewAsync(name, 0, (ctx) => action(ctx));
+        return StartAsync(name, 0, (ctx) => action(ctx));
     }
 
     /// <summary>
     /// StartNewAsync
     /// </summary>
-    public async Task<BackgroundTask> StartNewAsync<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action)
+    public async Task<BackgroundTask> StartAsync<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action)
     {
         long id;
 
@@ -66,7 +66,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
             id = _nextId++;
         }
 
-        BackgroundTask backgroundTask = new BackgroundTask(id, name, PermissionState.GetPrincipal());
+        BackgroundTask backgroundTask = new BackgroundTask(id, name, Permission.GetPrincipal(), BackgroundTask.GetCurrentTask());
 
         backgroundTask.Task = Task.Run(async () =>
         {
@@ -75,6 +75,8 @@ public class BackgroundTaskManager : IBackgroundTaskManager
 
             try
             {
+                BackgroundTask.SetCurrentTask(backgroundTask);
+
                 await Task.Delay(TimeSpan.FromSeconds(2));
 
                 Logger.LogInformation("Background task is started: {name}", backgroundTask.Name);
@@ -144,9 +146,9 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                         Name = x.Name,
                         ProgressValue = x.ProgressValue,
                         ProgressMaxValue = x.ProgressMaxValue,
-                        Status = x.Status,
+                        Status = x.Exception?.Message ?? x.Status,
                         State = x.State,
-                        Exception = x.Exception?.Message
+                        ParentTaskId = x.ParentTask?.Id
                     })
                     .OrderBy(x => x.Id)
                     .ToList());

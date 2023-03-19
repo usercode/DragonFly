@@ -17,9 +17,7 @@ class LoginMiddleware
         _next = next;
     }
 
-    public async Task InvokeAsync(
-        HttpContext context,
-        ILoginService loginService)
+    public async Task InvokeAsync(HttpContext context, ILoginService loginService)
     {
         if (context.Request.Path == "/login" && context.Request.Method == HttpMethods.Post)
         {

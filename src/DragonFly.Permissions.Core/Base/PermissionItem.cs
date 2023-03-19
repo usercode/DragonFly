@@ -10,17 +10,17 @@ namespace DragonFly;
 /// <summary>
 /// Permission
 /// </summary>
-public class Permission : IPermission
+public class PermissionItem : IPermissionItem
 {
-    public Permission()
+    public PermissionItem()
     {
         Name = string.Empty;
         Description = string.Empty;
-        Childs = new List<Permission>();
+        Childs = new List<PermissionItem>();
         SortKey = 0;
     }
 
-    public Permission(string name)
+    public PermissionItem(string name)
         : this()
     {
         Name = name;
@@ -32,11 +32,11 @@ public class Permission : IPermission
 
     public int SortKey { get; set; }
 
-    public IList<Permission> Childs { get; set; }
+    public IList<PermissionItem> Childs { get; set; }
 
-    public Permission Add(Permission permissionItem)
+    public PermissionItem Add(PermissionItem permissionItem)
     {
-        Permission? found = Childs.FirstOrDefault(x => x.Name == permissionItem.Name);
+        PermissionItem? found = Childs.FirstOrDefault(x => x.Name == permissionItem.Name);
 
         if (found != null)
         {
@@ -50,7 +50,7 @@ public class Permission : IPermission
 
     public override bool Equals(object? obj)
     {
-        if (obj is Permission permissionItem)
+        if (obj is PermissionItem permissionItem)
         {
             return Name == permissionItem.Name;
         }

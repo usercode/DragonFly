@@ -23,9 +23,18 @@ public class HeadingBlock : Block
 
     public override string CssIcon => "fa-solid fa-heading";
 
+    /// <summary>
+    /// Text
+    /// </summary>
     public string? Text { get; set; }
 
+    /// <summary>
+    /// TextAlignment
+    /// </summary>
     public TextAlignment? TextAlignment { get; set; }
 
+    /// <summary>
+    /// HeadingType
+    /// </summary>
     public HeadingType HeadingType { get; set; }
 }
