@@ -157,6 +157,15 @@ var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x
                                     .SlugQuery(x => x.Slug, slug));
 ```
 
+### BackgroundTask
+
+For long running jobs you can use the BackgroundTaskManager.
+
+```csharp
+IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
+taskManager.Start("Test", static async ctx => await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken));
+```
+
 ### DragonFly.AspNetCore	
 
 ```csharp
