@@ -36,7 +36,7 @@ public class BackgroundTaskContext
 
     public event Func<Task>? StateChanged;
 
-    public async Task UpdateAsync(string? status, long? progressValue = null, long? maxProgressValue = null)
+    public async Task UpdateStatusAsync(string? status, long? progressValue = null, long? maxProgressValue = null)
     {
         Task.Status = status;
 

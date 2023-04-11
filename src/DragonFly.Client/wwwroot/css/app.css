@@ -397,3 +397,8 @@ app {
 .text-field textarea {
   height: 200px;
 }
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}

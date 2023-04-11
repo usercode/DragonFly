@@ -76,7 +76,7 @@ public static class CssExtensions
         {
             ColumnWidth.Max => "col-lg",
             ColumnWidth.Auto => "col-lg-auto",
-            > ColumnWidth.W1 and  < ColumnWidth.W12 => $"col-lg-{(int)width}",
+            >= ColumnWidth.W1 and <= ColumnWidth.W12 => $"col-lg-{(int)width}",
             _ => null
         };
     }

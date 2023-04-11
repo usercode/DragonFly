@@ -1,55 +1,53 @@
 @page "/asset"
 @inherits AssetListBase
 
-<div style="flex-direction:column;flex: 1">
-    <div class="content-header">
 
-        @if (ListMode == EntityListMode.Default)
-        {
-            <Toolbar Items="ToolbarItems" />
-        }
+<div class="content-header">
 
-        @*@bind:event="oninput"*@
-        <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
-    </div>
+    @if (ListMode == EntityListMode.Default)
+    {
+        <Toolbar Items="ToolbarItems" />
+    }
 
-    <div class="scroll-content">
-        <BSRow>
-            <BSCol Column="3">
-                <AssetFolderSelector FolderClicked="async x => await OpenFolder(x)" />
-            </BSCol>
-            <BSCol Column="9">
-                <div style="flex: 1">
-                    @if (SearchResult == null)
-                    {
-                        <p><em>Loading...</em></p>
-                    }
-                    else
-                    {
-                        <div class="row">
-                            @foreach (Asset asset in SearchResult.Items)
-                            {
-                                <div class="col-md-3">
-                                    <div class="box-item zoom action" style="height:320px">
-                                        <a @onclick="x => OpenItem(asset)">
-                                            <div class="image">
-                                                @if (string.IsNullOrEmpty(asset.PreviewUrl ) == false)
-                                                {
-                                                    <img src="@asset.PreviewUrl" alt="@asset.Name" />
-                                                }
-                                            </div>
-                                            <div>
-                                                <p class="title">@asset.Name</p>
-                                            </div>
-                                        </a>
-                                    </div>
+    @*@bind:event="oninput"*@
+    <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
+</div>
+
+<div class="scroll-content">
+    <BSRow>
+        <BSCol Column="3">
+            <AssetFolderSelector FolderClicked="async x => await OpenFolder(x)" />
+        </BSCol>
+        <BSCol Column="9">
+            <div style="flex: 1">
+                @if (SearchResult == null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <div class="row">
+                        @foreach (Asset asset in SearchResult.Items)
+                        {
+                            <div class="col-md-3">
+                                <div class="box-item zoom action" style="height:320px">
+                                    <a @onclick="x => OpenItem(asset)">
+                                        <div class="image">
+                                            @if (string.IsNullOrEmpty(asset.PreviewUrl) == false)
+                                            {
+                                                <img src="@asset.PreviewUrl" alt="@asset.Name" />
+                                            }
+                                        </div>
+                                        <div>
+                                            <p class="title">@asset.Name</p>
+                                        </div>
+                                    </a>
                                 </div>
-                            }
-
-                        </div>
-                    }
-                </div>
-            </BSCol>
-        </BSRow>
-    </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </BSCol>
+    </BSRow>
 </div>

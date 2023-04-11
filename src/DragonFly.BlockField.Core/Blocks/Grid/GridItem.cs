@@ -26,7 +26,7 @@ public class GridItem
     /// <summary>
     /// Blocks
     /// </summary>
-    public Block Block { get; set; }
+    public Block? Block { get; set; }
 
     public int ColumnStart { get; set; }
     public int ColumnEnd { get; set; }

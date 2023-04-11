@@ -47,7 +47,7 @@ class AssetInterceptor : IInterceptor
 
     private async Task LoadData(Asset main)
     {
-        var result = await MongoStorage.Default.GetAssetAsync(AssetId);
+        Asset? result = await MongoStorage.Default.GetAssetAsync(AssetId);
 
         main.Id = result.Id;
         main.CreatedAt = result.CreatedAt;

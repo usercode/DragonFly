@@ -383,7 +383,7 @@ app {
 }
 
 .user-detail {
-    @extend .detail; 
+    @extend .detail;
 }
 
 .role-detail {
@@ -404,4 +404,9 @@ app {
     textarea {
         height: 200px;
     }
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
 }

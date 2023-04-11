@@ -32,16 +32,16 @@ public partial class MongoStorage : ISchemaStorage
         schema.Id = mongo.Id;
     }
 
-    public async Task UpdateAsync(ContentSchema entity)
+    public async Task UpdateAsync(ContentSchema schema)
     {
-        entity.ModifiedAt = DateTimeService.Current();
+        schema.ModifiedAt = DateTimeService.Current();
 
-        await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+        await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo());
     }
 
-    public async Task DeleteAsync(ContentSchema entity)
+    public async Task DeleteAsync(ContentSchema schema)
     {
-        await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, entity.Id));
+        await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id));
     }
 
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()

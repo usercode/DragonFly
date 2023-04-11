@@ -100,7 +100,7 @@ public static class DragonFlyBuilderExtensions
                                         else
                                         {
                                             Permission.Enable();
-                                            Permission.SetPrincipal(context.User);
+                                            Permission.SetCurrentPrincipal(context.User);
 
                                             await next(context);
                                         }

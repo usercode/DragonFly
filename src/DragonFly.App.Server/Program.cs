@@ -59,23 +59,27 @@ await app.InitDragonFly();
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
-await taskManager.StartAsync("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
-await taskManager.StartAsync("Import", static async ctx =>
+taskManager.Start("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
+
+for (int i = 0; i < 10; i++)
 {
-    int counter = 0;
-
-    while (ctx.CancellationToken.IsCancellationRequested == false)
+    taskManager.Start($"Import {i}", static async ctx =>
     {
-        await Task.Delay(TimeSpan.FromSeconds(1));
+        int counter = 0;
 
-        await ctx.UpdateAsync($"test {counter}", counter++, ctx.Task.ProgressMaxValue);
-
-        if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
+        while (ctx.CancellationToken.IsCancellationRequested == false)
         {
-            break;
+            await Task.Delay(TimeSpan.FromSeconds(1));
+
+            await ctx.UpdateStatusAsync($"test {counter}", counter++, ctx.Task.ProgressMaxValue);
+
+            if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
+            {
+                break;
+            }
         }
-    }
-});
+    });
+}
 
 IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
 

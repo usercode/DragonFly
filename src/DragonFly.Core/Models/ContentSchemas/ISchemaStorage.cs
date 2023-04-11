@@ -16,16 +16,11 @@ public interface ISchemaStorage
 
     Task<ContentSchema?> GetSchemaAsync(string name);
 
-    Task CreateAsync(ContentSchema contentType);
+    Task CreateAsync(ContentSchema schema);
 
-    Task UpdateAsync(ContentSchema entity);
+    Task UpdateAsync(ContentSchema schema);
 
-    Task DeleteAsync(ContentSchema entity);
-
-    //IList<ContentSchema> QueryContentSchemas()
-    //{
-    //    return QueryContentSchemas(new QueryParameters());
-    //}
+    Task DeleteAsync(ContentSchema schema);
 
     Task<QueryResult<ContentSchema>> QuerySchemasAsync();
 }

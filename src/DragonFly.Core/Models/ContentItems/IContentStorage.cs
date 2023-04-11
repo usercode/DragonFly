@@ -10,22 +10,22 @@ namespace DragonFly;
 /// IContentStorage
 /// </summary>
 public interface IContentStorage
-{
-    Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query);
-        
+{    
     Task<ContentItem?> GetContentAsync(string schema, Guid id);
 
-    Task CreateAsync(ContentItem contentItem);
+    Task CreateAsync(ContentItem content);
 
-    Task UpdateAsync(ContentItem entity);
+    Task UpdateAsync(ContentItem content);
 
-    Task DeleteAsync(ContentItem entity);
+    Task DeleteAsync(ContentItem content);    
+
+    Task PublishAsync(ContentItem content);
+
+    Task UnpublishAsync(ContentItem content);
+
+    Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query);
 
     Task PublishQueryAsync(ContentQuery query);
 
     Task UnpublishQueryAsync(ContentQuery query);
-
-    Task PublishAsync(ContentItem entity);
-
-    Task UnpublishAsync(ContentItem entity);
 }

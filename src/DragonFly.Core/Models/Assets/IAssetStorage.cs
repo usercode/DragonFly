@@ -12,7 +12,7 @@ namespace DragonFly;
 /// </summary>
 public interface IAssetStorage
 {
-    Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery);
+    Task<QueryResult<Asset>> QueryAsync(AssetQuery query);
 
     Task<Asset?> GetAssetAsync(Guid id);
 

@@ -22,7 +22,7 @@ public static class DragonFlyApiExtensions
             return;
         }
 
-        ClaimsPrincipal? principal = Permission.GetPrincipal();
+        ClaimsPrincipal? principal = Permission.GetCurrentPrincipal();
 
         if (principal == null)
         {

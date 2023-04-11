@@ -17,8 +17,8 @@ public static class Permission
     public static bool IsEnabled => Enabled.Value;
     public static void Enable() => Enabled.Value = true;
     public static void Disable() => Enabled.Value = false;
-    public static ClaimsPrincipal? GetPrincipal() => Principal.Value;
-    public static void SetPrincipal(ClaimsPrincipal? principal) => Principal.Value = principal;
+    public static ClaimsPrincipal? GetCurrentPrincipal() => Principal.Value;
+    public static void SetCurrentPrincipal(ClaimsPrincipal? principal) => Principal.Value = principal;
     
     public static SuppressPermissions Suppress()
     {
