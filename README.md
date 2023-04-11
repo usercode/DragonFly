@@ -163,7 +163,7 @@ For long running jobs you can use the BackgroundTaskManager.
 
 ```csharp
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
-taskManager.Start("Test", static async ctx => await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken));
+taskManager.Start("Test", async ctx => await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken));
 ```
 
 ### DragonFly.AspNetCore	
