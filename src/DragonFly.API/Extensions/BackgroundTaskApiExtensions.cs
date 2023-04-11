@@ -16,7 +16,7 @@ static class BackgroundTaskApiExtensions
         RouteGroupBuilder groupRoute = endpoints.MapGroup("task");
 
         groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapPost("{id}/cancel", MapStop);
+        groupRoute.MapPost("{id}/cancel", MapCancel);
     }
 
     private static async Task<IEnumerable<BackgroundTaskInfo>> MapQuery(HttpContext context, IBackgroundTaskManager service)
@@ -24,7 +24,7 @@ static class BackgroundTaskApiExtensions
         return await service.GetTasksAsync();
     }
 
-    private static async Task MapStop(long id, IBackgroundTaskManager service)
+    private static async Task MapCancel(int id, IBackgroundTaskManager service)
     {
         await service.CancelAsync(id);
     }

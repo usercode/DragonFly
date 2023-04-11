@@ -2,8 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Security.Claims;
 using DragonFly.AspNetCore;
+using DragonFly.Core;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
@@ -36,14 +36,14 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// </summary>
     private ILogger<BackgroundTaskManager> Logger { get; }
 
-    private readonly IDictionary<long, BackgroundTask> Tasks = new Dictionary<long, BackgroundTask>();
+    private readonly IDictionary<int, BackgroundTask> Tasks = new Dictionary<int, BackgroundTask>();
 
-    private long _nextId = 1;
+    private int _nextId = 1;
     private object _syncObject = new object();
 
-    private async Task TaskHasChangedAsnyc()
+    private async Task TaskHasChangedAsnyc(BackgroundTaskChangeState state, BackgroundTask task)
     {
-        await Hub.Clients.All.SendAsync("TaskChanged");
+        await Hub.Clients.All.SendAsync("TaskChanged", state, task.ToTaskInfo());
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
@@ -60,14 +60,14 @@ public class BackgroundTaskManager : IBackgroundTaskManager
             backgroundTask.Task = Task.Run(async () =>
             {
                 BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
-                ctx.StateChanged += () => TaskHasChangedAsnyc();
+                ctx.StateChanged += () => TaskHasChangedAsnyc(BackgroundTaskChangeState.Updated, backgroundTask);
 
                 try
                 {
                     BackgroundTask.SetCurrentTask(backgroundTask);
 
                     //notify new task
-                    await TaskHasChangedAsnyc();
+                    await TaskHasChangedAsnyc(BackgroundTaskChangeState.Added, backgroundTask);
 
                     //wait before starting task
                     await Task.Delay(TimeSpan.FromSeconds(2));
@@ -77,7 +77,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                     //set state to running
                     backgroundTask.SetRunning();
 
-                    await TaskHasChangedAsnyc();
+                    await TaskHasChangedAsnyc(BackgroundTaskChangeState.Updated, backgroundTask);
 
                     //execute task
                     await action(ctx);
@@ -104,7 +104,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                 {
                     Logger.LogInformation("Background task is exited: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
 
-                    await TaskHasChangedAsnyc();
+                    await TaskHasChangedAsnyc(BackgroundTaskChangeState.Updated, backgroundTask);
 
                     //wait before removing task
                     await Task.Delay(TimeSpan.FromMinutes(1));
@@ -115,7 +115,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                         Tasks.Remove(backgroundTask.Id);
                     }
 
-                    await TaskHasChangedAsnyc();
+                    await TaskHasChangedAsnyc(BackgroundTaskChangeState.Removed, backgroundTask);
                 }
             });
 
@@ -132,24 +132,13 @@ public class BackgroundTaskManager : IBackgroundTaskManager
             return Task.FromResult<IEnumerable<BackgroundTaskInfo>>(
                     Tasks
                     .Values
-                    .Select(x => new BackgroundTaskInfo()
-                    {
-                        Id = x.Id,
-                        CreatedAt = x.CreatedAt,
-                        CreatedBy = x.CreatedBy?.FindFirstValue("Name"),
-                        Name = x.Name,
-                        ProgressValue = x.ProgressValue,
-                        ProgressMaxValue = x.ProgressMaxValue,
-                        Status = x.Exception?.Message ?? x.Status,
-                        State = x.State,
-                        ParentTaskId = x.ParentTask?.Id
-                    })
+                    .Select(x => x.ToTaskInfo())
                     .OrderBy(x => x.Id)
                     .ToList());
         }
     }
 
-    public Task CancelAsync(long id)
+    public Task CancelAsync(int id)
     {
         lock (_syncObject)
         {

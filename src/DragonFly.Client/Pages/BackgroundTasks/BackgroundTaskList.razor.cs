@@ -4,8 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Client.Base;
+using DragonFly.Core;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
@@ -22,7 +24,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     /// <summary>
     /// Tasks
     /// </summary>
-    public IEnumerable<BackgroundTaskInfo> Tasks { get; set; }
+    public IDictionary<int, BackgroundTaskInfo> Tasks { get; set; }
 
     private HubConnection _hubConnection;
 
@@ -36,11 +38,20 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
         await base.OnInitializedAsync();
 
         _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/taskhub")).Build();
-        _hubConnection.On("TaskChanged", async () =>
+        _hubConnection.On<BackgroundTaskChangeState, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
         {
             await InvokeAsync(async () =>
             {
-                await RefreshAsync();
+                if (state == BackgroundTaskChangeState.Removed)
+                {
+                    Tasks.Remove(task.Id);
+                }
+                else
+                {
+                    Tasks[task.Id] = task;
+                }
+
+                StateHasChanged();
             });
         });
 
@@ -49,7 +60,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
 
     protected override async Task RefreshActionAsync()
     {
-        Tasks = await BackgroundTaskService.GetTasksAsync();
+        Tasks = (await BackgroundTaskService.GetTasksAsync()).ToDictionary(x => x.Id);
     }
 
     public async ValueTask DisposeAsync()

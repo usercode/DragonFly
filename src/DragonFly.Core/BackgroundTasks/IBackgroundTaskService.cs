@@ -8,5 +8,5 @@ public interface IBackgroundTaskService
 {
     Task<IEnumerable<BackgroundTaskInfo>> GetTasksAsync();
 
-    Task CancelAsync(long id);
+    Task CancelAsync(int id);
 }

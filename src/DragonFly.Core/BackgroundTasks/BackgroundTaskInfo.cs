@@ -9,7 +9,7 @@ public class BackgroundTaskInfo
     /// <summary>
     /// Id
     /// </summary>
-    public long Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// CreatedAt

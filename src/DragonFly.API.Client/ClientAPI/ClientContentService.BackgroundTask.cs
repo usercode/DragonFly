@@ -23,7 +23,7 @@ public partial class ClientContentService : IBackgroundTaskService
         return result;
     }
 
-    public async Task CancelAsync(long id)
+    public async Task CancelAsync(int id)
     {
         var response = await Client.PostAsync($"api/task/{id}/cancel", new StringContent(string.Empty));
 

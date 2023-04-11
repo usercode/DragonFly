@@ -17,7 +17,7 @@ public class BackgroundTask
 
     public static void SetCurrentTask(BackgroundTask? task) => _currentTask.Value = task;
 
-    public BackgroundTask(long id, string name, ClaimsPrincipal? createdBy, BackgroundTask? parentTask)
+    public BackgroundTask(int id, string name, ClaimsPrincipal? createdBy, BackgroundTask? parentTask)
     {
         Id = id;
         Name = name;
@@ -34,7 +34,7 @@ public class BackgroundTask
     /// <summary>
     /// Id
     /// </summary>
-    public long Id { get; }
+    public int Id { get; }
 
     /// <summary>
     /// Name
