@@ -104,7 +104,7 @@ public class BackgroundTask
     /// <summary>
     /// SetRunning
     /// </summary>
-    public void SetRunning()
+    internal void SetRunning()
     {
         StartedAt = DateTimeOffset.Now;
         State = BackgroundTaskState.Running;
@@ -114,7 +114,7 @@ public class BackgroundTask
     /// SetException
     /// </summary>
     /// <param name="exception"></param>
-    public void SetException(Exception exception)
+    internal void SetException(Exception exception)
     {
         if (State != BackgroundTaskState.Running)
         {
@@ -129,7 +129,7 @@ public class BackgroundTask
     /// <summary>
     /// SetCanceling
     /// </summary>
-    public void SetCanceling()
+    internal void SetCanceling()
     {
         if (State != BackgroundTaskState.Running)
         {
@@ -143,7 +143,7 @@ public class BackgroundTask
     /// <summary>
     /// SetCanceled
     /// </summary>
-    public void SetCanceled()
+    internal void SetCanceled()
     {
         if (State != BackgroundTaskState.Canceling)
         {
@@ -157,7 +157,7 @@ public class BackgroundTask
     /// <summary>
     /// SetCompleted
     /// </summary>
-    public void SetCompleted()
+    internal void SetCompleted()
     {
         if (State != BackgroundTaskState.Running)
         {
