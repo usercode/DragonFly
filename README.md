@@ -1,5 +1,4 @@
-# DragonFly
-Headless CMS based on ASP.NET Core and Blazor
+# DragonFly - Headless CMS based on ASP.NET Core and Blazor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
