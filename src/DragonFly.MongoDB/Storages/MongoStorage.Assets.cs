@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Security.Cryptography;
+using DragonFly.AspNetCore;
 using DragonFly.Assets.Query;
 using DragonFly.Query;
 using DragonFly.Storage;
@@ -124,7 +125,7 @@ public partial class MongoStorage : IAssetStorage
             query = query.Where(x => x.Name!.Contains(assetQuery.Pattern) || x.Slug!.Contains(assetQuery.Pattern));
         }
 
-        query = query.Take(assetQuery.Take);
+        query = query.Take(assetQuery.Top);
 
         if (assetQuery.Folder == null)
         {
@@ -141,7 +142,7 @@ public partial class MongoStorage : IAssetStorage
         queryResult.Items = result
                                 .Select(x => SetPreviewUrl(x.ToModel()))
                                 .ToList();
-        queryResult.Offset = assetQuery.Take;
+        queryResult.Offset = assetQuery.Top;
         queryResult.Count = queryResult.Items.Count;
         queryResult.TotalCount = 0;
 
@@ -182,5 +183,20 @@ public partial class MongoStorage : IAssetStorage
         {
             await processing.OnAssetChangedAsync(context);
         }
+    }
+
+    public Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    {
+        BackgroundTask task = BackgroundTaskService.Start("Apply metadata to asset query", query, static async ctx =>
+        {
+            IAssetStorage assetStorage = ctx.ServiceProvider.GetRequiredService<IAssetStorage>();
+
+            await ctx.ChunkedQueryAsync(
+                                ctx.Input,
+                                assetStorage.QueryAsync,
+                                assetStorage.ApplyMetadataAsync);
+        });
+
+        return Task.FromResult(task.ToTaskInfo());
     }
 }

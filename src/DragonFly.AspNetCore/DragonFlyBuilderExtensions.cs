@@ -70,7 +70,7 @@ public static class DragonFlyBuilderExtensions
     public static async Task InitDragonFly(this IHost host)
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
-        await api.InitAsync();        
+        await api.InitAsync();
     }
 
     /// <summary>

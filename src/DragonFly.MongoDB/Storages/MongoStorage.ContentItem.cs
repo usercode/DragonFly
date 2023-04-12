@@ -10,6 +10,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Microsoft.Extensions.DependencyInjection;
+using DragonFly.AspNetCore;
 
 namespace DragonFly.MongoDB;
 
@@ -229,7 +230,6 @@ public partial class MongoStorage : IContentStorage
     {
         ContentSchema schema = await GetSchemaAsync(content.Schema.Name);
 
-
         content.ApplySchema(schema);
 
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name);
@@ -359,74 +359,33 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public async Task PublishQueryAsync(ContentQuery query)
+    public Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
-        BackgroundTaskService.Start(
-            $"Publish all {query.Schema}", 
-            query,
-            static async ctx => await InternalPublishUnpublishAsync(true, ctx));
+        BackgroundTask task = BackgroundTaskService.Start(
+                                                        $"Publish all {query.Schema}", 
+                                                        query,
+                                                        static async ctx =>
+                                                        {
+                                                            IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
+
+                                                            await ctx.ChunkedQueryAsync(ctx.Input, contentStorage.QueryAsync, contentStorage.PublishAsync);
+                                                        });
+
+        return Task.FromResult(task.ToTaskInfo());
     }
 
-    public async Task UnpublishQueryAsync(ContentQuery query)
+    public Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
-        BackgroundTaskService.Start(
-            $"Unpublish all {query.Schema}",
-            query,
-            static async ctx => await InternalPublishUnpublishAsync(false, ctx));
-    }
+        BackgroundTask task = BackgroundTaskService.Start(
+                                                        $"Unpublish all {query.Schema}",
+                                                        query,
+                                                        static async ctx =>
+                                                        {
+                                                            IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-    private static async Task InternalPublishUnpublishAsync(bool publish, BackgroundTaskContext<ContentQuery> ctx)
-    {
-        IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
+                                                            await ctx.ChunkedQueryAsync(ctx.Input, contentStorage.QueryAsync, contentStorage.UnpublishAsync);
+                                                        });
 
-        int pageSize = 50;
-
-        ctx.Input.Skip = 0;
-        ctx.Input.Top = pageSize;
-
-        int counter = 0;
-        int counterSucceed = 0;
-        int counterFailed = 0;
-
-        while (true)
-        {
-            QueryResult<ContentItem> result = await contentStorage.QueryAsync(ctx.Input);
-
-            if (result.Items.Count == 0)
-            {
-                break;
-            }
-
-            foreach (ContentItem contentItem in result.Items)
-            {
-                await ctx.UpdateStatusAsync(contentItem.ToString(), counter, result.TotalCount);
-
-                try
-                {
-                    if (publish)
-                    {
-                        await contentStorage.PublishAsync(contentItem);
-                    }
-                    else
-                    {
-                        await contentStorage.UnpublishAsync(contentItem);
-                    }
-
-                    counterSucceed++;
-                }
-                catch
-                {
-                    counterFailed++;
-                }
-                finally
-                {
-                    counter++;
-                }
-            }
-
-            ctx.Input.Skip += pageSize;
-        }
-
-        await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
+        return Task.FromResult(task.ToTaskInfo());
     }
 }

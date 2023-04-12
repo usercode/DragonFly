@@ -79,4 +79,9 @@ public class Asset : ContentBase<Asset>
     /// Metaddata
     /// </summary>
     public virtual AssetMetadatas Metaddata { get => _metaddata; set => _metaddata = value; }
+
+    public override string ToString()
+    {
+        return $"{Name} ({MimeType})";
+    }
 }

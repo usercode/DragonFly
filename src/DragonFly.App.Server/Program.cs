@@ -59,19 +59,22 @@ await app.InitDragonFly();
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();
-taskManager.Start("Test", static async ctx => { await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken); });
+taskManager.Start("Test", static async ctx => await Task.Delay(TimeSpan.FromSeconds(60), ctx.CancellationToken));
 
 for (int i = 0; i < 10; i++)
 {
     taskManager.Start($"Import {i}", static async ctx =>
     {
+        Random random = new Random();
         int counter = 0;
 
         while (ctx.CancellationToken.IsCancellationRequested == false)
         {
             await Task.Delay(TimeSpan.FromSeconds(1));
 
-            await ctx.UpdateStatusAsync($"test {counter}", counter++, ctx.Task.ProgressMaxValue);
+            await ctx.UpdateStatusAsync($"test {counter}", counter, ctx.Task.ProgressMaxValue);
+
+            counter += random.Next(1, 8);
 
             if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
             {

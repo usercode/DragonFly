@@ -59,20 +59,20 @@ public class ContentStorageAuthorization : IContentStorage
         return await Storage.GetContentAsync(schema, id);
     }
 
-    public async Task PublishQueryAsync(ContentQuery query)
+    public async Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
 
-        await Storage.PublishQueryAsync(query);
+        return await Storage.PublishQueryAsync(query);
     }
 
-    public async Task UnpublishQueryAsync(ContentQuery query)
+    public async Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentUnpublish);
 
-        await Storage.UnpublishQueryAsync(query);
+        return await Storage.UnpublishQueryAsync(query);
     }
 
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)

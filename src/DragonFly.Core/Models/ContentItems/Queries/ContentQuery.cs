@@ -2,12 +2,14 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Core;
+
 namespace DragonFly.Query;
 
 /// <summary>
 /// ContentQuery
 /// </summary>
-public class ContentQuery
+public class ContentQuery : QueryBase
 {
     public ContentQuery(string schema)
         : this()
@@ -21,7 +23,6 @@ public class ContentQuery
         OrderFields = new List<FieldOrder>();
 
         SearchPattern = string.Empty;
-        Skip = 0;
         Top = 25;
         Published = true;
 
@@ -32,16 +33,6 @@ public class ContentQuery
     /// Schema
     /// </summary>
     public string? Schema { get; set; }
-
-    /// <summary>
-    /// Skip
-    /// </summary>
-    public int Skip { get; set; }
-
-    /// <summary>
-    /// Top
-    /// </summary>
-    public int Top { get; set; }
 
     /// <summary>
     /// SearchPattern

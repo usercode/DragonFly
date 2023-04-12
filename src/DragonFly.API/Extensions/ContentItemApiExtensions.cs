@@ -109,13 +109,13 @@ static class ContentItemApiExtensions
         await contentStore.UnpublishAsync(content);
     }
 
-    private static async Task MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
+    private static async Task<BackgroundTaskInfo> MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
     {
-        await contentStore.PublishQueryAsync(query);
+        return await contentStore.PublishQueryAsync(query);
     }
 
-    private static async Task MapUnpublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
+    private static async Task<BackgroundTaskInfo> MapUnpublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
     {
-        await contentStore.UnpublishQueryAsync(query);
+        return await contentStore.UnpublishQueryAsync(query);
     }
 }
