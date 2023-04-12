@@ -362,13 +362,13 @@ public partial class MongoStorage : IContentStorage
     public Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start(
-                                                        $"Publish all {query.Schema}", 
+                                                        $"Publish all {query.Schema}",
                                                         query,
                                                         static async ctx =>
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ChunkedQueryAsync(ctx.Input, contentStorage.QueryAsync, contentStorage.PublishAsync);
+                                                            await ctx.ChunkedQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
                                                         });
 
         return Task.FromResult(task.ToTaskInfo());
@@ -383,7 +383,7 @@ public partial class MongoStorage : IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ChunkedQueryAsync(ctx.Input, contentStorage.QueryAsync, contentStorage.UnpublishAsync);
+                                                            await ctx.ChunkedQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
                                                         });
 
         return Task.FromResult(task.ToTaskInfo());

@@ -192,7 +192,6 @@ public partial class MongoStorage : IAssetStorage
             IAssetStorage assetStorage = ctx.ServiceProvider.GetRequiredService<IAssetStorage>();
 
             await ctx.ChunkedQueryAsync(
-                                ctx.Input,
                                 assetStorage.QueryAsync,
                                 assetStorage.ApplyMetadataAsync);
         });

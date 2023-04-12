@@ -9,12 +9,12 @@ namespace DragonFly.AspNetCore;
 
 public static class BackgroundTaskContextExtensions
 {
-    public static async Task ChunkedQueryAsync<T, TQuery>(this BackgroundTaskContext ctx, TQuery query, Func<TQuery, Task<QueryResult<T>>> queryAction, Func<T, Task> itemAction, int chunkSize = 50)
+    public static async Task ChunkedQueryAsync<T, TQuery>(this BackgroundTaskContext<TQuery> ctx, Func<TQuery, Task<QueryResult<T>>> queryAction, Func<T, Task> itemAction, int chunkSize = 50)
         where T : notnull
         where TQuery : QueryBase
     {
-        query.Skip = 0;
-        query.Top = chunkSize;
+        ctx.Input.Skip = 0;
+        ctx.Input.Top = chunkSize;
 
         int counter = 0;
         int counterSucceed = 0;
@@ -22,7 +22,7 @@ public static class BackgroundTaskContextExtensions
 
         while (true)
         {
-            QueryResult<T> result = await queryAction(query);
+            QueryResult<T> result = await queryAction(ctx.Input);
 
             if (result.Items.Count == 0)
             {
@@ -49,7 +49,7 @@ public static class BackgroundTaskContextExtensions
                 }
             }
 
-            query.Skip += query.Top;
+            ctx.Input.Skip += ctx.Input.Top;
         }
 
         await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
