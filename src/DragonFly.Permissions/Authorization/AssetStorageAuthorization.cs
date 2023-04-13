@@ -40,6 +40,13 @@ class AssetStorageAuthorization : IAssetStorage
         await Storage.ApplyMetadataAsync(asset);
     }
 
+    public async Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    {
+        await Api.AuthorizeAsync(AssetPermissions.AssetUpdate);
+
+        return await Storage.ApplyMetadataAsync(query);
+    }
+
     public async Task CreateAsync(Asset asset)
     {
         await Api.AuthorizeAsync(AssetPermissions.AssetCreate);

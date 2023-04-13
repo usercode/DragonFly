@@ -82,4 +82,13 @@ public partial class ClientContentService : IAssetStorage
     {
         await Client.PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty));
     }
+
+    public async Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    {
+        var response = await Client.PostAsJsonAsync($"api/asset/metadata", query);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>();
+    }
 }

@@ -25,6 +25,7 @@ static class AssetApiExtensions
         groupRoute.MapGet("{id:guid}/download", MapDownload);
         groupRoute.MapPost("{id:guid}/upload", MapUpload);
         groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata);
+        groupRoute.MapPost("metadata", MapRefreshMetadataQuery);
     }
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
@@ -97,5 +98,10 @@ static class AssetApiExtensions
         Asset asset = await storage.GetRequiredAssetAsync(id);
 
         await storage.ApplyMetadataAsync(asset);
+    }
+
+    private static async Task<BackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
+    {   
+        return await storage.ApplyMetadataAsync(query);        
     }
 }

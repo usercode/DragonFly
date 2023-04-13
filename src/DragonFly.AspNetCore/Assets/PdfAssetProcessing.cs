@@ -18,7 +18,7 @@ public class PdfAssetProcessing : IAssetProcessing
         get => new[] { MimeTypes.Pdf };
     }
 
-    public async Task OnAssetChangedAsync(IAssetProcessingContext context)
+    public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
         using Stream stream = await context.OpenAssetStreamAsync();
 
@@ -37,5 +37,7 @@ public class PdfAssetProcessing : IAssetProcessing
         }
 
         await context.SetMetadataAsync(metadata);
+
+        return true;
     }
 }

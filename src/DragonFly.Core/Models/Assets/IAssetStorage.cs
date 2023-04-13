@@ -29,4 +29,6 @@ public interface IAssetStorage
     Task<Stream> GetStreamAsync(Asset asset);
 
     Task ApplyMetadataAsync(Asset asset);
+
+    Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query);
 }

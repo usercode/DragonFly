@@ -368,7 +368,7 @@ public partial class MongoStorage : IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ChunkedQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
                                                         });
 
         return Task.FromResult(task.ToTaskInfo());
@@ -383,7 +383,7 @@ public partial class MongoStorage : IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ChunkedQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
                                                         });
 
         return Task.FromResult(task.ToTaskInfo());

@@ -34,6 +34,12 @@ public class AssetListBase : EntityListComponent<Asset>
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
         toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Danger, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
+        toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Danger, RefreshAllMetadataAsync));
+    }
+
+    protected virtual AssetQuery CreateQuery()
+    {
+        return new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id };
     }
 
     protected override async Task RefreshActionAsync()
@@ -51,7 +57,7 @@ public class AssetListBase : EntityListComponent<Asset>
 
         Folders = (await AssetFolderStore.QueryAsync(query)).Items;
 
-        SearchResult = await AssetService.QueryAsync(new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id });
+        SearchResult = await AssetService.QueryAsync(CreateQuery());
     }
 
     protected async Task OpenFolder(AssetFolder folder)
@@ -59,6 +65,11 @@ public class AssetListBase : EntityListComponent<Asset>
         SelectedFolder = folder;
 
         await RefreshAsync();
+    }
+
+    private async Task RefreshAllMetadataAsync()
+    {
+        await AssetService.ApplyMetadataAsync(CreateQuery());
     }
 
     protected override string GetNavigationPath(Asset entity)

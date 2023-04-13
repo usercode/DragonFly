@@ -9,7 +9,7 @@ namespace DragonFly.AspNetCore;
 
 public static class BackgroundTaskContextExtensions
 {
-    public static async Task ChunkedQueryAsync<T, TQuery>(this BackgroundTaskContext<TQuery> ctx, Func<TQuery, Task<QueryResult<T>>> queryAction, Func<T, Task> itemAction, int chunkSize = 50)
+    public static async Task ProcessQueryAsync<T, TQuery>(this BackgroundTaskContext<TQuery> ctx, Func<TQuery, Task<QueryResult<T>>> queryAction, Func<T, Task> itemAction, int chunkSize = 50)
         where T : notnull
         where TQuery : QueryBase
     {

@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets;
 using SixLabors.ImageSharp;
 
 namespace DragonFly.AspNetCore;
@@ -17,7 +16,7 @@ public class ImageAssetProcessing : IAssetProcessing
         get => new[] { MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
     }
 
-    public async Task OnAssetChangedAsync(IAssetProcessingContext context)
+    public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
         using Stream stream = await context.OpenAssetStreamAsync();
 
@@ -31,6 +30,10 @@ public class ImageAssetProcessing : IAssetProcessing
                                                     BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
 
             await context.SetMetadataAsync(imageMetadata);
+
+            return true;
         }
+
+        return false;
     }
 }

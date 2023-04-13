@@ -136,6 +136,9 @@ public partial class MongoStorage : IAssetStorage
             query = query.OrderBy(x => x.Name);
         }
 
+        query = query.Skip(assetQuery.Skip);
+        query = query.Take(assetQuery.Top);
+
         IList<MongoAsset> result = await query.ToListAsync();
 
         QueryResult<Asset> queryResult = new QueryResult<Asset>();
@@ -144,7 +147,7 @@ public partial class MongoStorage : IAssetStorage
                                 .ToList();
         queryResult.Offset = assetQuery.Top;
         queryResult.Count = queryResult.Items.Count;
-        queryResult.TotalCount = 0;
+        queryResult.TotalCount = queryResult.Items.Count;
 
         return queryResult;
     }
@@ -187,11 +190,11 @@ public partial class MongoStorage : IAssetStorage
 
     public Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
-        BackgroundTask task = BackgroundTaskService.Start("Apply metadata to asset query", query, static async ctx =>
+        BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {
             IAssetStorage assetStorage = ctx.ServiceProvider.GetRequiredService<IAssetStorage>();
 
-            await ctx.ChunkedQueryAsync(
+            await ctx.ProcessQueryAsync(
                                 assetStorage.QueryAsync,
                                 assetStorage.ApplyMetadataAsync);
         });
