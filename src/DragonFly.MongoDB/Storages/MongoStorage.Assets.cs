@@ -185,7 +185,7 @@ public partial class MongoStorage : IAssetStorage
         }
     }
 
-    public Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {
@@ -196,6 +196,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return Task.FromResult(task.ToTaskInfo());
+        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
     }
 }

@@ -21,6 +21,7 @@ static class AssetApiExtensions
         groupRoute.MapGet("{id:guid}", MapGet);
         groupRoute.MapPost("", MapCreate);
         groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{id:guid}", MapDelete);
         groupRoute.MapPost("{id:guid}/publish", MapPublish);
         groupRoute.MapGet("{id:guid}/download", MapDownload);
         groupRoute.MapPost("{id:guid}/upload", MapUpload);
@@ -42,6 +43,13 @@ static class AssetApiExtensions
         RestAsset restAsset = entity.ToRest();
 
         return restAsset;
+    }
+
+    private static async Task MapDelete(HttpContext context, IAssetStorage storage, Guid id)
+    {
+        Asset entity = await storage.GetRequiredAssetAsync(id);
+
+        await storage.DeleteAsync(entity);
     }
 
     private static async Task<ResourceCreated> MapCreate(HttpContext context, IAssetStorage storage, RestAsset restAsset)
@@ -100,8 +108,8 @@ static class AssetApiExtensions
         await storage.ApplyMetadataAsync(asset);
     }
 
-    private static async Task<BackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
+    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
     {   
-        return await storage.ApplyMetadataAsync(query);        
+        return await storage.ApplyMetadataAsync(query);
     }
 }

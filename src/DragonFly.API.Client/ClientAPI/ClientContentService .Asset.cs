@@ -65,25 +65,33 @@ public partial class ClientContentService : IAssetStorage
 
     public async Task PublishAsync(Asset asset)
     {
-        await Client.PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty));
+        var response = await Client.PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty));
+
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task UpdateAsync(Asset entity)
     {
-        await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
+        var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
+
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task DeleteAsync(Asset asset)
     {
-        await Client.DeleteAsync($"api/asset/{asset.Id}");
+        var response = await Client.DeleteAsync($"api/asset/{asset.Id}");
+
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task ApplyMetadataAsync(Asset asset)
     {
-        await Client.PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty));
+        var response = await Client.PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty));
+
+        response.EnsureSuccessStatusCode();
     }
 
-    public async Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/metadata", query);
 

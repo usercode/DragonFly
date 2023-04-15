@@ -30,5 +30,5 @@ public interface IAssetStorage
 
     Task ApplyMetadataAsync(Asset asset);
 
-    Task<BackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query);
+    Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query);
 }

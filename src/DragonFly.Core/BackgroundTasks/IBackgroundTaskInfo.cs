@@ -4,50 +4,50 @@
 
 namespace DragonFly;
 
-public class BackgroundTaskInfo : IBackgroundTaskInfo
+public interface IBackgroundTaskInfo
 {
     /// <summary>
     /// Id
     /// </summary>
-    public int Id { get; set; }
+    public int Id { get; }
 
     /// <summary>
     /// CreatedAt
     /// </summary>
-    public DateTimeOffset? CreatedAt { get; set; }
+    public DateTimeOffset? CreatedAt { get; }
 
     /// <summary>
     /// CreatedBy
     /// </summary>
-    public string? CreatedBy { get; set; }
+    public string? CreatedBy { get; }
 
     /// <summary>
     /// Name
     /// </summary>
-    public string? Name { get; set; }
+    public string? Name { get; }
 
     /// <summary>
     /// Progress
     /// </summary>
-    public double ProgressValue { get; set; }
+    public double ProgressValue { get; }
 
     /// <summary>
     /// ProgressMaxValue
     /// </summary>
-    public double ProgressMaxValue { get; set; }
+    public double ProgressMaxValue { get; }
 
     /// <summary>
     /// Status
     /// </summary>
-    public string? Status { get; set; }
+    public string? Status { get; }
 
     /// <summary>
     /// State
     /// </summary>
-    public BackgroundTaskState State { get; set; }
+    public BackgroundTaskState State { get; }
 
     /// <summary>
     /// ParentTaskId
     /// </summary>
-    public long? ParentTaskId { get; set; }
+    public long? ParentTaskId { get; }
 }
