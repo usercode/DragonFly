@@ -196,6 +196,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task);
+        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
     }
 }

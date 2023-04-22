@@ -371,7 +371,7 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
                                                         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task);
+        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
     }
 
     public Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
@@ -386,6 +386,6 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
                                                         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task);
+        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
     }
 }

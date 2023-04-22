@@ -4,6 +4,9 @@
 
 namespace DragonFly;
 
+/// <summary>
+/// IBackgroundTaskInfo
+/// </summary>
 public interface IBackgroundTaskInfo
 {
     /// <summary>
