@@ -67,7 +67,7 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Initialize the DragonFLy API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
     /// </summary>
-    public static async Task InitDragonFly(this IHost host)
+    public static async Task InitDragonFlyAsync(this IHost host)
     {
         IDragonFlyApi api = host.Services.GetRequiredService<IDragonFlyApi>();
         await api.InitAsync();

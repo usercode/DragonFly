@@ -9,7 +9,7 @@ namespace DragonFly;
 /// <summary>
 /// BackgroundTask
 /// </summary>
-public class BackgroundTask
+public class BackgroundTask : IBackgroundTaskInfo
 {
     private readonly static AsyncLocal<BackgroundTask?> _currentTask = new AsyncLocal<BackgroundTask?>();
 
@@ -100,6 +100,10 @@ public class BackgroundTask
     /// ParentTask
     /// </summary>
     public BackgroundTask? ParentTask { get; set; }
+
+    string? IBackgroundTaskInfo.CreatedBy => CreatedBy?.FindFirstValue("Name");
+
+    public long? ParentTaskId => ParentTask?.Id;
 
     /// <summary>
     /// SetRunning

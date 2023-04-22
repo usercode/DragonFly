@@ -55,7 +55,7 @@ builder.Services.AddDragonFly()
 var app = builder.Build();
 
 //init DragonFly
-await app.InitDragonFly();
+await app.InitDragonFlyAsync();
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();

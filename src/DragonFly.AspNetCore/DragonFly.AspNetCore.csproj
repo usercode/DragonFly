@@ -25,7 +25,7 @@
   </ItemGroup> 
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.5" />
     <PackageReference Include="PdfPig" Version="0.1.7" />
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.4" />
   </ItemGroup>

@@ -33,7 +33,9 @@ public partial class ClientContentService : IWebHookStorage
 
     public async Task UpdateAsync(WebHook entity)
     {
-        await Client.PutAsJsonAsync($"api/webhook/{entity.Id}", entity);
+        var response = await Client.PutAsJsonAsync($"api/webhook", entity);
+
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task DeleteAsync(WebHook webHook)

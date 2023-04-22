@@ -14,6 +14,9 @@ public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptions
 /// </summary>
 public sealed class ContentFieldManager
 {
+    /// <summary>
+    /// Default
+    /// </summary>
     public static ContentFieldManager Default { get; } = new ContentFieldManager();
 
     private IDictionary<string, Type> _optionsByName;

@@ -16,6 +16,7 @@ public static class RestWebHookConverter
         restWebHook.TargetUrl = webHook.TargetUrl;
         restWebHook.Name = webHook.Name;
         restWebHook.EventName = webHook.EventName;
+        restWebHook.Headers = webHook.Headers;
 
         return restWebHook;
     }
@@ -30,6 +31,7 @@ public static class RestWebHookConverter
         webHook.TargetUrl = restWebHook.TargetUrl;
         webHook.Name = restWebHook.Name;
         webHook.EventName = restWebHook.EventName;
+        webHook.Headers = restWebHook.Headers;
 
         return webHook;
     }

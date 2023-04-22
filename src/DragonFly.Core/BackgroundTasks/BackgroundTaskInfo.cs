@@ -29,12 +29,12 @@ public class BackgroundTaskInfo : IBackgroundTaskInfo
     /// <summary>
     /// Progress
     /// </summary>
-    public double ProgressValue { get; set; }
+    public long ProgressValue { get; set; }
 
     /// <summary>
     /// ProgressMaxValue
     /// </summary>
-    public double ProgressMaxValue { get; set; }
+    public long ProgressMaxValue { get; set; }
 
     /// <summary>
     /// Status

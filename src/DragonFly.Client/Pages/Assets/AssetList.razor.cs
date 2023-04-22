@@ -14,7 +14,6 @@ public class AssetListBase : EntityListComponent<Asset>
 {
     public AssetListBase()
     {
-        Folders = new List<AssetFolder>();
     }
 
     [Inject]
@@ -23,11 +22,6 @@ public class AssetListBase : EntityListComponent<Asset>
 
     [Inject]
     public IAssetStorage AssetService { get; set; }
-
-    /// <summary>
-    /// Folders
-    /// </summary>
-    public IEnumerable<AssetFolder> Folders { get; set; }
 
     public AssetFolder SelectedFolder { get; set; }
 
@@ -54,8 +48,6 @@ public class AssetListBase : EntityListComponent<Asset>
         {
             query.Parent = SelectedFolder.Id;
         }
-
-        Folders = (await AssetFolderStore.QueryAsync(query)).Items;
 
         SearchResult = await AssetService.QueryAsync(CreateQuery());
     }

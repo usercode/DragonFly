@@ -75,18 +75,27 @@ static class AssetApiExtensions
         await storage.PublishAsync(entity);
     }
 
-    private static async Task MapDownload(HttpContext context, IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapDownload(HttpContext context, IAssetStorage storage, Guid id)
     {
         Asset asset = await storage.GetRequiredAssetAsync(id);
+
+        EntityTagHeaderValue etag = new EntityTagHeaderValue($"\"{asset.Hash}\"");
+
+        if (context.Request.Headers.ETag == etag)
+        {
+            return Results.StatusCode(StatusCodes.Status304NotModified);
+        }
 
         using Stream assetStream = await storage.GetStreamAsync(asset);
 
         context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
-        context.Response.GetTypedHeaders().ETag = new EntityTagHeaderValue($"\"{asset.Hash}\"");
+        context.Response.GetTypedHeaders().ETag = etag;
         context.Response.ContentType = asset.MimeType;
         context.Response.ContentLength = assetStream.Length;
 
         await assetStream.CopyToAsync(context.Response.Body);
+
+        return Results.Ok();
     }
 
     private static async Task MapUpload(HttpContext context, IAssetStorage storage, Guid id)

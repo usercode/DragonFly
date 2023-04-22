@@ -67,7 +67,7 @@ public partial class ClientContentService : IContentStorage
         return queryResult.Convert(x => x.ToModel());
     }
 
-    public async Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
+    public async Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/publish", query, JsonSerializerDefault.Options);
 
@@ -76,7 +76,7 @@ public partial class ClientContentService : IContentStorage
         return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>();
     }
 
-    public async Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
+    public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, JsonSerializerDefault.Options);
 

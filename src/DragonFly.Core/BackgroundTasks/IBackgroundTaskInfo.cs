@@ -29,12 +29,12 @@ public interface IBackgroundTaskInfo
     /// <summary>
     /// Progress
     /// </summary>
-    public double ProgressValue { get; }
+    public long ProgressValue { get; }
 
     /// <summary>
     /// ProgressMaxValue
     /// </summary>
-    public double ProgressMaxValue { get; }
+    public long ProgressMaxValue { get; }
 
     /// <summary>
     /// Status

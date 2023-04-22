@@ -17,6 +17,7 @@ static class WebHookConverter
         webHook.Description = mongoWebHook.Description;
         webHook.TargetUrl = mongoWebHook.TargetUrl;
         webHook.EventName = mongoWebHook.EventName;
+        webHook.Headers = mongoWebHook.Headers;
 
         return webHook;
     }
@@ -32,6 +33,7 @@ static class WebHookConverter
         mongoWebHook.Description = webHook.Description;
         mongoWebHook.TargetUrl = webHook.TargetUrl;
         mongoWebHook.EventName = webHook.EventName;
+        mongoWebHook.Headers = webHook.Headers;
 
         return mongoWebHook;
     }

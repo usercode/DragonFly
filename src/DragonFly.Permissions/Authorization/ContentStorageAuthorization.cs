@@ -59,7 +59,7 @@ public class ContentStorageAuthorization : IContentStorage
         return await Storage.GetContentAsync(schema, id);
     }
 
-    public async Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
+    public async Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentPublish);
@@ -67,7 +67,7 @@ public class ContentStorageAuthorization : IContentStorage
         return await Storage.PublishQueryAsync(query);
     }
 
-    public async Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
+    public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
         await Api.AuthorizeAsync(ContentPermissions.ContentQuery);
         await Api.AuthorizeAsync(ContentPermissions.ContentUnpublish);

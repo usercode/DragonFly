@@ -13,4 +13,6 @@ public class MongoWebHook : MongoContentBase
     public virtual string? TargetUrl { get; set; }
 
     public virtual string? Description { get; set; }
+
+    public virtual IList<HeaderItem> Headers { get; set; } = new List<HeaderItem>();
 }

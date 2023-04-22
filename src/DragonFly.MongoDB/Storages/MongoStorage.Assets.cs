@@ -179,7 +179,7 @@ public partial class MongoStorage : IAssetStorage
         IEnumerable<IAssetProcessing> processings = Api.ServiceProvider.GetServices<IAssetProcessing>();
 
         //add metadata
-        foreach (IAssetProcessing processing in processings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType) ))
+        foreach (IAssetProcessing processing in processings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType)))
         {
             await processing.OnAssetChangedAsync(context);
         }
@@ -196,6 +196,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
+        return Task.FromResult<IBackgroundTaskInfo>(task);
     }
 }

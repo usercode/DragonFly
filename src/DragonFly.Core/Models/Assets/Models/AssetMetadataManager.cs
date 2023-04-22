@@ -12,20 +12,10 @@ public sealed class AssetMetadataManager
     private IDictionary<string, Type> _byName;
     private IDictionary<Type, string> _byType;
 
-    private static AssetMetadataManager? _default;
-
-    public static AssetMetadataManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new AssetMetadataManager();
-            }
-
-            return _default;
-        }
-    }
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static AssetMetadataManager Default { get; } = new AssetMetadataManager();
 
     private AssetMetadataManager()
     {

@@ -33,4 +33,9 @@ public class RestWebHook : RestContentBase
     /// Description
     /// </summary>
     public virtual string Description { get; set; }
+
+    /// <summary>
+    /// Headers
+    /// </summary>
+    public virtual IList<HeaderItem> Headers { get; set; } = new List<HeaderItem>();
 }

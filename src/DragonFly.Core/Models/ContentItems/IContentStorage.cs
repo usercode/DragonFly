@@ -25,7 +25,7 @@ public interface IContentStorage
 
     Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query);
 
-    Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query);
+    Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query);
 
-    Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query);
+    Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query);
 }

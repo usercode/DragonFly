@@ -359,7 +359,7 @@ public partial class MongoStorage : IContentStorage
         }
     }
 
-    public Task<BackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
+    public Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start(
                                                         $"Publish all {query.Schema}",
@@ -371,10 +371,10 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
                                                         });
 
-        return Task.FromResult(task.ToTaskInfo());
+        return Task.FromResult<IBackgroundTaskInfo>(task);
     }
 
-    public Task<BackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
+    public Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start(
                                                         $"Unpublish all {query.Schema}",
@@ -386,6 +386,6 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
                                                         });
 
-        return Task.FromResult(task.ToTaskInfo());
+        return Task.FromResult<IBackgroundTaskInfo>(task);
     }
 }

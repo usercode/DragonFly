@@ -49,11 +49,11 @@ public class WebHookInterceptor : IContentInterceptor
     {
         QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
 
-        foreach (WebHook item in result.Items)
+        foreach (WebHook webHook in result.Items)
         {
             Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
 
-            if (item.TargetUrl == null)
+            if (webHook.TargetUrl == null)
             {
                 continue;
             }
@@ -65,9 +65,17 @@ public class WebHookInterceptor : IContentInterceptor
                     new ("publish", "true")
             });
 
-            Uri url = new Uri(item.TargetUrl + query);
+            Uri url = new Uri(webHook.TargetUrl + query);
 
-            HttpResponseMessage response = await HttpClient.PostAsync(url, new StringContent(string.Empty));
+            HttpContent content = new StringContent(string.Empty);
+
+            foreach (HeaderItem header in webHook.Headers)
+            {
+                content.Headers.Add(header.Name, header.Value);
+            }
+
+            //send webhook
+            HttpResponseMessage response = await HttpClient.PostAsync(url, content);
 
             if (response.IsSuccessStatusCode)
             {
