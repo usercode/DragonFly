@@ -2,20 +2,20 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNet.Middleware;
+using DragonFly.AspNetCore.Builders;
 using DragonFly.Identity;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFly.AspNetCore.Identity.Middlewares;
+namespace DragonFly.AspNetCore.Identity;
 
 internal static class Extensions
 {
     public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
     {
-        var group = endpoints.MapGroup("identity");
+        var group = endpoints.MapGroup("api/identity");
 
         group.MapGet("CurrentUser", CurrentUserAsync);
         group.MapUserApi();

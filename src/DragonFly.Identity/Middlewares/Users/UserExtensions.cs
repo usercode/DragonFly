@@ -4,6 +4,7 @@
 
 using DragonFly.Identity;
 using DragonFly.Identity.Commands;
+using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Rest.Commands;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Builder;
@@ -18,11 +19,11 @@ internal static class UserExtensions
     {
         var group = endpoints.MapGroup("user");
 
-        group.MapGet("{id:guid}", MapGet);
-        group.MapPost("query", MapQuery);
-        group.MapPost("", MapCreate);
-        group.MapPut("", MapUpdate);
-        group.MapPost("change-password", MapChangePassword);
+        group.MapGet("{id:guid}", MapGet).RequireAuthorization(IdentityPermissions.UserRead);
+        group.MapPost("query", MapQuery).RequireAuthorization(IdentityPermissions.UserQuery);
+        group.MapPost("", MapCreate).RequireAuthorization(IdentityPermissions.UserCreate);
+        group.MapPut("", MapUpdate).RequireAuthorization(IdentityPermissions.UserUpdate);
+        group.MapPost("change-password", MapChangePassword).RequireAuthorization(IdentityPermissions.PasswordChange);
 
         return endpoints;
     }

@@ -1,20 +1,22 @@
 ﻿@inherits ApiKeyListBase
 
-<Toolbar Items="ToolbarItems"></Toolbar>
-
-<BSListGroup>
-	@foreach(ApiKey entity in Items)
-	{
-		<a class="list-group-item list-group-item-action" @onclick="x => OpenItem(entity)">
-			<BSRow>
-				<BSCol LG="5">
-					@entity.Name
-				</BSCol>
-			</BSRow>			
-		</a>
-	}
-</BSListGroup>
-
+<div class="content-header">
+    <Toolbar Items="ToolbarItems"></Toolbar>
+</div>
+<div class="scroll-content">
+    <BSListGroup>
+        @foreach (ApiKey entity in Items)
+        {
+            <a class="list-group-item list-group-item-action" @onclick="x => OpenItem(entity)">
+                <BSRow>
+                    <BSCol LG="5">
+                        @entity.Name
+                    </BSCol>
+                </BSRow>
+            </a>
+        }
+    </BSListGroup>
+</div>
 
 @code {
 

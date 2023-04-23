@@ -5,57 +5,54 @@
 
 @if (Entity != null)
 {
-    <div class="role-detail">
+    <div class="content-header">
+        <h1>ApiKey</h1>
 
-        <div style="flex: 0">
-            <h1>ApiKey</h1>
-
-            <Toolbar Items="ToolbarItems"></Toolbar>
-        </div>
-        <div class="scroll-content" style="flex:1">
-            <EditForm Model="Entity">
-                <div>
-                    <div class="col-md-6">
-                        @if (IsNewEntity == false)
-                        {
-                            <!-- id -->
-                            <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Id</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                                </div>
-                            </BSRow>
-                        }
-
-                        <!-- name -->
+        <Toolbar Items="ToolbarItems"></Toolbar>
+    </div>
+    <div class="scroll-content">
+        <EditForm Model="Entity">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (IsNewEntity == false)
+                    {
+                        <!-- id -->
                         <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">Name</label>
+                            <label class="col-sm-2 col-form-label">Id</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
                             </div>
                         </BSRow>
+                    }
 
-                         <!-- value -->
-                        <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">Value</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Value" />
-                            </div>
-                        </BSRow>
+                    <!-- name -->
+                    <BSRow class="form-group">
+                        <label class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                        </div>
+                    </BSRow>
 
-                        <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Permissions</label>
-                                <div class="col-sm-10">
-                                        @foreach(SelectableElementTree<PermissionItem> permission in Permissions)
-                                        {
-                                            <PermissionItemView Permission="permission" />
-                                        }
-                                </div>                                
-                        </BSRow>
-                        
-                    </div>
-                 </div>
-          </EditForm>
-        </div>
-   </div>
+                    <!-- value -->
+                    <BSRow class="form-group">
+                        <label class="col-sm-2 col-form-label">Value</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" @bind-value="@Entity.Value" />
+                        </div>
+                    </BSRow>
+
+                    <BSRow class="form-group">
+                        <label class="col-sm-2 col-form-label">Permissions</label>
+                        <div class="col-sm-10">
+                            @foreach (SelectableElementTree<PermissionItem> permission in Permissions)
+                            {
+                                <PermissionItemView Permission="permission" />
+                            }
+                        </div>
+                    </BSRow>
+
+                </div>
+            </div>
+        </EditForm>
+    </div>
 }

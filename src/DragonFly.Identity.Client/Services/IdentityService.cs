@@ -26,14 +26,14 @@ class IdentityService : IIdentityService
 
     public async Task ChangePasswordAsync(Guid id, string newPassword)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user/change-password", new ChangePassword() { UserId = id, NewPassword = newPassword });
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user/change-password", new ChangePassword() { UserId = id, NewPassword = newPassword });
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task CreateRoleAsync(IdentityRole role)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("identity/role", role);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/role", role);
 
         response.EnsureSuccessStatusCode();
     }
@@ -44,14 +44,14 @@ class IdentityService : IIdentityService
         createUser.User = user;
         createUser.Password = password;
 
-        HttpResponseMessage response = await Client.PostAsJsonAsync("identity/user", createUser);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user", createUser);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<IEnumerable<IdentityRole>> GetRolesAsync()
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"identity/role/query", new StringContent(""));
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/identity/role/query", new StringContent(""));
 
         IList<IdentityRole>? result = await response.Content.ReadFromJsonAsync<IList<IdentityRole>>();
 
@@ -65,7 +65,7 @@ class IdentityService : IIdentityService
 
     public async Task<IEnumerable<IdentityUser>> GetUsersAsync()
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"identity/user/query", new StringContent(""));
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/identity/user/query", new StringContent(""));
 
         IList<IdentityUser>? result = await response.Content.ReadFromJsonAsync<IList<IdentityUser>>();
 
@@ -79,7 +79,7 @@ class IdentityService : IIdentityService
 
     public async Task<IdentityUser> GetUserAsync(string username)
     {
-        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"identity/user/{username}");
+        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"api/identity/user/{username}");
 
         if (user == null)
         {
@@ -91,7 +91,7 @@ class IdentityService : IIdentityService
 
     public async Task<IdentityUser> GetUserAsync(Guid id)
     {
-        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"identity/user/{id}");
+        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"api/identity/user/{id}");
 
         if (user == null)
         {
@@ -103,21 +103,21 @@ class IdentityService : IIdentityService
 
     public async Task UpdateUserAsync(IdentityUser user)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("identity/user", user);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/user", user);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task UpdateRoleAsync(IdentityRole role)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("identity/role", role);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/role", role);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<IdentityRole> GetRoleAsync(Guid id)
     {
-        IdentityRole? role = await Client.GetFromJsonAsync<IdentityRole>($"identity/role/{id}");
+        IdentityRole? role = await Client.GetFromJsonAsync<IdentityRole>($"api/identity/role/{id}");
 
         if (role == null)
         {

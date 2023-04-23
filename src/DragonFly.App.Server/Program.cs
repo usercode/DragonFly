@@ -49,8 +49,7 @@ builder.Services.AddDragonFly()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddApiKeys()
-                    .AddPermissions();
+                    .AddApiKeys();
 
 var app = builder.Build();
 
@@ -98,8 +97,7 @@ app.UseDragonFly(x => x
                         .MapImageWizard()
                         .MapApiKey()
                         .MapIdentity()
-                        .MapRestApi()
-                        .MapPermission());
+                        .MapRestApi());
 app.UseDragonFlyManager();
 app.UseSwagger();
 app.UseSwaggerUI();

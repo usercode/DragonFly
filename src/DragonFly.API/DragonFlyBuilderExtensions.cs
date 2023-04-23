@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.AspNetCore.Builders;
-using DragonFly.AspNetCore.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Http.Json;
@@ -40,6 +39,7 @@ public static class DragonFlyBuilderExtensions
             group.MapAssetFolderRestApi();
             group.MapWebHookRestApi();
             group.MapBackgroundTaskApi();
+            group.MapPermissionItemApi();
         });
 
         return builder;

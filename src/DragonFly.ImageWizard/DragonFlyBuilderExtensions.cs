@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Builders;
 using DragonFly.ImageWizard;
 using ImageWizard;

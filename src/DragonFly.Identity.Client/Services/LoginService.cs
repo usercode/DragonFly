@@ -32,7 +32,7 @@ class LoginService : ILoginService
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        HttpResponseMessage response = await Client.GetAsync("identity/CurrentUser");
+        HttpResponseMessage response = await Client.GetAsync("api/identity/CurrentUser");
 
         if (response.IsSuccessStatusCode == false)
         {

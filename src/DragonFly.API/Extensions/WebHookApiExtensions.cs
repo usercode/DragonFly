@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,10 +16,10 @@ static class WebHookApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("webhook");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapGet("{id:guid}", MapGet);
-        groupRoute.MapPost("", MapCreate);
-        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapPost("query", MapQuery).RequireAuthorization(WebHookPermissions.WebHookQuery);
+        groupRoute.MapGet("{id:guid}", MapGet).RequireAuthorization(WebHookPermissions.WebHookRead);
+        groupRoute.MapPost("", MapCreate).RequireAuthorization(WebHookPermissions.WebHookCreate);
+        groupRoute.MapPut("", MapUpdate).RequireAuthorization(WebHookPermissions.WebHookUpdate);
     }
 
     private static async Task<QueryResult<RestWebHook>> MapQuery(HttpContext context, IWebHookStorage storage)

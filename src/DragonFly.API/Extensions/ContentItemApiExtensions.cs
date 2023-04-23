@@ -2,11 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Text.Json;
+using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.API;
@@ -17,15 +16,15 @@ static class ContentItemApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("content");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapGet("{schema}/{id:guid}", MapGet);
-        groupRoute.MapPost("", MapCreate);
-        groupRoute.MapPut("", MapUpdate);
-        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete);
-        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish);
-        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish);
-        groupRoute.MapPost("publish", MapPublishQuery);
-        groupRoute.MapPost("unpublish", MapUnpublishQuery);
+        groupRoute.MapPost("query", MapQuery).RequireAuthorization(ContentPermissions.ContentQuery);
+        groupRoute.MapGet("{schema}/{id:guid}", MapGet).RequireAuthorization(ContentPermissions.ContentRead);
+        groupRoute.MapPost("", MapCreate).RequireAuthorization(ContentPermissions.ContentCreate);
+        groupRoute.MapPut("", MapUpdate).RequireAuthorization(ContentPermissions.ContentUpdate);
+        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete).RequireAuthorization(ContentPermissions.ContentDelete);
+        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish).RequireAuthorization(ContentPermissions.ContentPublish);
+        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish).RequireAuthorization(ContentPermissions.ContentUnpublish);
+        groupRoute.MapPost("publish", MapPublishQuery).RequireAuthorization(ContentPermissions.ContentPublish);
+        groupRoute.MapPost("unpublish", MapUnpublishQuery).RequireAuthorization(ContentPermissions.ContentUnpublish);
     }
 
     private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentQuery query)
@@ -51,6 +50,7 @@ static class ContentItemApiExtensions
         }
 
         result.ApplySchema();
+        result.Validate();
 
         RestContentItem restModel = result.ToRest();
 

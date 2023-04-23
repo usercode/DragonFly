@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Assets.Query;
+using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -17,16 +18,16 @@ static class AssetApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapGet("{id:guid}", MapGet);
-        groupRoute.MapPost("", MapCreate);
-        groupRoute.MapPut("", MapUpdate);
-        groupRoute.MapDelete("{id:guid}", MapDelete);
-        groupRoute.MapPost("{id:guid}/publish", MapPublish);
-        groupRoute.MapGet("{id:guid}/download", MapDownload);
-        groupRoute.MapPost("{id:guid}/upload", MapUpload);
-        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata);
-        groupRoute.MapPost("metadata", MapRefreshMetadataQuery);
+        groupRoute.MapPost("query", MapQuery).RequireAuthorization(AssetPermissions.AssetRead);
+        groupRoute.MapGet("{id:guid}", MapGet).RequireAuthorization(AssetPermissions.AssetRead);
+        groupRoute.MapPost("", MapCreate).RequireAuthorization(AssetPermissions.AssetCreate);
+        groupRoute.MapPut("", MapUpdate).RequireAuthorization(AssetPermissions.AssetUpdate);
+        groupRoute.MapDelete("{id:guid}", MapDelete).RequireAuthorization(AssetPermissions.AssetDelete);
+        groupRoute.MapPost("{id:guid}/publish", MapPublish).RequireAuthorization(AssetPermissions.AssetPublish);
+        groupRoute.MapGet("{id:guid}/download", MapDownload).RequireAuthorization(AssetPermissions.AssetDownload);
+        groupRoute.MapPost("{id:guid}/upload", MapUpload).RequireAuthorization(AssetPermissions.AssetUpload);
+        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata).RequireAuthorization(AssetPermissions.AssetUpdate);
+        groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequireAuthorization(AssetPermissions.AssetUpdate);
     }
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)

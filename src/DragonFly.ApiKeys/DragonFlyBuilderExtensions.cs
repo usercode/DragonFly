@@ -2,10 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly;
-using DragonFly.ApiKeys.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Identity.MongoDB;
-using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Builders;
 using DragonFly.Permissions;
 using DragonFLy.ApiKeys;
@@ -14,7 +11,6 @@ using DragonFLy.ApiKeys.AspNetCore.Services;
 using DragonFLy.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using AspNetCore.Decorator;
 
 namespace DragonFly.AspNetCore;
 
@@ -26,8 +22,6 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
         builder.Services.AddTransient<IPermissionAuthorizationService, PermissionAuthorizationService>();
-
-        builder.Services.Decorate<IApiKeyService, ApiKeyServiceAuthorization>();
 
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();

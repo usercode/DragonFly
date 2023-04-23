@@ -2,17 +2,15 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNet.Middleware;
-using DragonFly.AspNet.Middleware.Builders;
-using DragonFly.AspNetCore.Middleware;
 using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using DragonFly.AspNetCore.Middleware.Builders;
 using Microsoft.Extensions.Hosting;
 using DragonFly.API;
 using DragonFly.AspNetCore.Builders;
 using Microsoft.AspNetCore.Http;
+using DragonFly.Permissions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DragonFly.AspNetCore;
 
@@ -34,10 +32,12 @@ public static class DragonFlyBuilderExtensions
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
     /// <see cref="IAssetProcessing"/> -> <see cref="ImageAssetProcessing"/>, <see cref="PdfAssetProcessing"/>
+    /// <br/><br/>
+    /// Default permissions:<br/>
+    /// <see cref="ContentPermissions"/>, <see cref="SchemaPermissions"/>, <see cref="AssetPermissions"/>, <see cref="BackgroundTaskPermissions"/>, <see cref="WebHookPermissions"/>
     /// </summary>
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        services.AddSingleton<DragonFlyContext>();
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         services.AddSingleton<IDateTimeService, LocalDateTimeService>();
         services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
@@ -45,12 +45,17 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton(ContentFieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
 
-        services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
-        services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
-
         services.AddSingleton<ISlugService, SlugService>();
 
         services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
+
+        //assets
+        services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
+        services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
+
+        //permissions
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
         services.AddSignalR();
 
@@ -59,6 +64,7 @@ public static class DragonFlyBuilderExtensions
         {
             api.ContentFields().AddDefaults();
             api.AssetMetadatas().AddDefaults();
+            api.Permission().AddDefaults();
         });
 
         return builder;
@@ -112,7 +118,7 @@ public static class DragonFlyBuilderExtensions
                                     {
                                         end.EndpointList.Foreach(a => a(new DragonFlyEndpointBuilder(e)));
 
-                                        e.MapHub<BackgroundTaskHub>("/taskhub");
+                                        e.MapHub<BackgroundTaskHub>("/taskhub").RequireAuthorization(BackgroundTaskPermissions.BackgroundTaskQuery);
                                     });
                                 }
             );

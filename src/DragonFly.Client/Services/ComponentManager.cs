@@ -12,20 +12,10 @@ namespace DragonFly.Client;
 /// </summary>
 public sealed class ComponentManager
 {
-    private static ComponentManager _default;
-
-    public static ComponentManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new ComponentManager();
-            }
-
-            return _default;
-        }
-    }
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static ComponentManager Default { get; } = new ComponentManager();
 
     private IDictionary<Type, Type> _cacheFieldView;
 

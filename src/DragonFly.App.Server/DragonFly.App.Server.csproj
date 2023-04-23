@@ -25,7 +25,6 @@
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
     <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
-    <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
   </ItemGroup>
 

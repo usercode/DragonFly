@@ -48,7 +48,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
     {
-        return Start(name, 0, ctx => action(ctx));
+        return Start(name, 0, action);
     }
 
     public BackgroundTask Start<T>(string name, T input, Func<BackgroundTaskContext<T>, Task> action)

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,8 +16,8 @@ static class BackgroundTaskApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("task");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapPost("{id}/cancel", MapCancel);
+        groupRoute.MapPost("query", MapQuery).RequireAuthorization(BackgroundTaskPermissions.BackgroundTaskQuery);
+        groupRoute.MapPost("{id}/cancel", MapCancel).RequireAuthorization(BackgroundTaskPermissions.BackgroundTaskCancel);
     }
 
     private static async Task<IEnumerable<BackgroundTaskInfo>> MapQuery(HttpContext context, IBackgroundTaskManager service)

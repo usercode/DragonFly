@@ -30,7 +30,6 @@
 	
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.ApiKeys.Core\DragonFly.ApiKeys.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.Permissions.Client\DragonFly.Permissions.Client.csproj" />
     <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
   </ItemGroup>
 

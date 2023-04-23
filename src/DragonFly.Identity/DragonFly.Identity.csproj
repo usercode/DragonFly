@@ -32,7 +32,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	  <ProjectReference Include="..\DragonFly.Identity.Core\DragonFly.Identity.Core.csproj" />
-	  <ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

@@ -6,7 +6,6 @@ using System.Security.Cryptography;
 using DragonFly.AspNetCore;
 using DragonFly.Assets.Query;
 using DragonFly.Query;
-using DragonFly.Storage;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -86,9 +85,7 @@ public partial class MongoStorage : IAssetStorage
         //refresh asset infos
         using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
         {
-            SHA256 sha = SHA256.Create();
-
-            byte[] hash = sha.ComputeHash(s);
+            byte[] hash = SHA256.HashData(s);
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
@@ -185,7 +182,7 @@ public partial class MongoStorage : IAssetStorage
         }
     }
 
-    public Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {
@@ -196,6 +193,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
+        return task.ToTaskInfo();
     }
 }

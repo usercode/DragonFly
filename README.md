@@ -14,7 +14,6 @@
 | DragonFly.MongoDB           | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.MongoDB.svg)](https://www.nuget.org/packages/DragonFly.MongoDB/) |
 | DragonFly.Identity       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Identity.svg)](https://www.nuget.org/packages/DragonFly.Identity/) |
 | DragonFly.ApiKeys       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.ApiKeys.svg)](https://www.nuget.org/packages/DragonFly.ApiKeys/) |
-| DragonFly.Permissions       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Permissions.svg)](https://www.nuget.org/packages/DragonFly.Permissions/) |
 
 ## Getting started
 
@@ -178,8 +177,7 @@ builder.Services.AddDragonFly()
                   .AddMongoDbStorage()
                   .AddMongoDbIdentity()
                   .AddBlockField()
-                  .AddApiKeys()
-                  .AddPermissions();
+                  .AddApiKeys();
 
 var app = builder.Build();
 

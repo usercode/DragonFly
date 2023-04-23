@@ -31,7 +31,7 @@
 	
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.ApiKeys.Core\DragonFly.ApiKeys.Core.csproj" />
-		<ProjectReference Include="..\DragonFly.Permissions\DragonFly.Permissions.csproj" />
+		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
 	</ItemGroup>
 
   <ItemGroup>

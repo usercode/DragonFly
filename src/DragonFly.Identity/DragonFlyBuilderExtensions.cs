@@ -3,13 +3,10 @@
 // MIT License
 
 using DragonFly.AspNetCore.API.Middlewares.Logins;
-using DragonFly.AspNetCore.Identity.Middlewares;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Services;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
-using DragonFly.AspNetCore.Middleware;
 using DragonFly.AspNetCore.Builders;
-using DragonFly.Identity.AspNetCore.Authorization;
 using DragonFly.Identity.AspNetCore.Permissions;
 using DragonFly.Identity.AspNetCore.Services;
 using DragonFly.Identity.Permissions;
@@ -19,7 +16,7 @@ using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using AspNetCore.Decorator;
+using DragonFly.AspNetCore.Identity;
 
 namespace DragonFly.AspNetCore;
 
@@ -40,8 +37,6 @@ public static class DragonFlyBuilderExtensions
                         .AddCookie();
 
         builder.Services.AddAuthorization();
-
-        builder.Services.Decorate<IIdentityService, IdentityServiceAuthorization>();
 
         builder.Init(api =>
         {
