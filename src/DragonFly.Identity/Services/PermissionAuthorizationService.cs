@@ -47,7 +47,7 @@ class PermissionAuthorizationService : IPermissionAuthorizationService
 
         MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId);
 
-        IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+        IEnumerable<string> permissions = Api.Permissions().GetPolicy(permission);
 
         bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
 

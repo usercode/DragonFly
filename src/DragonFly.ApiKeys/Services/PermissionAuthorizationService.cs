@@ -41,7 +41,7 @@ internal class PermissionAuthorizationService : IPermissionAuthorizationService
 
         MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
 
-        IEnumerable<string> permissions = Api.Permission().GetPolicy(permission);
+        IEnumerable<string> permissions = Api.Permissions().GetPolicy(permission);
 
         bool found = permissions.All(p => apikey.Permissions.Contains(p));
 

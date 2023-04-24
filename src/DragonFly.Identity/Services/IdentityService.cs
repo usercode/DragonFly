@@ -127,7 +127,7 @@ class IdentityService : IIdentityService
 
         foreach (string p in role.Permissions)
         {
-            policies.AddRange(Api.Permission().GetPolicy(p));
+            policies.AddRange(Api.Permissions().GetPolicy(p));
         }
 
         policies = policies.Distinct().ToList();
@@ -177,7 +177,7 @@ class IdentityService : IIdentityService
 
         foreach (string p in role.Permissions)
         {
-            policies.AddRange(Api.Permission().GetPolicy(p));
+            policies.AddRange(Api.Permissions().GetPolicy(p));
         }
 
         policies = policies.Distinct().ToList();

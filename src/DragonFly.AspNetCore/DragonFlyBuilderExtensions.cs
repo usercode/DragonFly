@@ -64,7 +64,7 @@ public static class DragonFlyBuilderExtensions
         {
             api.ContentFields().AddDefaults();
             api.AssetMetadatas().AddDefaults();
-            api.Permission().AddDefaults();
+            api.Permissions().AddDefaults();
         });
 
         return builder;

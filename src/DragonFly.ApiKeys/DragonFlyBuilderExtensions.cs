@@ -28,7 +28,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.Permission()
+            api.Permissions()
                             .Add("ApiKey", x => x
                                             .Add(ApiKeyPermissions.ApiKeyRead, description: "Read apikey", sortkey: 0, childs: x => x
                                                     .Add(ApiKeyPermissions.ApiKeyQuery, description: "Query apikey"))
