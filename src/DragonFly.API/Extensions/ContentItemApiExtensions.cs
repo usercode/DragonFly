@@ -44,7 +44,7 @@ static class ContentItemApiExtensions
     {
         ContentItem? result = await contentStore.GetContentAsync(schema, id);
 
-        if(result == null)
+        if (result == null)
         {
             throw new Exception($"Content item not found: {schema} / {id}");
         }

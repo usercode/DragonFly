@@ -8,20 +8,20 @@ namespace DragonFly.Permissions;
 
 class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
 {
-    public PermissionAuthorizationHandler(IEnumerable<IPermissionAuthorizationService> permissionServices)
+    public PermissionAuthorizationHandler(IEnumerable<IPermissionAccessService> permissionServices)
     {
         PermissionServices = permissionServices;
     }
 
-    private IEnumerable<IPermissionAuthorizationService> PermissionServices { get; }
+    private IEnumerable<IPermissionAccessService> PermissionServices { get; }
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
         bool result = false;
 
-        foreach (IPermissionAuthorizationService permission in PermissionServices)
+        foreach (IPermissionAccessService permission in PermissionServices)
         {
-            result = await permission.AuthorizeAsync(context.User, requirement.Permission);
+            result = await permission.CanAccessAsync(context.User, requirement.Permission);
 
             if (result == true)
             {

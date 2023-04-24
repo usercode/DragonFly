@@ -14,11 +14,11 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace DragonFLy.ApiKeys.AspNetCore.Services;
+namespace DragonFLy;
 
-internal class PermissionAuthorizationService : IPermissionAuthorizationService
+internal class PermissionAccessService : IPermissionAccessService
 {
-    public PermissionAuthorizationService(IDragonFlyApi api, MongoIdentityStore store)
+    public PermissionAccessService(IDragonFlyApi api, MongoIdentityStore store)
     {
         Api = api;
         Store = store;
@@ -28,7 +28,7 @@ internal class PermissionAuthorizationService : IPermissionAuthorizationService
 
     public MongoIdentityStore Store { get; }
 
-    public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
+    public async Task<bool> CanAccessAsync(ClaimsPrincipal principal, string permission)
     {
         Claim? claim = principal.FindFirst("ApiKeyId");
 
@@ -43,7 +43,7 @@ internal class PermissionAuthorizationService : IPermissionAuthorizationService
 
         IEnumerable<string> permissions = Api.Permissions().GetPolicy(permission);
 
-        bool found = permissions.All(p => apikey.Permissions.Contains(p));
+        bool found = permissions.All(apikey.Permissions.Contains);
 
         return found;
     }

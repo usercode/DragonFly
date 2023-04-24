@@ -11,6 +11,7 @@ using DragonFLy.ApiKeys.AspNetCore.Services;
 using DragonFLy.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using DragonFLy;
 
 namespace DragonFly.AspNetCore;
 
@@ -21,7 +22,7 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<MongoIdentityStore>();
 
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
-        builder.Services.AddTransient<IPermissionAuthorizationService, PermissionAuthorizationService>();
+        builder.Services.AddTransient<IPermissionAccessService, PermissionAccessService>();
 
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();

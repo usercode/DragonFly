@@ -9,14 +9,14 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using System.Security.Claims;
 
-namespace DragonFly.Identity.AspNetCore.Permissions;
+namespace DragonFly.Identity;
 
 /// <summary>
-/// PermissionService
+/// PermissionAccessService
 /// </summary>
-class PermissionAuthorizationService : IPermissionAuthorizationService
+class PermissionAccessService : IPermissionAccessService
 {
-    public PermissionAuthorizationService(
+    public PermissionAccessService(
         MongoIdentityStore store,
         IDragonFlyApi api)
     {
@@ -34,7 +34,7 @@ class PermissionAuthorizationService : IPermissionAuthorizationService
     /// </summary>
     public IDragonFlyApi Api { get; }
 
-    public async Task<bool> AuthorizeAsync(ClaimsPrincipal principal, string permission)
+    public async Task<bool> CanAccessAsync(ClaimsPrincipal principal, string permission)
     {
         Claim? claim = principal.FindFirst("UserId");
 
