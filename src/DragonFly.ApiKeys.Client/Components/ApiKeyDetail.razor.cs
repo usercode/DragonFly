@@ -79,6 +79,13 @@ public class ApiKeyDetailBase : EntityDetailComponent<ApiKey>
         await ApiKeyService.UpdateApiKey(Entity);
     }
 
+    protected override async Task DeleteActionAsync()
+    {
+        await base.DeleteActionAsync();
+
+        await ApiKeyService.DeleteApiKey(Entity);
+    }
+
     protected override void OnSaving(SavingEventArgs args)
     {
         base.OnSaving(args);

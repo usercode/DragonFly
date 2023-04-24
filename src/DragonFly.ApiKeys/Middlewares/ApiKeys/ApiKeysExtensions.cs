@@ -21,6 +21,7 @@ static class ApiKeysExtensions
         endpoints.MapPost("api/apikey/query", MapQuery).RequireAuthorization(ApiKeyPermissions.ApiKeyQuery);
         endpoints.MapPost("api/apikey", MapCreate).RequireAuthorization(ApiKeyPermissions.ApiKeyCreate);
         endpoints.MapPut("api/apikey", MapUpdate).RequireAuthorization(ApiKeyPermissions.ApiKeyUpdate);
+        endpoints.MapDelete("api/apikey", MapDelete).RequireAuthorization(ApiKeyPermissions.ApiKeyDelete);
     }
 
     private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
@@ -42,6 +43,13 @@ static class ApiKeysExtensions
         ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
 
         await service.UpdateApiKey(entity);
+    }
+
+    private static async Task MapDelete(HttpContext context, IApiKeyService service)
+    {
+        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+
+        await service.DeleteApiKey(entity);
     }
 
     private static async Task MapQuery(HttpContext context, IApiKeyService service)
