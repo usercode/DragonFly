@@ -4,7 +4,7 @@
 
 namespace DragonFly.Permissions;
 
-public class SchemaPermissions
+public static class SchemaPermissions
 {
     public const string Schema = "Schema";
 

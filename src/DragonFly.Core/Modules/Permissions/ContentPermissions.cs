@@ -4,7 +4,7 @@
 
 namespace DragonFly.Permissions;
 
-public class ContentPermissions
+public static class ContentPermissions
 {
     public const string Content = "Content";
 

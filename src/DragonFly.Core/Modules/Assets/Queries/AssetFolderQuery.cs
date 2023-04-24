@@ -2,21 +2,15 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Core;
+
 namespace DragonFly.Assets.Query;
 
-public class AssetFolderQuery
+public class AssetFolderQuery : QueryBase
 {
     public AssetFolderQuery()
     {
-        Pattern = string.Empty;
-        Take = 50;
     }
-
-    public int Skip { get; set; }
-
-    public int Take { get; set; }
-
-    public string Pattern { get; set; }
 
     public bool RootOnly { get; set; }
 

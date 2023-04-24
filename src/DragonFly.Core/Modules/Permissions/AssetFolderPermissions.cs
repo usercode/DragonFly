@@ -4,7 +4,7 @@
 
 namespace DragonFly.Permissions;
 
-public class AssetFolderPermissions
+public static class AssetFolderPermissions
 {
     public const string AssetFolder = "AssetFolder";
 

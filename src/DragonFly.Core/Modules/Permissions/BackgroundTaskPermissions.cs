@@ -4,7 +4,7 @@
 
 namespace DragonFly.Permissions;
 
-public class BackgroundTaskPermissions
+public static class BackgroundTaskPermissions
 {
     public const string BackgroundTask = "BackgroundTask";
 

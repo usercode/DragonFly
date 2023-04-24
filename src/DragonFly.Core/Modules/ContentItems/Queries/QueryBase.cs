@@ -10,9 +10,12 @@ public abstract class QueryBase
     {
         Skip = 0;
         Top = 50;
+        Pattern = string.Empty;
     }
 
     public int Skip { get; set; }
 
     public int Top { get; set; }
+
+    public string Pattern { get; set; }
 }

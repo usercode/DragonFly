@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets;
-
 namespace DragonFly;
 
 /// <summary>
@@ -11,7 +9,7 @@ namespace DragonFly;
 /// </summary>
 public static class AssetDragonFlyApiExtensions
 {
-    public static AssetMetadataManager AssetMetadatas(this IDragonFlyApi dragonFlyApi)
+    public static AssetMetadataManager AssetMetadatas(this IDragonFlyApi api)
     {
         return AssetMetadataManager.Default;
     }

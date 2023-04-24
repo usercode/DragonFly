@@ -29,7 +29,6 @@ public static class DragonFlyBuilderExtensions
         }
 
         builder.Services.AddSingleton<MongoStorage>();
-        //builder.Services.AddSingleton<IDataStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<IContentStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<ISchemaStorage>(x => x.GetRequiredService<MongoStorage>());
         builder.Services.AddSingleton<IStructureStorage>(x => x.GetRequiredService<MongoStorage>());

@@ -4,7 +4,7 @@
 
 namespace DragonFly.Permissions;
 
-public class WebHookPermissions
+public static class WebHookPermissions
 {
     public const string WebHook = "WebHook";
 
