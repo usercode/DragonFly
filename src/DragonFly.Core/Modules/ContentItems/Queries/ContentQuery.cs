@@ -22,7 +22,6 @@ public class ContentQuery : QueryBase
         Fields = new List<FieldQuery>();
         OrderFields = new List<FieldOrder>();
 
-        SearchPattern = string.Empty;
         Top = 25;
         Published = true;
 
@@ -33,11 +32,6 @@ public class ContentQuery : QueryBase
     /// Schema
     /// </summary>
     public string? Schema { get; set; }
-
-    /// <summary>
-    /// SearchPattern
-    /// </summary>
-    public string SearchPattern { get; set; }
 
     /// <summary>
     /// Fields

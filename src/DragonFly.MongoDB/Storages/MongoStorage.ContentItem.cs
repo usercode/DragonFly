@@ -67,7 +67,7 @@ public partial class MongoStorage : IContentStorage
         List<FilterDefinition<MongoContentItem>> filters = new List<FilterDefinition<MongoContentItem>>();
 
         //filter all fields
-        if (string.IsNullOrEmpty(query.SearchPattern) == false)
+        if (string.IsNullOrEmpty(query.Pattern) == false)
         {
             List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
 
@@ -75,7 +75,7 @@ public partial class MongoStorage : IContentStorage
                                     .Where(x => x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
                                     .Select(x => x.Key))
             {
-                patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.SearchPattern, "i")));
+                patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.Pattern, "i")));
             }
 
             if (patternQuery.Count > 1)

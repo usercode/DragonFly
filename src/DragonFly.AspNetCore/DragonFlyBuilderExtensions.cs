@@ -57,6 +57,8 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
+        services.AddAuthentication();
+        services.AddAuthorization();
         services.AddSignalR();
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);

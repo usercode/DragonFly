@@ -33,9 +33,8 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<MongoIdentityStore>();
 
         builder.Services
-                        .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                        .AddAuthentication()
                         .AddCookie();
-
         builder.Services.AddAuthorization();
 
         builder.Init(api =>

@@ -13,7 +13,5 @@ public class AssetQuery : QueryBase
         Pattern = string.Empty;
     }
 
-    public string Pattern { get; set; }
-
     public Guid? Folder { get; set; }
 }

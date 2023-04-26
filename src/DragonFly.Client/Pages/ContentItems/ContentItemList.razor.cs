@@ -102,7 +102,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     {
         ContentQuery query = new()
         {
-            SearchPattern = SearchPattern,
+            Pattern = SearchPattern,
             Skip = Page * PageSize,
             Top = PageSize,
             Published = false
