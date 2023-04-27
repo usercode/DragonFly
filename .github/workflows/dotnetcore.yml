@@ -58,13 +58,7 @@ jobs:
     - name: Publish "DragonFly.Identity" to nuget
       run: dotnet nuget push "./src/DragonFly.Identity/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Identity.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
-    - name: Publish "DragonFly.Permissions.Core" to nuget
-      run: dotnet nuget push "./src/DragonFly.Permissions.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFLy.Permissions" to nuget
-      run: dotnet nuget push "./src/DragonFly.Permissions/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}} 
-    - name: Publish "DragonFly.Permissions.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.Permissions.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}         
+      run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}         
     - name: Publish "DragonFly.MongoDB" to nuget
       run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
    
