@@ -36,13 +36,12 @@ builder.Services.AddDragonFly()
                     .AddProxy(x => x
                                     .AddType<StandardPageModel>()
                                     .AddType<BlogPostModel>())
-                    .AddPermissions()
                     ;
 
 var app = builder.Build();
 
 //init DragonFly
-await app.InitDragonFly();
+await app.InitDragonFlyAsync();
 
 //data seeding
 DataSeeding seeding = app.Services.GetRequiredService<DataSeeding>();
@@ -60,8 +59,7 @@ app.UseDragonFly(x => x
                         .MapImageWizard(requireAuthentication: false)
                         .MapApiKey()
                         .MapIdentity()
-                        .MapRestApi()
-                        .MapPermission());
+                        .MapRestApi());
 app.UseDragonFlyManager();
 app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 app.UseStaticFiles();
