@@ -12,7 +12,7 @@ static class PermissionApiExtensions
 {
     public static void MapPermissionItemApi(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("permission/query", MapQuery);
+        endpoints.MapPost("permission/query", MapQuery).RequireAuthorization();
     }
 
     private static async Task MapQuery(HttpContext context, IDragonFlyApi api)

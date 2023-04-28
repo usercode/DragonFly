@@ -15,8 +15,8 @@ static class ContentNodeApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("node");
 
-        groupRoute.MapPost("query/{structure:guid}", MapQuery);
-        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPost("query/{structure:guid}", MapQuery).RequireAuthorization();
+        groupRoute.MapPost("", MapCreate).RequireAuthorization();
     }
 
     private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)

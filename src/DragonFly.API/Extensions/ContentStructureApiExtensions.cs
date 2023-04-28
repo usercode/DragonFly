@@ -15,11 +15,11 @@ static class ContentStructureApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("structure");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapGet("{id:guid}", MapGetById);
-        groupRoute.MapGet("{name}", MapGetByName);
-        groupRoute.MapPost("", MapCreate);
-        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapPost("query", MapQuery).RequireAuthorization();
+        groupRoute.MapGet("{id:guid}", MapGetById).RequireAuthorization();
+        groupRoute.MapGet("{name}", MapGetByName).RequireAuthorization();
+        groupRoute.MapPost("", MapCreate).RequireAuthorization();
+        groupRoute.MapPut("", MapUpdate).RequireAuthorization();
     }
 
     private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)
