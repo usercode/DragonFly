@@ -16,7 +16,7 @@ public interface IApiKeyService
 
     Task DeleteApiKey(ApiKey apiKey);
 
-    Task<ApiKey> GetApiKey(string value);
+    Task<ApiKey?> GetApiKey(string value);
 
     Task<ApiKey> GetApiKey(Guid id);
 

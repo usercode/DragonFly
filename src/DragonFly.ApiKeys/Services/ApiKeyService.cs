@@ -59,9 +59,14 @@ class ApiKeyService : IApiKeyService
         return result.ToModel();
     }
 
-    public async Task<ApiKey> GetApiKey(string value)
+    public async Task<ApiKey?> GetApiKey(string value)
     {
-        MongoApiKey result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Value == value);
+        MongoApiKey? result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Value == value);
+
+        if (result == null)
+        {
+            return null;
+        }
 
         return result.ToModel();
     }

@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.API.Middlewares.Logins;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Services;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
@@ -12,11 +11,11 @@ using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
 using DragonFly.Permissions;
 using DragonFly.Security;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore.Identity;
 using DragonFly.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DragonFly.AspNetCore;
 
@@ -27,15 +26,14 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
 
-        builder.Services.AddSingleton<IPermissionAccessService, PermissionAccessService>();
         builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
 
         builder.Services.AddSingleton<MongoIdentityStore>();
 
-        builder.Services
-                        .AddAuthentication()
-                        .AddCookie();
+        builder.Services.AddAuthentication().AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
         builder.Services.AddAuthorization();
+
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
         builder.Init(api =>
         {
@@ -64,7 +62,6 @@ public static class DragonFlyBuilderExtensions
 
     public static IDragonFlyMiddlewareBuilder MapIdentity(this IDragonFlyMiddlewareBuilder builder)
     {
-        builder.PreAuthBuilder(x => x.UseMiddleware<LoginMiddleware>());
         builder.Endpoints(x => x.MapIdentityApi());
 
         return builder;

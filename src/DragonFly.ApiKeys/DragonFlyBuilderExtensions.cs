@@ -4,14 +4,14 @@
 
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Builders;
-using DragonFly.Permissions;
 using DragonFLy.ApiKeys;
 using DragonFLy.ApiKeys.AspNetCore.Middlewares;
 using DragonFLy.ApiKeys.AspNetCore.Services;
 using DragonFLy.ApiKeys.Permissions;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using DragonFLy;
+using DragonFly.ApiKeys.Handlers;
+using Microsoft.AspNetCore.Authorization;
+using DragonFly.ApiKeys;
 
 namespace DragonFly.AspNetCore;
 
@@ -22,10 +22,11 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<MongoIdentityStore>();
 
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
-        builder.Services.AddTransient<IPermissionAccessService, PermissionAccessService>();
 
-        builder.Services.AddAuthentication();
+        builder.Services.AddAuthentication().AddApiKey(ApiKeyAuthenticationDefaults.AuthenticationScheme);
         builder.Services.AddAuthorization();
+
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
         builder.Init(api =>
         {
@@ -44,7 +45,6 @@ public static class DragonFlyBuilderExtensions
 
     public static IDragonFlyMiddlewareBuilder MapApiKey(this IDragonFlyMiddlewareBuilder builder)
     {
-        builder.PreAuthBuilder(x => x.UseMiddleware<ApiKeyMiddleware>());
         builder.Endpoints(x => x.MapApiKeyApi());
 
         return builder;

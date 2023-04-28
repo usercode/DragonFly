@@ -6,6 +6,7 @@ using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
 using DragonFly.AspNetCore.Identity.MongoDB.Storages.Models;
+using DragonFly.Identity.Services;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -67,14 +68,14 @@ class LoginService : ILoginService
 
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 
-        await HttpContextAccessor.HttpContext!.SignInAsync(principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+        await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
 
         return true;
     }
 
     public async Task Logout()
     {
-        await HttpContextAccessor.HttpContext!.SignOutAsync();
+        await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
     }
 
     public async Task<IdentityUser?> GetCurrentUserAsync()

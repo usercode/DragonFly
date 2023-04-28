@@ -55,7 +55,6 @@ public static class DragonFlyBuilderExtensions
 
         //permissions
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-        services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
 
         services.AddAuthentication();
         services.AddAuthorization();
@@ -92,26 +91,18 @@ public static class DragonFlyBuilderExtensions
                                     DragonFlyMiddlewareBuilder end = new DragonFlyMiddlewareBuilder();
                                     fullbuilder(end);
 
-                                    x.UseRouting();
-                                    x.UseAuthentication();
-                                    x.UseAuthorization();
-
                                     end.PreAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
-                                    //allows only requests from authenticated users
+                                    x.UseRouting();
+                                    x.UseAuthentication();
+                                    x.UseAuthorization();              
+                                    
                                     x.Use(async (context, next) =>
                                     {
-                                        if (context.User.Identity?.IsAuthenticated == false)
-                                        {
-                                            context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                                        }
-                                        else
-                                        {
-                                            Permission.Enable();
-                                            Permission.SetCurrentPrincipal(context.User);
+                                        Permission.Enable();
+                                        Permission.SetCurrentPrincipal(context.User);
 
-                                            await next(context);
-                                        }
+                                        await next(context);
                                     });
 
                                     end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));

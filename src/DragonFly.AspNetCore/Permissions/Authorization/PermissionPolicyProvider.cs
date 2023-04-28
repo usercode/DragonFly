@@ -16,14 +16,20 @@ class PermissionPolicyProvider : IAuthorizationPolicyProvider
 
     public DefaultAuthorizationPolicyProvider FallbackPolicyProvider { get; }
 
-    public Task<AuthorizationPolicy> GetDefaultPolicyAsync() => FallbackPolicyProvider.GetDefaultPolicyAsync();
+    public Task<AuthorizationPolicy> GetDefaultPolicyAsync() //=> FallbackPolicyProvider.GetDefaultPolicyAsync();
+    {
+        var policy = new AuthorizationPolicyBuilder("DragonFly_Identity", "DragonFly_ApiKey");
+        policy.RequireAssertion(x => true);
 
-    public Task<AuthorizationPolicy?> GetFallbackPolicyAsync() => FallbackPolicyProvider.GetFallbackPolicyAsync();
+        return Task.FromResult(policy.Build());
+    }
+
+public Task<AuthorizationPolicy?> GetFallbackPolicyAsync() => FallbackPolicyProvider.GetFallbackPolicyAsync();
 
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        var policy = new AuthorizationPolicyBuilder();
-        policy.AddRequirements(new PermissionRequirement(policyName));
+        var policy = new AuthorizationPolicyBuilder("DragonFly_Identity", "DragonFly_ApiKey");
+        policy.AddRequirements(new PermissionRequirement(policyName));        
 
         return Task.FromResult((AuthorizationPolicy?)policy.Build());
     }
