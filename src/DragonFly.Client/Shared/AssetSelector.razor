@@ -45,7 +45,14 @@
                 <div class="image" style="margin-top:1rem">
                     @if (string.IsNullOrEmpty(Asset.PreviewUrl) == false)
                     {
-                        <img src="@Asset.PreviewUrl" />
+                        @if(Asset.IsSVG())
+                        {
+                            <img src="@Asset.PreviewUrl" style="width:100%" />
+                        }
+                        else
+                        {
+                            <img src="@Asset.PreviewUrl" />
+                        }                        
                     }
                 </div>              
             }

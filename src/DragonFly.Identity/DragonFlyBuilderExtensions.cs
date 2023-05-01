@@ -5,17 +5,15 @@
 using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Services;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
-using DragonFly.AspNetCore.Builders;
 using DragonFly.Identity.AspNetCore.Services;
 using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
-using DragonFly.Permissions;
 using DragonFly.Security;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore.Identity;
 using DragonFly.Identity;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using DragonFly.AspNetCore.Builders;
 
 namespace DragonFly.AspNetCore;
 
@@ -26,14 +24,13 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
 
-        builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
-
         builder.Services.AddSingleton<MongoIdentityStore>();
-
-        builder.Services.AddAuthentication().AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
-        builder.Services.AddAuthorization();
-
+        builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+
+        builder.Authentication.AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
+
+        AuthenticationSchemeManager.Add(IdentityAuthenticationDefaults.AuthenticationScheme);
 
         builder.Init(api =>
         {

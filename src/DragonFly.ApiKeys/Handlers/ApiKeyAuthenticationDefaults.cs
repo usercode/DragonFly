@@ -4,7 +4,7 @@
 
 namespace DragonFly.ApiKeys.Handlers;
 
-public class ApiKeyAuthenticationDefaults
+public static class ApiKeyAuthenticationDefaults
 {
     public const string AuthenticationScheme = "DragonFly_ApiKey";
 }

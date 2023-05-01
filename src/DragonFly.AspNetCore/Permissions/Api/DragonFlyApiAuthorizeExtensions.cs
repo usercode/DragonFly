@@ -15,11 +15,6 @@ public static class DragonFlyApiAuthorizeExtensions
 {
     public static async Task AuthorizeAsync(this IDragonFlyApi api, string permission)
     {
-        if (Permission.IsEnabled == false)
-        {
-            return;
-        }
-
         ClaimsPrincipal? principal = Permission.GetCurrentPrincipal();
 
         if (principal == null)

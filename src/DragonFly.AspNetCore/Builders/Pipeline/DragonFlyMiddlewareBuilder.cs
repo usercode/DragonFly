@@ -4,7 +4,7 @@
 
 namespace DragonFly.AspNetCore.Builders;
 
-public class DragonFlyMiddlewareBuilder : IDragonFlyMiddlewareBuilder
+internal class DragonFlyMiddlewareBuilder : IDragonFlyMiddlewareBuilder
 {
     public DragonFlyMiddlewareBuilder()
     {

@@ -47,7 +47,7 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnPublishedAsync(ContentItem contentItem)
     {
-        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+        QueryResult<WebHook> result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
         foreach (WebHook webHook in result.Items)
         {
@@ -90,7 +90,7 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnPublishedAsync(Asset asset)
     {
-        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+        QueryResult<WebHook> result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
         foreach (WebHook item in result.Items)
         {
@@ -114,7 +114,7 @@ public class WebHookInterceptor : IContentInterceptor
 
     public async Task OnUnpublishedAsync(ContentItem contentItem)
     {
-        QueryResult<WebHook> result = await Permission.SuppressAsync(() => WebHookStorage.QueryAsync(new WebHookQuery()));
+        QueryResult<WebHook> result = await WebHookStorage.QueryAsync(new WebHookQuery());
 
         foreach (WebHook item in result.Items)
         {

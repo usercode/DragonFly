@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 
@@ -18,7 +19,7 @@ class PermissionPolicyProvider : IAuthorizationPolicyProvider
 
     public Task<AuthorizationPolicy> GetDefaultPolicyAsync()
     {
-        var policy = new AuthorizationPolicyBuilder("DragonFly_Identity", "DragonFly_ApiKey");
+        var policy = new AuthorizationPolicyBuilder(AuthenticationSchemeManager.GetAll());
         policy.RequireAuthenticatedUser();
 
         return Task.FromResult(policy.Build());
@@ -28,7 +29,7 @@ class PermissionPolicyProvider : IAuthorizationPolicyProvider
 
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        var policy = new AuthorizationPolicyBuilder("DragonFly_Identity", "DragonFly_ApiKey");
+        var policy = new AuthorizationPolicyBuilder(AuthenticationSchemeManager.GetAll());
         policy.RequireAuthenticatedUser();
         policy.AddRequirements(new PermissionRequirement(policyName));
 

@@ -1,5 +1,36 @@
 @import "colors";
 
+html {
+    height: 100%;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+body {
+    color: $text_regular;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body > main {
+    flex: 1 0 auto;
+}
+
+body > footer {
+    flex: 0 1 auto;
+    padding: 2rem 0;
+    margin-top: 2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    background-color: #222;
+
+    .footer-links {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
 img {
     max-width: 100%;
     max-height: 100%;
@@ -14,6 +45,8 @@ img {
 }
 
 body > header {
+    flex: 0 1 auto;
+    margin-bottom: 2rem;
     box-shadow: 0 0 1.5rem rgba(0, 0, 0, 0.15);
     background-color: #fff;
 
@@ -21,6 +54,19 @@ body > header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .icons {
+            font-size: 1.5rem;
+
+            a {
+                color: #000;
+                margin-right: 1rem;
+
+                &:last-child {
+                    margin-right: 0px;
+                }
+            }
+        }
     }
 
     .logo {
@@ -31,21 +77,25 @@ body > header {
         padding: 1rem 0;
         font-size: 1rem;
 
+        a {
+            color: $text_regular;
+        }
+
         .nav-link {
             padding: 0.5rem 1rem !important;
         }
 
-        .nav-link.active {           
-                color: #000;
-                font-weight: 400;
-                text-decoration: none;
-                background-color: #f5f5f5;            
+        .nav-link.active {
+            color: #000;
+            font-weight: 400;
+            text-decoration: none;
+            background-color: #f5f5f5;
         }
 
-        .nav-link:hover {            
-                text-decoration: none;
-                background-color: #fafafa;
-                color: #000;            
+        .nav-link:hover {
+            text-decoration: none;
+            background-color: #fafafa;
+            color: #000;
         }
     }
 

@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DragonFly.API;
-using DragonFly.AspNetCore.Builders;
-using Microsoft.AspNetCore.Http;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using DragonFly.AspNetCore.Builders;
 
 namespace DragonFly.AspNetCore;
 
@@ -56,11 +56,11 @@ public static class DragonFlyBuilderExtensions
         //permissions
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
-        services.AddAuthentication();
+        AuthenticationBuilder authenticationBuilder = services.AddAuthentication();
         services.AddAuthorization();
         services.AddSignalR();
 
-        IDragonFlyBuilder builder = new DragonFlyBuilder(services);
+        IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
         builder.Init(api =>
         {
             api.ContentFields().AddDefaults();
@@ -72,7 +72,7 @@ public static class DragonFlyBuilderExtensions
     }
 
     /// <summary>
-    /// Initialize the DragonFLy API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
+    /// Initializes the DragonFLy API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
     /// </summary>
     public static async Task InitDragonFlyAsync(this IHost host)
     {
@@ -95,11 +95,10 @@ public static class DragonFlyBuilderExtensions
 
                                     x.UseRouting();
                                     x.UseAuthentication();
-                                    x.UseAuthorization();              
+                                    x.UseAuthorization();
                                     
                                     x.Use(async (context, next) =>
                                     {
-                                        Permission.Enable();
                                         Permission.SetCurrentPrincipal(context.User);
 
                                         await next(context);

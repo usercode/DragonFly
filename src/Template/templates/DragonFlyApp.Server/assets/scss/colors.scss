@@ -4,3 +4,13 @@ $text_primary: #D54949;
 $text_light: #999;
 $border_color: #e2e2e2;
 $code_bg: #f2f2f2;
+
+a {
+    color: $text_primary;
+    text-decoration: none;
+
+    &:hover {
+        color: $text_primary;
+        text-decoration: underline;
+    }
+}
