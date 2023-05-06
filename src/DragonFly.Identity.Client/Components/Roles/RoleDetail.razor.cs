@@ -17,7 +17,7 @@ public class RoleDetailBase : EntityDetailComponent<IdentityRole>
 {
     public RoleDetailBase()
     {
-        Permissions = new List<SelectableElementTree<PermissionItem>>();
+        Permissions = new List<SelectableElementTree<Permission>>();
     }
 
     [Inject]
@@ -29,7 +29,7 @@ public class RoleDetailBase : EntityDetailComponent<IdentityRole>
     [Inject]
     public IPermissionService PermissionService { get; set; }
 
-    public IEnumerable<SelectableElementTree<PermissionItem>> Permissions { get; set; }
+    public IEnumerable<SelectableElement<Permission>> Permissions { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
@@ -58,7 +58,7 @@ public class RoleDetailBase : EntityDetailComponent<IdentityRole>
             Entity = await UserStore.GetRoleAsync(EntityId);
         }
 
-        IEnumerable<PermissionItem> permissions = await PermissionService.GetPermissionsAsync();
+        IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
         Permissions = permissions
                                 .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
@@ -84,8 +84,8 @@ public class RoleDetailBase : EntityDetailComponent<IdentityRole>
         base.OnSaving(args);
 
         Entity.Permissions = Permissions
-                                   .ToFlatList()
-                                   .Select(x => x.Name)
+                                   .Where(x=> x.IsSelected)
+                                   .Select(x => x.Element.Name)
                                    .ToList();
     }
 }

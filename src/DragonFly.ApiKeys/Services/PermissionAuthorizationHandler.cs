@@ -32,6 +32,11 @@ class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequiremen
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
+        if (context.HasSucceeded)
+        {
+            return;
+        }
+
         Claim? claim = context.User.FindFirst("ApiKeyId");
 
         if (claim == null)
@@ -41,11 +46,12 @@ class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequiremen
 
         Guid apikeyId = Guid.Parse(claim.Value);
 
-        MongoApiKey apikey = await Store.ApiKeys.AsQueryable().FirstAsync(x => x.Id == apikeyId);
-
         IEnumerable<string> permissions = Api.Permissions().GetPolicy(requirement.Permission);
 
-        bool found = permissions.All(apikey.Permissions.Contains);
+        bool found = await Store.ApiKeys.AsQueryable()
+                                            .Where(x => x.Id == apikeyId)
+                                            .Where(x => permissions.Any(p => x.Permissions.Contains(p)))
+                                            .AnyAsync();
 
         if (found)
         {

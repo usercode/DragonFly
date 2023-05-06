@@ -55,7 +55,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     {
         lock (_syncObject)
         {
-            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, Permission.GetCurrentPrincipal(), BackgroundTask.GetCurrentTask());
+            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PermissionPrincipal.GetCurrent(), BackgroundTask.GetCurrentTask());
 
             backgroundTask.Task = Task.Run(async () =>
             {

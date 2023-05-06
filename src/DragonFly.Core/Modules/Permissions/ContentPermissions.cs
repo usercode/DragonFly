@@ -6,13 +6,15 @@ namespace DragonFly.Permissions;
 
 public static class ContentPermissions
 {
-    public const string Content = "Content";
+    public static readonly PermissionGroup ContentGroup = new PermissionGroup("Content");
 
-    public const string ContentRead = "ContentRead";
-    public const string ContentQuery = "ContentQuery";
-    public const string ContentCreate = "ContentCreate";
-    public const string ContentUpdate = "ContentUpdate";
-    public const string ContentDelete = "ContentDelete";
-    public const string ContentPublish = "ContentPublish";
-    public const string ContentUnpublish = "ContentUnpublish";
+    public static readonly Permission ManageContent = new Permission(ContentGroup, "ManageContent", "Manage content");
+
+    public static readonly Permission QueryContent = new Permission(ContentGroup, "QueryContent", "Query content", ManageContent);
+    public static readonly Permission ReadContent = new Permission(ContentGroup, "ReadContent", "Read content", ManageContent, QueryContent);
+    public static readonly Permission CreateContent = new Permission(ContentGroup, "CreateContent", "Create content", ManageContent);
+    public static readonly Permission UpdateContent = new Permission(ContentGroup, "UpdateContent", "Update content", ManageContent);
+    public static readonly Permission DeleteContent = new Permission(ContentGroup, "DeleteContent", "Delete content", ManageContent);
+    public static readonly Permission PublishContent = new Permission(ContentGroup, "PublishContent", "Publish content", ManageContent);
+    public static readonly Permission UnpublishContent = new Permission(ContentGroup, "UnpublishContent", "Unpublish content", ManageContent);
 }

@@ -6,11 +6,13 @@ namespace DragonFly.Permissions;
 
 public static class WebHookPermissions
 {
-    public const string WebHook = "WebHook";
+    public static readonly PermissionGroup WebHookGroup = new PermissionGroup("WebHooks");
 
-    public const string WebHookRead = "WebHookRead";
-    public const string WebHookQuery = "WebHookQuery";
-    public const string WebHookCreate = "WebHookCreate";
-    public const string WebHookUpdate = "WebHookUpdate";
-    public const string WebHookDelete = "WebHookDelete";
+    public static readonly Permission ManageWebHook = new Permission(WebHookGroup, "ManageWebHook", "Manage webhook");
+
+    public static readonly Permission QueryWebHook = new Permission(WebHookGroup, "QueryWebHook", "Query webhook", ManageWebHook);
+    public static readonly Permission ReadWebHook = new Permission(WebHookGroup, "ReadWebHook", "Read webhook", ManageWebHook, QueryWebHook);
+    public static readonly Permission CreateWebHook = new Permission(WebHookGroup, "CreateWebHook", "Create webhook", ManageWebHook);
+    public static readonly Permission UpdateWebHook = new Permission(WebHookGroup, "UpdateWebHook", "Update webhook", ManageWebHook);
+    public static readonly Permission DeleteWebHook = new Permission(WebHookGroup, "DeleteWebHook", "Delete webhook", ManageWebHook);
 }

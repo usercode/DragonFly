@@ -6,8 +6,10 @@ namespace DragonFly.Permissions;
 
 public static class BackgroundTaskPermissions
 {
-    public const string BackgroundTask = "BackgroundTask";
+    public static readonly PermissionGroup BackgroundTaskGroup = new PermissionGroup("Background tasks");
 
-    public const string BackgroundTaskQuery = "BackgroundTaskQuery";
-    public const string BackgroundTaskCancel = "BackgroundTaskCancel";
+    public static readonly Permission ManageBackgroundTask = new Permission(BackgroundTaskGroup, "ManageBackgroundTask", "Manage background task");
+
+    public static readonly Permission QueryBackgroundTask = new Permission(BackgroundTaskGroup, "QueryBackgroundTask", "Query background task", ManageBackgroundTask);
+    public static readonly Permission CancelBackgroundTask = new Permission(BackgroundTaskGroup, "CancelBackgroundTask", "Cancel background task", ManageBackgroundTask);
 }

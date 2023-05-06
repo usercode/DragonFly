@@ -44,10 +44,7 @@
                     <BSRow class="form-group">
                         <label class="col-sm-2 col-form-label">Permissions</label>
                         <div class="col-sm-10">
-                            @foreach (SelectableElementTree<PermissionItem> permission in Permissions)
-                            {
-                                <PermissionItemView Permission="permission" />
-                            }
+                           <PermissionItemView Permissions="Permissions" />                            
                         </div>
                     </BSRow>
 

@@ -123,17 +123,6 @@ class IdentityService : IIdentityService
 
     public async Task CreateRoleAsync(IdentityRole role)
     {
-        List<string> policies = new List<string>();
-
-        foreach (string p in role.Permissions)
-        {
-            policies.AddRange(Api.Permissions().GetPolicy(p));
-        }
-
-        policies = policies.Distinct().ToList();
-
-        role.Permissions = policies;
-
         MongoIdentityRole identity = role.ToMongo();
 
         await Store.Roles.InsertOneAsync(identity);
@@ -173,19 +162,10 @@ class IdentityService : IIdentityService
 
     public async Task UpdateRoleAsync(IdentityRole role)
     {
-        List<string> policies = new List<string>();
-
-        foreach (string p in role.Permissions)
-        {
-            policies.AddRange(Api.Permissions().GetPolicy(p));
-        }
-
-        policies = policies.Distinct().ToList();
-
         await Store.Roles.UpdateOneAsync(Builders<MongoIdentityRole>.Filter.Eq(x => x.Id, role.Id),
                                         Builders<MongoIdentityRole>.Update
                                                                     .Set(x => x.Name, role.Name)
-                                                                    .Set(x => x.Permissions, policies)
+                                                                    .Set(x => x.Permissions, role.Permissions)
                                                                     );
     }
 

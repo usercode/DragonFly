@@ -6,74 +6,57 @@ namespace DragonFly.Permissions;
 
 public sealed class TraverseNode
 {
-    public TraverseNode(PermissionItem permission, IList<PermissionItem> path)
+    public TraverseNode(Permission permission, IList<Permission> path)
     {
         Permission = permission;
         Path = path;
     }
 
-    public IList<PermissionItem> Path;
+    public IList<Permission> Path;
 
-    public PermissionItem Permission;
+    public Permission Permission;
 }
 
 /// <summary>
 /// PermissionManager
 /// </summary>
-public sealed class PermissionManager : IPermissionItem
+public sealed class PermissionManager
 {
     /// <summary>
     /// Default
     /// </summary>
     public static PermissionManager Default { get; } = new PermissionManager();
 
-    public PermissionManager()
+    public event Action<Permission>? Added;
+
+    public PermissionManager Add(Permission permission)
     {
-        Items = new List<PermissionItem>();
-        Policies = new Dictionary<string, IList<string>>();
+        Items.Add(permission);
+
+        Policies.Add(permission.Name, GetImpliedPermissions(permission).Select(x=> x.Name).ToArray());
+
+        Added?.Invoke(permission);
+
+        return this;
     }
 
-    public event Action<PermissionItem>? Added;
+    private IDictionary<string, IEnumerable<string>> Policies { get; } = new Dictionary<string, IEnumerable<string>>();  
+    private IList<Permission> Items { get; } = new List<Permission>();
 
     /// <summary>
-    /// Items
+    /// GetAll
     /// </summary>
-    public IList<PermissionItem> Items { get; }
+    /// <returns></returns>
+    public IEnumerable<Permission> GetAll() => Items;
 
-    public PermissionItem Add(PermissionItem permissionItem)
-    {
-        if (_policyBuilt)
-        {
-            throw new InvalidOperationException("The PermissionManager is already fixed.");
-        }
-
-        PermissionItem? found = Items.FirstOrDefault(x => x.Name == permissionItem.Name);
-
-        if (found != null)
-        {
-            return found;
-        }
-
-        Items.Add(permissionItem);
-
-        Added?.Invoke(permissionItem);
-
-        return permissionItem;
-    }
-
-    private IDictionary<string, IList<string>> Policies { get; }
-    private bool _policyBuilt;
-
+    /// <summary>
+    /// GetPolicy
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     public IEnumerable<string> GetPolicy(string name)
     {
-        if (_policyBuilt == false)
-        {
-            BuildPolicies();
-
-            _policyBuilt = true;
-        }
-
-        if (Policies.TryGetValue(name, out IList<string>? policies))
+        if (Policies.TryGetValue(name, out IEnumerable<string>? policies))
         {
             return policies;
         }
@@ -81,13 +64,21 @@ public sealed class PermissionManager : IPermissionItem
         return Array.Empty<string>();
     }
 
-    private void BuildPolicies()
+    private IEnumerable<Permission> GetImpliedPermissions(Permission permission)
     {
-        Policies.Clear();
+        return GetImpliedPermissionsInternal(permission).Distinct().ToArray();
+    }
 
-        Items.Traverse(x =>
+    private IEnumerable<Permission> GetImpliedPermissionsInternal(Permission permission)
+    {
+        yield return permission;
+
+        foreach (Permission p in permission.ImpliedBy)
         {
-            Policies.Add(x.Permission.Name, x.Path.Select(p => p.Name).ToList());
-        });
-    }        
+            foreach (Permission a in GetImpliedPermissions(p))
+            {
+                yield return a;
+            }
+        }
+    }
 }

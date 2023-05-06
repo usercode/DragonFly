@@ -7,22 +7,25 @@ namespace DragonFly.Identity.Permissions;
 /// <summary>
 /// IdentityPermissions
 /// </summary>
-public class IdentityPermissions
+public static class IdentityPermissions
 {
-    //user
-    public const string UserRead = "UserRead";
-    public const string UserQuery = "UserQuery";
-    public const string UserCreate = "UserCreate";
-    public const string UserUpdate = "UserUpdate";
-    public const string UserDelete = "UserDelete";
+    public static readonly PermissionGroup UserGroup = new PermissionGroup("Users");
 
-    public const string PasswordChange = "PasswordChange";
+    //user
+    public static readonly Permission ReadUser = new Permission(UserGroup, "ReadUser", "Read user");
+    public static readonly Permission QueryUser = new Permission(UserGroup, "QueryUser", "Query user");
+    public static readonly Permission CreateUser = new Permission(UserGroup, "CreateUser", "Create user");
+    public static readonly Permission UpdateUser = new Permission(UserGroup, "UpdateUser", "Update user");
+    public static readonly Permission DeleteUser = new Permission(UserGroup, "DeleteUser", "Delete user");
+
+    public static readonly Permission ChangePassword = new Permission(UserGroup, "ChangePassword", "Change user");
+
+    public static readonly PermissionGroup RoleGroup = new PermissionGroup("Roles");
 
     //role
-    public const string RoleRead = "RoleRead";
-    public const string RoleQuery = "RoleQuery";
-    public const string RoleCreate = "RoleCreate";
-    public const string RoleUpdate = "RoleUpdate";
-    public const string RoleDelete = "RoleDelete";
-
+    public static readonly Permission ReadRole = new Permission(RoleGroup, "ReadRole", "Read role");
+    public static readonly Permission QueryRole = new Permission(RoleGroup, "QueryRole", "Query role");
+    public static readonly Permission CreateRole = new Permission(RoleGroup, "CreateRole", "Create role");
+    public static readonly Permission UpdateRole = new Permission(RoleGroup, "UpdateRole", "Update role");
+    public static readonly Permission DeleteRole = new Permission(RoleGroup, "DeleteRole", "Delete role");
 }

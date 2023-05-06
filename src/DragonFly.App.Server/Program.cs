@@ -3,11 +3,14 @@
 // MIT License
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
+using DragonFly.Identity.Services;
 using DragonFly.MongoDB;
+using DragonFly.Permissions;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
@@ -55,6 +58,16 @@ var app = builder.Build();
 
 //init DragonFly
 await app.InitDragonFlyAsync();
+
+IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();
+var roles = await identityService.GetRolesAsync();
+
+foreach (var role in roles)
+{
+    role.Permissions = PermissionManager.Default.GetAll().Select(x => x.Name).ToList();
+
+    await identityService.UpdateRoleAsync(role);
+}
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();

@@ -11,6 +11,8 @@ using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using DragonFly.AspNetCore.Builders;
+using DragonFly.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace DragonFly.AspNetCore;
 
@@ -99,7 +101,7 @@ public static class DragonFlyBuilderExtensions
                                     
                                     x.Use(async (context, next) =>
                                     {
-                                        Permission.SetCurrentPrincipal(context.User);
+                                        PermissionPrincipal.SetCurrent(context.User);
 
                                         await next(context);
                                     });
@@ -110,7 +112,7 @@ public static class DragonFlyBuilderExtensions
                                     {
                                         end.EndpointList.Foreach(a => a(new DragonFlyEndpointBuilder(e)));
 
-                                        e.MapHub<BackgroundTaskHub>("/taskhub").RequireAuthorization(BackgroundTaskPermissions.BackgroundTaskQuery);
+                                        e.MapHub<BackgroundTaskHub>("/taskhub").RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask);
                                     });
                                 }
             );

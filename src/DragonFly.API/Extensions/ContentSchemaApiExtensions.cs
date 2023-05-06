@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Authorization;
 using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
@@ -16,12 +17,12 @@ static class ContentSchemaApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("schema");
 
-        groupRoute.MapPost("query", MapQuery).RequireAuthorization(SchemaPermissions.SchemaQuery);
-        groupRoute.MapGet("{id:guid}", MapGetById).RequireAuthorization(SchemaPermissions.SchemaRead);
-        groupRoute.MapGet("{name}", MapGetByName).RequireAuthorization(SchemaPermissions.SchemaRead);
-        groupRoute.MapPost("", MapCreate).RequireAuthorization(SchemaPermissions.SchemaCreate);
-        groupRoute.MapPut("", MapUpdate).RequireAuthorization(SchemaPermissions.SchemaUpdate);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequireAuthorization(SchemaPermissions.SchemaDelete);
+        groupRoute.MapPost("query", MapQuery).RequirePermission(SchemaPermissions.QuerySchema);
+        groupRoute.MapGet("{id:guid}", MapGetById).RequirePermission(SchemaPermissions.ReadSchema);
+        groupRoute.MapGet("{name}", MapGetByName).RequirePermission(SchemaPermissions.ReadSchema);
+        groupRoute.MapPost("", MapCreate).RequirePermission(SchemaPermissions.CreateSchema);
+        groupRoute.MapPut("", MapUpdate).RequirePermission(SchemaPermissions.UpdateSchema);
+        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(SchemaPermissions.DeleteSchema);
     }
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)

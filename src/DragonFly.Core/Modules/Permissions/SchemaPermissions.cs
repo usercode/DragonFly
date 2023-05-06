@@ -6,11 +6,13 @@ namespace DragonFly.Permissions;
 
 public static class SchemaPermissions
 {
-    public const string Schema = "Schema";
+    public static readonly PermissionGroup SchemaGroup = new PermissionGroup("Schema");
 
-    public const string SchemaRead = "SchemaRead";
-    public const string SchemaQuery = "SchemaQuery";
-    public const string SchemaCreate = "SchemaCreate";
-    public const string SchemaUpdate = "SchemaUpdate";
-    public const string SchemaDelete = "SchemaDelete";
+    public static readonly Permission ManageSchema = new Permission(SchemaGroup, "ManageSchema", "Manage schema");
+
+    public static readonly Permission QuerySchema = new Permission(SchemaGroup, "QuerySchema", "Query schema", ManageSchema);
+    public static readonly Permission ReadSchema = new Permission(SchemaGroup, "ReadSchema", "Read schema", ManageSchema, QuerySchema);
+    public static readonly Permission CreateSchema = new Permission(SchemaGroup, "CreateSchema", "Create schema", ManageSchema);
+    public static readonly Permission UpdateSchema = new Permission(SchemaGroup, "UpdateSchema", "Update schema", ManageSchema);
+    public static readonly Permission DeleteSchema = new Permission(SchemaGroup, "DeleteSchema", "Delete schema", ManageSchema);
 }

@@ -50,7 +50,7 @@ class SeedDataAction : IPostInitialize
         IdentityRole roleAdmin = new IdentityRole();
         roleAdmin.Name = "Administrators";
 
-        api.Permissions().Items.Traverse(x => roleAdmin.Permissions.Add(x.Permission.Name));
+        roleAdmin.Permissions = api.Permissions().GetAll().Select(x => x.Name).ToList();
 
         await api.Identity().CreateRoleAsync(roleAdmin);
 

@@ -32,6 +32,11 @@ class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequiremen
 
     protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
     {
+        if (context.HasSucceeded)
+        {
+            return;
+        }
+
         Claim? claim = context.User.FindFirst("UserId");
 
         if (claim == null)
@@ -44,7 +49,10 @@ class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequiremen
 
         IEnumerable<string> permissions = Api.Permissions().GetPolicy(requirement.Permission);
 
-        bool found = await Store.Roles.AsQueryable().AnyAsync(x => user.Roles.Contains(x.Id) && permissions.All(p => x.Permissions.Contains(p)));
+        bool found = await Store.Roles.AsQueryable()
+                                        .Where(x => user.Roles.Contains(x.Id))
+                                        .Where(x => permissions.Any(p => x.Permissions.Contains(p)))
+                                        .AnyAsync();
 
         if (found)
         {

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Authorization;
 using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
@@ -16,15 +17,15 @@ static class ContentItemApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("content");
 
-        groupRoute.MapPost("query", MapQuery).RequireAuthorization(ContentPermissions.ContentQuery);
-        groupRoute.MapGet("{schema}/{id:guid}", MapGet).RequireAuthorization(ContentPermissions.ContentRead);
-        groupRoute.MapPost("", MapCreate).RequireAuthorization(ContentPermissions.ContentCreate);
-        groupRoute.MapPut("", MapUpdate).RequireAuthorization(ContentPermissions.ContentUpdate);
-        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete).RequireAuthorization(ContentPermissions.ContentDelete);
-        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish).RequireAuthorization(ContentPermissions.ContentPublish);
-        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish).RequireAuthorization(ContentPermissions.ContentUnpublish);
-        groupRoute.MapPost("publish", MapPublishQuery).RequireAuthorization(ContentPermissions.ContentPublish);
-        groupRoute.MapPost("unpublish", MapUnpublishQuery).RequireAuthorization(ContentPermissions.ContentUnpublish);
+        groupRoute.MapPost("query", MapQuery).RequirePermission(ContentPermissions.QueryContent);
+        groupRoute.MapGet("{schema}/{id:guid}", MapGet).RequirePermission(ContentPermissions.ReadContent);
+        groupRoute.MapPost("", MapCreate).RequirePermission(ContentPermissions.CreateContent);
+        groupRoute.MapPut("", MapUpdate).RequirePermission(ContentPermissions.UpdateContent);
+        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete).RequirePermission(ContentPermissions.DeleteContent);
+        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish).RequirePermission(ContentPermissions.PublishContent);
+        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish).RequirePermission(ContentPermissions.UnpublishContent);
+        groupRoute.MapPost("publish", MapPublishQuery).RequirePermission(ContentPermissions.PublishContent);
+        groupRoute.MapPost("unpublish", MapUnpublishQuery).RequirePermission(ContentPermissions.UnpublishContent);
     }
 
     private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentQuery query)

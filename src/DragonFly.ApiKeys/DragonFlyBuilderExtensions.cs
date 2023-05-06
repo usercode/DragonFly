@@ -31,13 +31,11 @@ public static class DragonFlyBuilderExtensions
         builder.Init(api =>
         {
             api.Permissions()
-                            .Add("ApiKey", x => x
-                                            .Add(ApiKeyPermissions.ApiKeyRead, description: "Read apikey", sortkey: 0, childs: x => x
-                                                    .Add(ApiKeyPermissions.ApiKeyQuery, description: "Query apikey"))
-                                            .Add(ApiKeyPermissions.ApiKeyCreate, description: "Create apikey", sortkey: 1)
-                                            .Add(ApiKeyPermissions.ApiKeyUpdate, description: "Update apikey", sortkey: 2)
-                                            .Add(ApiKeyPermissions.ApiKeyDelete, description: "Delete apikey", sortkey: 3)
-                                            );
+                            .Add(ApiKeyPermissions.QueryApiKey)
+                            .Add(ApiKeyPermissions.ReadApiKey)
+                            .Add(ApiKeyPermissions.CreateApiKey)
+                            .Add(ApiKeyPermissions.UpdateApiKey)
+                            .Add(ApiKeyPermissions.DeleteApiKey);
         });
 
         return builder;

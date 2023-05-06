@@ -2,15 +2,17 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly;
+
 namespace DragonFLy.ApiKeys.Permissions;
 
-public class ApiKeyPermissions
+public static class ApiKeyPermissions
 {
-    public const string ApiKey = "ApiKey";
+    public static readonly PermissionGroup ApiKeyGroup = new PermissionGroup("API keys");
 
-    public const string ApiKeyRead = "ApiKeyRead";
-    public const string ApiKeyQuery = "ApiKeyQuery";
-    public static string ApiKeyCreate = "ApiKeyCreate";
-    public static string ApiKeyUpdate = "ApiKeyUpdate";
-    public static string ApiKeyDelete = "ApiKeyDelete";
+    public static readonly Permission ReadApiKey = new Permission(ApiKeyGroup, "ReadApiKey", "Read api key");
+    public static readonly Permission QueryApiKey = new Permission(ApiKeyGroup, "QueryApiKey", "Query api key");
+    public static readonly Permission CreateApiKey = new Permission(ApiKeyGroup, "CreateApiKey", "Create api key");
+    public static readonly Permission UpdateApiKey = new Permission(ApiKeyGroup, "UpdateApiKey", "Update api key");
+    public static readonly Permission DeleteApiKey = new Permission(ApiKeyGroup, "DeleteApiKey", "Delete api key");
 }

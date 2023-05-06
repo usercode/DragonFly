@@ -11,17 +11,13 @@ namespace DragonFly.Client;
 
 public static class PermissionExtensions
 {
-    public static IEnumerable<SelectableElementTree<PermissionItem>> ToSelectableStructure(this IEnumerable<PermissionItem> permissions, Func<PermissionItem, bool> isSelected)
+    public static IEnumerable<SelectableElement<Permission>> ToSelectableStructure(this IEnumerable<Permission> permissions, Func<Permission, bool> isSelected)
     {
-        foreach (PermissionItem permission in permissions
-                                                    .OrderBy(x => x.SortKey)
-                                                    .ThenBy(x => x.Name))
+        foreach (Permission permission in permissions)
         {
-            yield return new SelectableElementTree<PermissionItem>(
-                                    isSelected(permission),
-                                    permission,
-                                    ToSelectableStructure(permission.Childs, isSelected).ToList())
-                    .EnableActivePath();
+            yield return new SelectableElement<Permission>(
+                                                        isSelected(permission),
+                                                        permission);
         }
     }
 }

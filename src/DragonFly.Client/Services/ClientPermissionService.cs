@@ -22,13 +22,13 @@ public class ClientPermissionService : IPermissionService
 
     public HttpClient Client { get; }
 
-    public async Task<IEnumerable<PermissionItem>> GetPermissionsAsync()
+    public async Task<IEnumerable<Permission>> GetPermissionsAsync()
     {
         HttpResponseMessage response = await Client.PostAsync("api/permission/query", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
 
-        IEnumerable<PermissionItem>? permissions = await response.Content.ReadFromJsonAsync<IEnumerable<PermissionItem>>();
+        IEnumerable<Permission>? permissions = await response.Content.ReadFromJsonAsync<IEnumerable<Permission>>();
 
         if (permissions == null)
         {

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Authorization;
 using DragonFly.Assets.Query;
 using DragonFly.Permissions;
 using DragonFly.Query;
@@ -18,16 +19,16 @@ static class AssetApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
 
-        groupRoute.MapPost("query", MapQuery).RequireAuthorization(AssetPermissions.AssetRead);
-        groupRoute.MapGet("{id:guid}", MapGet).RequireAuthorization(AssetPermissions.AssetRead);
-        groupRoute.MapPost("", MapCreate).RequireAuthorization(AssetPermissions.AssetCreate);
-        groupRoute.MapPut("", MapUpdate).RequireAuthorization(AssetPermissions.AssetUpdate);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequireAuthorization(AssetPermissions.AssetDelete);
-        groupRoute.MapPost("{id:guid}/publish", MapPublish).RequireAuthorization(AssetPermissions.AssetPublish);
-        groupRoute.MapGet("{id:guid}/download", MapDownload).RequireAuthorization(AssetPermissions.AssetDownload);
-        groupRoute.MapPost("{id:guid}/upload", MapUpload).RequireAuthorization(AssetPermissions.AssetUpload);
-        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata).RequireAuthorization(AssetPermissions.AssetUpdate);
-        groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequireAuthorization(AssetPermissions.AssetUpdate);
+        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetPermissions.ReadAsset);
+        groupRoute.MapGet("{id:guid}", MapGet).RequirePermission(AssetPermissions.ReadAsset);
+        groupRoute.MapPost("", MapCreate).RequirePermission(AssetPermissions.CreateAsset);
+        groupRoute.MapPut("", MapUpdate).RequirePermission(AssetPermissions.UpdateAsset);
+        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(AssetPermissions.DeleteAsset);
+        groupRoute.MapPost("{id:guid}/publish", MapPublish).RequirePermission(AssetPermissions.PublishAsset);
+        groupRoute.MapGet("{id:guid}/download", MapDownload).RequirePermission(AssetPermissions.DownloadAsset);
+        groupRoute.MapPost("{id:guid}/upload", MapUpload).RequirePermission(AssetPermissions.UploadAsset);
+        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata).RequirePermission(AssetPermissions.UpdateAsset);
+        groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequirePermission(AssetPermissions.UpdateAsset);
     }
 
     private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)

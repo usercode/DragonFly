@@ -80,7 +80,7 @@ class LoginService : ILoginService
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        if (Permission.GetCurrentPrincipal() is ClaimsPrincipal principal)
+        if (PermissionPrincipal.GetCurrent() is ClaimsPrincipal principal)
         {
             Claim? claimUserId = principal.Claims.FirstOrDefault(x => x.Type == "UserId");
 

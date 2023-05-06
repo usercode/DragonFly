@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Authorization;
 using DragonFly.Identity;
 using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
@@ -17,10 +18,10 @@ internal static class RoleExtensions
     {
         var group = endpoints.MapGroup("role");
 
-        group.MapGet("{id:guid}", MapGet).RequireAuthorization(IdentityPermissions.RoleRead);
-        group.MapPost("", MapCreate).RequireAuthorization(IdentityPermissions.RoleCreate);
-        group.MapPut("", MapUpdate).RequireAuthorization(IdentityPermissions.RoleUpdate);
-        group.MapPost("query", MapQuery).RequireAuthorization(IdentityPermissions.RoleQuery);
+        group.MapGet("{id:guid}", MapGet).RequirePermission(IdentityPermissions.ReadRole);
+        group.MapPost("", MapCreate).RequirePermission(IdentityPermissions.CreateRole);
+        group.MapPut("", MapUpdate).RequirePermission(IdentityPermissions.UpdateRole);
+        group.MapPost("query", MapQuery).RequirePermission(IdentityPermissions.QueryRole);
 
         return endpoints;
     }

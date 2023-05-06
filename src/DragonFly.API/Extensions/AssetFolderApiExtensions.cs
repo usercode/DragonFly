@@ -8,6 +8,7 @@ using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using DragonFly.AspNetCore.Authorization;
 
 namespace DragonFly.API;
 
@@ -17,10 +18,10 @@ static class AssetFolderApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("assetfolder");
 
-        groupRoute.MapPost("query", MapQuery).RequireAuthorization(AssetFolderPermissions.AssetFolderRead);
-        groupRoute.MapGet("{id:guid}", MapGet).RequireAuthorization(AssetFolderPermissions.AssetFolderRead);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequireAuthorization(AssetFolderPermissions.AssetFolderDelete);
-        groupRoute.MapPost("", MapCreate).RequireAuthorization(AssetFolderPermissions.AssetFolderCreate);
+        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetFolderPermissions.QueryAssetFolder);
+        groupRoute.MapGet("{id:guid}", MapGet).RequirePermission(AssetFolderPermissions.ReadAssetFolder);
+        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(AssetFolderPermissions.DeleteAssetFolder);
+        groupRoute.MapPost("", MapCreate).RequirePermission(AssetFolderPermissions.CreateAssetFolder);
     }
 
     private static async Task<QueryResult<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)

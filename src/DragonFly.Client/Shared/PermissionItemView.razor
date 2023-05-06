@@ -1,35 +1,30 @@
-﻿<div class="form-check">
-    <input id="check_@Permission.Element.Name" type="checkbox" class="form-check-input" @bind="Permission.IsSelected" />
-                                            
-    <label class="form-check-label" for="check_@Permission.Element.Name">
-        @if(string.IsNullOrEmpty(Permission.Element.Description) == false)
-        {
-        @Permission.Element.Description    
-        }
-        else
-        {
-            @Permission.Element.Name            
-        }
-        
-        </label>
+﻿@foreach (var group in Permissions.GroupBy(x=> x.Element.Group.Name).OrderBy(x => x.Key))
+{
+    <div>
+        <strong>@group.Key</strong>
     </div>
 
-    <div style="margin-left: 1.5rem">
-        @foreach(SelectableElementTree<PermissionItem> sub in Permission.Childs)
-        {
-            <PermissionItemView Permission="sub" />
-        }
+    @foreach (var permission in group)
+    {
+    <div class="form-check">
+        <input id="check_@permission.Element.Name" type="checkbox" class="form-check-input" @bind="permission.IsSelected" />
+
+        <label class="form-check-label" for="check_@permission.Element.Name">
+            @if (string.IsNullOrEmpty(permission.Element.DisplayName) == false)
+            {
+                @permission.Element.DisplayName
+            }
+            else
+            {
+                @permission.Element.Name
+            }
+        </label>
     </div>
+    }
+}
 
 @code {
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-
-        Permission.IsSelectedChanged += x => StateHasChanged();
-    }
-
     [Parameter]
-    public SelectableElementTree<PermissionItem> Permission { get; set; }
+    public IEnumerable<SelectableElement<Permission>> Permissions { get; set; }
 }

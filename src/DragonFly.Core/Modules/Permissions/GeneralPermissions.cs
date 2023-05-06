@@ -6,5 +6,5 @@ namespace DragonFly.Permissions;
 
 public static class GeneralPermissions
 {
-    public const string Admin = "Admin";
+
 }

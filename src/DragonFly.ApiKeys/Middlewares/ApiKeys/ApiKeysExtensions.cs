@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Builders;
 using DragonFLy.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
@@ -16,11 +17,11 @@ static class ApiKeysExtensions
     {
         RouteGroupBuilder group = endpoints.MapGroup("api/apikey").RequireAuthorization();
 
-        group.MapGet("{id:guid}", MapGet).RequireAuthorization(ApiKeyPermissions.ApiKeyRead);
-        group.MapPost("query", MapQuery).RequireAuthorization(ApiKeyPermissions.ApiKeyQuery);
-        group.MapPost("", MapCreate).RequireAuthorization(ApiKeyPermissions.ApiKeyCreate);
-        group.MapPut("", MapUpdate).RequireAuthorization(ApiKeyPermissions.ApiKeyUpdate);
-        group.MapDelete("", MapDelete).RequireAuthorization(ApiKeyPermissions.ApiKeyDelete);
+        group.MapGet("{id:guid}", MapGet).RequirePermission(ApiKeyPermissions.ReadApiKey);
+        group.MapPost("query", MapQuery).RequirePermission(ApiKeyPermissions.QueryApiKey);
+        group.MapPost("", MapCreate).RequirePermission(ApiKeyPermissions.CreateApiKey);
+        group.MapPut("", MapUpdate).RequirePermission(ApiKeyPermissions.UpdateApiKey);
+        group.MapDelete("", MapDelete).RequirePermission(ApiKeyPermissions.DeleteApiKey);
     }
 
     private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)

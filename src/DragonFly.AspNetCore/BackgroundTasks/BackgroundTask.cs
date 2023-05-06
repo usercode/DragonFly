@@ -11,7 +11,7 @@ namespace DragonFly;
 /// </summary>
 public class BackgroundTask : IBackgroundTaskInfo
 {
-    private readonly static AsyncLocal<BackgroundTask?> _currentTask = new AsyncLocal<BackgroundTask?>();
+    private static readonly AsyncLocal<BackgroundTask?> _currentTask = new AsyncLocal<BackgroundTask?>();
 
     public static BackgroundTask? GetCurrentTask() => _currentTask.Value;
 
