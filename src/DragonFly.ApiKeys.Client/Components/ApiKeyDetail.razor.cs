@@ -61,7 +61,7 @@ public class ApiKeyDetailBase : EntityDetailComponent<ApiKey>
         IEnumerable<Permission> permissions = await PermissionService.GetPermissionsAsync();
 
         Permissions = permissions
-                                .ToSelectableStructure(x => Entity.Permissions.Any(p => p == x.Name))
+                                .ToSelectableElement(x => Entity.Permissions.Any(p => p == x.Name))
                                 .ToList();
     }
 

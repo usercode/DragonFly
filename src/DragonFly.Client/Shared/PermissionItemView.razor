@@ -1,30 +1,50 @@
-﻿@foreach (var group in Permissions.GroupBy(x=> x.Element.Group.Name).OrderBy(x => x.Key))
+﻿@foreach (var group in Permissions.GroupBy(x => x.Element.Group.Name).OrderBy(x => x.Key))
 {
     <div>
-        <strong>@group.Key</strong>
+        <h4 style="margin-top: 1rem">@group.Key</h4>
     </div>
 
-    @foreach (var permission in group)
-    {
-    <div class="form-check">
-        <input id="check_@permission.Element.Name" type="checkbox" class="form-check-input" @bind="permission.IsSelected" />
+    <ul class="list-group">
+        @foreach (var permission in group)
+        {
+            var p1 = permission;
 
-        <label class="form-check-label" for="check_@permission.Element.Name">
-            @if (string.IsNullOrEmpty(permission.Element.DisplayName) == false)
-            {
-                @permission.Element.DisplayName
-            }
-            else
-            {
-                @permission.Element.Name
-            }
-        </label>
-    </div>
-    }
+            Permission[] impliedBy = p1.Element.GetImpliedPermissions().Where(i => Permissions.Where(x => x.IsSelected).Any(p => p.Element == i)).ToArray();
+
+            <li class="list-group-item">
+                <input id="check_@permission.Element.Name" type="checkbox" class="form-check-input me-2" @bind="permission.IsSelected" @bind:after="() => PermissionSelected(p1)" />
+
+                @if (impliedBy.Length > 0)
+                {
+                    <input type="checkbox" class="form-check-input me-2" disabled="disabled" checked="checked" />                   
+                }
+                else
+                {
+                    <input type="checkbox" class="form-check-input me-2" disabled="disabled" />
+                }
+
+                <label class="form-check-label" for="check_@permission.Element.Name" style="opacity:initial">
+                    @if (string.IsNullOrEmpty(permission.Element.DisplayName) == false)
+                    {
+                        @permission.Element.DisplayName
+                    }
+                    else
+                    {
+                        @permission.Element.Name
+                    }
+                </label>
+            </li>
+        }
+    </ul>
 }
 
 @code {
 
     [Parameter]
     public IEnumerable<SelectableElement<Permission>> Permissions { get; set; }
+
+    private void PermissionSelected(SelectableElement<Permission> permission)
+    {
+
+    }
 }

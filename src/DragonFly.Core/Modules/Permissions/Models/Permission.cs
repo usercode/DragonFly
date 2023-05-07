@@ -11,7 +11,7 @@ public class Permission
 {
     public Permission()
     {
-        
+
     }
 
     public Permission(PermissionGroup group, string name, string displayName, params Permission[] impliedBy)
@@ -40,7 +40,7 @@ public class Permission
     /// <summary>
     /// ImpliedBy
     /// </summary>
-    public IEnumerable<Permission> ImpliedBy { get; }
+    public IEnumerable<Permission> ImpliedBy { get; set; }
 
     public override bool Equals(object? obj)
     {
@@ -55,5 +55,20 @@ public class Permission
     public override int GetHashCode()
     {
         return HashCode.Combine(typeof(Permission), Name);
+    }
+
+    public static bool operator ==(Permission permission1, Permission permission2)
+    {
+        return Equals(permission1, permission2);
+    }
+
+    public static bool operator !=(Permission permission1, Permission permission2)
+    {
+        return Equals(permission1, permission2) == false;
+    }
+
+    public override string ToString()
+    {
+        return Name;
     }
 }

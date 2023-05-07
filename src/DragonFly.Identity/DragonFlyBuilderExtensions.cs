@@ -35,12 +35,14 @@ public static class DragonFlyBuilderExtensions
         builder.Init(api =>
         {
             api.Permissions()
+                            .Add(IdentityPermissions.ManageUser)
                             .Add(IdentityPermissions.QueryUser)
                             .Add(IdentityPermissions.ReadUser)
                             .Add(IdentityPermissions.CreateUser)
                             .Add(IdentityPermissions.UpdateUser)
                             .Add(IdentityPermissions.DeleteUser)
                             .Add(IdentityPermissions.ChangePassword)
+                            .Add(IdentityPermissions.ManageRole)
                             .Add(IdentityPermissions.QueryRole)
                             .Add(IdentityPermissions.ReadRole)
                             .Add(IdentityPermissions.CreateRole)

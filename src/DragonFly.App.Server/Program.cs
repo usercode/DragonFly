@@ -59,15 +59,15 @@ var app = builder.Build();
 //init DragonFly
 await app.InitDragonFlyAsync();
 
-IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();
-var roles = await identityService.GetRolesAsync();
+//IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();
+//var roles = await identityService.GetRolesAsync();
 
-foreach (var role in roles)
-{
-    role.Permissions = PermissionManager.Default.GetAll().Select(x => x.Name).ToList();
+//foreach (var role in roles)
+//{
+//    role.Permissions = PermissionManager.Default.GetAll().Select(x => x.Name).ToList();
 
-    await identityService.UpdateRoleAsync(role);
-}
+//    await identityService.UpdateRoleAsync(role);
+//}
 
 //demo tasks
 IBackgroundTaskManager taskManager = app.Services.GetRequiredService<IBackgroundTaskManager>();

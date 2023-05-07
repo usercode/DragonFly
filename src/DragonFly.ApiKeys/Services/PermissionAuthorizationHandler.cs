@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
 using DragonFly.Permissions;
 
 namespace DragonFly.ApiKeys;
@@ -46,7 +45,7 @@ class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequiremen
 
         Guid apikeyId = Guid.Parse(claim.Value);
 
-        IEnumerable<string> permissions = Api.Permissions().GetPolicy(requirement.Permission);
+        string[] permissions = Api.Permissions().Get(requirement.Permission);
 
         bool found = await Store.ApiKeys.AsQueryable()
                                             .Where(x => x.Id == apikeyId)

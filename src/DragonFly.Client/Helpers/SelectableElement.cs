@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Client.Helpers;
+namespace DragonFly.Client;
 
 public delegate void IsSelectedChangedHandler<T>(SelectableElement<T> selectableElement);
 

@@ -4,6 +4,9 @@
 
 namespace DragonFly;
 
+/// <summary>
+/// PermissionGroup
+/// </summary>
 public class PermissionGroup
 {
     public PermissionGroup()

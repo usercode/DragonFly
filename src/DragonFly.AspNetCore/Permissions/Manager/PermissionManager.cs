@@ -2,20 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Permissions;
-
-public sealed class TraverseNode
-{
-    public TraverseNode(Permission permission, IList<Permission> path)
-    {
-        Permission = permission;
-        Path = path;
-    }
-
-    public IList<Permission> Path;
-
-    public Permission Permission;
-}
+namespace DragonFly;
 
 /// <summary>
 /// PermissionManager
@@ -29,56 +16,65 @@ public sealed class PermissionManager
 
     public event Action<Permission>? Added;
 
+    private IDictionary<string, string[]> Policies { get; } = new Dictionary<string, string[]>();
+    private HashSet<Permission> Items { get; } = new HashSet<Permission>();
+
+    /// <summary>
+    /// Add
+    /// </summary>
+    /// <param name="permission"></param>
+    /// <returns></returns>
     public PermissionManager Add(Permission permission)
     {
         Items.Add(permission);
-
-        Policies.Add(permission.Name, GetImpliedPermissions(permission).Select(x=> x.Name).ToArray());
+        Policies.Add(permission.Name, BuildImpliedPermissions(permission).Select(x => x.Name).ToArray());
 
         Added?.Invoke(permission);
 
         return this;
     }
 
-    private IDictionary<string, IEnumerable<string>> Policies { get; } = new Dictionary<string, IEnumerable<string>>();  
-    private IList<Permission> Items { get; } = new List<Permission>();
-
     /// <summary>
-    /// GetAll
+    /// Gets all permissions.
     /// </summary>
     /// <returns></returns>
     public IEnumerable<Permission> GetAll() => Items;
 
     /// <summary>
-    /// GetPolicy
+    /// Gets self and implied permissions.
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public IEnumerable<string> GetPolicy(string name)
+    public string[] Get(string name)
     {
-        if (Policies.TryGetValue(name, out IEnumerable<string>? policies))
+        if (Policies.TryGetValue(name, out string[]? permissions))
         {
-            return policies;
+            return permissions;
         }
 
         return Array.Empty<string>();
     }
 
-    private IEnumerable<Permission> GetImpliedPermissions(Permission permission)
+    /// <summary>
+    /// GetImpliedPermissions
+    /// </summary>
+    /// <param name="permission"></param>
+    /// <returns></returns>
+    private IEnumerable<Permission> BuildImpliedPermissions(Permission permission)
     {
-        return GetImpliedPermissionsInternal(permission).Distinct().ToArray();
-    }
-
-    private IEnumerable<Permission> GetImpliedPermissionsInternal(Permission permission)
-    {
-        yield return permission;
-
-        foreach (Permission p in permission.ImpliedBy)
+        IEnumerable<Permission> BuildImpliedPermissionsInternal(Permission permission)
         {
-            foreach (Permission a in GetImpliedPermissions(p))
+            yield return permission;
+
+            foreach (Permission p in permission.ImpliedBy)
             {
-                yield return a;
+                foreach (Permission a in BuildImpliedPermissionsInternal(p))
+                {
+                    yield return a;
+                }
             }
         }
+
+        return BuildImpliedPermissionsInternal(permission).Distinct().ToArray();
     }
 }
