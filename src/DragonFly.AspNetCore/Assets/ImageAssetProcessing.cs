@@ -20,7 +20,7 @@ public class ImageAssetProcessing : IAssetProcessing
     {
         using Stream stream = await context.OpenAssetStreamAsync();
 
-        IImageInfo imageInfo = await Image.IdentifyAsync(stream);
+        ImageInfo imageInfo = await Image.IdentifyAsync(stream);
 
         if (imageInfo != null)
         {

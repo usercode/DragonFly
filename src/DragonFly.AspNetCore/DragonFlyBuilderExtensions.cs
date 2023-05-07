@@ -93,7 +93,7 @@ public static class DragonFlyBuilderExtensions
                                     DragonFlyMiddlewareBuilder end = new DragonFlyMiddlewareBuilder();
                                     fullbuilder(end);
 
-                                    end.PreAuthBuilders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
+                                    end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseRouting();
                                     x.UseAuthentication();
@@ -101,12 +101,22 @@ public static class DragonFlyBuilderExtensions
                                     
                                     x.Use(async (context, next) =>
                                     {
+                                        Endpoint? endpoint = context.GetEndpoint();
+
+                                        //Allows only authenticated access (except for explicit anonymous endpoint calls).
+                                        if (endpoint == null || endpoint.Metadata.Any(m => m is AllowAnonymousAttribute) == false)
+                                        {
+                                            if (context.User == null || context.User.Identities.Any(i => i.IsAuthenticated) == false)
+                                            {
+                                                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                                                return;
+                                            }
+                                        }
+
                                         PermissionPrincipal.SetCurrent(context.User);
 
                                         await next(context);
                                     });
-
-                                    end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
                                     x.UseEndpoints(e =>
                                     {

@@ -82,11 +82,11 @@ class LoginService : ILoginService
     {
         if (PermissionPrincipal.GetCurrent() is ClaimsPrincipal principal)
         {
-            Claim? claimUserId = principal.Claims.FirstOrDefault(x => x.Type == "UserId");
+            string? claimUserId = principal.FindFirstValue("UserId");
 
             if (claimUserId != null)
             {
-                Guid userIdGuid = Guid.Parse(claimUserId.Value);
+                Guid userIdGuid = Guid.Parse(claimUserId);
 
                 MongoIdentityUser? currentUser = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == userIdGuid);
 

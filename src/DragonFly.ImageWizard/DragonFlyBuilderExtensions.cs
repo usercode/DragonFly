@@ -6,6 +6,7 @@ using DragonFly.AspNetCore.Builders;
 using DragonFly.ImageWizard;
 using ImageWizard;
 using ImageWizard.Client;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -42,15 +43,15 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyMiddlewareBuilder MapImageWizard(this IDragonFlyMiddlewareBuilder builder, bool requireAuthentication = true)
+    public static IDragonFlyMiddlewareBuilder MapImageWizard(this IDragonFlyMiddlewareBuilder builder, bool requireAuthorization = true)
     {
-        if (requireAuthentication)
+        if (requireAuthorization)
         {
-            builder.Builder(x => x.UseImageWizard("/image"));
+            builder.Endpoints(x=> x.MapImageWizard().RequireAuthorization());
         }
         else
         {
-            builder.PreAuthBuilder(x => x.UseImageWizard("/image"));
+            builder.Endpoints(x => x.MapImageWizard().AllowAnonymous());
         }
 
         return builder;

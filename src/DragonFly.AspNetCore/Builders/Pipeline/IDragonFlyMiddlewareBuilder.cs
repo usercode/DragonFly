@@ -8,7 +8,5 @@ public interface IDragonFlyMiddlewareBuilder
 {
     void Endpoints(Action<IDragonFlyEndpointBuilder> endpoints);
 
-    void PreAuthBuilder(Action<IDragonFlyApplicationBuilder> builder);
-
     void Builder(Action<IDragonFlyApplicationBuilder> builder);
 }
