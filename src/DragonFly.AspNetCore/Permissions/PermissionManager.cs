@@ -45,9 +45,9 @@ public sealed class PermissionManager
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
-    public string[] Get(string name)
+    public string[] Get(string permission)
     {
-        if (Policies.TryGetValue(name, out string[]? permissions))
+        if (Policies.TryGetValue(permission, out string[]? permissions))
         {
             return permissions;
         }

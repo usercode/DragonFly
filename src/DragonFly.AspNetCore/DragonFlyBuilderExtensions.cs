@@ -45,6 +45,7 @@ public static class DragonFlyBuilderExtensions
 
         services.AddSingleton(ContentFieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
+        services.AddSingleton(PermissionManager.Default);
 
         services.AddSingleton<ISlugService, SlugService>();
 

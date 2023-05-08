@@ -27,8 +27,10 @@ public class PermissionPolicyProvider : IAuthorizationPolicyProvider
         //DragonFly permission?
         if (policyName.StartsWith(Permission.PolicyPrefix))
         {
+            //remove prefix
             string permission = policyName[Permission.PolicyPrefix.Length..];
 
+            //build policy
             var policy = new AuthorizationPolicyBuilder(PermissionSchemeManager.GetAll());
             policy.RequireAuthenticatedUser();
             policy.AddRequirements(new PermissionRequirement(permission));
