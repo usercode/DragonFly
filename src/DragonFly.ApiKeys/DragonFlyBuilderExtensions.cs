@@ -26,18 +26,14 @@ public static class DragonFlyBuilderExtensions
 
         builder.Authentication.AddApiKey(ApiKeyAuthenticationDefaults.AuthenticationScheme);
 
-        AuthenticationSchemeManager.Add(ApiKeyAuthenticationDefaults.AuthenticationScheme);
-
-        builder.Init(api =>
-        {
-            api.Permissions()
-                            .Add(ApiKeyPermissions.ManageApiKey)
-                            .Add(ApiKeyPermissions.QueryApiKey)
-                            .Add(ApiKeyPermissions.ReadApiKey)
-                            .Add(ApiKeyPermissions.CreateApiKey)
-                            .Add(ApiKeyPermissions.UpdateApiKey)
-                            .Add(ApiKeyPermissions.DeleteApiKey);
-        });
+        builder.AddPermissionScheme(ApiKeyAuthenticationDefaults.AuthenticationScheme);
+        builder.AddPermissions(
+                                ApiKeyPermissions.ManageApiKey, 
+                                ApiKeyPermissions.QueryApiKey, 
+                                ApiKeyPermissions.ReadApiKey, 
+                                ApiKeyPermissions.CreateApiKey, 
+                                ApiKeyPermissions.UpdateApiKey, 
+                                ApiKeyPermissions.DeleteApiKey);
 
         return builder;
     }

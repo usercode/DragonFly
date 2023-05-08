@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Identity.MongoDB;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using DragonFly.Permissions;
+using DragonFly.AspNetCore;
 
 namespace DragonFly.Identity;
 

@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Authorization;
 using DragonFly.Identity;
 using DragonFly.Identity.Commands;
 using DragonFly.Identity.Permissions;

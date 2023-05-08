@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,11 +16,11 @@ static class ContentStructureApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("structure");
 
-        groupRoute.MapPost("query", MapQuery).RequireAuthorization();
-        groupRoute.MapGet("{id:guid}", MapGetById).RequireAuthorization();
-        groupRoute.MapGet("{name}", MapGetByName).RequireAuthorization();
-        groupRoute.MapPost("", MapCreate).RequireAuthorization();
-        groupRoute.MapPut("", MapUpdate).RequireAuthorization();
+        groupRoute.MapPost("query", MapQuery).RequirePermission();
+        groupRoute.MapGet("{id:guid}", MapGetById).RequirePermission();
+        groupRoute.MapGet("{name}", MapGetByName).RequirePermission();
+        groupRoute.MapPost("", MapCreate).RequirePermission();
+        groupRoute.MapPut("", MapUpdate).RequirePermission();
     }
 
     private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)

@@ -8,7 +8,7 @@ using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
-using DragonFly.AspNetCore.Authorization;
+using DragonFly.AspNetCore;
 
 namespace DragonFly.API;
 

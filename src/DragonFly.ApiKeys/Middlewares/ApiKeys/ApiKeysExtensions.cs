@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Authorization;
+using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Builders;
 using DragonFLy.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
@@ -15,7 +15,7 @@ static class ApiKeysExtensions
 {
     public static void MapApiKeyApi(this IDragonFlyEndpointBuilder endpoints)
     {
-        RouteGroupBuilder group = endpoints.MapGroup("api/apikey").RequireAuthorization();
+        RouteGroupBuilder group = endpoints.MapGroup("api/apikey");
 
         group.MapGet("{id:guid}", MapGet).RequirePermission(ApiKeyPermissions.ReadApiKey);
         group.MapPost("query", MapQuery).RequirePermission(ApiKeyPermissions.QueryApiKey);

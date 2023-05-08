@@ -2,9 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Authorization;
+using DragonFly.AspNetCore;
 using DragonFly.Permissions;
-using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;

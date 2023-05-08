@@ -24,7 +24,7 @@ public sealed class PermissionManager
     /// </summary>
     /// <param name="permission"></param>
     /// <returns></returns>
-    public PermissionManager Add(Permission permission)
+    internal PermissionManager Add(Permission permission)
     {
         Items.Add(permission);
         Policies.Add(permission.Name, BuildImpliedPermissions(permission).Select(x => x.Name).ToArray());

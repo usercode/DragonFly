@@ -16,10 +16,10 @@ internal static class Extensions
 {
     public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
     {
-        RouteGroupBuilder group = endpoints.MapGroup("api/identity").RequireAuthorization();
+        RouteGroupBuilder group = endpoints.MapGroup("api/identity").RequirePermission();
 
         group.MapPost("login", MapLogin).AllowAnonymous();
-        group.MapGet("CurrentUser", CurrentUserAsync).RequireAuthorization();
+        group.MapGet("CurrentUser", CurrentUserAsync).RequirePermission();
 
         group.MapUserApi();
         group.MapRoleApi();

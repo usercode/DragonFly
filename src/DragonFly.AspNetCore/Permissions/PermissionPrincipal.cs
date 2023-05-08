@@ -4,7 +4,7 @@
 
 using System.Security.Claims;
 
-namespace DragonFly;
+namespace DragonFly.AspNetCore;
 
 /// <summary>
 /// PermissionPrincipal

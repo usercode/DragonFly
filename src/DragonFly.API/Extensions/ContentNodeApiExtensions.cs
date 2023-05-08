@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -15,8 +16,8 @@ static class ContentNodeApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("node");
 
-        groupRoute.MapPost("query/{structure:guid}", MapQuery).RequireAuthorization();
-        groupRoute.MapPost("", MapCreate).RequireAuthorization();
+        groupRoute.MapPost("query/{structure:guid}", MapQuery).RequirePermission();
+        groupRoute.MapPost("", MapCreate).RequirePermission();
     }
 
     private static async Task<QueryResult<RestContentNode>> MapQuery(HttpContext context, IStructureStorage storage, Guid structure)

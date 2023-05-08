@@ -6,5 +6,7 @@ namespace DragonFly.Permissions;
 
 public static class GeneralPermissions
 {
+    public static readonly PermissionGroup PermissionGroup = new PermissionGroup("Permissions");
 
+    public static readonly Permission ReadPermissions = new Permission(PermissionGroup, "ReadPermissions", "Read permissions");
 }

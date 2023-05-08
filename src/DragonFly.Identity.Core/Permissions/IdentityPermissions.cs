@@ -28,7 +28,7 @@ public static class IdentityPermissions
     public static readonly Permission ManageRole = new Permission(RoleGroup, "ManageRole", "Manage role");
 
     public static readonly Permission QueryRole = new Permission(RoleGroup, "QueryRole", "Query role", ManageRole);
-    public static readonly Permission ReadRole = new Permission(RoleGroup, "ReadRole", "Read role", ManageRole, QueryRole);    
+    public static readonly Permission ReadRole = new Permission(RoleGroup, "ReadRole", "Read role", ManageRole, QueryRole);
     public static readonly Permission CreateRole = new Permission(RoleGroup, "CreateRole", "Create role", ManageRole);
     public static readonly Permission UpdateRole = new Permission(RoleGroup, "UpdateRole", "Update role", ManageRole);
     public static readonly Permission DeleteRole = new Permission(RoleGroup, "DeleteRole", "Delete role", ManageRole);
