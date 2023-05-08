@@ -22,18 +22,22 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 
         builder.Services.AddSingleton<MongoIdentityStore>();
-        builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
         builder.Authentication.AddApiKey(ApiKeyAuthenticationDefaults.AuthenticationScheme);
 
         builder.AddPermissionScheme(ApiKeyAuthenticationDefaults.AuthenticationScheme);
-        builder.AddPermissions(
-                                ApiKeyPermissions.ManageApiKey, 
-                                ApiKeyPermissions.QueryApiKey, 
-                                ApiKeyPermissions.ReadApiKey, 
-                                ApiKeyPermissions.CreateApiKey, 
-                                ApiKeyPermissions.UpdateApiKey, 
-                                ApiKeyPermissions.DeleteApiKey);
+
+        builder.Init(api =>
+        {
+            api.Permissions()
+                            .Add(ApiKeyPermissions.ManageApiKey)
+                            .Add(ApiKeyPermissions.QueryApiKey)
+                            .Add(ApiKeyPermissions.ReadApiKey)
+                            .Add(ApiKeyPermissions.CreateApiKey)
+                            .Add(ApiKeyPermissions.UpdateApiKey)
+                            .Add(ApiKeyPermissions.DeleteApiKey);
+        });
 
         return builder;
     }

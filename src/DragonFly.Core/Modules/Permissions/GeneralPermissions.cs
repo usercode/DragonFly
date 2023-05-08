@@ -8,5 +8,5 @@ public static class GeneralPermissions
 {
     public static readonly PermissionGroup PermissionGroup = new PermissionGroup("Permissions");
 
-    public static readonly Permission ReadPermissions = new Permission(PermissionGroup, "ReadPermissions", "Read permissions");
+    public static readonly Permission ReadPermissions = new Permission(PermissionGroup, "Permissions:Read", "Read permissions");
 }

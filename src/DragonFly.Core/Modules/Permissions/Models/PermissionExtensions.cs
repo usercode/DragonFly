@@ -33,4 +33,14 @@ public static class PermissionExtensions
 
         return BuildImpliedPermissionsInternal(permission, hashSet);
     }
+
+    /// <summary>
+    /// Adds the policy prefix to the name.
+    /// </summary>
+    /// <param name="permission"></param>
+    /// <returns></returns>
+    public static string GetPolicyName(this Permission permission)
+    {
+        return $"{Permission.PolicyPrefix}{permission.Name}";
+    }
 }

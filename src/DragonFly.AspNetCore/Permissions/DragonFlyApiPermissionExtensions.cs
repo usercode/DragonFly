@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.AspNetCore;
+using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
@@ -22,6 +23,57 @@ public static class DragonFlyApiPermissionExtensions
     }
 
     /// <summary>
+    /// Adds default permissions.
+    /// </summary>
+    /// <param name="manager"></param>
+    /// <returns></returns>
+    public static PermissionManager AddDefaults(this PermissionManager manager)
+    {
+        manager
+            .Add(ContentPermissions.ManageContent)
+            .Add(ContentPermissions.QueryContent)
+            .Add(ContentPermissions.ReadContent)
+            .Add(ContentPermissions.CreateContent)
+            .Add(ContentPermissions.UpdateContent)
+            .Add(ContentPermissions.DeleteContent)
+            .Add(ContentPermissions.PublishContent)
+            .Add(ContentPermissions.UnpublishContent)
+            .Add(SchemaPermissions.ManageSchema)
+            .Add(SchemaPermissions.QuerySchema)
+            .Add(SchemaPermissions.ReadSchema)
+            .Add(SchemaPermissions.CreateSchema)
+            .Add(SchemaPermissions.UpdateSchema)
+            .Add(SchemaPermissions.DeleteSchema)
+            .Add(AssetPermissions.ManageAsset)
+            .Add(AssetPermissions.QueryAsset)
+            .Add(AssetPermissions.ReadAsset)
+            .Add(AssetPermissions.CreateAsset)
+            .Add(AssetPermissions.UpdateAsset)
+            .Add(AssetPermissions.DeleteAsset)
+            .Add(AssetPermissions.UploadAsset)
+            .Add(AssetPermissions.DownloadAsset)
+            .Add(AssetPermissions.PublishAsset)
+            .Add(AssetPermissions.UnpublishAsset)
+            .Add(AssetFolderPermissions.ManageAssetFolder)
+            .Add(AssetFolderPermissions.QueryAssetFolder)
+            .Add(AssetFolderPermissions.ReadAssetFolder)
+            .Add(AssetFolderPermissions.CreateAssetFolder)
+            .Add(AssetFolderPermissions.UpdateAssetFolder)
+            .Add(AssetFolderPermissions.DeleteAssetFolder)
+            .Add(BackgroundTaskPermissions.ManageBackgroundTask)
+            .Add(BackgroundTaskPermissions.QueryBackgroundTask)
+            .Add(BackgroundTaskPermissions.CancelBackgroundTask)
+            .Add(WebHookPermissions.ManageWebHook)
+            .Add(WebHookPermissions.QueryWebHook)
+            .Add(WebHookPermissions.ReadWebHook)
+            .Add(WebHookPermissions.CreateWebHook)
+            .Add(WebHookPermissions.UpdateWebHook)
+            .Add(WebHookPermissions.DeleteWebHook);
+
+        return manager;
+    }
+
+    /// <summary>
     /// Authorizes a permission.
     /// </summary>
     /// <param name="api"></param>
@@ -38,7 +90,7 @@ public static class DragonFlyApiPermissionExtensions
 
         IAuthorizationService authorizationService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.Name);
+        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.GetPolicyName());
 
         return result.Succeeded;
     }

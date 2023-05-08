@@ -54,6 +54,8 @@ public static class DragonFlyBuilderExtensions
         services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
         services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
 
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
         AuthenticationBuilder authenticationBuilder = services.AddAuthentication();
         services.AddAuthorization();
         services.AddSignalR();
@@ -63,48 +65,8 @@ public static class DragonFlyBuilderExtensions
         {
             api.ContentFields().AddDefaults();
             api.AssetMetadatas().AddDefaults();
+            api.Permissions().AddDefaults();
         });
-
-        builder.AddPermissions(
-                            ContentPermissions.ManageContent,
-                            ContentPermissions.QueryContent,
-                            ContentPermissions.ReadContent,
-                            ContentPermissions.CreateContent,
-                            ContentPermissions.UpdateContent,
-                            ContentPermissions.DeleteContent,
-                            ContentPermissions.PublishContent,
-                            ContentPermissions.UnpublishContent,
-                            SchemaPermissions.ManageSchema,
-                            SchemaPermissions.QuerySchema,
-                            SchemaPermissions.ReadSchema,
-                            SchemaPermissions.CreateSchema,
-                            SchemaPermissions.UpdateSchema,
-                            SchemaPermissions.DeleteSchema,
-                            AssetPermissions.ManageAsset,
-                            AssetPermissions.QueryAsset,
-                            AssetPermissions.ReadAsset,
-                            AssetPermissions.CreateAsset,
-                            AssetPermissions.UpdateAsset,
-                            AssetPermissions.DeleteAsset,
-                            AssetPermissions.UploadAsset,
-                            AssetPermissions.DownloadAsset,
-                            AssetPermissions.PublishAsset,
-                            AssetPermissions.UnpublishAsset,
-                            AssetFolderPermissions.ManageAssetFolder,
-                            AssetFolderPermissions.QueryAssetFolder,
-                            AssetFolderPermissions.ReadAssetFolder,
-                            AssetFolderPermissions.CreateAssetFolder,
-                            AssetFolderPermissions.UpdateAssetFolder,
-                            AssetFolderPermissions.DeleteAssetFolder,
-                            BackgroundTaskPermissions.ManageBackgroundTask,
-                            BackgroundTaskPermissions.QueryBackgroundTask,
-                            BackgroundTaskPermissions.CancelBackgroundTask,
-                            WebHookPermissions.ManageWebHook,
-                            WebHookPermissions.QueryWebHook,
-                            WebHookPermissions.ReadWebHook,
-                            WebHookPermissions.CreateWebHook,
-                            WebHookPermissions.UpdateWebHook,
-                            WebHookPermissions.DeleteWebHook);
 
         return builder;
     }

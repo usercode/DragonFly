@@ -8,8 +8,8 @@ public static class BackgroundTaskPermissions
 {
     public static readonly PermissionGroup BackgroundTaskGroup = new PermissionGroup("Background tasks");
 
-    public static readonly Permission ManageBackgroundTask = new Permission(BackgroundTaskGroup, "ManageBackgroundTask", "Manage background task");
+    public static readonly Permission ManageBackgroundTask = new Permission(BackgroundTaskGroup, "BackgroundTask:*", "Manage background task");
 
-    public static readonly Permission QueryBackgroundTask = new Permission(BackgroundTaskGroup, "QueryBackgroundTask", "Query background task", ManageBackgroundTask);
-    public static readonly Permission CancelBackgroundTask = new Permission(BackgroundTaskGroup, "CancelBackgroundTask", "Cancel background task", ManageBackgroundTask);
+    public static readonly Permission QueryBackgroundTask = new Permission(BackgroundTaskGroup, "BackgroundTask:Query", "Query background task", ManageBackgroundTask);
+    public static readonly Permission CancelBackgroundTask = new Permission(BackgroundTaskGroup, "BackgroundTask:Cancel", "Cancel background task", ManageBackgroundTask);
 }

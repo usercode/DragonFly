@@ -11,9 +11,9 @@ using DragonFly.AspNetCore;
 
 namespace DragonFly.ApiKeys;
 
-class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
+class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 {
-    public PermissionAuthorizationHandler(IDragonFlyApi api, MongoIdentityStore store)
+    public PermissionHandler(IDragonFlyApi api, MongoIdentityStore store)
     {
         Api = api;
         Store = store;

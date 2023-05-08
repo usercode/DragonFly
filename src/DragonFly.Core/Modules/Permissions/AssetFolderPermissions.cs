@@ -8,11 +8,11 @@ public static class AssetFolderPermissions
 {
     public static readonly PermissionGroup AssetFolderGroup = new PermissionGroup("Asset folders");
 
-    public static readonly Permission ManageAssetFolder = new Permission(AssetFolderGroup, "ManageAssetFolder", "Manage asset folder");
+    public static readonly Permission ManageAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:*", "Manage asset folder");
 
-    public static readonly Permission QueryAssetFolder = new Permission(AssetFolderGroup, "QueryAssetFolder", "Query asset folder", ManageAssetFolder);
-    public static readonly Permission ReadAssetFolder = new Permission(AssetFolderGroup, "ReadAssetFolder", "Read asset folder", ManageAssetFolder, QueryAssetFolder);
-    public static readonly Permission CreateAssetFolder = new Permission(AssetFolderGroup, "CreateAssetFolder", "Create asset folder", ManageAssetFolder);
-    public static readonly Permission UpdateAssetFolder = new Permission(AssetFolderGroup, "UpdateAssetFolder", "Update asset folder", ManageAssetFolder);
-    public static readonly Permission DeleteAssetFolder = new Permission(AssetFolderGroup, "DeleteAssetFolder", "Delete asset folder", ManageAssetFolder);
+    public static readonly Permission QueryAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:Query", "Query asset folder", ManageAssetFolder);
+    public static readonly Permission ReadAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:Read", "Read asset folder", ManageAssetFolder, QueryAssetFolder);
+    public static readonly Permission CreateAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:Create", "Create asset folder", ManageAssetFolder);
+    public static readonly Permission UpdateAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:Update", "Update asset folder", ManageAssetFolder);
+    public static readonly Permission DeleteAssetFolder = new Permission(AssetFolderGroup, "AssetFolder:Delete", "Delete asset folder", ManageAssetFolder);
 }

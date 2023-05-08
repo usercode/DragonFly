@@ -26,26 +26,29 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddSingleton<MongoIdentityStore>();
         builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
-        builder.Services.AddSingleton<IAuthorizationHandler, PermissionAuthorizationHandler>();
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
         builder.Authentication.AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
 
         builder.AddPermissionScheme(IdentityAuthenticationDefaults.AuthenticationScheme);
-        builder.AddPermissions(
-                                IdentityPermissions.ManageUser, 
-                                IdentityPermissions.QueryUser, 
-                                IdentityPermissions.ReadUser, 
-                                IdentityPermissions.CreateUser, 
-                                IdentityPermissions.UpdateUser, 
-                                IdentityPermissions.DeleteUser,
-                                IdentityPermissions.ChangePassword,
-                                IdentityPermissions.ManageRole,
-                                IdentityPermissions.QueryRole,
-                                IdentityPermissions.ReadRole,
-                                IdentityPermissions.CreateRole,
-                                IdentityPermissions.UpdateRole,
-                                IdentityPermissions.DeleteRole
-                                );
+
+        builder.Init(api =>
+        {
+            api.Permissions()
+                            .Add(IdentityPermissions.ManageUser)
+                            .Add(IdentityPermissions.QueryUser)
+                            .Add(IdentityPermissions.ReadUser)
+                            .Add(IdentityPermissions.CreateUser)
+                            .Add(IdentityPermissions.UpdateUser)
+                            .Add(IdentityPermissions.DeleteUser)
+                            .Add(IdentityPermissions.ChangePassword)
+                            .Add(IdentityPermissions.ManageRole)
+                            .Add(IdentityPermissions.QueryRole)
+                            .Add(IdentityPermissions.ReadRole)
+                            .Add(IdentityPermissions.CreateRole)
+                            .Add(IdentityPermissions.UpdateRole)
+                            .Add(IdentityPermissions.DeleteRole);
+        });
 
         builder.PostInit<SeedDataAction>();
 

@@ -18,7 +18,7 @@ public static class AuthorizationExtensions
     public static TBuilder RequirePermission<TBuilder>(this TBuilder builder, Permission permission)
         where TBuilder : IEndpointConventionBuilder
     {
-        return builder.RequireAuthorization(permission.Name);
+        return builder.RequireAuthorization(permission.GetPolicyName());
     }
 
     /// <summary>

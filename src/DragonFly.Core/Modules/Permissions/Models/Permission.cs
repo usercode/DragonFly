@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace DragonFly;
 
 /// <summary>
@@ -9,6 +11,8 @@ namespace DragonFly;
 /// </summary>
 public class Permission
 {
+    public const string PolicyPrefix = "DragonFly_";
+
     public Permission()
     {
 
