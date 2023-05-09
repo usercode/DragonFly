@@ -56,7 +56,7 @@ if (env.IsDevelopment())
 }
 
 app.UseDragonFly(x => x
-                        .MapImageWizard(requireAuthentication: false)
+                        .MapImageWizard(requireAuthorization : false)
                         .MapApiKey()
                         .MapIdentity()
                         .MapRestApi());

@@ -18,5 +18,5 @@ builder.AddDragonFly()
 
 WebAssemblyHost host = builder.Build();
 
-await host.InitDragonFly();
+await host.InitDragonFlyAsync();
 await host.RunAsync();
