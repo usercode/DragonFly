@@ -92,7 +92,7 @@ public static class DragonFlyClientExtensions
     /// </summary>
     /// <param name="host"></param>
     /// <returns></returns>
-    public static async Task InitDragonFly(this WebAssemblyHost host)
+    public static async Task InitDragonFlyAsync(this WebAssemblyHost host)
     {
         var api = host.Services.GetRequiredService<IDragonFlyApi>();
         await api.InitAsync();
