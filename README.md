@@ -70,7 +70,7 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 - HtmlField
 - BlockField (HeadingBlock, TextBlock, HtmlBlock, CodeBlock, ContainerBlock, ColumnBlock, AssetBlock, ReferenceBlock, GridBlock,..)
 
-How to create new content schema and content item
+### How to create new content schema and content item
 ```csharp
 IContentStorage contentStorage = ...;//use MongoStorage or ClientContentService (http client)
 
