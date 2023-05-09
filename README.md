@@ -194,8 +194,7 @@ app.UseDragonFly(x => x
                   .MapImageWizard()
                   .MapApiKey()
                   .MapIdentity()
-                  .MapRestApi()
-                  .MapPermission());
+                  .MapRestApi());
 app.UseDragonFlyManager();
 app.UseRouting();
 app.Run();
