@@ -17,7 +17,7 @@ public static class PermissionSchemeManager
     /// Adds scheme.
     /// </summary>
     /// <param name="scheme"></param>
-    internal static void Add(string scheme)
+    public static void Add(string scheme)
     {
         _items.Add(scheme);
 

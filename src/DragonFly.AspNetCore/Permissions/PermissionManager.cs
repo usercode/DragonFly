@@ -52,7 +52,7 @@ public sealed class PermissionManager
             return permissions;
         }
 
-        return Array.Empty<string>();
+        throw new Exception($"The permission '{permission}' doesn't exist.");
     }
 
     /// <summary>

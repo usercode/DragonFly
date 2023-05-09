@@ -17,6 +17,20 @@ namespace DragonFly.Client;
 
 public static class DragonFlyClientExtensions
 {
+    /// <summary>
+    /// Adds DragonFly services.
+    /// <br/><br/>
+    /// Default services:<br/>
+    /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br/>
+    /// <br/>
+    /// Default manager:<br/>
+    /// <see cref="ComponentManager"/>, <see cref="ContentFieldManager"/>, <see cref="AssetMetadataManager"/>, <see cref="AssetPreviewManager"/>
+    /// <br/><br/>
+    /// Default modules:<br/>
+    /// <see cref="ContentModule"/>, <see cref="AssetModule"/>, <see cref="WebHookModule"/>, <see cref="BackgroundTaskModule"/>, <see cref="SettingsModule"/>
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <returns></returns>
     public static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder builder)
     {
         var uri = new Uri(builder.HostEnvironment.BaseAddress);
@@ -73,6 +87,11 @@ public static class DragonFlyClientExtensions
         return builder;
     }
 
+    /// <summary>
+    /// Initializes the DragonFLy API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
+    /// </summary>
+    /// <param name="host"></param>
+    /// <returns></returns>
     public static async Task InitDragonFly(this WebAssemblyHost host)
     {
         var api = host.Services.GetRequiredService<IDragonFlyApi>();

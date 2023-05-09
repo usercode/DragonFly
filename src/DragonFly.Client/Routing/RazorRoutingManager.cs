@@ -12,12 +12,13 @@ namespace DragonFly.Client;
 /// </summary>
 public sealed class RazorRoutingManager
 {
+    /// <summary>
+    /// Default
+    /// </summary>
     public static RazorRoutingManager Default { get; } = new RazorRoutingManager();
 
-    private RazorRoutingManager()
-    {
-        Items = new List<Assembly>();
-    }
-
-    public IList<Assembly> Items { get; }
+    /// <summary>
+    /// Items
+    /// </summary>
+    public IList<Assembly> Items { get; } = new List<Assembly>();
 }
