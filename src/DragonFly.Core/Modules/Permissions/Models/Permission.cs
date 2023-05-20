@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// Permission
 /// </summary>
-public class Permission
+public class Permission : IEquatable<Permission>
 {
     public const string PolicyPrefix = "DragonFly_";
 
@@ -46,12 +46,22 @@ public class Permission
 
     public override bool Equals(object? obj)
     {
-        if (obj is Permission permissionItem)
+        if (obj is Permission permission)
         {
-            return Name == permissionItem.Name;
+            return Equals(permission);
         }
 
         return false;
+    }
+
+    public bool Equals(Permission? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        return Name == other.Name;
     }
 
     public override int GetHashCode()

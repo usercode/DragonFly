@@ -35,10 +35,12 @@
 </BSOffCanvas>
 
 <BSListGroup>
+    <CascadingValue Value="this" IsFixed="true">
     @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
     {
-        <ContentFieldItemView Key="@field.Key" Field="@field.Value" FieldsView="this" />
+        <ContentFieldItemView Key="@field.Key" Field="@field.Value" />
     }
+    </CascadingValue>
 </BSListGroup>
 
 @code {

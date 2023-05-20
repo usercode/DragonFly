@@ -88,7 +88,7 @@ public static class DragonFlyClientExtensions
     }
 
     /// <summary>
-    /// Initializes the DragonFLy API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
+    /// Initializes the DragonFly API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
     /// </summary>
     /// <param name="host"></param>
     /// <returns></returns>

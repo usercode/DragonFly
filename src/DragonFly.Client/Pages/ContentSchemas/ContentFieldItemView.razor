@@ -20,7 +20,7 @@
 </BSListGroupItem>
 
 @code {
-    [Parameter]
+    [CascadingParameter]
     public ContentFieldsView FieldsView { get; set; }
 
     [Parameter]
@@ -28,6 +28,4 @@
 
     [Parameter]
     public SchemaField Field { get; set; }
-
-    
 }

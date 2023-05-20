@@ -29,7 +29,14 @@ public partial class ClientContentService : IContentStorage
     {
         var response = await Client.PostAsJsonAsync($"api/content", entity.ToRest());
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        response.EnsureSuccessStatusCode();
+
+        ResourceCreated? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+
+        if (result == null)
+        {
+            throw new Exception();
+        }
 
         entity.Id = result.Id;
     }
