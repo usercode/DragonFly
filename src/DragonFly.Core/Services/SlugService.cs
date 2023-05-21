@@ -9,7 +9,7 @@ namespace DragonFly;
 /// <summary>
 /// SlugService
 /// </summary>
-public class SlugService : ISlugService
+public partial class SlugService : ISlugService
 {
     public string Transform(string? phrase)
     {
@@ -25,9 +25,15 @@ public class SlugService : ISlugService
         str = str.Replace("ü", "ue");
         str = str.Replace("ß", "ss");
     
-        str = Regex.Replace(str, @"[^a-z0-9-.]", "-", RegexOptions.Compiled);
-        str = Regex.Replace(str, @"-+", "-", RegexOptions.Compiled);
+        str = RegexRemoveSpecialCharacters().Replace(str, "-");
+        str = RegexRemoveDuplicateMinus().Replace(str, "-");
 
         return str.Trim('-');
     }
+
+    [GeneratedRegex("[^a-z0-9-]", RegexOptions.Compiled)]
+    private static partial Regex RegexRemoveSpecialCharacters();
+
+    [GeneratedRegex("-+", RegexOptions.Compiled)]
+    private static partial Regex RegexRemoveDuplicateMinus();
 }
