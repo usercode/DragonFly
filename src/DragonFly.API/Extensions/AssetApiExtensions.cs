@@ -88,16 +88,11 @@ static class AssetApiExtensions
             return Results.StatusCode(StatusCodes.Status304NotModified);
         }
 
-        using Stream assetStream = await storage.GetStreamAsync(asset);
-
         context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
-        context.Response.GetTypedHeaders().ETag = etag;
-        context.Response.ContentType = asset.MimeType;
-        context.Response.ContentLength = assetStream.Length;
 
-        await assetStream.CopyToAsync(context.Response.Body);
+        Stream assetStream = await storage.GetStreamAsync(asset);
 
-        return Results.Ok();
+        return Results.Stream(assetStream, contentType : asset.MimeType, entityTag: etag);
     }
 
     private static async Task MapUpload(HttpContext context, IAssetStorage storage, Guid id)
