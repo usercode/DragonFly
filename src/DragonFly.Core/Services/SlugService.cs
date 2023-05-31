@@ -31,9 +31,9 @@ public partial class SlugService : ISlugService
         return str.Trim('-');
     }
 
-    [GeneratedRegex("[^a-z0-9-]", RegexOptions.Compiled)]
+    [GeneratedRegex("[^a-z0-9-]")]
     private static partial Regex RegexRemoveSpecialCharacters();
 
-    [GeneratedRegex("-+", RegexOptions.Compiled)]
+    [GeneratedRegex("-+")]
     private static partial Regex RegexRemoveDuplicateMinus();
 }

@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Text.Json.Serialization;
+using DragonFly.Query;
 
 namespace DragonFly.API;
 
@@ -11,6 +12,10 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(RestContentSchema))]
 [JsonSerializable(typeof(RestAsset))]
 [JsonSerializable(typeof(RestAssetFolder))]
+[JsonSerializable(typeof(QueryResult<RestAsset>))]
+[JsonSerializable(typeof(QueryResult<RestContentItem>))]
+[JsonSerializable(typeof(QueryResult<RestContentSchema>))]
+[JsonSerializable(typeof(ContentQuery))]
 public partial class ApiJsonSerializerContext : JsonSerializerContext
 {
 }

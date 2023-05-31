@@ -11,8 +11,8 @@ public class LoginData
 {
     public LoginData()
     {
-        Username = String.Empty;
-        Password = String.Empty;
+        Username = string.Empty;
+        Password = string.Empty;
         IsPersistent = false;
     }
 

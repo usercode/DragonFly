@@ -20,7 +20,7 @@ class LoginService : ILoginService
 
     public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/login", new LoginData() { Username = username, Password = password, IsPersistent = isPersistent });
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/login", new LoginData() { Username = username, Password = password, IsPersistent = isPersistent }, ApiJsonSerializerContext.Default.LoginData);
 
         return response.IsSuccessStatusCode;
     }

@@ -14,6 +14,7 @@ using DragonFly.AspNetCore.Identity;
 using DragonFly.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Builders;
+using Microsoft.AspNetCore.Http.Json;
 
 namespace DragonFly.AspNetCore;
 
@@ -31,6 +32,11 @@ public static class DragonFlyBuilderExtensions
         builder.Authentication.AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
 
         builder.AddPermissionScheme(IdentityAuthenticationDefaults.AuthenticationScheme);
+
+        builder.Services.Configure<JsonOptions>(opt =>
+        {
+            //opt.SerializerOptions.AddJsonContext<ApiJsonSerializerContext>();
+        });
 
         builder.Init(api =>
         {

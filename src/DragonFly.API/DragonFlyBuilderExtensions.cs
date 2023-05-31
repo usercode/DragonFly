@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.API;
 using DragonFly.AspNetCore.Builders;
+using System.Text.Json.Serialization.Metadata;
 
 namespace DragonFly.AspNetCore;
 
@@ -18,7 +19,7 @@ public static class DragonFlyBuilderExtensions
         builder.Services.Configure<JsonOptions>(opt =>
         {
             opt.SerializerOptions.TypeInfoResolver = JsonSerializerDefault.Options.TypeInfoResolver;
-            //opt.SerializerOptions.AddContext<ApiJsonSerializerContext>();
+            //opt.SerializerOptions.AddJsonContext<ApiJsonSerializerContext>();
         });
 
         builder.Init(api => api.JsonFields().AddDefaults());

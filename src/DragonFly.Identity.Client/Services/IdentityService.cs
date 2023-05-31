@@ -26,7 +26,7 @@ class IdentityService : IIdentityService
 
     public async Task ChangePasswordAsync(Guid id, string newPassword)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user/change-password", new ChangePassword() { UserId = id, NewPassword = newPassword });
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user/change-password", new ChangePassword() { UserId = id, NewPassword = newPassword }, ApiJsonSerializerContext.Default.ChangePassword);
 
         response.EnsureSuccessStatusCode();
     }
