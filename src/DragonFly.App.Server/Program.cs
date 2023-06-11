@@ -58,7 +58,6 @@ var app = builder.Build();
 //init DragonFly
 await app.InitDragonFlyAsync();
 
-
 ////update permissions to all roles
 //IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();
 //var roles = await identityService.GetRolesAsync();
