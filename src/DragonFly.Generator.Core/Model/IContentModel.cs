@@ -7,5 +7,7 @@ namespace DragonFly;
 public interface IContentModel
 {
     Guid Id { get; }
-
+    ContentItem GetContentItem();
+    static abstract IContentMetadata Metadata { get; }
 }
+
