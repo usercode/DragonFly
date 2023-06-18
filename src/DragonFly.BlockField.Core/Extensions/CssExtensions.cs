@@ -133,6 +133,7 @@ public static class CssExtensions
             CodeType.XML => "xml",
             CodeType.SQL => "sql",
             CodeType.SVG => "svg",
+            CodeType.Docker => "docker",
             _ => null
         };
 

@@ -7,6 +7,7 @@ namespace DragonFly.BlockField;
 public enum CodeType
 {
     Plain,
+    Docker,
     CSharp,
     HTML,
     HLSL,
