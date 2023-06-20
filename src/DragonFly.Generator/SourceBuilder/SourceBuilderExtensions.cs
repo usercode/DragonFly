@@ -2,10 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace DragonFly.Generator.SourceBuilder;
 
 static class SourceBuilderExtensions
@@ -22,18 +18,18 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddNamespace(this SourceBuilder builder, string name, Action<SourceBuilder> inner)
+    public static SourceBuilder AddNamespace(this SourceBuilder builder, string name, Action<SourceBuilder> body)
     {
         builder.AppendLine($"namespace {name}");
-        builder.AppendBlock(inner);
+        builder.AppendBlock(body);
 
         return builder;
     }
 
-    public static SourceBuilder AddClass(this SourceBuilder builder, Modifier modifier, string name, Action<SourceBuilder> inner, bool isPartial = false, bool isStatic = false, bool isSealed = false, IEnumerable<string>? baseTypes = null)
+    public static SourceBuilder AddClass(this SourceBuilder builder, Modifier modifier, string name, Action<SourceBuilder> body, bool isPartial = false, bool isStatic = false, bool isSealed = false, IEnumerable<string>? baseTypes = null)
     {
         builder.AppendTabs();
-        builder.Append($"{modifier.Name} ");
+        builder.Append($"{modifier} ");
 
         if (isStatic)
         {
@@ -54,20 +50,103 @@ static class SourceBuilderExtensions
 
         if (baseTypes != null)
         {
-            builder.Append($" : {string.Join(", ", baseTypes)}");            
+            builder.Append($" : {string.Join(", ", baseTypes)}");
         }
 
         builder.AppendLine();
-        builder.AppendBlock(inner);
+        builder.AppendBlock(body);
         builder.AppendLine();
 
         return builder;
     }
 
-    public static SourceBuilder AddContentConstructor(this SourceBuilder builder, Modifier modifier, string name)
+    public static SourceBuilder AddMethod(this SourceBuilder builder, string name, TypeElement returnType, Modifier modifier, ParameterList parameterList, Action<SourceBuilder> body)
     {
-        builder.AppendLine($"{modifier} {name}(ContentItem contentItem)");
-        builder.AppendBlock(x => x.AppendLine("_contentItem = contentItem;"));
+        builder.AppendLine($"{modifier} {returnType} {name}{parameterList}");
+        builder.AppendBlock(body);
+
+        return builder;
+    }
+
+    public static SourceBuilder AddLambdaMethod(this SourceBuilder builder, Modifier modifier, TypeElement returnType, string name, ParameterList parameterList, string body)
+    {
+        builder.AppendLine($"{modifier} {returnType} {name}{parameterList} => {body};");
+
+        return builder;
+    }
+
+    public static SourceBuilder AddVirtualMethod(this SourceBuilder builder, string name, TypeElement returnType, Modifier modifier, ParameterList parameterList, Action<SourceBuilder> body)
+    {
+        builder.AppendLine($"{modifier} virtual {returnType} {name}{parameterList}");
+        builder.AppendBlock(body);
+
+        return builder;
+    }
+
+    public static SourceBuilder AddStaticMethod(this SourceBuilder builder, string name, TypeElement returnType, Modifier modifier, ParameterList parameterList, Action<SourceBuilder> body)
+    {
+        builder.AppendLine($"{modifier} static {returnType} {name}{parameterList}");
+        builder.AppendBlock(body);
+
+        return builder;
+    }
+
+    public static SourceBuilder AddProperty(this SourceBuilder builder, string type, string name, Modifier modifier, bool isPartial = false, string? variable = null)
+    {
+        builder.AppendTabs();
+        builder.Append($"{modifier} ");
+
+        if (isPartial)
+        {
+            builder.Append("partial ");
+        }
+
+        builder.Append($"{type} {name}");
+        builder.AppendLine();
+
+        if (variable == null)
+        {
+            builder.AppendBlock(x =>
+            {
+                x.AppendLine($"get;");
+                x.AppendLine($"set;");
+            });
+        }
+        else
+        {
+            builder.AppendBlock(x =>
+            {
+                x.AppendLine($"get => {variable};");
+                x.AppendLine($"set => {variable} = value;");
+            });
+        }
+
+        builder.AppendLine();
+
+        return builder;
+    }
+
+    public static SourceBuilder AddField(this SourceBuilder builder, Modifier modifier, string type, string name, bool isReadOnly = false)
+    {
+        builder.AppendTabs();
+        builder.Append($"{modifier} ");
+
+        if (isReadOnly)
+        {
+            builder.Append("readonly ");
+        }
+
+        builder.Append($"{type} {name};");
+        builder.AppendLine();
+
+        return builder;
+    }
+
+    public static SourceBuilder AddConstructor(this SourceBuilder builder, Modifier modifier, string name, ParameterList parameterList, Action<SourceBuilder> body)
+    {
+        builder.AppendLine($"{modifier} {name}{parameterList}");
+        builder.AppendBlock(body);
+
         builder.AppendLine();
 
         return builder;
@@ -104,12 +183,12 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddContentIdProperty(this SourceBuilder builder)
-    {
-        builder.AppendLine("public Guid Id => _contentItem.Id;");
+    //public static SourceBuilder AddContentIdProperty(this SourceBuilder builder)
+    //{
+    //    builder.AppendLine("public Guid Id => _contentItem.Id;");
 
-        return builder;
-    }
+    //    return builder;
+    //}
 
     public static SourceBuilder AddContentItemProperty(this SourceBuilder builder)
     {
@@ -118,102 +197,44 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddContentMetadataProperty(this SourceBuilder builder, string type, string name, string value)
+    public static SourceBuilder AddlambdaProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string value)
     {
-        builder.AppendLine($"public {type} {name} => \"{value}\";");
+        builder.AppendLine($"{modifier} {type} {name} => {value};");
 
         return builder;
     }
 
-    public static SourceBuilder AddContentMetadataCreate(this SourceBuilder builder, string className)
+    public static SourceBuilder AddContentMetadataCreateSchema(this SourceBuilder builder, string className, IEnumerable<ContentItemProperty> properties)
     {
-        builder.AppendLine($"IContentModel IContentMetadata.Create(ContentItem contentItem) => Create(contentItem);");
-
-        return builder;
-    }
-
-    public static SourceBuilder AddContentMetadata2Create(this SourceBuilder builder, string className)
-    {
-        builder.AppendLine($"public {className} Create(ContentItem contentItem) => new {className}(contentItem);");
-
-        return builder;
-    }
-
-    public static SourceBuilder AddStaticContentMetadataProperty(this SourceBuilder builder, string className)
-    {
-        builder.AppendLine($"static IContentMetadata IContentModel.Metadata => Metadata;");
-
-        return builder;
-    }
-
-    public static SourceBuilder AddStaticContentMetadata2Property(this SourceBuilder builder, string className)
-    {
-        builder.AppendLine($"public static {className}Metadata Metadata => new {className}Metadata();");
-
-        return builder;
-    }
-
-    public static SourceBuilder AddContentMetadataModelNameProperty(this SourceBuilder builder, string className)
-    {
-        builder.AppendLine($"public string ModelName => \"{className}\";");
-
-        return builder;
-    }
-
-    public static SourceBuilder AddProperty(this SourceBuilder builder, string type, string name, bool isPublic = true, bool isPartial = false, string? variable = null)
-    {
-        builder.AppendTabs();
-
-        if (isPublic)
+        builder.AppendLine($"public ContentSchema CreateSchema()");
+        builder.AppendBlock(x =>
         {
-            builder.Append("public ");
-        }
-        else
-        {
-            builder.Append("private ");
-        }
+            x.AppendLine($"ContentSchema schema = new ContentSchema(\"{className}\");");
+            x.AppendLine();
 
-        if (isPartial)
-        {
-            builder.Append("partial ");
-        }
-
-        builder.Append($"{type} {name}");
-        builder.AppendLine();
-
-        if (variable == null)
-        {
-            builder.AppendBlock(x =>
+            foreach (ContentItemProperty property in properties)
             {
-                x.AppendLine($"get;");
-                x.AppendLine($"set;");
-            });
-        }
-        else
-        {
-            builder.AppendBlock(x =>
-            {
-                x.AppendLine($"get => {variable};");
-                x.AppendLine($"set => {variable} = value;");
-            });
-        }
+                string? parameters = null;
 
-        builder.AppendLine();
+                if (string.IsNullOrEmpty(property.AttributeParameters) == false)
+                {
+                    parameters = $" {{ {property.AttributeParameters} }}";
+                }
 
-        return builder;
-    }
+                x.AppendLine($"new {property.AttributeName}Attribute(){parameters}.AddToSchema(schema, \"{property.PropertyName}\");");
+            }
+            x.AppendLine();
 
-    public static SourceBuilder AddReadOnlyField(this SourceBuilder builder, Modifier modifier, string type, string name)
-    {
-        builder.AppendLine($"{modifier} readonly {type} {name};");
-        builder.AppendLine();
+            x.AppendLine($"return schema;");
+        });
 
         return builder;
     }
 
-    public static SourceBuilder AddExtensionToModel(this SourceBuilder builder, string type)
+    public static SourceBuilder AddExtensionMethod(this SourceBuilder builder, Modifier modifier, string name, string returnType, Parameter thisParamter, Action<SourceBuilder> body)
     {
-        builder.AppendLine($"public static {type} To{type}(this ContentItem contentItem) => {type}.Metadata.Create(contentItem);");
+        builder.AppendLine($"{modifier} static {returnType} {name}(this {thisParamter})");
+        builder.AppendBlock(body);
         builder.AppendLine();
 
         return builder;

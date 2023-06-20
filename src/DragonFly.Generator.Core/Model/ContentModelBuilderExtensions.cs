@@ -18,7 +18,7 @@ public static class ContentModelBuilderExtensions
             return null;
         }
 
-        return (TContentModel)TContentModel.Metadata.Create(content);
+        return (TContentModel)TContentModel.Metadata.CreateModel(content);
     }
 
     public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
@@ -68,7 +68,7 @@ public static class ContentModelBuilderExtensions
             return null;
         }
 
-        return (TContentModel)TContentModel.Metadata.Create(result.Items[0]);
+        return (TContentModel)TContentModel.Metadata.CreateModel(result.Items[0]);
     }
 
     public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
@@ -80,6 +80,6 @@ public static class ContentModelBuilderExtensions
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
-        return result.Convert(x => (TContentModel)TContentModel.Metadata.Create(x));
+        return result.Convert(x => (TContentModel)TContentModel.Metadata.CreateModel(x));
     }
 }

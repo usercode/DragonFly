@@ -8,16 +8,19 @@ using DragonFly.Validations;
 namespace DragonFly;
 
 [FieldOptions(typeof(ColorFieldOptions))]
-public class ColorField : TextBaseField
+public partial class ColorField : TextBaseField
 {
     public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
     {
         if (HasValue)
         {
-            if (Regex.IsMatch(Value, "^#[a-f0-9]{6}$", RegexOptions.Compiled) == false)
+            if (RegexHex().IsMatch(Value) == false)
             {
                 context.AddInvalidValidation(nameof(Value));
             }
         }
     }
+
+    [GeneratedRegex("^#[a-f0-9]{6}$")]
+    private static partial Regex RegexHex();
 }

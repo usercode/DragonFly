@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Generator.Core.Attributes.Fields;
+namespace DragonFly.Generator;
 
 [AttributeUsage(AttributeTargets.Field)]
 public abstract class BaseFieldAttribute : Attribute
@@ -11,5 +11,5 @@ public abstract class BaseFieldAttribute : Attribute
 
     public bool ListField { get; set; }
 
-    public abstract void ApplySchema(string property, ContentSchema schema);
+    public abstract void AddToSchema(ContentSchema schema, string property);
 }

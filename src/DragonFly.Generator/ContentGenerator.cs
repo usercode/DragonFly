@@ -3,6 +3,7 @@ using DragonFly;
 using DragonFly.Generator;
 using DragonFly.Generator.SourceBuilder;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DragonFly;
@@ -21,9 +22,8 @@ public class ContentGenerator : IIncrementalGenerator
                                    {
                                        return ctx;
                                    });
-
+        
         context.RegisterSourceOutput(classProvider, Generate);
-        //context.RegisterPostInitializationOutput(x => x.AddSource("DragonFly.ContentAttribute.g.cs", SourceGenerationHelper.Attribute));
     }
 
     private static void Generate(SourceProductionContext ctx, GeneratorSyntaxContext g)
@@ -36,6 +36,18 @@ public class ContentGenerator : IIncrementalGenerator
         }
 
         ClassDeclarationSyntax classSyntax = (ClassDeclarationSyntax)g.Node;
+
+        //try
+        //{
+        //    var r22 = g.SemanticModel.GetConstantValue(classSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments[0].Expression);
+
+        //    string fieldAttribute = classSyntax.AttributeLists[0].Attributes[0].Name.ToString();
+        //    var arg = classSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString();
+        //}
+        //catch
+        //{
+
+        //}
 
         if (classSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "ContentItem") == false)
         {
@@ -52,62 +64,80 @@ public class ContentGenerator : IIncrementalGenerator
         //properties of contentitems
         foreach (var field in classSyntax.Members.OfType<FieldDeclarationSyntax>().Where(x=> x.AttributeLists.Count > 0))
         {
+            string attributeName = field.AttributeLists[0].Attributes[0].Name.ToString();
+            string attributeParameters = field.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString() ?? string.Empty;
+
             string fieldName = field.Declaration.Variables[0].Identifier.Text;
             string propertyName = fieldName.TrimStart('_').FirstCharToUpper();
             string propertyType = field.Declaration.Type.ToString();
-            string contentFieldType = propertyType;
             bool isSingleValue = false;
 
             var propertyTypeSymbol = g.SemanticModel.GetTypeInfo(field.Declaration.Type);
-            if (propertyTypeSymbol.Type.IsValueType || propertyTypeSymbol.Type.Name == "String")
+
+            if (propertyTypeSymbol.Type?.IsValueType == true || propertyTypeSymbol.Type?.Name == "String")
             {
                 isSingleValue = true;
             }
 
-            properties.Add(new ContentItemProperty() { PropertyName = propertyName, FieldName = fieldName, PropertyType = propertyType, IsSingleValue = isSingleValue });
+            properties.Add(new ContentItemProperty() 
+            { 
+                AttributeName = attributeName,
+                AttributeParameters = attributeParameters,
+                PropertyName = propertyName, 
+                PropertyType = propertyType, 
+                IsSingleValue = isSingleValue });
         }
 
-        builder.AddUsings("DragonFly");
+        builder.AddUsings("DragonFly", "DragonFly.Generator");
         builder.AddNamespace(ns, x =>
         {
             x.AddClass(Modifier.Public, className, x => 
             {
-                x.AddStaticContentMetadataProperty(className);
-                x.AddStaticContentMetadata2Property(className);
+                x.AppendLine($"static IContentMetadata IContentModel.Metadata => Metadata;");
+                x.AppendLine($"public static {className}Metadata Metadata => new {className}Metadata();");
 
-                x.AddContentConstructor(Modifier.Public, className);
-                x.AddReadOnlyField(Modifier.Private, "ContentItem", "_contentItem");
-                x.AddContentIdProperty();
-                x.AddContentItemProperty();
-                
+                x.AddConstructor(Modifier.Public, className, ParameterList.New.Add("ContentItem", "contentItem"), x =>
+                {
+                    x.AppendLine("_contentItem = contentItem;");
+                });
+                x.AddField(Modifier.Private, "ContentItem", "_contentItem", isReadOnly: true);
+                x.AddlambdaProperty(Modifier.Public, TypeElement.Guid, "Id", "_contentItem.Id");
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get("ContentItem"), "GetContentItem", ParameterList.New, "_contentItem");
+
                 foreach (ContentItemProperty property in properties)
                 {
                     x.AddContentProperty(property);
                 }
             },
-            isPartial : true, 
-            isSealed : true,
-            baseTypes : new[] { "IContentModel" });
+            isPartial: true,
+            isSealed: true,
+            baseTypes: new[] { "IContentModel" });
 
             x.AddClass(Modifier.Public, $"{className}Metadata", x =>
             {
-                x.AddContentMetadataModelNameProperty(className);
+                x.AddlambdaProperty(Modifier.Public, TypeElement.String, "ModelName", $"\"{className}\"");
 
                 foreach (ContentItemProperty property in properties)
                 {
-                    x.AddContentMetadataProperty("string", property.PropertyName, property.PropertyName);
+                    x.AddlambdaProperty(Modifier.Public, TypeElement.String, property.PropertyName, $"\"{property.PropertyName}\"");
                 }
 
-                x.AddContentMetadataCreate(className);
-                x.AddContentMetadata2Create(className);
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New.Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
+
+                x.AppendLine($"IContentModel IContentMetadata.CreateModel(ContentItem contentItem) => CreateModel(contentItem);");
+
+                x.AddContentMetadataCreateSchema(className, properties);
 
             },
-            isSealed : true,
+            isSealed: true,
             baseTypes: new[] { "IContentMetadata" });
 
             x.AddClass(Modifier.Public, $"{className}Extensions", x =>
             {
-                x.AddExtensionToModel(className);
+                x.AddExtensionMethod(Modifier.Public, $"To{className}", className, new Parameter("contentItem","ContentItem"), x =>
+                {
+                    x.AppendLine($"return {className}.Metadata.CreateModel(contentItem);");
+                });
 
             }, 
             isStatic: true);

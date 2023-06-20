@@ -9,13 +9,15 @@ namespace DragonFly.Generator;
 /// </summary>
 public class Modifier
 {
-    public static readonly Modifier Public = new Modifier("public");
+    public static readonly Modifier Public = Get("public");
 
-    public static readonly Modifier Private = new Modifier("private");
+    public static readonly Modifier Private = Get("private");
 
-    public static readonly Modifier Internal = new Modifier("internal");
+    public static readonly Modifier Internal = Get("internal");
 
-    public Modifier(string name)
+    public static Modifier Get(string name) => new Modifier(name);
+
+    private Modifier(string name)
     {
         Name = name;
     }

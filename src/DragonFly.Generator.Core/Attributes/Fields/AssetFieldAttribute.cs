@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Generator.Core.Attributes.Fields;
-
 namespace DragonFly.Generator;
 
 public class AssetFieldAttribute : BaseFieldAttribute
@@ -14,7 +12,7 @@ public class AssetFieldAttribute : BaseFieldAttribute
 
     public bool ShowPreview { get; set; }
 
-    public override void ApplySchema(string property, ContentSchema schema)
+    public override void AddToSchema(ContentSchema schema, string property)
     {
         schema.AddField(
                                 name: property,

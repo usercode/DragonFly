@@ -8,5 +8,7 @@ public interface IContentMetadata
 {
     string ModelName { get; }
 
-    IContentModel Create(ContentItem contentItem);
+    IContentModel CreateModel(ContentItem contentItem);
+
+    ContentSchema CreateSchema();
 }

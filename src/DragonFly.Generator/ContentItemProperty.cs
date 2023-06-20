@@ -13,5 +13,6 @@ internal class ContentItemProperty
     public string PropertyName { get; set; }
     public string PropertyType { get; set; }
     public bool IsSingleValue { get; set; }
-    public string FieldName { get; set; }
+    public string AttributeName { get; set; }
+    public string AttributeParameters { get; set; }
 }

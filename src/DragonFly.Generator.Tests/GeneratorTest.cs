@@ -32,10 +32,10 @@ public class GeneratorTest
         var source = """
                     namespace DragonFly.Generator.Tests;
 
-                    [ContentItem]
+                    [ContentItem("TestContent")]
                     public partial class Product
                     {
-
+                        [StringField]
                         public string? _title;
                     }
                     
