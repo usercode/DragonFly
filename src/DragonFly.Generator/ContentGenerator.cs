@@ -66,18 +66,13 @@ public class ContentGenerator : IIncrementalGenerator
         {
             string attributeName = field.AttributeLists[0].Attributes[0].Name.ToString();
             string attributeParameters = field.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString() ?? string.Empty;
-
+            
+            var propertyTypeSymbol = g.SemanticModel.GetTypeInfo(field.Declaration.Type);
+            
             string fieldName = field.Declaration.Variables[0].Identifier.Text;
             string propertyName = fieldName.TrimStart('_').FirstCharToUpper();
             string propertyType = field.Declaration.Type.ToString();
-            bool isSingleValue = false;
-
-            var propertyTypeSymbol = g.SemanticModel.GetTypeInfo(field.Declaration.Type);
-
-            if (propertyTypeSymbol.Type?.IsValueType == true || propertyTypeSymbol.Type?.Name == "String")
-            {
-                isSingleValue = true;
-            }
+            bool isSingleValue = propertyTypeSymbol.Type?.IsValueType == true || propertyTypeSymbol.Type?.Name == "String";
 
             properties.Add(new ContentItemProperty() 
             { 
@@ -94,7 +89,7 @@ public class ContentGenerator : IIncrementalGenerator
             x.AddClass(Modifier.Public, className, x => 
             {
                 x.AppendLine($"static IContentMetadata IContentModel.Metadata => Metadata;");
-                x.AppendLine($"public static {className}Metadata Metadata => new {className}Metadata();");
+                x.AddGetProperty(Modifier.Public, TypeElement.Get($"{className}Metadata"), "Metadata", $"new {className}Metadata()", isStatic: true);
 
                 x.AddConstructor(Modifier.Public, className, ParameterList.New.Add("ContentItem", "contentItem"), x =>
                 {
@@ -115,6 +110,11 @@ public class ContentGenerator : IIncrementalGenerator
 
             x.AddClass(Modifier.Public, $"{className}Metadata", x =>
             {
+                x.AddConstructor(Modifier.Public, $"{className}Metadata", ParameterList.New, x =>
+                {
+                    x.AppendLine("Schema = CreateSchema();");
+                });
+
                 x.AddlambdaProperty(Modifier.Public, TypeElement.String, "ModelName", $"\"{className}\"");
 
                 foreach (ContentItemProperty property in properties)
@@ -122,8 +122,12 @@ public class ContentGenerator : IIncrementalGenerator
                     x.AddlambdaProperty(Modifier.Public, TypeElement.String, property.PropertyName, $"\"{property.PropertyName}\"");
                 }
 
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New.Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
+                x.AddGetProperty(Modifier.Public, TypeElement.Get("ContentSchema"), "Schema");
 
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New.Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New, $"new {className}(new ContentItem(Schema))");
+
+                x.AppendLine($"IContentModel IContentMetadata.CreateModel() => CreateModel();");
                 x.AppendLine($"IContentModel IContentMetadata.CreateModel(ContentItem contentItem) => CreateModel(contentItem);");
 
                 x.AddContentMetadataCreateSchema(className, properties);

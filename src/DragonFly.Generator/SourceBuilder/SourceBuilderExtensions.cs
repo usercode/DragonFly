@@ -197,16 +197,49 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddlambdaProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string value)
+    public static SourceBuilder AddlambdaProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string? value = null, bool isStatic = false)
     {
-        builder.AppendLine($"{modifier} {type} {name} => {value};");
+        builder.AppendTabs();
+
+        builder.Append($"{modifier} ");
+
+        if (isStatic)
+        {
+            builder.Append("static ");
+        }
+
+        if (string.IsNullOrEmpty(value) == false)
+        {
+            builder.Append($"{type} {name} => {value};");
+        }
+        builder.AppendLine();
+
+        return builder;
+    }
+
+    public static SourceBuilder AddGetProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string? value = null, bool isStatic = false)
+    {
+        builder.AppendTabs();
+        builder.Append($"{modifier} ");
+        if (isStatic)
+        {
+            builder.Append("static ");
+        }
+        builder.Append($"{type} {name} {{ get; }}");
+
+        if (string.IsNullOrEmpty(value) == false)
+        {
+            builder.Append($" = {value};");
+        }
+
+        builder.AppendLine();
 
         return builder;
     }
 
     public static SourceBuilder AddContentMetadataCreateSchema(this SourceBuilder builder, string className, IEnumerable<ContentItemProperty> properties)
     {
-        builder.AppendLine($"public ContentSchema CreateSchema()");
+        builder.AppendLine($"private ContentSchema CreateSchema()");
         builder.AppendBlock(x =>
         {
             x.AppendLine($"ContentSchema schema = new ContentSchema(\"{className}\");");

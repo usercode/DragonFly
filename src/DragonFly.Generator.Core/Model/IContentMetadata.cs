@@ -4,11 +4,30 @@
 
 namespace DragonFly;
 
+/// <summary>
+/// IContentMetadata
+/// </summary>
 public interface IContentMetadata
 {
+    /// <summary>
+    /// ModelName
+    /// </summary>
     string ModelName { get; }
 
-    IContentModel CreateModel(ContentItem contentItem);
+    /// <summary>
+    /// Schema
+    /// </summary>
+    ContentSchema Schema { get; }
 
-    ContentSchema CreateSchema();
+    /// <summary>
+    /// Creates model with new content item.
+    /// </summary>
+    IContentModel CreateModel();
+
+    /// <summary>
+    /// Creates model for existing content item.
+    /// </summary>
+    IContentModel CreateModel(ContentItem contentItem);
+    
+
 }

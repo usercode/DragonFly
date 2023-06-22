@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Verify.XUnit" Version="14.7.0" />
-    <PackageReference Include="Verify.SourceGenerators" Version="1.2.0" />
+    <PackageReference Include="Verify.XUnit" Version="20.4.0" />
+    <PackageReference Include="Verify.SourceGenerators" Version="2.1.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
