@@ -36,6 +36,7 @@ public static class DragonFlyBuilderExtensions
             api.RegisterBlock<AlertBlock, AlertBlockView>();
             api.RegisterBlock<ProgressBlock, ProgressBlockView>();
             api.RegisterBlock<CardBlock, CardBlockView>();
+            api.RegisterBlock<SectionBlock, SectionBlockView>();
 
             api.RegisterBlock<UnknownBlock, UnknownBlockView>();
         });
