@@ -50,7 +50,12 @@
     padding: 0.275rem 0.75rem;
 }
 
-.container-block {
+.container-block-body {    
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.section-block-body {
     padding-left: 2rem;
     padding-right: 2rem;
 }
@@ -59,7 +64,7 @@
     justify-content: center;
 }
 
-.alert-block {
+.alert-block-body {
     padding-left: 2rem;
     padding-right: 2rem;
 }

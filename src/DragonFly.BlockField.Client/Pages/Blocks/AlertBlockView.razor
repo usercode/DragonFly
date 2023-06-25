@@ -1,8 +1,10 @@
 ﻿@inherits BlockComponent<AlertBlock>
 
-<div class="block alert-block">
+<div class="block alert-block">    
     <div class="mb-3">
         <EnumView TEnum="ColorType" @bind-EnumValue="@Block.ColorType" />
     </div>
-    <BlocksView Blocks="Block.Blocks" />
+    <div class="alert-block-body">
+        <BlocksView Blocks="Block.Blocks" />
+    </div>
 </div>
