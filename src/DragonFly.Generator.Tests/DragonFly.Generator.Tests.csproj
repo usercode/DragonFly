@@ -27,10 +27,14 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.Generator.Core\DragonFly.Generator.Core.csproj" />
-    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />   
+    <ProjectReference Include="..\DragonFly.Generator.Source\DragonFly.Generator.Source.csproj" />
     <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.Generator.Source\DragonFly.Generator.Source.csproj"
+                     OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>

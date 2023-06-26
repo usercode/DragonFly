@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Generator;
+namespace DragonFly.Generator.Source;
 
 internal static class StringExtensions
 {

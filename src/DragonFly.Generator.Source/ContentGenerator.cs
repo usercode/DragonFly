@@ -1,6 +1,5 @@
-﻿using System.Xml;
-using DragonFly;
-using DragonFly.Generator;
+﻿using DragonFly.Generator;
+using DragonFly.Generator.Source;
 using DragonFly.Generator.SourceBuilder;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -91,13 +90,13 @@ public class ContentGenerator : IIncrementalGenerator
                 x.AppendLine($"static IContentMetadata IContentModel.Metadata => Metadata;");
                 x.AddGetProperty(Modifier.Public, TypeElement.Get($"{className}Metadata"), "Metadata", $"new {className}Metadata()", isStatic: true);
 
-                x.AddConstructor(Modifier.Public, className, ParameterList.New.Add("ContentItem", "contentItem"), x =>
+                x.AddConstructor(Modifier.Public, className, ParameterList.New().Add("ContentItem", "contentItem"), x =>
                 {
                     x.AppendLine("_contentItem = contentItem;");
                 });
                 x.AddField(Modifier.Private, "ContentItem", "_contentItem", isReadOnly: true);
-                x.AddlambdaProperty(Modifier.Public, TypeElement.Guid, "Id", "_contentItem.Id");
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get("ContentItem"), "GetContentItem", ParameterList.New, "_contentItem");
+                x.AddLambdaProperty(Modifier.Public, TypeElement.Guid, "Id", "_contentItem.Id");
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get("ContentItem"), "GetContentItem", ParameterList.New(), "_contentItem");
 
                 foreach (ContentItemProperty property in properties)
                 {
@@ -110,22 +109,22 @@ public class ContentGenerator : IIncrementalGenerator
 
             x.AddClass(Modifier.Public, $"{className}Metadata", x =>
             {
-                x.AddConstructor(Modifier.Public, $"{className}Metadata", ParameterList.New, x =>
-                {
-                    x.AppendLine("Schema = CreateSchema();");
-                });
+                //x.AddConstructor(Modifier.Public, $"{className}Metadata", ParameterList.New(), x =>
+                //{
+                //    x.AppendLine("Schema = CreateSchema();");
+                //});
 
-                x.AddlambdaProperty(Modifier.Public, TypeElement.String, "ModelName", $"\"{className}\"");
+                x.AddLambdaProperty(Modifier.Public, TypeElement.String, "ModelName", $"\"{className}\"");
 
                 foreach (ContentItemProperty property in properties)
                 {
-                    x.AddlambdaProperty(Modifier.Public, TypeElement.String, property.PropertyName, $"\"{property.PropertyName}\"");
+                    x.AddLambdaProperty(Modifier.Public, TypeElement.String, property.PropertyName, $"\"{property.PropertyName}\"");
                 }
 
-                x.AddGetProperty(Modifier.Public, TypeElement.Get("ContentSchema"), "Schema");
+                x.AddGetProperty(Modifier.Public, TypeElement.Get("ContentSchema"), "Schema", "CreateSchema()");
 
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New.Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New, $"new {className}(new ContentItem(Schema))");
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New().Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New(), $"new {className}(new ContentItem(Schema))");
 
                 x.AppendLine($"IContentModel IContentMetadata.CreateModel() => CreateModel();");
                 x.AppendLine($"IContentModel IContentMetadata.CreateModel(ContentItem contentItem) => CreateModel(contentItem);");

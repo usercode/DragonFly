@@ -197,7 +197,7 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddlambdaProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string? value = null, bool isStatic = false)
+    public static SourceBuilder AddLambdaProperty(this SourceBuilder builder, Modifier modifier, TypeElement type, string name, string? value = null, bool isStatic = false)
     {
         builder.AppendTabs();
 
@@ -239,7 +239,7 @@ static class SourceBuilderExtensions
 
     public static SourceBuilder AddContentMetadataCreateSchema(this SourceBuilder builder, string className, IEnumerable<ContentItemProperty> properties)
     {
-        builder.AppendLine($"private ContentSchema CreateSchema()");
+        builder.AppendLine($"private static ContentSchema CreateSchema()");
         builder.AppendBlock(x =>
         {
             x.AppendLine($"ContentSchema schema = new ContentSchema(\"{className}\");");

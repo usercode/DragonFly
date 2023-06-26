@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
+    <LangVersion>Latest</LangVersion>
     <Authors>usercode</Authors>
     <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
@@ -11,15 +12,15 @@
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageIcon>logo.png</PackageIcon>
-    <PackageTags>cms</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageTags>cms</PackageTags>    
     <MinVerTagPrefix>v</MinVerTagPrefix>
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-  </ItemGroup>  
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\..\logo.png" Pack="true" PackagePath="" />
@@ -31,16 +32,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Model\Query\Fields\**" />
-    <EmbeddedResource Remove="Model\Query\Fields\**" />
-    <None Remove="Model\Query\Fields\**" />
-  </ItemGroup>
+  </ItemGroup>  
   
+  <ItemGroup>
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.6.0" PrivateAssets="all" />
+  </ItemGroup>
 </Project>

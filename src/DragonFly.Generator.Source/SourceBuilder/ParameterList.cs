@@ -11,7 +11,7 @@ internal class ParameterList
     /// <summary>
     /// Empty
     /// </summary>
-    public static ParameterList New => new ParameterList();
+    public static ParameterList New() => new ParameterList();
 
     public ParameterList()
     {
