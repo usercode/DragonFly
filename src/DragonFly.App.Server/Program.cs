@@ -3,9 +3,7 @@
 // MIT License
 
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Bogus;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
@@ -18,7 +16,6 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 

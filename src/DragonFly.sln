@@ -88,7 +88,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.Tests",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generator", "Generator", "{D1C57DD2-A28A-42C8-B21C-1E3920144F70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.Source", "DragonFly.Generator.Source\DragonFly.Generator.Source.csproj", "{B833B627-1EB9-4F15-A743-262051F96A20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.SourceBuilder", "DragonFly.Generator.SourceBuilder\DragonFly.Generator.SourceBuilder.csproj", "{B833B627-1EB9-4F15-A743-262051F96A20}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.Core", "DragonFly.Generator.Core\DragonFly.Generator.Core.csproj", "{E2A6F95A-7AD2-488F-9979-29C3CA3631A5}"
 EndProject
