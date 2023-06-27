@@ -26,6 +26,11 @@ internal class SourceBuilder
         }
     }
 
+    public void AppendLineBreak()
+    {
+        Builder.AppendLine();
+    }
+
     public void Append(string source)
     {
         Builder.Append(source);

@@ -15,13 +15,18 @@ public interface IContentModel
     Guid Id { get; }
 
     /// <summary>
-    /// Returns the internal content item.
+    /// Gets the internal content item.
     /// </summary>
     ContentItem GetContentItem();
 
     /// <summary>
-    /// Metadata
+    /// Schema
     /// </summary>
-    static abstract IContentMetadata Metadata { get; }
+    static abstract ContentSchema Schema { get; }
+
+    /// <summary>
+    /// Creates model for existing content item.
+    /// </summary>
+    static abstract IContentModel Create(ContentItem contentItem);
 }
 

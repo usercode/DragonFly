@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core;
-
 namespace DragonFly;
 
 public class WebHookQuery : QueryBase

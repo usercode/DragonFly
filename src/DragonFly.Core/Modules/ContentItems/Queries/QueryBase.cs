@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Core;
+namespace DragonFly;
 
 public abstract class QueryBase
 {

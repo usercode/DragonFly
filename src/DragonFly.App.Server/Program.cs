@@ -3,12 +3,12 @@
 // MIT License
 
 using System;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Bogus;
 using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
-using DragonFly.Identity.Services;
 using DragonFly.MongoDB;
 using ImageWizard;
 using ImageWizard.Caches;
@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,12 +52,26 @@ builder.Services.AddDragonFly()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddBlockField()
-                    .AddApiKeys();
+                    .AddApiKeys()
+                    .AddContentModel<Product>();
 
 var app = builder.Build();
 
 //init DragonFly
 await app.InitDragonFlyAsync();
+
+IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
+
+Product p = new Product();
+p.Title = "Bürostuhl";
+p.Slug.Value = "product-a";
+p.IsActive = true;
+
+await contentStorage.CreateAsync(p);
+
+var products = await contentStorage.QueryAsync<Product>(x => x
+                                                                .Published(false)
+                                                                .SlugQuery(Product.Fields.Slug, "product-a"));
 
 ////update permissions to all roles
 //IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();

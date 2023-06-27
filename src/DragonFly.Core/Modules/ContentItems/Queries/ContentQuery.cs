@@ -2,9 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core;
+using DragonFly.Query;
 
-namespace DragonFly.Query;
+namespace DragonFly;
 
 /// <summary>
 /// ContentQuery

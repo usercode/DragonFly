@@ -17,10 +17,10 @@ public class ContentModelInitializer<TContentModel> : IPostInitialize
     {
         ISchemaStorage storage = api.ServiceProvider.GetRequiredService<ISchemaStorage>();
 
-        ContentSchema schema = TContentModel.Metadata.Schema;
+        ContentSchema schema = TContentModel.Schema;
 
         //delete existing schema
-        ContentSchema? existingSchema = await storage.GetSchemaAsync(TContentModel.Metadata.ModelName);
+        ContentSchema? existingSchema = await storage.GetSchemaAsync(TContentModel.Schema.Name);
 
         if (existingSchema != null)
         {

@@ -82,14 +82,15 @@ public class ContentGenerator : IIncrementalGenerator
                 IsSingleValue = isSingleValue });
         }
 
-        builder.AddUsings("DragonFly", "DragonFly.Generator");
+        builder.AddUsings("System", "DragonFly", "DragonFly.Generator");
         builder.AddNamespace(ns, x =>
         {
             x.AddClass(Modifier.Public, className, x => 
             {
-                x.AppendLine($"static IContentMetadata IContentModel.Metadata => Metadata;");
-                x.AddGetProperty(Modifier.Public, TypeElement.Get($"{className}Metadata"), "Metadata", $"new {className}Metadata()", isStatic: true);
-
+                x.AddConstructor(Modifier.Public, className, ParameterList.New(), x =>
+                {
+                    x.AppendLine("_contentItem = Schema.CreateContent();");
+                });
                 x.AddConstructor(Modifier.Public, className, ParameterList.New().Add("ContentItem", "contentItem"), x =>
                 {
                     x.AppendLine("_contentItem = contentItem;");
@@ -102,44 +103,34 @@ public class ContentGenerator : IIncrementalGenerator
                 {
                     x.AddContentProperty(property);
                 }
+
+                x.AddGetProperty(Modifier.Public, TypeElement.Get("ContentSchema"), "Schema", "CreateSchema()", isStatic: true);
+                x.AddGetProperty(Modifier.Public, TypeElement.Get($"{className}Fields"), "Fields", $"new {className}Fields()", isStatic: true);
+
+                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "Create", ParameterList.New().Add("ContentItem", "contentItem"), $"new {className}(contentItem)", isStatic: true);                
+
+                x.AppendLine($"static IContentModel IContentModel.Create(ContentItem contentItem) => Create(contentItem);");
+
+                x.AddContentMetadataCreateSchema(className, properties);
             },
             isPartial: true,
             isSealed: true,
             baseTypes: new[] { "IContentModel" });
 
-            x.AddClass(Modifier.Public, $"{className}Metadata", x =>
+            x.AddClass(Modifier.Public, $"{className}Fields", x =>
             {
-                //x.AddConstructor(Modifier.Public, $"{className}Metadata", ParameterList.New(), x =>
-                //{
-                //    x.AppendLine("Schema = CreateSchema();");
-                //});
-
-                x.AddLambdaProperty(Modifier.Public, TypeElement.String, "ModelName", $"\"{className}\"");
-
                 foreach (ContentItemProperty property in properties)
                 {
                     x.AddLambdaProperty(Modifier.Public, TypeElement.String, property.PropertyName, $"\"{property.PropertyName}\"");
-                }
-
-                x.AddGetProperty(Modifier.Public, TypeElement.Get("ContentSchema"), "Schema", "CreateSchema()");
-
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New().Add("ContentItem", "contentItem"), $"new {className}(contentItem)");
-                x.AddLambdaMethod(Modifier.Public, TypeElement.Get(className), "CreateModel", ParameterList.New(), $"new {className}(new ContentItem(Schema))");
-
-                x.AppendLine($"IContentModel IContentMetadata.CreateModel() => CreateModel();");
-                x.AppendLine($"IContentModel IContentMetadata.CreateModel(ContentItem contentItem) => CreateModel(contentItem);");
-
-                x.AddContentMetadataCreateSchema(className, properties);
-
+                }                
             },
-            isSealed: true,
-            baseTypes: new[] { "IContentMetadata" });
+            isSealed: true);
 
             x.AddClass(Modifier.Public, $"{className}Extensions", x =>
             {
                 x.AddExtensionMethod(Modifier.Public, $"To{className}", className, new Parameter("contentItem","ContentItem"), x =>
                 {
-                    x.AppendLine($"return {className}.Metadata.CreateModel(contentItem);");
+                    x.AppendLine($"return {className}.Create(contentItem);");
                 });
 
             }, 

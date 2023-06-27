@@ -53,9 +53,9 @@ static class SourceBuilderExtensions
             builder.Append($" : {string.Join(", ", baseTypes)}");
         }
 
-        builder.AppendLine();
+        builder.AppendLineBreak();
         builder.AppendBlock(body);
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -68,9 +68,18 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddLambdaMethod(this SourceBuilder builder, Modifier modifier, TypeElement returnType, string name, ParameterList parameterList, string body)
+    public static SourceBuilder AddLambdaMethod(this SourceBuilder builder, Modifier modifier, TypeElement returnType, string name, ParameterList parameterList, string body, bool isStatic = false)
     {
-        builder.AppendLine($"{modifier} {returnType} {name}{parameterList} => {body};");
+        builder.AppendTabs();
+        builder.Append($"{modifier} ");
+
+        if (isStatic)
+        {
+            builder.Append("static ");
+        }
+
+        builder.Append($"{returnType} {name}{parameterList} => {body};");
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -102,7 +111,7 @@ static class SourceBuilderExtensions
         }
 
         builder.Append($"{type} {name}");
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         if (variable == null)
         {
@@ -121,7 +130,7 @@ static class SourceBuilderExtensions
             });
         }
 
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -137,7 +146,7 @@ static class SourceBuilderExtensions
         }
 
         builder.Append($"{type} {name};");
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -147,7 +156,7 @@ static class SourceBuilderExtensions
         builder.AppendLine($"{modifier} {name}{parameterList}");
         builder.AppendBlock(body);
 
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -157,7 +166,7 @@ static class SourceBuilderExtensions
         builder.AppendTabs();
 
         builder.Append($"public {property.PropertyType} {property.PropertyName}");
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         string type = property.PropertyType;
 
@@ -178,7 +187,7 @@ static class SourceBuilderExtensions
             });
         }
         
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -212,7 +221,7 @@ static class SourceBuilderExtensions
         {
             builder.Append($"{type} {name} => {value};");
         }
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }
@@ -232,7 +241,7 @@ static class SourceBuilderExtensions
             builder.Append($" = {value};");
         }
 
-        builder.AppendLine();
+        builder.AppendLineBreak();
 
         return builder;
     }

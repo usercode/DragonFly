@@ -4,7 +4,6 @@
 
 using DragonFly.Builders;
 using DragonFly.Generator;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.AspNetCore;
 
@@ -16,7 +15,7 @@ public static class DragonFlyBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="config"></param>
     /// <returns></returns>
-    public static IDragonFlyBuilder AddContentModel<TContentModel>(this IDragonFlyBuilder builder, Action<TContentModel> action)
+    public static IDragonFlyBuilder AddContentModel<TContentModel>(this IDragonFlyBuilder builder)
         where TContentModel : IContentModel
     {
         builder.PostInit<ContentModelInitializer<TContentModel>>();

@@ -2,13 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Query;
+namespace DragonFly;
 
 public class ContentQuery<TContentModel> : ContentQuery
     where TContentModel : class, IContentModel
 {
     public ContentQuery()
     {
-        Schema = TContentModel.Metadata.ModelName;
+        Schema = TContentModel.Schema.Name;
     }
 }
