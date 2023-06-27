@@ -90,7 +90,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generator", "Generator", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.Source", "DragonFly.Generator.Source\DragonFly.Generator.Source.csproj", "{B833B627-1EB9-4F15-A743-262051F96A20}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator", "DragonFly.Generator\DragonFly.Generator.csproj", "{E2A6F95A-7AD2-488F-9979-29C3CA3631A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.Generator.Core", "DragonFly.Generator.Core\DragonFly.Generator.Core.csproj", "{E2A6F95A-7AD2-488F-9979-29C3CA3631A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

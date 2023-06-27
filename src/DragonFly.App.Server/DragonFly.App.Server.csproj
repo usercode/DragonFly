@@ -22,7 +22,7 @@
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.BlockField\DragonFly.BlockField.csproj" />
     <ProjectReference Include="..\DragonFly.Generator.Source\DragonFly.Generator.Source.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" />    
+    <ProjectReference Include="..\DragonFly.Generator.Core\DragonFly.Generator.Core.csproj" />    
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
