@@ -3,10 +3,10 @@
 // MIT License
 
 using DragonFly.AspNetCore.Identity.MongoDB;
-using DragonFLy.ApiKeys;
-using DragonFLy.ApiKeys.AspNetCore.Middlewares;
-using DragonFLy.ApiKeys.AspNetCore.Services;
-using DragonFLy.ApiKeys.Permissions;
+using DragonFly.ApiKeys;
+using DragonFly.ApiKeys.AspNetCore.Middlewares;
+using DragonFly.ApiKeys.AspNetCore.Services;
+using DragonFly.ApiKeys.Permissions;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.ApiKeys.Handlers;
 using Microsoft.AspNetCore.Authorization;

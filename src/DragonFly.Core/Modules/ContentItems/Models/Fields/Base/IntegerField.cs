@@ -10,7 +10,7 @@ namespace DragonFly;
 /// IntegerField
 /// </summary>
 [FieldOptions(typeof(IntegerFieldOptions))]
-[FieldQuery(typeof(IntegerFieldQuery))]
+[FieldQuery(typeof(IntegerQuery))]
 public class IntegerField : SingleValueField<long?>
 {
     public IntegerField()

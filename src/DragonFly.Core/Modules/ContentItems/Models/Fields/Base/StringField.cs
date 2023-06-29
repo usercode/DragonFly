@@ -11,7 +11,7 @@ namespace DragonFly;
 /// TextField
 /// </summary>
 [FieldOptions(typeof(StringFieldOptions))]
-[FieldQuery(typeof(StringFieldQuery))]
+[FieldQuery(typeof(StringQuery))]
 public class StringField : TextBaseField
 {
     public StringField()

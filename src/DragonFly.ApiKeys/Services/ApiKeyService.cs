@@ -3,15 +3,11 @@
 // MIT License
 
 using DragonFly.AspNetCore.Identity.MongoDB;
-using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
+using DragonFly.ApiKeys.AspNetCore.Storage.Models;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DragonFLy.ApiKeys.AspNetCore.Services;
+namespace DragonFly.ApiKeys.AspNetCore.Services;
 
 /// <summary>
 /// ApiKeyService

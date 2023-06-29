@@ -10,9 +10,9 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// BoolFieldQueryAction
 /// </summary>
-public class BoolFieldQueryAction : FieldQueryAction<BoolFieldQuery>
+public class BoolFieldQueryAction : FieldQueryAction<BoolQuery>
 {
-    public override void Apply(BoolFieldQuery query, FieldQueryActionContext context)
+    public override void Apply(BoolQuery query, FieldQueryActionContext context)
     {
         if (query.Value != null)
         {

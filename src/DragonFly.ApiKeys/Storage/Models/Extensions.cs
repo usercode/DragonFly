@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models;
+namespace DragonFly.ApiKeys.AspNetCore.Storage.Models;
 
 static class Extensions
 {

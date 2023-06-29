@@ -17,4 +17,7 @@ public partial class Product
 
     [BoolField]
     private bool? _isActive;
+
+    [BlockField]
+    private BlockField.BlockField _mainContent;
 }

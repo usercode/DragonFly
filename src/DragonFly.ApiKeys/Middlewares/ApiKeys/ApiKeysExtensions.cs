@@ -4,12 +4,12 @@
 
 using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Builders;
-using DragonFLy.ApiKeys.Permissions;
+using DragonFly.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
-namespace DragonFLy.ApiKeys.AspNetCore.Middlewares;
+namespace DragonFly.ApiKeys.AspNetCore.Middlewares;
 
 static class ApiKeysExtensions
 {

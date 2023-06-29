@@ -10,7 +10,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentItem
 /// </summary>
-public class ContentItem : ContentBase<ContentItem>, IContentElement
+public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable<ContentItem>
 {
     public ContentItem(ContentSchema schema)
     {
@@ -73,6 +73,33 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement
         ValidationContext = validationContext;
 
         return validationContext.State == ValidationState.Valid;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Schema.Name, Id);
+    }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is ContentItem other)
+        {
+            return Equals(other);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool Equals(ContentItem? other)
+    {
+        if (other is null)
+        {
+            return false;
+        }
+
+        return Id == other.Id && Schema.Name == other.Schema.Name;
     }
 
     public override string ToString()

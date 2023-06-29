@@ -4,7 +4,7 @@
 
 using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
-using DragonFLy.ApiKeys;
+using DragonFly.ApiKeys;
 using DragonFly.ApiKeys.Razor.Services;
 using DragonFly.ApiKeys.Client;
 

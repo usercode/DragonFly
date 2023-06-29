@@ -11,9 +11,9 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// ReferenceFieldQueryAction
 /// </summary>
-public class ReferenceFieldQueryAction : FieldQueryAction<ReferenceFieldQuery>
+public class ReferenceFieldQueryAction : FieldQueryAction<ReferenceQuery>
 {
-    public override void Apply(ReferenceFieldQuery query, FieldQueryActionContext context)
+    public override void Apply(ReferenceQuery query, FieldQueryActionContext context)
     {
         if (query.ContentItemId != null)
         {

@@ -10,9 +10,9 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// IntegerFieldQueryAction
 /// </summary>
-public class IntegerFieldQueryAction : FieldQueryAction<IntegerFieldQuery>
+public class IntegerFieldQueryAction : FieldQueryAction<IntegerQuery>
 {
-    public override void Apply(IntegerFieldQuery query, FieldQueryActionContext context)
+    public override void Apply(IntegerQuery query, FieldQueryActionContext context)
     {
         if (query.MinValue != null)
         {

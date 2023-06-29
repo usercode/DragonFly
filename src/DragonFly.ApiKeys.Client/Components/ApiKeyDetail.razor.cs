@@ -8,7 +8,7 @@ using DragonFly.Client.Helpers;
 using DragonFly.Permissions;
 using DragonFly.Permissions.Client;
 using DragonFly.Razor.Base;
-using DragonFLy.ApiKeys;
+using DragonFly.ApiKeys;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;

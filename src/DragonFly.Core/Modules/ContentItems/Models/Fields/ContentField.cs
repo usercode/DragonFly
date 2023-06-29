@@ -24,6 +24,5 @@ public abstract class ContentField
 
     public virtual void Clear()
     {
-
     }
 }

@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// AssetFieldQuery
+/// AssetQuery
 /// </summary>
-public class AssetFieldQuery : FieldQuery
+public class AssetQuery : FieldQuery
 {
     /// <summary>
     /// AssetId

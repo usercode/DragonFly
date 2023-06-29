@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// StringFieldQueryType
+/// StringQueryType
 /// </summary>
-public enum StringFieldQueryType
+public enum StringQueryType
 {
     Equals,
     Contains,

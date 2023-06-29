@@ -85,7 +85,7 @@ public partial class MongoStorage : IAssetFolderStorage
         //Delete all assets
         while (true)
         {
-            QueryResult<Asset> assets = await QueryAsync(new AssetQuery() { Folder = folder.Id });
+            var assets = await QueryAsync(new Assets.Query.AssetQuery() { Folder = folder.Id });
 
             if (assets.Count == 0)
             {

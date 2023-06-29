@@ -59,6 +59,8 @@ internal class SourceBuilder
 
         RemoveTab();
         AppendLine("}");
+
+        AppendLineBreak();
     }
 
     public override string ToString() => Builder.ToString();

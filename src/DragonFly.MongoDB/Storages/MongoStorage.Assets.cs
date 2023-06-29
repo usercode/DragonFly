@@ -108,7 +108,7 @@ public partial class MongoStorage : IAssetStorage
         return await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString());
     }
 
-    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
+    public async Task<QueryResult<Asset>> QueryAsync(Assets.Query.AssetQuery assetQuery)
     {
         IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
 
@@ -182,7 +182,7 @@ public partial class MongoStorage : IAssetStorage
         }
     }
 
-    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(Assets.Query.AssetQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {

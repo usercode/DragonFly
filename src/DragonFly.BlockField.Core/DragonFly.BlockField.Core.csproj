@@ -31,6 +31,8 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+		<ProjectReference Include="..\DragonFly.Generator.Core\DragonFly.Generator.Core.csproj" />
+    <ProjectReference Include="..\DragonFly.Proxy.Attributes\DragonFly.Proxy.Attributes.csproj" />
 	</ItemGroup>
   
   <ItemGroup>

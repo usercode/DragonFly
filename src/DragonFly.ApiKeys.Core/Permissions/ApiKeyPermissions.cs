@@ -4,7 +4,7 @@
 
 using DragonFly;
 
-namespace DragonFLy.ApiKeys.Permissions;
+namespace DragonFly.ApiKeys.Permissions;
 
 public static class ApiKeyPermissions
 {

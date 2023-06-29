@@ -11,9 +11,9 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// AssetFieldQueryAction
 /// </summary>
-public class AssetFieldQueryAction : FieldQueryAction<AssetFieldQuery>
+public class AssetFieldQueryAction : FieldQueryAction<AssetQuery>
 {
-    public override void Apply(AssetFieldQuery query, FieldQueryActionContext context)
+    public override void Apply(AssetQuery query, FieldQueryActionContext context)
     {
         if (query.AssetId != null)
         {

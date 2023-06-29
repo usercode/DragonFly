@@ -4,6 +4,9 @@
 
 namespace DragonFly;
 
+/// <summary>
+/// FieldOrder
+/// </summary>
 public class FieldOrder
 {
     public FieldOrder()
@@ -18,7 +21,13 @@ public class FieldOrder
         Asc = asc;
     }
 
+    /// <summary>
+    /// Name
+    /// </summary>
     public string Name { get; set; }
 
+    /// <summary>
+    /// Asc
+    /// </summary>
     public bool Asc { get; set; }
 }

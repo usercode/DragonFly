@@ -5,7 +5,7 @@
 using DragonFly;
 using System.Collections.Generic;
 
-namespace DragonFLy.ApiKeys;
+namespace DragonFly.ApiKeys;
 
 /// <summary>
 /// ApiKey

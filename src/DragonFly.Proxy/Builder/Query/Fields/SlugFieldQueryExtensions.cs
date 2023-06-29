@@ -16,12 +16,12 @@ public static class SlugFieldQueryExtensions
     public static ContentQuery<TContentModel> SlugQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, SlugField>> name, string value)
         where TContentModel : class, IContentModel
     {
-        return query.SlugQuery(ReflectionHelper.GetPropertyName(name), value);
+        return query.Slug(ReflectionHelper.GetPropertyName(name), value);
     }
 
     public static ContentQuery<TContentModel> SlugQuery<TContentModel>(this ContentQuery<TContentModel> query, Expression<Func<TContentModel, string?>> name, string value)
         where TContentModel : class, IContentModel
     {
-        return query.SlugQuery(ReflectionHelper.GetPropertyName(name), value);
+        return query.Slug(ReflectionHelper.GetPropertyName(name), value);
     }
 }

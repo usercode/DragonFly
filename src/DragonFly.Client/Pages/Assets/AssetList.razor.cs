@@ -31,9 +31,9 @@ public class AssetListBase : EntityListComponent<Asset>
         toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Danger, RefreshAllMetadataAsync));
     }
 
-    protected virtual AssetQuery CreateQuery()
+    protected virtual DragonFly.Assets.Query.AssetQuery CreateQuery()
     {
-        return new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id };
+        return new DragonFly.Assets.Query.AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id };
     }
 
     protected override async Task RefreshActionAsync()

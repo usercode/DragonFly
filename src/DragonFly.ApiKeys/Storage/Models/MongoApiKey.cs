@@ -2,10 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly;
-using System.Collections.Generic;
-
-namespace DragonFLy.ApiKeys.AspNetCore.Storage.Models;
+namespace DragonFly.ApiKeys.AspNetCore.Storage.Models;
 
 class MongoApiKey : Entity<MongoApiKey>
 {

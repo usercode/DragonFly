@@ -64,11 +64,16 @@ p.Title = "Bürostuhl";
 p.Slug.Value = "product-a";
 p.IsActive = true;
 
+ContentItem ci = p.GetContentItem();
+
+ci.ToModel<Product>();
+
 await contentStorage.CreateAsync(p);
 
 var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Published(false)
-                                                                .SlugQuery(Product.Fields.Slug, "product-a"));
+                                                                .Slug(x => x.Slug, "product-a")
+                                                                .String(x => x.Title, "123", StringQueryType.Contains));
 
 ////update permissions to all roles
 //IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();

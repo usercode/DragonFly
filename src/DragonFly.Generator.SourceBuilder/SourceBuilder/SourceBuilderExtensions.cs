@@ -55,7 +55,6 @@ static class SourceBuilderExtensions
 
         builder.AppendLineBreak();
         builder.AppendBlock(body);
-        builder.AppendLineBreak();
 
         return builder;
     }
@@ -130,8 +129,6 @@ static class SourceBuilderExtensions
             });
         }
 
-        builder.AppendLineBreak();
-
         return builder;
     }
 
@@ -155,8 +152,6 @@ static class SourceBuilderExtensions
     {
         builder.AppendLine($"{modifier} {name}{parameterList}");
         builder.AppendBlock(body);
-
-        builder.AppendLineBreak();
 
         return builder;
     }
@@ -186,22 +181,6 @@ static class SourceBuilderExtensions
                 x.AppendLine($"set => _contentItem.SetField(\"{property.PropertyName}\", value);");
             });
         }
-        
-        builder.AppendLineBreak();
-
-        return builder;
-    }
-
-    //public static SourceBuilder AddContentIdProperty(this SourceBuilder builder)
-    //{
-    //    builder.AppendLine("public Guid Id => _contentItem.Id;");
-
-    //    return builder;
-    //}
-
-    public static SourceBuilder AddContentItemProperty(this SourceBuilder builder)
-    {
-        builder.AppendLine("public ContentItem GetContentItem() => _contentItem;");
 
         return builder;
     }
@@ -230,10 +209,12 @@ static class SourceBuilderExtensions
     {
         builder.AppendTabs();
         builder.Append($"{modifier} ");
+
         if (isStatic)
         {
             builder.Append("static ");
         }
+
         builder.Append($"{type} {name} {{ get; }}");
 
         if (string.IsNullOrEmpty(value) == false)
@@ -277,7 +258,6 @@ static class SourceBuilderExtensions
     {
         builder.AppendLine($"{modifier} static {returnType} {name}(this {thisParamter})");
         builder.AppendBlock(body);
-        builder.AppendLine();
 
         return builder;
     }

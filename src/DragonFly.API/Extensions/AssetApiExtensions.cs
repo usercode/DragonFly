@@ -31,7 +31,7 @@ static class AssetApiExtensions
         groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequirePermission(AssetPermissions.UpdateAsset);
     }
 
-    private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
+    private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, Assets.Query.AssetQuery query)
     {
         QueryResult<Asset> queryResult = await storage.QueryAsync(query);
 
@@ -114,7 +114,7 @@ static class AssetApiExtensions
         await storage.ApplyMetadataAsync(asset);
     }
 
-    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
+    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, Assets.Query.AssetQuery query)
     {   
         return await storage.ApplyMetadataAsync(query);
     }

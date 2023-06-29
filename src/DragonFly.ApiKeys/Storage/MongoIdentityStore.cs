@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.MongoDB;
-using DragonFLy.ApiKeys.AspNetCore.Storage.Models;
+using DragonFly.ApiKeys.AspNetCore.Storage.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 

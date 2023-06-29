@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// StringFieldQuery
+/// StringQuery
 /// </summary>
-public class StringFieldQuery : FieldQuery
+public class StringQuery : FieldQuery
 {
     /// <summary>
     /// Pattern
@@ -17,7 +17,7 @@ public class StringFieldQuery : FieldQuery
     /// <summary>
     /// PatternType
     /// </summary>
-    public StringFieldQueryType PatternType { get; set; }
+    public StringQueryType PatternType { get; set; }
 
     public override bool IsEmpty()
     {

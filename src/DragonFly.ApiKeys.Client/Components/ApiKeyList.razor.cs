@@ -5,7 +5,7 @@
 using BlazorStrap;
 using DragonFly.Client;
 using DragonFly.Client.Base;
-using DragonFLy.ApiKeys;
+using DragonFly.ApiKeys;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;

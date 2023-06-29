@@ -11,7 +11,7 @@ namespace DragonFly;
 /// AssetField
 /// </summary>
 [FieldOptions(typeof(AssetFieldOptions))]
-[FieldQuery(typeof(AssetFieldQuery))]
+[FieldQuery(typeof(AssetQuery))]
 public class AssetField : ContentField
 {
     public AssetField()

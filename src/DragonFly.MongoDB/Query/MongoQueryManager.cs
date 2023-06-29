@@ -21,12 +21,12 @@ public sealed class MongoQueryManager
             {
                 _default = new MongoQueryManager();
 
-                _default.Register<BoolFieldQuery, BoolFieldQueryAction>();
-                _default.Register<StringFieldQuery, StringFieldQueryAction>();
-                _default.Register<SlugFieldQuery, SlugFieldQueryAction>();
-                _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
-                _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
-                _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
+                _default.Register<BoolQuery, BoolFieldQueryAction>();
+                _default.Register<StringQuery, StringFieldQueryAction>();
+                _default.Register<SlugQuery, SlugFieldQueryAction>();
+                _default.Register<IntegerQuery, IntegerFieldQueryAction>();
+                _default.Register<ReferenceQuery, ReferenceFieldQueryAction>();
+                _default.Register<AssetQuery, AssetFieldQueryAction>();
             }
 
             return _default;
