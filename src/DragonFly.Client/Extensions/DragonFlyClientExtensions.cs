@@ -24,7 +24,7 @@ public static class DragonFlyClientExtensions
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br/>
     /// <br/>
     /// Default manager:<br/>
-    /// <see cref="ComponentManager"/>, <see cref="ContentFieldManager"/>, <see cref="AssetMetadataManager"/>, <see cref="AssetPreviewManager"/>
+    /// <see cref="ComponentManager"/>, <see cref="FieldManager"/>, <see cref="AssetMetadataManager"/>, <see cref="AssetPreviewManager"/>
     /// <br/><br/>
     /// Default modules:<br/>
     /// <see cref="ContentModule"/>, <see cref="AssetModule"/>, <see cref="WebHookModule"/>, <see cref="BackgroundTaskModule"/>, <see cref="SettingsModule"/>
@@ -54,7 +54,7 @@ public static class DragonFlyClientExtensions
 
         builder.Services.AddSingleton(DragonFlyApp.Default);
         builder.Services.AddSingleton(ComponentManager.Default);
-        builder.Services.AddSingleton(ContentFieldManager.Default);
+        builder.Services.AddSingleton(FieldManager.Default);
         builder.Services.AddSingleton(AssetMetadataManager.Default);
         builder.Services.AddSingleton(AssetPreviewManager.Default);
 

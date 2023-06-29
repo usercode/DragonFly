@@ -17,7 +17,7 @@ public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
     public TField Field { get; set; }
 
     [Parameter]
-    public ContentFieldOptions Options { get; set; }
+    public FieldOptions Options { get; set; }
 
     ContentField IFieldComponent.Field => Field;
 }

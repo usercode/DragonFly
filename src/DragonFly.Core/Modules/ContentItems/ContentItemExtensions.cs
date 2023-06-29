@@ -185,7 +185,7 @@ public static class ContentItemExtensions
                 }
                 else
                 {
-                    contentField = ContentFieldManager.Default.CreateField(field.Value.FieldType);
+                    contentField = FieldManager.Default.CreateField(field.Value.FieldType);
                 }
 
                 if (contentField == null)

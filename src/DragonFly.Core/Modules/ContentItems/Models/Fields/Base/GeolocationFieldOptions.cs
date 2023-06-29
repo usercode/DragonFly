@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// GeolocationFieldOptions
 /// </summary>
-public class GeolocationFieldOptions : ContentFieldOptions
+public class GeolocationFieldOptions : FieldOptions
 {
     public override ContentField CreateContentField()
     {

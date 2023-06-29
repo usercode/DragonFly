@@ -56,7 +56,7 @@
     public IEnumerable<KeyValuePair<string, SchemaField>> GetUnsedOrderFields()
     {
         return ContentItemList.Schema.Fields
-                                          .Where(x => ContentFieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
+                                          .Where(x => FieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
                                           .Where(f => ContentItemList.OrderFields.Any(a => a.Name == f.Key) == false)
                                           ;
     }

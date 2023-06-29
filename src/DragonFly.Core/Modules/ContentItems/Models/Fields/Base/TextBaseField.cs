@@ -15,7 +15,7 @@ public abstract class TextBaseField : SingleValueField<string>
     {
     }
 
-    public TextBaseField(string text)
+    public TextBaseField(string? text)
     {
         Value = text;
     }

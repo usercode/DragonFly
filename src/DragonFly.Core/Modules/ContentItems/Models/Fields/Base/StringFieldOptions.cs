@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class StringFieldOptions : ContentFieldOptions
+public class StringFieldOptions : FieldOptions
 {
     public const int DefaultMaxLength = 2048;
 

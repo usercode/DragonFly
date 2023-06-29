@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// ArrayFieldOptions
 /// </summary>
-public class ArrayFieldOptions : ContentFieldOptions, ISchemaElement
+public class ArrayFieldOptions : FieldOptions, ISchemaElement
 {
     public ArrayFieldOptions()
     {

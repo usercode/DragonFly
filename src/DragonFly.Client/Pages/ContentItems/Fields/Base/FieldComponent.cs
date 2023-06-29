@@ -8,7 +8,7 @@ namespace DragonFly.Client;
 
 public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent
     where TField : ContentField
-    where TFieldOptions : ContentFieldOptions
+    where TFieldOptions : FieldOptions
 {
     [Parameter]
     public TField Field { get; set; }
@@ -18,5 +18,5 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
 
     ContentField IFieldComponent.Field => Field;
 
-    ContentFieldOptions IFieldComponent.Options => Options;
+    FieldOptions IFieldComponent.Options => Options;
 }

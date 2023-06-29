@@ -27,7 +27,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     public Asset UsedAsset { get; set; }
 
     [Inject]
-    public ContentFieldManager ContentFieldManager { get; set; }
+    public FieldManager ContentFieldManager { get; set; }
 
 
     [Inject]

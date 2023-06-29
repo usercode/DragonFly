@@ -21,7 +21,7 @@ public static class JsonSerializerDefault
                 _options = new JsonSerializerOptions();
 
                 //build missing json field serializer
-                foreach (Type contentFieldType in ContentFieldManager.Default.GetAllFieldTypes())
+                foreach (Type contentFieldType in FieldManager.Default.GetAllFieldTypes())
                 {
                     if (JsonFieldManager.Default.TryGetByFieldType(contentFieldType, out IJsonFieldSerializer? fieldSerializer))
                     {
@@ -57,14 +57,14 @@ public static class JsonSerializerDefault
                 //build derived types
                 JsonPolymorphismOptions optionsDerivedTypes = new JsonPolymorphismOptions();
 
-                foreach (Type type in ContentFieldManager.Default.GetAllOptionsTypes())
+                foreach (Type type in FieldManager.Default.GetAllOptionsTypes())
                 {
                     optionsDerivedTypes.DerivedTypes.Add(new JsonDerivedType(type, type.Name));
                 }
 
                 JsonPolymorphismOptions queryDerivedTypes = new JsonPolymorphismOptions();
 
-                foreach (Type type in ContentFieldManager.Default.GetAllQueryTypes())
+                foreach (Type type in FieldManager.Default.GetAllQueryTypes())
                 {
                     queryDerivedTypes.DerivedTypes.Add(new JsonDerivedType(type, type.Name));
                 }
@@ -75,7 +75,7 @@ public static class JsonSerializerDefault
                     {
                         (JsonTypeInfo typeInfo) =>
                         {
-                            if (typeInfo.Type == typeof(ContentFieldOptions))
+                            if (typeInfo.Type == typeof(FieldOptions))
                             {
                                 typeInfo.PolymorphismOptions = optionsDerivedTypes;
                             }

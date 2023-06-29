@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class ComponentFieldOptions : ContentFieldOptions
+public class ComponentFieldOptions : FieldOptions
 {
     public override ContentField CreateContentField()
     {

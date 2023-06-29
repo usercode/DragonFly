@@ -11,7 +11,7 @@ namespace DragonFly.MongoDB;
 /// DefaultOptionsSerializer
 /// </summary>
 internal class DefaultOptionsSerializer<TOptions> : OptionsSerializer<TOptions>
-    where TOptions : ContentFieldOptions, new()
+    where TOptions : FieldOptions, new()
 {
     public override TOptions Read(BsonValue bsonValue)
     {

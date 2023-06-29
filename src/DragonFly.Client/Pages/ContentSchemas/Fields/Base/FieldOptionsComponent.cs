@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Components;
 namespace DragonFly.Client;
 
 public abstract class FieldOptionsComponent<TFieldOptions> : ComponentBase, IFieldOptionsComponent
-    where TFieldOptions : ContentFieldOptions
+    where TFieldOptions : FieldOptions
 {
     [Parameter]
     public TFieldOptions Options { get; set; }
 
-    ContentFieldOptions IFieldOptionsComponent.Options { get => Options; }
+    FieldOptions IFieldOptionsComponent.Options { get => Options; }
 }

@@ -8,5 +8,5 @@ namespace DragonFly.Client;
 
 public interface IFieldOptionsComponent : IComponent
 {
-    public ContentFieldOptions Options { get; }
+    public FieldOptions Options { get; }
 }

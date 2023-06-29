@@ -12,10 +12,6 @@ namespace DragonFly;
 /// </summary>
 public abstract class SingleValueField<T> : ContentField, ISingleValueField
 {
-    public SingleValueField()
-    {
-
-    }
 
     private T? _value;
 
@@ -47,7 +43,7 @@ public abstract class SingleValueField<T> : ContentField, ISingleValueField
         Value = default;
     }
 
-    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         if (options.IsRequired && HasValue == false)
         {

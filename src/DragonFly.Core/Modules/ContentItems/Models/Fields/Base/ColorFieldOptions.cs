@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class ColorFieldOptions : ContentFieldOptions
+public class ColorFieldOptions : FieldOptions
 {
     public ColorFieldOptions()
     {

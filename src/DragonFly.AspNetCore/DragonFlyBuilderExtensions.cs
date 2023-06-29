@@ -43,7 +43,7 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton<IDateTimeService, LocalDateTimeService>();
         services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
 
-        services.AddSingleton(ContentFieldManager.Default);
+        services.AddSingleton(FieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
         services.AddSingleton(PermissionManager.Default);
 

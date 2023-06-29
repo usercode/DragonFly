@@ -9,12 +9,12 @@ namespace DragonFly;
 /// </summary>
 public static class ContentItemDragonFlyApiExtensions
 {
-    public static ContentFieldManager ContentFields(this IDragonFlyApi api)
+    public static FieldManager ContentFields(this IDragonFlyApi api)
     {
-        return ContentFieldManager.Default;
+        return FieldManager.Default;
     }
 
-    public static ContentFieldManager AddDefaults(this ContentFieldManager manager)
+    public static FieldManager AddDefaults(this FieldManager manager)
     {
         manager.Add<ArrayField>();
         manager.Add<AssetField>();

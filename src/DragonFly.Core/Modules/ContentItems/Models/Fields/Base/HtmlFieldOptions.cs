@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// HtmlFieldOptions
 /// </summary>
-public class HtmlFieldOptions : ContentFieldOptions
+public class HtmlFieldOptions : FieldOptions
 {
     public HtmlFieldOptions()
     {

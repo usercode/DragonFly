@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// DateFieldOptions
 /// </summary>
-public class DateTimeFieldOptions : ContentFieldOptions
+public class DateTimeFieldOptions : FieldOptions
 {
     public DateTimeFieldOptions()
     {

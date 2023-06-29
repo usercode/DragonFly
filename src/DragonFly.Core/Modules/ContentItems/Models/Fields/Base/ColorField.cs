@@ -10,7 +10,7 @@ namespace DragonFly;
 [FieldOptions(typeof(ColorFieldOptions))]
 public partial class ColorField : TextBaseField
 {
-    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         if (HasValue)
         {

@@ -9,12 +9,12 @@ namespace DragonFly;
 /// </summary>
 public static class ContentSchemaExtensions
 {
-    public static TContentSchema AddField<TContentSchema>(this TContentSchema schema, string name, Type fieldType, ContentFieldOptions? options = null, int sortkey = 0)
+    public static TContentSchema AddField<TContentSchema>(this TContentSchema schema, string name, Type fieldType, FieldOptions? options = null, int sortkey = 0)
         where TContentSchema : ISchemaElement
     {
         if (options == null)
         {
-            options = ContentFieldManager.Default.CreateOptions(fieldType);
+            options = FieldManager.Default.CreateOptions(fieldType);
         }
 
         if (fieldType.IsSubclassOf(typeof(ContentField)) == false)
@@ -22,7 +22,7 @@ public static class ContentSchemaExtensions
             throw new Exception($"The field type '{fieldType.Name}' isn't valid.");
         }
 
-        schema.Fields[name] = new SchemaField(ContentFieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options };
+        schema.Fields[name] = new SchemaField(FieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options };
 
         return schema;
     }

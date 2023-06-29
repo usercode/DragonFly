@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// ContentFieldOptions
+/// FieldOptions
 /// </summary>
-public abstract class ContentFieldOptions
+public abstract class FieldOptions
 {
     /// <summary>
     /// IsRequired

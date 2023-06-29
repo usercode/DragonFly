@@ -23,7 +23,7 @@ public class XHtmlField : TextBaseField
         Value = text;
     }
 
-    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         if (HasValue)
         {

@@ -13,7 +13,7 @@ public interface IOptionsSerializer
 {
     Type OptionsType { get; }
 
-    ContentFieldOptions Read(BsonValue bsonvalue);
+    FieldOptions Read(BsonValue bsonvalue);
     
-    BsonValue Write(ContentFieldOptions options);
+    BsonValue Write(FieldOptions options);
 }

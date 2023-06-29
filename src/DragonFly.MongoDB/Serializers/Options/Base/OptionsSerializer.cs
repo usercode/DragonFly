@@ -10,7 +10,7 @@ namespace DragonFly.MongoDB;
 /// OptionsSerializer
 /// </summary>
 public abstract class OptionsSerializer<TOptions> : IOptionsSerializer
-    where TOptions : ContentFieldOptions
+    where TOptions : FieldOptions
 {
     public Type OptionsType => typeof(TOptions);
 
@@ -18,12 +18,12 @@ public abstract class OptionsSerializer<TOptions> : IOptionsSerializer
     
     public abstract BsonValue Write(TOptions options);
 
-    BsonValue IOptionsSerializer.Write(ContentFieldOptions options)
+    BsonValue IOptionsSerializer.Write(FieldOptions options)
     {
         return Write((TOptions)options);
     }
 
-    ContentFieldOptions IOptionsSerializer.Read(BsonValue bsonvalue)
+    FieldOptions IOptionsSerializer.Read(BsonValue bsonvalue)
     {
         return Read(bsonvalue);
     }

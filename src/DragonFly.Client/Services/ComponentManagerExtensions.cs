@@ -22,7 +22,7 @@ public static class ComponentManagerExtensions
         componentManager.Add(fieldType, typeof(TFieldComponent));
     }
 
-    public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, ContentFieldOptions? options)
+    public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, FieldOptions? options)
     {
         Type componentType = componentManager.GetComponentType(contentField.GetType());
 
@@ -43,7 +43,7 @@ public static class ComponentManagerExtensions
         componentManager.Add(fieldOptionsType, typeof(TFieldOptionsComponent));
     }
 
-    public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentFieldOptions options)
+    public static RenderFragment CreateComponent(this ComponentManager componentManager, FieldOptions options)
     {
         Type componentType = componentManager.GetComponentType(options.GetType());
 

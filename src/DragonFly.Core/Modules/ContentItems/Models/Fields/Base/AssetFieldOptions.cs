@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// AssetFieldOptions
 /// </summary>
-public class AssetFieldOptions : ContentFieldOptions
+public class AssetFieldOptions : FieldOptions
 {
     public AssetFieldOptions()
     {

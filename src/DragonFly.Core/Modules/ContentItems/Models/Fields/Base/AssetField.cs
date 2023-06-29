@@ -29,7 +29,7 @@ public class AssetField : ContentField
     /// </summary>
     public Asset? Asset { get; set; }
 
-    public override void Validate(string fieldName, ContentFieldOptions options, ValidationContext context)
+    public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         if (options is AssetFieldOptions fieldOptions)
         {

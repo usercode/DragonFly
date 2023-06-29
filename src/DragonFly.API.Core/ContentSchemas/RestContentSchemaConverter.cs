@@ -68,13 +68,13 @@ public static class RestContentSchemaConverter
 
     public static SchemaField ToModel(this RestContentSchemaField definition)
     {
-        Type? optionsType = ContentFieldManager.Default.GetOptionsType(definition.FieldType);
+        Type? optionsType = FieldManager.Default.GetOptionsType(definition.FieldType);
 
-        ContentFieldOptions? options = null;
+        FieldOptions? options = null;
 
         if (optionsType != null)
         {
-            options = (ContentFieldOptions?)definition.Options.Deserialize(optionsType, JsonSerializerDefault.Options);
+            options = (FieldOptions?)definition.Options.Deserialize(optionsType, JsonSerializerDefault.Options);
         }
 
         SchemaField schemaField = new SchemaField(definition.FieldType, options);

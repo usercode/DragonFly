@@ -10,5 +10,5 @@ public interface IFieldComponent : IComponent
 {
     ContentField Field { get; }
 
-    ContentFieldOptions Options { get; }
+    FieldOptions Options { get; }
 }

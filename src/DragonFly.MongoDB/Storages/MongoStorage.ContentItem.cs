@@ -72,7 +72,7 @@ public partial class MongoStorage : IContentStorage
             List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
 
             foreach (string field in schema.Fields
-                                    .Where(x => x.Value.FieldType == ContentFieldManager.Default.GetContentFieldName<StringField>())
+                                    .Where(x => x.Value.FieldType == FieldManager.Default.GetContentFieldName<StringField>())
                                     .Select(x => x.Key))
             {
                 patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.Pattern, "i")));
@@ -153,7 +153,7 @@ public partial class MongoStorage : IContentStorage
         //used assets
         if (query.UsedAsset != null)
         {
-            string assetFieldName = ContentFieldManager.Default.GetContentFieldName<AssetField>();
+            string assetFieldName = FieldManager.Default.GetContentFieldName<AssetField>();
 
             List<FilterDefinition<MongoContentItem>> assetQueries = new List<FilterDefinition<MongoContentItem>>();
 

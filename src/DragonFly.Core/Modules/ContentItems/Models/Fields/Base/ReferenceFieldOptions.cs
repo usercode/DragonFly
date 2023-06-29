@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class ReferenceFieldOptions : ContentFieldOptions
+public class ReferenceFieldOptions : FieldOptions
 {
 
 

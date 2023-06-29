@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class XmlFieldOptions : ContentFieldOptions
+public class XmlFieldOptions : FieldOptions
 {
     public XmlFieldOptions()
     {

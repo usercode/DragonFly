@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
 using System.Reflection;
 
 namespace DragonFly;
@@ -10,14 +9,14 @@ namespace DragonFly;
 public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute);
 
 /// <summary>
-/// ContentFieldManager
+/// FieldManager
 /// </summary>
-public sealed class ContentFieldManager
+public sealed class FieldManager
 {
     /// <summary>
     /// Default
     /// </summary>
-    public static ContentFieldManager Default { get; } = new ContentFieldManager();
+    public static FieldManager Default { get; } = new FieldManager();
 
     private IDictionary<string, Type> _optionsByName;
     private IDictionary<Type, Type> _optionsByField;
@@ -27,7 +26,7 @@ public sealed class ContentFieldManager
 
     public event ContentItemAddedHandler? Added;
 
-    private ContentFieldManager()
+    private FieldManager()
     {
         _optionsByName = new Dictionary<string, Type>();
         _optionsByField = new Dictionary<Type, Type>();
@@ -227,7 +226,7 @@ public sealed class ContentFieldManager
         return instance;
     }
 
-    public ContentFieldOptions? CreateOptions(string? fieldType)
+    public FieldOptions? CreateOptions(string? fieldType)
     {
         if (fieldType == null)
         {
@@ -241,22 +240,22 @@ public sealed class ContentFieldManager
             return null;
         }
 
-        ContentFieldOptions? options = CreateOptions(type);
+        FieldOptions? options = CreateOptions(type);
 
         return options;
     }
 
-    public ContentFieldOptions? CreateOptions<TField>()
+    public FieldOptions? CreateOptions<TField>()
         where TField : ContentField
     {
         return CreateOptions(typeof(TField));
     }
 
-    public ContentFieldOptions? CreateOptions(Type fieldType)
+    public FieldOptions? CreateOptions(Type fieldType)
     {
         if (_optionsByField.TryGetValue(fieldType, out Type? t))
         {
-            ContentFieldOptions? options = (ContentFieldOptions?)Activator.CreateInstance(t);
+            FieldOptions? options = (FieldOptions?)Activator.CreateInstance(t);
 
             if (options == null)
             {

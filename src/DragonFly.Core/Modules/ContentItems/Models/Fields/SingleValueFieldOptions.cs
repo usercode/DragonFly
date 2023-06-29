@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public abstract class SingleValueFieldOptions<T> : ContentFieldOptions
+public abstract class SingleValueFieldOptions<T> : FieldOptions
     where T : struct
 { 
 

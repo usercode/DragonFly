@@ -26,12 +26,12 @@ static class ContentSchemaConverter
         {
             try
             {
-                Type? optionsType = ContentFieldManager.Default.GetOptionsType(field.Value.FieldType);
-                ContentFieldOptions? options = null;
+                Type? optionsType = FieldManager.Default.GetOptionsType(field.Value.FieldType);
+                FieldOptions? options = null;
 
                 if (field.Value.Options is BsonDocument bsonOptions)
                 {
-                    options = (ContentFieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
+                    options = (FieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
 
                     //add missing options inside ArrayFieldOptions
                     if (options is ArrayFieldOptions arrayFieldOptions)
@@ -40,7 +40,7 @@ static class ContentSchemaConverter
                         {
                             if (f.Value.Options == null)
                             {
-                                f.Value.Options = ContentFieldManager.Default.CreateOptions(f.Value.FieldType);
+                                f.Value.Options = FieldManager.Default.CreateOptions(f.Value.FieldType);
                             }
                         }
                     }
@@ -48,7 +48,7 @@ static class ContentSchemaConverter
 
                 if (options == null)
                 {
-                    options = ContentFieldManager.Default.CreateOptions(field.Value.FieldType);
+                    options = FieldManager.Default.CreateOptions(field.Value.FieldType);
                 }
 
                 SchemaField schemaField = new SchemaField(field.Value.FieldType, options);
