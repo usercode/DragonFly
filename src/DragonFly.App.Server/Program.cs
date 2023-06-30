@@ -8,6 +8,8 @@ using DragonFly;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
+using DragonFlyABC;
+using DragonFlyTEST;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
@@ -60,20 +62,27 @@ await app.InitDragonFlyAsync();
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
 Product p = new Product();
-p.Title = "Bürostuhl";
+p.Title = "chair";
 p.Slug.Value = "product-a";
 p.IsActive = true;
 
 ContentItem ci = p.GetContentItem();
 
 ci.ToModel<Product>();
+ci.ToProduct();
+ci.ToModel();
 
 await contentStorage.CreateAsync(p);
 
 var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Published(false)
+                                                                .Asset(x => x.IsActive, null)
                                                                 .Slug(x => x.Slug, "product-a")
                                                                 .String(x => x.Title, "123", StringQueryType.Contains));
+
+var customers = await contentStorage.QueryAsync<Customer>(x => x
+                                                                .Published(false)
+                                                                .String(x => x.Lastname, "aaa", StringQueryType.StartsWith));
 
 ////update permissions to all roles
 //IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();

@@ -50,7 +50,7 @@ internal class SourceBuilder
         Builder.AppendLine();
     }
 
-    public void AppendBlock(Action<SourceBuilder> action)
+    public void AppendBlock(Action<SourceBuilder> action, bool command = false)
     {
         AppendLine("{");
         AddTab();
@@ -58,9 +58,15 @@ internal class SourceBuilder
         action(this);
 
         RemoveTab();
-        AppendLine("}");
-
-        AppendLineBreak();
+        
+        if (command)
+        {
+            AppendLine("};");
+        }
+        else
+        {
+            AppendLine("}");
+        }
     }
 
     public override string ToString() => Builder.ToString();

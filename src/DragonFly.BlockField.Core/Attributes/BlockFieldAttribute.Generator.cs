@@ -16,7 +16,7 @@ public class BlockFieldAttribute : BaseFieldAttribute
     {
         schema.AddField(
                                 name: property,
-                                fieldType: typeof(DragonFly.BlockField.BlockField),
+                                fieldType: typeof(BlockField.BlockField),
                                 options: new BlockFieldOptions()
                                 {
                                 },

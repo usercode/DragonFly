@@ -3,16 +3,19 @@
 // MIT License
 
 using DragonFly.Generator;
-using Newtonsoft.Json;
 
-namespace DragonFly.Tests;
+namespace DragonFlyABC;
 
 [ContentItem]
-public partial class Product
+public partial class Customer
 {
     [StringField(Required = true, MaxLength = 1024)]
     private string? _title;
 
-    [SlugField]
-    private SlugField _slug;
+    [StringField]
+    private string? _lastname;
+
+    [StringField]
+    private string? _firstname;
+
 }

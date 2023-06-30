@@ -37,6 +37,12 @@ public class GeneratorTest
                     {
                         [StringField]
                         public string? _title;
+
+                        [BoolField]
+                        public bool? _title;
+
+                        [SlugField]
+                        public SlugField _title;
                     }
                     
                     """;
@@ -99,7 +105,6 @@ public class GeneratorTest
         Assert.Equal(content.Id, customer.Id);
         Assert.Equal("Doe", customer.Lastname);
         Assert.Equal("John", customer.Firstname);
-        Assert.True(customer.IsActive);
         Assert.Equal("my-path", customer.Slug.Value);
     }
 
@@ -111,7 +116,6 @@ public class GeneratorTest
         Customer customer = content.ToCustomer();
         customer.Lastname = "Doe";
         customer.Firstname = "John";
-        customer.IsActive = true;
         customer.Slug = new SlugField("my-path");
 
         Assert.Equal("Doe", content.GetString("Lastname"));

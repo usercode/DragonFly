@@ -10,7 +10,7 @@ namespace DragonFly.AspNetCore;
 public static class DragonFlyBuilderExtensions
 {
     /// <summary>
-    /// AddContentModel
+    /// Adds a source generated model.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>

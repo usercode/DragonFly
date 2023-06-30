@@ -7,7 +7,7 @@ namespace DragonFly;
 public static class ContentItemExtensions
 {
     /// <summary>
-    /// ToModel
+    /// Wraps the content item to <typeparamref name="TContentModel"/>.
     /// </summary>
     /// <typeparam name="TContentModel"></typeparam>
     /// <param name="contentItem"></param>

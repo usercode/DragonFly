@@ -2,9 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly;
+using DragonFly.BlockField;
 using DragonFly.Generator;
 
-namespace DragonFly;
+namespace DragonFlyTEST;
 
 [ContentItem]
 public partial class Product
@@ -19,5 +21,5 @@ public partial class Product
     private bool? _isActive;
 
     [BlockField]
-    private BlockField.BlockField _mainContent;
+    private BlockField _mainContent;
 }

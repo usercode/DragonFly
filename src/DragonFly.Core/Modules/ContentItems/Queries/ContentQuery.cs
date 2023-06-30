@@ -42,7 +42,7 @@ public class ContentQuery : QueryBase
     public IList<FieldOrder> OrderFields { get; set; }
 
     /// <summary>
-    /// 
+    /// IncludeListFieldsOnly
     /// </summary>
     public bool IncludeListFieldsOnly { get; set; }
 

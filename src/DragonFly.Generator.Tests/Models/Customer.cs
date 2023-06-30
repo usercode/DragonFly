@@ -15,11 +15,6 @@ public partial class Customer
     [StringField]
     private string? _lastname;
 
-    [BoolField]
-    private bool? _isActive;
-
-    private long? _value;
-
     [StringField]
     private string? _street;
 

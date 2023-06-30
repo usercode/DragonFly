@@ -8,7 +8,9 @@ static class SourceBuilderExtensions
 {
     public static SourceBuilder AddUsings(this SourceBuilder builder, params string[] usings)
     {
-        foreach (string usingName in usings)
+        foreach (string usingName in usings
+                                        .Distinct()
+                                        .OrderBy(x => x))
         {
             builder.AppendLine($"using {usingName};");
         }
@@ -18,10 +20,20 @@ static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddNamespace(this SourceBuilder builder, string name, Action<SourceBuilder> body)
+    public static SourceBuilder AddNamespace(this SourceBuilder builder, string name, Action<SourceBuilder> body, bool useFileScope = false)
     {
-        builder.AppendLine($"namespace {name}");
-        builder.AppendBlock(body);
+        if (useFileScope)
+        {
+            builder.AppendLine($"namespace {name};");
+            builder.AppendLineBreak();
+
+            body(builder);
+        }
+        else
+        {
+            builder.AppendLine($"namespace {name}");
+            builder.AppendBlock(body);
+        }
 
         return builder;
     }
