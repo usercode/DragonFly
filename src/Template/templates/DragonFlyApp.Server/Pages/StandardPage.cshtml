@@ -18,12 +18,12 @@
     {
         List<string> robots = new List<string>(2);
 
-        if (Model.Result.NoIndex)
+        if (Model.Result.NoIndex == true)
         {
             robots.Add("noindex");
         }
 
-        if (Model.Result.NoFollow)
+        if (Model.Result.NoFollow == true)
         {
             robots.Add("nofollow");
         }

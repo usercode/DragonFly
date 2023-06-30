@@ -27,11 +27,11 @@ public class StandardPage : BasePageModel
     {
         if (string.IsNullOrEmpty(slug))
         {
-            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.BoolQuery(x => x.IsStartPage, true));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Bool(x => x.IsStartPage, true));
         }
         else
         {
-            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.SlugQuery(x => x.Slug, slug));
+            Result = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>(x => x.Slug(x => x.Slug, slug));
         }        
 
         if (Result == null)

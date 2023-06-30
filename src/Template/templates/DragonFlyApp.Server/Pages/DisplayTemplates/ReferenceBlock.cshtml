@@ -8,7 +8,11 @@
     <div class="block reference-block">
         @{
             IContentModel contentModel = content.ToModel();
-            
+
+            if (contentModel is StandardPageModel)
+            {
+
+            }
         }
     </div>
 }

@@ -4,28 +4,28 @@
 
 using DragonFly;
 using DragonFly.BlockField;
-using DragonFly.Proxy.Attributes;
+using DragonFly.Generator;
 
 namespace DragonFlyTemplate.Models;
 
 [ContentItem("BlogPost")]
-public class BlogPostModel : EntityPageModel
+public partial class BlogPostModel
 {
     [DateField(Required = true)]
-    public virtual DateTime? Date { get; set; }
+    private DateTime? _date;
 
     [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
-    public virtual string Title { get; set; }
+    private string? _title;
 
     [TextField]
-    public virtual string Description { get; set; }
+    private string? _description;
 
     [SlugField(Required = true, Index = true)]
-    public virtual string Slug { get; set; }
+    private string? _slug;
 
     [AssetField(ListField = true, ShowPreview = true)]
-    public virtual AssetField Image { get; set; }
+    private AssetField _image;
 
     [BlockField]
-    public virtual BlockField MainContent { get; set; }
+    private BlockField _mainContent;
 }

@@ -11,6 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Core" Version="0.9.17" />
+    <PackageReference Include="DragonFly.Core" Version="0.9.22" />
   </ItemGroup>
 </Project>

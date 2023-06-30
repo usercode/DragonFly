@@ -7,7 +7,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
             <div class="navbar-nav">
-                <a class="nav-link @(Model is StandardPage standardPage && standardPage.Result.IsStartPage ? "active" : "")" href="/">Start</a>
+                <a class="nav-link @(Model is StandardPage standardPage && standardPage.Result.IsStartPage == true ? "active" : "")" href="/">Start</a>
                 <a class="nav-link @(Model is BlogPage or BlogPostPage ? "active" : "")" href="/blog">Blog</a>
             </div>
         </div>

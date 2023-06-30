@@ -3,32 +3,32 @@
 // MIT License
 
 using DragonFly;
-using DragonFly.Proxy.Attributes;
 using DragonFly.BlockField;
+using DragonFly.Generator;
 
 namespace DragonFlyTemplate.Models;
 
 [ContentItem("StandardPage")]
-public class StandardPageModel : EntityPageModel
+public partial class StandardPageModel
 {
     [StringField(Required = true, ListField = true)]
-    public virtual string Title { get; set; }
+    private string? _title;
 
     [SlugField(Required = true, Index = true)]
-    public virtual string Slug { get; set; }
+    private string? _slug;
 
     [BoolField(Required = true, Index = true)]
-    public virtual bool NoFollow { get; set; }
+    private bool? _noFollow;
 
     [BoolField(Required = true, Index = true)]
-    public virtual bool NoIndex { get; set; }
+    private bool? _noIndex;
 
     [BoolField(Required = true, Index = true)]
-    public virtual bool IsStartPage { get; set; }
+    private bool? _isStartPage;
 
     [BoolField(Required = true, Index = true)]
-    public virtual bool IsFooterPage { get; set; }
+    private bool? _isFooterPage;
 
     [BlockField]
-    public virtual BlockField MainContent { get; set; }
+    private BlockField _mainContent;
 }

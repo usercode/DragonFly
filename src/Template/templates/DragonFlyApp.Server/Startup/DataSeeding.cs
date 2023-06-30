@@ -4,10 +4,8 @@
 
 using DragonFly;
 using Microsoft.Extensions.FileProviders;
-using DragonFly.Proxy;
 using DragonFlyTemplate.Models;
 using DragonFly.BlockField;
-using DragonFly.Query;
 
 namespace DragonFlyTemplate.Startup;
 
@@ -57,7 +55,7 @@ public class DataSeeding
             return;
         }
 
-        StandardPageModel startPage = Api.Proxy().Create<StandardPageModel>();
+        StandardPageModel startPage = new StandardPageModel();
         startPage.IsStartPage = true;
         startPage.Title = "Welcome To DragonFly CMS";
         startPage.Slug = "start";

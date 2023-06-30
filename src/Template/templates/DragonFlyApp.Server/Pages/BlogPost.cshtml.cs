@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
 using DragonFlyTemplate.Models;
 using Microsoft.AspNetCore.Mvc;
 using DragonFly;
@@ -25,7 +24,7 @@ public class BlogPostPage : BasePageModel
 
     public async Task<IActionResult> OnGetAsync(string slug)
     {
-        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.SlugQuery(x => x.Slug, slug));
+        Result = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x.Slug(x => x.Slug, slug));
 
         if (Result == null)
         {
