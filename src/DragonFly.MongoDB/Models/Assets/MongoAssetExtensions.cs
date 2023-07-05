@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.MongoDB.Proxies;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 
@@ -57,7 +56,7 @@ static class MongoAssetExtensions
 
         if (mongoAsset.Folder != null)
         {
-            asset.Folder = ContentItemProxy.CreateAssetFolder(mongoAsset.Folder.Value);
+            asset.Folder = ProxyFactory.CreateAssetFolder(mongoAsset.Folder.Value);
         }
 
         foreach (var item in mongoAsset.Metaddata)

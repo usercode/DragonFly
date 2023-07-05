@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.MongoDB.Proxies;
-
 namespace DragonFly.MongoDB;
 
 static class MongoFolderAssetExtensions
@@ -36,7 +34,7 @@ static class MongoFolderAssetExtensions
 
         if (mongoAsset.Parent != null)
         {
-            asset.Parent = ContentItemProxy.CreateAssetFolder(mongoAsset.Parent.Value);
+            asset.Parent = ProxyFactory.CreateAssetFolder(mongoAsset.Parent.Value);
         }
 
         return asset;

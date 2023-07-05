@@ -28,12 +28,11 @@
   
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />   
-    <ProjectReference Include="..\DragonFly.Generator.SourceBuilder\DragonFly.Generator.SourceBuilder.csproj" />
-    <ProjectReference Include="..\DragonFly.Generator.Core\DragonFly.Generator.Core.csproj" />
+    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.Generator.SourceBuilder\DragonFly.Generator.SourceBuilder.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
 </Project>

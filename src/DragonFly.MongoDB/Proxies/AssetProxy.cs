@@ -7,17 +7,16 @@ using DragonFly.Generator;
 namespace DragonFly.MongoDB;
 
 [Proxy]
-internal partial class ContentItemProxy : ContentItem
+internal partial class AssetProxy : Asset
 {
     private bool _loaded = false;
 
     [Intercept]
     [IgnoreProperty(nameof(Id))]
-    [IgnoreProperty(nameof(Schema))]
     [IgnoreMethod(nameof(IsNew))]
     [IgnoreMethod(nameof(Equals))]
     [IgnoreMethod(nameof(GetHashCode))]
-    private async Task OnMethodCalling(string name)
+    private async ValueTask OnMethodCalling(string name)
     {
         if (_loaded == true)
         {
@@ -26,11 +25,11 @@ internal partial class ContentItemProxy : ContentItem
 
         _loaded = true;
 
-        ContentItem? result = await MongoStorage.Default.GetContentAsync(Schema.Name, Id);
+        Asset? result = await MongoStorage.Default.GetAssetAsync(Id);
 
         if (result == null)
         {
-            throw new Exception($"ContentItem '{Id}' not found");
+            throw new Exception($"Asset '{Id}' not found");
         }
 
         SetInvocationTarget(result);

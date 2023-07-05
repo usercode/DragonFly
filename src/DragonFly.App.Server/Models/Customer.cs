@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly;
 using DragonFly.Generator;
 
 namespace DragonFlyABC;

@@ -22,4 +22,10 @@ public partial class Product
 
     [BlockField]
     private BlockField _mainContent;
+
+    [AssetField(ShowPreview = true)]
+    private AssetField _image;
+
+    [ReferenceField]
+    private ReferenceField _reference;
 }

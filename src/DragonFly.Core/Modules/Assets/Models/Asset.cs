@@ -25,7 +25,7 @@ public class Asset : ContentBase<Asset>
     public Asset(Guid id)
        : this()
     {
-        Id = id;
+        _id = id;
     }
 
     /// <summary>

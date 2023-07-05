@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.Generator;
-using Newtonsoft.Json;
 
 namespace DragonFly.Tests;
 

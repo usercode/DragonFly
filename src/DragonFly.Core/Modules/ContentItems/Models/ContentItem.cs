@@ -16,8 +16,6 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
         _schema = schema;
         _fields = new ContentFields();
         _validationContext = new ValidationContext();
-
-        this.ApplySchema();
     }
 
     public ContentItem(Guid id, ContentSchema schema)

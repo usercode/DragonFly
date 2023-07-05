@@ -4,7 +4,6 @@
 
 using MongoDB.Bson;
 using DragonFly.Storage.Abstractions;
-using DragonFly.MongoDB.Proxies;
 
 namespace DragonFly.MongoDB;
 
@@ -24,7 +23,7 @@ public class ReferenceMongoFieldSerializer : MongoFieldSerializer<ReferenceField
                 Guid targetId = bsonDocument[ReferenceField.IdField].AsGuid;
                 string targetType = bsonDocument[ReferenceField.SchemaField].AsString;
 
-                contentField.ContentItem = ContentItemProxy.CreateContentItem(targetType, targetId);
+                contentField.ContentItem = ProxyFactory.CreateContentItem(targetType, targetId);
             }
         }
 

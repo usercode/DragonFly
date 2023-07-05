@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Testing;
 using Microsoft.CodeAnalysis;
 using Xunit;
+using DragonFly.Generator;
 
 namespace DragonFly.Tests;
 
@@ -48,10 +49,38 @@ public class GeneratorTest
                     """;
 
         // Pass the source code to our helper and snapshot test the output
-        Verify(source);
+        Verify<ModelGenerator>(source);
     }
 
-    public static Task Verify(string source)
+    [Fact]
+    public void TestProxy()
+    {
+        // The source code to test
+        var source = """
+                    using DragonFly;
+                    using DragonFly.Generator;
+
+                    namespace DragonFly.Generator.Tests;
+
+                    public class Asset { }
+
+                    [Proxy]
+                    partial class AssetProxy : Asset
+                    {
+                            [Intercept]
+                            [IgnoreProperty(nameof(Asset))]
+                            public Task Do()
+                            {
+                            }
+                    }                    
+                    """;
+
+        // Pass the source code to our helper and snapshot test the output
+        Verify<ProxyGenerator>(source);
+    }
+
+    public static Task Verify<T>(string source)
+        where T : IIncrementalGenerator, new()
     {
         SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);
         // Create references for assemblies we require
@@ -66,7 +95,7 @@ public class GeneratorTest
             syntaxTrees: new[] { syntaxTree },
             references: references); // 👈 pass the references to the compilation
 
-        ContentGenerator generator = new ContentGenerator();
+        T generator = new T();
 
         GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
 

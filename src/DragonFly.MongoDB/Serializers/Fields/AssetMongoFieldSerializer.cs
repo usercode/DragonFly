@@ -4,7 +4,6 @@
 
 using MongoDB.Bson;
 using DragonFly.Storage.Abstractions;
-using DragonFly.MongoDB.Proxies;
 
 namespace DragonFly.MongoDB;
 
@@ -19,7 +18,7 @@ public class AssetMongoFieldSerializer : MongoFieldSerializer<AssetField>
 
         if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
         {
-            contentField.Asset = ContentItemProxy.CreateAsset(bsonBinary.ToGuid());
+            contentField.Asset = ProxyFactory.CreateAsset(bsonBinary.ToGuid());
         }
 
         return contentField;

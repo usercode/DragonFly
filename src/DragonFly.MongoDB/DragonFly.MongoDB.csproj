@@ -21,7 +21,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Castle.Core" Version="5.1.1" />
 		<PackageReference Include="MongoDB.Driver" Version="2.20.0" />
 		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.20.0" />
 	</ItemGroup>
@@ -33,6 +32,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+		<ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
 	</ItemGroup>
 
   <ItemGroup>
