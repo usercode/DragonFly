@@ -112,47 +112,49 @@ await contentStorage.CreateAsync(contentProduct);
 
 ### Create typed content
 
+DragonFly.Generator.SourceBuilder
+
 ```csharp
 [ContentItem("BlogPost")]
-public class BlogPostModel : EntityPageModel
+public partial class BlogPostModel
 {
     [DateField(Required = true)]
-    public virtual DateTime? Date { get; set; }
+    private DateTime? _date;
 
     [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
-    public virtual string Title { get; set; }
+    private string? _title;
 
     [TextField]
-    public virtual string Description { get; set; }
+    private string? _description;
 
     [SlugField(Required = true, Index = true)]
-    public virtual string Slug { get; set; }
+    private string? _slug;
 
     [AssetField(ListField = true, ShowPreview = true)]
-    public virtual AssetField Image { get; set; }
+    private AssetField _image;
 
     [BlockField]
-    public virtual BlockField MainContent { get; set; }
+    private BlockField _mainContent;
 }
 ```
 #### Register typed content
 
 ```csharp
 builder.Services.AddDragonFly()
-                    .AddProxy(x => x.AddType<BlogPostModel>());                    
+                    .AddContentModel<BlogPostModel>();                    
 ```
 
 #### Use queries for typed content
 ```csharp
 //get first item
 var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x
-                                    .SlugQuery(x => x.Slug, slug));
+                                    .Slug(x => x.Slug, slug));
 
 //get all items
 var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x
                                     .Published(true)
                                     .Top(10)
-                                    .SlugQuery(x => x.Slug, slug));
+                                    .Slug(x => x.Slug, slug));
 ```
 
 ### BackgroundTask
