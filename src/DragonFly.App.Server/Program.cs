@@ -64,8 +64,8 @@ IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage
 
 Product p = new Product();
 p.Title = "chair";
-p.Slug.Value = "product-a";
 p.IsActive = true;
+p.Slug.Value = "product-a";
 
 ContentItem ci = p.GetContentItem();
 

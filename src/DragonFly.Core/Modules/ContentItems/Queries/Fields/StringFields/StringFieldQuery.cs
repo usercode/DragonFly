@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// StringQuery
+/// StringFieldQuery
 /// </summary>
-public class StringQuery : FieldQuery
+public class StringFieldQuery : FieldQuery
 {
     /// <summary>
     /// Pattern

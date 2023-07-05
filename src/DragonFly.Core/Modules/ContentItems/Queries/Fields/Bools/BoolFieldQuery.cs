@@ -5,17 +5,17 @@
 namespace DragonFly;
 
 /// <summary>
-/// SlugQuery
+/// BoolFieldQuery
 /// </summary>
-public class SlugQuery : FieldQuery
+public class BoolFieldQuery : FieldQuery
 {
     /// <summary>
     /// Value
     /// </summary>
-    public string? Value { get; set; }
+    public bool? Value { get; set; }
 
     public override bool IsEmpty()
     {
-        return string.IsNullOrWhiteSpace(Value);
+        return Value == null;
     }
 }

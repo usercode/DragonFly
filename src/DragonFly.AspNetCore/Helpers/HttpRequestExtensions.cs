@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
@@ -17,14 +16,14 @@ public static class HttpRequestExtensions
         StringValues skip = request.Query["$skip"];
         StringValues top = request.Query["$top"];
 
-        if (skip.Any())
+        if (skip.Count > 0)
         {
-            result.Skip = int.Parse(skip.First());
+            result.Skip = int.Parse(skip[0]);
         }
 
-        if (top.Any())
+        if (top.Count > 0)
         {
-            result.Top = int.Parse(top.First());
+            result.Top = int.Parse(top[0]);
         }
 
         return result;

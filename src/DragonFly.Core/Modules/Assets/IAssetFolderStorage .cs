@@ -2,9 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets.Query;
-using DragonFly.Query;
-
 namespace DragonFly;
 
 /// <summary>

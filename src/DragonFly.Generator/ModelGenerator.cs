@@ -116,6 +116,7 @@ public class ModelGenerator : IIncrementalGenerator
                             {
                                 x.AppendLine("return Id == other.Id;");
                             });
+                            x.AppendLine();
                             x.AppendLine("return false;");
                         });
 

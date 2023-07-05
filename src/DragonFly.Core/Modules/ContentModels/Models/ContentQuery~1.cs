@@ -4,6 +4,10 @@
 
 namespace DragonFly;
 
+/// <summary>
+/// ContentQuery
+/// </summary>
+/// <typeparam name="TContentModel"></typeparam>
 public class ContentQuery<TContentModel> : ContentQuery
     where TContentModel : class, IContentModel
 {

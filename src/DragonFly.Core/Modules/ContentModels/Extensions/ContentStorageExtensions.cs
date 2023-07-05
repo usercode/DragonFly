@@ -19,7 +19,7 @@ public static class ContentStorageExtensions
     public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, string schema, Guid id)
         where TContentModel : class, IContentModel
     {
-        var content = await storage.GetContentAsync(schema, id);
+        ContentItem? content = await storage.GetContentAsync(schema, id);
 
         if (content == null)
         {

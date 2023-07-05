@@ -2,10 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Amazon.SecurityToken.Model.Internal.MarshallTransformations;
-using DragonFly.Assets.Query;
-using DragonFly.Query;
-using DragonFly.Storage;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -85,7 +81,7 @@ public partial class MongoStorage : IAssetFolderStorage
         //Delete all assets
         while (true)
         {
-            var assets = await QueryAsync(new Assets.Query.AssetQuery() { Folder = folder.Id });
+            var assets = await QueryAsync(new AssetQuery() { Folder = folder.Id });
 
             if (assets.Count == 0)
             {

@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.AspNetCore;
-using DragonFly.Assets.Query;
 using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +30,7 @@ static class AssetApiExtensions
         groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequirePermission(AssetPermissions.UpdateAsset);
     }
 
-    private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, Assets.Query.AssetQuery query)
+    private static async Task<QueryResult<RestAsset>> MapQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
     {
         QueryResult<Asset> queryResult = await storage.QueryAsync(query);
 
@@ -114,7 +113,7 @@ static class AssetApiExtensions
         await storage.ApplyMetadataAsync(asset);
     }
 
-    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, Assets.Query.AssetQuery query)
+    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(HttpContext context, IAssetStorage storage, AssetQuery query)
     {   
         return await storage.ApplyMetadataAsync(query);
     }

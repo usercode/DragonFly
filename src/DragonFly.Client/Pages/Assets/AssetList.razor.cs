@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Assets.Query;
 using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
@@ -31,9 +30,9 @@ public class AssetListBase : EntityListComponent<Asset>
         toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Danger, RefreshAllMetadataAsync));
     }
 
-    protected virtual DragonFly.Assets.Query.AssetQuery CreateQuery()
+    protected virtual AssetQuery CreateQuery()
     {
-        return new DragonFly.Assets.Query.AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id };
+        return new AssetQuery() { Pattern = SearchPattern, Folder = SelectedFolder?.Id };
     }
 
     protected override async Task RefreshActionAsync()

@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// IntegerFieldQuery
 /// </summary>
-public class IntegerQuery : FieldQuery
+public class IntegerFieldQuery : FieldQuery
 {
     /// <summary>
     /// MinValue

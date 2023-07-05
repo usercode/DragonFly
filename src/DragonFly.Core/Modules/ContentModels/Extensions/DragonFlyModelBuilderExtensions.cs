@@ -6,10 +6,12 @@ using DragonFly.Builders;
 
 namespace DragonFly.AspNetCore;
 
-public static class DragonFlyBuilderExtensions
+public static class DragonFlyModelBuilderExtensions
 {
     /// <summary>
-    /// Adds a source generated model for <typeparamref name="TContentModel"/>.
+    /// Adds a source generated model for <typeparamref name="TContentModel"/>. 
+    /// <br /><br />
+    /// At startup an existing content schema for <typeparamref name="TContentModel"/> will be overriden.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>

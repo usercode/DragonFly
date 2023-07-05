@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <PackageReference Include="DragonFly.API" Version="0.9.22" />
-    <PackageReference Include="DragonFly.AspNetCore" Version="0.9.22" />
     <PackageReference Include="DragonFly.Generator.SourceBuilder" Version="0.9.22" />
     <PackageReference Include="DragonFly.ImageWizard" Version="0.9.22" />
     <PackageReference Include="DragonFly.MongoDB" Version="0.9.22" />

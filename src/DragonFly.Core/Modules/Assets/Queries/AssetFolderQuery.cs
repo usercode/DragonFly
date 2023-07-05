@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.Assets.Query;
+namespace DragonFly;
 
 public class AssetFolderQuery : QueryBase
 {

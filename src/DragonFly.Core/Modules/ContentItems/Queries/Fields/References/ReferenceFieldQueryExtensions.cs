@@ -5,14 +5,14 @@
 namespace DragonFly;
 
 /// <summary>
-/// ReferenceQueryExtensions
+/// ReferenceFieldQueryExtensions
 /// </summary>
-public static class ReferenceQueryExtensions
+public static class ReferenceFieldQueryExtensions
 {
     public static TContentQuery Reference<TContentQuery>(this TContentQuery query, string name, Guid? id)
         where TContentQuery : ContentQuery
     {
-        query.Fields.Add(new ReferenceQuery() { FieldName = name, ContentItemId = id });
+        query.Fields.Add(new ReferenceFieldQuery() { FieldName = name, ContentItemId = id });
 
         return query;
     }

@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// ReferenceQuery
+/// ReferenceFieldQuery
 /// </summary>
-public class ReferenceQuery : FieldQuery
+public class ReferenceFieldQuery : FieldQuery
 {
     /// <summary>
     /// ContentItemId

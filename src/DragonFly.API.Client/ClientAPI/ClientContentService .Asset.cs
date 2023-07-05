@@ -4,7 +4,6 @@
 
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
-using DragonFly.Assets.Query;
 using DragonFly.Query;
 
 namespace DragonFly.API.Client;
@@ -14,7 +13,7 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IAssetStorage
 {
-    public async Task<QueryResult<Asset>> QueryAsync(Assets.Query.AssetQuery assetQuery)
+    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
 
@@ -91,7 +90,7 @@ public partial class ClientContentService : IAssetStorage
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(Assets.Query.AssetQuery query)
+    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/metadata", query);
 

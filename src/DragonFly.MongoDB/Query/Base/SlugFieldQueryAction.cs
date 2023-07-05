@@ -11,9 +11,9 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// SlugFieldQueryAction
 /// </summary>
-public class SlugFieldQueryAction : FieldQueryAction<SlugQuery>
+public class SlugFieldQueryAction : FieldQueryAction<SlugFieldQuery>
 {
-    public override void Apply(SlugQuery query, FieldQueryActionContext context)
+    public override void Apply(SlugFieldQuery query, FieldQueryActionContext context)
     {
         if (string.IsNullOrEmpty(query.Value) == false)
         {
