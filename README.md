@@ -112,7 +112,7 @@ await contentStorage.CreateAsync(contentProduct);
 
 ### Create typed content
 
-DragonFly.Generator.SourceBuilder
+DragonFly.Generator
 
 ```csharp
 [ContentItem("BlogPost")]
