@@ -66,6 +66,7 @@ Product p = new Product();
 p.Title = "chair";
 p.IsActive = true;
 p.Slug.Value = "product-a";
+p.CustomerC = new Customer();
 
 ContentItem ci = p.GetContentItem();
 
@@ -79,6 +80,7 @@ var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Published(false)
                                                                 .Asset(x => x.IsActive, null)
                                                                 .Slug(x => x.Slug, "product-a")
+                                                                .Slug(Product.Fields.Slug, "product-a")
                                                                 .String(x => x.Title, "123", StringQueryType.Contains));
 
 var customers = await contentStorage.QueryAsync<Customer>(x => x

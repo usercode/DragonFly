@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-using DragonFly.Generator;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -29,20 +27,20 @@ public class ModelGenerator : IIncrementalGenerator
 
             foreach (var item in ar)
             {
-                var namespaceDeclaration = item.ClassSyntax.Parent as BaseNamespaceDeclarationSyntax;
-
-                if (namespaceDeclaration == null)
-                {
-                    return;
-                }
-
                 if (item.ClassSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "ContentItem") == false)
                 {
                     return;
                 }
 
-                string ns = namespaceDeclaration.Name.ToString();
-                string className = item.ClassSyntax.Identifier.Text;
+                INamedTypeSymbol? classSymbol = item.GeneratorContext.SemanticModel.GetDeclaredSymbol(item.ClassSyntax);
+
+                if (classSymbol == null)
+                {
+                    return;
+                }
+
+                string ns = classSymbol.ContainingNamespace.ToDisplayString();
+                string className = classSymbol.Name;
                 string classFields = $"{className}Fields";
                 string classQuery = $"ContentQuery<{className}>";
 
@@ -51,41 +49,40 @@ public class ModelGenerator : IIncrementalGenerator
 
                 List<ContentItemProperty> properties = new List<ContentItemProperty>();
 
-                List<string> usings = new List<string>()
-                {
-                    "DragonFly",
-                    "DragonFly.Generator"
-                };
-
                 //properties of contentitems
                 foreach (var field in item.ClassSyntax.Members.OfType<FieldDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
                 {
-                    string attributeName = field.AttributeLists[0].Attributes[0].Name.ToString();
+                    TypeInfo attributeTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.AttributeLists[0].Attributes[0]);
+
+                    if (attributeTypeInfo.Type == null)
+                    {
+                        continue;
+                    }
+
+                    TypeInfo propertyTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.Declaration.Type);
+
+                    if (propertyTypeInfo.Type == null)
+                    {
+                        continue;
+                    }
+
                     string attributeParameters = field.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString() ?? string.Empty;
 
-                    TypeInfo propertyTypeSymbol = item.GeneratorContext.SemanticModel.GetTypeInfo(field.Declaration.Type);
-                    
                     string fieldName = field.Declaration.Variables[0].Identifier.Text;
                     string propertyName = fieldName.TrimStart('_').FirstCharToUpper();
-                    string propertyType = field.Declaration.Type.ToString();
-                    bool isSingleValue = propertyTypeSymbol.Type?.IsValueType == true || propertyTypeSymbol.Type.Name == "String";
-                    string propertyTypeNamespace = propertyTypeSymbol.Type.ContainingNamespace.ToString();
 
                     properties.Add(new ContentItemProperty()
                     {
-                        AttributeName = attributeName,
                         AttributeParameters = attributeParameters,
                         PropertyName = propertyName,
-                        PropertyType = propertyType,
-                        IsSingleValue = isSingleValue
+                        AttributeTypeSymbol = attributeTypeInfo.Type,
+                        PropertyTypeSymbol = propertyTypeInfo.Type
                     });
-
-                    usings.Add(propertyTypeNamespace);
                 }
 
                 models.Add(new ClassItem(ns, className));
 
-                builder.AddUsings(usings.ToArray());
+                builder.AddUsings("System", "DragonFly");
                 builder.AddNamespace(ns, x =>
                 {
                     x.AddClass(Modifier.Public, className, x =>

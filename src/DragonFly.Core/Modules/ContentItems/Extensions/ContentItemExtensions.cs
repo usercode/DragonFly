@@ -32,7 +32,7 @@ public static class ContentItemExtensions
         return contentElement.Fields.TryGetValue(name, out contentField);
     }
 
-    public static void SetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+    public static void SetField(this IContentElement contentElement, string fieldName, ContentField? contentField)
     {
         if (TrySetField(contentElement, fieldName, contentField) == false)
         {
@@ -40,8 +40,10 @@ public static class ContentItemExtensions
         }
     }
 
-    public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField contentField)
+    public static bool TrySetField(this IContentElement contentElement, string fieldName, ContentField? contentField)
     {
+        ArgumentNullException.ThrowIfNull(contentField);
+
         if (contentElement.Fields.ContainsKey(fieldName) == false)
         {
             return false;

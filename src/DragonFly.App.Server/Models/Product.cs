@@ -5,6 +5,7 @@
 using DragonFly;
 using DragonFly.BlockField;
 using DragonFly.Generator;
+using DragonFlyABC;
 
 namespace DragonFlyTEST;
 
@@ -26,6 +27,15 @@ public partial class Product
     [AssetField(ShowPreview = true)]
     private AssetField _image;
 
+    [AssetField(ShowPreview = true)]
+    private Asset _image2;
+
     [ReferenceField]
-    private ReferenceField _reference;
+    private ReferenceField _customerA;
+
+    [ReferenceField]
+    private ContentItem? _customerB;
+
+    [ReferenceField]
+    private Customer? _customerC;
 }

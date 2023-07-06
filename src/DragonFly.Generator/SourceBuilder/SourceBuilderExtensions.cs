@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Microsoft.CodeAnalysis;
+
 namespace DragonFly.Generator;
 
 public static class SourceBuilderExtensions
@@ -179,24 +181,97 @@ public static class SourceBuilderExtensions
     {
         builder.AppendTabs();
 
-        builder.Append($"public {property.PropertyType} {property.PropertyName}");
+        string propertyType = property.PropertyTypeSymbol.ToDisplayString();
+        string propertyTypeMaybeNull = property.PropertyTypeSymbol.ToDisplayString(NullableFlowState.MaybeNull);
+
+        bool IsSingleValueType = property.PropertyTypeSymbol.IsValueType == true || property.PropertyTypeSymbol.Name == "String";
+        bool isDirectReferenceField = property.AttributeTypeSymbol.Name == "ReferenceFieldAttribute" && property.PropertyTypeSymbol.Name != "ReferenceField";
+        bool isDirectAssetField = property.AttributeTypeSymbol.Name == "AssetFieldAttribute" && property.PropertyTypeSymbol.Name != "AssetField";
+
+        builder.Append($"public {(IsSingleValueType || isDirectReferenceField || isDirectAssetField ? propertyTypeMaybeNull : propertyType)} {property.PropertyName}");
         builder.AppendLineBreak();
 
-        string type = property.PropertyType;
-
-        if (property.IsSingleValue)
+        //primitive type or string?
+        if (IsSingleValueType)
         {
             builder.AppendBlock(x =>
             {
-                x.AppendLine($"get => _contentItem.GetSingleValue<{type}>(\"{property.PropertyName}\");");
-                x.AppendLine($"set => _contentItem.SetSingleValue<{type}>(\"{property.PropertyName}\", value);");
+                x.AppendLine($"get => _contentItem.GetSingleValue<{propertyType}>(\"{property.PropertyName}\");");
+                x.AppendLine($"set => _contentItem.SetSingleValue<{propertyType}>(\"{property.PropertyName}\", value);");
             });
         }
+        //ReferenceField
+        else if (isDirectReferenceField)
+        {
+            if (property.PropertyTypeSymbol.Name == "ContentItem")
+            {
+                builder.AppendBlock(x =>
+                {
+                    x.AppendLine($"get");
+                    x.AppendBlock(x =>
+                    {
+                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");                        
+                        x.AppendLine($"return field.ContentItem;");
+                    });
+
+                    x.AppendLine($"set");
+                    x.AppendBlock(x =>
+                    {
+                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
+                        x.AppendLine($"field.ContentItem = value;");
+                    });
+                });
+            }
+            else
+            {
+                builder.AppendBlock(x =>
+                {
+                    x.AppendLine($"get");
+                    x.AppendBlock(x =>
+                    {
+                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
+                        x.AppendLine("if (field.ContentItem == null)");
+                        x.AppendBlock(x =>
+                        {
+                            x.AppendLine("return null;");
+                        });
+                        x.AppendLine($"return {propertyType}.Create(field.ContentItem);");
+                    });
+
+                    x.AppendLine($"set");
+                    x.AppendBlock(x =>
+                    {
+                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
+                        x.AppendLine($"field.ContentItem = value?.GetContentItem();");
+                    });
+                });
+            }
+        }
+        else if (isDirectAssetField)
+        {
+            builder.AppendBlock(x =>
+            {
+                x.AppendLine($"get");
+                x.AppendBlock(x =>
+                {
+                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");               
+                    x.AppendLine($"return field.Asset;");
+                });
+
+                x.AppendLine($"set");
+                x.AppendBlock(x =>
+                {
+                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");
+                    x.AppendLine($"field.Asset = value;");
+                });
+            });
+        }
+        //ContentField
         else
         {
             builder.AppendBlock(x =>
             {
-                x.AppendLine($"get => _contentItem.GetField<{type}>(\"{property.PropertyName}\");");
+                x.AppendLine($"get => _contentItem.GetField<{propertyType}>(\"{property.PropertyName}\");");
                 x.AppendLine($"set => _contentItem.SetField(\"{property.PropertyName}\", value);");
             });
         }
@@ -264,7 +339,7 @@ public static class SourceBuilderExtensions
                     parameters = $" {{ {property.AttributeParameters} }}";
                 }
 
-                x.AppendLine($"new {property.AttributeName}Attribute(){parameters}.AddToSchema(schema, \"{property.PropertyName}\");");
+                x.AppendLine($"new {property.AttributeTypeSymbol.ToDisplayString()}(){parameters}.AddToSchema(schema, \"{property.PropertyName}\");");
             }
             x.AppendLine();
 
