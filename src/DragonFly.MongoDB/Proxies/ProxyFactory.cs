@@ -8,7 +8,7 @@ internal static class ProxyFactory
 {
     public static ContentItem CreateContentItem(string schema, Guid id)
     {
-        return new ContentItemProxy(id, CreateContentSchema(schema));
+        return new ContentItemProxy(CreateContentSchema(schema), id);
     }
 
     public static ContentSchema CreateContentSchema(string schema)

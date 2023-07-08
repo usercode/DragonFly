@@ -43,8 +43,6 @@ public partial class ClientContentService : ISchemaStorage
 
     public async Task UpdateAsync(ContentSchema entity)
     {
-        string type = entity.GetType().Name;
-
         await Client.PutAsJsonAsync($"api/schema", entity.ToRest());
     }
 

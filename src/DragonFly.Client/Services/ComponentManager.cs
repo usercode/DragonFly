@@ -29,13 +29,18 @@ public sealed class ComponentManager
         _cacheFieldView[fieldType] = componentType;
     }
 
-    public Type GetComponentType(Type fieldType)
+    public Type GetComponentType(Type type)
     {
-        if (_cacheFieldView.TryGetValue(fieldType, out Type componentType))
+        if (_cacheFieldView.TryGetValue(type, out Type componentType))
         {
             return componentType;
         }
 
         return null;
+    }
+
+    public Type GetComponentType<T>()
+    {
+        return GetComponentType(typeof(T));
     }
 }

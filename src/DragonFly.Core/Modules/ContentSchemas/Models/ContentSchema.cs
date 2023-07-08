@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly;
 
 /// <summary>
@@ -59,6 +57,21 @@ public class ContentSchema : ContentBase<ContentSchema>, ISchemaElement
     private IList<string> _queryFields;
 
     public IList<string> QueryFields { get => _queryFields; set => _queryFields = value; }
+
+    public override bool Equals(object? obj)
+    {
+        if (obj is ContentSchema other)
+        {
+            return Name == other.Name;
+        }
+
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(typeof(ContentSchema), Name);
+    }
 
     public override string ToString()
     {

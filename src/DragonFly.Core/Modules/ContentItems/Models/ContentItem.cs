@@ -13,12 +13,17 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
 {
     public ContentItem(ContentSchema schema)
     {
+        if (schema == null)
+        {
+            ArgumentNullException.ThrowIfNull(schema);
+        }
+
         _schema = schema;
         _fields = new ContentFields();
         _validationContext = new ValidationContext();
     }
 
-    public ContentItem(Guid id, ContentSchema schema)
+    public ContentItem(ContentSchema schema, Guid id)
         : this(schema)
     {
         _id = id;

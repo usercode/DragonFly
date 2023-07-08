@@ -27,6 +27,6 @@ public class DefaultMongoFieldSerializer<TContentField> : MongoFieldSerializer<T
 
     public override BsonValue Write(TContentField contentField)
     {
-        return contentField.ToBsonDocument(contentField.GetType());
+        return contentField.ToBsonDocument();
     }
 }

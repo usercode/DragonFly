@@ -43,8 +43,6 @@ public partial class ClientContentService : IStructureStorage
 
     public async Task UpdateAsync(ContentStructure entity)
     {
-        string type = entity.GetType().Name;
-
         await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity);
     }
 

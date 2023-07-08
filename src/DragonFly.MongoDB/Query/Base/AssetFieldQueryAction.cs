@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
 using MongoDB.Bson;
 using MongoDB.Driver;
 

@@ -34,12 +34,12 @@ public static class ContentStorageExtensions
     /// </summary>
     /// <typeparam name="TContentModel"></typeparam>
     /// <param name="storage"></param>
-    /// <param name="entity"></param>
+    /// <param name="model"></param>
     /// <returns></returns>
-    public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
+    public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        await storage.CreateAsync(entity.GetContentItem());
+        await storage.CreateAsync(model.GetContentItem());
     }
 
     /// <summary>
@@ -47,12 +47,12 @@ public static class ContentStorageExtensions
     /// </summary>
     /// <typeparam name="TContentModel"></typeparam>
     /// <param name="storage"></param>
-    /// <param name="entity"></param>
+    /// <param name="model"></param>
     /// <returns></returns>
-    public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel entity)
+    public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        await storage.UpdateAsync(entity.GetContentItem());
+        await storage.UpdateAsync(model.GetContentItem());
     }
 
     /// <summary>

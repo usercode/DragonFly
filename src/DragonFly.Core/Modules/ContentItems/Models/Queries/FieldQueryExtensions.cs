@@ -20,7 +20,7 @@ public static class FieldQueryExtensions
     {
         if (isCustomField)
         {
-            query.OrderFields.Add(new FieldOrder($"Fields.{field}", asc));
+            query.OrderFields.Add(new FieldOrder($"{nameof(ContentItem.Fields)}.{field}", asc));
         }
         else
         {

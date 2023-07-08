@@ -66,7 +66,9 @@ Product p = new Product();
 p.Title = "chair";
 p.IsActive = true;
 p.Slug.Value = "product-a";
+p.CustomerA = new ReferenceField();
 p.CustomerC = new Customer();
+p.CustomerB = Customer.Schema.CreateContent();
 
 ContentItem ci = p.GetContentItem();
 
