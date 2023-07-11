@@ -11,7 +11,29 @@ public abstract class BaseFieldAttribute : Attribute
 
     public bool ListField { get; set; }
 
+    public bool QueryField { get; set; }
+
+    public bool ReferenceField { get; set; }
+
     public int SortKey { get; set; }
 
-    public abstract void AddToSchema(ContentSchema schema, string property);
+    public bool Index { get; set; }
+
+    public virtual void AddToSchema(ContentSchema schema, string property)
+    {
+        if (ListField)
+        {
+            schema.ListFields.Add(property);
+        }
+
+        if (QueryField)
+        {
+            schema.QueryFields.Add(property);
+        }
+
+        if (ReferenceField)
+        {
+            schema.ReferenceFields.Add(property);
+        }
+    }
 }

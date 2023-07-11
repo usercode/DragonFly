@@ -11,27 +11,7 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public sealed class MongoQueryManager
 {
-    private static MongoQueryManager? _default;
-
-    public static MongoQueryManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new MongoQueryManager();
-
-                _default.Register<BoolFieldQuery, BoolFieldQueryAction>();
-                _default.Register<StringFieldQuery, StringFieldQueryAction>();
-                _default.Register<SlugFieldQuery, SlugFieldQueryAction>();
-                _default.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
-                _default.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
-                _default.Register<AssetFieldQuery, AssetFieldQueryAction>();
-            }
-
-            return _default;
-        }
-    }
+    public static MongoQueryManager Default { get; } = new MongoQueryManager();
 
     private IDictionary<Type, IFieldQueryAction> _fields;
 

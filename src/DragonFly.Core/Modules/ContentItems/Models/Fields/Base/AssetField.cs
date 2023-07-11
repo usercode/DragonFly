@@ -24,10 +24,24 @@ public class AssetField : ContentField
         Asset = asset;
     }
 
+    private Asset? _asset;
+
     /// <summary>
     /// Asset
     /// </summary>
-    public Asset? Asset { get; set; }
+    public Asset? Asset
+    {
+        get => _asset;
+        set
+        {
+            if (value?.IsNew() == true)
+            {
+                throw new Exception("It's not allowed to assign an unsaved asset.");
+            }
+
+            _asset = value;
+        }
+    }
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {

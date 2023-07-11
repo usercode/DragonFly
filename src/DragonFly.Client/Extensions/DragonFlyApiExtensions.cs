@@ -12,7 +12,7 @@ public static class DragonFlyApiExtensions
         where TField : ContentField
         where TFieldView : IFieldComponent
     {
-        api.ContentFields().Add<TField>();
+        api.ContentField().Add<TField>();
         api.Components().RegisterField<TFieldView>();
     }
 
@@ -39,7 +39,7 @@ public static class DragonFlyApiExtensions
         where TMetadata : AssetMetadata, new()
         where TMetadataView : IAssetMetadataComponent
     {
-        api.AssetMetadatas().Add<TMetadata>();
+        api.AssetMetadata().Add<TMetadata>();
         api.Components().RegisterAssetMetadata<TMetadataView>();
     }
 }

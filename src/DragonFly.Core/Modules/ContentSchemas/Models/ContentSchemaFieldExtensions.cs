@@ -117,6 +117,18 @@ public static class ContentSchemaFieldExtensions
         return schema;
     }
 
+    public static TContentSchema AddGeolocation<TContentSchema>(this TContentSchema schema, string name, Action<GeolocationFieldOptions>? configOptions = null, int sortkey = 0)
+        where TContentSchema : ISchemaElement
+    {
+        GeolocationFieldOptions options = new GeolocationFieldOptions();
+
+        configOptions?.Invoke(options);
+
+        schema.AddField(name, typeof(GeolocationField), options, sortkey);
+
+        return schema;
+    }
+
     public static TContentSchema AddAsset<TContentSchema>(this TContentSchema schema, string name, Action<AssetFieldOptions>? configOptions = null, int sortkey = 0)
         where TContentSchema : ISchemaElement
     {

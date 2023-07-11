@@ -11,8 +11,6 @@ public class StringFieldAttribute : BaseFieldAttribute
         MaxLength = StringFieldOptions.DefaultMaxLength;
     }
 
-    public bool Searchable { get; set; }
-
     public string? DefaultValue { get; set; }
 
     public int MinLength { get; set; }
@@ -21,19 +19,16 @@ public class StringFieldAttribute : BaseFieldAttribute
 
     public override void AddToSchema(ContentSchema schema, string property)
     {
+        base.AddToSchema(schema, property);
+
         schema.AddString(property, x =>
                                         {
-                                            x.IsSearchable = Searchable;
+                                            x.IsSearchable = Index;
                                             x.IsRequired = Required;
                                             x.DefaultValue = DefaultValue;
                                             x.MinLength = MinLength;
                                             x.MaxLength = MaxLength;
                                         },
                                         SortKey);
-
-        if (ListField)
-        {
-            schema.ListFields.Add(property);
-        }
     }
 }

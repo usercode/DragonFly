@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Diagnostics.CodeAnalysis;
+using DragonFly.MongoDB.Index;
 
 namespace DragonFly.MongoDB;
 
@@ -11,29 +12,10 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public sealed class MongoIndexManager
 {
-    private static MongoIndexManager? _default;
-
-    public static MongoIndexManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new MongoIndexManager();
-
-                _default.Register<StringField>();
-                _default.Register<SlugField>();
-                _default.Register<BoolField>();
-                _default.Register<IntegerField>();
-                _default.Register<FloatField>();
-                _default.Register<DateTimeField>();
-                //_default.Register<AssetField>(null);
-                //_default.Register<ReferenceField>(ReferenceField.IdField);
-            }
-
-            return _default;
-        }
-    }
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static MongoIndexManager Default { get; } = new MongoIndexManager();
 
     public MongoIndexManager()
     {
@@ -42,16 +24,12 @@ public sealed class MongoIndexManager
 
     public IDictionary<Type, FieldIndex> Fields { get; set; }
 
-    public void Register<TField>(string? name, bool unique = false)
-        where TField : ContentField
+    public void Register<TFieldIndex>()
+        where TFieldIndex : FieldIndex, new()
     {
-        Fields[typeof(TField)] = new FieldIndex(name, unique);
-    }
+        TFieldIndex index = new TFieldIndex();
 
-    public void Register<TField>(bool unique = false)
-        where TField : ContentField, ISingleValueField
-    {
-        Register<TField>(null, unique);
+        Fields[index.FieldType] = index;
     }
 
     public bool TryGetByType(Type fieldType, [NotNullWhen(true)] out FieldIndex? fieldIndex)

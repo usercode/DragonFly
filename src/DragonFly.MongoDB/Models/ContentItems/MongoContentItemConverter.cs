@@ -17,7 +17,7 @@ static class MongoContentItemConverter
         contentItem.Version = mongoContentItem.Version;
         contentItem.SchemaVersion = mongoContentItem.SchemaVersion;
 
-        foreach(var mongoField in mongoContentItem.Fields)
+        foreach (var mongoField in mongoContentItem.Fields)
         {
             mongoField.Value.ToModelValue(mongoField.Key, contentItem, schema);
         }

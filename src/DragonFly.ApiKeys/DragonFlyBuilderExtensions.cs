@@ -30,7 +30,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.Permissions()
+            api.Permission()
                             .Add(ApiKeyPermissions.ManageApiKey)
                             .Add(ApiKeyPermissions.QueryApiKey)
                             .Add(ApiKeyPermissions.ReadApiKey)

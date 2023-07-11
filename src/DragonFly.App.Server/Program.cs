@@ -66,9 +66,11 @@ Product p = new Product();
 p.Title = "chair";
 p.IsActive = true;
 p.Slug.Value = "product-a";
-p.CustomerA = new ReferenceField();
-p.CustomerC = new Customer();
-p.CustomerB = Customer.Schema.CreateContent();
+//p.CustomerA = new ReferenceField();
+//p.CustomerC = new Customer();
+//p.CustomerB = Customer.Schema.CreateContent();
+p.Location.Latitude = 10;
+p.Location.Longitude = -9;
 
 ContentItem ci = p.GetContentItem();
 
@@ -80,7 +82,7 @@ await contentStorage.CreateAsync(p);
 
 var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Published(false)
-                                                                .Asset(x => x.IsActive, null)
+                                                                .Asset(x => x.Image, null)
                                                                 .Slug(x => x.Slug, "product-a")
                                                                 .Slug(Product.Fields.Slug, "product-a")
                                                                 .String(x => x.Title, "123", StringQueryType.Contains));

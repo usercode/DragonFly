@@ -37,13 +37,21 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<IWebHookStorage>(x => x.GetRequiredService<MongoStorage>());
 
         builder.Services.AddSingleton(MongoFieldManager.Default);
-        builder.Services.AddSingleton(MongoQueryManager.Default);
         builder.Services.AddSingleton(MongoIndexManager.Default);
+        builder.Services.AddSingleton(MongoQueryManager.Default);
 
         //fix for nested field options (inside ArrayFieldOptions)
-        builder.PreInit(api => api.ContentFields().Added += ContentFieldAdded);
+        builder.PreInit(api =>
+        {
+            api.ContentField().Added += ContentFieldAdded;
+        });
 
-        builder.Init(api => api.MongoFields().AddDefaults());
+        builder.Init(api =>
+        {
+            api.MongoField().AddDefaults();
+            api.MongoIndex().AddDefaults();
+            api.MongoQuery().AddDefaults();
+        });
 
         builder.PostInit<CreateIndexAction>();
 

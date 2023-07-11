@@ -7,11 +7,18 @@ using DragonFly.Validations;
 namespace DragonFly;
 
 [FieldOptions(typeof(GeolocationFieldOptions))]
+[FieldQuery(typeof(GeolocationFieldQuery))]
 public class GeolocationField : ContentField
 {
-    public double? Latitude { get; set; }
-
+    /// <summary>
+    /// Valid longitude values are between -180 and 180, both inclusive.
+    /// </summary>
     public double? Longitude { get; set; }
+
+    /// <summary>
+    /// Valid latitude values are between -90 and 90, both inclusive.
+    /// </summary>
+    public double? Latitude { get; set; }
 
     public override void Clear()
     {

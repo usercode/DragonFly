@@ -9,7 +9,7 @@ namespace DragonFly;
 
 public static class MongoFieldManagerExtensions
 {
-    public static MongoFieldManager MongoFields(this IDragonFlyApi api)
+    public static MongoFieldManager MongoField(this IDragonFlyApi api)
     {
         return MongoFieldManager.Default;
     }
@@ -20,6 +20,7 @@ public static class MongoFieldManagerExtensions
         mongoFieldManager.RegisterField<AssetMongoFieldSerializer>();
         mongoFieldManager.RegisterField<ComponentMongoFieldSerializer>();
         mongoFieldManager.RegisterField<ReferenceMongoFieldSerializer>();
+        mongoFieldManager.RegisterField<GeolocationMongoFieldSerializer>();
 
         mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<BoolField>>();
         mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<StringField>>();
@@ -31,9 +32,7 @@ public static class MongoFieldManagerExtensions
         mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<HtmlField>>();
         mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<XHtmlField>>();
         mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<XmlField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<DateTimeField>>();
-
-        mongoFieldManager.RegisterField<DefaultMongoFieldSerializer<GeolocationField>>();
+        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<DateTimeField>>();        
 
         return mongoFieldManager;
     }

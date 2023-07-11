@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Storage;
 using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields;
 using Microsoft.Extensions.Logging;
@@ -93,9 +92,9 @@ public partial class MongoStorage
 
     public void CreateMissingFieldSerializers(IDragonFlyApi api)
     {
-        foreach (Type contentFieldType in api.ContentFields().GetAllFieldTypes())
+        foreach (Type contentFieldType in api.ContentField().GetAllFieldTypes())
         {
-            if (api.MongoFields().TryGetByFieldType(contentFieldType, out IMongoFieldSerializer? fieldSerializer))
+            if (api.MongoField().TryGetByFieldType(contentFieldType, out IMongoFieldSerializer? fieldSerializer))
             {
                 continue;
             }
@@ -111,7 +110,7 @@ public partial class MongoStorage
                     throw new Exception($"Could not create single value field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.MongoFields().RegisterField(fieldSerializer);
+                api.MongoField().RegisterField(fieldSerializer);
             }
             else //build DefaultFieldSerializer
             {
@@ -122,10 +121,10 @@ public partial class MongoStorage
                     throw new Exception($"Could not create default field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.MongoFields().RegisterField(fieldSerializer);
+                api.MongoField().RegisterField(fieldSerializer);
             }
         }
-    }
+    }    
 
     public async Task DeleteDatabaseAsync()
     {

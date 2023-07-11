@@ -14,16 +14,13 @@ public class AssetFieldAttribute : BaseFieldAttribute
 
     public override void AddToSchema(ContentSchema schema, string property)
     {
+        base.AddToSchema(schema, property);
+
         schema.AddAsset(property, x =>
                                     {
                                         x.IsRequired = Required;
                                         x.ShowPreview = ShowPreview;
                                     }, 
                                     SortKey);
-
-        if (ListField)
-        {
-            schema.ListFields.Add(property);
-        }
     }
 }

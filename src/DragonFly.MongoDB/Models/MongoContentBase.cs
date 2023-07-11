@@ -34,5 +34,8 @@ public abstract class MongoContentBase
     /// </summary>
     public int Version { get; set; }
 
-    
+    public override string ToString()
+    {
+        return $"{Id}";
+    }
 }

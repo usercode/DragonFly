@@ -1,0 +1,52 @@
+﻿@inherits FieldQueryComponent<GeolocationFieldQuery>
+
+<div>
+    <BSRow>
+        <BSCol LG="4">
+            <BSLabel class="form-label">Longitude</BSLabel>
+        </BSCol>
+        <BSCol>
+            <BSInput InputType="InputType.Number"
+            @bind-Value="@Query.Longitude"
+                     class="form-control" />
+        </BSCol>
+    </BSRow>
+    <BSRow>
+        <BSCol LG="4">
+            <BSLabel class="form-label">Latitude</BSLabel>
+        </BSCol>
+        <BSCol>
+            <BSInput InputType="InputType.Number"
+            @bind-Value="@Query.Latitude"
+                     class="form-control" />
+        </BSCol>
+    </BSRow>
+	<BSRow>
+		<BSCol LG="4">
+            <BSLabel class="form-label">Min distance</BSLabel>
+		</BSCol>
+		<BSCol>
+				<BSInput InputType="InputType.Number"              
+										@bind-Value="@Query.MinDistance"
+										class="form-control" 
+										/>
+		</BSCol>		
+	</BSRow>
+</div>
+<div>
+	<BSRow>
+		<BSCol LG="4">
+            <BSLabel class="form-label">Max distance</BSLabel>
+		</BSCol>
+		<BSCol>
+				<BSInput InputType="InputType.Number"              
+										@bind-Value="@Query.MaxDistance"
+										class="form-control" 
+										/>
+		</BSCol>
+	</BSRow>
+</div>
+
+@code {
+
+}

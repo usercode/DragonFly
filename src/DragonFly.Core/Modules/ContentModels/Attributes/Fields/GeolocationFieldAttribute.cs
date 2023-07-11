@@ -4,9 +4,9 @@
 
 namespace DragonFly.Generator;
 
-public class ReferenceFieldAttribute : BaseFieldAttribute
+public class GeolocationFieldAttribute : BaseFieldAttribute
 {
-    public ReferenceFieldAttribute()
+    public GeolocationFieldAttribute()
     {
     }
 
@@ -14,9 +14,10 @@ public class ReferenceFieldAttribute : BaseFieldAttribute
     {
         base.AddToSchema(schema, property);
 
-        schema.AddReference(property, x =>
+        schema.AddGeolocation(property, x =>
                                         {
                                             x.IsRequired = Required;
+                                            x.IsSearchable = Index;
                                         },
                                         SortKey);
     }

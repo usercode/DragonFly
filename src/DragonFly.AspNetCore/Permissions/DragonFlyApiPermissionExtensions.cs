@@ -17,7 +17,7 @@ public static class DragonFlyApiPermissionExtensions
     /// </summary>
     /// <param name="api"></param>
     /// <returns></returns>
-    public static PermissionManager Permissions(this IDragonFlyApi api)
+    public static PermissionManager Permission(this IDragonFlyApi api)
     {
         return PermissionManager.Default;
     }

@@ -3,8 +3,6 @@
 // MIT License
 
 using DragonFly.Validations;
-using DragonFly.Query;
-using DragonFly.Storage;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -21,7 +19,7 @@ public partial class MongoStorage : IContentStorage
 {
     public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
-        ContentSchema contentSchema = await GetSchemaAsync(schema);
+        ContentSchema? contentSchema = await GetSchemaAsync(schema);
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
 
         MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
@@ -61,7 +59,7 @@ public partial class MongoStorage : IContentStorage
 
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)
     {
-        ContentSchema schema = await GetSchemaAsync(query.Schema);
+        ContentSchema? schema = await GetSchemaAsync(query.Schema);
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name, query.Published);
 
         List<FilterDefinition<MongoContentItem>> filters = new List<FilterDefinition<MongoContentItem>>();
@@ -182,7 +180,7 @@ public partial class MongoStorage : IContentStorage
         //execute query
         var cursor = await collection.FindAsync(q, findOptions);
 
-        long totalCount = await collection.CountDocumentsAsync(q);
+        long totalCount = 1;// await collection.CountDocumentsAsync(q);
 
         IList<MongoContentItem> result = await cursor.ToListAsync();
 

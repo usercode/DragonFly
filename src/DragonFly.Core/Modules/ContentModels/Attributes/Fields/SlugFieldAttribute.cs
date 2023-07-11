@@ -10,20 +10,15 @@ public class SlugFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public bool Index { get; set; }
-
     public override void AddToSchema(ContentSchema schema, string property)
     {
+        base.AddToSchema(schema, property);
+
         schema.AddSlug(property, x =>
                                     {
                                         x.IsRequired = Required;
                                         x.IsSearchable = Index;
                                     },
-                                    SortKey);
-
-        if (ListField)
-        {
-            schema.ListFields.Add(property);
-        }
+                                    SortKey);       
     }
 }

@@ -64,9 +64,9 @@ public static class DragonFlyBuilderExtensions
         IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
         builder.Init(api =>
         {
-            api.ContentFields().AddDefaults();
-            api.AssetMetadatas().AddDefaults();
-            api.Permissions().AddDefaults();
+            api.ContentField().AddDefaults();
+            api.AssetMetadata().AddDefaults();
+            api.Permission().AddDefaults();
         });
 
         return builder;

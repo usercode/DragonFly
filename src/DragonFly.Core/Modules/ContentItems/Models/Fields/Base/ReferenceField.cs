@@ -25,10 +25,24 @@ public class ReferenceField : ContentField
         ContentItem = contentItem;
     }
 
+    private ContentItem? _contentItem;
+
     /// <summary>
     /// ContentItem
     /// </summary>
-    public ContentItem? ContentItem { get; set; }
+    public ContentItem? ContentItem
+    {
+        get => _contentItem;
+        set
+        {
+            if (value?.IsNew() == true)
+            {
+                throw new Exception("It's not allowed to assign an unsaved content item.");
+            }
+
+            _contentItem = value;
+        }
+    }
 
     public override void Clear()
     {

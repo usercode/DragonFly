@@ -2,7 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
+using DragonFly.MongoDB.Index;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 
@@ -30,6 +31,8 @@ public partial class MongoStorage : ISchemaStorage
         await ContentSchemas.InsertOneAsync(mongo);
 
         schema.Id = mongo.Id;
+
+        await CreateIndicesAsync(schema);
     }
 
     public async Task UpdateAsync(ContentSchema schema)
@@ -37,6 +40,8 @@ public partial class MongoStorage : ISchemaStorage
         schema.ModifiedAt = DateTimeService.Current();
 
         await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo());
+
+        await CreateIndicesAsync(schema);
     }
 
     public async Task DeleteAsync(ContentSchema schema)
@@ -46,24 +51,26 @@ public partial class MongoStorage : ISchemaStorage
 
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
     {
+        var r = await ContentSchemas.AsQueryable()
+                                    .OrderBy(x => x.Name)
+                                    .ToListAsync();
+
         return new QueryResult<ContentSchema>()
         {
-            Items = ContentSchemas.AsQueryable()
-                    .OrderBy(x => x.Name)
-                    .ToList()
+            Items = r
                     .Select(x => x.ToModel())
                     .ToList()
         };
     }
 
-    public async Task<ContentSchema> GetSchemaAsync(string? name)
+    public async Task<ContentSchema?> GetSchemaAsync(string? name)
     {
         if (name == null)
         {
             throw new ArgumentNullException(nameof(name));
         }
 
-        MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Name == name);
+        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
 
         if (schema == null)
         {
@@ -73,15 +80,47 @@ public partial class MongoStorage : ISchemaStorage
         return schema.ToModel();
     }
 
-    public async Task<ContentSchema> GetSchemaAsync(Guid id)
+    public async Task<ContentSchema?> GetSchemaAsync(Guid id)
     {
-        MongoContentSchema? schema = ContentSchemas.AsQueryable().FirstOrDefault(x => x.Id == id);
+        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         if (schema == null)
         {
-            throw new Exception($"Schema was not found: {id}");
+            return null;
         }
 
         return schema.ToModel();
+    }
+
+    public async Task CreateIndicesAsync(ContentSchema schema)
+    {
+        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
+
+        await collection.Indexes.DropAllAsync();
+
+        foreach (var field in schema.Fields)
+        {
+            if (field.Value.Options?.IsSearchable == false)
+            {
+                continue;
+            }
+
+            Type? fieldType = Api.ContentField().GetContentFieldType(field.Value.FieldType);
+
+            if (fieldType == null)
+            {
+                throw new Exception($"Content field not found for '{field.Value.FieldType}'.");
+            }
+
+            //add new indices
+            if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
+            {
+                await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key);
+            }
+            else
+            {
+                Logger.LogWarning($"No index field found for '{fieldType.Name}'.");
+            }
+        }
     }
 }

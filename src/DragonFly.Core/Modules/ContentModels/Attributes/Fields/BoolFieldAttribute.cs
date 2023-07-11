@@ -6,10 +6,10 @@ namespace DragonFly.Generator;
 
 public class BoolFieldAttribute : BaseFieldAttribute
 {
-    public bool Index { get; set; }
-
     public override void AddToSchema(ContentSchema schema, string property)
     {
+        base.AddToSchema(schema, property);
+
         schema.AddBool(property, x => 
                                     { 
                                         x.DefaultValue = false; 
@@ -17,10 +17,5 @@ public class BoolFieldAttribute : BaseFieldAttribute
                                         x.IsSearchable = Index; 
                                     }, 
                                     SortKey);
-
-        if (ListField)
-        {
-            schema.ListFields.Add(property);
-        }
     }
 }

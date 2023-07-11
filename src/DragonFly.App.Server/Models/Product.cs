@@ -12,10 +12,10 @@ namespace DragonFlyTEST;
 [ContentItem]
 public partial class Product
 {
-    [StringField(Required = true, MaxLength = 1024)]
+    [StringField(Required = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
     private string? _title;
 
-    [SlugField]
+    [SlugField(Index = true)]
     private SlugField _slug;
 
     [BoolField]
@@ -38,4 +38,7 @@ public partial class Product
 
     [ReferenceField]
     private Customer? _customerC;
+
+    [GeolocationField(Index = true, QueryField = true)]
+    private GeolocationField _location;
 }

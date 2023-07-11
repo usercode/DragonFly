@@ -40,6 +40,6 @@ public class ContentModule : ClientModule
         api.RegisterField<XHtmlField, XHtmlFieldView>();
         api.RegisterField<XmlField, XmlFieldView>();
         api.RegisterField<ColorField, ColorFieldView>();
-        api.RegisterField<GeolocationField, GeolocationFieldView>();
+        api.RegisterField<GeolocationField, GeolocationFieldView, GeolocationFieldOptionsView, GeolocationFieldQueryView>();
     }
 }

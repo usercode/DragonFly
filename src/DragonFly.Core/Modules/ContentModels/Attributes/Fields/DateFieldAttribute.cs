@@ -12,15 +12,12 @@ public class DateFieldAttribute : BaseFieldAttribute
 
     public override void AddToSchema(ContentSchema schema, string property)
     {
+        base.AddToSchema(schema, property);
+
         schema.AddDate(property, x =>
                                     {
                                         x.IsRequired = Required;
                                     },
                                     SortKey);
-
-        if (ListField)
-        {
-            schema.ListFields.Add(property);
-        }
     }
 }

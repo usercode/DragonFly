@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.API;
+using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB;
@@ -12,10 +13,11 @@ namespace DragonFly.MongoDB;
 /// </summary>
 class CreateIndexAction : IPostInitialize
 {
-    public CreateIndexAction(MongoStorage mongoStorage, IDragonFlyApi api)
+    public CreateIndexAction(MongoStorage mongoStorage, IDragonFlyApi api, ILogger<CreateIndexAction> logger)
     {
         MongoStorage = mongoStorage;
         Api = api;
+        Logger = logger;
     }
 
     /// <summary>
@@ -27,6 +29,11 @@ class CreateIndexAction : IPostInitialize
     /// Api
     /// </summary>
     public IDragonFlyApi Api { get; }
+
+    /// <summary>
+    /// Logger
+    /// </summary>
+    public ILogger<CreateIndexAction> Logger { get; }
 
     public async Task ExecuteAsync(IDragonFlyApi api)
     {
@@ -46,49 +53,7 @@ class CreateIndexAction : IPostInitialize
 
         foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))
         {
-            IMongoCollection<MongoContentItem> collection = MongoStorage.GetMongoCollection(schema);
-
-            //await collection.Indexes.DropAllAsync();
-
-            ////remove unused indices
-            //var existingIndices = await collection.Indexes.ListAsync();
-
-            //foreach (var f in existingIndices.ToList())
-            //{
-            //    string name = f.GetElement("name").Value.AsString;
-
-            //    if (schema.Fields.Any(x => $"{x.Key}_Index" == name) == false)
-            //    {
-            //        await collection.Indexes.DropOneAsync(name);
-            //    }
-            //}
-
-            foreach (var field in schema.Fields)
-            {
-                if (field.Value.Options?.IsSearchable == false)
-                {
-                    continue;
-                }
-
-                Type? fieldType = Api.ContentFields().GetContentFieldType(field.Value.FieldType);
-
-                if (fieldType == null)
-                {
-                    continue;
-                }
-
-                //add new indices
-                if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
-                {
-                    await collection.Indexes.CreateOneAsync(
-                        new CreateIndexModel<MongoContentItem>(Builders<MongoContentItem>.IndexKeys.Ascending(fieldIndex.CreateIndexPath(field.Key)),
-                        new CreateIndexOptions() { 
-                            Name = fieldIndex.CreateIndexName(field.Key), 
-                            Unique = fieldIndex.Unique, 
-                            Collation = new Collation(locale: "en", strength: CollationStrength.Primary)
-                        }));
-                }
-            }
+            await MongoStorage.CreateIndicesAsync(schema);
         }
     }
 }

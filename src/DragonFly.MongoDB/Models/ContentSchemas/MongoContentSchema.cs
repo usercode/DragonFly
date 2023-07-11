@@ -50,4 +50,9 @@ public class MongoContentSchema : MongoContentBase
     /// OrderFields
     /// </summary>
     public virtual IList<FieldOrder> OrderFields { get; set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }

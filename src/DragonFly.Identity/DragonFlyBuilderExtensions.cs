@@ -40,7 +40,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.Permissions()
+            api.Permission()
                             .Add(IdentityPermissions.ManageUser)
                             .Add(IdentityPermissions.QueryUser)
                             .Add(IdentityPermissions.ReadUser)
