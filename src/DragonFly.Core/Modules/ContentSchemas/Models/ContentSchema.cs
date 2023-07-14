@@ -11,6 +11,8 @@ public class ContentSchema : ContentBase<ContentSchema>, ISchemaElement
 {
     public ContentSchema(string name)
     {
+        ArgumentNullException.ThrowIfNull(name);
+
         _name = name;
         _fields = new SchemaFields();
         _listFields = new List<string>();

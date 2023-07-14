@@ -9,8 +9,9 @@ namespace DragonFly;
 /// <summary>
 /// ComponentField
 /// </summary>
+[Field]
 [FieldOptions(typeof(ComponentFieldOptions))]
-public class ComponentField : ContentField
+public partial class ComponentField
 {
     public ComponentField()
     {

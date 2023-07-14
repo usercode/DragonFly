@@ -7,8 +7,9 @@ namespace DragonFly.BlockField;
 /// <summary>
 /// BlockField
 /// </summary>
+[Field]
 [FieldOptions(typeof(BlockFieldOptions))]
-public class BlockField : SingleValueField<string>
+public partial class BlockField : SingleValueField<string>
 {
     public BlockField()
     {

@@ -52,8 +52,8 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddBlockField()
                     .AddApiKeys()
-                    .AddContentModel<Product>()
-                    .AddContentModel<Customer>();
+                    .AddModel<Product>()
+                    .AddModel<Customer>();
 
 var app = builder.Build();
 

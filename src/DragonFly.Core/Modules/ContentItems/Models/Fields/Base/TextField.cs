@@ -7,8 +7,9 @@ namespace DragonFly;
 /// <summary>
 /// TextField
 /// </summary>
+[Field]
 [FieldOptions(typeof(TextFieldOptions))]
-public class TextField : TextBaseField
+public partial class TextField : TextBaseField
 {
     public TextField()
     {

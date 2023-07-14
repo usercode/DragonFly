@@ -16,7 +16,10 @@ public class DragonFlyApi : IDragonFlyApi
         _done = false;
         ServiceProvider = serviceProvider;
     }
-    
+
+    /// <summary>
+    /// ServiceProvider
+    /// </summary>
     public IServiceProvider ServiceProvider { get; }
 
     private bool _done;

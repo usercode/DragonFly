@@ -5,9 +5,9 @@
 namespace DragonFly;
 
 /// <summary>
-/// ContentItemDragonFlyApiExtensions
+/// FieldManagerExtensions
 /// </summary>
-public static class ContentItemDragonFlyApiExtensions
+public static class FieldManagerExtensions
 {
     public static FieldManager ContentField(this IDragonFlyApi api)
     {

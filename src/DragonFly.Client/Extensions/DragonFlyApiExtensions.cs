@@ -9,30 +9,30 @@ namespace DragonFly;
 public static class DragonFlyApiExtensions
 {
     public static void RegisterField<TField, TFieldView>(this IDragonFlyApi api)
-        where TField : ContentField
+        where TField : IContentField, new()
         where TFieldView : IFieldComponent
     {
         api.ContentField().Add<TField>();
-        api.Components().RegisterField<TFieldView>();
+        api.Component().RegisterField<TFieldView>();
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView>(this IDragonFlyApi api)
-        where TField : ContentField, new()
+        where TField : IContentField, new()
         where TFieldView : IFieldComponent
         where TFieldOptionsView : IFieldOptionsComponent
     {
         api.RegisterField<TField, TFieldView>();
-        api.Components().RegisterOptions<TFieldOptionsView>();
+        api.Component().RegisterOptions<TFieldOptionsView>();
     }
 
     public static void RegisterField<TField, TFieldView, TFieldOptionsView, TFieldQueryView>(this IDragonFlyApi api)
-        where TField : ContentField, new()
+        where TField : IContentField, new()
         where TFieldView : IFieldComponent
         where TFieldOptionsView : IFieldOptionsComponent
         where TFieldQueryView : IFieldQueryComponent
     {
         api.RegisterField<TField, TFieldView, TFieldOptionsView>();
-        api.Components().RegisterQuery<TFieldQueryView>();
+        api.Component().RegisterQuery<TFieldQueryView>();
     }
 
     public static void RegisterMetadata<TMetadata, TMetadataView>(this IDragonFlyApi api)
@@ -40,6 +40,6 @@ public static class DragonFlyApiExtensions
         where TMetadataView : IAssetMetadataComponent
     {
         api.AssetMetadata().Add<TMetadata>();
-        api.Components().RegisterAssetMetadata<TMetadataView>();
+        api.Component().RegisterAssetMetadata<TMetadataView>();
     }
 }

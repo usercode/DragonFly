@@ -10,9 +10,10 @@ namespace DragonFly;
 /// <summary>
 /// TextField
 /// </summary>
+[Field]
 [FieldOptions(typeof(StringFieldOptions))]
 [FieldQuery(typeof(StringFieldQuery))]
-public class StringField : TextBaseField
+public partial class StringField : TextBaseField
 {
     public StringField()
     {

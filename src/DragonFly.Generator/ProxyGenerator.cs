@@ -185,13 +185,13 @@ public class ProxyGenerator : IIncrementalGenerator
                     ignoredProperties = memberSyntax.AttributeLists
                                                     .SelectMany(x => x.Attributes)
                                                     .Where(x => x.Name.ToString() == "IgnoreProperty")
-                                                    .Select(x => GetString(x.ArgumentList.Arguments[0].Expression))
+                                                    .Select(x => x.ArgumentList.Arguments[0].Expression.GetString())
                                                     .ToArray();
 
                     ignoredMethods = memberSyntax.AttributeLists
                                                     .SelectMany(x => x.Attributes)
                                                     .Where(x => x.Name.ToString() == "IgnoreMethod")
-                                                    .Select(x => GetString(x.ArgumentList.Arguments[0].Expression))
+                                                    .Select(x => x.ArgumentList.Arguments[0].Expression.GetString())
                                                     .ToArray();
 
                     method = methodDeclaration.Identifier.Text.ToString();
@@ -217,22 +217,5 @@ public class ProxyGenerator : IIncrementalGenerator
         isTask = false;
 
         return false;
-    }
-
-    private string GetString(ExpressionSyntax expression)
-    {
-        if (expression is LiteralExpressionSyntax literal)
-        {
-            return literal.Token.Text;
-        }
-        else if (expression is InvocationExpressionSyntax invocation) //nameof(..)
-        {
-            if (invocation.ArgumentList.Arguments[0].Expression is IdentifierNameSyntax identifier)
-            {
-                return identifier.Identifier.ValueText;
-            }
-        }
-
-        return string.Empty;
     }
 }

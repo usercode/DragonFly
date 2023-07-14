@@ -6,9 +6,10 @@ using DragonFly.Validations;
 
 namespace DragonFly;
 
+[Field]
 [FieldOptions(typeof(GeolocationFieldOptions))]
 [FieldQuery(typeof(GeolocationFieldQuery))]
-public class GeolocationField : ContentField
+public partial class GeolocationField
 {
     /// <summary>
     /// Valid longitude values are between -180 and 180, both inclusive.

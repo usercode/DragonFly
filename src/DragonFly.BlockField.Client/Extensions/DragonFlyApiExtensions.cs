@@ -16,7 +16,7 @@ public static class DragonFlyApiExtensions
         where TBlock : Block, new()
         where TBlockView : BlockComponent<TBlock>
     {
-        api.BlockFields().Add<TBlock>();
-        api.Components().RegisterBlock<TBlockView>();
+        api.BlockField().Add<TBlock>();
+        api.Component().RegisterBlock<TBlockView>();
     }
 }

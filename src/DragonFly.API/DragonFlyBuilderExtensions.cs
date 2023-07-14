@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.API;
 using DragonFly.AspNetCore.Builders;
-using System.Text.Json.Serialization.Metadata;
 
 namespace DragonFly.AspNetCore;
 

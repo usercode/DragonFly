@@ -10,8 +10,9 @@ namespace DragonFly;
 /// <summary>
 /// TextField
 /// </summary>
+[Field]
 [FieldOptions(typeof(XHtmlFieldOptions))]
-public class XHtmlField : TextBaseField
+public partial class XHtmlField : TextBaseField
 {
     public XHtmlField()
     {

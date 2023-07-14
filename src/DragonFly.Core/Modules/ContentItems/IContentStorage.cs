@@ -15,7 +15,7 @@ public interface IContentStorage
 
     Task UpdateAsync(ContentItem content);
 
-    Task DeleteAsync(ContentItem content);    
+    Task DeleteAsync(ContentItem content);
 
     Task PublishAsync(ContentItem content);
 

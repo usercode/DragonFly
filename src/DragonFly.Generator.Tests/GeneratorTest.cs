@@ -53,6 +53,26 @@ public class GeneratorTest
     }
 
     [Fact]
+    public void TestFieldGenerator()
+    {
+        // The source code to test
+        var source = """
+                    namespace DragonFly;
+
+                    [ContentField]
+                    [FieldOptions(typeof(AssetOptions))]
+                    [FieldQuery(typeof(AssetQuery))]
+                    public partial class AssetField
+                    {
+                    }
+                    
+                    """;
+
+        // Pass the source code to our helper and snapshot test the output
+        Verify<FieldGenerator>(source);
+    }
+
+    [Fact]
     public void TestProxy()
     {
         // The source code to test

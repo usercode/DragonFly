@@ -2,11 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Reflection;
-
 namespace DragonFly;
 
-public delegate void ContentItemAddedHandler(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute);
+public delegate void FieldAddedHandler(FieldFactory fieldFactory);
 
 /// <summary>
 /// FieldManager
@@ -18,94 +16,84 @@ public sealed class FieldManager
     /// </summary>
     public static FieldManager Default { get; } = new FieldManager();
 
-    private IDictionary<string, Type> _optionsByName;
-    private IDictionary<Type, Type> _optionsByField;
-    private IDictionary<string, Type> _queryByName;
-    private IDictionary<Type, Type> _queryByField;
-    private IDictionary<string, Type> _fieldByName;
+    private readonly IDictionary<string, FieldFactory> _optionsByName = new Dictionary<string, FieldFactory>();
+    private readonly IDictionary<string, FieldFactory> _queryByName = new Dictionary<string, FieldFactory>();
+    private readonly IDictionary<string, FieldFactory> _fieldByName = new Dictionary<string, FieldFactory>();
+    private readonly IDictionary<Type, FieldFactory> _fieldByType = new Dictionary<Type, FieldFactory>();
 
-    public event ContentItemAddedHandler? Added;
-
-    private FieldManager()
-    {
-        _optionsByName = new Dictionary<string, Type>();
-        _optionsByField = new Dictionary<Type, Type>();
-        _queryByName = new Dictionary<string, Type>();
-        _queryByField = new Dictionary<Type, Type>();
-        _fieldByName = new Dictionary<string, Type>();
-    }
+    public event FieldAddedHandler? Added;
 
     public void Add<TField>()
-        where TField : ContentField
+        where TField : IContentField
     {
-        Add(typeof(TField));
-    }
+        FieldFactory factory = TField.Factory;
 
-    public void Add(Type fieldType)
-    {
         //name
-        _fieldByName[fieldType.Name] = fieldType;
+        _fieldByName[factory.FieldName] = factory;
+        _fieldByType[factory.FieldType] = factory;
 
         //options
-        FieldOptionsAttribute? fieldOptionsAttribute = fieldType.GetCustomAttribute<FieldOptionsAttribute>();
-
-        if (fieldOptionsAttribute != null)
+        if (factory.OptionsType != null)
         {
-            _optionsByName[fieldOptionsAttribute.OptionsType.Name] = fieldOptionsAttribute.OptionsType;
-            _optionsByField[fieldType] = fieldOptionsAttribute.OptionsType;
+            _optionsByName[factory.OptionsType.Name] = factory;
         }
 
         //query
-        FieldQueryAttribute? fieldQueryAttribute = fieldType.GetCustomAttribute<FieldQueryAttribute>();
-
-        if (fieldQueryAttribute != null)
+        if (factory.QueryType != null)
         {
-            _queryByName[fieldQueryAttribute.QueryType.Name] = fieldQueryAttribute.QueryType;
-            _queryByField[fieldType] = fieldQueryAttribute.QueryType;
+            _queryByName[factory.QueryType.Name] = factory;
         }
 
-        Added?.Invoke(fieldType, fieldOptionsAttribute, fieldQueryAttribute);
-    }
-
-    public IEnumerable<Type> GetAllOptionsTypes()
-    {
-        return _optionsByField.Values;
+        Added?.Invoke(factory);
     }
 
     public IEnumerable<Type> GetAllFieldTypes()
     {
-        return _fieldByName.Select(x => x.Value).OrderBy(x => x.Name).ToList();
+        return _fieldByType.Keys;
+    }
+
+    public IEnumerable<Type> GetAllOptionsTypes()
+    {
+        return _optionsByName.Values
+                                .Select(x => x.OptionsType)
+                                .Cast<Type>()
+                                .ToArray();
     }
 
     public IEnumerable<Type> GetAllQueryTypes()
     {
-        return _queryByField.Values;
+        return _queryByName.Values
+                                .Select(x => x.QueryType)
+                                .Cast<Type>()
+                                .ToArray();
     }
 
-    public string GetContentFieldName<T>()
+    public string GetFieldName<T>()
         where T : ContentField
     {
-        return GetContentFieldName(typeof(T));
+        return GetFieldName(typeof(T));
     }
 
-    public string GetContentFieldName(Type type)
+    public string GetFieldName(Type type)
     {
-        return type.Name;
+        if (_fieldByType.TryGetValue(type, out FieldFactory? factory))
+        {
+            return factory.FieldName;
+        }
+
+        throw new Exception($"The field '{type.Name}' wasn't found.");
     }
 
-    public Type? GetContentFieldType(string fieldTypeName)
+    public Type GetFieldType(string fieldName)
     {
-        if (fieldTypeName == null)
+        ArgumentNullException.ThrowIfNull(fieldName);
+
+        if (_fieldByName.TryGetValue(fieldName, out FieldFactory? factory))
         {
-            throw new ArgumentNullException(nameof(fieldTypeName));
+            return factory.FieldType;
         }
 
-        if (_fieldByName.TryGetValue(fieldTypeName, out Type? type))
-        {
-            return type;
-        }
-
-        return null;
+        throw new Exception($"The field '{fieldName}' wasn't found.");
     }
 
     public ContentField CreateField<T>()
@@ -114,40 +102,39 @@ public sealed class FieldManager
         return CreateField(typeof(T));
     }
 
-    public ContentField CreateField(Type t)
+    public ContentField CreateField(Type fieldType)
     {
-        ContentField? field = (ContentField?)Activator.CreateInstance(t);
+        ArgumentNullException.ThrowIfNull(fieldType);
 
-        if (field == null)
+        if (_fieldByType.TryGetValue(fieldType, out FieldFactory? factory) == false)
         {
-            throw new Exception($"Cannot create an instance of field '{t.Name}'");
+            throw new Exception($"Cannot create an instance of field '{fieldType.Name}'");
         }
+
+        ContentField field = factory.CreateField();
 
         return field;
     }
 
-    public ContentField? CreateField(string? fieldName)
+    public ContentField CreateField(string fieldName)
     {
-        if (fieldName == null)
+        ArgumentNullException.ThrowIfNull(fieldName);
+
+        if (_fieldByName.TryGetValue(fieldName, out FieldFactory? factory) == false)
         {
-            throw new ArgumentNullException(nameof(fieldName));
+            throw new Exception($"Cannot create an instance of field '{fieldName}'");
         }
 
-        Type? fieldType = GetContentFieldType(fieldName);
+        ContentField field = factory.CreateField();
 
-        if (fieldType == null)
-        {
-            return null;
-        }
-
-        return CreateField(fieldType);
+        return field;
     }
 
     public Type? GetOptionsTypeByName(string name)
     {
-        if (_optionsByName.TryGetValue(name, out Type? type))
+        if (_optionsByName.TryGetValue(name, out FieldFactory? factory))
         {
-            return type;
+            return factory.OptionsType;
         }
 
         return null;
@@ -155,21 +142,11 @@ public sealed class FieldManager
 
     public Type? GetOptionsType(string? fieldName)
     {
-        if (fieldName == null)
-        {
-            throw new ArgumentNullException(nameof(fieldName));
-        }
+        ArgumentNullException.ThrowIfNull(fieldName);
 
-        Type? fieldType = GetContentFieldType(fieldName);
-
-        if (fieldType == null)
+        if (_fieldByName.TryGetValue(fieldName, out FieldFactory? factory))
         {
-            return null;
-        }
-
-        if (_optionsByField.TryGetValue(fieldType, out Type? type))
-        {
-            return type;
+            return factory.OptionsType;
         }
 
         return null;
@@ -177,21 +154,11 @@ public sealed class FieldManager
 
     public Type? GetQueryType(string? fieldType)
     {
-        if (fieldType == null)
-        {
-            throw new ArgumentNullException(nameof(fieldType));
-        }
+        ArgumentNullException.ThrowIfNull(fieldType);
 
-        Type? type = GetContentFieldType(fieldType);
-
-        if (fieldType == null)
+        if (_fieldByName.TryGetValue(fieldType, out FieldFactory? factory))
         {
-            return null;
-        }
-
-        if (_queryByField.TryGetValue(type, out Type? queryType))
-        {
-            return queryType;
+            return factory.QueryType;
         }
 
         return null;
@@ -199,9 +166,9 @@ public sealed class FieldManager
 
     public Type? GetQueryByName(string name)
     {
-        if (_queryByName.TryGetValue(name, out Type? type))
+        if (_queryByName.TryGetValue(name, out FieldFactory? factory))
         {
-            return type;
+            return factory.QueryType;
         }
 
         return null;
@@ -209,40 +176,30 @@ public sealed class FieldManager
 
     public FieldQuery? CreateQuery(string? fieldType)
     {
-        Type? type = GetQueryType(fieldType);
+        ArgumentNullException.ThrowIfNull(fieldType);
 
-        if (type == null)
+        if (_fieldByName.TryGetValue(fieldType, out FieldFactory? factory))
         {
-            return null;
+            FieldQuery? query = factory.CreateQuery();
+
+            return query;
         }
 
-        FieldQuery? instance = (FieldQuery?)Activator.CreateInstance(type);
-
-        if (instance == null)
-        {
-            return null;
-        }
-
-        return instance;
+        return null;
     }
 
     public FieldOptions? CreateOptions(string? fieldType)
     {
-        if (fieldType == null)
+        ArgumentNullException.ThrowIfNull(fieldType);
+
+        if (_fieldByName.TryGetValue(fieldType, out FieldFactory? factory))
         {
-            throw new ArgumentNullException(nameof(fieldType));
+            FieldOptions? options = factory.CreateOptions();
+
+            return options;
         }
 
-        Type? type = GetContentFieldType(fieldType);
-
-        if (type == null)
-        {
-            return null;
-        }
-
-        FieldOptions? options = CreateOptions(type);
-
-        return options;
+        return null;
     }
 
     public FieldOptions? CreateOptions<TField>()
@@ -253,20 +210,15 @@ public sealed class FieldManager
 
     public FieldOptions? CreateOptions(Type fieldType)
     {
-        if (_optionsByField.TryGetValue(fieldType, out Type? t))
-        {
-            FieldOptions? options = (FieldOptions?)Activator.CreateInstance(t);
+        ArgumentNullException.ThrowIfNull(fieldType);
 
-            if (options == null)
-            {
-                throw new Exception($"Could not create options for {fieldType.Name}.");
-            }
+        if (_fieldByType.TryGetValue(fieldType, out FieldFactory? factory))
+        {
+            FieldOptions? options = factory.CreateOptions();
 
             return options;
         }
-        else
-        {
-            return null;
-        }
+
+        return null;
     }
 }

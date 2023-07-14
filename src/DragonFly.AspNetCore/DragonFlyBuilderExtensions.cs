@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core.WebHooks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using DragonFly.AspNetCore.Builders;
 using Microsoft.AspNetCore.Http;
+using DragonFly.WebHooks;
 
 namespace DragonFly.AspNetCore;
 

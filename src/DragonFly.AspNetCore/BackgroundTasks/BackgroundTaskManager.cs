@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.AspNetCore;
-using DragonFly.Core;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 

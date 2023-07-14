@@ -2,16 +2,15 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly;
 
 /// <summary>
 /// ReferenceField
 /// </summary>
+[Field]
 [FieldOptions(typeof(ReferenceFieldOptions))]
 [FieldQuery(typeof(ReferenceFieldQuery))]
-public class ReferenceField : ContentField
+public partial class ReferenceField
 {
     public const string IdField = "Id";
     public const string SchemaField = "Schema";

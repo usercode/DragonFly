@@ -7,8 +7,9 @@ namespace DragonFly;
 /// <summary>
 /// HtmlField
 /// </summary>
+[Field]
 [FieldOptions(typeof(HtmlFieldOptions))]
-public class HtmlField : TextBaseField
+public partial class HtmlField : TextBaseField
 {
     public HtmlField()
     {

@@ -5,6 +5,7 @@
 using DragonFly.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.API;
@@ -16,10 +17,10 @@ static class PermissionApiExtensions
         endpoints.MapPost("permission/query", MapQuery).RequirePermission();
     }
 
-    private static async Task MapQuery(HttpContext context, IDragonFlyApi api)
+    private static async Task<Ok<IEnumerable<Permission>>> MapQuery(HttpContext context, IDragonFlyApi api)
     {
         IEnumerable<Permission> items = api.Permission().GetAll();
 
-        await context.Response.WriteAsJsonAsync(items);
+        return TypedResults.Ok(items);
     }
 }

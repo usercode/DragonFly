@@ -58,11 +58,11 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    private static void ContentFieldAdded(Type contentFieldType, FieldOptionsAttribute? fieldOptionsAttribute, FieldQueryAttribute? fieldQueryAttribute)
+    private static void ContentFieldAdded(FieldFactory fieldFactory)
     {
-        if (fieldOptionsAttribute != null)
+        if (fieldFactory.OptionsType != null)
         {
-            BsonClassMap map = new BsonClassMap(fieldOptionsAttribute.OptionsType);
+            BsonClassMap map = new BsonClassMap(fieldFactory.OptionsType);
             map.AutoMap();
 
             BsonClassMap.RegisterClassMap(map);

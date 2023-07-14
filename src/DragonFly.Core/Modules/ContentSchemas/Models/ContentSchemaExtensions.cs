@@ -22,7 +22,7 @@ public static class ContentSchemaExtensions
             throw new Exception($"The field type '{fieldType.Name}' isn't valid.");
         }
 
-        schema.Fields[name] = new SchemaField(FieldManager.Default.GetContentFieldName(fieldType), options) { SortKey = sortkey, Options = options };
+        schema.Fields[name] = new SchemaField(FieldManager.Default.GetFieldName(fieldType), options) { SortKey = sortkey, Options = options };
 
         return schema;
     }

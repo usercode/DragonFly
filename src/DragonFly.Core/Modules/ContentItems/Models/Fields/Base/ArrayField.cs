@@ -9,8 +9,9 @@ namespace DragonFly;
 /// <summary>
 /// ArrayField
 /// </summary>
+[Field]
 [FieldOptions(typeof(ArrayFieldOptions))]
-public class ArrayField : ContentField
+public partial class ArrayField
 {
     public ArrayField()
     {

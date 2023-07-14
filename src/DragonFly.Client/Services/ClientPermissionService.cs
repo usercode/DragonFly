@@ -30,10 +30,7 @@ public class ClientPermissionService : IPermissionService
 
         IEnumerable<Permission>? permissions = await response.Content.ReadFromJsonAsync<IEnumerable<Permission>>();
 
-        if (permissions == null)
-        {
-            throw new ArgumentNullException(nameof(permissions));
-        }
+        ArgumentNullException.ThrowIfNull(permissions);
 
         return permissions;
     }

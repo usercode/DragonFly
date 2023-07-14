@@ -93,6 +93,11 @@ public class ModelGenerator : IIncrementalGenerator
                         });
                         x.AddConstructor(Modifier.Public, className, ParameterList.New().Add("ContentItem", "contentItem"), x =>
                         {
+                            x.AppendLine("if (contentItem.Schema.Name != Schema.Name)");
+                            x.AppendBlock(x =>
+                            {
+                                x.AppendLine($"throw new Exception(\"The content item isn't compatible with the model '{className}'.\");");
+                            });
                             x.AppendLine("_contentItem = contentItem;");
                         });
                         x.AddField(Modifier.Private, "ContentItem", "_contentItem", isReadOnly: true);
@@ -200,6 +205,11 @@ public class ModelGenerator : IIncrementalGenerator
                             x.AppendLine($"return query.String(field({classFields}.Default), pattern, type);");
                         });
 
+                        x.AppendLine($"public static {classQuery} Geolocation(this {classQuery} query, Func<{classFields}, string> field, double longitude, double latitude, double? minDistance = null, double? maxDistance = null)");
+                        x.AppendBlock(x =>
+                        {
+                            x.AppendLine($"return query.Geolocation(field({classFields}.Default), longitude, latitude, minDistance, maxDistance);");
+                        });
                     },
                     isStatic: true);
                 }, useFileScope: true);
@@ -225,7 +235,7 @@ public class ModelGenerator : IIncrementalGenerator
                                 {
                                     x.AppendLine($"\"{model.Name}\" => new {model.Namespace}.{model.Name}(content),");
                                 }
-                                x.AppendLine("_ => throw new Exception(\"Unknown model.\")");
+                                x.AppendLine("_ => throw new Exception($\"Unknown model for '{content.Schema.Name}'.\")");
                             }, command: true);
                             
                         });

@@ -9,10 +9,10 @@ namespace DragonFly;
 /// </summary>
 public static class IntegerFieldQueryExtensions
 {
-    public static TContentQuery Integer<TContentQuery>(this TContentQuery query, string name, int? value, int? minValue = null, int? maxValue = null)
+    public static TContentQuery Integer<TContentQuery>(this TContentQuery query, string field, int? value, int? minValue = null, int? maxValue = null)
         where TContentQuery : ContentQuery
     {
-        query.Fields.Add(new IntegerFieldQuery() { FieldName = name, Value = value, MinValue = minValue, MaxValue = maxValue });
+        query.Fields.Add(new IntegerFieldQuery() { FieldName = field, Value = value, MinValue = minValue, MaxValue = maxValue });
 
         return query;
     }

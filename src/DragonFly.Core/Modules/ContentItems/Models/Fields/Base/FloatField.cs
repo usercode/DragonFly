@@ -9,8 +9,9 @@ namespace DragonFly;
 /// <summary>
 /// FloatField
 /// </summary>
+[Field]
 [FieldOptions(typeof(FloatFieldOptions))]
-public class FloatField : SingleValueField<double?>
+public partial class FloatField : SingleValueField<double?>
 {
     public FloatField()
     {

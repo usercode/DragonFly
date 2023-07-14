@@ -122,12 +122,9 @@ public static class ContentItemExtensions
         return item;
     }
 
-    public static void ApplySchema(this ContentItem? contentItem)
+    public static void ApplySchema(this ContentItem contentItem)
     {
-        if (contentItem == null)
-        {
-            throw new ArgumentNullException(nameof(contentItem));
-        }
+        ArgumentNullException.ThrowIfNull(contentItem);
 
         ApplySchema(contentItem, contentItem.Schema);
 
@@ -136,15 +133,8 @@ public static class ContentItemExtensions
 
     public static void ApplySchema(this IContentElement contentItem, ISchemaElement schema)
     {
-        if (contentItem == null)
-        {
-            throw new ArgumentNullException(nameof(contentItem));
-        }
-
-        if (schema == null)
-        {
-            throw new ArgumentNullException(nameof(schema));
-        }
+        ArgumentNullException.ThrowIfNull(contentItem);
+        ArgumentNullException.ThrowIfNull(schema);
 
         //remove content fields by schema
         foreach (var field in contentItem.Fields.ToList())

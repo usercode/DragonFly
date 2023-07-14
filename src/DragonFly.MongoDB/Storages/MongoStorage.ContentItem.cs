@@ -59,6 +59,8 @@ public partial class MongoStorage : IContentStorage
 
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)
     {
+        ArgumentNullException.ThrowIfNull(query.Schema);
+
         ContentSchema? schema = await GetSchemaAsync(query.Schema);
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema.Name, query.Published);
 
@@ -70,7 +72,7 @@ public partial class MongoStorage : IContentStorage
             List<FilterDefinition<MongoContentItem>> patternQuery = new List<FilterDefinition<MongoContentItem>>();
 
             foreach (string field in schema.Fields
-                                    .Where(x => x.Value.FieldType == FieldManager.Default.GetContentFieldName<StringField>())
+                                    .Where(x => x.Value.FieldType == FieldManager.Default.GetFieldName<StringField>())
                                     .Select(x => x.Key))
             {
                 patternQuery.Add(Builders<MongoContentItem>.Filter.Regex($"{nameof(MongoContentItem.Fields)}.{field}", new BsonRegularExpression(query.Pattern, "i")));
@@ -151,7 +153,7 @@ public partial class MongoStorage : IContentStorage
         //used assets
         if (query.UsedAsset != null)
         {
-            string assetFieldName = FieldManager.Default.GetContentFieldName<AssetField>();
+            string assetFieldName = FieldManager.Default.GetFieldName<AssetField>();
 
             List<FilterDefinition<MongoContentItem>> assetQueries = new List<FilterDefinition<MongoContentItem>>();
 

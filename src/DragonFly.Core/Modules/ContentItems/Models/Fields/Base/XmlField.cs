@@ -9,8 +9,9 @@ namespace DragonFly;
 /// <summary>
 /// XmlField
 /// </summary>
+[Field]
 [FieldOptions(typeof(XmlFieldOptions))]
-public class XmlField : TextBaseField
+public partial class XmlField : TextBaseField
 {
     public XmlField()
     {

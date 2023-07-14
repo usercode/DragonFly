@@ -51,9 +51,9 @@ public partial class MongoStorage : ISchemaStorage
 
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
     {
-        var r = await ContentSchemas.AsQueryable()
-                                    .OrderBy(x => x.Name)
-                                    .ToListAsync();
+        IList<MongoContentSchema> r = await ContentSchemas.AsQueryable()
+                                                            .OrderBy(x => x.Name)
+                                                            .ToListAsync();
 
         return new QueryResult<ContentSchema>()
         {
@@ -63,12 +63,9 @@ public partial class MongoStorage : ISchemaStorage
         };
     }
 
-    public async Task<ContentSchema?> GetSchemaAsync(string? name)
+    public async Task<ContentSchema?> GetSchemaAsync(string name)
     {
-        if (name == null)
-        {
-            throw new ArgumentNullException(nameof(name));
-        }
+        ArgumentNullException.ThrowIfNull(name);
 
         MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
 
@@ -105,7 +102,7 @@ public partial class MongoStorage : ISchemaStorage
                 continue;
             }
 
-            Type? fieldType = Api.ContentField().GetContentFieldType(field.Value.FieldType);
+            Type? fieldType = Api.ContentField().GetFieldType(field.Value.FieldType);
 
             if (fieldType == null)
             {

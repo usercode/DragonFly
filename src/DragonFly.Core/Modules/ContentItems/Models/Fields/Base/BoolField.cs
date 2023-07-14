@@ -7,8 +7,10 @@ namespace DragonFly;
 /// <summary>
 /// BoolField
 /// </summary>
+[Field]
 [FieldOptions(typeof(BoolFieldOptions))]
-public class BoolField : SingleValueField<bool?>
+[FieldQuery(typeof(BoolFieldQuery))]
+public partial class BoolField : SingleValueField<bool?>
 {
     public BoolField()
     {

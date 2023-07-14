@@ -13,11 +13,8 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
 {
     public ContentItem(ContentSchema schema)
     {
-        if (schema == null)
-        {
-            ArgumentNullException.ThrowIfNull(schema);
-        }
-
+        ArgumentNullException.ThrowIfNull(schema);
+        
         _schema = schema;
         _fields = new ContentFields();
         _validationContext = new ValidationContext();

@@ -6,7 +6,7 @@ namespace DragonFly.BlockField;
 
 public static class BlockFieldManagerExtensions
 {
-    public static BlockFieldManager BlockFields(this IDragonFlyApi api)
+    public static BlockFieldManager BlockField(this IDragonFlyApi api)
     {
         return BlockFieldManager.Default;
     }

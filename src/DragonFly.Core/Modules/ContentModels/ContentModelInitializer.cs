@@ -20,7 +20,7 @@ public class ContentModelInitializer<TContentModel> : IPostInitialize
         ContentSchema schema = TContentModel.Schema;
 
         //override existing schema
-        ContentSchema? existingSchema = await storage.GetSchemaAsync(TContentModel.Schema.Name);
+        ContentSchema? existingSchema = await storage.GetSchemaAsync(schema.Name);
 
         if (existingSchema != null)
         {

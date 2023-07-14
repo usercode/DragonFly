@@ -4,8 +4,9 @@
 
 namespace DragonFly;
 
+[Field]
 [FieldOptions(typeof(DateTimeFieldOptions))]
-public class DateTimeField : SingleValueField<DateTime?>
+public partial class DateTimeField : SingleValueField<DateTime?>
 {
     public DateTimeField()
     {

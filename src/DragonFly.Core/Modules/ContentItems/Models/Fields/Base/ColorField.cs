@@ -7,6 +7,10 @@ using DragonFly.Validations;
 
 namespace DragonFly;
 
+/// <summary>
+/// ColorField
+/// </summary>
+[Field]
 [FieldOptions(typeof(ColorFieldOptions))]
 public partial class ColorField : TextBaseField
 {

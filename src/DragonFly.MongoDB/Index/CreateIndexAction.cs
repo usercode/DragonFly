@@ -37,6 +37,9 @@ class CreateIndexAction : IPostInitialize
 
     public async Task ExecuteAsync(IDragonFlyApi api)
     {
+        //schema
+        await MongoStorage.ContentSchemas.Indexes.CreateOneAsync(new CreateIndexModel<MongoContentSchema>(Builders<MongoContentSchema>.IndexKeys.Ascending(x => x.Name)));
+
         //assets
         await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Name)));
         await MongoStorage.Assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Slug)));

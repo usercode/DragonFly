@@ -11,12 +11,12 @@ public static class DragonFlyModelBuilderExtensions
     /// <summary>
     /// Adds a source generated model for <typeparamref name="TContentModel"/>. 
     /// <br /><br />
-    /// At startup an existing content schema for <typeparamref name="TContentModel"/> will be overriden.
+    /// At startup an existing schema for <typeparamref name="TContentModel"/> will be overriden.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>
     /// <returns></returns>
-    public static IDragonFlyBuilder AddContentModel<TContentModel>(this IDragonFlyBuilder builder)
+    public static IDragonFlyBuilder AddModel<TContentModel>(this IDragonFlyBuilder builder)
         where TContentModel : IContentModel
     {
         builder.PostInit<ContentModelInitializer<TContentModel>>();

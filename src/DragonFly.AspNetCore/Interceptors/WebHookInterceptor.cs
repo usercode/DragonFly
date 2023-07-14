@@ -2,11 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace DragonFly.Core.WebHooks;
+namespace DragonFly.WebHooks;
 
 /// <summary>
 /// WebHookInterceptor
