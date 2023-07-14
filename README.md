@@ -53,9 +53,7 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 
 ![grafik](https://user-images.githubusercontent.com/2958488/208325922-9e55b4d0-9e08-4e0a-96c1-855fe1361584.png)
 
-### Try to avoid reflection source code
-
-#### Source generators:
+### Use source generators to avoid reflection
 - FieldGenerator
 - ModelGenerator
 - ProxyGenerator
