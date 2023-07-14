@@ -53,6 +53,13 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 
 ![grafik](https://user-images.githubusercontent.com/2958488/208325922-9e55b4d0-9e08-4e0a-96c1-855fe1361584.png)
 
+### Try to avoid reflection source code
+
+#### Source generators:
+- FieldGenerator
+- ModelGenerator
+- ProxyGenerator
+
 ### Supported fields
 - StringField
 - FloatField
@@ -141,7 +148,7 @@ public partial class BlogPostModel
 
 ```csharp
 builder.Services.AddDragonFly()
-                    .AddContentModel<BlogPostModel>();                    
+                    .AddModel<BlogPostModel>();                    
 ```
 
 #### Use queries for typed content
