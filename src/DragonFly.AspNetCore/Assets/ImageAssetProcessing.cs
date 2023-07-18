@@ -9,9 +9,17 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class ImageAssetProcessing : IAssetProcessing
 {
-    public IEnumerable<string> SupportedMimetypes
+    public bool CanUse(string mimeType)
     {
-        get => new[] { MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp };
+        return mimeType switch
+        {
+            MimeTypes.WebP => true,
+            MimeTypes.Jpeg => true,
+            MimeTypes.Png => true,
+            MimeTypes.Gif => true,
+            MimeTypes.Bmp => true,
+            _ => false
+        };
     }
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)

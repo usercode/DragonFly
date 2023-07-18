@@ -4,10 +4,10 @@
 <BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
     <Header>Select block</Header>
     <Content>
-        @foreach (Block block in BlockFieldManager.GetAllBlocks())
+        @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</BSButton>
+                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</BSButton>
             </div>
         }
     </Content>
@@ -85,12 +85,10 @@
         await _offCanvas.ToggleAsync();
     }
 
-    private async Task Add(Block element)
+    private async Task Add(BlockFactory factory)
     {
-        //await Modal.HideAsync();
-
         await _offCanvas.ToggleAsync();
 
-        Blocks.Insert(Position, element);
+        Blocks.Insert(Position, factory.CreateBlock());
     }
 }

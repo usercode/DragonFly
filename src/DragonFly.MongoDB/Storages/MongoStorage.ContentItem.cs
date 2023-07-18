@@ -182,7 +182,7 @@ public partial class MongoStorage : IContentStorage
         //execute query
         var cursor = await collection.FindAsync(q, findOptions);
 
-        long totalCount = 1;// await collection.CountDocumentsAsync(q);
+        long totalCount = await collection.EstimatedDocumentCountAsync();
 
         IList<MongoContentItem> result = await cursor.ToListAsync();
 

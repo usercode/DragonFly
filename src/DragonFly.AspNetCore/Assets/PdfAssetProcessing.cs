@@ -12,9 +12,9 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class PdfAssetProcessing : IAssetProcessing
 {
-    public IEnumerable<string> SupportedMimetypes
+    public bool CanUse(string mimeType)
     {
-        get => new[] { MimeTypes.Pdf };
+        return mimeType == MimeTypes.Pdf;
     }
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)

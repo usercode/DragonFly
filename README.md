@@ -1,4 +1,4 @@
-# DragonFly - Headless ASP.NET Core CMS
+# DragonFly - Headless ASP.NET Core CMS + Blazor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -69,7 +69,7 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 - DateField
 - IntegerField
 - ColorField
-- GeoLocationField
+- GeolocationField
 - SlugField
 - XmlField
 - HtmlField
@@ -120,8 +120,8 @@ await contentStorage.CreateAsync(contentProduct);
 DragonFly.Generator
 
 ```csharp
-[ContentItem("BlogPost")]
-public partial class BlogPostModel
+[ContentItem]
+public partial class BlogPost
 {
     [DateField(Required = true)]
     private DateTime? _date;
@@ -146,7 +146,7 @@ public partial class BlogPostModel
 
 ```csharp
 builder.Services.AddDragonFly()
-                    .AddModel<BlogPostModel>();                    
+                    .AddModel<BlogPost>();                    
 ```
 
 #### Use queries for typed content

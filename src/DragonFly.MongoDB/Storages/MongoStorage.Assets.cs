@@ -164,7 +164,7 @@ public partial class MongoStorage : IAssetStorage
             await AssetData.DeleteAsync(f.Id);
         }
 
-        await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id));
+        var result = await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id));
     }
 
     public async Task ApplyMetadataAsync(Asset asset)
@@ -174,13 +174,13 @@ public partial class MongoStorage : IAssetStorage
         IEnumerable<IAssetProcessing> processings = Api.ServiceProvider.GetServices<IAssetProcessing>();
 
         //add metadata
-        foreach (IAssetProcessing processing in processings.Where(x => x.SupportedMimetypes.Contains(asset.MimeType)))
+        foreach (IAssetProcessing processing in processings.Where(x => x.CanUse(asset.MimeType)))
         {
             await processing.OnAssetChangedAsync(context);
         }
     }
 
-    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {
@@ -191,6 +191,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return task.ToTaskInfo();
+        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
     }
 }

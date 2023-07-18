@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using DragonFly.AspNetCore;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DragonFly.API;
 
@@ -30,16 +31,16 @@ static class AssetFolderApiExtensions
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<RestAssetFolder> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
+    private static async Task<Results<Ok<RestAssetFolder>, NotFound>> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
     {
         AssetFolder? entity = await storage.GetAssetFolderAsync(id);
 
         if (entity == null)
         {
-            throw new Exception("Asset folder not found.");
+            return TypedResults.NotFound();
         }
 
-        return entity.ToRest();
+        return TypedResults.Ok(entity.ToRest());
     }
 
     private static async Task<ResourceCreated> MapCreate(HttpContext context, IAssetFolderStorage storage, RestAssetFolder input)
@@ -51,15 +52,17 @@ static class AssetFolderApiExtensions
         return new ResourceCreated() { Id = model.Id };
     }
 
-    private static async Task MapDelete(HttpContext context, IAssetFolderStorage storage, Guid id)
+    private static async Task<Results<Ok, NotFound>> MapDelete(HttpContext context, IAssetFolderStorage storage, Guid id)
     {
         AssetFolder? entity = await storage.GetAssetFolderAsync(id);
 
         if (entity == null)
         {
-            throw new Exception("Asset folder not found.");
+            return TypedResults.NotFound();
         }
 
         await storage.DeleteAsync(entity);
+
+        return TypedResults.Ok();
     }
 }

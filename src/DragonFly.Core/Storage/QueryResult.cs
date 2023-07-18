@@ -9,16 +9,11 @@ namespace DragonFly;
 /// </summary>
 /// <typeparam name="TModel"></typeparam>
 public class QueryResult<TModel>
-{
-    public QueryResult()
-    {
-        Items = new List<TModel>();
-    }
-    
+{    
     /// <summary>
     /// Items
     /// </summary>
-    public IList<TModel> Items { get; set; }
+    public IList<TModel> Items { get; set; } = new List<TModel>();
 
     /// <summary>
     /// Offset

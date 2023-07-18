@@ -10,7 +10,7 @@ using System.Security.Claims;
 
 namespace DragonFly;
 
-public static class DragonFlyApiPermissionExtensions
+public static class ApiPermissionExtensions
 {
     /// <summary>
     /// Gets the permission manager.

@@ -99,7 +99,7 @@ public static class ContentItemExtensions
     {
         ContentItem item = new ContentItem(schema);
 
-        ApplySchema(item, schema);
+        item.ApplySchema();
 
         return item;
     }
@@ -108,7 +108,7 @@ public static class ContentItemExtensions
     {
         ContentComponent item = new ContentComponent(schema);
 
-        ApplySchema(item, schema);
+        item.ApplySchema(schema);
 
         return item;
     }
@@ -117,7 +117,7 @@ public static class ContentItemExtensions
     {
         ArrayFieldItem item = new ArrayFieldItem();
 
-        ApplySchema(item, options);
+        item.ApplySchema(options);
 
         return item;
     }
@@ -126,7 +126,7 @@ public static class ContentItemExtensions
     {
         ArgumentNullException.ThrowIfNull(contentItem);
 
-        ApplySchema(contentItem, contentItem.Schema);
+        contentItem.ApplySchema(contentItem.Schema);
 
         contentItem.SchemaVersion = contentItem.Schema.Version;
     }
@@ -159,7 +159,7 @@ public static class ContentItemExtensions
 
                 foreach (ArrayFieldItem item in arrayField.Items)
                 {
-                    ApplySchema(item, options);
+                    item.ApplySchema(options);
                 }
             }
         }

@@ -5,6 +5,7 @@
            .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
            .ToList())
 {
+    <div class="field">
         <BSAlert Color="GetFieldColor(part.FieldName)">
             <div class="form-group">
                 <BSRow>
@@ -21,6 +22,7 @@
                 </BSRow>
             </div>
         </BSAlert>
+    </div>
 }
 
 @code {

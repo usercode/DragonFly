@@ -33,7 +33,7 @@ public partial class GeolocationField
         {
             if (Latitude < -90 || Latitude > 90)
             {
-                context.AddRangeValidation(nameof(Latitude), -90, 90);
+                context.AddRangeValidation(fieldName, -90, 90);
             }
         }
 
@@ -41,7 +41,7 @@ public partial class GeolocationField
         {
             if (Longitude < -180 || Longitude > 180)
             {
-                context.AddRangeValidation(nameof(Longitude), -180, 180);
+                context.AddRangeValidation(fieldName, -180, 180);
             }
         }
     }

@@ -6,7 +6,7 @@ using DragonFly.Builders;
 
 namespace DragonFly.AspNetCore;
 
-public static class DragonFlyModelBuilderExtensions
+public static class ModelBuilderExtensions
 {
     /// <summary>
     /// Adds a source generated model for <typeparamref name="TContentModel"/>. 

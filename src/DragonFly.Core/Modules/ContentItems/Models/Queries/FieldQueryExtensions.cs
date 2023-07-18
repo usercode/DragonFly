@@ -31,6 +31,21 @@ public static class FieldQueryExtensions
     }
 
     /// <summary>
+    /// Selects the schema.
+    /// </summary>
+    /// <typeparam name="TContentQuery"></typeparam>
+    /// <param name="query"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static TContentQuery Schema<TContentQuery>(this TContentQuery query, string name)
+        where TContentQuery : ContentQuery
+    {
+        query.Schema = name;
+
+        return query;
+    }
+
+    /// <summary>
     /// Selects a specified number of models.
     /// </summary>
     /// <typeparam name="TContentQuery"></typeparam>

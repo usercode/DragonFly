@@ -1,20 +1,13 @@
-﻿// Copyright (c) usercode
-// https://github.com/usercode/DragonFly
-// MIT License
+﻿using DragonFly.BlockField;
 
 namespace DragonFly.BlockField;
 
-/// <summary>
-/// CardBlock
-/// </summary>
-public class CardBlock : Block
+public class CardItem
 {
-    public CardBlock()
-    {
-        Blocks = new List<Block>();
-    }
-
-    public override string CssIcon => "fa-regular fa-id-card";
+    /// <summary>
+    /// AssetId
+    /// </summary>
+    public Guid? AssetId { get; set; }
 
     /// <summary>
     /// Title
@@ -24,7 +17,7 @@ public class CardBlock : Block
     /// <summary>
     /// Blocks
     /// </summary>
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 
     /// <summary>
     /// Header
@@ -36,3 +29,4 @@ public class CardBlock : Block
     /// </summary>
     public string? Footer { get; set; }
 }
+

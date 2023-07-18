@@ -16,59 +16,69 @@ public sealed class BlockFieldManager
     /// </summary>
     public static BlockFieldManager Default { get; } = new BlockFieldManager();
 
-    private IDictionary<string, Type> _elementsByName;
-    private IDictionary<Type, string> _elementsByType;
+    private IDictionary<string, BlockFactory> _blocksByName = new Dictionary<string, BlockFactory>();
+    private IDictionary<Type, BlockFactory> _blocksByType = new Dictionary<Type, BlockFactory>();
 
-    private BlockFieldManager()
-    {
-        _elementsByName = new Dictionary<string, Type>();
-        _elementsByType = new Dictionary<Type, string>();
-    }
+    private BlockFactory[] _currentBlockFactories = null;
+    private bool _rebuildBlockList = false;
 
-    public IEnumerable<Type> GetAllBlockTypes()
+    /// <summary>
+    /// Gets all available block factories.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BlockFactory> GetAllBlocks()
     {
-        return _elementsByType.Keys.ToList();
-    }
+        if (_rebuildBlockList)
+        {
+            _currentBlockFactories = _blocksByType.Values
+                                        .Where(x => x.BlockType != typeof(UnknownBlock))
+                                        .OrderBy(x => x.BlockName)                                        
+                                        .ToArray();
 
-    public IEnumerable<Block> GetAllBlocks()
-    {
-        return _elementsByType.Keys
-                                    .Where(x => x != typeof(UnknownBlock))
-                                    .OrderBy(x => x.Name)
-                                    .Select(x => (Block?)Activator.CreateInstance(x))
-                                    .ToList();
+            _rebuildBlockList = false;
+        }
+
+        return _currentBlockFactories;
     }
 
     /// <summary>
-    /// RegisterElement
+    /// Adds a new block.
     /// </summary>
     /// <typeparam name="TElement"></typeparam>
     public void Add<TBlock>()
         where TBlock : Block, new()
     {
-        string typeName = typeof(TBlock).Name;
+        Type blockType = typeof(TBlock);
 
-        _elementsByName[typeName] = typeof(TBlock);
-        _elementsByType[typeof(TBlock)] = typeName;
+        BlockFactory factory = new BlockFactory(blockType.Name, blockType, new TBlock().CssIcon, () => new TBlock());
+
+        _blocksByName[factory.BlockName] = factory;
+        _blocksByType[factory.BlockType] = factory;
+
+        _rebuildBlockList = true;
     }
 
-    public bool TryGetBlockTypeByName(string name, [NotNullWhen(true)] out Type? type)
+    public bool TryGetBlockTypeByName(string name, [NotNullWhen(true)] out Type? blockType)
     {
-        if (_elementsByName.TryGetValue(name, out type))
+        if (_blocksByName.TryGetValue(name, out BlockFactory? factory))
         {
+            blockType = factory.BlockType;
             return true;
         }
 
+        blockType = null;
         return false;
     }
 
-    public bool TryGetBlockNameByType(Type type, [NotNullWhen(true)] out string? typeName)
+    public bool TryGetBlockNameByType(Type type, [NotNullWhen(true)] out string? blockName)
     {
-        if (_elementsByType.TryGetValue(type, out typeName))
+        if (_blocksByType.TryGetValue(type, out BlockFactory? factory))
         {
+            blockName = factory.BlockName;
             return true;
         }
 
+        blockName = null;
         return false;
     }
 }

@@ -28,7 +28,7 @@ public static class BlockFieldManagerExtensions
         manager.Add<ContainerBlock>();
         manager.Add<AlertBlock>();
         manager.Add<ProgressBlock>();
-        manager.Add<CardBlock>();
+        manager.Add<CardsBlock>();
         manager.Add<SectionBlock>();
 
         manager.Add<UnknownBlock>();

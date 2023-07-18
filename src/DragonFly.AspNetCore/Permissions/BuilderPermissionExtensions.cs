@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.AspNetCore;
 
-public static class DragonFlyBuilderPermissionExtensions
+public static class BuilderPermissionExtensions
 {
     /// <summary>
     /// Adds permission scheme.

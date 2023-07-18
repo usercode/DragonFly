@@ -27,7 +27,12 @@ button {
     flex-wrap: wrap;
 }
 
-.alert {    
+.alert {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.field .alert {    
     padding: 0px;
     margin-bottom: 0rem;
     border: none;
