@@ -30,7 +30,8 @@
     * Use IAssetProcessing after asset upload
   * Create thumbnails for image and pdf files with ImageWizard
 * REST API
-* Permissions for content, schema and asset
+* Permissions for content, schema, asset, asset folder, webhooks
+  * Dynamic permissions for every schema
 * Background tasks
 * WebHooks
 * MongoDB engine
