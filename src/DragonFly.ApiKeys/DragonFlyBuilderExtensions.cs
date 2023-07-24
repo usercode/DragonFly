@@ -10,7 +10,6 @@ using DragonFly.ApiKeys.Permissions;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.ApiKeys.Handlers;
 using Microsoft.AspNetCore.Authorization;
-using DragonFly.ApiKeys;
 using DragonFly.AspNetCore.Builders;
 
 namespace DragonFly.AspNetCore;

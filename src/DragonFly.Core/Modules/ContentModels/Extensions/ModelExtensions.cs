@@ -4,7 +4,10 @@
 
 namespace DragonFly;
 
-public static class ContentModelExtensions
+/// <summary>
+/// ModelExtensions
+/// </summary>
+public static class ModelExtensions
 {
     /// <summary>
     /// Decorates the content item with <typeparamref name="TContentModel"/>.

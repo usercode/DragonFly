@@ -124,16 +124,16 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         }
     }
 
-    public Task<IEnumerable<BackgroundTaskInfo>> GetTasksAsync()
+    public Task<BackgroundTaskInfo[]> GetTasksAsync()
     {
         lock (_syncObject)
         {
-            return Task.FromResult<IEnumerable<BackgroundTaskInfo>>(
-                    Tasks
-                    .Values
-                    .Select(x => x.ToTaskInfo())
-                    .OrderBy(x => x.Id)
-                    .ToList());
+            return Task.FromResult(
+                                    Tasks
+                                    .Values
+                                    .Select(x => x.ToTaskInfo())
+                                    .OrderBy(x => x.Id)
+                                    .ToArray());
         }
     }
 

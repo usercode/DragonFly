@@ -24,14 +24,14 @@ static class AssetFolderApiExtensions
         groupRoute.MapPost("", MapCreate).RequirePermission(AssetFolderPermissions.CreateAssetFolder);
     }
 
-    private static async Task<QueryResult<RestAssetFolder>> MapQuery(HttpContext context, IAssetFolderStorage storage, AssetFolderQuery query)
+    private static async Task<QueryResult<RestAssetFolder>> MapQuery(IAssetFolderStorage storage, AssetFolderQuery query)
     {
         QueryResult<AssetFolder> queryResult = await storage.QueryAsync(query);
 
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<Results<Ok<RestAssetFolder>, NotFound>> MapGet(HttpContext context, IAssetFolderStorage storage, Guid id)
+    private static async Task<Results<Ok<RestAssetFolder>, NotFound>> MapGet(IAssetFolderStorage storage, Guid id)
     {
         AssetFolder? entity = await storage.GetAssetFolderAsync(id);
 
@@ -43,7 +43,7 @@ static class AssetFolderApiExtensions
         return TypedResults.Ok(entity.ToRest());
     }
 
-    private static async Task<ResourceCreated> MapCreate(HttpContext context, IAssetFolderStorage storage, RestAssetFolder input)
+    private static async Task<ResourceCreated> MapCreate(IAssetFolderStorage storage, RestAssetFolder input)
     {
         AssetFolder model = input.ToModel();
 
@@ -52,7 +52,7 @@ static class AssetFolderApiExtensions
         return new ResourceCreated() { Id = model.Id };
     }
 
-    private static async Task<Results<Ok, NotFound>> MapDelete(HttpContext context, IAssetFolderStorage storage, Guid id)
+    private static async Task<Results<Ok, NotFound>> MapDelete(IAssetFolderStorage storage, Guid id)
     {
         AssetFolder? entity = await storage.GetAssetFolderAsync(id);
 

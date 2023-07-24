@@ -50,9 +50,9 @@ class PermissionHandler : AuthorizationHandler<PermissionRequirement>
         string[] permissions = Api.Permission().Get(requirement.Permission);
 
         bool found = await Store.Roles.AsQueryable()
-                                        .Where(x => user.Roles.Contains(x.Id))
-                                        .Where(x => permissions.Any(p => x.Permissions.Contains(p)))
-                                        .AnyAsync();
+                                            .Where(x => user.Roles.Contains(x.Id))
+                                            .Where(x => permissions.Any(p => x.Permissions.Contains(p)))
+                                            .AnyAsync();
 
         if (found)
         {

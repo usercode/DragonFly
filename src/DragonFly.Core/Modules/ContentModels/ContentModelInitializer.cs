@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
+using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly;
@@ -10,7 +10,7 @@ namespace DragonFly;
 /// <summary>
 /// ContentModelInitializer
 /// </summary>
-public class ContentModelInitializer<TContentModel> : IPostInitialize
+public class ContentModelInitializer<TContentModel> : IInitialize
     where TContentModel : IContentModel
 {
     public async Task ExecuteAsync(IDragonFlyApi api)

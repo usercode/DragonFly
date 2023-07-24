@@ -5,9 +5,9 @@
 namespace DragonFly.AspNetCore;
 
 /// <summary>
-/// ImageAssetProcessing
+/// ImageProcessing
 /// </summary>
-public class ImageAssetProcessing : IAssetProcessing
+public class ImageProcessing : IAssetProcessing
 {
     public bool CanUse(string mimeType)
     {

@@ -2,18 +2,18 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
+using DragonFly.Init;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// CreateIndexAction
+/// CreateIndexInitializer
 /// </summary>
-class CreateIndexAction : IPostInitialize
+class CreateIndexInitializer : IPostInitialize
 {
-    public CreateIndexAction(MongoStorage mongoStorage, IDragonFlyApi api, ILogger<CreateIndexAction> logger)
+    public CreateIndexInitializer(MongoStorage mongoStorage, IDragonFlyApi api, ILogger<CreateIndexInitializer> logger)
     {
         MongoStorage = mongoStorage;
         Api = api;
@@ -33,7 +33,7 @@ class CreateIndexAction : IPostInitialize
     /// <summary>
     /// Logger
     /// </summary>
-    public ILogger<CreateIndexAction> Logger { get; }
+    public ILogger<CreateIndexInitializer> Logger { get; }
 
     public async Task ExecuteAsync(IDragonFlyApi api)
     {

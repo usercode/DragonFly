@@ -9,19 +9,13 @@ namespace DragonFly;
 /// </summary>
 public sealed class AssetMetadataManager
 {
-    private IDictionary<string, Type> _byName;
-    private IDictionary<Type, string> _byType;
+    private IDictionary<string, Type> _byName = new Dictionary<string, Type>();
+    private IDictionary<Type, string> _byType = new Dictionary<Type, string>();
 
     /// <summary>
     /// Default
     /// </summary>
     public static AssetMetadataManager Default { get; } = new AssetMetadataManager();
-
-    private AssetMetadataManager()
-    {
-        _byName = new Dictionary<string, Type>();
-        _byType = new Dictionary<Type, string>();
-    }
 
     public void Add<TMetadata>()
         where TMetadata : AssetMetadata, new()

@@ -5,7 +5,6 @@
 using DragonFly.AspNetCore;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.API;
@@ -20,7 +19,7 @@ static class BackgroundTaskApiExtensions
         groupRoute.MapPost("{id}/cancel", MapCancel).RequirePermission(BackgroundTaskPermissions.CancelBackgroundTask);
     }
 
-    private static async Task<IEnumerable<BackgroundTaskInfo>> MapQuery(HttpContext context, IBackgroundTaskManager service)
+    private static async Task<IEnumerable<BackgroundTaskInfo>> MapQuery(IBackgroundTaskManager service)
     {
         return await service.GetTasksAsync();
     }

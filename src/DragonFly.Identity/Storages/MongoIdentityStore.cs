@@ -37,6 +37,7 @@ internal class MongoIdentityStore
         Users.Indexes.CreateOne(new CreateIndexModel<MongoIdentityUser>(Builders<MongoIdentityUser>.IndexKeys.Ascending(x => x.NormalizedUsername)));
 
         Roles.Indexes.CreateOne(new CreateIndexModel<MongoIdentityRole>(Builders<MongoIdentityRole>.IndexKeys.Ascending(x => x.Name)));
+        Roles.Indexes.CreateOne(new CreateIndexModel<MongoIdentityRole>(Builders<MongoIdentityRole>.IndexKeys.Ascending(x => x.Permissions)));
 
     }
 

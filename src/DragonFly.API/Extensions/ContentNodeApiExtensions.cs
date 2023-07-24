@@ -36,7 +36,7 @@ static class ContentNodeApiExtensions
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentNode input)
+    private static async Task<ResourceCreated> MapCreate(IStructureStorage storage, RestContentNode input)
     {
         ContentNode m = input.ToModel();
 

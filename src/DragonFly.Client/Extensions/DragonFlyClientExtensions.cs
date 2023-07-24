@@ -4,7 +4,7 @@
 
 using Blazored.Toast;
 using BlazorStrap;
-using DragonFly.API;
+using DragonFly.Init;
 using DragonFly.Client.Builders;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

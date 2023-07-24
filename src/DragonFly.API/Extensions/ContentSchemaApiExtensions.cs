@@ -25,7 +25,7 @@ static class ContentSchemaApiExtensions
         groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(SchemaPermissions.DeleteSchema);
     }
 
-    private static async Task<QueryResult<RestContentSchema>> MapQuery(HttpContext context, ISchemaStorage storage)
+    private static async Task<QueryResult<RestContentSchema>> MapQuery(ISchemaStorage storage)
     {
         QueryResult<ContentSchema> queryResult = await storage
                                                 .QuerySchemasAsync();
@@ -33,7 +33,7 @@ static class ContentSchemaApiExtensions
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<RestContentSchema> MapGetById(HttpContext context, ISchemaStorage storage, Guid id)
+    private static async Task<RestContentSchema> MapGetById(ISchemaStorage storage, Guid id)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(id);
 
@@ -42,7 +42,7 @@ static class ContentSchemaApiExtensions
         return restSchema;
     }
 
-    private static async Task<RestContentSchema> MapGetByName(HttpContext context, ISchemaStorage storage, string name)
+    private static async Task<RestContentSchema> MapGetByName(ISchemaStorage storage, string name)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(name);
 
@@ -51,7 +51,7 @@ static class ContentSchemaApiExtensions
         return restSchema;
     }
 
-    private static async Task<ResourceCreated> MapCreate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
+    private static async Task<ResourceCreated> MapCreate(ISchemaStorage storage, RestContentSchema input)
     {
         ContentSchema m = input.ToModel();
 
@@ -62,14 +62,14 @@ static class ContentSchemaApiExtensions
         return result;
     }
 
-    private static async Task MapUpdate(HttpContext context, ISchemaStorage storage, RestContentSchema input)
+    private static async Task MapUpdate(ISchemaStorage storage, RestContentSchema input)
     {
         ContentSchema m = input.ToModel();
 
         await storage.UpdateAsync(m);
     }
 
-    private static async Task MapDelete(HttpContext context, ISchemaStorage storage, Guid id)
+    private static async Task MapDelete(ISchemaStorage storage, Guid id)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(id);
 

@@ -52,8 +52,10 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddBlockField()
                     .AddApiKeys()
-                    .AddModel<Product>()
-                    .AddModel<Customer>();
+                    .AddModels(x => x
+                                    .Add<Product>()
+                                    .Add<Customer>()
+                                    );
 
 var app = builder.Build();
 
@@ -116,7 +118,7 @@ for (int i = 0; i < 10; i++)
 
         while (ctx.CancellationToken.IsCancellationRequested == false)
         {
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            await Task.Delay(TimeSpan.FromSeconds(1), ctx.CancellationToken);
 
             await ctx.UpdateStatusAsync($"test {counter}", counter, ctx.Task.ProgressMaxValue);
 

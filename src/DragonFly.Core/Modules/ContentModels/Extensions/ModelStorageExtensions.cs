@@ -6,7 +6,10 @@ using DragonFly.Query;
 
 namespace DragonFly;
 
-public static class ContentStorageExtensions
+/// <summary>
+/// ModelStorageExtensions
+/// </summary>
+public static class ModelStorageExtensions
 {
     /// <summary>
     /// Gets <typeparamref name="TContentModel"/> by id.
@@ -104,14 +107,14 @@ public static class ContentStorageExtensions
     public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel
     {
-        var query = new ContentQuery<TContentModel>();
+        ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 
         action?.Invoke(query);
 
         query.Skip = 0;
         query.Top = 1;
 
-        var result = await storage.QueryAsync(query);
+        QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
         if (result.Items.Count == 0)
         {
@@ -127,11 +130,11 @@ public static class ContentStorageExtensions
     public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel
     {
-        var query = new ContentQuery<TContentModel>();
+        ContentQuery<TContentModel> query = new ContentQuery<TContentModel>();
 
         action?.Invoke(query);
 
-        var result = await storage.QueryAsync(query);
+        QueryResult<ContentItem> result = await storage.QueryAsync(query);
 
         return result.Convert(x => (TContentModel)TContentModel.Create(x));
     }

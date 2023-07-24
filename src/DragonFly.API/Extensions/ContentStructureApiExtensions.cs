@@ -23,14 +23,14 @@ static class ContentStructureApiExtensions
         groupRoute.MapPut("", MapUpdate).RequirePermission();
     }
 
-    private static async Task<QueryResult<RestContentStructure>> MapQuery(HttpContext context, IStructureStorage storage, StructureQuery query)
+    private static async Task<QueryResult<RestContentStructure>> MapQuery(IStructureStorage storage, StructureQuery query)
     {
         QueryResult<ContentStructure> queryResult = await storage.QueryAsync(query);
 
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<RestContentStructure> MapGetById(HttpContext context, IStructureStorage storage, Guid id)
+    private static async Task<RestContentStructure> MapGetById(IStructureStorage storage, Guid id)
     {
         ContentStructure entity = await storage.GetStructureAsync(id);
 
@@ -39,7 +39,7 @@ static class ContentStructureApiExtensions
         return restSchema;
     }
 
-    private static async Task<RestContentStructure> MapGetByName(HttpContext context, IStructureStorage storage, string name)
+    private static async Task<RestContentStructure> MapGetByName(IStructureStorage storage, string name)
     {
         ContentStructure entity = await storage.GetStructureAsync(name);
         
@@ -48,7 +48,7 @@ static class ContentStructureApiExtensions
        return restSchema;
     }
 
-    private static async Task<ResourceCreated> MapCreate(HttpContext context, IStructureStorage storage, RestContentStructure input)
+    private static async Task<ResourceCreated> MapCreate(IStructureStorage storage, RestContentStructure input)
     {
         ContentStructure m = input.ToModel();
 
@@ -57,7 +57,7 @@ static class ContentStructureApiExtensions
         return new ResourceCreated() { Id = m.Id };
     }
 
-    private static async Task MapUpdate(HttpContext context, IStructureStorage storage, RestContentStructure input)
+    private static async Task MapUpdate(IStructureStorage storage, RestContentStructure input)
     {
         ContentStructure m = input.ToModel();
 

@@ -5,7 +5,7 @@
 namespace DragonFly;
 
 /// <summary>
-/// IContentStorage
+/// Defines storage engine for content items.
 /// </summary>
 public interface IContentStorage
 {    

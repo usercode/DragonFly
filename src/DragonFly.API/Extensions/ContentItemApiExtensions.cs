@@ -18,19 +18,24 @@ static class ContentItemApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("content");
 
-        groupRoute.MapPost("query", MapQuery).RequirePermission(ContentPermissions.QueryContent);
-        groupRoute.MapGet("{schema}/{id:guid}", MapGet).RequirePermission(ContentPermissions.ReadContent);
-        groupRoute.MapPost("", MapCreate).RequirePermission(ContentPermissions.CreateContent);
-        groupRoute.MapPut("", MapUpdate).RequirePermission(ContentPermissions.UpdateContent);
-        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete).RequirePermission(ContentPermissions.DeleteContent);
-        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish).RequirePermission(ContentPermissions.PublishContent);
-        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish).RequirePermission(ContentPermissions.UnpublishContent);
-        groupRoute.MapPost("publish", MapPublishQuery).RequirePermission(ContentPermissions.PublishContent);
-        groupRoute.MapPost("unpublish", MapUnpublishQuery).RequirePermission(ContentPermissions.UnpublishContent);
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{schema}/{id:guid}", MapGet);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{schema}/{id:guid}", MapDelete);
+        groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish);
+        groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish);
+        groupRoute.MapPost("publish", MapPublishQuery);
+        groupRoute.MapPost("unpublish", MapUnpublishQuery);
     }
 
-    private static async Task<QueryResult<RestContentItem>> MapQuery(HttpContext context, IContentStorage storage, ContentQuery query)
+    private static async Task<Results<Ok<QueryResult<RestContentItem>>, ForbidHttpResult>> MapQuery(IDragonFlyApi api, IContentStorage storage, ContentQuery query)
     {
+        if (await api.AuthorizeContentAsync(query.Schema, ContentAction.Query) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         QueryResult<ContentItem> queryResult = await storage.QueryAsync(query);
 
         foreach (ContentItem contentItem in queryResult.Items)
@@ -39,11 +44,16 @@ static class ContentItemApiExtensions
             contentItem.Validate();
         }
 
-        return queryResult.Convert(x => x.ToRest());
+        return TypedResults.Ok(queryResult.Convert(x => x.ToRest()));
     }
 
-    private static async Task<Results<Ok<RestContentItem>, NotFound>> MapGet(IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
+    private static async Task<Results<Ok<RestContentItem>, NotFound, ForbidHttpResult>> MapGet(IDragonFlyApi api, IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
     {
+        if (await api.AuthorizeContentAsync(schema, ContentAction.Read) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         ContentItem? result = await contentStore.GetContentAsync(schema, id);
 
         if (result == null)
@@ -59,24 +69,41 @@ static class ContentItemApiExtensions
         return TypedResults.Ok(restModel);
     }
 
-    private static async Task<ResourceCreated> MapCreate(HttpContext context, IContentStorage contentStore, RestContentItem input)
+    private static async Task<Results<Ok<ResourceCreated>, ForbidHttpResult>> MapCreate(IDragonFlyApi api, IContentStorage contentStore, RestContentItem input)
     {
         ContentItem model = input.ToModel();
+
+        if (await api.AuthorizeContentAsync(model.Schema.Name, ContentAction.Create) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
 
         await contentStore.CreateAsync(model);
 
-        return new ResourceCreated() { Id = model.Id };
+        return TypedResults.Ok(new ResourceCreated() { Id = model.Id });
     }
 
-    private static async Task MapUpdate(HttpContext context, IContentStorage contentStore, RestContentItem input)
+    private static async Task<Results<Ok, ForbidHttpResult>> MapUpdate(IDragonFlyApi api, IContentStorage contentStore, RestContentItem input)
     {
         ContentItem model = input.ToModel();
 
+        if (await api.AuthorizeContentAsync(model.Schema.Name, ContentAction.Update) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         await contentStore.UpdateAsync(model);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> MapDelete(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    private static async Task<Results<Ok, NotFound, ForbidHttpResult>> MapDelete(IDragonFlyApi api, IContentStorage contentStore, string schema, Guid id)
     {
+        if (await api.AuthorizeContentAsync(schema, ContentAction.Delete) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         ContentItem? content = await contentStore.GetContentAsync(schema, id);
 
         if (content == null)
@@ -89,8 +116,13 @@ static class ContentItemApiExtensions
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> MapPublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    private static async Task<Results<Ok, NotFound, ForbidHttpResult>> MapPublish(IDragonFlyApi api, IContentStorage contentStore, string schema, Guid id)
     {
+        if (await api.AuthorizeContentAsync(schema, ContentAction.Publish) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         ContentItem? content = await contentStore.GetContentAsync(schema, id);
 
         if (content == null)
@@ -103,8 +135,13 @@ static class ContentItemApiExtensions
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> MapUnpublish(HttpContext context, IContentStorage contentStore, string schema, Guid id)
+    private static async Task<Results<Ok, NotFound, ForbidHttpResult>> MapUnpublish(IDragonFlyApi api, IContentStorage contentStore, string schema, Guid id)
     {
+        if (await api.AuthorizeContentAsync(schema, ContentAction.Unpublish) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
         ContentItem? content = await contentStore.GetContentAsync(schema, id);
 
         if (content == null)
@@ -117,13 +154,27 @@ static class ContentItemApiExtensions
         return TypedResults.Ok();
     }
 
-    private static async Task<IBackgroundTaskInfo> MapPublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
+    private static async Task<Results<Ok<IBackgroundTaskInfo>, ForbidHttpResult>> MapPublishQuery(IDragonFlyApi api, IContentStorage contentStore, ContentQuery query)
     {
-        return await contentStore.PublishQueryAsync(query);
+        if (await api.AuthorizeContentAsync(query.Schema, ContentAction.Publish) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
+        IBackgroundTaskInfo result = await contentStore.PublishQueryAsync(query);
+
+        return TypedResults.Ok(result);
     }
 
-    private static async Task<IBackgroundTaskInfo> MapUnpublishQuery(HttpContext context, IContentStorage contentStore, ContentQuery query)
+    private static async Task<Results<Ok<IBackgroundTaskInfo>, ForbidHttpResult>> MapUnpublishQuery(IDragonFlyApi api, IContentStorage contentStore, ContentQuery query)
     {
-        return await contentStore.UnpublishQueryAsync(query);
+        if (await api.AuthorizeContentAsync(query.Schema, ContentAction.Unpublish) == false)
+        {
+            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
+        }
+
+        IBackgroundTaskInfo result =  await contentStore.UnpublishQueryAsync(query);
+
+        return TypedResults.Ok(result);
     }
 }

@@ -74,6 +74,19 @@ public static class ApiPermissionExtensions
     }
 
     /// <summary>
+    /// AuthorizeContentAsync
+    /// </summary>
+    /// <param name="api"></param>
+    /// <param name="schema"></param>
+    /// <returns></returns>
+    public static async Task<bool> AuthorizeContentAsync(this IDragonFlyApi api, string schema, ContentAction action)
+    {
+        Permission permission = ContentPermissions.Create(schema, action);
+
+        return await api.AuthorizeAsync(permission);
+    }
+
+    /// <summary>
     /// Authorizes a permission.
     /// </summary>
     /// <param name="api"></param>

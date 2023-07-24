@@ -6,7 +6,7 @@ namespace DragonFly;
 
 public interface IBackgroundTaskService
 {
-    Task<IEnumerable<BackgroundTaskInfo>> GetTasksAsync();
+    Task<BackgroundTaskInfo[]> GetTasksAsync();
 
     Task CancelAsync(int id);
 }

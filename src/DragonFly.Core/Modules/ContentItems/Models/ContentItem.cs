@@ -7,7 +7,7 @@ using DragonFly.Validations;
 namespace DragonFly;
 
 /// <summary>
-/// ContentItem
+/// Content item based on specified schema.
 /// </summary>
 public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable<ContentItem>
 {
@@ -16,8 +16,6 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
         ArgumentNullException.ThrowIfNull(schema);
         
         _schema = schema;
-        _fields = new ContentFields();
-        _validationContext = new ValidationContext();
     }
 
     public ContentItem(ContentSchema schema, Guid id)
@@ -34,18 +32,18 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
     private ContentSchema _schema;
 
     /// <summary>
-    /// Type
+    /// Schema
     /// </summary>
     public virtual ContentSchema Schema { get => _schema; set => _schema = value; }
 
-    private ContentFields _fields;
+    private ContentFields _fields = new ContentFields();
 
     /// <summary>
     /// Fields
     /// </summary>
     public virtual ContentFields Fields { get => _fields; set => _fields = value; }
 
-    private ValidationContext _validationContext;
+    private ValidationContext _validationContext = new ValidationContext();
 
     /// <summary>
     /// ValidationContext
@@ -55,7 +53,7 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
     /// <summary>
     /// Validates the content item.
     /// </summary>
-    public virtual bool Validate()
+    public virtual ValidationState Validate()
     {
         ValidationContext validationContext = new ValidationContext(ValidationState.Valid);
 
@@ -71,7 +69,7 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
 
         ValidationContext = validationContext;
 
-        return validationContext.State == ValidationState.Valid;
+        return validationContext.State;
     }
 
     public override int GetHashCode()

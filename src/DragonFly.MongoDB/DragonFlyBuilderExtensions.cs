@@ -53,7 +53,7 @@ public static class DragonFlyBuilderExtensions
             api.MongoQuery().AddDefaults();
         });
 
-        builder.PostInit<CreateIndexAction>();
+        builder.PostInit<CreateIndexInitializer>();
 
         return builder;
     }

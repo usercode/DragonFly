@@ -27,7 +27,9 @@ public sealed class PermissionManager
     public PermissionManager Add(Permission permission)
     {
         Items.Add(permission);
-        Policies.Add(permission.Name, BuildImpliedPermissions(permission).Select(x => x.Name).ToArray());
+        Policies.Add(permission.Name, new[] { permission }.Concat(permission.GetImpliedPermissions())
+                                                            .Select(x => x.Name)
+                                                            .ToArray());
 
         Added?.Invoke(permission);
 
@@ -53,28 +55,5 @@ public sealed class PermissionManager
         }
 
         throw new Exception($"The permission '{permission}' doesn't exist.");
-    }
-
-    /// <summary>
-    /// GetImpliedPermissions
-    /// </summary>
-    /// <param name="permission"></param>
-    /// <returns></returns>
-    private IEnumerable<Permission> BuildImpliedPermissions(Permission permission)
-    {
-        IEnumerable<Permission> BuildImpliedPermissionsInternal(Permission permission)
-        {
-            yield return permission;
-
-            foreach (Permission p in permission.ImpliedBy)
-            {
-                foreach (Permission a in BuildImpliedPermissionsInternal(p))
-                {
-                    yield return a;
-                }
-            }
-        }
-
-        return BuildImpliedPermissionsInternal(permission).Distinct().ToArray();
     }
 }

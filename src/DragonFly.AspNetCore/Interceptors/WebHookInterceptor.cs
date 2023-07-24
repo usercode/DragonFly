@@ -50,7 +50,7 @@ public class WebHookInterceptor : IContentInterceptor
 
         foreach (WebHook webHook in result.Items)
         {
-            Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
+            Logger.LogInformation("Starting webhook for {schema} with id {id}", contentItem.Schema.Name, contentItem.Id);
 
             if (webHook.TargetUrl == null)
             {
@@ -117,7 +117,7 @@ public class WebHookInterceptor : IContentInterceptor
 
         foreach (WebHook item in result.Items)
         {
-            Logger.LogInformation($"Starting webhook for {contentItem.Schema.Name} with id {contentItem.Id}");
+            Logger.LogInformation("Starting webhook for {schema} with id {id}", contentItem.Schema.Name, contentItem.Id);
 
             if (item.TargetUrl == null)
             {

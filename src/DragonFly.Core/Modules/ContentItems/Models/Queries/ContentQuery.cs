@@ -17,6 +17,7 @@ public class ContentQuery : QueryBase
 
     public ContentQuery()
     {
+        Schema = string.Empty;
         Fields = new List<FieldQuery>();
         OrderFields = new List<FieldOrder>();
 
@@ -29,7 +30,7 @@ public class ContentQuery : QueryBase
     /// <summary>
     /// Schema
     /// </summary>
-    public string? Schema { get; set; }
+    public string Schema { get; set; }
 
     /// <summary>
     /// Fields

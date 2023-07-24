@@ -8,9 +8,9 @@ using UglyToad.PdfPig;
 namespace DragonFly.AspNetCore;
 
 /// <summary>
-/// PdfAssetProcessing
+/// PdfProcessing
 /// </summary>
-public class PdfAssetProcessing : IAssetProcessing
+public class PdfProcessing : IAssetProcessing
 {
     public bool CanUse(string mimeType)
     {

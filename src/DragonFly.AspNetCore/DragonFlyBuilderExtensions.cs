@@ -5,7 +5,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DragonFly.API;
+using DragonFly.Init;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
@@ -32,7 +32,7 @@ public static class DragonFlyBuilderExtensions
     /// Default services::<br/>
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
-    /// <see cref="IAssetProcessing"/> -> <see cref="ImageAssetProcessing"/>, <see cref="PdfAssetProcessing"/>
+    /// <see cref="IAssetProcessing"/> -> <see cref="ImageProcessing"/>, <see cref="PdfProcessing"/>
     /// <br/><br/>
     /// Default permissions:<br/>
     /// <see cref="ContentPermissions"/>, <see cref="SchemaPermissions"/>, <see cref="AssetPermissions"/>, <see cref="BackgroundTaskPermissions"/>, <see cref="WebHookPermissions"/>
@@ -52,8 +52,8 @@ public static class DragonFlyBuilderExtensions
         services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 
         //assets
-        services.AddTransient<IAssetProcessing, ImageAssetProcessing>();
-        services.AddTransient<IAssetProcessing, PdfAssetProcessing>();
+        services.AddTransient<IAssetProcessing, ImageProcessing>();
+        services.AddTransient<IAssetProcessing, PdfProcessing>();
 
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
@@ -62,12 +62,14 @@ public static class DragonFlyBuilderExtensions
         services.AddSignalR();
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
-        builder.Init(api =>
-        {
-            api.ContentField().AddDefaults();
-            api.AssetMetadata().AddDefaults();
-            api.Permission().AddDefaults();
-        });
+        builder
+            .Init(api =>
+            {
+                api.ContentField().AddDefaults();
+                api.AssetMetadata().AddDefaults();
+                api.Permission().AddDefaults();
+            })
+            .PostInit<CreateContentPermissionsInitializer>();
 
         return builder;
     }

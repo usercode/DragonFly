@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.API;
+namespace DragonFly.Init;
 
 /// <summary>
 /// IPostInitialized

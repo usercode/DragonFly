@@ -13,7 +13,7 @@ public static class PermissionExtensions
     /// <returns></returns>
     public static IEnumerable<Permission> GetImpliedPermissions(this Permission permission)
     {
-        IEnumerable<Permission> BuildImpliedPermissionsInternal(Permission permission, HashSet<Permission> hashSet)
+        static IEnumerable<Permission> BuildImpliedPermissionsInternal(Permission permission, HashSet<Permission> hashSet)
         {
             foreach (Permission p in permission.ImpliedBy)
             {

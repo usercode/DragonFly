@@ -8,6 +8,7 @@ using DragonFly.ApiKeys.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace DragonFly.ApiKeys.AspNetCore.Middlewares;
 
@@ -24,32 +25,58 @@ static class ApiKeysExtensions
         group.MapDelete("", MapDelete).RequirePermission(ApiKeyPermissions.DeleteApiKey);
     }
 
-    private static async Task MapGet(HttpContext context, IApiKeyService service, Guid id)
+    private static async Task<Results<Ok<ApiKey>, NotFound>> MapGet(HttpContext context, IApiKeyService service, Guid id)
     {
-        ApiKey entity = await service.GetApiKey(id);
+        ApiKey? entity = await service.GetApiKey(id);
 
-        await context.Response.WriteAsJsonAsync(entity);
+        if (entity == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(entity);
     }
 
-    private static async Task MapCreate(HttpContext context, IApiKeyService service)
+    private static async Task<Results<Ok, BadRequest>> MapCreate(HttpContext context, IApiKeyService service)
     {
         ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+
+        if (entity == null)
+        {
+            return TypedResults.BadRequest();
+        }
 
         await service.CreateApiKey(entity);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapUpdate(HttpContext context, IApiKeyService service)
+    private static async Task<Results<Ok, BadRequest>> MapUpdate(HttpContext context, IApiKeyService service)
     {
         ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+
+        if (entity == null)
+        {
+            return TypedResults.BadRequest();
+        }
 
         await service.UpdateApiKey(entity);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapDelete(HttpContext context, IApiKeyService service)
+    private static async Task<Results<Ok, NotFound>> MapDelete(HttpContext context, IApiKeyService service)
     {
         ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
 
+        if (entity == null)
+        {
+            return TypedResults.NotFound();
+        }
+
         await service.DeleteApiKey(entity);
+
+        return TypedResults.Ok();
     }
 
     private static async Task MapQuery(HttpContext context, IApiKeyService service)

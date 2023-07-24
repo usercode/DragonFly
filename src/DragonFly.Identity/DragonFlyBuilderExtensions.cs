@@ -56,7 +56,7 @@ public static class DragonFlyBuilderExtensions
                             .Add(IdentityPermissions.DeleteRole);
         });
 
-        builder.PostInit<SeedDataAction>();
+        builder.PostInit<SeedDataInitializer>();
 
         return builder;
     }

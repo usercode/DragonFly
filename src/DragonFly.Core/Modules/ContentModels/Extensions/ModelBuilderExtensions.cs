@@ -6,20 +6,25 @@ using DragonFly.Builders;
 
 namespace DragonFly.AspNetCore;
 
+/// <summary>
+/// ModelBuilderExtensions
+/// </summary>
 public static class ModelBuilderExtensions
 {
     /// <summary>
-    /// Adds a source generated model for <typeparamref name="TContentModel"/>. 
+    /// Adds source generated models. 
     /// <br /><br />
-    /// At startup an existing schema for <typeparamref name="TContentModel"/> will be overriden.
+    /// At startup existing schemas will be overriden.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="config"></param>
     /// <returns></returns>
-    public static IDragonFlyBuilder AddModel<TContentModel>(this IDragonFlyBuilder builder)
-        where TContentModel : IContentModel
+    public static TBuilder AddModels<TBuilder>(this TBuilder builder, Action<ModelBuilderItem> action)
+        where TBuilder : IDragonFlyBuilder
     {
-        builder.PostInit<ContentModelInitializer<TContentModel>>();
+        ModelBuilderItem item = new ModelBuilderItem(builder);
+
+        action(item);
 
         return builder;
     }

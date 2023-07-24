@@ -48,9 +48,14 @@ class ApiKeyService : IApiKeyService
         await Store.ApiKeys.DeleteOneAsync(Builders<MongoApiKey>.Filter.Eq(x => x.Id, apiKey.Id));
     }
 
-    public async Task<ApiKey> GetApiKey(Guid id)
+    public async Task<ApiKey?> GetApiKey(Guid id)
     {
-        var result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoApiKey? result = await Store.ApiKeys.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+
+        if (result == null)
+        {
+            return null;
+        }
 
         return result.ToModel();
     }

@@ -2,21 +2,20 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
+using DragonFly.Init;
 using DragonFly.Identity;
 using DragonFly.MongoDB;
-using DragonFly.Permissions;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
 namespace DragonFly.AspNetCore.Identity.MongoDB;
 
 /// <summary>
-/// SeedDataAction
+/// SeedDataInitializer
 /// </summary>
-class SeedDataAction : IPostInitialize
+class SeedDataInitializer : IPostInitialize
 {
-    public SeedDataAction(
+    public SeedDataInitializer(
         IOptions<MongoDbOptions> options,
         MongoIdentityStore mongoStore)
     {

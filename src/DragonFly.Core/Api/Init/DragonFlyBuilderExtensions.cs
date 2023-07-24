@@ -2,8 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
 using DragonFly.Builders;
+using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly;
@@ -12,7 +12,7 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder Init(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
     {
-        builder.Services.AddTransient<IInitialize>(x => new InitItem(action));
+        builder.Services.AddTransient<IInitialize>(x => new InitializerItem(action));
 
         return builder;
     }
@@ -27,7 +27,7 @@ public static class DragonFlyBuilderExtensions
 
     public static IDragonFlyBuilder PreInit(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
     {
-        builder.Services.AddTransient<IPreInitialize>(x => new InitItem(action));
+        builder.Services.AddTransient<IPreInitialize>(x => new InitializerItem(action));
 
         return builder;
     }
@@ -42,7 +42,7 @@ public static class DragonFlyBuilderExtensions
 
     public static IDragonFlyBuilder PostInit(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
     {
-        builder.Services.AddTransient<IPostInitialize>(x => new InitItem(action));
+        builder.Services.AddTransient<IPostInitialize>(x => new InitializerItem(action));
 
         return builder;
     }

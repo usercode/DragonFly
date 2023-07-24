@@ -18,7 +18,7 @@ public interface IApiKeyService
 
     Task<ApiKey?> GetApiKey(string value);
 
-    Task<ApiKey> GetApiKey(Guid id);
+    Task<ApiKey?> GetApiKey(Guid id);
 
     Task<IEnumerable<ApiKey>> GetAllApiKeys();
 }

@@ -116,7 +116,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override void OnSaving(SavingEventArgs args)
     {
-        if(Entity.Validate() == false)
+        if (Entity.Validate() == ValidationState.Invalid)
         {
             StateHasChanged();
 
