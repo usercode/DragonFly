@@ -17,6 +17,26 @@
 
 ## Getting started
 
+### Features
+* Define schema with custom fields
+* Create, update, delete and publish/unpublish content items based on schema
+  * Create new Fields with FieldGenerator
+* Create typed content items with ModelGenerator
+* BlockField for structured page content
+  * TextBlock, HtmlBlock, ColumnBlock, GridBlock, AssetBlock, YouTubeBlock, CodeBlock,..
+* Asset management
+  * Folder tree
+  * Asset metadata like ImageMetadata and PdfMetadata
+    * Use IAssetProcessing after asset upload
+  * Create thumbnails for image and pdf files with ImageWizard
+* REST API
+* Permissions for content, schema and asset
+* Background tasks
+* WebHooks
+* MongoDB engine
+  * Create proxies with ProxyGenerator
+* Admin interface with Blazor
+
 ### Prerequisites
 
 * [.NET 7.0 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
