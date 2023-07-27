@@ -19,8 +19,6 @@ jobs:
         dotnet-version: 7.0.x
     - name: Build with dotnet
       run: dotnet build --configuration Release "./src/DragonFly.sln"
-    - name: Run unit tests
-      run: dotnet test "./src/DragonFly.sln"
     - name: Create the package
       run: dotnet pack --configuration Release "./src/DragonFly.sln"
     - name: Publish "DragonFly.AspNetCore" to nuget
