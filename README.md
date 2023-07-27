@@ -167,7 +167,7 @@ public partial class BlogPost
 
 ```csharp
 builder.Services.AddDragonFly()
-                    .AddModel<BlogPost>();                    
+                    .AddModels(x => x.Add<BlogPost>());                    
 ```
 
 #### Use queries for typed content
