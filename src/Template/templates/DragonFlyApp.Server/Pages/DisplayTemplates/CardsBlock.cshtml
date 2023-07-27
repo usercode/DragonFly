@@ -1,0 +1,38 @@
+@model CardsBlock
+@inject IAssetStorage Storage
+
+<div class="block cards-block">
+    <div class="card-group">
+        @for (int i = 0; i < Model.Cards.Count; i++)
+        {
+            <div class="card">
+                @if (Model.Cards[i].AssetId != null)
+                {
+                    Asset asset = await Storage.GetAssetAsync(Model.Cards[i].AssetId.Value);
+
+                    <img src="@Url.ImageWizard().Asset(asset).AsImage().Resize(1200,900).BuildUrl()" alt="@asset.Name" class="card-image" />
+                }
+                @if (string.IsNullOrEmpty(Model.Cards[i].Header) == false)
+                {
+                    <div class="card-header">@Model.Cards[i].Header</div>
+                }
+                <div class="card-body">
+                    @if (string.IsNullOrEmpty(Model.Cards[i].Title) == false)
+                    {
+                        <h5 class="card-title">@Model.Cards[i].Title</h5>
+                    }
+
+                    @Html.DisplayFor(m => Model.Cards[i].Blocks)
+
+                    @*<p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>*@
+                </div>
+                @if (string.IsNullOrEmpty(Model.Cards[i].Footer) == false)
+                {
+                    <div class="card-footer">
+                        <small class="text-body-secondary">@Model.Cards[i].Footer</small>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

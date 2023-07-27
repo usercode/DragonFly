@@ -6,7 +6,8 @@ using DragonFly;
 
 namespace DragonFlyApp.Shared;
 
-public class MyCustomField : ContentField
+[Field]
+public partial class MyCustomField
 {
-
+    public string? Test { get; set; }
 }

@@ -14,7 +14,7 @@ public partial class BlogPostModel
     [DateField(Required = true)]
     private DateTime? _date;
 
-    [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
+    [StringField(Required = true, Index = true, ListField = true, MinLength = 8, MaxLength = 512)]
     private string? _title;
 
     [TextField]

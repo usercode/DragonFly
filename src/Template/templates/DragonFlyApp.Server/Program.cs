@@ -30,11 +30,12 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
-                    .AddBlockField()                    
+                    .AddBlockField()
                     .AddApiKeys()
-                    .AddContentModel<BlogPostModel>()
-                    .AddContentModel<StandardPageModel>()
-                    ;
+                    .AddModels(x => x
+                        .Add<BlogPostModel>()
+                        .Add<StandardPageModel>()
+                        );
 
 var app = builder.Build();
 
