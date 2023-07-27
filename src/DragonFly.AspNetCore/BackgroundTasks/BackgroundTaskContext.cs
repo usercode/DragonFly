@@ -59,7 +59,10 @@ public class BackgroundTaskContext
 
     private async Task StateHasChanged()
     {
-        await StateChanged?.Invoke();
+        if (StateChanged != null)
+        {
+            await StateChanged();
+        }
     }
 }
 

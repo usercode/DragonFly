@@ -52,10 +52,10 @@ public static class FieldQueryExtensions
     /// <param name="query"></param>
     /// <param name="value"></param>
     /// <returns></returns>
-    public static TContentQuery Top<TContentQuery>(this TContentQuery query, int value)
+    public static TContentQuery Take<TContentQuery>(this TContentQuery query, int value)
         where TContentQuery : ContentQuery
     {
-        query.Top = value;
+        query.Take = value;
 
         return query;
     }

@@ -20,6 +20,12 @@ public partial class MongoStorage : IContentStorage
     public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
         ContentSchema? contentSchema = await GetSchemaAsync(schema);
+
+        if (contentSchema == null)
+        {
+            throw new Exception($"The schema '{schema}' doesn't exist.");
+        }
+
         IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
 
         MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
@@ -27,7 +33,6 @@ public partial class MongoStorage : IContentStorage
         if (result == null)
         {
             return null;
-            //throw new Exception($"ContentItem '{schema}/{id}' not found");
         }
 
         return result.ToModel(contentSchema);
@@ -94,7 +99,7 @@ public partial class MongoStorage : IContentStorage
 
         FindOptions<MongoContentItem> findOptions = new FindOptions<MongoContentItem>()
         {
-            Limit = query.Top,
+            Limit = query.Take,
             Skip = query.Skip
         };
 

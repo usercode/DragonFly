@@ -21,7 +21,7 @@ public class ContentQuery : QueryBase
         Fields = new List<FieldQuery>();
         OrderFields = new List<FieldOrder>();
 
-        Top = 25;
+        Take = 25;
         Published = true;
 
         IncludeListFieldsOnly = false;

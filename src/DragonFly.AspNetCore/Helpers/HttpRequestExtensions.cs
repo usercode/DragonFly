@@ -14,16 +14,16 @@ public static class HttpRequestExtensions
         ContentQuery result = new ContentQuery();
 
         StringValues skip = request.Query["$skip"];
-        StringValues top = request.Query["$top"];
+        StringValues take = request.Query["$top"];
 
         if (skip.Count > 0)
         {
             result.Skip = int.Parse(skip[0]);
         }
 
-        if (top.Count > 0)
+        if (take.Count > 0)
         {
-            result.Top = int.Parse(top[0]);
+            result.Take = int.Parse(take[0]);
         }
 
         return result;

@@ -104,7 +104,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         {
             Pattern = SearchPattern,
             Skip = Page * PageSize,
-            Top = PageSize,
+            Take = PageSize,
             Published = false
         };
 

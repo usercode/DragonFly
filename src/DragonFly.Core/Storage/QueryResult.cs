@@ -5,15 +5,14 @@
 namespace DragonFly;
 
 /// <summary>
-/// QueryResult
+/// Query result for <typeparamref name="T"/>.
 /// </summary>
-/// <typeparam name="TModel"></typeparam>
-public class QueryResult<TModel>
+public class QueryResult<T>
 {    
     /// <summary>
     /// Items
     /// </summary>
-    public IList<TModel> Items { get; set; } = new List<TModel>();
+    public IList<T> Items { get; set; } = new List<T>();
 
     /// <summary>
     /// Offset

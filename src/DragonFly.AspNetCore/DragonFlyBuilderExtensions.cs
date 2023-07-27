@@ -75,7 +75,7 @@ public static class DragonFlyBuilderExtensions
     }
 
     /// <summary>
-    /// Initializes the DragonFly API by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
+    /// Initializes the DragonFly CMS by executing the following services: <see cref="IPreInitialize"/>, <see cref="IInitialize"/> and <see cref="IPostInitialize"/>.
     /// </summary>
     public static async Task InitDragonFlyAsync(this IHost host)
     {

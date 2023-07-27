@@ -91,7 +91,7 @@ var products = await contentStorage.QueryAsync<Product>(x => x
 
 var customers = await contentStorage.QueryAsync<Customer>(x => x
                                                                 .Published(false)
-                                                                .Top(100)
+                                                                .Take(100)
                                                                 .String(x => x.Lastname, "aaa", StringQueryType.StartsWith));
 
 ////update permissions to all roles

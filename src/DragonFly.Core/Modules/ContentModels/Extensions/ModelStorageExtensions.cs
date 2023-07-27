@@ -112,7 +112,7 @@ public static class ModelStorageExtensions
         action?.Invoke(query);
 
         query.Skip = 0;
-        query.Top = 1;
+        query.Take = 1;
 
         QueryResult<ContentItem> result = await storage.QueryAsync(query);
 

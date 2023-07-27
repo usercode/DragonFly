@@ -117,7 +117,7 @@ public partial class MongoStorage : IAssetStorage
             query = query.Where(x => x.Name!.Contains(assetQuery.Pattern) || x.Slug!.Contains(assetQuery.Pattern));
         }
 
-        query = query.Take(assetQuery.Top);
+        query = query.Take(assetQuery.Take);
 
         if (assetQuery.Folder == null)
         {
@@ -129,7 +129,7 @@ public partial class MongoStorage : IAssetStorage
         }
 
         query = query.Skip(assetQuery.Skip);
-        query = query.Take(assetQuery.Top);
+        query = query.Take(assetQuery.Take);
 
         IList<MongoAsset> result = await query.ToListAsync();
 
@@ -137,7 +137,7 @@ public partial class MongoStorage : IAssetStorage
         queryResult.Items = result
                                 .Select(x => SetPreviewUrl(x.ToModel()))
                                 .ToList();
-        queryResult.Offset = assetQuery.Top;
+        queryResult.Offset = assetQuery.Take;
         queryResult.Count = queryResult.Items.Count;
         queryResult.TotalCount = queryResult.Items.Count;
 

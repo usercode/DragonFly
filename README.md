@@ -1,4 +1,4 @@
-# DragonFly - Headless ASP.NET Core CMS + Blazor
+# DragonFly » Headless ASP.NET Core CMS + Blazor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,7 +34,7 @@
   * Dynamic permissions for every schema
 * Background tasks
 * WebHooks
-* MongoDB engine
+* MongoDB storage
   * Create proxies with ProxyGenerator
 * Admin interface with Blazor
 

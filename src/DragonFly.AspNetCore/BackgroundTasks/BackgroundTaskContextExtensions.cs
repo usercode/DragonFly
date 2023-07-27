@@ -13,7 +13,7 @@ public static class BackgroundTaskContextExtensions
         where TQuery : QueryBase
     {
         ctx.Input.Skip = 0;
-        ctx.Input.Top = chunkSize;
+        ctx.Input.Take = chunkSize;
 
         int counter = 0;
         int counterSucceed = 0;
@@ -48,7 +48,7 @@ public static class BackgroundTaskContextExtensions
                 }
             }
 
-            ctx.Input.Skip += ctx.Input.Top;
+            ctx.Input.Skip += ctx.Input.Take;
         }
 
         await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
