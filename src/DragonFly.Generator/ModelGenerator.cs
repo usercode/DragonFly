@@ -218,31 +218,34 @@ public class ModelGenerator : IIncrementalGenerator
             }
 
             {
-                SourceBuilder builder = new SourceBuilder();
-
-                builder.AddUsings("System");
-                builder.AddNamespace("DragonFly", x =>
+                if (models.Count > 0)
                 {
-                    x.AddClass(Modifier.Public, "ContentExtensions", x =>
+                    SourceBuilder builder = new SourceBuilder();
+
+                    builder.AddUsings("System");
+                    builder.AddNamespace("DragonFly", x =>
                     {
-                        x.AppendLine("public static IContentModel ToModel(this ContentItem content)");
-                        x.AppendBlock(x =>
+                        x.AddClass(Modifier.Public, "ContentExtensions", x =>
                         {
-                            x.AppendLine("return content.Schema.Name switch");
+                            x.AppendLine("public static IContentModel ToModel(this ContentItem content)");
                             x.AppendBlock(x =>
                             {
-                                foreach (ClassItem model in models.OrderBy(x => x.Name))
+                                x.AppendLine("return content.Schema.Name switch");
+                                x.AppendBlock(x =>
                                 {
-                                    x.AppendLine($"\"{model.Name}\" => new {model.Namespace}.{model.Name}(content),");
-                                }
-                                x.AppendLine("_ => throw new Exception($\"Unknown model for '{content.Schema.Name}'.\")");
-                            }, command: true);
-                            
-                        });
-                    }, isStatic: true);
-                }, useFileScope: true);
+                                    foreach (ClassItem model in models.OrderBy(x => x.Name))
+                                    {
+                                        x.AppendLine($"\"{model.Name}\" => new {model.Namespace}.{model.Name}(content),");
+                                    }
+                                    x.AppendLine("_ => throw new Exception($\"Unknown model for '{content.Schema.Name}'.\")");
+                                }, command: true);
 
-                ctx.AddSource("DragonFly.ContentExtensions.g.cs", builder.ToString());
+                            });
+                        }, isStatic: true);
+                    }, useFileScope: true);
+
+                    ctx.AddSource("DragonFly.ContentExtensions.g.cs", builder.ToString());
+                }
             }
         });
     }

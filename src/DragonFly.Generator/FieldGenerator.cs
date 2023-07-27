@@ -69,9 +69,9 @@ public class FieldGenerator : IIncrementalGenerator
 
             SourceBuilder builder = new SourceBuilder();
             builder.AppendNullableDirective();
+            builder.AddUsings("DragonFly");
             builder.AddNamespace(ns, x =>
-            {               
-                
+            {                
                 x.AddClass(Modifier.From(classSymbol.DeclaredAccessibility), className, x =>
                 {
                     x.AppendLine("public static FieldFactory Factory { get; } = CreateFactory();");
