@@ -30,7 +30,7 @@ internal partial class ContentItemProxy : ContentItem
 
         if (result == null)
         {
-            throw new Exception($"ContentItem '{Id}' not found");
+            throw new Exception($"ContentItem '{Schema.Name}/{Id}' not found");
         }
 
         SetInvocationTarget(result);

@@ -110,7 +110,10 @@ public partial class MongoStorage : IAssetStorage
     {
         IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
 
-        query = query.Where(x => x.Folder == assetQuery.Folder);        
+        if (assetQuery.Folder != null)
+        {
+            query = query.Where(x => x.Folder == assetQuery.Folder);
+        }
 
         if (string.IsNullOrEmpty(assetQuery.Pattern) == false)
         {

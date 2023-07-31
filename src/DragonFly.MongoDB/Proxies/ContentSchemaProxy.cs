@@ -25,7 +25,7 @@ internal partial class ContentSchemaProxy : ContentSchema
 
         _loaded = true;
 
-        ContentSchema result = await MongoStorage.Default.GetSchemaAsync(Name);
+        ContentSchema? result = await MongoStorage.Default.GetSchemaAsync(Name);
 
         if (result == null)
         {

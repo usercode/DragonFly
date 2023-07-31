@@ -18,7 +18,7 @@ public class ComponentMongoFieldSerializer : MongoFieldSerializer<ComponentField
 
         string schemaName = bsonValue[ReferenceField.SchemaField].AsString;
 
-        ContentSchema schema = MongoStorage.Default.GetSchemaAsync(schemaName).GetAwaiter().GetResult();
+        ContentSchema? schema = MongoStorage.Default.GetSchemaAsync(schemaName).GetAwaiter().GetResult();
 
         contentField.ContentComponent = schema.CreateEmbeddedContent();
 

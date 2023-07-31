@@ -16,7 +16,7 @@ public class AssetFolder : ContentBase<AssetFolder>
     public AssetFolder(Guid id)
         : this()
     {
-        Id = id;
+        _id = id;
     }
 
     /// <summary>

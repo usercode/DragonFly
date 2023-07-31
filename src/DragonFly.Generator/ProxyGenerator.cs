@@ -88,68 +88,77 @@ public class ProxyGenerator : IIncrementalGenerator
                         // Process each base type and its members
                         foreach (INamedTypeSymbol baseType in baseTypes)
                         {
-                            IEnumerable<ISymbol> members = baseType.GetMembers();
+                            IEnumerable<ISymbol> members = baseType.GetMembers().Where(x => x.IsVirtual);
 
                             // Process each member of the base type
                             foreach (ISymbol member in members)
                             {
-                                if (member.IsVirtual)
+                                //override properties
+                                if (member is IPropertySymbol propertySymbol)
                                 {
-                                    //override properties
-                                    if (member is IPropertySymbol propertySymbol && ignoredProperties.Contains(propertySymbol.Name) == false)
+                                    bool ignoreProperty = ignoredProperties.Contains(propertySymbol.Name);
+
+                                    builder.AppendLine($"public override {propertySymbol.Type.ToDisplayString()} {propertySymbol.Name}");
+                                    builder.AppendBlock(x =>
                                     {
-                                        builder.AppendLine($"public override {propertySymbol.Type.ToDisplayString()} {propertySymbol.Name}");
-                                        builder.AppendBlock(x =>
+                                        if (propertySymbol.GetMethod != null)
                                         {
-                                            if (propertySymbol.GetMethod != null)
+                                            builder.AppendLine($"get");
+                                            builder.AppendBlock(x =>
                                             {
-                                                builder.AppendLine($"get");
-                                                builder.AppendBlock(x =>
+                                                if (ignoreProperty == false)
                                                 {
                                                     x.AppendLine($"{methodCaller}(\"{propertySymbol.GetMethod.Name}\"){methodCallerAsyncExtensions};");
-                                                    x.AppendLine($"return _invocationTarget.{propertySymbol.Name};");
-                                                });
+                                                }
+                                                x.AppendLine($"return _invocationTarget.{propertySymbol.Name};");
+                                            });
 
-                                            }
-                                            if (propertySymbol.SetMethod != null)
+                                        }
+                                        if (propertySymbol.SetMethod != null)
+                                        {
+                                            builder.AppendLine($"set");
+                                            builder.AppendBlock(x =>
                                             {
-                                                builder.AppendLine($"set");
-                                                builder.AppendBlock(x =>
+                                                if (ignoreProperty == false)
                                                 {
                                                     x.AppendLine($"{methodCaller}(\"{propertySymbol.SetMethod.Name}\"){methodCallerAsyncExtensions};");
-                                                    x.AppendLine($"_invocationTarget.{propertySymbol.Name} = value;");
-                                                });
-                                            }
-                                        });
-                                    }
+                                                }
+                                                x.AppendLine($"_invocationTarget.{propertySymbol.Name} = value;");
+                                            });
+                                        }
+                                    });
+                                }
 
-                                    //override methods
-                                    if (member is IMethodSymbol methodSymbol
-                                                                        && ignoredMethods.Contains(methodSymbol.Name) == false
-                                                                        && methodSymbol.MethodKind != MethodKind.PropertyGet
-                                                                        && methodSymbol.MethodKind != MethodKind.PropertySet)
+                                //override methods
+                                if (member is IMethodSymbol methodSymbol
+                                                                    && methodSymbol.MethodKind != MethodKind.PropertyGet
+                                                                    && methodSymbol.MethodKind != MethodKind.PropertySet)
+                                {
+                                    bool ignoreMethod = ignoredMethods.Contains(methodSymbol.Name);
+
+                                    string parameterDefinition = $"{string.Join(", ", methodSymbol.Parameters.Select(x => $"{x.Type.ToDisplayString()} {x.Name}"))}";
+
+                                    builder.AppendTabs();
+                                    builder.Append($"public override {methodSymbol.ReturnType.OriginalDefinition.ToDisplayString()} {methodSymbol.Name}({parameterDefinition})");
+                                    builder.AppendLineBreak();
+                                    builder.AppendBlock(x =>
                                     {
-                                        string parameterDefinition = $"{string.Join(", ", methodSymbol.Parameters.Select(x => $"{x.Type.ToDisplayString()} {x.Name}"))}";
-
-                                        builder.AppendTabs();
-                                        builder.Append($"public override {methodSymbol.ReturnType.OriginalDefinition.ToDisplayString()} {methodSymbol.Name}({parameterDefinition})");
-                                        builder.AppendLineBreak();
-                                        builder.AppendBlock(x =>
+                                        if (ignoreMethod == false)
                                         {
                                             builder.AppendLine($"{methodCaller}(\"{methodSymbol.Name}\"){methodCallerAsyncExtensions};");
+                                        }
 
-                                            builder.AppendTabs();
+                                        builder.AppendTabs();
 
-                                            if (methodSymbol.ReturnsVoid == false)
-                                            {
-                                                builder.Append($"return ");
-                                            }
+                                        if (methodSymbol.ReturnsVoid == false)
+                                        {
+                                            builder.Append($"return ");
+                                        }
 
-                                            builder.Append($"_invocationTarget.{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(x => x.Name))});");
+                                        builder.Append($"_invocationTarget.{methodSymbol.Name}({string.Join(", ", methodSymbol.Parameters.Select(x => x.Name))});");
 
-                                            builder.AppendLineBreak();
-                                        });
-                                    }
+                                        builder.AppendLineBreak();
+                                    });
                                 }
                             }
                         }
