@@ -28,7 +28,7 @@ public class ContentModule : ClientModule
         api.RegisterField<ArrayField, ArrayFieldView, ArrayFieldOptionsView>();
         api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();
         api.RegisterField<ReferenceField, ReferenceFieldView, ReferenceFieldOptionsView, ReferenceFieldQueryView>();
-        api.RegisterField<BoolField, BoolFieldView, BoolFieldOptionsView>();
+        api.RegisterField<BoolField, BoolFieldView, BoolFieldOptionsView, BoolFieldQueryView>();
         api.RegisterField<ComponentField, ComponentFieldView, ComponentFieldOptionsView>();
         api.RegisterField<DateTimeField, DateTimeFieldView>();
         api.RegisterField<StringField, StringFieldView, StringFieldOptionsView, StringFieldQueryView>();

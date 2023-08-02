@@ -18,7 +18,7 @@ public partial class Product
     [SlugField(Index = true)]
     private SlugField _slug;
 
-    [BoolField]
+    [BoolField(Index = true, QueryField = true)]
     private bool? _isActive;
 
     [BlockField]

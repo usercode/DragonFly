@@ -1,0 +1,16 @@
+﻿@inherits FieldQueryComponent<BoolFieldQuery>
+
+<div>
+	<BSRow>
+		<BSCol>
+			<BSLabel class="form-label">Value</BSLabel>
+		</BSCol>
+        <BSCol Column="auto">
+				<BoolValue @bind-Value="Query.Value" AllowUnset="true" />
+		</BSCol>		
+	</BSRow>
+</div>
+
+@code {
+
+}

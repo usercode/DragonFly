@@ -7,7 +7,7 @@ namespace DragonFly;
 public static class FieldQueryExtensions
 {
     /// <summary>
-    /// Orders models by a specified field.
+    /// Orders content items by a specified field.
     /// </summary>
     /// <typeparam name="TContentQuery"></typeparam>
     /// <param name="query"></param>
@@ -46,7 +46,7 @@ public static class FieldQueryExtensions
     }
 
     /// <summary>
-    /// Selects a specified number of models.
+    /// Selects a specified number of content items.
     /// </summary>
     /// <typeparam name="TContentQuery"></typeparam>
     /// <param name="query"></param>
@@ -61,7 +61,7 @@ public static class FieldQueryExtensions
     }
 
     /// <summary>
-    /// Skips a specified number of models.
+    /// Skips a specified number of content items.
     /// </summary>
     /// <typeparam name="TContentQuery"></typeparam>
     /// <param name="query"></param>
@@ -76,7 +76,7 @@ public static class FieldQueryExtensions
     }
 
     /// <summary>
-    /// Filters all published or unpublished models.
+    /// Filters all published or unpublished content items.
     /// </summary>
     /// <typeparam name="TContentQuery"></typeparam>
     /// <param name="query"></param>

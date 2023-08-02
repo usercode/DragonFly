@@ -10,7 +10,8 @@ namespace DragonFly;
 
 public static class DragonFlyBuilderExtensions
 {
-    public static IDragonFlyBuilder Init(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder Init<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+        where TBuilder : IDragonFlyBuilder
     {
         builder.Services.AddTransient<IInitialize>(x => new InitializerItem(action));
 
@@ -25,7 +26,8 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyBuilder PreInit(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder PreInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+        where TBuilder : IDragonFlyBuilder
     {
         builder.Services.AddTransient<IPreInitialize>(x => new InitializerItem(action));
 
@@ -40,7 +42,8 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static IDragonFlyBuilder PostInit(this IDragonFlyBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder PostInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+        where TBuilder : IDragonFlyBuilder
     {
         builder.Services.AddTransient<IPostInitialize>(x => new InitializerItem(action));
 
