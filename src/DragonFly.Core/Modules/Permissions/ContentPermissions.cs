@@ -27,20 +27,29 @@ public static class ContentPermissions
     /// <exception cref="Exception"></exception>
     public static Permission Create(string schema, ContentAction action)
     {
-        string name = $"Content.{schema}:{action}";
-        string displayName = $"{action} {schema} content";
+        ArgumentException.ThrowIfNullOrEmpty(schema);
+
+        var createName = static (string schema, ContentAction action) => $"Content.{schema}:{action}";
+        var createDisplayName = static (string schema, ContentAction action) => $"{action} {schema} content";
+
+        string name = createName(schema, action);
+        string displayName = createDisplayName(schema, action);
         PermissionGroup group = new PermissionGroup($"Content ({schema})");
+
+        Permission manage = new Permission(group, createName(schema, ContentAction.Manage), createDisplayName(schema, ContentAction.Manage), ManageContent);
+        Permission query = new Permission(group, createName(schema, ContentAction.Query), createDisplayName(schema, ContentAction.Query), manage, QueryContent);
 
         Permission permission = action switch
         {
-            ContentAction.Query => new Permission(group, name, displayName, ManageContent, QueryContent),
-            ContentAction.Read => new Permission(group, name, displayName, ManageContent, ReadContent),            
-            ContentAction.Create => new Permission(group, name, displayName, ManageContent, CreateContent),
-            ContentAction.Update => new Permission(group, name, displayName, ManageContent, UpdateContent),
-            ContentAction.Delete => new Permission(group, name, displayName, ManageContent, DeleteContent),
-            ContentAction.Publish => new Permission(group, name, displayName, ManageContent, PublishContent),
-            ContentAction.Unpublish => new Permission(group, name, displayName, ManageContent, UnpublishContent),
-            _ => throw new Exception()
+            ContentAction.Manage => manage,
+            ContentAction.Query => query,
+            ContentAction.Read => new Permission(group, name, displayName, manage, query, ReadContent),
+            ContentAction.Create => new Permission(group, name, displayName, manage, CreateContent),
+            ContentAction.Update => new Permission(group, name, displayName, manage, UpdateContent),
+            ContentAction.Delete => new Permission(group, name, displayName, manage, DeleteContent),
+            ContentAction.Publish => new Permission(group, name, displayName, manage, PublishContent),
+            ContentAction.Unpublish => new Permission(group, name, displayName, manage, UnpublishContent),
+            _ => throw new Exception($"Unknown permission action: {action}")
         };
 
         return permission;
@@ -52,6 +61,7 @@ public static class ContentPermissions
 /// </summary>
 public enum ContentAction
 {
+    Manage,
     Query,
     Read,
     Create,

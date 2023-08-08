@@ -110,7 +110,7 @@ public partial class MongoStorage
                     throw new Exception($"Could not create single value field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.MongoField().RegisterField(fieldSerializer);
+                api.MongoField().Add(fieldSerializer);
             }
             else //build DefaultFieldSerializer
             {
@@ -121,7 +121,7 @@ public partial class MongoStorage
                     throw new Exception($"Could not create default field serializer for '{contentFieldType.Name}'.");
                 }
 
-                api.MongoField().RegisterField(fieldSerializer);
+                api.MongoField().Add(fieldSerializer);
             }
         }
     }    

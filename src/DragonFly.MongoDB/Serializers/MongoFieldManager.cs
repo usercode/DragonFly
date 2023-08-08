@@ -18,27 +18,19 @@ public sealed class MongoFieldManager
     /// </summary>
     public static MongoFieldManager Default { get; } = new MongoFieldManager();
 
-    private IDictionary<Type, IMongoFieldSerializer> _fields;
+    private IDictionary<Type, IMongoFieldSerializer> _fields = new Dictionary<Type, IMongoFieldSerializer>();
 
-    private MongoFieldManager()
+    public void Add(IMongoFieldSerializer fieldSerializer)
     {
-        _fields = new Dictionary<Type, IMongoFieldSerializer>();
+        _fields[fieldSerializer.FieldType] = fieldSerializer;
     }
 
-    public void RegisterField(IMongoFieldSerializer fieldSerializer)
-    {
-        if (_fields.TryAdd(fieldSerializer.FieldType, fieldSerializer) == false)
-        {
-            _fields[fieldSerializer.FieldType] = fieldSerializer;
-        }
-    }
-
-    public void RegisterField<TSerializer>()
+    public void Add<TSerializer>()
         where TSerializer : IMongoFieldSerializer, new()
     {
         TSerializer serializer = new TSerializer();
 
-        RegisterField(serializer);
+        Add(serializer);
     }
 
     public IMongoFieldSerializer GetByFieldType(Type contentFieldType)

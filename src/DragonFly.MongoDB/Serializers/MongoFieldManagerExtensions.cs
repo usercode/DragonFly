@@ -14,26 +14,26 @@ public static class MongoFieldManagerExtensions
         return MongoFieldManager.Default;
     }
 
-    public static MongoFieldManager AddDefaults(this MongoFieldManager mongoFieldManager)
+    public static MongoFieldManager AddDefaults(this MongoFieldManager manager)
     {
-        mongoFieldManager.RegisterField<ArrayMongoFieldSerializer>();
-        mongoFieldManager.RegisterField<AssetMongoFieldSerializer>();
-        mongoFieldManager.RegisterField<ComponentMongoFieldSerializer>();
-        mongoFieldManager.RegisterField<ReferenceMongoFieldSerializer>();
-        mongoFieldManager.RegisterField<GeolocationMongoFieldSerializer>();
+        manager.Add<ArrayMongoFieldSerializer>();
+        manager.Add<AssetMongoFieldSerializer>();
+        manager.Add<ComponentMongoFieldSerializer>();
+        manager.Add<ReferenceMongoFieldSerializer>();
+        manager.Add<GeolocationMongoFieldSerializer>();
 
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<BoolField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<StringField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<SlugField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<ColorField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<IntegerField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<FloatField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<TextField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<HtmlField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<XHtmlField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<XmlField>>();
-        mongoFieldManager.RegisterField<SingleValueMongoFieldSerializer<DateTimeField>>();        
+        manager.Add<SingleValueMongoFieldSerializer<BoolField>>();
+        manager.Add<SingleValueMongoFieldSerializer<StringField>>();
+        manager.Add<SingleValueMongoFieldSerializer<SlugField>>();
+        manager.Add<SingleValueMongoFieldSerializer<ColorField>>();
+        manager.Add<SingleValueMongoFieldSerializer<IntegerField>>();
+        manager.Add<SingleValueMongoFieldSerializer<FloatField>>();
+        manager.Add<SingleValueMongoFieldSerializer<TextField>>();
+        manager.Add<SingleValueMongoFieldSerializer<HtmlField>>();
+        manager.Add<SingleValueMongoFieldSerializer<XHtmlField>>();
+        manager.Add<SingleValueMongoFieldSerializer<XmlField>>();
+        manager.Add<SingleValueMongoFieldSerializer<DateTimeField>>();        
 
-        return mongoFieldManager;
+        return manager;
     }
 }

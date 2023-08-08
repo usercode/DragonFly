@@ -17,24 +17,19 @@ public sealed class MongoIndexManager
     /// </summary>
     public static MongoIndexManager Default { get; } = new MongoIndexManager();
 
-    public MongoIndexManager()
-    {
-        Fields = new Dictionary<Type, FieldIndex>();
-    }
+    private IDictionary<Type, FieldIndex> _fields = new Dictionary<Type, FieldIndex>();
 
-    public IDictionary<Type, FieldIndex> Fields { get; set; }
-
-    public void Register<TFieldIndex>()
+    public void Add<TFieldIndex>()
         where TFieldIndex : FieldIndex, new()
     {
         TFieldIndex index = new TFieldIndex();
 
-        Fields[index.FieldType] = index;
+        _fields[index.FieldType] = index;
     }
 
     public bool TryGetByType(Type fieldType, [NotNullWhen(true)] out FieldIndex? fieldIndex)
     {
-        if (Fields.TryGetValue(fieldType, out var result))
+        if (_fields.TryGetValue(fieldType, out var result))
         {
             fieldIndex = result;
 

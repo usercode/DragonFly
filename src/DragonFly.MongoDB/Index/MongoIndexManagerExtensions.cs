@@ -15,13 +15,13 @@ public static class MongoIndexManagerExtensions
 
     public static MongoIndexManager AddDefaults(this MongoIndexManager manager)
     {
-        manager.Register<DefaultFieldIndex<StringField>>();
-        manager.Register<DefaultFieldIndex<SlugField>>();
-        manager.Register<DefaultFieldIndex<BoolField>>();
-        manager.Register<DefaultFieldIndex<IntegerField>>();
-        manager.Register<DefaultFieldIndex<FloatField>>();
-        manager.Register<DefaultFieldIndex<DateTimeField>>();
-        manager.Register<GeolocationFieldIndex>();
+        manager.Add<DefaultFieldIndex<StringField>>();
+        manager.Add<DefaultFieldIndex<SlugField>>();
+        manager.Add<DefaultFieldIndex<BoolField>>();
+        manager.Add<DefaultFieldIndex<IntegerField>>();
+        manager.Add<DefaultFieldIndex<FloatField>>();
+        manager.Add<DefaultFieldIndex<DateTimeField>>();
+        manager.Add<GeolocationFieldIndex>();
 
         return manager;
     }

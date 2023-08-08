@@ -21,6 +21,7 @@ public class CreateContentPermissionsInitializer : IPostInitialize
 
         foreach (ContentSchema schema in result.Items)
         {
+            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Manage));
             api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Query));
             api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Read));
             api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Create));

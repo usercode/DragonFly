@@ -41,13 +41,12 @@ public static class DragonFlyBuilderExtensions
     {
         services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         services.AddSingleton<IDateTimeService, LocalDateTimeService>();
+        services.AddSingleton<ISlugService, SlugService>();
         services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
 
         services.AddSingleton(FieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
         services.AddSingleton(PermissionManager.Default);
-
-        services.AddSingleton<ISlugService, SlugService>();
 
         services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 

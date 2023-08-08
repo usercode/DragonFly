@@ -13,13 +13,13 @@ public static class MongoQueryManagerExtensions
 
     public static MongoQueryManager AddDefaults(this MongoQueryManager manager)
     {
-        manager.Register<BoolFieldQuery, BoolFieldQueryAction>();
-        manager.Register<StringFieldQuery, StringFieldQueryAction>();
-        manager.Register<SlugFieldQuery, SlugFieldQueryAction>();
-        manager.Register<IntegerFieldQuery, IntegerFieldQueryAction>();
-        manager.Register<ReferenceFieldQuery, ReferenceFieldQueryAction>();
-        manager.Register<AssetFieldQuery, AssetFieldQueryAction>();
-        manager.Register<GeolocationFieldQuery, GeolocationFieldQueryAction>();
+        manager.Add<BoolFieldQuery, BoolFieldQueryAction>();
+        manager.Add<StringFieldQuery, StringFieldQueryAction>();
+        manager.Add<SlugFieldQuery, SlugFieldQueryAction>();
+        manager.Add<IntegerFieldQuery, IntegerFieldQueryAction>();
+        manager.Add<ReferenceFieldQuery, ReferenceFieldQueryAction>();
+        manager.Add<AssetFieldQuery, AssetFieldQueryAction>();
+        manager.Add<GeolocationFieldQuery, GeolocationFieldQueryAction>();
 
         return manager;
     }

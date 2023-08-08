@@ -13,23 +13,18 @@ public sealed class MongoQueryManager
 {
     public static MongoQueryManager Default { get; } = new MongoQueryManager();
 
-    private IDictionary<Type, IFieldQueryAction> _fields;
+    private IDictionary<Type, IFieldQueryAction> _fields = new Dictionary<Type, IFieldQueryAction>();
 
-    public MongoQueryManager()
-    {
-        _fields = new Dictionary<Type, IFieldQueryAction>();
-    }
-
-    public void Register(Type fieldType, IFieldQueryAction queryConverter)
+    public void Add(Type fieldType, IFieldQueryAction queryConverter)
     {
         _fields.Add(fieldType, queryConverter);
     }
 
-    public void Register<TQuery, TQueryConverter>()
+    public void Add<TQuery, TQueryAction>()
         where TQuery : FieldQuery
-        where TQueryConverter : FieldQueryAction<TQuery>, new()
+        where TQueryAction : FieldQueryAction<TQuery>, new()
     {
-        Register(typeof(TQuery), new TQueryConverter());
+        Add(typeof(TQuery), new TQueryAction());
     }
 
     public IFieldQueryAction GetByType(Type fieldType)
