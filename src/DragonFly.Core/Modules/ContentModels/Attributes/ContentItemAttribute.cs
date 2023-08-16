@@ -21,4 +21,22 @@ public class ContentItemAttribute : Attribute
     /// SchemaName
     /// </summary>
     public string? Schema { get; set; }
+
+    /// <summary>
+    /// Pattern
+    /// </summary>
+    public string? Preview { get; set; }
+
+    public void ApplyToSchema(ContentSchema schema)
+    {
+        if (Schema != null)
+        {
+            schema.Name = Schema;
+        }
+
+        if (Preview != null)
+        {
+            schema.Preview.Pattern = Preview;
+        }
+    }
 }

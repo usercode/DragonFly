@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly.API;
 
 public class RestContentSchema : RestContentBase
@@ -11,11 +9,6 @@ public class RestContentSchema : RestContentBase
     public RestContentSchema()
     {
         Name = string.Empty;
-        Fields = new Dictionary<string, RestContentSchemaField>();
-        ListFields = new List<string>();
-        ReferenceFields = new List<string>();
-        QueryFields = new List<string>();
-        OrderFields = new List<FieldOrder>();
     }
 
     /// <summary>
@@ -27,25 +20,30 @@ public class RestContentSchema : RestContentBase
     /// <summary>
     /// Parts
     /// </summary>
-    public IDictionary<string, RestContentSchemaField> Fields { get; set; }
+    public IDictionary<string, RestContentSchemaField> Fields { get; set; } = new Dictionary<string, RestContentSchemaField>();
 
     /// <summary>
     /// ListFields
     /// </summary>
-    public IList<string> ListFields { get; set; }
+    public IList<string> ListFields { get; set; } = new List<string>();
 
     /// <summary>
     /// ReferenceFields
     /// </summary>
-    public IList<string> ReferenceFields { get; set; }
+    public IList<string> ReferenceFields { get; set; } = new List<string>();
 
     /// <summary>
     /// QueryFields
     /// </summary>
-    public IList<string> QueryFields { get; set; }
+    public IList<string> QueryFields { get; set; } = new List<string>();
 
     /// <summary>
     /// OrderFields
     /// </summary>
-    public IList<FieldOrder> OrderFields { get; set; }
+    public IList<FieldOrder> OrderFields { get; set; } = new List<FieldOrder>();
+
+    /// <summary>
+    /// Previews
+    /// </summary>
+    public PreviewItem Preview { get; set; } = new PreviewItem();
 }

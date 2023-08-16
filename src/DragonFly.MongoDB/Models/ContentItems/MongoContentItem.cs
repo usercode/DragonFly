@@ -9,11 +9,6 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoContentItem : MongoContentBase
 {
-    public MongoContentItem()
-    {
-        Fields = new MongoContentFields();
-    }
-
     /// <summary>
     /// SchemaVersion
     /// </summary>
@@ -22,5 +17,5 @@ public class MongoContentItem : MongoContentBase
     /// <summary>
     /// Fields
     /// </summary>
-    public MongoContentFields Fields { get; set; }
+    public MongoContentFields Fields { get; set; } = new MongoContentFields();
 }

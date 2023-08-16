@@ -8,47 +8,49 @@ namespace DragonFly.API;
 
 public static class RestContentSchemaConverter
 {
-    public static ContentSchema ToModel(this RestContentSchema restContentItem)
+    public static ContentSchema ToModel(this RestContentSchema restSchema)
     {
-        ContentSchema contentSchema = new ContentSchema(restContentItem.Name);
+        ContentSchema schema = new ContentSchema(restSchema.Name);
 
-        contentSchema.Id = restContentItem.Id;
-        contentSchema.CreatedAt = restContentItem.CreatedAt;
-        contentSchema.ModifiedAt = restContentItem.ModifiedAt;
-        contentSchema.Version = restContentItem.Version;
-        contentSchema.ListFields = restContentItem.ListFields.ToList();
-        contentSchema.ReferenceFields = restContentItem.ReferenceFields.ToList();
-        contentSchema.QueryFields = restContentItem.QueryFields.ToList();
-        contentSchema.OrderFields = restContentItem.OrderFields.ToList();
+        schema.Id = restSchema.Id;
+        schema.CreatedAt = restSchema.CreatedAt;
+        schema.ModifiedAt = restSchema.ModifiedAt;
+        schema.Version = restSchema.Version;
+        schema.ListFields = restSchema.ListFields.ToList();
+        schema.ReferenceFields = restSchema.ReferenceFields.ToList();
+        schema.QueryFields = restSchema.QueryFields.ToList();
+        schema.OrderFields = restSchema.OrderFields.ToList();
+        schema.Preview = restSchema.Preview;
 
-        foreach (var mongoField in restContentItem.Fields)
+        foreach (var mongoField in restSchema.Fields)
         {
-            contentSchema.Fields.Add(mongoField.Key, mongoField.Value.ToModel());
+            schema.Fields.Add(mongoField.Key, mongoField.Value.ToModel());
         }
 
-        return contentSchema;
+        return schema;
     }
 
-    public static RestContentSchema ToRest(this ContentSchema contentSchema)
+    public static RestContentSchema ToRest(this ContentSchema schema)
     {
-        RestContentSchema restContentItem = new RestContentSchema();
+        RestContentSchema restSchema = new RestContentSchema();
 
-        restContentItem.Id = contentSchema.Id;
-        restContentItem.Name = contentSchema.Name;
-        restContentItem.CreatedAt = contentSchema.CreatedAt;
-        restContentItem.ModifiedAt = contentSchema.ModifiedAt;
-        restContentItem.Version = contentSchema.Version;
-        restContentItem.ListFields = contentSchema.ListFields.ToList();
-        restContentItem.ReferenceFields = contentSchema.ReferenceFields.ToList();
-        restContentItem.QueryFields = contentSchema.QueryFields.ToList();
-        restContentItem.OrderFields = contentSchema.OrderFields.ToList();
+        restSchema.Id = schema.Id;
+        restSchema.Name = schema.Name;
+        restSchema.CreatedAt = schema.CreatedAt;
+        restSchema.ModifiedAt = schema.ModifiedAt;
+        restSchema.Version = schema.Version;
+        restSchema.ListFields = schema.ListFields.ToList();
+        restSchema.ReferenceFields = schema.ReferenceFields.ToList();
+        restSchema.QueryFields = schema.QueryFields.ToList();
+        restSchema.OrderFields = schema.OrderFields.ToList();
+        restSchema.Preview = schema.Preview;
 
-        foreach (var field in contentSchema.Fields)
+        foreach (var field in schema.Fields)
         {
-            restContentItem.Fields.Add(field.Key, field.Value.ToRest());
+            restSchema.Fields.Add(field.Key, field.Value.ToRest());
         }
 
-        return restContentItem;
+        return restSchema;
     }
 
     public static RestContentSchemaField ToRest(this SchemaField schemaField)

@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly.MongoDB;
 
 /// <summary>
@@ -14,11 +12,6 @@ public class MongoContentSchema : MongoContentBase
     public MongoContentSchema()
     {
         Name = string.Empty;
-        Fields = new Dictionary<string, MongoSchemaField>();
-        ListFields = new List<string>();
-        ReferenceFields = new List<string>();
-        QueryFields = new List<string>();
-        OrderFields = new List<FieldOrder>();            
     }
 
     /// <summary>
@@ -29,27 +22,32 @@ public class MongoContentSchema : MongoContentBase
     /// <summary>
     /// Parts
     /// </summary>
-    public virtual IDictionary<string, MongoSchemaField> Fields { get; set; }
+    public virtual IDictionary<string, MongoSchemaField> Fields { get; set; } = new Dictionary<string, MongoSchemaField>();
 
     /// <summary>
     /// ListFields
     /// </summary>
-    public virtual IList<string> ListFields { get; set; }
+    public virtual IList<string> ListFields { get; set; } = new List<string>();
 
     /// <summary>
     /// ReferenceFields
     /// </summary>
-    public virtual IList<string> ReferenceFields { get; set; }
+    public virtual IList<string> ReferenceFields { get; set; } = new List<string>();
 
     /// <summary>
     /// QueryFields
     /// </summary>
-    public virtual IList<string> QueryFields { get; set; }
+    public virtual IList<string> QueryFields { get; set; } = new List<string>();
 
     /// <summary>
     /// OrderFields
     /// </summary>
-    public virtual IList<FieldOrder> OrderFields { get; set; }
+    public virtual IList<FieldOrder> OrderFields { get; set; } = new List<FieldOrder>();
+
+    /// <summary>
+    /// Preview
+    /// </summary>
+    public virtual PreviewItem Preview { get; set; } = new PreviewItem();
 
     public override string ToString()
     {

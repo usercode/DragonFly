@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
+using System.Diagnostics;
+using Microsoft.JSInterop;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -25,13 +27,14 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     [Inject]
     public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
 
-
     [Inject]
     public IContentStorage ContentService { get; set; }
 
-
     [Inject]
     public ISchemaStorage SchemaService { get; set; }
+
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
 
     [Parameter]
     public Guid? CloneFromEntityId { get; set; }
@@ -51,12 +54,17 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         }
         else
         {
-            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
-            toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, () => UnpublishAsync()));
-            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, () => CloneAsync()));
+            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, PublishAsync));
+            toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, UnpublishAsync));
+            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, CloneAsync));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);
+
+            if (string.IsNullOrEmpty(Entity.Schema.Preview.Pattern) == false)
+            {
+                toolbarItems.Add(new ToolbarItem("Preview", BSColor.Success, PreviewAsync));
+            }
         }
 
         if (ContentItemActions != null)
@@ -112,6 +120,15 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         await ContentService.DeleteAsync(Entity);
 
         NavigationManager.NavigateTo($"content/{EntityType}");
+    }
+
+    protected virtual async Task PreviewAsync()
+    {
+        string url = Entity.GetPreviewUrl();
+
+        Console.WriteLine("Preview: " + url);
+
+        await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
     protected override void OnSaving(SavingEventArgs args)

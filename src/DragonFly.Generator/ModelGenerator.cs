@@ -49,6 +49,8 @@ public class ModelGenerator : IIncrementalGenerator
 
                 List<ContentItemProperty> properties = new List<ContentItemProperty>();
 
+                string? contentAttributeParameters = item.ClassSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString();
+
                 //properties of contentitems
                 foreach (var field in item.ClassSyntax.Members.OfType<FieldDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
                 {
@@ -136,7 +138,7 @@ public class ModelGenerator : IIncrementalGenerator
 
                         x.AppendLine($"static IContentModel IContentModel.Create(ContentItem contentItem) => Create(contentItem);");
 
-                        x.AddContentMetadataCreateSchema(className, properties);
+                        x.AddContentMetadataCreateSchema(className, contentAttributeParameters, properties);
                     },
                     isPartial: true,
                     isSealed: true,

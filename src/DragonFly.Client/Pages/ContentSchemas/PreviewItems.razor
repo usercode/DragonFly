@@ -1,0 +1,20 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <ul class="list-group">
+            @foreach (PreviewItem preview in Items)
+            {
+                <li class="list-group-item">
+                    <div style="display:flex;align-items:center">
+                        <span>@preview.Name</span>                       
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public IList<PreviewItem> Items { get; set; }
+}

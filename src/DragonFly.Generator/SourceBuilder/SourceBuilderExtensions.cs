@@ -322,12 +322,21 @@ public static class SourceBuilderExtensions
         return builder;
     }
 
-    public static SourceBuilder AddContentMetadataCreateSchema(this SourceBuilder builder, string className, IEnumerable<ContentItemProperty> properties)
+    public static SourceBuilder AddContentMetadataCreateSchema(this SourceBuilder builder, string className, string? contentAttributeParameters, IEnumerable<ContentItemProperty> properties)
     {
         builder.AppendLine($"private static ContentSchema CreateSchema()");
         builder.AppendBlock(x =>
         {
             x.AppendLine($"ContentSchema schema = new ContentSchema(\"{className}\");");
+            x.AppendLine();
+
+            if (contentAttributeParameters != null)
+            {
+                contentAttributeParameters = $" {{ {contentAttributeParameters} }}";
+            }
+
+            x.AppendLine($"new DragonFly.Generator.ContentItemAttribute(){contentAttributeParameters}.ApplyToSchema(schema);");
+            
             x.AppendLine();
 
             foreach (ContentItemProperty property in properties)

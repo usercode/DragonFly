@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Diagnostics.CodeAnalysis;
+using Fluid;
 
 namespace DragonFly;
 
@@ -188,5 +189,21 @@ public static class ContentItemExtensions
                 contentItem.Fields.Add(field.Key, contentField);
             }
         }
+    }
+
+    public static string GetPreviewUrl(this ContentItem content)
+    {
+        FluidParser parser = new FluidParser();
+
+        if (parser.TryParse(content.Schema.Preview.Pattern, out var template))
+        {
+            var context = new TemplateContext(content.Fields);
+
+            string result = template.Render(context);
+
+            return result;
+        }
+
+        throw new Exception();
     }
 }

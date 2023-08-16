@@ -14,11 +14,6 @@ public class ContentSchema : ContentBase<ContentSchema>, ISchemaElement
         ArgumentNullException.ThrowIfNull(name);
 
         _name = name;
-        _fields = new SchemaFields();
-        _listFields = new List<string>();
-        _referenceFields = new List<string>();
-        _queryFields = new List<string>();
-        _orderFields = new List<FieldOrder>();
     }
 
     private string _name;
@@ -28,37 +23,47 @@ public class ContentSchema : ContentBase<ContentSchema>, ISchemaElement
     /// </summary>
     public virtual string Name { get => _name; set => _name = value; }
 
-    private SchemaFields _fields;
+    private SchemaFields _fields = new SchemaFields();
 
     /// <summary>
     /// Fields
     /// </summary>
     public virtual SchemaFields Fields { get => _fields; set => _fields = value; }
 
-    private IList<string> _listFields;
+    private IList<string> _listFields = new List<string>();
 
     /// <summary>
     /// ListFields
     /// </summary>
     public virtual IList<string> ListFields { get => _listFields; set => _listFields = value; }
 
-    private IList<string> _referenceFields;
+    private IList<string> _referenceFields = new List<string>();
 
     /// <summary>
     /// ReferenceFields
     /// </summary>
     public virtual IList<string> ReferenceFields { get => _referenceFields; set => _referenceFields = value; }
 
-    private IList<FieldOrder> _orderFields;
+    private IList<FieldOrder> _orderFields = new List<FieldOrder>();
 
     /// <summary>
     /// OrderFields
     /// </summary>
     public IList<FieldOrder> OrderFields { get => _orderFields; set => _orderFields = value; }
 
-    private IList<string> _queryFields;
+    private IList<string> _queryFields = new List<string>();
 
+    /// <summary>
+    /// QueryFields
+    /// </summary>
     public IList<string> QueryFields { get => _queryFields; set => _queryFields = value; }
+
+    private PreviewItem _previewOptions = new PreviewItem();
+
+    /// <summary>
+    /// Preview
+    /// </summary>
+    public PreviewItem Preview { get => _previewOptions; set => _previewOptions = value; }
 
     public override bool Equals(object? obj)
     {

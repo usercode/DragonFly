@@ -21,6 +21,7 @@ static class ContentSchemaConverter
         schema.ReferenceFields = mongoSchema.ReferenceFields.ToList();
         schema.QueryFields = mongoSchema.QueryFields.ToList();
         schema.OrderFields = mongoSchema.OrderFields.ToList();
+        schema.Preview = mongoSchema.Preview;
 
         foreach (var field in mongoSchema.Fields)
         {
@@ -79,6 +80,7 @@ static class ContentSchemaConverter
         mongoContentItem.ReferenceFields = schema.ReferenceFields.ToList();
         mongoContentItem.QueryFields = schema.QueryFields.ToList();
         mongoContentItem.OrderFields = schema.OrderFields.ToList();
+        mongoContentItem.Preview = schema.Preview;
 
         foreach(var field in schema.Fields)
         {
