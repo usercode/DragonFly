@@ -20,6 +20,7 @@ public class AssetFieldAttribute : BaseFieldAttribute
                                     {
                                         x.IsRequired = Required;
                                         x.ShowPreview = ShowPreview;
+                                        x.IsSearchable = Index;
                                     }, 
                                     SortKey);
     }

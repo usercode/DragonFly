@@ -12,10 +12,10 @@ namespace DragonFlyTEST;
 [ContentItem(Preview = "http://localhost/preview/{{Title}}")]
 public partial class Product
 {
-    [StringField(Required = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
+    [StringField(Required = true, Index = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
     private string? _title;
 
-    [SlugField(Index = true)]
+    [SlugField(Index = true, QueryField = true)]
     private SlugField _slug;
 
     [BoolField(Index = true, QueryField = true)]
@@ -24,13 +24,13 @@ public partial class Product
     [BlockField]
     private BlockField _mainContent;
 
-    [AssetField(ShowPreview = true)]
+    [AssetField(ShowPreview = true, Index = true, QueryField = true)]
     private AssetField _image;
 
-    [AssetField(ShowPreview = true)]
+    [AssetField(ShowPreview = true, Index = true, QueryField = true)]
     private Asset _image2;
 
-    [ReferenceField]
+    [ReferenceField(Index = true, QueryField = true)]
     private ReferenceField _customerA;
 
     [ReferenceField]

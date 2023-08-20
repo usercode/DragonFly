@@ -21,6 +21,8 @@ public static class MongoIndexManagerExtensions
         manager.Add<DefaultFieldIndex<IntegerField>>();
         manager.Add<DefaultFieldIndex<FloatField>>();
         manager.Add<DefaultFieldIndex<DateTimeField>>();
+        manager.Add<DefaultFieldIndex<ReferenceField>>();
+        manager.Add<DefaultFieldIndex<AssetField>>();
         manager.Add<GeolocationFieldIndex>();
 
         return manager;
