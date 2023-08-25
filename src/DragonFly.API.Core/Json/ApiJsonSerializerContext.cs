@@ -6,15 +6,15 @@ using System.Text.Json.Serialization;
 
 namespace DragonFly.API;
 
-[JsonSerializable(typeof(ResourceCreated))]
-[JsonSerializable(typeof(RestContentItem))]
-[JsonSerializable(typeof(RestContentSchema))]
-[JsonSerializable(typeof(RestAsset))]
-[JsonSerializable(typeof(RestAssetFolder))]
-[JsonSerializable(typeof(QueryResult<RestAsset>))]
-[JsonSerializable(typeof(QueryResult<RestContentItem>))]
-[JsonSerializable(typeof(QueryResult<RestContentSchema>))]
-[JsonSerializable(typeof(ContentQuery))]
-public partial class ApiJsonSerializerContext : JsonSerializerContext
-{
-}
+//[JsonSerializable(typeof(ResourceCreated))]
+//[JsonSerializable(typeof(RestContentItem))]
+//[JsonSerializable(typeof(RestContentSchema))]
+//[JsonSerializable(typeof(RestAsset))]
+//[JsonSerializable(typeof(RestAssetFolder))]
+//[JsonSerializable(typeof(QueryResult<RestAsset>))]
+//[JsonSerializable(typeof(QueryResult<RestContentItem>))]
+//[JsonSerializable(typeof(QueryResult<RestContentSchema>))]
+//[JsonSerializable(typeof(ContentQuery))]
+//public partial class ApiJsonSerializerContext : JsonSerializerContext
+//{
+//}

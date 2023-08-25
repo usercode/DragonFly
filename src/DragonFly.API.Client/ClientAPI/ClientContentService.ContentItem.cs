@@ -31,7 +31,7 @@ public partial class ClientContentService : IContentStorage
 
         response.EnsureSuccessStatusCode();
 
-        ResourceCreated? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        ResourceCreated? result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
 
         if (result == null)
         {
