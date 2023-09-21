@@ -11,11 +11,6 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoAsset : MongoContentBase
 {
-    public MongoAsset()
-    {
-        Metaddata = new Dictionary<string, BsonDocument>();
-    }
-
     /// <summary>
     /// Name
     /// </summary>
@@ -59,5 +54,5 @@ public class MongoAsset : MongoContentBase
     /// <summary>
     /// Metaddata
     /// </summary>
-    public IDictionary<string, BsonDocument> Metaddata { get; set; }
+    public IDictionary<string, BsonDocument> Metaddata { get; set; } = new Dictionary<string, BsonDocument>();
 }

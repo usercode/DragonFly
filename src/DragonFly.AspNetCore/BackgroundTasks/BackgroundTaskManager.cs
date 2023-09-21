@@ -40,7 +40,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     private int _nextId = 1;
     private object _syncObject = new object();
 
-    private async Task TaskHasChangedAsnyc(BackgroundTaskChange state, BackgroundTask task)
+    private async Task TaskHasChangedAsync(BackgroundTaskStatusChange state, BackgroundTask task)
     {
         await Hub.Clients.All.SendAsync("TaskChanged", state, task.ToTaskInfo());
     }
@@ -59,24 +59,24 @@ public class BackgroundTaskManager : IBackgroundTaskManager
             backgroundTask.Task = Task.Run(async () =>
             {
                 BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
-                ctx.StateChanged += () => TaskHasChangedAsnyc(BackgroundTaskChange.Updated, backgroundTask);
+                ctx.StateChanged += () => TaskHasChangedAsync(BackgroundTaskStatusChange.Updated, backgroundTask);
 
                 try
                 {
                     BackgroundTask.SetCurrentTask(backgroundTask);
 
                     //notify new task
-                    await TaskHasChangedAsnyc(BackgroundTaskChange.Added, backgroundTask);
+                    await TaskHasChangedAsync(BackgroundTaskStatusChange.Added, backgroundTask);
 
                     //wait before starting task
-                    await Task.Delay(TimeSpan.FromSeconds(2));
+                    await Task.Delay(TimeSpan.FromSeconds(3));
 
                     Logger.LogInformation("Background task is started: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
 
                     //set state to running
                     backgroundTask.SetRunning();
 
-                    await TaskHasChangedAsnyc(BackgroundTaskChange.Updated, backgroundTask);
+                    await TaskHasChangedAsync(BackgroundTaskStatusChange.Updated, backgroundTask);
 
                     //execute task
                     await action(ctx);
@@ -103,7 +103,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                 {
                     Logger.LogInformation("Background task is exited: {id} / {name}", backgroundTask.Id, backgroundTask.Name);
 
-                    await TaskHasChangedAsnyc(BackgroundTaskChange.Updated, backgroundTask);
+                    await TaskHasChangedAsync(BackgroundTaskStatusChange.Updated, backgroundTask);
 
                     //wait before removing task
                     await Task.Delay(TimeSpan.FromMinutes(1));
@@ -114,7 +114,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                         Tasks.Remove(backgroundTask.Id);
                     }
 
-                    await TaskHasChangedAsnyc(BackgroundTaskChange.Removed, backgroundTask);
+                    await TaskHasChangedAsync(BackgroundTaskStatusChange.Removed, backgroundTask);
                 }
             });
 

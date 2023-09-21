@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public enum BackgroundTaskChange
+public enum BackgroundTaskStatusChange
 {
     Added,
     Updated,

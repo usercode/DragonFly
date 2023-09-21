@@ -37,11 +37,11 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
         await base.OnInitializedAsync();
 
         _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/taskhub")).Build();
-        _hubConnection.On<BackgroundTaskChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
+        _hubConnection.On<BackgroundTaskStatusChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
         {
             await InvokeAsync(async () =>
             {
-                if (state == BackgroundTaskChange.Removed)
+                if (state == BackgroundTaskStatusChange.Removed)
                 {
                     Tasks.Remove(task.Id);
                 }

@@ -12,11 +12,6 @@ public class ContentItemAttribute : Attribute
             
     }
 
-    public ContentItemAttribute(string schema)
-    {
-        Schema = schema;
-    }
-
     /// <summary>
     /// SchemaName
     /// </summary>
