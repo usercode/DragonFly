@@ -23,7 +23,7 @@ public class ReferenceMongoFieldSerializer : MongoFieldSerializer<ReferenceField
                 Guid targetId = bsonDocument[ReferenceField.IdField].AsGuid;
                 string targetType = bsonDocument[ReferenceField.SchemaField].AsString;
 
-                contentField.ContentItem = ProxyFactory.CreateContentItem(targetType, targetId);
+                contentField.ContentItem = ProxyFactory.CreateContent(targetType, targetId);
             }
         }
 

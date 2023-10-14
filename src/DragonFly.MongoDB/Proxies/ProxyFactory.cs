@@ -6,12 +6,12 @@ namespace DragonFly.MongoDB;
 
 internal static class ProxyFactory
 {
-    public static ContentItem CreateContentItem(string schema, Guid id)
+    public static ContentItem CreateContent(string schema, Guid id)
     {
-        return new ContentItemProxy(CreateContentSchema(schema), id);
+        return new ContentItemProxy(CreateSchema(schema), id);
     }
 
-    public static ContentSchema CreateContentSchema(string schema)
+    public static ContentSchema CreateSchema(string schema)
     {
         return new ContentSchemaProxy(schema);
     }

@@ -17,7 +17,8 @@ internal partial class ContentItemProxy : ContentItem
     [IgnoreMethod(nameof(IsNew))]
     [IgnoreMethod(nameof(Equals))]
     [IgnoreMethod(nameof(GetHashCode))]
-    private async Task OnMethodCalling(string name)
+    [IgnoreMethod(nameof(ToString))]
+    private async ValueTask OnMethodCalling(string name)
     {
         if (_loaded == true)
         {

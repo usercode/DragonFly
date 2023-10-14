@@ -95,7 +95,7 @@ public class ModelGenerator : IIncrementalGenerator
                         });
                         x.AddConstructor(Modifier.Public, className, ParameterList.New().Add("ContentItem", "contentItem"), x =>
                         {
-                            x.AppendLine("if (contentItem.Schema.Name != Schema.Name)");
+                            x.AppendLine($"if (contentItem.Schema.Name != \"{className}\")");
                             x.AppendBlock(x =>
                             {
                                 x.AppendLine($"throw new Exception(\"The content item isn't compatible with the model '{className}'.\");");
@@ -159,11 +159,6 @@ public class ModelGenerator : IIncrementalGenerator
 
                     x.AddClass(Modifier.Public, $"{className}Extensions", x =>
                     {
-                        x.AddExtensionMethod(Modifier.Public, $"To{className}", className, new Parameter("contentItem", "ContentItem"), x =>
-                        {
-                            x.AppendLine($"return new {className}(contentItem);");
-                        });
-
                         x.AppendLine($"public static {classQuery} OrderBy(this {classQuery} query, Func<{classFields}, string> field, bool asc = true)");
                         x.AppendBlock(x =>
                         {

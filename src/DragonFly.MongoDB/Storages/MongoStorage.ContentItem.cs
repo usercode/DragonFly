@@ -233,7 +233,7 @@ public partial class MongoStorage : IContentStorage
 
     public async Task UpdateAsync(ContentItem content)
     {
-        ContentSchema schema = await GetSchemaAsync(content.Schema.Name);
+        ContentSchema? schema = await GetSchemaAsync(content.Schema.Name);
 
         content.ApplySchema(schema);
 
@@ -274,7 +274,6 @@ public partial class MongoStorage : IContentStorage
         IMongoCollection<MongoContentItem> col = GetMongoCollection(content.Schema.Name, false);
 
         await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
-
 
         var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 

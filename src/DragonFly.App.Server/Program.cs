@@ -52,10 +52,11 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddBlockField()
                     .AddApiKeys()
-                    .AddModels(x => x
-                                    .Add<Product>()
-                                    .Add<Customer>()
-                                    );
+                    //.AddModels(x => x
+                    //                .Add<Product>()
+                    //                .Add<Customer>()
+                    //                )
+                    ;
 
 var app = builder.Build();
 
@@ -77,7 +78,6 @@ p.Location.Longitude = -9;
 ContentItem ci = p.GetContentItem();
 
 ci.ToModel<Product>();
-ci.ToProduct();
 ci.ToModel();
 
 await contentStorage.CreateAsync(p);

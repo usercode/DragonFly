@@ -133,7 +133,7 @@ public class GeneratorTest
         content.SetString("Lastname", "Doe");
         content.SetString("Firstname", "John");
 
-        Customer model = content.ToCustomer();
+        Customer model = content.ToModel<Customer>();
 
         Assert.True(model is Customer);
     }
@@ -149,7 +149,7 @@ public class GeneratorTest
         content.SetInteger("Value", 123);
         content.SetSlug("Slug", "my-path");
 
-        Customer customer = content.ToCustomer();
+        Customer customer = content.ToModel<Customer>();
 
         Assert.Equal(content.Id, customer.Id);
         Assert.Equal("Doe", customer.Lastname);
@@ -162,7 +162,7 @@ public class GeneratorTest
     {
         ContentItem content = CustomerSchema.CreateContent();
 
-        Customer customer = content.ToCustomer();
+        Customer customer = content.ToModel<Customer>();
         customer.Lastname = "Doe";
         customer.Firstname = "John";
         customer.Slug = new SlugField("my-path");

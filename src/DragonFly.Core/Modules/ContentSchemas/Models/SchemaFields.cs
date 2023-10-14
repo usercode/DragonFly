@@ -7,6 +7,6 @@ namespace DragonFly;
 /// <summary>
 /// SchemaFields
 /// </summary>
-public class SchemaFields : Dictionary<string, SchemaField>
+public sealed class SchemaFields : Dictionary<string, SchemaField>
 {
 }

@@ -16,6 +16,7 @@ internal partial class AssetProxy : Asset
     [IgnoreMethod(nameof(IsNew))]
     [IgnoreMethod(nameof(Equals))]
     [IgnoreMethod(nameof(GetHashCode))]
+    [IgnoreMethod(nameof(ToString))]
     private async ValueTask OnMethodCalling(string name)
     {
         if (_loaded == true)
