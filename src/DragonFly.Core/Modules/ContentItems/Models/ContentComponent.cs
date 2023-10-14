@@ -12,7 +12,6 @@ public class ContentComponent : IContentElement
     public ContentComponent(ContentSchema schema)
     {
         _schema = schema;
-        _fields = new ContentFields();
     }
 
     private ContentSchema _schema;
@@ -22,7 +21,7 @@ public class ContentComponent : IContentElement
     /// </summary>
     public virtual ContentSchema Schema { get => _schema; set => _schema = value; }
 
-    private ContentFields _fields;
+    private ContentFields _fields = new ContentFields();
 
     /// <summary>
     /// Fields
