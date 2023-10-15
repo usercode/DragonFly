@@ -202,7 +202,7 @@ public class ModelGenerator : IIncrementalGenerator
                             x.AppendLine($"return query.Slug(field({classFields}.Default), value);");
                         });
 
-                        x.AppendLine($"public static {classQuery} String(this {classQuery} query, Func<{classFields}, string> field, string pattern, StringQueryType type = StringQueryType.Equals)");
+                        x.AppendLine($"public static {classQuery} String(this {classQuery} query, Func<{classFields}, string> field, string pattern, StringQueryType type = StringQueryType.Equal)");
                         x.AppendBlock(x =>
                         {
                             x.AppendLine($"return query.String(field({classFields}.Default), pattern, type);");

@@ -9,8 +9,8 @@ namespace DragonFly;
 /// </summary>
 public enum StringQueryType
 {
-    Equals,
-    Contains,
-    StartsWith,
-    EndsWith
+    Equal,
+    Contain,
+    StartWith,
+    EndWith
 }

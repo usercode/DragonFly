@@ -87,14 +87,14 @@ var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Asset(x => x.Image, null)
                                                                 .Slug(x => x.Slug, "product-a")
                                                                 .Slug(Product.Fields.Slug, "product-a")
-                                                                .Integer(x => x.Slug, 10)
+                                                                .Integer(x => x.Slug, 10, NumberQueryType.Equal)
                                                                 .Float(x => x.Slug, 1.1)
-                                                                .String(x => x.Title, "123", StringQueryType.Contains));
+                                                                .String(x => x.Title, "123", StringQueryType.Equal));
 
 var customers = await contentStorage.QueryAsync<Customer>(x => x
                                                                 .Published(false)
                                                                 .Take(100)
-                                                                .String(x => x.Lastname, "aaa", StringQueryType.StartsWith));
+                                                                .String(x => x.Lastname, "aaa", StringQueryType.StartWith));
 
 ////update permissions to all roles
 //IIdentityService identityService = app.Services.GetRequiredService<IIdentityService>();
