@@ -3,6 +3,7 @@
 // MIT License
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace DragonFly.Init;
 
@@ -11,16 +12,22 @@ namespace DragonFly.Init;
 /// </summary>
 public class DragonFlyApi : IDragonFlyApi
 {
-    public DragonFlyApi(IServiceProvider serviceProvider)
+    public DragonFlyApi(IServiceProvider serviceProvider, ILogger<DragonFlyApi> logger)
     {
         _done = false;
         ServiceProvider = serviceProvider;
+        Logger = logger;
     }
 
     /// <summary>
     /// ServiceProvider
     /// </summary>
     public IServiceProvider ServiceProvider { get; }
+
+    /// <summary>
+    /// Logger
+    /// </summary>
+    public ILogger<DragonFlyApi> Logger { get; }
 
     private bool _done;
 
@@ -31,23 +38,29 @@ public class DragonFlyApi : IDragonFlyApi
             throw new Exception("The DragonFly API is already initialized.");
         }
 
+        _done = true;
+
         using IServiceScope scope = ServiceProvider.CreateScope();
 
         foreach (IPreInitialize item in scope.ServiceProvider.GetServices<IPreInitialize>())
         {
+            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+
             await item.ExecuteAsync(this);
         }
 
         foreach (IInitialize item in scope.ServiceProvider.GetServices<IInitialize>())
         {
+            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+
             await item.ExecuteAsync(this);
         }
 
         foreach (IPostInitialize item in scope.ServiceProvider.GetServices<IPostInitialize>())
         {
+            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+
             await item.ExecuteAsync(this);
         }
-
-        _done = true;
     }
 }
