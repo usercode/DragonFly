@@ -17,6 +17,7 @@ public static class MongoQueryManagerExtensions
         manager.Add<StringFieldQuery, StringFieldQueryAction>();
         manager.Add<SlugFieldQuery, SlugFieldQueryAction>();
         manager.Add<IntegerFieldQuery, IntegerFieldQueryAction>();
+        manager.Add<FloatFieldQuery, FloatFieldQueryAction>();
         manager.Add<ReferenceFieldQuery, ReferenceFieldQueryAction>();
         manager.Add<AssetFieldQuery, AssetFieldQueryAction>();
         manager.Add<GeolocationFieldQuery, GeolocationFieldQueryAction>();

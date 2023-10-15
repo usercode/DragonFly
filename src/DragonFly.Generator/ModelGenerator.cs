@@ -178,10 +178,16 @@ public class ModelGenerator : IIncrementalGenerator
                             x.AppendLine($"return query.Bool(field({classFields}.Default), value);");
                         });
 
-                        x.AppendLine($"public static {classQuery} Integer(this {classQuery} query, Func<{classFields}, string> field, int? value, int? minValue = null, int? maxValue = null)");
+                        x.AppendLine($"public static {classQuery} Integer(this {classQuery} query, Func<{classFields}, string> field, long? value, NumberQueryType type = NumberQueryType.Equal)");
                         x.AppendBlock(x =>
                         {
-                            x.AppendLine($"return query.Integer(field({classFields}.Default), value, minValue, maxValue);");
+                            x.AppendLine($"return query.Integer(field({classFields}.Default), value, type);");
+                        });
+
+                        x.AppendLine($"public static {classQuery} Float(this {classQuery} query, Func<{classFields}, string> field, double? value, NumberQueryType type = NumberQueryType.Equal)");
+                        x.AppendBlock(x =>
+                        {
+                            x.AppendLine($"return query.Float(field({classFields}.Default), value, type);");
                         });
 
                         x.AppendLine($"public static {classQuery} Reference(this {classQuery} query, Func<{classFields}, string> field, Guid? id)");

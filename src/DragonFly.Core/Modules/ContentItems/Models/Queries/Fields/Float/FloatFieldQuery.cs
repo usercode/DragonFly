@@ -5,14 +5,14 @@
 namespace DragonFly;
 
 /// <summary>
-/// IntegerFieldQuery
+/// FloatFieldQuery
 /// </summary>
-public class IntegerFieldQuery : FieldQuery
+public class FloatFieldQuery : FieldQuery
 {
     /// <summary>
     /// MinValue
     /// </summary>
-    public long? Value { get; set; }
+    public double? Value { get; set; }
 
     /// <summary>
     /// Type

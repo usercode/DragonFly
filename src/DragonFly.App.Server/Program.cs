@@ -29,12 +29,12 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddEndpointsApiExplorer();
 
 //DragonFly options
-builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
-builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddOptions<DragonFlyOptions>().BindConfiguration("General");
+builder.Services.AddOptions<MongoDbOptions>().BindConfiguration("MongoDB");
 
 //ImageWizard options
-builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
-builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
+builder.Services.AddOptions<ImageWizardOptions>().BindConfiguration("ImageWizard");
+builder.Services.AddOptions<FileCacheOptions>().BindConfiguration("AssetCache");
 
 //ASP.NET
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -52,10 +52,10 @@ builder.Services.AddDragonFly()
                     .AddMongoDbIdentity()
                     .AddBlockField()
                     .AddApiKeys()
-                    //.AddModels(x => x
-                    //                .Add<Product>()
-                    //                .Add<Customer>()
-                    //                )
+                    .AddModels(x => x
+                                    .Add<Product>()
+                                    .Add<Customer>()
+                                    )
                     ;
 
 var app = builder.Build();
@@ -87,6 +87,8 @@ var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Asset(x => x.Image, null)
                                                                 .Slug(x => x.Slug, "product-a")
                                                                 .Slug(Product.Fields.Slug, "product-a")
+                                                                .Integer(x => x.Slug, 10)
+                                                                .Float(x => x.Slug, 1.1)
                                                                 .String(x => x.Title, "123", StringQueryType.Contains));
 
 var customers = await contentStorage.QueryAsync<Customer>(x => x

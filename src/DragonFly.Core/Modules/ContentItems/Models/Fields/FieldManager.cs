@@ -96,10 +96,10 @@ public sealed class FieldManager
         throw new Exception($"The field '{fieldName}' wasn't found.");
     }
 
-    public ContentField CreateField<T>()
+    public T CreateField<T>()
         where T : ContentField
     {
-        return CreateField(typeof(T));
+        return (T)CreateField(typeof(T));
     }
 
     public ContentField CreateField(Type fieldType)

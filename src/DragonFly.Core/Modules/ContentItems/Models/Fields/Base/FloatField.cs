@@ -11,6 +11,7 @@ namespace DragonFly;
 /// </summary>
 [Field]
 [FieldOptions(typeof(FloatFieldOptions))]
+[FieldQuery(typeof(FloatFieldQuery))]
 public partial class FloatField : SingleValueField<double?>
 {
     public FloatField()
@@ -22,6 +23,7 @@ public partial class FloatField : SingleValueField<double?>
     {
         Value = number;
     }
+    public override bool CanSorting => true;
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {

@@ -21,6 +21,12 @@ public partial class Product
     [BoolField(Index = true, QueryField = true)]
     private bool? _isActive;
 
+    [IntegerField(Index = true, QueryField = true)]
+    private long? _quantity;
+
+    [FloatField(Index = true, QueryField = true)]
+    private double? _quantity2;
+
     [BlockField]
     private BlockField _mainContent;
 

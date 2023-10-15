@@ -5,18 +5,18 @@
     <h4 class="query-title">Order</h4>
 
     <BSListGroup>
-    @foreach (FieldOrder field in ContentItemList.OrderFields)
-    {
-    <BSListGroupItem style="display:flex;align-items:center">
-        <span>@field.Name</span>
-        <div style="flex-grow:1"></div>
+        @foreach (FieldOrder field in ContentItemList.OrderFields)
+        {
+            <BSListGroupItem style="display:flex;align-items:center">
+                <span>@field.Name</span>
+                <div style="flex-grow:1"></div>
 
-        <OrderDirection Order="field" />
-        <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveUp(field)"><i class="fas fa-arrow-up"></i></BSButton>
-        <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveDown(field)"><i class="fas fa-arrow-down"></i></BSButton>
-        <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.Remove(field)"><i class="fas fa-times"></i></BSButton>        
-    </BSListGroupItem>
-    }
+                <OrderDirection Order="field" />
+                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveUp(field)"><i class="fas fa-arrow-up"></i></BSButton>
+                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveDown(field)"><i class="fas fa-arrow-down"></i></BSButton>
+                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.Remove(field)"><i class="fas fa-times"></i></BSButton>
+            </BSListGroupItem>
+        }
     </BSListGroup>
 
     @if (GetUnsedOrderFields().Any())
@@ -34,14 +34,14 @@
 
     <h4 class="query-title">Filter</h4>
     <BSListGroup>
-	
-    @foreach (var fieldQuery in ContentItemList.QueryFields)
-    {
-        <BSListGroupItem>
-            <BSLabel class="form-label badge bg-secondary">@fieldQuery.FieldName</BSLabel>
-            @FieldComponentManager.CreateComponent(fieldQuery)
-        </BSListGroupItem>
-    }
+
+        @foreach (var fieldQuery in ContentItemList.QueryFields)
+        {
+            <BSListGroupItem>
+                <BSLabel class="form-label badge bg-secondary">@fieldQuery.FieldName</BSLabel>
+                @FieldComponentManager.CreateComponent(fieldQuery)
+            </BSListGroupItem>
+        }
     </BSListGroup>
 }
 

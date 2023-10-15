@@ -32,7 +32,7 @@ public class ContentModule : ClientModule
         api.RegisterField<ComponentField, ComponentFieldView, ComponentFieldOptionsView>();
         api.RegisterField<DateTimeField, DateTimeFieldView>();
         api.RegisterField<StringField, StringFieldView, StringFieldOptionsView, StringFieldQueryView>();
-        api.RegisterField<FloatField, FloatFieldView, FloatFieldOptionsView>();
+        api.RegisterField<FloatField, FloatFieldView, FloatFieldOptionsView, FloatFieldQueryView>();
         api.RegisterField<IntegerField, IntegerFieldView, IntegerFieldOptionsView, IntegerFieldQueryView>();
         api.RegisterField<SlugField, SlugFieldView>();
         api.RegisterField<TextField, TextFieldView>();
