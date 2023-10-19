@@ -16,11 +16,10 @@ public sealed class JsonFieldManager
     /// </summary>
     public static JsonFieldManager Default { get; } = new JsonFieldManager();
 
-    private IDictionary<Type, IJsonFieldSerializer> _fields;
+    private IDictionary<Type, IJsonFieldSerializer> _fields = new Dictionary<Type, IJsonFieldSerializer>();
 
     private JsonFieldManager()
     {
-        _fields = new Dictionary<Type, IJsonFieldSerializer>();
     }
 
     public void Add(IJsonFieldSerializer fieldSerializer)

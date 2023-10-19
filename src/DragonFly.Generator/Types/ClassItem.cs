@@ -24,4 +24,9 @@ internal class ClassItem
     /// Namespace
     /// </summary>
     public string Namespace { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Namespace}.{Name}";
+    }
 }

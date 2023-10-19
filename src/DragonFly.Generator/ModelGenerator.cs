@@ -223,6 +223,8 @@ public class ModelGenerator : IIncrementalGenerator
             {
                 if (models.Count > 0)
                 {
+                    models = models.OrderBy(x => x.Name).ToList();
+
                     SourceBuilder builder = new SourceBuilder();
 
                     builder.AddUsings("System");
@@ -230,13 +232,20 @@ public class ModelGenerator : IIncrementalGenerator
                     {
                         x.AddClass(Modifier.Public, "ContentExtensions", x =>
                         {
+                            x.AppendLine("/// <summary>");
+                            x.AppendLine("/// Decorates automatically the content item based on the schema.");
+                            x.AppendLine("/// <br /><br />");
+                            x.AppendLine($"/// Available models: {string.Join(", ", models.Select(x => $"<see cref=\"{x}\"/>"))}");
+                            x.AppendLine("/// </summary>");
+                            x.AppendLine("/// <param name=\"content\"></param>");
+                            x.AppendLine("/// <returns></returns>");
                             x.AppendLine("public static IContentModel ToModel(this ContentItem content)");
                             x.AppendBlock(x =>
                             {
                                 x.AppendLine("return content.Schema.Name switch");
                                 x.AppendBlock(x =>
                                 {
-                                    foreach (ClassItem model in models.OrderBy(x => x.Name))
+                                    foreach (ClassItem model in models)
                                     {
                                         x.AppendLine($"\"{model.Name}\" => new {model.Namespace}.{model.Name}(content),");
                                     }

@@ -2,12 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly;
 
 /// <summary>
-/// IMongoStore
+/// ISchemaStorage
 /// </summary>
 public interface ISchemaStorage
 {

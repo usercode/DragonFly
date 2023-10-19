@@ -47,7 +47,7 @@ public static class DragonFlyBuilderExtensions
     {
         if (requireAuthorization)
         {
-            builder.Endpoints(x=> x.MapImageWizard().RequirePermission());
+            builder.Endpoints(x => x.MapImageWizard().RequirePermission());
         }
         else
         {

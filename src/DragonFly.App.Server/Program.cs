@@ -74,6 +74,8 @@ p.Slug.Value = "product-a";
 //p.CustomerB = Customer.Schema.CreateContent();
 p.Location.Latitude = 10;
 p.Location.Longitude = -9;
+p.Quantity = 10;
+p.Quantity2 = 1.1;
 
 ContentItem ci = p.GetContentItem();
 
@@ -87,8 +89,8 @@ var products = await contentStorage.QueryAsync<Product>(x => x
                                                                 .Asset(x => x.Image, null)
                                                                 .Slug(x => x.Slug, "product-a")
                                                                 .Slug(Product.Fields.Slug, "product-a")
-                                                                .Integer(x => x.Slug, 10, NumberQueryType.Equal)
-                                                                .Float(x => x.Slug, 1.1)
+                                                                .Integer(x => x.Quantity, 10, NumberQueryType.Equal)
+                                                                .Float(x => x.Quantity2, 1.1)
                                                                 .String(x => x.Title, "123", StringQueryType.Equal));
 
 var customers = await contentStorage.QueryAsync<Customer>(x => x
