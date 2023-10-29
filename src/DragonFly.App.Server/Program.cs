@@ -154,5 +154,4 @@ app.UseDragonFly(x => x
 app.UseDragonFlyManager();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseRouting();
 app.Run();

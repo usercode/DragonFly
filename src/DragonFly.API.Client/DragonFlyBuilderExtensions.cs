@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
 using DragonFly.API.Client;
 using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;

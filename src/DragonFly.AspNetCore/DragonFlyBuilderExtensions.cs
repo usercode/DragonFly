@@ -2,15 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using DragonFly.Init;
-using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using DragonFly.Init;
+using DragonFly.Permissions;
 using DragonFly.AspNetCore.Builders;
-using Microsoft.AspNetCore.Http;
 using DragonFly.WebHooks;
 
 namespace DragonFly.AspNetCore;
@@ -44,6 +40,7 @@ public static class DragonFlyBuilderExtensions
         services.AddSingleton<ISlugService, SlugService>();
         services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
 
+        //manager
         services.AddSingleton(FieldManager.Default);
         services.AddSingleton(AssetMetadataManager.Default);
         services.AddSingleton(PermissionManager.Default);
@@ -56,9 +53,11 @@ public static class DragonFlyBuilderExtensions
 
         services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
+        //auth
         AuthenticationBuilder authenticationBuilder = services.AddAuthentication();
         services.AddAuthorization();
-        services.AddSignalR();
+
+        services.AddSignalR();        
 
         IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
         builder
@@ -103,7 +102,7 @@ public static class DragonFlyBuilderExtensions
                                     {
                                         Endpoint? endpoint = context.GetEndpoint();
 
-                                        //Allows only authenticated access (except for explicit anonymous endpoint calls).
+                                        //Allows only authenticated access (except for explicit allowed anonymous endpoints).
                                         if (endpoint == null || endpoint.Metadata.Any(m => m is AllowAnonymousAttribute) == false)
                                         {
                                             if (context.User == null || context.User.Identities.Any(i => i.IsAuthenticated) == false)
@@ -143,7 +142,7 @@ public static class DragonFlyBuilderExtensions
                                     x.UseRouting();
                                     x.UseEndpoints(endpoints => endpoints.MapFallbackToFile("index.html"));
                                 }
-            );
+            );       
 
         return builder;
     }

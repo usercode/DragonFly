@@ -6,5 +6,5 @@ namespace DragonFly.ApiKeys.Handlers;
 
 public static class ApiKeyAuthenticationDefaults
 {
-    public const string AuthenticationScheme = "DragonFly_ApiKey";
+    public const string AuthenticationScheme = $"{Permission.PolicyPrefix}ApiKey";
 }

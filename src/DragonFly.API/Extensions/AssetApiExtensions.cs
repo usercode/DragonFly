@@ -19,7 +19,7 @@ static class AssetApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
 
-        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetPermissions.ReadAsset);
+        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetPermissions.QueryAsset);
         groupRoute.MapGet("{id:guid}", MapGet).RequirePermission(AssetPermissions.ReadAsset);
         groupRoute.MapPost("", MapCreate).RequirePermission(AssetPermissions.CreateAsset);
         groupRoute.MapPut("", MapUpdate).RequirePermission(AssetPermissions.UpdateAsset);

@@ -3,7 +3,6 @@
 // MIT License
 
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.AspNetCore.Builders;
 

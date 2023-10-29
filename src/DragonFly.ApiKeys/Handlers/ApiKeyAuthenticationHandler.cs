@@ -15,10 +15,9 @@ internal class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthent
     public ApiKeyAuthenticationHandler(
                                 IOptionsMonitor<ApiKeyAuthenticationOptions> options, 
                                 ILoggerFactory logger, 
-                                UrlEncoder encoder, 
-                                ISystemClock clock,
+                                UrlEncoder encoder,
                                 IApiKeyService apiKeyService) 
-        : base(options, logger, encoder, clock)
+        : base(options, logger, encoder)
     {
         ApiKeyService = apiKeyService;
     }

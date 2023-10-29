@@ -8,11 +8,12 @@ using DragonFly.Identity;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.AspNetCore.Identity;
 
-internal static class Extensions
+internal static class IdentityApiExtensions
 {
     public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
     {
@@ -27,26 +28,26 @@ internal static class Extensions
         return endpoints;
     }
 
-    private static async Task<IResult> MapLogin(LoginData loginData, ILoginService loginService)
+    private static async Task<Results<Ok, UnauthorizedHttpResult>> MapLogin(LoginData loginData, ILoginService loginService)
     {
         bool valid = await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent);
 
         if (valid)
         {
-            return Results.Ok();
+            return TypedResults.Ok();
         }
         else
         {
             await Task.Delay(TimeSpan.FromSeconds(3));
 
-            return Results.StatusCode(StatusCodes.Status401Unauthorized);
+            return TypedResults.Unauthorized();
         }
     }
 
-    private static async Task CurrentUserAsync(HttpContext context, ILoginService service)
+    private static async Task<Ok<IdentityUser>> CurrentUserAsync(HttpContext context, ILoginService service)
     {
         IdentityUser? currentUser = await service.GetCurrentUserAsync();
 
-        await context.Response.WriteAsJsonAsync(currentUser);
+        return TypedResults.Ok(currentUser);
     }
 }

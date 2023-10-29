@@ -5,7 +5,6 @@
 using DragonFly.AspNetCore;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 
 namespace DragonFly;

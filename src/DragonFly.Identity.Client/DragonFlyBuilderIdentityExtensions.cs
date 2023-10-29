@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Client;
 
-public static class DragonFlyBuilderExtensions
+public static class DragonFlyBuilderIdentityExtensions
 {
     public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
     {

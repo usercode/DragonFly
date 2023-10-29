@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>true</ImplicitUsings>
 	  <Authors>usercode</Authors>
 	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>

@@ -30,7 +30,9 @@ public static class DragonFlyBuilderExtensions
     {
         builder.Endpoints(endpoints =>
         {
-            RouteGroupBuilder group = endpoints.MapGroup("api").RequirePermission();
+            RouteGroupBuilder group = endpoints.MapGroup("api")
+                                                .RequirePermission()
+                                                .WithDisplayName("DragonFly.API");
 
             group.MapContentItemRestApi();
             group.MapContentSchemaRestApi();
