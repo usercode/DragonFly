@@ -16,23 +16,23 @@ public partial class ClientContentService : IWebHookStorage
     {
         var response = await Client.GetAsync($"api/webhook/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestWebHook>();
+        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestWebHook);
 
         return e.ToModel();
     }
 
     public async Task CreateAsync(WebHook entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/webhook", entity);
+        var response = await Client.PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerContext.Default.RestWebHook);
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 
         entity.Id = result.Id;
     }
 
     public async Task UpdateAsync(WebHook entity)
     {
-        var response = await Client.PutAsJsonAsync($"api/webhook", entity);
+        var response = await Client.PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerContext.Default.RestWebHook);
 
         response.EnsureSuccessStatusCode();
     }
@@ -44,9 +44,9 @@ public partial class ClientContentService : IWebHookStorage
 
     public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
     {
-        var response = await Client.PostAsJsonAsync("api/webhook/query", query);
+        var response = await Client.PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerContext.Default.WebHookQuery);
 
-        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>();
+        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestWebHook);
 
         return result.Convert(x => x.ToModel());
     }

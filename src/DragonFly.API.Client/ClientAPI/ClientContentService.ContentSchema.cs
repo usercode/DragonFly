@@ -18,7 +18,7 @@ public partial class ClientContentService : ISchemaStorage
     {
         var response = await Client.GetAsync($"api/schema/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestContentSchema>();
+        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestContentSchema);
 
         return e.ToModel();
     }
@@ -27,7 +27,7 @@ public partial class ClientContentService : ISchemaStorage
     {
         var response = await Client.GetAsync($"api/schema/{name}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestContentSchema>();
+        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestContentSchema);
 
         return e.ToModel();
     }
@@ -36,14 +36,14 @@ public partial class ClientContentService : ISchemaStorage
     {
         var response = await Client.PostAsJsonAsync($"api/schema", entity.ToRest());
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 
         entity.Id = result.Id;
     }
 
     public async Task UpdateAsync(ContentSchema entity)
     {
-        await Client.PutAsJsonAsync($"api/schema", entity.ToRest());
+        await Client.PutAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentSchema);
     }
 
     public async Task DeleteAsync(ContentSchema entity)
@@ -57,7 +57,7 @@ public partial class ClientContentService : ISchemaStorage
         {
             var response = await Client.PostAsync("api/schema/query", new StringContent(""));
 
-            QueryResult<RestContentSchema>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>();
+            QueryResult<RestContentSchema>? queryResult = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestContentSchema);
 
             return queryResult.Convert(x => x.ToModel());
         }

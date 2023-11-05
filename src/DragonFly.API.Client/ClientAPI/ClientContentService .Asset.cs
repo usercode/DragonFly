@@ -15,9 +15,9 @@ public partial class ClientContentService : IAssetStorage
 {
     public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
-        var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery);
+        var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerContext.Default.AssetQuery);
 
-        var result = await response.Content.ReadFromJsonAsync<QueryResult<RestAsset>>();
+        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestAsset);
 
         if (result == null)
         {
@@ -48,7 +48,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.GetAsync($"api/asset/{id}");
 
-        RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>();
+        RestAsset? restAsset = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestAsset);
 
         return restAsset.ToModel();
     }
@@ -57,7 +57,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>();
+        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 
         entity.Id = result.Id;
     }
@@ -71,7 +71,7 @@ public partial class ClientContentService : IAssetStorage
 
     public async Task UpdateAsync(Asset entity)
     {
-        var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest());
+        var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerContext.Default.RestAsset);
 
         response.EnsureSuccessStatusCode();
     }

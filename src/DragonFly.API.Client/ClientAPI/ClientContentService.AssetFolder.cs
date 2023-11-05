@@ -14,14 +14,14 @@ public partial class ClientContentService : IAssetFolderStorage
 {
     public async Task CreateAsync(AssetFolder folder)
     {
-        var response = await Client.PostAsJsonAsync("api/assetfolder", folder.ToRest());
+        var response = await Client.PostAsJsonAsync("api/assetfolder", folder.ToRest(), ApiJsonSerializerContext.Default.RestAssetFolder);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<AssetFolder?> GetAssetFolderAsync(Guid id)
     {
-        RestAssetFolder? entity = await Client.GetFromJsonAsync<RestAssetFolder>($"api/assetfolder/{id}");
+        RestAssetFolder? entity = await Client.GetFromJsonAsync($"api/assetfolder/{id}", ApiJsonSerializerContext.Default.RestAssetFolder);
 
         if (entity == null)
         {
@@ -33,11 +33,11 @@ public partial class ClientContentService : IAssetFolderStorage
 
     public async Task<QueryResult<AssetFolder>> QueryAsync(AssetFolderQuery query)
     {
-        var response = await Client.PostAsJsonAsync("api/assetfolder/query", query);
+        var response = await Client.PostAsJsonAsync("api/assetfolder/query", query, ApiJsonSerializerContext.Default.AssetFolderQuery);
 
         response.EnsureSuccessStatusCode();
 
-        QueryResult<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestAssetFolder>>();
+        QueryResult<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestAssetFolder);
 
         return result.Convert(x => x.ToModel());
     }

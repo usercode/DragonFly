@@ -6,16 +6,10 @@ namespace DragonFly.API;
 
 public class RestContentSchema : RestContentBase
 {
-    public RestContentSchema()
-    {
-        Name = string.Empty;
-    }
-
     /// <summary>
     /// Name
     /// </summary>
-    public string Name { get; set; }
-
+    public string Name { get; set; } = string.Empty;
 
     /// <summary>
     /// Parts

@@ -32,7 +32,7 @@ public class ContentItemTypeListBase2 : ContentSchemaListBase
     {
         SelectedItem = schema;
 
-        if(ContentItemList != null)
+        if (ContentItemList != null)
         {
             await ContentItemList.RefreshAsync(schema.Name);
         }
