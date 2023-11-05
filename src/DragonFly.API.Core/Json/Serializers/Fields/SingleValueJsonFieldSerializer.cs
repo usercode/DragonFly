@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 
 namespace DragonFly.API;
 

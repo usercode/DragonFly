@@ -19,7 +19,7 @@ public sealed class BlockFieldManager
     private IDictionary<string, BlockFactory> _blocksByName = new Dictionary<string, BlockFactory>();
     private IDictionary<Type, BlockFactory> _blocksByType = new Dictionary<Type, BlockFactory>();
 
-    private BlockFactory[] _currentBlockFactories = null;
+    private BlockFactory[]? _currentBlockFactories = null;
     private bool _rebuildBlockList = false;
 
     /// <summary>
@@ -28,7 +28,7 @@ public sealed class BlockFieldManager
     /// <returns></returns>
     public IEnumerable<BlockFactory> GetAllBlocks()
     {
-        if (_rebuildBlockList)
+        if (_currentBlockFactories == null || _rebuildBlockList)
         {
             _currentBlockFactories = _blocksByType.Values
                                         .Where(x => x.BlockType != typeof(UnknownBlock))
@@ -44,7 +44,6 @@ public sealed class BlockFieldManager
     /// <summary>
     /// Adds a new block.
     /// </summary>
-    /// <typeparam name="TElement"></typeparam>
     public void Add<TBlock>()
         where TBlock : Block, new()
     {
@@ -58,6 +57,12 @@ public sealed class BlockFieldManager
         _rebuildBlockList = true;
     }
 
+    /// <summary>
+    /// TryGetBlockTypeByName
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="blockType"></param>
+    /// <returns></returns>
     public bool TryGetBlockTypeByName(string name, [NotNullWhen(true)] out Type? blockType)
     {
         if (_blocksByName.TryGetValue(name, out BlockFactory? factory))
@@ -70,6 +75,12 @@ public sealed class BlockFieldManager
         return false;
     }
 
+    /// <summary>
+    /// TryGetBlockNameByType
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="blockName"></param>
+    /// <returns></returns>
     public bool TryGetBlockNameByType(Type type, [NotNullWhen(true)] out string? blockName)
     {
         if (_blocksByType.TryGetValue(type, out BlockFactory? factory))

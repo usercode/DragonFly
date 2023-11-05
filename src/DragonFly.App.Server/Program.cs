@@ -3,8 +3,10 @@
 // MIT License
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DragonFly;
+using DragonFly.API;
 using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
@@ -75,7 +77,7 @@ p.Slug.Value = "product-a";
 p.Location.Latitude = 10;
 p.Location.Longitude = -9;
 p.Quantity = 10;
-p.Quantity2 = 1.1;
+//p.Quantity2 = 1.1;
 
 ContentItem ci = p.GetContentItem();
 

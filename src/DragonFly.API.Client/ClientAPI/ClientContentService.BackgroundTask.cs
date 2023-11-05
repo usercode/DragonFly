@@ -12,7 +12,7 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IBackgroundTaskService
 {
-    public async Task<BackgroundTaskInfo[]> GetTasksAsync()
+    public async Task<IBackgroundTaskInfo[]> GetTasksAsync()
     {
         var response = await Client.PostAsync("api/task/query", new StringContent(string.Empty));
 

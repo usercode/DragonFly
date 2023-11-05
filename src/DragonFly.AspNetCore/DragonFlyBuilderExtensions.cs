@@ -84,13 +84,13 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Maps the DragonFly routings.
     /// </summary>
-    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyMiddlewareBuilder> fullbuilder)
+    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyMiddlewareBuilder>? subBuilder = null)
     {
         builder.Map("/dragonfly",
                                 x =>
                                 {
                                     DragonFlyMiddlewareBuilder end = new DragonFlyMiddlewareBuilder();
-                                    fullbuilder(end);
+                                    subBuilder?.Invoke(end);
 
                                     end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
 
@@ -121,7 +121,9 @@ public static class DragonFlyBuilderExtensions
                                     {
                                         end.EndpointList.Foreach(a => a(new DragonFlyEndpointBuilder(e)));
 
-                                        e.MapHub<BackgroundTaskHub>("/taskhub").RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask);
+                                        e.MapHub<BackgroundTaskHub>("/background-task-hub")
+                                                        .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
+                                                        .WithDisplayName("DragonFly.BackgroundTask.Hub");
                                     });
                                 }
             );

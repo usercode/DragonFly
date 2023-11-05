@@ -23,7 +23,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     /// <summary>
     /// Tasks
     /// </summary>
-    public IDictionary<int, BackgroundTaskInfo> Tasks { get; set; }
+    public IDictionary<int, IBackgroundTaskInfo> Tasks { get; set; }
 
     private HubConnection _hubConnection;
 
@@ -36,7 +36,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     {
         await base.OnInitializedAsync();
 
-        _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/taskhub")).Build();
+        _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/background-task-hub")).Build();
         _hubConnection.On<BackgroundTaskStatusChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
         {
             await InvokeAsync(async () =>

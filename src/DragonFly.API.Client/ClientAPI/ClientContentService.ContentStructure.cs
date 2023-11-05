@@ -50,7 +50,7 @@ public partial class ClientContentService : IStructureStorage
     {
         try
         {
-            var response = await Client.PostAsJsonAsync("api/structure/query", query);
+            var response = await Client.PostAsJsonAsync("api/structure/query", query, JsonSerializerDefault.Options);
 
             var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>();
 

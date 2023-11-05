@@ -124,7 +124,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         }
     }
 
-    public Task<BackgroundTaskInfo[]> GetTasksAsync()
+    public Task<IBackgroundTaskInfo[]> GetTasksAsync()
     {
         lock (_syncObject)
         {
@@ -133,6 +133,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                                     .Values
                                     .Select(x => x.ToTaskInfo())
                                     .OrderBy(x => x.Id)
+                                    .Cast<IBackgroundTaskInfo>()
                                     .ToArray());
         }
     }

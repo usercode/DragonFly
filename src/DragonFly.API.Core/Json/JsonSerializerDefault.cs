@@ -11,6 +11,9 @@ public static class JsonSerializerDefault
 {
     private static JsonSerializerOptions? _options;
 
+    /// <summary>
+    /// Options
+    /// </summary>
     public static JsonSerializerOptions Options
     {
         get
@@ -18,6 +21,8 @@ public static class JsonSerializerDefault
             if (_options == null)
             {
                 _options = new JsonSerializerOptions();
+
+                //_options.TypeInfoResolverChain.Add(ApiJsonSerializerContext.Default);
 
                 //build missing json field serializer
                 foreach (Type contentFieldType in FieldManager.Default.GetAllFieldTypes())
@@ -53,7 +58,7 @@ public static class JsonSerializerDefault
                     }
                 }
 
-                //build derived types
+               // build derived types
                 JsonPolymorphismOptions optionsDerivedTypes = new JsonPolymorphismOptions();
 
                 foreach (Type type in FieldManager.Default.GetAllOptionsTypes())

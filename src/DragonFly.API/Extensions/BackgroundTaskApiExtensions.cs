@@ -19,7 +19,7 @@ static class BackgroundTaskApiExtensions
         groupRoute.MapPost("{id}/cancel", MapCancel).RequirePermission(BackgroundTaskPermissions.CancelBackgroundTask);
     }
 
-    private static async Task<IEnumerable<BackgroundTaskInfo>> MapQuery(IBackgroundTaskManager service)
+    private static async Task<IEnumerable<IBackgroundTaskInfo>> MapQuery(IBackgroundTaskManager service)
     {
         return await service.GetTasksAsync();
     }

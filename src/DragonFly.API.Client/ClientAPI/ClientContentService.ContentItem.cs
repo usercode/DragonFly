@@ -71,7 +71,7 @@ public partial class ClientContentService : IContentStorage
 
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery queryParameters)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, JsonSerializerDefault.Options);
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters);
 
         QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>();
 
@@ -80,7 +80,7 @@ public partial class ClientContentService : IContentStorage
 
     public async Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
-        var response = await Client.PostAsJsonAsync($"api/content/publish", query, JsonSerializerDefault.Options);
+        var response = await Client.PostAsJsonAsync($"api/content/publish", query);
 
         response.EnsureSuccessStatusCode();
 
@@ -89,7 +89,7 @@ public partial class ClientContentService : IContentStorage
 
     public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
-        var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, JsonSerializerDefault.Options);
+        var response = await Client.PostAsJsonAsync($"api/content/unpublish", query);
 
         response.EnsureSuccessStatusCode();
 

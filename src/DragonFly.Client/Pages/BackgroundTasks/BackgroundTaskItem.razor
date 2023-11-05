@@ -44,7 +44,7 @@
     public BackgroundTaskInfo Task { get; set; }
 
     [Parameter]
-    public IEnumerable<BackgroundTaskInfo> Tasks { get; set; }
+    public IEnumerable<IBackgroundTaskInfo> Tasks { get; set; }
 
     [Inject]
     public IBackgroundTaskService BackgroundTaskService { get; set; }

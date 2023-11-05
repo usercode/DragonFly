@@ -9,16 +9,11 @@ namespace DragonFly.AspNetCore;
 
 public static class JsonExtensions
 {
-    public static void AddJsonContext<T>(this JsonSerializerOptions jsonSerializerOptions)
-        where T : IJsonTypeInfoResolver, new()
+    public static void AddJsonContext(this JsonSerializerOptions jsonSerializerOptions, IJsonTypeInfoResolver resolver)
     {
         if (jsonSerializerOptions.TypeInfoResolver != null)
         {
-            jsonSerializerOptions.TypeInfoResolver = JsonTypeInfoResolver.Combine(jsonSerializerOptions.TypeInfoResolver, new T());
-        }
-        else
-        {
-            jsonSerializerOptions.TypeInfoResolver = new T();
+            jsonSerializerOptions.TypeInfoResolverChain.Add(resolver);
         }
     }
 }

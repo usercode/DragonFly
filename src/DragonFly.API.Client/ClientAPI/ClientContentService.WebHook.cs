@@ -12,7 +12,6 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IWebHookStorage
 {
-
     public async Task<WebHook> GetAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/webhook/{id}");

@@ -80,10 +80,10 @@ public partial class MongoStorage : IAssetStorage
         //upload new stream to asset
         await AssetData.UploadFromStreamAsync(asset.Id.ToString(), stream);
 
-        //refresh asset infos
+        //refresh asset info
         using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
         {
-            byte[] hash = SHA256.HashData(s);
+            byte[] hash = await SHA256.HashDataAsync(s);
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
