@@ -15,8 +15,7 @@ public class ApiJsonTypeInfoResolver : IJsonTypeInfoResolver
     public static ApiJsonTypeInfoResolver Default { get; } = new ApiJsonTypeInfoResolver();
 
     private ApiJsonTypeInfoResolver()
-    {
-            
+    {            
     }
 
     public JsonTypeInfo? GetTypeInfo(Type type, JsonSerializerOptions options)

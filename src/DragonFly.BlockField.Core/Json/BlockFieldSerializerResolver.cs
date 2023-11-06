@@ -5,7 +5,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 
-namespace DragonFly.BlockField.Core.Json;
+namespace DragonFly.BlockField;
 
 internal class BlockFieldSerializerResolver : IJsonTypeInfoResolver
 {
@@ -31,7 +31,7 @@ internal class BlockFieldSerializerResolver : IJsonTypeInfoResolver
                 }
 
                 jsonTypeInfo.PolymorphismOptions = optionsDerivedTypes;
-            }                        
+            }
         }
 
         return jsonTypeInfo;

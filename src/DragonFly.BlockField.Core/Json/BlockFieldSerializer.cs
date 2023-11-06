@@ -2,10 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.IO.Compression;
+global using CurrentBlockSerializer = DragonFly.BlockField.BlockFieldSerializerV1;
+
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using DragonFly.BlockField.Core.Json;
 
 namespace DragonFly.BlockField;
 
@@ -14,41 +13,24 @@ namespace DragonFly.BlockField;
 /// </summary>
 public static class BlockFieldSerializer
 {
-    static BlockFieldSerializer()
-    {
-        Options = new JsonSerializerOptions() { TypeInfoResolver = BlockFieldSerializerResolver.Default };
-        Options.Converters.Add(new JsonStringEnumConverter());
-    }
-
     /// <summary>
     /// Options
     /// </summary>
-    private static JsonSerializerOptions Options { get; }
+    public static JsonSerializerOptions Options => CurrentBlockSerializer.Options;
 
-    public static async Task<byte[]> SerializeBlockAsync(IEnumerable<Block> blocks)
+    public static Task<byte[]> SerializeBlockAsync(IEnumerable<Block> blocks)
     {
-        MemoryStream jsonStream = new MemoryStream();
-
-        await JsonSerializer.SerializeAsync(jsonStream, blocks, Options);
-
-        return jsonStream.ToArray();
+        return CurrentBlockSerializer.SerializeBlockAsync(blocks);
     }
 
-    public static async Task<Block[]> DeserializeBlockAsync(byte[] buffer)
+    public static Task<Block[]> DeserializeBlockAsync(byte[] buffer)
     {
-        Block[]? blocks = await JsonSerializer.DeserializeAsync<Block[]>(new MemoryStream(buffer), Options);
-
-        if (blocks == null)
-        {
-            return Array.Empty<Block>();
-        }
-
-        return blocks;
+        return CurrentBlockSerializer.DeserializeBlockAsync(buffer);
     }
 
     public static Task<string?> SerializeAsync(Document document)
     {
-        return BlockFieldSerializerV1.SerializeAsync(document);
+        return CurrentBlockSerializer.SerializeAsync(document);
     }
 
     public static async Task<Document> DeserializeAsync(string? input)

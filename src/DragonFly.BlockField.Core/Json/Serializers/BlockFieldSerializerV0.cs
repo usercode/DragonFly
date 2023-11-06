@@ -5,7 +5,6 @@
 using System.IO.Compression;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using DragonFly.BlockField.Json;
 
 namespace DragonFly.BlockField;
 
@@ -24,7 +23,7 @@ internal static class BlockFieldSerializerV0
     /// <summary>
     /// Options
     /// </summary>
-    private static JsonSerializerOptions Options { get; }
+    public static JsonSerializerOptions Options { get; }
 
     public static async Task<Document> DeserializeAsync(string? input)
     {

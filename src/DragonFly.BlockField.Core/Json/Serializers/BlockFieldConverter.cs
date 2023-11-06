@@ -5,7 +5,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace DragonFly.BlockField.Json;
+namespace DragonFly.BlockField;
 
 class BlockFieldConverter : JsonConverter<Block>
 {
