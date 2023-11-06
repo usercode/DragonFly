@@ -2,11 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using DragonFly.Query;
 
 namespace DragonFly.API;
 
+//models
 [JsonSerializable(typeof(ResourceCreated))]
 [JsonSerializable(typeof(RestContentItem))]
 [JsonSerializable(typeof(RestContentSchema))]
@@ -23,9 +25,27 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(AssetFolderQuery))]
 [JsonSerializable(typeof(ContentQuery))]
 [JsonSerializable(typeof(StructureQuery))]
+[JsonSerializable(typeof(WebHookQuery))]
 [JsonSerializable(typeof(IBackgroundTaskInfo))]
 [JsonSerializable(typeof(IEnumerable<IBackgroundTaskInfo>))]
-[JsonSerializable(typeof(WebHookQuery))]
+
+//Field
+[JsonSerializable(typeof(ArrayField))]
+[JsonSerializable(typeof(AssetField))]
+[JsonSerializable(typeof(BoolField))]
+[JsonSerializable(typeof(ColorField))]
+[JsonSerializable(typeof(ComponentField))]
+[JsonSerializable(typeof(DateTimeField))]
+[JsonSerializable(typeof(FloatField))]
+[JsonSerializable(typeof(GeolocationField))]
+[JsonSerializable(typeof(HtmlField))]
+[JsonSerializable(typeof(IntegerField))]
+[JsonSerializable(typeof(ReferenceField))]
+[JsonSerializable(typeof(SlugField))]
+[JsonSerializable(typeof(StringField))]
+[JsonSerializable(typeof(TextField))]
+[JsonSerializable(typeof(XHtmlField))]
+[JsonSerializable(typeof(XmlField))]
 
 //FieldOptions
 [JsonSerializable(typeof(ArrayFieldOptions))]
@@ -45,7 +65,18 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(XHtmlFieldOptions))]
 [JsonSerializable(typeof(XmlFieldOptions))]
 
-[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+//FieldQuery
+[JsonSerializable(typeof(StringFieldQuery))]
+[JsonSerializable(typeof(BoolFieldQuery))]
+[JsonSerializable(typeof(FloatFieldQuery))]
+[JsonSerializable(typeof(GeolocationFieldQuery))]
+[JsonSerializable(typeof(IntegerFieldQuery))]
+[JsonSerializable(typeof(ReferenceFieldQuery))]
+[JsonSerializable(typeof(SlugFieldQuery))]
+[JsonSerializable(typeof(StringFieldQuery))]
+
+//defaults
+[JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
 public partial class ApiJsonSerializerContext : JsonSerializerContext
 {
 }

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using DragonFly.API.Client;
 using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,6 @@ public static class StartupExtensions
     public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
     {
         builder.Services.AddTransient<ClientContentService>();
-        //builder.Services.AddTransient<IDataStorage, ClientContentService>();
         builder.Services.AddTransient<IContentStorage, ClientContentService>();
         builder.Services.AddTransient<ISchemaStorage, ClientContentService>();
         builder.Services.AddTransient<IStructureStorage, ClientContentService>();
@@ -22,7 +22,11 @@ public static class StartupExtensions
         builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
         builder.Services.AddTransient<IBackgroundTaskService, ClientContentService>();
 
-        builder.Init(api => api.JsonFields().AddDefaults());
+        builder.Init(api =>
+        {
+            api.JsonFields().AddDefaults();
+            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
+        });
 
         return builder;
     }

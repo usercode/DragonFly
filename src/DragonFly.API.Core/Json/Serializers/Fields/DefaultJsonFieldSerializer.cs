@@ -16,7 +16,7 @@ public class DefaultJsonFieldSerializer<TContentField> : JsonFieldSerializer<TCo
 {
     public override TContentField Read(SchemaField schemaField, JsonNode? jsonNode)
     {
-        TContentField? result = JsonSerializer.Deserialize<TContentField>(jsonNode, JsonSerializerDefault.Options);
+        TContentField? result = JsonSerializer.Deserialize<TContentField>(jsonNode, ApiJsonSerializerDefault.Options);
 
         if (result != null)
         {
@@ -28,6 +28,6 @@ public class DefaultJsonFieldSerializer<TContentField> : JsonFieldSerializer<TCo
 
     public override JsonNode? Write(TContentField contentField, bool includeNavigationProperty)
     {
-        return JsonSerializer.SerializeToNode(contentField, contentField.GetType(), JsonSerializerDefault.Options);
+        return JsonSerializer.SerializeToNode(contentField, contentField.GetType(), ApiJsonSerializerDefault.Options);
     }
 }

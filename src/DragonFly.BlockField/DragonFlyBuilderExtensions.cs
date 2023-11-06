@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using DragonFly.AspNetCore.Builders;
 using DragonFly.BlockField;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,8 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
+        builder.AddJsonTypeInfoResolver(BlockFieldJsonSerializerContext.Default);
+
         builder.Services.AddSingleton(BlockFieldManager.Default);
 
         builder.Init(api =>

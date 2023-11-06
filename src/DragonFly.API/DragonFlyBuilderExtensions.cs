@@ -17,10 +17,14 @@ public static class DragonFlyBuilderExtensions
     {
         builder.Services.Configure<JsonOptions>(opt =>
         {
-            opt.SerializerOptions.TypeInfoResolver = ApiJsonSerializerContext.Default;
+            opt.SerializerOptions.TypeInfoResolver = ApiJsonSerializerDefault.Options.TypeInfoResolver;
         });
 
-        builder.Init(api => api.JsonFields().AddDefaults());
+        builder.Init(api =>
+        {
+            api.JsonFields().AddDefaults();
+            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
+        });
 
         return builder;
     }

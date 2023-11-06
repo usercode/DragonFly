@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Diagnostics;
 using System.Net.Http.Json;
 using DragonFly.Query;
 
@@ -34,7 +33,7 @@ public partial class ClientContentService : IStructureStorage
 
     public async Task CreateAsync(ContentStructure entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/structure", entity);
+        var response = await Client.PostAsJsonAsync($"api/structure", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentStructure);
 
         var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 
@@ -43,7 +42,7 @@ public partial class ClientContentService : IStructureStorage
 
     public async Task UpdateAsync(ContentStructure entity)
     {
-        await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity);
+        await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentStructure);
     }
 
     public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
@@ -66,7 +65,7 @@ public partial class ClientContentService : IStructureStorage
 
     public async Task CreateAsync(ContentNode node)
     {
-        var response = await Client.PostAsJsonAsync($"api/node", node);
+        var response = await Client.PostAsJsonAsync($"api/node", node.ToRest(), ApiJsonSerializerContext.Default.RestContentNode);
 
         var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 

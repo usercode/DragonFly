@@ -62,7 +62,7 @@ public static class RestContentSchemaConverter
 
         if (schemaField.Options != null)
         {
-            restContentFieldDefinition.Options = JsonSerializer.SerializeToNode(schemaField.Options, schemaField.Options.GetType(), JsonSerializerDefault.Options);
+            restContentFieldDefinition.Options = JsonSerializer.SerializeToNode(schemaField.Options, schemaField.Options.GetType(), ApiJsonSerializerDefault.Options);
         }
 
         return restContentFieldDefinition;
@@ -76,7 +76,7 @@ public static class RestContentSchemaConverter
 
         if (optionsType != null)
         {
-            options = (FieldOptions?)definition.Options.Deserialize(optionsType, JsonSerializerDefault.Options);
+            options = (FieldOptions?)definition.Options.Deserialize(optionsType, ApiJsonSerializerDefault.Options);
         }
 
         SchemaField schemaField = new SchemaField(definition.FieldType, options);

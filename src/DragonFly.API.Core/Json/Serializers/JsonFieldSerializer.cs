@@ -24,8 +24,8 @@ public abstract class JsonFieldSerializer<TContentField> : IJsonFieldSerializer
         return Write((TContentField)contentField, includeNavigationProperty);
     }
 
-    ContentField IJsonFieldSerializer.Read(SchemaField definition, JsonNode? bsonvalue)
+    ContentField IJsonFieldSerializer.Read(SchemaField definition, JsonNode? bsonValue)
     {
-        return Read(definition, bsonvalue);
+        return Read(definition, bsonValue);
     }
 }

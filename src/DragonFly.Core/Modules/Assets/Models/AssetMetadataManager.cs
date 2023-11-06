@@ -51,7 +51,7 @@ public sealed class AssetMetadataManager
 
     public Type GetMetadataType(string name)
     {
-        if(_byName.TryGetValue(name, out Type? result))
+        if (_byName.TryGetValue(name, out Type? result))
         {
             return result;
         }

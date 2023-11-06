@@ -35,6 +35,42 @@ public sealed class JsonFieldManager
         Add(serializer);
     }
 
+    /// <summary>
+    /// Ensures that the content field has a <see cref="SingleValueJsonFieldSerializer{T}"/>  or <see cref="DefaultJsonFieldSerializer{T}"/>.
+    /// </summary>
+    /// <param name="fieldType"></param>
+    public void EnsureField(Type fieldType)
+    {
+        if (_fields.ContainsKey(fieldType) == false)
+        {
+            IJsonFieldSerializer? fieldSerializer;
+
+            if (fieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
+            {
+                //create SingleValueFieldSerializer
+                fieldSerializer = (IJsonFieldSerializer?)Activator.CreateInstance(typeof(SingleValueJsonFieldSerializer<>).MakeGenericType(fieldType));
+
+                if (fieldSerializer == null)
+                {
+                    throw new Exception($"Could not create single value field serializer for '{fieldType.Name}'.");
+                }
+
+                JsonFieldManager.Default.Add(fieldSerializer);
+            }
+            else //build DefaultFieldSerializer
+            {
+                fieldSerializer = (IJsonFieldSerializer?)Activator.CreateInstance(typeof(DefaultJsonFieldSerializer<>).MakeGenericType(fieldType));
+
+                if (fieldSerializer == null)
+                {
+                    throw new Exception($"Could not create default field serializer for '{fieldType.Name}'.");
+                }
+
+                JsonFieldManager.Default.Add(fieldSerializer);
+            }
+        }
+    }
+
     public IJsonFieldSerializer GetByFieldType(Type contentFieldType)
     {
         if (TryGetByFieldType(contentFieldType, out IJsonFieldSerializer? fieldSerializer))

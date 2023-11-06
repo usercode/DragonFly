@@ -19,7 +19,7 @@ public static class RestContentItemConverter
         }
         else
         {
-            RestContentSchema? restSchema = restContentItem.Schema.Deserialize<RestContentSchema>(JsonSerializerDefault.Options);
+            RestContentSchema? restSchema = restContentItem.Schema.Deserialize(ApiJsonSerializerContext.Default.RestContentSchema);
                 
             if (restSchema == null)
             {
@@ -57,7 +57,7 @@ public static class RestContentItemConverter
         }
         else
         {
-            RestContentSchema? restSchema = restContentItem.Schema.Deserialize<RestContentSchema>(JsonSerializerDefault.Options);
+            RestContentSchema? restSchema = restContentItem.Schema.Deserialize(ApiJsonSerializerContext.Default.RestContentSchema);
 
             if (restSchema == null)
             {
@@ -85,11 +85,11 @@ public static class RestContentItemConverter
 
         if (includeSchema)
         {
-            restContentItem.Schema = JsonSerializer.SerializeToNode(contentItem.Schema.ToRest(), JsonSerializerDefault.Options);
+            restContentItem.Schema = JsonSerializer.SerializeToNode(contentItem.Schema.ToRest(), ApiJsonSerializerContext.Default.RestContentSchema);
         }
         else
         {
-            restContentItem.Schema = JsonValue.Create(contentItem.Schema.Name);
+            restContentItem.Schema = JsonValue.Create(contentItem.Schema.Name, ApiJsonSerializerContext.Default.String);
         }
 
         restContentItem.CreatedAt = contentItem.CreatedAt;
@@ -118,11 +118,11 @@ public static class RestContentItemConverter
 
         if (includeSchema)
         {
-            restContentItem.Schema = JsonSerializer.SerializeToNode(contentItem.Schema.ToRest(), JsonSerializerDefault.Options);
+            restContentItem.Schema = JsonSerializer.SerializeToNode(contentItem.Schema.ToRest(), ApiJsonSerializerContext.Default.RestContentSchema);
         }
         else
         {
-            restContentItem.Schema = JsonValue.Create(contentItem.Schema.Name);
+            restContentItem.Schema = JsonValue.Create(contentItem.Schema.Name, ApiJsonSerializerContext.Default.String);
         }
 
         foreach (var field in contentItem.Fields)

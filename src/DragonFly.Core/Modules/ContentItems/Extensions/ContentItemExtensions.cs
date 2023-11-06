@@ -114,7 +114,7 @@ public static class ContentItemExtensions
         return item;
     }
 
-    public static ArrayFieldItem CreateArrayField(this ArrayFieldOptions options)
+    public static ArrayFieldItem CreateArrayItem(this ArrayFieldOptions options)
     {
         ArrayFieldItem item = new ArrayFieldItem();
 

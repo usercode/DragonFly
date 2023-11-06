@@ -174,7 +174,7 @@ public static class ContentItemFieldsExtensions
         where TContentItem : IContentElement
     {
         ArrayFieldOptions options = schema.GetArrayFieldOptions(name);
-        ArrayFieldItem item = options.CreateArrayField();
+        ArrayFieldItem item = options.CreateArrayItem();
         
         action(item);
 

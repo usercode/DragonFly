@@ -27,7 +27,7 @@ public class ArrayMongoFieldSerializer : MongoFieldSerializer<ArrayField>
 
             foreach (BsonDocument item in bsonArray)
             {
-                ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
+                ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayItem();
 
                 foreach (BsonElement subitem in item)
                 {

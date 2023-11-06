@@ -11,11 +11,11 @@ namespace DragonFly.API;
 /// </summary>
 public class ArrayJsonFieldSerializer : JsonFieldSerializer<ArrayField>
 {
-    public override ArrayField Read(SchemaField schemaField, JsonNode? bsonvalue)
+    public override ArrayField Read(SchemaField schemaField, JsonNode? bsonValue)
     {
         ArrayField contentField = new ArrayField();
 
-        if (bsonvalue is JsonArray jsonArray)
+        if (bsonValue is JsonArray jsonArray)
         {
             if (contentField is ArrayField arrayField)
             {
@@ -30,7 +30,7 @@ public class ArrayJsonFieldSerializer : JsonFieldSerializer<ArrayField>
                 {
                     if (item is JsonObject itemJsonObject)
                     {
-                        ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayField();
+                        ArrayFieldItem arrayFieldItem = arrayOptions.CreateArrayItem();
 
                         foreach (var subitem in itemJsonObject)
                         {

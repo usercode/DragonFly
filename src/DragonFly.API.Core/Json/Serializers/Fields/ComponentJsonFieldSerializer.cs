@@ -16,7 +16,7 @@ public class ComponentJsonFieldSerializer : JsonFieldSerializer<ComponentField>
     {
         ComponentField contentField = new ComponentField();
 
-        RestContentComponent? restContentItem = jsonNode.Deserialize<RestContentComponent>(JsonSerializerDefault.Options);
+        RestContentComponent? restContentItem = jsonNode.Deserialize<RestContentComponent>(ApiJsonSerializerDefault.Options);
 
         if (restContentItem == null)
         {
@@ -32,7 +32,7 @@ public class ComponentJsonFieldSerializer : JsonFieldSerializer<ComponentField>
     {
         if (includeNavigationProperty && contentField.ContentComponent != null)
         {
-            return JsonSerializer.SerializeToNode(contentField.ContentComponent.ToRest(true, true), JsonSerializerDefault.Options);
+            return JsonSerializer.SerializeToNode(contentField.ContentComponent.ToRest(true, true), ApiJsonSerializerDefault.Options);
         }
         else
         {

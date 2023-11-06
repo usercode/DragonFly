@@ -71,7 +71,7 @@ public partial class ClientContentService : IContentStorage
 
     public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery queryParameters)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerContext.Default.ContentQuery);
+        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerDefault.Options);
 
         QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestContentItem);
 

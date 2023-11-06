@@ -78,6 +78,7 @@ If you have a remote MongoDB instance, you need to add some appsettings:
 - FieldGenerator
 - ModelGenerator
 - ProxyGenerator
+- JsonSerializerContext
 
 ### Supported fields
 - StringField

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.API;
 using DragonFly.BlockField;
 using DragonFly.BlockField.Client.Pages;
 using DragonFly.BlockField.Client.Pages.Blocks;
@@ -15,6 +16,8 @@ public static class DragonFlyBuilderExtensions
     public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
         builder.Services.AddSingleton(BlockFieldManager.Default);
+
+        builder.AddJsonTypeInfoResolver(BlockFieldJsonSerializerContext.Default);
 
         builder.Init(api =>
         {

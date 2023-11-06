@@ -16,7 +16,7 @@ public class ReferenceJsonFieldSerializer : JsonFieldSerializer<ReferenceField>
     {
         ReferenceField contentField = new ReferenceField();
 
-        RestContentItem? restContentItem = jsonNode.Deserialize<RestContentItem>(JsonSerializerDefault.Options);
+        RestContentItem? restContentItem = jsonNode.Deserialize<RestContentItem>(ApiJsonSerializerDefault.Options);
 
         if (restContentItem != null)
         {
@@ -30,7 +30,7 @@ public class ReferenceJsonFieldSerializer : JsonFieldSerializer<ReferenceField>
     {
         if (includeNavigationProperty && contentField.ContentItem != null)
         {
-            return JsonSerializer.SerializeToNode(contentField.ContentItem.ToRest(true, false), JsonSerializerDefault.Options);            
+            return JsonSerializer.SerializeToNode(contentField.ContentItem.ToRest(true, false), ApiJsonSerializerDefault.Options);            
         }
         else
         {
