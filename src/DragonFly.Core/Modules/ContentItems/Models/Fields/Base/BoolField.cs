@@ -17,8 +17,6 @@ public partial class BoolField : SingleValueField<bool?>
 
     }
 
-    public override bool CanSorting => true;
-
     public BoolField(bool? value)
     {
         Value = value;

@@ -8,22 +8,11 @@ namespace DragonFly.API;
 
 public static class ApiJsonSerializerDefault
 {
-    private static JsonSerializerOptions? _options;
-
     /// <summary>
     /// Options
     /// </summary>
-    public static JsonSerializerOptions Options
-    {
-        get
-        {
-            if (_options == null)
-            {
-                _options = new JsonSerializerOptions();
-                _options.TypeInfoResolver = ApiJsonTypeInfoResolver.Default;
-            }
-
-            return _options;
-        }
-    }
+    public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions()
+                                                                    {
+                                                                        TypeInfoResolver = ApiJsonTypeInfoResolver.Default 
+                                                                    };
 }

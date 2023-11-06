@@ -11,8 +11,8 @@ namespace DragonFly.BlockField;
 /// </summary>
 public abstract class Block
 {
-    [JsonPropertyOrder(-1)]
-    public virtual string Type => GetType().Name;
+    //[JsonPropertyOrder(-1)]
+    //public virtual string Type => GetType().Name;
 
     private string? _name;
 

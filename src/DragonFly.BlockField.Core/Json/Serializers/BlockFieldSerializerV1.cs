@@ -10,11 +10,11 @@ using DragonFly.BlockField.Core.Json;
 namespace DragonFly.BlockField;
 
 /// <summary>
-/// BlockFieldSerializer
+/// BlockFieldSerializerV1
 /// </summary>
-public static class BlockFieldSerializer
+internal static class BlockFieldSerializerV1
 {
-    static BlockFieldSerializer()
+    static BlockFieldSerializerV1()
     {
         Options = new JsonSerializerOptions() { TypeInfoResolver = BlockFieldSerializerResolver.Default };
         Options.Converters.Add(new JsonStringEnumConverter());
@@ -46,9 +46,29 @@ public static class BlockFieldSerializer
         return blocks;
     }
 
-    public static Task<string?> SerializeAsync(Document document)
+    public static async Task<string?> SerializeAsync(Document document)
     {
-        return BlockFieldSerializerV1.SerializeAsync(document);
+        if (document.Blocks.Count == 0)
+        {
+            return null;
+        }
+
+        MemoryStream jsonStream = new MemoryStream();
+
+        await JsonSerializer.SerializeAsync(jsonStream, document, Options);
+
+        jsonStream.Seek(0, SeekOrigin.Begin);
+
+        MemoryStream mem = new MemoryStream();
+        using (GZipStream zipStream = new GZipStream(mem, CompressionLevel.Optimal))
+        {
+            await jsonStream.CopyToAsync(zipStream);
+        }
+
+        string result = Convert.ToBase64String(mem.ToArray());
+
+        //add version prefix
+        return $"V1_{result}";
     }
 
     public static async Task<Document> DeserializeAsync(string? input)
@@ -58,13 +78,26 @@ public static class BlockFieldSerializer
             return new Document();
         }
 
-        if (input.StartsWith("V1_"))
+        //remove version prefix
+        input = input["V1_".Length..];
+
+        byte[] buffer = Convert.FromBase64String(input);
+
+        MemoryStream mem = new MemoryStream();
+        using (GZipStream zipStream = new GZipStream(new MemoryStream(buffer), CompressionMode.Decompress))
         {
-            return await BlockFieldSerializerV1.DeserializeAsync(input);
+            await zipStream.CopyToAsync(mem);
         }
-        else
+
+        mem.Seek(0, SeekOrigin.Begin);
+
+        Document? result = await JsonSerializer.DeserializeAsync<Document>(mem, Options);
+
+        if (result == null)
         {
-            return await BlockFieldSerializerV0.DeserializeAsync(input);
+            throw new Exception();
         }
+
+        return result;
     }
 }

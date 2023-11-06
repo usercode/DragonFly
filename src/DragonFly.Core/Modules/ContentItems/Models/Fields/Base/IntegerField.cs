@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
-
 namespace DragonFly;
 
 /// <summary>
@@ -18,8 +16,6 @@ public partial class IntegerField : SingleValueField<long?>
     {
 
     }
-
-    public override bool CanSorting => true;
 
     public IntegerField(long? number)
     {

@@ -16,8 +16,6 @@ public partial class SlugField : TextBaseField
 
     }
 
-    public override bool CanSorting => true;
-
     public SlugField(string? text)
     {
         Value = text;

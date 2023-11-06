@@ -46,6 +46,4 @@ public partial class StringField : TextBaseField
             }
         }
     }
-
-    public override bool CanSorting => true;
 }
