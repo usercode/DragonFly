@@ -32,7 +32,7 @@ public static class RestAssetConverter
 
         foreach (var item in restAsset.Metaddata)
         {
-            AssetMetadata? assetMetadata = (AssetMetadata?)item.Value.Deserialize(AssetMetadataManager.Default.GetMetadataType(item.Key));
+            AssetMetadata? assetMetadata = (AssetMetadata?)item.Value.Deserialize(AssetMetadataManager.Default.GetMetadataType(item.Key), ApiJsonSerializerDefault.Options);
 
             if (assetMetadata != null)
             {
@@ -67,7 +67,7 @@ public static class RestAssetConverter
 
         foreach (var metadata in asset.Metaddata)
         {
-            restAsset.Metaddata.Add(metadata.Key, JsonSerializer.SerializeToNode(metadata.Value, metadata.Value.GetType()));
+            restAsset.Metaddata.Add(metadata.Key, JsonSerializer.SerializeToNode(metadata.Value, metadata.Value.GetType(), ApiJsonSerializerDefault.Options));
         }
 
         return restAsset;

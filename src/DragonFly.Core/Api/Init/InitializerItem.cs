@@ -6,10 +6,16 @@ namespace DragonFly.Init;
 
 class InitializerItem : IInitialize, IPreInitialize, IPostInitialize
 {
-    public InitializerItem(Action<IDragonFlyApi> action)
+    public InitializerItem(string name, Action<IDragonFlyApi> action)
     {
+        Name = name;
         Action = action;
     }
+
+    /// <summary>
+    /// Name
+    /// </summary>
+    public string Name { get; set; }
 
     private Action<IDragonFlyApi> Action { get; }
 

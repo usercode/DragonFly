@@ -8,7 +8,7 @@ using DragonFly.Query;
 
 namespace DragonFly.API;
 
-//models
+//Model
 [JsonSerializable(typeof(ResourceCreated))]
 [JsonSerializable(typeof(RestContentItem))]
 [JsonSerializable(typeof(RestContentSchema))]
@@ -28,6 +28,10 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(WebHookQuery))]
 [JsonSerializable(typeof(IBackgroundTaskInfo))]
 [JsonSerializable(typeof(IEnumerable<IBackgroundTaskInfo>))]
+
+//AssetMetadata
+[JsonSerializable(typeof(ImageMetadata))]
+[JsonSerializable(typeof(PdfMetadata))]
 
 //Field
 [JsonSerializable(typeof(ArrayField))]

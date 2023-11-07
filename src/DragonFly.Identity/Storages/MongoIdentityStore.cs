@@ -7,10 +7,10 @@ using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace DragonFly.AspNetCore.Identity.MongoDB;
+namespace DragonFly.Identity;
 
 /// <summary>
-/// MongIdentityStore
+/// MongoIdentityStore
 /// </summary>
 internal class MongoIdentityStore
 {

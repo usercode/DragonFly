@@ -44,23 +44,35 @@ public class DragonFlyApi : IDragonFlyApi
 
         foreach (IPreInitialize item in scope.ServiceProvider.GetServices<IPreInitialize>())
         {
-            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+            Logger.LogInformation("Initializing {type}", GetName(item));
 
             await item.ExecuteAsync(this);
         }
 
         foreach (IInitialize item in scope.ServiceProvider.GetServices<IInitialize>())
         {
-            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+            Logger.LogInformation("Initializing {type}", GetName(item));
 
             await item.ExecuteAsync(this);
         }
 
         foreach (IPostInitialize item in scope.ServiceProvider.GetServices<IPostInitialize>())
         {
-            Logger.LogInformation("Initializing {type}", item.GetType().FullName);
+            Logger.LogInformation("Initializing {type}", GetName(item));
 
             await item.ExecuteAsync(this);
+        }
+    }
+
+    private static string? GetName(object initializer)
+    {
+        if (initializer is InitializerItem item)
+        {
+            return item.Name;
+        }
+        else
+        {
+            return initializer.GetType().FullName;
         }
     }
 }

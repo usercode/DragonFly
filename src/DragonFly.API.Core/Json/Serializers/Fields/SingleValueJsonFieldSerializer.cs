@@ -3,14 +3,12 @@
 // MIT License
 
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization.Metadata;
 
 namespace DragonFly.API;
 
 /// <summary>
 /// SingleValueFieldSerializer
 /// </summary>
-/// <typeparam name="TContentField"></typeparam>
 public class SingleValueJsonFieldSerializer<TContentField> : JsonFieldSerializer<TContentField>
     where TContentField : ContentField, ISingleValueField, new()
 {
@@ -34,25 +32,11 @@ public class SingleValueJsonFieldSerializer<TContentField> : JsonFieldSerializer
                     boolField.Value = boolValue;
                 }
             }
-            else if (contentField is SingleValueField<DateTime?> dateField)
+            else if (contentField is SingleValueField<short?> shortField)
             {
-                if (jsonValue.TryGetValue(out DateTime? dateValue))
+                if (jsonValue.TryGetValue(out short? shortValue))
                 {
-                    dateField.Value = dateValue;
-                }
-            }
-            else if (contentField is SingleValueField<Guid?> guidField)
-            {
-                if (jsonValue.TryGetValue(out Guid? guidValue))
-                {
-                    guidField.Value = guidValue;
-                }
-            }
-            else if (contentField is SingleValueField<long?> longField)
-            {
-                if (jsonValue.TryGetValue(out long? longValue))
-                {
-                    longField.Value = longValue;
+                    shortField.Value = shortValue;
                 }
             }
             else if (contentField is SingleValueField<int?> intField)
@@ -62,11 +46,11 @@ public class SingleValueJsonFieldSerializer<TContentField> : JsonFieldSerializer
                     intField.Value = intValue;
                 }
             }
-            else if (contentField is SingleValueField<short?> shortField)
+            else if (contentField is SingleValueField<long?> longField)
             {
-                if (jsonValue.TryGetValue(out short? shortValue))
+                if (jsonValue.TryGetValue(out long? longValue))
                 {
-                    shortField.Value = shortValue;
+                    longField.Value = longValue;
                 }
             }
             else if (contentField is SingleValueField<float?> floatField)
@@ -82,6 +66,20 @@ public class SingleValueJsonFieldSerializer<TContentField> : JsonFieldSerializer
                 {
                     doubleField.Value = doubleValue;
                 }
+            }           
+            else if (contentField is SingleValueField<DateTime?> dateField)
+            {
+                if (jsonValue.TryGetValue(out DateTime? dateValue))
+                {
+                    dateField.Value = dateValue;
+                }
+            }
+            else if (contentField is SingleValueField<Guid?> guidField)
+            {
+                if (jsonValue.TryGetValue(out Guid? guidValue))
+                {
+                    guidField.Value = guidValue;
+                }
             }
         }
 
@@ -92,7 +90,19 @@ public class SingleValueJsonFieldSerializer<TContentField> : JsonFieldSerializer
     {
         if (contentField.HasValue)
         {
-            return JsonValue.Create(contentField.Value);
+            return contentField switch
+            {
+                SingleValueField<string> stringField => JsonValue.Create(stringField.Value),
+                SingleValueField<bool?> boolField => JsonValue.Create(boolField.Value),
+                SingleValueField<short?> shortField => JsonValue.Create(shortField.Value),
+                SingleValueField<int?> intField => JsonValue.Create(intField.Value),
+                SingleValueField<long?> longField => JsonValue.Create(longField.Value),
+                SingleValueField<float?> floatField => JsonValue.Create(floatField.Value),
+                SingleValueField<double?> doubleField => JsonValue.Create(doubleField.Value),                
+                SingleValueField<DateTime?> dateField => JsonValue.Create(dateField.Value),
+                SingleValueField<Guid?> guidField => JsonValue.Create(guidField.Value),
+                _ => throw new Exception($"Unknown field type: {contentField.Value.GetType().Name}")
+            };
         }
         else
         {

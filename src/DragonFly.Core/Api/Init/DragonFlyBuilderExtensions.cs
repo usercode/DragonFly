@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Runtime.CompilerServices;
 using DragonFly.Builders;
 using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,10 +11,10 @@ namespace DragonFly;
 
 public static class DragonFlyBuilderExtensions
 {
-    public static TBuilder Init<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder Init<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action, [CallerMemberName] string name = "")
         where TBuilder : IDragonFlyBuilder
     {
-        builder.Services.AddTransient<IInitialize>(x => new InitializerItem(action));
+        builder.Services.AddTransient<IInitialize>(x => new InitializerItem(name, action));
 
         return builder;
     }
@@ -26,10 +27,10 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static TBuilder PreInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder PreInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action, [CallerMemberName] string name = "")
         where TBuilder : IDragonFlyBuilder
     {
-        builder.Services.AddTransient<IPreInitialize>(x => new InitializerItem(action));
+        builder.Services.AddTransient<IPreInitialize>(x => new InitializerItem(name, action));
 
         return builder;
     }
@@ -42,10 +43,10 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    public static TBuilder PostInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action)
+    public static TBuilder PostInit<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action, [CallerMemberName] string name = "")
         where TBuilder : IDragonFlyBuilder
     {
-        builder.Services.AddTransient<IPostInitialize>(x => new InitializerItem(action));
+        builder.Services.AddTransient<IPostInitialize>(x => new InitializerItem(name, action));
 
         return builder;
     }

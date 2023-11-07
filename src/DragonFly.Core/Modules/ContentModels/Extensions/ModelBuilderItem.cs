@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Model;
+
 namespace DragonFly.Builders;
 
 /// <summary>

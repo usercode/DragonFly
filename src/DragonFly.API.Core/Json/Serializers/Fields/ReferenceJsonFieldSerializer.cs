@@ -30,7 +30,7 @@ public class ReferenceJsonFieldSerializer : JsonFieldSerializer<ReferenceField>
     {
         if (includeNavigationProperty && contentField.ContentItem != null)
         {
-            return JsonSerializer.SerializeToNode(contentField.ContentItem.ToRest(true, false), ApiJsonSerializerDefault.Options);            
+            return JsonSerializer.SerializeToNode(contentField.ContentItem.ToRest(true, false), ApiJsonSerializerDefault.Options);
         }
         else
         {

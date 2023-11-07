@@ -5,7 +5,7 @@
 using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly;
+namespace DragonFly.Model;
 
 /// <summary>
 /// ContentModelInitializer

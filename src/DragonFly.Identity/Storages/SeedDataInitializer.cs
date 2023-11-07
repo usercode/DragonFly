@@ -2,13 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.Init;
-using DragonFly.Identity;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 
-namespace DragonFly.AspNetCore.Identity.MongoDB;
+namespace DragonFly.Identity;
 
 /// <summary>
 /// SeedDataInitializer
