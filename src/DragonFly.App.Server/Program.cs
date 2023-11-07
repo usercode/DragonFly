@@ -55,7 +55,7 @@ builder.Services.AddDragonFly()
                     .AddBlockField()
                     .AddApiKeys()
                     .AddModels(x => x
-                                    .Add<Product>()
+                                    .Add<Product2>()
                                     .Add<Customer>()
                                     )
                     ;
@@ -67,7 +67,7 @@ await app.InitDragonFlyAsync();
 
 IContentStorage contentStorage = app.Services.GetRequiredService<IContentStorage>();
 
-Product p = new Product();
+Product2 p = new Product2();
 p.Title = "chair";
 p.IsActive = true;
 p.Slug.Value = "product-a";
@@ -81,16 +81,16 @@ p.Quantity = 10;
 
 ContentItem ci = p.GetContentItem();
 
-ci.ToModel<Product>();
+ci.ToModel<Product2>();
 ci.ToModel();
 
 await contentStorage.CreateAsync(p);
 
-var products = await contentStorage.QueryAsync<Product>(x => x
+var products = await contentStorage.QueryAsync<Product2>(x => x
                                                                 .Published(false)
                                                                 .Asset(x => x.Image, null)
                                                                 .Slug(x => x.Slug, "product-a")
-                                                                .Slug(Product.Fields.Slug, "product-a")
+                                                                .Slug(Product2.Fields.Slug, "product-a")
                                                                 .Integer(x => x.Quantity, 10, NumberQueryType.Equal)
                                                                 .Float(x => x.Quantity2, 1.1)
                                                                 .String(x => x.Title, "123", StringQueryType.Equal));

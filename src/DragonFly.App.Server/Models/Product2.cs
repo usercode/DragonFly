@@ -10,7 +10,7 @@ using DragonFlyABC;
 namespace DragonFlyTEST;
 
 [ContentItem(Preview = "http://localhost/preview/{{Title}}")]
-public partial class Product
+public partial class Product2
 {
     [StringField(Required = true, Index = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
     private string? _title;

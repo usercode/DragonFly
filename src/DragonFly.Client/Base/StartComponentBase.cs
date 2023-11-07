@@ -56,7 +56,7 @@ public class StartComponentBase : ComponentBase
 
             OnRefreshed();
 
-            //StateHasChanged();
+            StateHasChanged();
         }
         finally
         {

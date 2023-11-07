@@ -72,7 +72,7 @@ public class DragonFlyApi : IDragonFlyApi
         }
         else
         {
-            return initializer.GetType().FullName;
+            return initializer.GetType().Name;
         }
     }
 }
