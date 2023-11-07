@@ -15,9 +15,8 @@
 | DragonFly.Identity       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.Identity.svg)](https://www.nuget.org/packages/DragonFly.Identity/) |
 | DragonFly.ApiKeys       | [![NuGet](https://img.shields.io/nuget/vpre/DragonFly.ApiKeys.svg)](https://www.nuget.org/packages/DragonFly.ApiKeys/) |
 
-## Getting started
+## Features
 
-### Features
 * Define schema with custom fields
 * Create, update, delete and publish/unpublish content items based on schema
   * Create new Fields with FieldGenerator
@@ -38,6 +37,7 @@
   * Create proxies with ProxyGenerator
 * Admin interface with Blazor
 
+## Getting started
 ### Prerequisites
 
 * [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
