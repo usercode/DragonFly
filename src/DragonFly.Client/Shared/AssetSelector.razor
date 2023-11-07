@@ -3,7 +3,10 @@
 <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
     <Header>Select asset</Header>
     <Content>
-        <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
+        @if(Modal.Shown)
+        {
+            <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
+        }
     </Content>
     <Footer>
         <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync()">Ok</BSButton>

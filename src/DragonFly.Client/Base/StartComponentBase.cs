@@ -4,6 +4,7 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -16,23 +17,37 @@ public class StartComponentBase : ComponentBase
         RebuildToolbar();
     }
 
+    private bool _init = false;
+
     public async Task InitAsync()
     {
+        if (_init)
+        {
+            return;
+        }
+
+        _init = true;
+
+        Console.WriteLine("InitAsync");
+
         await InitActionAsync();
     }
 
-    protected virtual async Task InitActionAsync()
+    protected virtual Task InitActionAsync()
     {
-
+        return Task.CompletedTask;
     }
 
-    public Task RefreshAsync()
+    public async Task RefreshAsync()
     {
-        return RefreshAsync(true);
-    }
-     
-    public async Task RefreshAsync(bool stateHasChanged)
-    {
+        Console.WriteLine("RefreshAsync");
+
+        //blocks recursive refreshing
+        if (IsRefreshing == true)
+        {
+            return;
+        }
+
         IsRefreshing = true;
 
         try
@@ -41,10 +56,7 @@ public class StartComponentBase : ComponentBase
 
             OnRefreshed();
 
-            if (stateHasChanged)
-            {
-                await InvokeAsync(StateHasChanged);
-            }
+            //StateHasChanged();
         }
         finally
         {
@@ -59,16 +71,25 @@ public class StartComponentBase : ComponentBase
 
     public bool IsRefreshing { get; protected set; }
 
-    protected virtual async Task RefreshActionAsync()
+    protected virtual Task RefreshActionAsync()
     {
-
+        return Task.CompletedTask;
     }
 
     protected override async Task OnParametersSetAsync()
     {
-        await InitAsync();
-        await RefreshAsync(false);
+        Console.WriteLine("OnParametersSetAsync: " + this.GetType().Name);
+        
+        await RefreshAsync();
     }
+
+    //public override Task SetParametersAsync(ParameterView parameters)
+    //{
+    //    Console.WriteLine("SetParametersAsync: " + this.GetType().Name);
+    //    Console.WriteLine("Parameters: " + string.Join(", ", parameters.ToDictionary().Keys));
+
+    //    return base.SetParametersAsync(parameters);
+    //}
 
     protected virtual void OnRefreshed()
     {
@@ -89,6 +110,8 @@ public class StartComponentBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine("OnInitializedAsync");
+
         await InitAsync();
     }
 

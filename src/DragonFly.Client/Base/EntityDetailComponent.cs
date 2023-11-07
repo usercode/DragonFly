@@ -38,13 +38,14 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
     [Parameter]
     public EventCallback<T> EntityChanged { get; set; }
 
-    protected override async Task RefreshActionAsync()
+    protected override Task RefreshActionAsync()
     {
-
+        return Task.CompletedTask;
     }
 
-    protected virtual async Task DeleteActionAsync()
+    protected virtual Task DeleteActionAsync()
     {
+        return Task.CompletedTask;
     }
 
     protected virtual async Task SaveActionAsync()

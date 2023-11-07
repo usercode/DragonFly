@@ -22,7 +22,6 @@ public interface IEntityDetailComponent<T>
     public ContentSchema Schema { get; set; }
 
     Task RefreshAsync();
-
     Task CreateAsync();
     Task UpdateAsync();
     Task SaveAsync();

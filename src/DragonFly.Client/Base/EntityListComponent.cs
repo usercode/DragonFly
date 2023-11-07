@@ -16,12 +16,10 @@ public abstract class EntityListComponent<T> : StartComponentBase
 {
     public EntityListComponent()
     {
-        ListMode = EntityListMode.Default;
-        PageSize = 25;
     }
 
     [Parameter]
-    public EntityListMode ListMode { get; set; }
+    public EntityListMode ListMode { get; set; } = EntityListMode.Default;
 
     [Parameter]
     public Action<T> ItemSelected { get; set; }
@@ -57,28 +55,16 @@ public abstract class EntityListComponent<T> : StartComponentBase
         }
     }
 
-    public int PageSize { get; set; }
+    public int PageSize { get; set; } = 25;
 
     public int CountPages => (int)Math.Ceiling((double)SearchResult.TotalCount / PageSize);
-
-    private string _searchPattern;
 
     /// <summary>
     /// SearchPattern
     /// </summary>
     [Parameter]
     [SupplyParameterFromQuery(Name = "pattern")]
-    public string SearchPattern 
-    {
-        get => _searchPattern;
-        set 
-        {
-            if (_searchPattern != value)
-            {
-                _searchPattern = value;
-            }
-        }
-    }
+    public string SearchPattern { get; set; }
 
     public async Task NavigateAsync()
     {
