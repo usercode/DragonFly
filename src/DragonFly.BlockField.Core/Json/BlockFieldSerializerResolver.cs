@@ -17,7 +17,7 @@ internal class BlockFieldSerializerResolver : IJsonTypeInfoResolver
 
     public JsonTypeInfo? GetTypeInfo(Type type, JsonSerializerOptions options)
     {
-        JsonTypeInfo? jsonTypeInfo = ((IJsonTypeInfoResolver)BlockFieldJsonSerializerContext.Default).GetTypeInfo(type, options);
+        JsonTypeInfo? jsonTypeInfo = ((IJsonTypeInfoResolver)BlockFieldSerializerContext.Default).GetTypeInfo(type, options);
 
         if (jsonTypeInfo != null)
         {

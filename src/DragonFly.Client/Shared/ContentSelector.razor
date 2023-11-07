@@ -1,63 +1,62 @@
 ﻿@inject NavigationManager NavigationManager
 
-
-    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" Size="Size.ExtraLarge" >
-        <Header>Select asset</Header>
-        <Content>
+<BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" Size="Size.ExtraLarge">
+    <Header>Select asset</Header>
+    <Content>
         @if (Modal.Shown)
         {
             <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>
         }
-        </Content>
-        <Footer>
-            <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync() ">Ok</BSButton>
-        </Footer>
-    </BSModal>
+    </Content>
+    <Footer>
+        <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync() ">Ok</BSButton>
+    </Footer>
+</BSModal>
 
-    <div class="content-selector">
-        <BSListGroup>
+<div class="content-selector">
+    <BSListGroup>
         <BSListGroupItem>
-                <div style="display: flex; align-items: center; justify-content: space-between;">
-                  
-                    @if (ContentItem != null)
-                    {
-                        <span class="badge bg-primary">@ContentItem.Schema.Name</span>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
 
-                        @foreach (string field in ContentItem.Schema.ReferenceFields)
+                @if (ContentItem != null)
+                {
+                    <span class="badge bg-primary">@ContentItem.Schema.Name</span>
+
+                    @foreach (string field in ContentItem.Schema.ReferenceFields)
+                    {
+                        if (ContentItem.TryGetField(field, out ContentField column))
                         {
-                            if (ContentItem.TryGetField(field, out ContentField column))
+                            @if (column is ISingleValueField singleValueField)
                             {
-                                @if (column is ISingleValueField singleValueField)
+                                <span>@singleValueField.Value</span>
+                            }
+                            else if (column is AssetField assetField)
+                            {
+                                @if (assetField.Asset != null && assetField.Asset.IsImage())
                                 {
-                                    <span>@singleValueField.Value</span>
-                                }
-                                else if (column is AssetField assetField)
-                                {
-                                    @if (assetField.Asset != null && assetField.Asset.IsImage())
-                                    {
-                                        <img src="@assetField.Asset.PreviewUrl" style="height:2rem;object-fit:contain" />
-                                    }
+                                    <img src="@assetField.Asset.PreviewUrl" style="height:2rem;object-fit:contain" />
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                      <span>...</span>
-                    }
+                }
+                else
+                {
+                    <span>...</span>
+                }
 
-                    <div class="options">
-                        @if (ContentItem != null)
-                        {
-                            <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>                        
-                            <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>
-                        }
-                        <BSButton Color="BSColor.Light" title="Select" OnClick="e => Modal.ShowAsync()"><i class="fas fa-plus"></i></BSButton>
-                    </div>
+                <div class="options">
+                    @if (ContentItem != null)
+                    {
+                        <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>
+                    }
+                    <BSButton Color="BSColor.Light" title="Select" OnClick="e => Modal.ShowAsync()"><i class="fas fa-plus"></i></BSButton>
                 </div>
-            </BSListGroupItem>
-        </BSListGroup>
-    </div>
+            </div>
+        </BSListGroupItem>
+    </BSListGroup>
+</div>
 
 @code {
 
@@ -67,7 +66,7 @@
     private ContentItem _contentItem;
 
     [Parameter]
-    public ContentItem ContentItem 
+    public ContentItem ContentItem
     {
         get => _contentItem;
         set

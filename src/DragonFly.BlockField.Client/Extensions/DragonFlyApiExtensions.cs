@@ -12,6 +12,9 @@ namespace DragonFly;
 /// </summary>
 public static class DragonFlyApiExtensions
 {
+    /// <summary>
+    /// Registers the <typeparamref name="TBlock"/> with <typeparamref name="TBlockView"/>.
+    /// </summary>
     public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
         where TBlock : Block, new()
         where TBlockView : BlockComponent<TBlock>

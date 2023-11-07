@@ -31,7 +31,7 @@ namespace DragonFly.BlockField;
 
 //defaults
 [JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
-public partial class BlockFieldJsonSerializerContext : JsonSerializerContext
+public partial class BlockFieldSerializerContext : JsonSerializerContext
 {
 
 }

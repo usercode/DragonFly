@@ -21,7 +21,7 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
     {
-        builder.AddJsonTypeInfoResolver(BlockFieldJsonSerializerContext.Default);
+        builder.AddJsonTypeInfoResolver(BlockFieldSerializerContext.Default);
 
         builder.Services.AddSingleton(BlockFieldManager.Default);
 
