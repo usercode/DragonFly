@@ -62,7 +62,7 @@ static class ApiKeysExtensions
 
     private static async Task<Ok<IEnumerable<ApiKey>>> MapQuery(IApiKeyService service)
     {
-        IEnumerable<ApiKey> items = await service.GetAllApiKeys();
+        IEnumerable<ApiKey> items = await service.QueryApiKeys();
 
         return TypedResults.Ok(items);
     }

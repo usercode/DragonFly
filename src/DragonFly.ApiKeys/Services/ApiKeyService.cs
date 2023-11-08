@@ -72,7 +72,7 @@ class ApiKeyService : IApiKeyService
         return result.ToModel();
     }
 
-    public async Task<IEnumerable<ApiKey>> GetAllApiKeys()
+    public async Task<IEnumerable<ApiKey>> QueryApiKeys()
     {
         var result = await Store.ApiKeys.AsQueryable().ToListAsync();
 

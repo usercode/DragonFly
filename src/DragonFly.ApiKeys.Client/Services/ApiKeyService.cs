@@ -24,14 +24,14 @@ class ApiKeyService : IApiKeyService
 
     public async Task CreateApiKey(ApiKey apiKey)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/apikey", apiKey);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/apikey", apiKey, ApiKeysSerializerContext.Default.ApiKey);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task UpdateApiKey(ApiKey apiKey)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("api/apikey", apiKey);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/apikey", apiKey, ApiKeysSerializerContext.Default.ApiKey);
 
         response.EnsureSuccessStatusCode();
     }
@@ -43,13 +43,13 @@ class ApiKeyService : IApiKeyService
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<IEnumerable<ApiKey>> GetAllApiKeys()
+    public async Task<IEnumerable<ApiKey>> QueryApiKeys()
     {
-        HttpResponseMessage response = await Client.PostAsync("api/apikey/query", new StringContent(string.Empty) );
+        HttpResponseMessage response = await Client.PostAsync("api/apikey/query", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
 
-        IEnumerable<ApiKey>? result = await response.Content.ReadFromJsonAsync<IEnumerable<ApiKey>>();
+        IEnumerable<ApiKey>? result = await response.Content.ReadFromJsonAsync(ApiKeysSerializerContext.Default.IEnumerableApiKey);
 
         if (result == null)
         {
@@ -66,7 +66,7 @@ class ApiKeyService : IApiKeyService
 
     public async Task<ApiKey> GetApiKey(Guid id)
     {
-        ApiKey? apikey = await Client.GetFromJsonAsync<ApiKey>($"api/apikey/{id}");
+        ApiKey? apikey = await Client.GetFromJsonAsync<ApiKey>($"api/apikey/{id}", ApiKeysSerializerContext.Default.ApiKey);
 
         if (apikey == null)
         {

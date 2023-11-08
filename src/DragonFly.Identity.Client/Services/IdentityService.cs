@@ -33,7 +33,7 @@ class IdentityService : IIdentityService
 
     public async Task CreateRoleAsync(IdentityRole role)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/role", role);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/role", role, IdentitySerializerContext.Default.IdentityRole);
 
         response.EnsureSuccessStatusCode();
     }
@@ -44,16 +44,16 @@ class IdentityService : IIdentityService
         createUser.User = user;
         createUser.Password = password;
 
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user", createUser);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/identity/user", createUser, IdentitySerializerContext.Default.CreateUser);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<IEnumerable<IdentityRole>> GetRolesAsync()
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/identity/role/query", new StringContent(""));
+        HttpResponseMessage response = await Client.PostAsync($"api/identity/role/query", new StringContent(""));
 
-        IList<IdentityRole>? result = await response.Content.ReadFromJsonAsync<IList<IdentityRole>>();
+        IEnumerable<IdentityRole>? result = await response.Content.ReadFromJsonAsync(IdentitySerializerContext.Default.IEnumerableIdentityRole);
 
         if (result == null)
         {
@@ -65,9 +65,9 @@ class IdentityService : IIdentityService
 
     public async Task<IEnumerable<IdentityUser>> GetUsersAsync()
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync($"api/identity/user/query", new StringContent(""));
+        HttpResponseMessage response = await Client.PostAsync($"api/identity/user/query", new StringContent(""));
 
-        IList<IdentityUser>? result = await response.Content.ReadFromJsonAsync<IList<IdentityUser>>();
+        IEnumerable<IdentityUser>? result = await response.Content.ReadFromJsonAsync(IdentitySerializerContext.Default.IEnumerableIdentityUser);
 
         if (result == null)
         {
@@ -79,7 +79,7 @@ class IdentityService : IIdentityService
 
     public async Task<IdentityUser> GetUserAsync(string username)
     {
-        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"api/identity/user/{username}");
+        IdentityUser? user = await Client.GetFromJsonAsync($"api/identity/user/{username}", IdentitySerializerContext.Default.IdentityUser);
 
         if (user == null)
         {
@@ -91,7 +91,7 @@ class IdentityService : IIdentityService
 
     public async Task<IdentityUser> GetUserAsync(Guid id)
     {
-        IdentityUser? user = await Client.GetFromJsonAsync<IdentityUser>($"api/identity/user/{id}");
+        IdentityUser? user = await Client.GetFromJsonAsync($"api/identity/user/{id}", IdentitySerializerContext.Default.IdentityUser);
 
         if (user == null)
         {
@@ -103,21 +103,21 @@ class IdentityService : IIdentityService
 
     public async Task UpdateUserAsync(IdentityUser user)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/user", user);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/user", user, IdentitySerializerContext.Default.IdentityUser);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task UpdateRoleAsync(IdentityRole role)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/role", role);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/role", role, IdentitySerializerContext.Default.IdentityRole);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task<IdentityRole> GetRoleAsync(Guid id)
     {
-        IdentityRole? role = await Client.GetFromJsonAsync<IdentityRole>($"api/identity/role/{id}");
+        IdentityRole? role = await Client.GetFromJsonAsync($"api/identity/role/{id}", IdentitySerializerContext.Default.IdentityRole);
 
         if (role == null)
         {

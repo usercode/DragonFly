@@ -50,7 +50,7 @@ internal static class UserExtensions
         return TypedResults.Ok();
     }
 
-    private static async Task<Ok<IEnumerable<IdentityUser>>> MapQuery(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok<IEnumerable<IdentityUser>>> MapQuery(IIdentityService identityService)
     {
         IEnumerable<IdentityUser> users = await identityService.GetUsersAsync();
 

@@ -39,6 +39,6 @@ public class ApiKeyListBase : EntityListComponent<ApiKey>
 
     protected override async Task RefreshActionAsync()
     {
-        Items = await ApiKeyService.GetAllApiKeys();
+        Items = await ApiKeyService.QueryApiKeys();
     }
 }

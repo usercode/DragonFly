@@ -39,6 +39,6 @@ class LoginService : ILoginService
             return null;
         }
 
-        return await response.Content.ReadFromJsonAsync<IdentityUser>();
+        return await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.IdentityUser);
     }
 }
