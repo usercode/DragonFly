@@ -9,6 +9,7 @@ using DragonFly.Identity.Rest.Commands;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.AspNetCore.Identity;
@@ -28,48 +29,38 @@ internal static class UserExtensions
         return endpoints;
     }
 
-    private static async Task MapGet(HttpContext context, IIdentityService identityService, Guid id)
+    private static async Task<Results<Ok<IdentityUser>, NotFound>> MapGet(IIdentityService identityService, Guid id)
     {
         IdentityUser user = await identityService.GetUserAsync(id);
 
-        await context.Response.WriteAsJsonAsync(user);
+        return TypedResults.Ok(user);
     }
 
-    private static async Task MapCreate(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok> MapCreate(CreateUser createUser, IIdentityService identityService)
     {
-        CreateUser? createUser = await context.Request.ReadFromJsonAsync<CreateUser>();
-
-        if (createUser == null)
-        {
-            throw new Exception();
-        }
-
         await identityService.CreateUserAsync(createUser.User, createUser.Password);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapUpdate(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok> MapUpdate(IdentityUser user, IIdentityService identityService)
     {
-        IdentityUser? user = await context.Request.ReadFromJsonAsync<IdentityUser>();
-
         await identityService.UpdateUserAsync(user);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapQuery(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok<IEnumerable<IdentityUser>>> MapQuery(HttpContext context, IIdentityService identityService)
     {
         IEnumerable<IdentityUser> users = await identityService.GetUsersAsync();
 
-        await context.Response.WriteAsJsonAsync(users);
+        return TypedResults.Ok(users);
     }
 
-    private static async Task MapChangePassword(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok> MapChangePassword(ChangePassword changePassword, IIdentityService identityService)
     {
-        ChangePassword? changePassword = await context.Request.ReadFromJsonAsync<ChangePassword>();
-
-        if (changePassword == null)
-        {
-            throw new ArgumentException(nameof(changePassword));
-        }
-
         await identityService.ChangePasswordAsync(changePassword.UserId, changePassword.NewPassword);
+
+        return TypedResults.Ok();
     }
 }

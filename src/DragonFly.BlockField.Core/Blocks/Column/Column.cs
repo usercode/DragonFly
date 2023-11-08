@@ -11,8 +11,6 @@ public class Column
 {
     public Column()
     {
-        Width = ColumnWidth.Max;
-        Blocks = new List<Block>();
     }
 
     public Column(params Block[] blocks)
@@ -24,10 +22,10 @@ public class Column
     /// <summary>
     /// Width
     /// </summary>
-    public ColumnWidth Width { get; set; }
+    public ColumnWidth Width { get; set; } = ColumnWidth.Max;
 
     /// <summary>
     /// Blocks
     /// </summary>
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 }

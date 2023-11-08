@@ -22,10 +22,10 @@ static class ApiKeysExtensions
         group.MapPost("query", MapQuery).RequirePermission(ApiKeyPermissions.QueryApiKey);
         group.MapPost("", MapCreate).RequirePermission(ApiKeyPermissions.CreateApiKey);
         group.MapPut("", MapUpdate).RequirePermission(ApiKeyPermissions.UpdateApiKey);
-        group.MapDelete("", MapDelete).RequirePermission(ApiKeyPermissions.DeleteApiKey);
+        group.MapDelete("{id:guid}", MapDelete).RequirePermission(ApiKeyPermissions.DeleteApiKey);
     }
 
-    private static async Task<Results<Ok<ApiKey>, NotFound>> MapGet(HttpContext context, IApiKeyService service, Guid id)
+    private static async Task<Results<Ok<ApiKey>, NotFound>> MapGet(Guid id, IApiKeyService service)
     {
         ApiKey? entity = await service.GetApiKey(id);
 
@@ -37,52 +37,33 @@ static class ApiKeysExtensions
         return TypedResults.Ok(entity);
     }
 
-    private static async Task<Results<Ok, BadRequest>> MapCreate(HttpContext context, IApiKeyService service)
+    private static async Task<Ok> MapCreate(ApiKey apiKey1, IApiKeyService service)
     {
-        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
-
-        if (entity == null)
-        {
-            return TypedResults.BadRequest();
-        }
-
-        await service.CreateApiKey(entity);
+        await service.CreateApiKey(apiKey1);
 
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, BadRequest>> MapUpdate(HttpContext context, IApiKeyService service)
+    private static async Task<Ok> MapUpdate(ApiKey apiKey2, IApiKeyService service)
     {
-        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
-
-        if (entity == null)
-        {
-            return TypedResults.BadRequest();
-        }
-
-        await service.UpdateApiKey(entity);
+        await service.UpdateApiKey(apiKey2);
 
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<Ok, NotFound>> MapDelete(HttpContext context, IApiKeyService service)
+    private static async Task<Ok> MapDelete(Guid id, IApiKeyService service)
     {
-        ApiKey? entity = await context.Request.ReadFromJsonAsync<ApiKey>();
+        var apikey = await service.GetApiKey(id);
 
-        if (entity == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        await service.DeleteApiKey(entity);
+        await service.DeleteApiKey(apikey);
 
         return TypedResults.Ok();
     }
 
-    private static async Task MapQuery(HttpContext context, IApiKeyService service)
+    private static async Task<Ok<IEnumerable<ApiKey>>> MapQuery(IApiKeyService service)
     {
         IEnumerable<ApiKey> items = await service.GetAllApiKeys();
 
-        await context.Response.WriteAsJsonAsync(items);
+        return TypedResults.Ok(items);
     }
 }

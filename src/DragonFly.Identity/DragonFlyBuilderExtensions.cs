@@ -22,10 +22,7 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
     {
-        builder.Services.Configure<JsonOptions>(opt =>
-        {
-            opt.SerializerOptions.TypeInfoResolverChain.Add(ApiJsonSerializerContext.Default);
-        });
+        builder.AddJsonTypeInfoResolver(IdentitySerializerContext.Default);
 
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
@@ -37,11 +34,6 @@ public static class DragonFlyBuilderExtensions
         builder.Authentication.AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
 
         builder.AddPermissionScheme(IdentityAuthenticationDefaults.AuthenticationScheme);
-
-        builder.Services.Configure<JsonOptions>(opt =>
-        {
-            //opt.SerializerOptions.AddJsonContext<ApiJsonSerializerContext>();
-        });
 
         builder.Init(api =>
         {

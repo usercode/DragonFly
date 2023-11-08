@@ -11,8 +11,6 @@ public class AlertBlock : Block, IChildBlocks
 {
     public AlertBlock()
     {
-        ColorType = ColorType.Info;
-        Blocks = new List<Block>();
     }
 
     public AlertBlock(ColorType colorType, params Block[] blocks)
@@ -24,9 +22,9 @@ public class AlertBlock : Block, IChildBlocks
 
     public override string CssIcon => "fa-solid fa-circle-info";
 
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 
-    public ColorType ColorType { get; set; }
+    public ColorType ColorType { get; set; } = ColorType.Info;
 
     public IEnumerable<Block> GetBlocks()
     {

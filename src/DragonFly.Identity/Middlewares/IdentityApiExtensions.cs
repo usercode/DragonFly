@@ -44,7 +44,7 @@ internal static class IdentityApiExtensions
         }
     }
 
-    private static async Task<Ok<IdentityUser>> CurrentUserAsync(HttpContext context, ILoginService service)
+    private static async Task<Ok<IdentityUser>> CurrentUserAsync(ILoginService service)
     {
         IdentityUser? currentUser = await service.GetCurrentUserAsync();
 

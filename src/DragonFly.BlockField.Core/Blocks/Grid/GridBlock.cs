@@ -11,9 +11,6 @@ public class GridBlock : Block, IChildBlocks
 {
     public GridBlock()
     {
-        Columns = new List<GridSpan>();
-        Rows = new List<GridSpan>();
-        Items = new List<GridItem>();
     }
 
     public GridBlock(params GridSpan[] columns)
@@ -27,17 +24,17 @@ public class GridBlock : Block, IChildBlocks
     /// <summary>
     /// Columns
     /// </summary>
-    public IList<GridSpan> Columns { get; set; }
+    public IList<GridSpan> Columns { get; set; } = new List<GridSpan>();
 
     /// <summary>
     /// Rows
     /// </summary>
-    public IList<GridSpan> Rows { get; set; }
+    public IList<GridSpan> Rows { get; set; } = new List<GridSpan>();
 
     /// <summary>
     /// Items
     /// </summary>
-    public IList<GridItem> Items { get; set; }
+    public IList<GridItem> Items { get; set; } = new List<GridItem>();
 
     public IEnumerable<Block> GetBlocks() => Items.Select(x => x.Block);
 }

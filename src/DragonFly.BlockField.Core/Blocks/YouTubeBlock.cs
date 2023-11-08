@@ -11,7 +11,7 @@ public class YouTubeBlock : Block
 
     }
 
-    public YouTubeBlock(string videoId)
+    public YouTubeBlock(string? videoId)
     {
         VideoId = videoId;
     }

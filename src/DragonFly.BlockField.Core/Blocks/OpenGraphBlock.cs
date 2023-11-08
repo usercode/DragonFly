@@ -14,7 +14,7 @@ public class OpenGraphBlock : Block
 
     }
 
-    public OpenGraphBlock(string url)
+    public OpenGraphBlock(string? url)
         : this()
     {
         Url = url;

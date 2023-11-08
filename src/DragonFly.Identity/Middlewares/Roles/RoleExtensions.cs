@@ -7,6 +7,7 @@ using DragonFly.Identity.Permissions;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 
 namespace DragonFly.AspNetCore.Identity;
@@ -25,31 +26,31 @@ internal static class RoleExtensions
         return endpoints;
     }
 
-    private static async Task MapGet(HttpContext context, IIdentityService identityService, Guid id)
+    private static async Task<Ok<IdentityRole>> MapGet(IIdentityService identityService, Guid id)
     {
         IdentityRole role = await identityService.GetRoleAsync(id);
 
-        await context.Response.WriteAsJsonAsync(role);
+        return TypedResults.Ok(role);
     }
 
-    private static async Task MapCreate(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok> MapCreate(IdentityRole role, IIdentityService identityService)
     {
-        IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
-
         await identityService.CreateRoleAsync(role);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapUpdate(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok> MapUpdate(IdentityRole role, IIdentityService identityService)
     {
-        IdentityRole? role = await context.Request.ReadFromJsonAsync<IdentityRole>();
-
         await identityService.UpdateRoleAsync(role);
+
+        return TypedResults.Ok();
     }
 
-    private static async Task MapQuery(HttpContext context, IIdentityService identityService)
+    private static async Task<Ok<IEnumerable<IdentityRole>>> MapQuery(HttpContext context, IIdentityService identityService)
     {
         IEnumerable<IdentityRole> users = await identityService.GetRolesAsync();
 
-        await context.Response.WriteAsJsonAsync(users);
+        return TypedResults.Ok(users);
     }
 }

@@ -11,13 +11,12 @@ public class Document : IChildBlocks
 {
     public Document()
     {
-        Blocks = new List<Block>();
     }
 
     /// <summary>
     /// Blocks
     /// </summary>
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 
     public IEnumerable<Block> GetBlocks()
     {

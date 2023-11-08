@@ -36,9 +36,11 @@ class ApiKeyService : IApiKeyService
         response.EnsureSuccessStatusCode();
     }
 
-    public Task DeleteApiKey(ApiKey apiKey)
+    public async Task DeleteApiKey(ApiKey apiKey)
     {
-        throw new NotImplementedException();
+        HttpResponseMessage response = await Client.DeleteAsync($"api/apikey/{apiKey.Id}");
+
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task<IEnumerable<ApiKey>> GetAllApiKeys()

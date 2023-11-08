@@ -11,12 +11,11 @@ public class SlideshowBlock : Block, IChildBlocks
 {
     public SlideshowBlock()
     {
-        Blocks = new List<Block>();
     }
 
     public override string CssIcon => "fa-regular fa-images";
 
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 
     public IEnumerable<Block> GetBlocks()
     {

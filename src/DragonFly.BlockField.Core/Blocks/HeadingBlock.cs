@@ -11,7 +11,6 @@ public class HeadingBlock : Block
 {
     public HeadingBlock()
     {
-        HeadingType = HeadingType.H1;
     }
 
     public HeadingBlock(HeadingType type, string text)
@@ -36,5 +35,5 @@ public class HeadingBlock : Block
     /// <summary>
     /// HeadingType
     /// </summary>
-    public HeadingType HeadingType { get; set; }
+    public HeadingType HeadingType { get; set; } = HeadingType.H1;
 }

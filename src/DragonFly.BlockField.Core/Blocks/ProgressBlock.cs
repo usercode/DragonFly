@@ -11,10 +11,9 @@ public class ProgressBlock : Block
 {
     public ProgressBlock()
     {
-        ColorType = ColorType.Primary;
     }
 
-    public ProgressBlock(ColorType colorType, int value)
+    public ProgressBlock(ColorType colorType, int? value)
         : this()
     {
         ColorType = colorType;
@@ -25,5 +24,5 @@ public class ProgressBlock : Block
 
     public int? Value { get; set; }
 
-    public ColorType ColorType { get; set; }
+    public ColorType ColorType { get; set; } = ColorType.Primary;
 }

@@ -11,7 +11,6 @@ public class ColumnBlock : Block, IChildBlocks
 {
     public ColumnBlock()
     {
-        Columns = new List<Column>();
     }
 
     public ColumnBlock(params Column[] columns)
@@ -25,7 +24,7 @@ public class ColumnBlock : Block, IChildBlocks
     /// <summary>
     /// Columns
     /// </summary>
-    public IList<Column> Columns { get; set; }
+    public IList<Column> Columns { get; set; } = new List<Column>();
 
     /// <summary>
     /// HorizontalAlignment

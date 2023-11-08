@@ -11,12 +11,11 @@ public class ContainerBlock : Block, IChildBlocks
 {
     public ContainerBlock()
     {
-        Blocks = new List<Block>();
     }
 
     public override string CssIcon => "fa-regular fa-square";
 
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = new List<Block>();
 
     public IEnumerable<Block> GetBlocks()
     {

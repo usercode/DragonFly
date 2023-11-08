@@ -9,6 +9,16 @@ namespace DragonFly.BlockField;
 /// </summary>
 public class TextBlock : Block
 {
+    public TextBlock()
+    {
+            
+    }
+
+    public TextBlock(string? text)
+    {
+        Text = text;
+    }
+
     public override string CssIcon => "fa-solid fa-align-left";
 
     public string? Text { get; set; }

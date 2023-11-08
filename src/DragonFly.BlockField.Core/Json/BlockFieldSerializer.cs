@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-global using CurrentBlockSerializer = DragonFly.BlockField.BlockFieldSerializerV1;
+using CurrentBlockSerializer = DragonFly.BlockField.BlockFieldSerializerV1;
 
 using System.Text.Json;
 

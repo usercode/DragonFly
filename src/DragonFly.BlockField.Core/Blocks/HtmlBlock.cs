@@ -13,7 +13,7 @@ public class HtmlBlock : Block
     {
     }
 
-    public HtmlBlock(string html)
+    public HtmlBlock(string? html)
         : this()
     {
         HtmlText = html;

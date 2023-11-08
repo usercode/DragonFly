@@ -17,9 +17,7 @@ public class BlockFieldAttribute : BaseFieldAttribute
         schema.AddField(
                                 name: property,
                                 fieldType: typeof(BlockField.BlockField),
-                                options: new BlockFieldOptions()
-                                {
-                                },
+                                options: new BlockFieldOptions(),
                                 sortkey: schema.Fields.Count
                                 );
     }
