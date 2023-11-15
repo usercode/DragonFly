@@ -66,7 +66,7 @@ class ApiKeyService : IApiKeyService
 
     public async Task<ApiKey> GetApiKey(Guid id)
     {
-        ApiKey? apikey = await Client.GetFromJsonAsync<ApiKey>($"api/apikey/{id}", ApiKeysSerializerContext.Default.ApiKey);
+        ApiKey? apikey = await Client.GetFromJsonAsync($"api/apikey/{id}", ApiKeysSerializerContext.Default.ApiKey);
 
         if (apikey == null)
         {

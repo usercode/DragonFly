@@ -2,9 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-
 namespace DragonFly.WebHooks;
 
 /// <summary>

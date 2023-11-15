@@ -15,14 +15,14 @@ public interface IAssetProcessingContext
     Asset Asset { get; }
 
     /// <summary>
-    /// SetMetadataAsync
+    /// Writes metadata to the asset.
     /// </summary>
     /// <param name="metadata"></param>
     /// <returns></returns>
     Task SetMetadataAsync(AssetMetadata metadata);
 
     /// <summary>
-    /// OpenAssetStreamAsync
+    /// Opens the stream of the asset.
     /// </summary>
     /// <returns></returns>
     Task<Stream> OpenAssetStreamAsync();

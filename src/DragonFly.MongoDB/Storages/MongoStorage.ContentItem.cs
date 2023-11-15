@@ -289,7 +289,7 @@ public partial class MongoStorage : IContentStorage
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(content.Schema.Name, true);
 
-        //find contentitem
+        //find content
         MongoContentItem found = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
 
         if (found == null)
@@ -297,7 +297,7 @@ public partial class MongoStorage : IContentStorage
             throw new Exception($"Content item not found: {content.Schema.Name}/{content.Id}");
         }
 
-        //add contentitem to published collection
+        //add content to published collection
         await published.ReplaceOneAsync(
                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id), found, new ReplaceOptions() { IsUpsert = true });
 
@@ -306,7 +306,7 @@ public partial class MongoStorage : IContentStorage
                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
                     Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
 
-        //refresh contentitem
+        //refresh content
         content = await GetContentAsync(content.Schema.Name, content.Id);
 
         if (content == null)
