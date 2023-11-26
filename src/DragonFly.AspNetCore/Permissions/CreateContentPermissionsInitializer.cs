@@ -4,7 +4,6 @@
 
 using DragonFly.Init;
 using DragonFly.Permissions;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.AspNetCore;
 

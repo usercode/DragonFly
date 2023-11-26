@@ -73,11 +73,8 @@ public static class ApiPermissionExtensions
     }
 
     /// <summary>
-    /// AuthorizeContentAsync
+    /// Authorizes access to a content item.
     /// </summary>
-    /// <param name="api"></param>
-    /// <param name="schema"></param>
-    /// <returns></returns>
     public static async Task<bool> AuthorizeContentAsync(this IDragonFlyApi api, string schema, ContentAction action)
     {
         Permission permission = ContentPermissions.Create(schema, action);
@@ -88,9 +85,6 @@ public static class ApiPermissionExtensions
     /// <summary>
     /// Authorizes a permission.
     /// </summary>
-    /// <param name="api"></param>
-    /// <param name="permission"></param>
-    /// <returns></returns>
     public static async Task<bool> AuthorizeAsync(this IDragonFlyApi api, Permission permission)
     {
         ClaimsPrincipal? principal = PermissionPrincipal.GetCurrent();
@@ -102,7 +96,7 @@ public static class ApiPermissionExtensions
 
         IAuthorizationService authorizationService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.GetPolicyName());
+        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy());
 
         return result.Succeeded;
     }

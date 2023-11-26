@@ -15,7 +15,7 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
     {
-        builder.Services.Configure<JsonOptions>(opt =>
+        builder.Services.ConfigureHttpJsonOptions(opt =>
         {
             opt.SerializerOptions.TypeInfoResolver = ApiJsonSerializerDefault.Options.TypeInfoResolver;
         });
