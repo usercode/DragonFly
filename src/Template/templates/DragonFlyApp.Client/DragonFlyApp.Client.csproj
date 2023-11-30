@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Client" Version="1.0.1" />
-    <PackageReference Include="DragonFly.API.Client" Version="1.0.1" />
-    <PackageReference Include="DragonFly.ApiKeys.Client" Version="1.0.1" />
-    <PackageReference Include="DragonFly.BlockField.Client" Version="1.0.1" />
-    <PackageReference Include="DragonFly.Identity.Client" Version="1.0.1" />    
+    <PackageReference Include="DragonFly.Client" Version="1.0.2" />
+    <PackageReference Include="DragonFly.API.Client" Version="1.0.2" />
+    <PackageReference Include="DragonFly.ApiKeys.Client" Version="1.0.2" />
+    <PackageReference Include="DragonFly.BlockField.Client" Version="1.0.2" />
+    <PackageReference Include="DragonFly.Identity.Client" Version="1.0.2" />    
   </ItemGroup>
 
   <ItemGroup>

@@ -17,12 +17,10 @@ public class DataSeeding
     public DataSeeding(
         IContentStorage contentStorage,
         IAssetStorage assetStorage,
-        IDragonFlyApi api,
         ISlugService slugService)
     {
         ContentStorage = contentStorage;
         AssetStorage = assetStorage;
-        Api = api;
         SlugService = slugService;
     }
 
@@ -35,11 +33,6 @@ public class DataSeeding
     /// AssetStorage
     /// </summary>
     private IAssetStorage AssetStorage { get; }
-
-    /// <summary>
-    /// Api
-    /// </summary>
-    private IDragonFlyApi Api { get; }
 
     /// <summary>
     /// SlugService
