@@ -65,7 +65,7 @@ public class DataSeeding
         document.Blocks.Add(new ColumnBlock(
                                 new Column(
                                        new CodeBlock(CodeType.CSharp, """
-                                                        [ContentItem("StandardPage")]
+                                                        [ContentItem]
                                                         public class StandardPageModel : EntityPageModel
                                                         {
                                                             [StringField(Required = true, ListField = true)]

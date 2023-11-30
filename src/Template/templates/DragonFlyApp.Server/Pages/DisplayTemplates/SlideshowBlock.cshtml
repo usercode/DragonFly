@@ -9,7 +9,7 @@
                 {
                     <div class="carousel-item @(i == 0 ? "active" : "")">
                         <div class="carousel-subitem">
-                            @Html.DisplayFor(m => Model.Blocks[i], Model.Blocks[i].GetType())
+                            @Html.DisplayFor(m => Model.Blocks[i], Model.Blocks[i].GetType().Name)
                         </div>
                     </div>
                 }
