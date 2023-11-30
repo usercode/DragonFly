@@ -8,7 +8,7 @@ using DragonFly.Generator;
 
 namespace DragonFlyTemplate.Models;
 
-[ContentItem("StandardPage")]
+[ContentItem]
 public partial class StandardPageModel
 {
     [StringField(Required = true, ListField = true)]

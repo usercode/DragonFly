@@ -8,7 +8,7 @@ using DragonFly.Generator;
 
 namespace DragonFlyTemplate.Models;
 
-[ContentItem("BlogPost")]
+[ContentItem]
 public partial class BlogPostModel
 {
     [DateField(Required = true)]

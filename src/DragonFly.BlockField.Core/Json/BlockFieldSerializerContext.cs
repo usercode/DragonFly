@@ -17,6 +17,7 @@ namespace DragonFly.BlockField;
 [JsonSerializable(typeof(AssetBlock))]
 [JsonSerializable(typeof(CardsBlock))]
 [JsonSerializable(typeof(ContainerBlock))]
+[JsonSerializable(typeof(ColumnBlock))]
 [JsonSerializable(typeof(HeadingBlock))]
 [JsonSerializable(typeof(HtmlBlock))]
 [JsonSerializable(typeof(OpenGraphBlock))]

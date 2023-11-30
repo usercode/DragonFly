@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Core" Version="0.9.31" />
+    <PackageReference Include="DragonFly.Core" Version="1.0.1" />
   </ItemGroup>
 
 <ItemGroup>
-    <PackageReference Include="DragonFly.Generator" Version="0.9.31">
+    <PackageReference Include="DragonFly.Generator" Version="1.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
