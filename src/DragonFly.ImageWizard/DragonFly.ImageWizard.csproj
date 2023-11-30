@@ -16,6 +16,7 @@
     <MinVerTagPrefix>v</MinVerTagPrefix>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <NoWarn>CS1591</NoWarn>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
 	<ItemGroup>		
