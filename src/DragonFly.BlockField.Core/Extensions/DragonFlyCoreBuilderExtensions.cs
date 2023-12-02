@@ -2,13 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore.Builders;
 using DragonFly.BlockField;
-using DragonFly.Core;
+using DragonFly.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.AspNetCore;
+namespace DragonFly.Core;
 
-public static class DragonFlyBuilderExtensions
+public static class DragonFlyCoreBuilderExtensions
 {
     /// <summary>
     /// Adds a block field.<br />
@@ -19,9 +19,17 @@ public static class DragonFlyBuilderExtensions
     /// <see cref="HeadingBlock"/>, <see cref="TextBlock"/>, <see cref="HtmlBlock"/>, <see cref="CodeBlock"/>, <see cref="QuoteBlock"/>, <see cref="AlertBlock"/>, <see cref="ProgressBlock"/> <br/>
     /// <see cref="YouTubeBlock"/>, <see cref="OpenGraphBlock"/>
     /// </summary>
-    public static IDragonFlyBuilder AddBlockField(this IDragonFlyBuilder builder)
+    public static IDragonFlyBuilder AddBlockFieldCore(this IDragonFlyBuilder builder)
     {
-        builder.AddBlockFieldCore();
+        builder.AddRestSerializerResolver(BlockFieldSerializerContext.Default);
+
+        builder.Services.AddSingleton(BlockFieldManager.Default);
+
+        builder.Init(api =>
+        {
+            api.BlockField().AddDefaults();
+            api.ContentField().Add<BlockField.BlockField>();
+        });
 
         return builder;
     }

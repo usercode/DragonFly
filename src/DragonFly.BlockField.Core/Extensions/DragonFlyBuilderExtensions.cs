@@ -10,7 +10,8 @@ namespace DragonFly;
 
 public static class DragonFlyBuilderExtensions
 {
-    public static IDragonFlyBuilder AddJsonBlockTypeInfoResolver(this IDragonFlyBuilder builder, IJsonTypeInfoResolver resolver)
+    public static TDragonFlyBuilder AddBlockFieldSerializerResolver<TDragonFlyBuilder>(this TDragonFlyBuilder builder, IJsonTypeInfoResolver resolver)
+        where TDragonFlyBuilder : IDragonFlyBuilder
     {
         BlockFieldSerializer.Options.TypeInfoResolverChain.Add(resolver);
 

@@ -4,6 +4,7 @@
 
 using Blazored.Toast;
 using BlazorStrap;
+using DragonFly.Core;
 using DragonFly.Init;
 using DragonFly.Client.Builders;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -41,7 +42,7 @@ public static class DragonFlyClientExtensions
     private static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
     {
         var builder = new DragonFlyBuilder(hostBuilder.Services);
-
+        builder.AddCore();
         builder.AddRazorRouting();
 
         builder.Services.AddBlazoredToast();
@@ -54,11 +55,7 @@ public static class DragonFlyClientExtensions
 
         builder.Services.AddSingleton(DragonFlyApp.Default);
         builder.Services.AddSingleton(ComponentManager.Default);
-        builder.Services.AddSingleton(FieldManager.Default);
-        builder.Services.AddSingleton(AssetMetadataManager.Default);
         builder.Services.AddSingleton(AssetPreviewManager.Default);
-
-        builder.Services.AddSingleton<ISlugService, SlugService>();
 
         builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
 

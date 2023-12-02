@@ -1,0 +1,102 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div @ref="@ToolBar">
+    @ToolbarContent
+</div>
+
+<div @ref="@QuillElement">
+    @EditorContent
+</div>
+
+@code {
+    [Parameter] public RenderFragment EditorContent { get; set; }
+    [Parameter] public RenderFragment ToolbarContent { get; set; }
+    [Parameter] public bool ReadOnly { get; set; } = false;
+    [Parameter] public string Placeholder { get; set; } = "Insert text here...";
+    [Parameter] public string Theme { get; set; } = "snow";
+    [Parameter] public string DebugLevel { get; set; } = "info";
+
+    private string _htmlValue;
+
+    [Parameter] 
+    public string HtmlValue 
+    {
+        get => _htmlValue;
+        set
+        {
+            if (_htmlValue != value)
+            {
+                _htmlValue = value;
+
+                HtmlValueChanged?.Invoke(value);
+            }
+        }
+    }
+
+    [Parameter] public Action<string> HtmlValueChanged { get; set; }
+
+    // [JSInvokable]
+    // public async Task OnCustomEvent(EventArgs args)
+    // {
+        
+    // }
+
+    private ElementReference QuillElement;
+    private ElementReference ToolBar;
+
+    protected override async Task
+        OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await QuillInterop.CreateQuill(
+                JSRuntime,
+                QuillElement,
+                ToolBar,
+                ReadOnly,
+                Placeholder,
+                Theme,
+                DebugLevel);
+
+            await SetHTML(HtmlValue);
+
+            //var Reference = DotNetObjectReference.Create(OnCustomEvent);
+            // addCustomEventListener will be a js function we create later
+            //await JSRuntime.InvokeAsync<string>("addCustomEventListener", Reference);
+        }
+    }
+
+    public async ValueTask<string> GetText()
+    {
+        return await QuillInterop.GetText(JSRuntime, QuillElement);
+    }
+
+    public async ValueTask<string> GetHTML()
+    {
+        return await QuillInterop.GetHTML(JSRuntime, QuillElement);
+    }
+    public async ValueTask SetHTML(string html)
+    {
+        await QuillInterop.SetHTML(JSRuntime, QuillElement, html);
+    }
+
+    public async ValueTask<string> GetContent()
+    {
+        return await QuillInterop.GetContent(JSRuntime, QuillElement);
+    }
+
+    public async ValueTask LoadContent(string Content)
+    {
+        var QuillDelta = await QuillInterop.LoadQuillContent(JSRuntime, QuillElement, Content);
+    }
+
+    public async ValueTask EnableEditor(bool mode)
+    {
+        var QuillDelta = await QuillInterop.EnableQuillEditor(JSRuntime, QuillElement, mode);
+    }
+
+    public async ValueTask InsertImage(string ImageURL)
+    {
+        var QuillDelta = await QuillInterop.InsertQuillImage(JSRuntime, QuillElement, ImageURL);
+    }
+}

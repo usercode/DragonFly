@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using SixLabors.ImageSharp;
+
 namespace DragonFly.AspNetCore;
 
 /// <summary>

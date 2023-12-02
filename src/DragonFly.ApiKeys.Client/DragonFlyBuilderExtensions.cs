@@ -15,7 +15,7 @@ public static class DragonFlyBuilderExtensions
     public static IDragonFlyBuilder AddApiKeys(this IDragonFlyBuilder builder)
     {
         builder.AddRazorRouting();
-        builder.AddJsonTypeInfoResolver(ApiKeysSerializerContext.Default);
+        builder.AddRestSerializerResolver(ApiKeysSerializerContext.Default);
 
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 

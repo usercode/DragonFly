@@ -9,7 +9,6 @@ namespace DragonFly.Client;
 /// <summary>
 /// FieldComponent
 /// </summary>
-/// <typeparam name="TContentField"></typeparam>
 public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent
     where TField : ContentField
 {

@@ -19,10 +19,12 @@ public class PdfProcessing : IAssetProcessing
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
-        using Stream stream = await context.OpenAssetStreamAsync();
-
         MemoryStream mem = new MemoryStream();
-        await stream.CopyToAsync(mem);
+
+        using (Stream stream = await context.OpenAssetStreamAsync())
+        {   
+            await stream.CopyToAsync(mem);
+        }
 
         mem.Seek(0, SeekOrigin.Begin);
 

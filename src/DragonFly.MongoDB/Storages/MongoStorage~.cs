@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNetCore;
 using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields;
 using Microsoft.Extensions.Logging;

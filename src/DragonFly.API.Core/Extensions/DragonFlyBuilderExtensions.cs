@@ -16,7 +16,8 @@ public static class DragonFlyBuilderExtensions
     /// <param name="builder"></param>
     /// <param name="resolver"></param>
     /// <returns></returns>
-    public static IDragonFlyBuilder AddJsonTypeInfoResolver(this IDragonFlyBuilder builder, IJsonTypeInfoResolver resolver)
+    public static TDragonFlyBuilder AddRestSerializerResolver<TDragonFlyBuilder>(this TDragonFlyBuilder builder, IJsonTypeInfoResolver resolver)
+        where TDragonFlyBuilder : IDragonFlyBuilder
     {
         ApiJsonSerializerDefault.Options.TypeInfoResolverChain.Add(resolver);
 

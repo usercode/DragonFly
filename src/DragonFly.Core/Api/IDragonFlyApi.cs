@@ -6,7 +6,5 @@ namespace DragonFly;
 
 public interface IDragonFlyApi
 {
-    Task InitAsync();
-
     IServiceProvider ServiceProvider { get; }
 }

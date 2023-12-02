@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly;
+namespace DragonFly.AspNetCore;
 
 public interface IBackgroundTaskManager : IBackgroundTaskService
 {

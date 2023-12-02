@@ -2,17 +2,30 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.API;
 using DragonFly.API.Client;
 using DragonFly.Client.Builders;
+using DragonFly.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Client;
 
 public static class StartupExtensions
 {
-    public static IDragonFlyBuilder AddRestApi(this IDragonFlyBuilder builder)
+    /// <summary>
+    /// Adds storages for REST.<br />
+    /// <br />
+    /// Default services:<br />
+    /// <see cref="IContentStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="ISchemaStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="IAssetStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="IAssetFolderStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="IWebHookStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="IBackgroundTaskService"/> -> <see cref="ClientContentService"/>
+    /// </summary>
+    public static IDragonFlyBuilder AddRestClient(this IDragonFlyBuilder builder)
     {
+        builder.AddRestApiCore();
+
         builder.Services.AddTransient<ClientContentService>();
         builder.Services.AddTransient<IContentStorage, ClientContentService>();
         builder.Services.AddTransient<ISchemaStorage, ClientContentService>();
@@ -21,12 +34,6 @@ public static class StartupExtensions
         builder.Services.AddTransient<IAssetStorage, ClientContentService>();
         builder.Services.AddTransient<IAssetFolderStorage, ClientContentService>();
         builder.Services.AddTransient<IBackgroundTaskService, ClientContentService>();
-
-        builder.Init(api =>
-        {
-            api.JsonFields().AddDefaults();
-            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
-        });
 
         return builder;
     }

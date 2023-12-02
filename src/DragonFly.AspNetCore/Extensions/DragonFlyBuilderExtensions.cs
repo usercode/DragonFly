@@ -4,10 +4,10 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using DragonFly.Core;
 using DragonFly.Init;
 using DragonFly.Permissions;
 using DragonFly.AspNetCore.Builders;
-using DragonFly.WebHooks;
 
 namespace DragonFly.AspNetCore;
 
@@ -17,7 +17,7 @@ namespace DragonFly.AspNetCore;
 public static class DragonFlyBuilderExtensions
 {
     /// <summary>
-    /// Adds the DragonFly services.
+    /// Adds DragonFly services.
     /// <br /><br />
     /// Default fields: <br />
     /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/><br />
@@ -35,39 +35,34 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
-        services.AddSingleton<IDateTimeService, LocalDateTimeService>();
-        services.AddSingleton<ISlugService, SlugService>();
-        services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
-
-        //manager
-        services.AddSingleton(FieldManager.Default);
-        services.AddSingleton(AssetMetadataManager.Default);
-        services.AddSingleton(PermissionManager.Default);
-
-        services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
-
-        //assets
-        services.AddTransient<IAssetProcessing, ImageProcessing>();
-        services.AddTransient<IAssetProcessing, PdfProcessing>();
-
-        //services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-
-        //auth
         AuthenticationBuilder authenticationBuilder = services.AddAuthentication();
         services.AddAuthorization();
 
-        services.AddSignalR();        
-
         IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
         builder
+            .AddCore()
             .Init(api =>
             {
-                api.ContentField().AddDefaults();
-                api.AssetMetadata().AddDefaults();
                 api.Permission().AddDefaults();
             })
             .PostInit<CreateContentPermissionsInitializer>();
+
+        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
+        builder.Services.AddSingleton<IDateTimeService, LocalDateTimeService>();
+        builder.Services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
+
+        //manager
+        builder.Services.AddSingleton(PermissionManager.Default);
+
+        builder.Services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
+
+        //assets
+        builder.Services.AddTransient<IAssetProcessing, ImageProcessing>();
+        builder.Services.AddTransient<IAssetProcessing, PdfProcessing>();
+
+        //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+
+        builder.Services.AddSignalR();        
 
         return builder;
     }

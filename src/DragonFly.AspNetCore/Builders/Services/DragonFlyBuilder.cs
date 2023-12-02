@@ -25,5 +25,5 @@ public class DragonFlyBuilder : IDragonFlyBuilder
     /// <summary>
     /// AuthenticationBuilder
     /// </summary>
-    public AuthenticationBuilder Authentication { get; set; }
+    public AuthenticationBuilder Authentication { get; }
 }

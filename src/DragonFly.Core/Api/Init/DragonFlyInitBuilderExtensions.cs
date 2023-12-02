@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly;
 
-public static class DragonFlyBuilderExtensions
+public static class DragonFlyInitBuilderExtensions
 {
     public static TBuilder Init<TBuilder>(this TBuilder builder, Action<IDragonFlyApi> action, [CallerMemberName] string name = "")
         where TBuilder : IDragonFlyBuilder

@@ -28,8 +28,6 @@ public class StartComponentBase : ComponentBase
 
         _init = true;
 
-        Console.WriteLine("InitAsync");
-
         await InitActionAsync();
     }
 
@@ -40,8 +38,6 @@ public class StartComponentBase : ComponentBase
 
     public async Task RefreshAsync()
     {
-        Console.WriteLine("RefreshAsync");
-
         //blocks recursive refreshing
         if (IsRefreshing == true)
         {
@@ -77,9 +73,7 @@ public class StartComponentBase : ComponentBase
     }
 
     protected override async Task OnParametersSetAsync()
-    {
-        Console.WriteLine("OnParametersSetAsync: " + this.GetType().Name);
-        
+    {        
         await RefreshAsync();
     }
 
@@ -110,8 +104,6 @@ public class StartComponentBase : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine("OnInitializedAsync");
-
         await InitAsync();
     }
 

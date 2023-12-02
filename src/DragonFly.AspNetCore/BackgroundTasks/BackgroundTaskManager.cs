@@ -2,11 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
-namespace DragonFly;
+namespace DragonFly.AspNetCore;
 
 /// <summary>
 /// BackgroundTaskManager

@@ -4,9 +4,9 @@
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.API;
+using DragonFly.Core;
 using DragonFly.AspNetCore.Builders;
 
 namespace DragonFly.AspNetCore;
@@ -20,11 +20,7 @@ public static class DragonFlyBuilderExtensions
             opt.SerializerOptions.TypeInfoResolver = ApiJsonSerializerDefault.Options.TypeInfoResolver;
         });
 
-        builder.Init(api =>
-        {
-            api.JsonFields().AddDefaults();
-            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
-        });
+        builder.AddRestApiCore();
 
         return builder;
     }

@@ -1,8 +1,40 @@
-﻿@inherits BlockComponent<HtmlBlock>
+﻿@using Blazored.TextEditor
+@inherits BlockComponent<HtmlBlock>
 
 <div class="block html-block">
 	<TinyMCE.Blazor.Editor 
 			                Field="() => Block.HtmlText"
 			                @bind-Value="Block.HtmlText" 
                             Conf="TinyMceConfiguration.Editor" />
+
+    @* <QuillEditor @ref="@QuillHtml" HtmlValue="@Block.HtmlText">
+        <ToolbarContent>
+            <select class="ql-header">
+                <option selected=""></option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+            </select>
+            <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+            </span>
+            <span class="ql-formats">
+                <select class="ql-color"></select>
+            </span>
+            <span class="ql-formats">
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+            </span>
+        </ToolbarContent>
+        <EditorContent>     
+        </EditorContent>
+    </QuillEditor> *@
 </div>
+
+@code {
+    private QuillEditor QuillHtml;
+}

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.WebHooks;
+namespace DragonFly.AspNetCore;
 
 /// <summary>
 /// WebHookInterceptor

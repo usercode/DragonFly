@@ -17,9 +17,6 @@ public interface IAssetProcessing
     /// <summary>
     /// OnAssetChangedAsync
     /// </summary>
-    /// <param name="asset"></param>
-    /// <param name="openStream"></param>
-    /// <returns></returns>
     Task<bool> OnAssetChangedAsync(IAssetProcessingContext context);
 
 }

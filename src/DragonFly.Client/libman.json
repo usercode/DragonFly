@@ -9,6 +9,14 @@
     {
       "library": "font-awesome@6.2.0",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "quill@1.3.7",
+      "destination": "wwwroot/lib/quill/"
+    },
+    {
+      "library": "tinymce@6.8.1",
+      "destination": "wwwroot/lib/tinymce/"
     }
   ]
 }
