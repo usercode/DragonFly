@@ -11,7 +11,7 @@ builder.RootComponents.Add<DragonFlyApp.Client.App>("app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.AddDragonFly()
-            .AddRestApi()
+            .AddRestClient()
             .AddBlockField()
             .AddIdentity()
             .AddApiKeys();
