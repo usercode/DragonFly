@@ -47,7 +47,6 @@ public static class DragonFlyBuilderExtensions
             })
             .PostInit<CreateContentPermissionsInitializer>();
 
-        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         builder.Services.AddSingleton<IDateTimeService, LocalDateTimeService>();
         builder.Services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
 

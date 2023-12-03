@@ -90,7 +90,7 @@ public class DataSeeding
                                                             public virtual BlockField MainContent { get; set; }
                                                         } 
                                                         """)),
-                                        new Column(new OpenGraphBlock("https://github.com/usercode/DragonFly"))));
+                                       new Column(new OpenGraphBlock("https://github.com/usercode/DragonFly"))));
 
         document.Blocks.Add(new HeadingBlock(HeadingType.H2, "Great youtube videos about .NET, C# and Blazor"));
         document.Blocks.Add(new ColumnBlock(

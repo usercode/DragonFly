@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Blazored.Toast;
 using BlazorStrap;
 using DragonFly.Core;
 using DragonFly.Init;
@@ -45,13 +44,10 @@ public static class DragonFlyClientExtensions
         builder.AddCore();
         builder.AddRazorRouting();
 
-        builder.Services.AddBlazoredToast();
         builder.Services.AddBlazorStrap();
 
         DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
         DragonFlyApp.Default.ClientBaseUrl = clientBaseUrl;
-
-        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
 
         builder.Services.AddSingleton(DragonFlyApp.Default);
         builder.Services.AddSingleton(ComponentManager.Default);

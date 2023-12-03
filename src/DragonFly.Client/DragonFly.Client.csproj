@@ -38,7 +38,6 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazored.Toast" Version="4.1.0" />
 		<PackageReference Include="BlazorStrap" Version="5.1.102.51923" />
     <PackageReference Include="BlazorStrap.V5" Version="5.1.102.51723" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
@@ -59,5 +58,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\lib\bootstrap\scss\" />
+    <Folder Include="wwwroot\lib\font-awesome\" />
   </ItemGroup>
 </Project>

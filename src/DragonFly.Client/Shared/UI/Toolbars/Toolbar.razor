@@ -1,6 +1,4 @@
-﻿@inject IToastService toastService
-
-<div class="toolbar">
+﻿<div class="toolbar">
     @foreach (ToolbarItem item in Items)
     {
         <BSButton Class="toolbar-item" Color="item.Color" OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" disabled="@(item.IsRunning ? "disabled" : null)">

@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Builders;
+using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Core;
@@ -32,6 +33,7 @@ public static class DragonFlyBuilderExtensions
              api.AssetMetadata().AddDefaults();
          });
 
+        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         builder.Services.AddSingleton<ISlugService, SlugService>();
 
         return builder;
