@@ -45,15 +45,12 @@ public static class DragonFlyClientExtensions
         builder.AddRazorRouting();
 
         builder.Services.AddBlazorStrap();
-
-        DragonFlyApp.Default.ApiBaseUrl = apiBaseUri;
-        DragonFlyApp.Default.ClientBaseUrl = clientBaseUrl;
-
-        builder.Services.AddSingleton(DragonFlyApp.Default);
+        
         builder.Services.AddSingleton(ComponentManager.Default);
         builder.Services.AddSingleton(AssetPreviewManager.Default);
 
-        builder.Services.AddTransient(sp => new HttpClient { BaseAddress = apiBaseUri });
+        builder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
+        builder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
