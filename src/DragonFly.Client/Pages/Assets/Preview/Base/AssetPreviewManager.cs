@@ -8,29 +8,17 @@ using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
+/// <summary>
+/// AssetPreviewManager
+/// </summary>
 public sealed class AssetPreviewManager
 {
-    private static AssetPreviewManager _default;
+    /// <summary>
+    /// Default
+    /// </summary>
+    public static AssetPreviewManager Default { get; } = new AssetPreviewManager();
 
-    public static AssetPreviewManager Default
-    {
-        get
-        {
-            if (_default == null)
-            {
-                _default = new AssetPreviewManager();
-            }
-
-            return _default;
-        }
-    }
-
-    private IDictionary<string, Type> _cache;
-
-    private AssetPreviewManager()
-    {
-        _cache = new Dictionary<string, Type>();
-    }
+    private IDictionary<string, Type> _cache = new Dictionary<string, Type>();
 
     public void Add<TAssetPreview>(params string[] mimetypes)
         where TAssetPreview : IAssetPreviewComponent

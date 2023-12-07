@@ -4,7 +4,6 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -39,10 +38,10 @@ public class StartComponentBase : ComponentBase
     public async Task RefreshAsync()
     {
         //blocks recursive refreshing
-        if (IsRefreshing == true)
-        {
-            return;
-        }
+        //if (IsRefreshing == true)
+        //{
+        //    return;
+        //}
 
         IsRefreshing = true;
 

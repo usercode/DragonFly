@@ -50,7 +50,7 @@ public abstract class EntityListComponent<T> : StartComponentBase
             {
                 _page = value;
 
-                Navigation.NavigateTo(Navigation.GetUriWithQueryParameter("page", _page));
+                //Navigation.NavigateTo(Navigation.GetUriWithQueryParameter("page", _page));
             }
         }
     }
