@@ -27,6 +27,7 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(StructureQuery))]
 [JsonSerializable(typeof(WebHookQuery))]
 [JsonSerializable(typeof(IBackgroundTaskInfo))]
+[JsonSerializable(typeof(BackgroundTaskInfo))]
 [JsonSerializable(typeof(IEnumerable<IBackgroundTaskInfo>))]
 
 //AssetMetadata

@@ -13,6 +13,8 @@ namespace DragonFly.BlockField;
 [JsonSerializable(typeof(Document))]
 
 //Blocks
+[JsonSerializable(typeof(IEnumerable<Block>))]
+
 [JsonSerializable(typeof(AlertBlock))]
 [JsonSerializable(typeof(AssetBlock))]
 [JsonSerializable(typeof(CardsBlock))]

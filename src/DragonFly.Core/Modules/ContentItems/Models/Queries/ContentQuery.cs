@@ -17,43 +17,35 @@ public class ContentQuery : QueryBase
 
     public ContentQuery()
     {
-        Schema = string.Empty;
-        Fields = new List<FieldQuery>();
-        OrderFields = new List<FieldOrder>();
-
-        Take = 25;
-        Published = true;
-
-        IncludeListFieldsOnly = false;
     }
 
     /// <summary>
     /// Schema
     /// </summary>
-    public string Schema { get; set; }
+    public string Schema { get; set; } = string.Empty;
 
     /// <summary>
     /// Fields
     /// </summary>
-    public IList<FieldQuery> Fields { get; set; }
+    public IList<FieldQuery> Fields { get; set; } = new List<FieldQuery>();
 
     /// <summary>
     /// OrderFields
     /// </summary>
-    public IList<FieldOrder> OrderFields { get; set; }
+    public IList<FieldOrder> OrderFields { get; set; } = new List<FieldOrder>();
 
     /// <summary>
     /// IncludeListFieldsOnly
     /// </summary>
-    public bool IncludeListFieldsOnly { get; set; }
+    public bool IncludeListFieldsOnly { get; set; } = false;
 
     /// <summary>
     /// UsedAsset
     /// </summary>
-    public Guid? UsedAsset { get; set; }
+    public Guid? UsedAsset { get; set; } = null;
 
     /// <summary>
     /// Published
     /// </summary>
-    public bool Published { get; set; }
+    public bool Published { get; set; } = true;
 }

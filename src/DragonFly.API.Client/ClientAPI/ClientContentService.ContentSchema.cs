@@ -34,7 +34,7 @@ public partial class ClientContentService : ISchemaStorage
 
     public async Task CreateAsync(ContentSchema entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/schema", entity.ToRest());
+        var response = await Client.PostAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentSchema);
 
         var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
 

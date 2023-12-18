@@ -61,7 +61,7 @@ public static class DragonFlyBuilderExtensions
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
-        builder.Services.AddSignalR();        
+        builder.Services.AddSignalR();
 
         return builder;
     }

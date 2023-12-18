@@ -3,7 +3,6 @@
 // MIT License
 
 using System.Net.Http.Json;
-using DragonFly.API;
 using DragonFly.Query;
 
 namespace DragonFly.API.Client;
@@ -80,19 +79,19 @@ public partial class ClientContentService : IContentStorage
 
     public async Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
     {
-        var response = await Client.PostAsJsonAsync($"api/content/publish", query);
+        var response = await Client.PostAsJsonAsync($"api/content/publish", query, ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>();
+        return await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.BackgroundTaskInfo) ?? throw new ArgumentNullException();
     }
 
     public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
     {
-        var response = await Client.PostAsJsonAsync($"api/content/unpublish", query);
+        var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>();
+        return await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.BackgroundTaskInfo) ?? throw new ArgumentNullException();
     }
 }
