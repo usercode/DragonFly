@@ -16,23 +16,23 @@ public partial class ClientContentService : IWebHookStorage
     {
         var response = await Client.GetAsync($"api/webhook/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestWebHook);
+        var e = await response.Content.ReadFromJsonAsync<RestWebHook>(ApiJsonSerializerDefault.Options);
 
         return e.ToModel();
     }
 
     public async Task CreateAsync(WebHook entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerContext.Default.RestWebHook);
+        var response = await Client.PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         entity.Id = result.Id;
     }
 
     public async Task UpdateAsync(WebHook entity)
     {
-        var response = await Client.PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerContext.Default.RestWebHook);
+        var response = await Client.PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
@@ -44,9 +44,9 @@ public partial class ClientContentService : IWebHookStorage
 
     public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
     {
-        var response = await Client.PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerContext.Default.WebHookQuery);
+        var response = await Client.PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerDefault.Options);
 
-        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestWebHook);
+        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options);
 
         return result.Convert(x => x.ToModel());
     }

@@ -16,7 +16,7 @@ public class AssetJsonFieldSerializer : JsonFieldSerializer<AssetField>
     {
         AssetField contentField = new AssetField();
 
-        RestAsset? restAsset = jsonValue.Deserialize<RestAsset>(ApiJsonSerializerDefault.Options);
+        RestAsset? restAsset = jsonValue.Deserialize(ApiJsonSerializerContext.Default.RestAsset);
 
         if (restAsset != null)
         {
@@ -30,7 +30,7 @@ public class AssetJsonFieldSerializer : JsonFieldSerializer<AssetField>
     {
         if (contentField.Asset != null)
         {
-            return JsonSerializer.SerializeToNode(contentField.Asset.ToRest(), ApiJsonSerializerDefault.Options);
+            return JsonSerializer.SerializeToNode(contentField.Asset.ToRest(), ApiJsonSerializerContext.Default.RestAsset);
         }
         else
         {

@@ -19,7 +19,8 @@ public static class DragonFlyCoreBuilderExtensions
     /// <see cref="HeadingBlock"/>, <see cref="TextBlock"/>, <see cref="HtmlBlock"/>, <see cref="CodeBlock"/>, <see cref="QuoteBlock"/>, <see cref="AlertBlock"/>, <see cref="ProgressBlock"/> <br/>
     /// <see cref="YouTubeBlock"/>, <see cref="OpenGraphBlock"/>
     /// </summary>
-    public static IDragonFlyBuilder AddBlockFieldCore(this IDragonFlyBuilder builder)
+    public static TDragonFlyBuilder AddBlockFieldCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
+        where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.AddRestSerializerResolver(BlockFieldSerializerContext.Default);
 

@@ -40,9 +40,25 @@ public static class DragonFlyClientExtensions
 
     private static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
     {
-        var builder = new DragonFlyBuilder(hostBuilder.Services);
-        builder.AddCore();
-        builder.AddRazorRouting();
+        IDragonFlyBuilder builder = new DragonFlyBuilder(hostBuilder.Services);
+        builder
+            .AddCore()
+            .AddRazorRouting()
+            .Init(api =>
+            {
+                api.Module().Add<ContentModule>();
+                api.Module().Add<AssetModule>();
+                api.Module().Add<WebHookModule>();
+                api.Module().Add<BackgroundTaskModule>();
+                api.Module().Add<SettingsModule>();
+            })
+            .PostInit(api =>
+            {
+                foreach (ClientModule module in api.Module().Modules)
+                {
+                    module.Init(api);
+                }
+            });
 
         builder.Services.AddBlazorStrap();
         
@@ -54,25 +70,6 @@ public static class DragonFlyClientExtensions
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
-
-        //add default modules
-        builder.Init(api =>
-        {
-            api.Module().Add<ContentModule>();
-            api.Module().Add<AssetModule>();
-            api.Module().Add<WebHookModule>();
-            api.Module().Add<BackgroundTaskModule>();
-            api.Module().Add<SettingsModule>();
-        });
-
-        //init all modules
-        builder.PostInit(api =>
-        {
-            foreach (ClientModule module in api.Module().Modules)
-            {
-                module.Init(api);
-            }
-        });
 
         return builder;
     }

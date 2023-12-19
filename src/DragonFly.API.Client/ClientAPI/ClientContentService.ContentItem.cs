@@ -14,7 +14,7 @@ public partial class ClientContentService : IContentStorage
 {       
     public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
     {
-        RestContentItem? entity = await Client.GetFromJsonAsync($"api/content/{schema}/{id}", ApiJsonSerializerContext.Default.RestContentItem);
+        RestContentItem? entity = await Client.GetFromJsonAsync<RestContentItem>($"api/content/{schema}/{id}", ApiJsonSerializerDefault.Options);
 
         if (entity == null)
         {
@@ -26,11 +26,11 @@ public partial class ClientContentService : IContentStorage
 
     public async Task CreateAsync(ContentItem entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentItem);
+        var response = await Client.PostAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
 
-        ResourceCreated? result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        ResourceCreated? result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result == null)
         {
@@ -42,7 +42,7 @@ public partial class ClientContentService : IContentStorage
 
     public async Task UpdateAsync(ContentItem entity)
     {
-        var response = await Client.PutAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentItem);
+        var response = await Client.PutAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
@@ -72,7 +72,7 @@ public partial class ClientContentService : IContentStorage
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerDefault.Options);
 
-        QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestContentItem);
+        QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>(ApiJsonSerializerDefault.Options);
 
         return queryResult.Convert(x => x.ToModel());
     }
@@ -83,7 +83,7 @@ public partial class ClientContentService : IContentStorage
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.BackgroundTaskInfo) ?? throw new ArgumentNullException();
+        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
     }
 
     public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
@@ -92,6 +92,6 @@ public partial class ClientContentService : IContentStorage
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.BackgroundTaskInfo) ?? throw new ArgumentNullException();
+        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
     }
 }

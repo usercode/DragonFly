@@ -82,6 +82,6 @@ namespace DragonFly.API;
 
 //defaults
 [JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
-public partial class ApiJsonSerializerContext : JsonSerializerContext
+internal partial class ApiJsonSerializerContext : JsonSerializerContext
 {
 }

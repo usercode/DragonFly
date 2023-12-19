@@ -15,9 +15,9 @@ public partial class ClientContentService : IAssetStorage
 {
     public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
     {
-        var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerContext.Default.AssetQuery);
+        var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestAsset);
+        var result = await response.Content.ReadFromJsonAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options);
 
         if (result == null)
         {
@@ -48,7 +48,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.GetAsync($"api/asset/{id}");
 
-        RestAsset? restAsset = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestAsset);
+        RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>(ApiJsonSerializerDefault.Options);
 
         return restAsset.ToModel();
     }
@@ -57,7 +57,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
-        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         entity.Id = result.Id;
     }
@@ -71,7 +71,7 @@ public partial class ClientContentService : IAssetStorage
 
     public async Task UpdateAsync(Asset entity)
     {
-        var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerContext.Default.RestAsset);
+        var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
@@ -92,10 +92,10 @@ public partial class ClientContentService : IAssetStorage
 
     public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
     {
-        var response = await Client.PostAsJsonAsync($"api/asset/metadata", query);
+        var response = await Client.PostAsJsonAsync($"api/asset/metadata", query, ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>();
+        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
     }
 }

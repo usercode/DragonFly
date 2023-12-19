@@ -11,8 +11,8 @@ public static class ApiJsonSerializerDefault
     /// <summary>
     /// Options
     /// </summary>
-    public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions()
+    public static JsonSerializerOptions Options { get; } = new JsonSerializerOptions(JsonSerializerDefaults.Web)
                                                                     {
-                                                                        TypeInfoResolver = ApiJsonTypeInfoResolver.Default 
+                                                                        TypeInfoResolver = ApiJsonTypeInfoResolver.Default
                                                                     };
 }

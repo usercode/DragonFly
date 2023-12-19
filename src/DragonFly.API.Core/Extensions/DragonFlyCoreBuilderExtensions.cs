@@ -9,7 +9,8 @@ namespace DragonFly.Core;
 
 public static class DragonFlyCoreBuilderExtensions
 {
-    public static IDragonFlyBuilder AddRestApiCore(this IDragonFlyBuilder builder)
+    public static TDragonFlyBuilder AddRestApiCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
+        where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.Init(api =>
         {

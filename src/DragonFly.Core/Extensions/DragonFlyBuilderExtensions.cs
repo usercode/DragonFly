@@ -22,7 +22,8 @@ public static class DragonFlyBuilderExtensions
     /// Default services::<br/>
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// </summary>
-    public static IDragonFlyBuilder AddCore(this IDragonFlyBuilder builder)
+    public static TDragonFlyBuilder AddCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
+        where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.Services.AddSingleton(FieldManager.Default);
         builder.Services.AddSingleton(AssetMetadataManager.Default);

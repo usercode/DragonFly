@@ -17,7 +17,7 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.GetAsync($"api/structure/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestContentStructure);
+        var e = await response.Content.ReadFromJsonAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
         return e.ToModel();
     }
@@ -26,30 +26,30 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.GetAsync($"api/structure/{name}");
 
-        var e = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.RestContentStructure);
+        var e = await response.Content.ReadFromJsonAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
         return e.ToModel();
     }
 
     public async Task CreateAsync(ContentStructure entity)
     {
-        var response = await Client.PostAsJsonAsync($"api/structure", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentStructure);
+        var response = await Client.PostAsJsonAsync($"api/structure", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         entity.Id = result.Id;
     }
 
     public async Task UpdateAsync(ContentStructure entity)
     {
-        await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity.ToRest(), ApiJsonSerializerContext.Default.RestContentStructure);
+        await Client.PutAsJsonAsync($"api/structure/{entity.Id}", entity.ToRest(), ApiJsonSerializerDefault.Options);
     }
 
     public async Task<QueryResult<ContentStructure>> QueryAsync(StructureQuery query)
     {
-        var response = await Client.PostAsJsonAsync("api/structure/query", query, ApiJsonSerializerContext.Default.StructureQuery);
+        var response = await Client.PostAsJsonAsync("api/structure/query", query, ApiJsonSerializerDefault.Options);
 
-        var restQueryResult = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestContentStructure);
+        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options);
 
         return restQueryResult.Convert(x => x.ToModel());
     }
@@ -58,22 +58,22 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""));
 
-        var restQueryResult = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.QueryResultRestContentNode);
+        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options);
 
         return restQueryResult.Convert(x => x.ToModel());
     }
 
     public async Task CreateAsync(ContentNode node)
     {
-        var response = await Client.PostAsJsonAsync($"api/node", node.ToRest(), ApiJsonSerializerContext.Default.RestContentNode);
+        var response = await Client.PostAsJsonAsync($"api/node", node.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync(ApiJsonSerializerContext.Default.ResourceCreated);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         node.Id = result.Id;
     }
 
     public async Task UpdateAsync(ContentNode node)
     {
-        await Client.PutAsJsonAsync($"api/node/{node.Id}", node.ToRest(), ApiJsonSerializerContext.Default.RestContentNode);
+        await Client.PutAsJsonAsync($"api/node/{node.Id}", node.ToRest(), ApiJsonSerializerDefault.Options);
     }
 }
