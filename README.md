@@ -171,15 +171,14 @@ builder.Services.AddDragonFly()
 
 #### Use queries for typed content
 ```csharp
-//get first item
-var first = await ContentStorage.FirstOrDefaultAsync<BlogPostModel>(x => x
-                                    .Slug(x => x.Slug, slug));
-
 //get all items
 var result = await ContentStorage.QueryAsync<BlogPostModel>(x => x
                                     .Published(true)
                                     .Top(10)
-                                    .Slug(x => x.Slug, slug));
+                                    .Slug(x => x.Slug, "my-product")
+                                    .Integer(x => x.Quantity, 10, NumberQueryType.Equal)
+                                    .String(x => x.Title, "Test", StringQueryType.Equal)
+);
 ```
 
 ### BackgroundTask
