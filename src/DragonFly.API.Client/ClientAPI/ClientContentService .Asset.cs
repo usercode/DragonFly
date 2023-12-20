@@ -17,12 +17,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options);
-
-        if (result == null)
-        {
-            throw new Exception();
-        }
+        var result = await response.Content.ReadFromJsonAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return result.Convert(x => x.ToModel());
     }
@@ -44,11 +39,16 @@ public partial class ClientContentService : IAssetStorage
     }
 
     //assets
-    public async Task<Asset> GetAssetAsync(Guid id)
+    public async Task<Asset?> GetAssetAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/asset/{id}");
 
         RestAsset? restAsset = await response.Content.ReadFromJsonAsync<RestAsset>(ApiJsonSerializerDefault.Options);
+
+        if (restAsset == null)
+        {
+            return null;
+        }
 
         return restAsset.ToModel();
     }
@@ -57,7 +57,7 @@ public partial class ClientContentService : IAssetStorage
     {
         var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+        ResourceCreated? result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
     }
@@ -96,6 +96,6 @@ public partial class ClientContentService : IAssetStorage
 
         response.EnsureSuccessStatusCode();
 
-        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
+        return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
     }
 }

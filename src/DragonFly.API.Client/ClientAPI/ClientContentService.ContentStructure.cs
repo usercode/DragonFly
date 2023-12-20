@@ -12,7 +12,6 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IStructureStorage
 {
-
     public async Task<ContentStructure> GetStructureAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/structure/{id}");
@@ -35,7 +34,7 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.PostAsJsonAsync($"api/structure", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
     }
@@ -49,7 +48,7 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.PostAsJsonAsync("api/structure/query", query, ApiJsonSerializerDefault.Options);
 
-        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options);
+        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return restQueryResult.Convert(x => x.ToModel());
     }
@@ -58,7 +57,7 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""));
 
-        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options);
+        var restQueryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return restQueryResult.Convert(x => x.ToModel());
     }
@@ -67,7 +66,7 @@ public partial class ClientContentService : IStructureStorage
     {
         var response = await Client.PostAsJsonAsync($"api/node", node.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         node.Id = result.Id;
     }

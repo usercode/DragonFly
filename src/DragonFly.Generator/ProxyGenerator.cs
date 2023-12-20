@@ -46,7 +46,7 @@ public class ProxyGenerator : IIncrementalGenerator
             string className = classSymbol.Name;
 
             SourceBuilder builder = new SourceBuilder();
-            builder.AppendNullableDirective();
+            builder.AppendPreprocessorDirectives();
             builder.AddNamespace(ns, x =>
             {
                 IEnumerable<INamedTypeSymbol> baseTypes = classSymbol.BaseType != null
@@ -194,13 +194,13 @@ public class ProxyGenerator : IIncrementalGenerator
                     ignoredProperties = memberSyntax.AttributeLists
                                                     .SelectMany(x => x.Attributes)
                                                     .Where(x => x.Name.ToString() == "IgnoreProperty")
-                                                    .Select(x => x.ArgumentList.Arguments[0].Expression.GetString())
+                                                    .Select(x => x.ArgumentList!.Arguments[0].Expression.GetString())
                                                     .ToArray();
 
                     ignoredMethods = memberSyntax.AttributeLists
                                                     .SelectMany(x => x.Attributes)
                                                     .Where(x => x.Name.ToString() == "IgnoreMethod")
-                                                    .Select(x => x.ArgumentList.Arguments[0].Expression.GetString())
+                                                    .Select(x => x.ArgumentList!.Arguments[0].Expression.GetString())
                                                     .ToArray();
 
                     method = methodDeclaration.Identifier.Text.ToString();

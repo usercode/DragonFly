@@ -45,7 +45,7 @@ public class ModelGenerator : IIncrementalGenerator
                 string classQuery = $"ContentQuery<{className}>";
 
                 SourceBuilder builder = new SourceBuilder();
-                builder.AppendNullableDirective();
+                builder.AppendPreprocessorDirectives();
 
                 List<ContentItemProperty> properties = new List<ContentItemProperty>();
 
@@ -235,10 +235,12 @@ public class ModelGenerator : IIncrementalGenerator
                             x.AppendLine("/// <summary>");
                             x.AppendLine("/// Decorates automatically the content item based on the schema.");
                             x.AppendLine("/// <br /><br />");
-                            x.AppendLine($"/// Available models: {string.Join(", ", models.Select(x => $"<see cref=\"{x}\"/>"))}");
-                            x.AppendLine("/// </summary>");
-                            x.AppendLine("/// <param name=\"content\"></param>");
-                            x.AppendLine("/// <returns></returns>");
+                            x.AppendLine("/// Available models:<br />");
+                            foreach (ClassItem model in models)
+                            {
+                                x.AppendLine($"/// <see cref=\"{model}\"/><br />");
+                            }
+                            x.AppendLine("/// </summary>");                           
                             x.AppendLine("public static IContentModel ToModel(this ContentItem content)");
                             x.AppendBlock(x =>
                             {

@@ -32,7 +32,7 @@ public partial class XHtmlField : TextBaseField
             {
                 XElement.Parse($"<div>{Value}</div>");
             }
-            catch (Exception ex)
+            catch
             {
                 context.AddInvalidValidation(fieldName);
             }

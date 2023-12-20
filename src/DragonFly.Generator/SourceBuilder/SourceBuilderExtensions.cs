@@ -8,9 +8,10 @@ namespace DragonFly.Generator;
 
 public static class SourceBuilderExtensions
 {
-    public static SourceBuilder AppendNullableDirective(this SourceBuilder builder)
+    public static SourceBuilder AppendPreprocessorDirectives(this SourceBuilder builder)
     {
         builder.AppendLine("#nullable enable");
+        builder.AppendLine("#pragma warning disable CS8618");
         builder.AppendLine();
 
         return builder;

@@ -13,11 +13,6 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : IStructureStorage
 {
-    public MongoStorage()
-    {
-        
-    }
-
     public async Task CreateAsync(ContentStructure structure)
     {
         if (structure.Id == Guid.Empty)
@@ -125,8 +120,8 @@ public partial class MongoStorage : IStructureStorage
         node.Id = mongo.Id;
     }
 
-    public async Task UpdateAsync(ContentNode node)
+    public Task UpdateAsync(ContentNode node)
     {
-        
+        return Task.CompletedTask;
     }
 }

@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Diagnostics;
 using System.Net.Http.Json;
 using DragonFly.Query;
 
@@ -14,20 +13,30 @@ namespace DragonFly.API.Client;
 public partial class ClientContentService : ISchemaStorage
 {
 
-    public async Task<ContentSchema> GetSchemaAsync(Guid id)
+    public async Task<ContentSchema?> GetSchemaAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/schema/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+        RestContentSchema? e = await response.Content.ReadFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+
+        if (e == null)
+        {
+            return null;
+        }
 
         return e.ToModel();
     }
 
-    public async Task<ContentSchema> GetSchemaAsync(string name)
+    public async Task<ContentSchema?> GetSchemaAsync(string name)
     {
         var response = await Client.GetAsync($"api/schema/{name}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+        RestContentSchema? e = await response.Content.ReadFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+
+        if (e == null)
+        {
+            return null;
+        }
 
         return e.ToModel();
     }
@@ -36,7 +45,7 @@ public partial class ClientContentService : ISchemaStorage
     {
         var response = await Client.PostAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
     }
@@ -53,19 +62,10 @@ public partial class ClientContentService : ISchemaStorage
 
     public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
     {
-        try
-        {
-            var response = await Client.PostAsync("api/schema/query", new StringContent(""));
+        var response = await Client.PostAsync("api/schema/query", new StringContent(string.Empty));
 
-            QueryResult<RestContentSchema>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options);
+        QueryResult<RestContentSchema>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
-            return queryResult.Convert(x => x.ToModel());
-        }
-        catch(Exception ex)
-        {
-            Debug.WriteLine(ex.Message);
-
-            throw;
-        }
-    }        
+        return queryResult.Convert(x => x.ToModel());
+    }
 }

@@ -25,7 +25,7 @@ public partial class ClientContentService : IWebHookStorage
     {
         var response = await Client.PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+        var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
     }
@@ -46,7 +46,7 @@ public partial class ClientContentService : IWebHookStorage
     {
         var response = await Client.PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerDefault.Options);
 
-        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options);
+        QueryResult<RestWebHook>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return result.Convert(x => x.ToModel());
     }

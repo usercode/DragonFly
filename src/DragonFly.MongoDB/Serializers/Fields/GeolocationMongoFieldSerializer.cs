@@ -12,7 +12,6 @@ namespace DragonFly.Storage.MongoDB.Fields;
 /// <summary>
 /// GeolocationMongoFieldSerializer
 /// </summary>
-/// <typeparam name="TContentField"></typeparam>
 public class GeolocationMongoFieldSerializer : MongoFieldSerializer<GeolocationField>
 {
     public override GeolocationField Read(SchemaField schemaField,  BsonValue bsonValue)

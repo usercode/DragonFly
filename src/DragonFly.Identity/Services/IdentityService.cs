@@ -139,14 +139,16 @@ class IdentityService : IIdentityService
 
     public async Task<IEnumerable<string>> GetPermissionsAsync(IdentityUser user)
     {
-        IEnumerable<IdentityRole> roles = Store.Roles
-                                                  .AsQueryable()
-                                                  .Where(x => user.Roles.Any(r => r.Id == x.Id))
-                                                  .ToList()
-                                                  .Select(x => x.ToModel())
-                                                  .ToList();
+        var roles = await Store.Roles
+                                    .AsQueryable()
+                                    .Where(x => user.Roles.Any(r => r.Id == x.Id))
+                                    .ToListAsync();
 
-        string[] permissions = roles.SelectMany(x => x.Permissions).Distinct().ToArray();
+        string[] permissions = roles
+                                .Select(x => x.ToModel())
+                                .SelectMany(x => x.Permissions)
+                                .Distinct()
+                                .ToArray();
 
         return permissions;
     }
@@ -156,7 +158,7 @@ class IdentityService : IIdentityService
         await Store.Users.UpdateOneAsync(Builders<MongoIdentityUser>.Filter.Eq(x => x.Id, user.Id),
                                         Builders<MongoIdentityUser>.Update
                                                                     .Set(x => x.Username, user.Username)
-                                                                    .Set(x=> x.Roles, user.Roles.Select(r => r.Id).ToList())                                                                        
+                                                                    .Set(x => x.Roles, user.Roles.Select(r => r.Id).ToList())
                                                                     );
     }
 

@@ -103,9 +103,9 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
-    public async Task OnPublishingAsync(ContentItem contentItem)
+    public Task OnPublishingAsync(ContentItem contentItem)
     {
-
+        return Task.CompletedTask;
     }
 
     public async Task OnUnpublishedAsync(ContentItem contentItem)

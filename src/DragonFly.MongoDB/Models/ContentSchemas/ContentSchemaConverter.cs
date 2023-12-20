@@ -25,43 +25,37 @@ static class ContentSchemaConverter
 
         foreach (var field in mongoSchema.Fields)
         {
-            try
+
+            Type? optionsType = FieldManager.Default.GetOptionsType(field.Value.FieldType);
+            FieldOptions? options = null;
+
+            if (field.Value.Options is BsonDocument bsonOptions)
             {
-                Type? optionsType = FieldManager.Default.GetOptionsType(field.Value.FieldType);
-                FieldOptions? options = null;
+                options = (FieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
 
-                if (field.Value.Options is BsonDocument bsonOptions)
+                //add missing options inside ArrayFieldOptions
+                if (options is ArrayFieldOptions arrayFieldOptions)
                 {
-                    options = (FieldOptions)BsonSerializer.Deserialize(bsonOptions, optionsType);
-
-                    //add missing options inside ArrayFieldOptions
-                    if (options is ArrayFieldOptions arrayFieldOptions)
+                    foreach (var f in arrayFieldOptions.Fields)
                     {
-                        foreach (var f in arrayFieldOptions.Fields)
+                        if (f.Value.Options == null)
                         {
-                            if (f.Value.Options == null)
-                            {
-                                f.Value.Options = FieldManager.Default.CreateOptions(f.Value.FieldType);
-                            }
+                            f.Value.Options = FieldManager.Default.CreateOptions(f.Value.FieldType);
                         }
                     }
                 }
-
-                if (options == null)
-                {
-                    options = FieldManager.Default.CreateOptions(field.Value.FieldType);
-                }
-
-                SchemaField schemaField = new SchemaField(field.Value.FieldType, options);
-                schemaField.Label = field.Value.Label;
-                schemaField.SortKey = field.Value.SortKey;
-
-                schema.Fields.Add(field.Key, schemaField);
             }
-            catch (Exception ex)
+
+            if (options == null)
             {
-                throw;
+                options = FieldManager.Default.CreateOptions(field.Value.FieldType);
             }
+
+            SchemaField schemaField = new SchemaField(field.Value.FieldType, options);
+            schemaField.Label = field.Value.Label;
+            schemaField.SortKey = field.Value.SortKey;
+
+            schema.Fields.Add(field.Key, schemaField);
         }
 
         return schema;

@@ -42,11 +42,12 @@ public partial class MongoStorage : IAssetFolderStorage
             query = query.Where(x => x.Parent == null);
         }
 
-        var result = query
-            .ToList()
-            .OrderBy(x => x.Name)            
-            .Select(x => x.ToModel())
-            .ToList();
+        IList<MongoAssetFolder> resultMongo = await query.ToListAsync();
+
+        var result = resultMongo
+                    .OrderBy(x => x.Name)            
+                    .Select(x => x.ToModel())
+                    .ToList();
 
         return new QueryResult<AssetFolder>() { Offset = queryData.Skip, Count = result.Count, Items = result };
     }

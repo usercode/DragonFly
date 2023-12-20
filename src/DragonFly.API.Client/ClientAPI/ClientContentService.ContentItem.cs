@@ -72,7 +72,7 @@ public partial class ClientContentService : IContentStorage
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerDefault.Options);
 
-        QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>(ApiJsonSerializerDefault.Options);
+        QueryResult<RestContentItem>? queryResult = await response.Content.ReadFromJsonAsync<QueryResult<RestContentItem>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return queryResult.Convert(x => x.ToModel());
     }

@@ -132,7 +132,7 @@ public static class ContentItemExtensions
         contentItem.SchemaVersion = contentItem.Schema.Version;
     }
 
-    public static void ApplySchema(this IContentElement contentItem, ISchemaElement schema)
+    public static void ApplySchema(this IContentElement contentItem, ISchemaElement? schema)
     {
         ArgumentNullException.ThrowIfNull(contentItem);
         ArgumentNullException.ThrowIfNull(schema);

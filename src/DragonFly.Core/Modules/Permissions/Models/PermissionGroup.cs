@@ -10,9 +10,9 @@ namespace DragonFly;
 public class PermissionGroup
 {
     public PermissionGroup()
-    {
-        
+    {        
     }
+
     public PermissionGroup(string name)
     {
         Name = name;
@@ -21,5 +21,5 @@ public class PermissionGroup
     /// <summary>
     /// Name
     /// </summary>
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 }

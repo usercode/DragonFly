@@ -68,7 +68,7 @@ public class FieldGenerator : IIncrementalGenerator
             }
 
             SourceBuilder builder = new SourceBuilder();
-            builder.AppendNullableDirective();
+            builder.AppendPreprocessorDirectives();
             builder.AddUsings("DragonFly");
             builder.AddNamespace(ns, x =>
             {                

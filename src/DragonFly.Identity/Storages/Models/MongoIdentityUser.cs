@@ -6,11 +6,6 @@ namespace DragonFly.AspNetCore.Identity.MongoDB.Models;
 
 class MongoIdentityUser : Entity<MongoIdentityUser>
 {
-    public MongoIdentityUser()
-    {
-        Roles = new List<Guid>();
-    }
-
     public string Username { get; set; }
 
     public string NormalizedUsername { get; set; }
@@ -23,5 +18,5 @@ class MongoIdentityUser : Entity<MongoIdentityUser>
 
     public string Salt { get; set; }
 
-    public IList<Guid> Roles { get; set; }
+    public IList<Guid> Roles { get; set; } = new List<Guid>();
 }

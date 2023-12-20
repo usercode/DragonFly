@@ -37,7 +37,7 @@ public partial class ClientContentService : IAssetFolderStorage
 
         response.EnsureSuccessStatusCode();
 
-        QueryResult<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestAssetFolder>>(ApiJsonSerializerDefault.Options);
+        QueryResult<RestAssetFolder>? result = await response.Content.ReadFromJsonAsync<QueryResult<RestAssetFolder>>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         return result.Convert(x => x.ToModel());
     }

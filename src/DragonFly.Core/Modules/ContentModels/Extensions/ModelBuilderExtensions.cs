@@ -16,9 +16,6 @@ public static class ModelBuilderExtensions
     /// <br /><br />
     /// At startup existing schemas will be overriden.
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="config"></param>
-    /// <returns></returns>
     public static TBuilder AddModels<TBuilder>(this TBuilder builder, Action<ModelBuilderItem> action)
         where TBuilder : IDragonFlyBuilder
     {

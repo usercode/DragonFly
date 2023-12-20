@@ -6,16 +6,18 @@ namespace DragonFly;
 
 public abstract class QueryBase
 {
-    public QueryBase()
-    {
-        Skip = 0;
-        Take = 50;
-        Pattern = string.Empty;
-    }
+    /// <summary>
+    /// Skip
+    /// </summary>
+    public int Skip { get; set; } = 0;
 
-    public int Skip { get; set; }
+    /// <summary>
+    /// Take
+    /// </summary>
+    public int Take { get; set; } = 50;
 
-    public int Take { get; set; }
-
-    public string Pattern { get; set; }
+    /// <summary>
+    /// Pattern
+    /// </summary>
+    public string Pattern { get; set; } = string.Empty;
 }
