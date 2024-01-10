@@ -14,11 +14,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Gets <typeparamref name="TContentModel"/> by id.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="schema"></param>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, string schema, Guid id)
         where TContentModel : class, IContentModel
     {
@@ -35,10 +30,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Creates a new <typeparamref name="TContentModel"/>.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public static async Task CreateAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
@@ -48,10 +39,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Updates an existing <typeparamref name="TContentModel"/>.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public static async Task UpdateAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
@@ -61,10 +48,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Deletes an existing <typeparamref name="TContentModel"/>,
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
@@ -74,10 +57,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Publishes an existing <typeparamref name="TContentModel"/>.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public static async Task PublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
@@ -87,10 +66,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Unpublishes an existing <typeparamref name="TContentModel"/>.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="model"></param>
-    /// <returns></returns>
     public static async Task UnpublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
@@ -100,10 +75,6 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Gets the first <typeparamref name="TContentModel"/>.
     /// </summary>
-    /// <typeparam name="TContentModel"></typeparam>
-    /// <param name="storage"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
     public static async Task<TContentModel?> FirstOrDefaultAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel
     {

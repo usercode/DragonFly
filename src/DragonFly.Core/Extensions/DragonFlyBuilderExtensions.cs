@@ -29,10 +29,10 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton(AssetMetadataManager.Default);
 
         builder.Init(api =>
-         {
-             api.ContentField().AddDefaults();
-             api.AssetMetadata().AddDefaults();
-         });
+        {
+            api.ContentField().AddDefaults();
+            api.AssetMetadata().AddDefaults();
+        });
 
         builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
         builder.Services.AddSingleton<ISlugService, SlugService>();

@@ -29,8 +29,8 @@ public static class ContentPermissions
     {
         ArgumentException.ThrowIfNullOrEmpty(schema);
 
-        var createName = static (string schema, ContentAction action) => $"Content.{schema}:{action}";
-        var createDisplayName = static (string schema, ContentAction action) => $"{action} {schema} content";
+        static string createName(string schema, ContentAction action) => $"Content.{schema}:{action}";
+        static string createDisplayName(string schema, ContentAction action) => $"{action} {schema} content";
 
         string name = createName(schema, action);
         string displayName = createDisplayName(schema, action);

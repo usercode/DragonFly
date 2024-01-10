@@ -55,6 +55,9 @@ public static class ContentItemExtensions
         return true;
     }
 
+    /// <summary>
+    /// Gets <typeparamref name="T"/> value from <see cref="SingleValueField{T}"/>.
+    /// </summary>
     public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
     {
         ContentField field = GetField(contentItem, name);
@@ -67,6 +70,9 @@ public static class ContentItemExtensions
         return singleValueField.Value;
     }
 
+    /// <summary>
+    /// Gets <typeparamref name="T"/> value from <see cref="SingleValueField{T}"/>.
+    /// </summary>
     public static T GetRequiredSingleValue<T>(this IContentElement contentItem, string name)
     {
         T? value = GetSingleValue<T>(contentItem, name);
@@ -88,9 +94,12 @@ public static class ContentItemExtensions
     //        return default;
     //    }
 
-    //    return value;
+    //    return (T)value;
     //}
 
+    /// <summary>
+    /// Sets <typeparamref name="T"/> value to <see cref="SingleValueField{T}"/>.
+    /// </summary>
     public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
     {
         ((SingleValueField<T>)contentItem.GetField(name)).Value = value;

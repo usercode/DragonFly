@@ -155,4 +155,5 @@ app.UseDragonFly(x => x
 app.UseDragonFlyManager();
 app.UseSwagger();
 app.UseSwaggerUI();
-app.Run();
+
+await app.RunAsync();

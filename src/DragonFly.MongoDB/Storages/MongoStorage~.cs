@@ -34,7 +34,6 @@ public partial class MongoStorage
     public ILogger<MongoStorage> Logger { get; }
     public IBackgroundTaskManager BackgroundTaskService { get; }
 
-
     private static MongoStorage? _default;
 
     /// <summary>
@@ -43,7 +42,7 @@ public partial class MongoStorage
     public static MongoStorage Default
     {
         get => _default!;
-        set => _default = value;
+        private set => _default = value;
     }
 
     public MongoStorage(
@@ -85,8 +84,6 @@ public partial class MongoStorage
         Events = Database.GetCollection<MongoEvent>("Events");
 
         AssetData = new GridFSBucket(Database, new GridFSBucketOptions() { BucketName = "Assets" });
-
-        ContentItems = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 
         DateTimeService = dateTimeService;
     }
@@ -134,5 +131,5 @@ public partial class MongoStorage
 
     public MongoDbOptions Options { get; }
 
-    private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; }
+    private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; } = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 }
