@@ -17,11 +17,15 @@ public static class BlockClipboard
 
     public static async Task PasteAsync(int index, IList<Block> blocks)
     {
-        Block[] innerBlock = await BlockFieldSerializer.DeserializeBlockAsync(Data);
+        IEnumerable<Block> innerBlock = await BlockFieldSerializer.DeserializeBlockAsync(Data);
 
-        for (int i = 0; i < innerBlock.Length; i++)
+        int i = 0;
+
+        foreach(Block block in innerBlock) 
         {
-            blocks.Insert(index + i, innerBlock[i]);
+            blocks.Insert(index + i, block);
+
+            i++;
         }
     }
 }

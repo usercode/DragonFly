@@ -10,18 +10,22 @@ public static class CssExtensions
 {
     public static string? ToGridTemplate(this IEnumerable<GridSpan> spans)
     {
-        List<string> builder = new List<string>(spans.Count());
+        string[] builder = new string[spans.Count()];
+
+        int i = 0;
 
         foreach (GridSpan span in spans)
         {
             if (span.Unit == GridUnit.Auto)
             {
-                builder.Add($"{span.Unit.ToCss()}");
+                builder[i] = $"{span.Unit.ToCss()}";
             }
             else
             {
-                builder.Add($"{span.Value.ToString(CultureInfo.InvariantCulture)}{span.Unit.ToCss()}");
+                builder[i] = $"{span.Value.ToString(CultureInfo.InvariantCulture)}{span.Unit.ToCss()}";
             }
+
+            i++;
         }
 
         return string.Join(" ", builder);

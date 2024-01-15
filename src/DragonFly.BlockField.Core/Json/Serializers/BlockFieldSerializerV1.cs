@@ -33,13 +33,13 @@ internal static class BlockFieldSerializerV1
         return jsonStream.ToArray();
     }
 
-    public static async Task<Block[]> DeserializeBlockAsync(byte[] buffer)
+    public static async Task<IEnumerable<Block>> DeserializeBlockAsync(byte[] buffer)
     {
-        Block[]? blocks = await JsonSerializer.DeserializeAsync<Block[]>(new MemoryStream(buffer), Options);
+        IEnumerable<Block>? blocks = await JsonSerializer.DeserializeAsync<IEnumerable<Block>>(new MemoryStream(buffer), Options);
 
         if (blocks == null)
         {
-            return Array.Empty<Block>();
+            return Enumerable.Empty<Block>();
         }
 
         return blocks;

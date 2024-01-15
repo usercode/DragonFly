@@ -23,7 +23,7 @@ public static class BlockFieldSerializer
         return CurrentBlockSerializer.SerializeBlockAsync(blocks);
     }
 
-    public static Task<Block[]> DeserializeBlockAsync(byte[] buffer)
+    public static Task<IEnumerable<Block>> DeserializeBlockAsync(byte[] buffer)
     {
         return CurrentBlockSerializer.DeserializeBlockAsync(buffer);
     }
