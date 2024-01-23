@@ -19,7 +19,7 @@ public class Asset : ContentBase<Asset>
         //Hash = string.Empty;
         //PreviewUrl = string.Empty;
         //Size = 0;
-        _metaddata = new AssetMetadatas();
+        //_metaddata = new AssetMetadatas();
     }
 
     public Asset(Guid id)
@@ -73,12 +73,10 @@ public class Asset : ContentBase<Asset>
     /// </summary>
     public virtual AssetFolder? Folder { get; set; }
 
-    private AssetMetadatas _metaddata;
-
     /// <summary>
     /// Metaddata
     /// </summary>
-    public virtual AssetMetadatas Metaddata { get => _metaddata; set => _metaddata = value; }
+    public virtual AssetMetadatas Metaddata { get; set; } = new AssetMetadatas();
 
     public override string ToString()
     {

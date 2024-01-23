@@ -23,7 +23,7 @@ public sealed class FieldManager
 
     public event FieldAddedHandler? Added;
 
-    public void Add<TField>()
+    public FieldAdded Add<TField>()
         where TField : IContentField
     {
         FieldFactory factory = TField.Factory;
@@ -45,6 +45,8 @@ public sealed class FieldManager
         }
 
         Added?.Invoke(factory);
+
+        return new FieldAdded(factory.FieldType, factory.OptionsType, factory.QueryType);
     }
 
     public IEnumerable<Type> GetAllFieldTypes()

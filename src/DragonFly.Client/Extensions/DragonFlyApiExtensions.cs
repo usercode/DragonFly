@@ -2,44 +2,50 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System;
 using DragonFly.Client;
 
 namespace DragonFly;
 
 public static class DragonFlyApiExtensions
 {
-    public static void RegisterField<TField, TFieldView>(this IDragonFlyApi api)
-        where TField : IContentField, new()
-        where TFieldView : IFieldComponent
+    public static FieldAdded WithFieldView<TFieldView>(this FieldAdded field)
+        where TFieldView : IFieldComponent, new()
     {
-        api.ContentField().Add<TField>();
-        api.Component().RegisterField<TFieldView>();
+        Type fieldType = new TFieldView().FieldType;
+
+        ComponentManager.Default.Add(fieldType, typeof(TFieldView));
+
+        return field;
     }
 
-    public static void RegisterField<TField, TFieldView, TFieldOptionsView>(this IDragonFlyApi api)
-        where TField : IContentField, new()
-        where TFieldView : IFieldComponent
-        where TFieldOptionsView : IFieldOptionsComponent
+    public static FieldAdded WithOptionView<TFieldOptionsView>(this FieldAdded field)       
+        where TFieldOptionsView : IFieldOptionsComponent, new()
     {
-        api.RegisterField<TField, TFieldView>();
-        api.Component().RegisterOptions<TFieldOptionsView>();
+        Type optionsType = new TFieldOptionsView().OptionsType;
+
+        ComponentManager.Default.Add(optionsType, typeof(TFieldOptionsView));
+
+        return field;
     }
 
-    public static void RegisterField<TField, TFieldView, TFieldOptionsView, TFieldQueryView>(this IDragonFlyApi api)
-        where TField : IContentField, new()
-        where TFieldView : IFieldComponent
-        where TFieldOptionsView : IFieldOptionsComponent
-        where TFieldQueryView : IFieldQueryComponent
+    public static FieldAdded WithQueryView<TFieldQueryView>(this FieldAdded field)
+        where TFieldQueryView : IFieldQueryComponent, new()
     {
-        api.RegisterField<TField, TFieldView, TFieldOptionsView>();
-        api.Component().RegisterQuery<TFieldQueryView>();
+        Type queryType = new TFieldQueryView().QueryType;
+
+        ComponentManager.Default.Add(queryType, typeof(TFieldQueryView));
+
+        return field;
     }
 
-    public static void RegisterMetadata<TMetadata, TMetadataView>(this IDragonFlyApi api)
-        where TMetadata : AssetMetadata, new()
-        where TMetadataView : IAssetMetadataComponent
+    public static AssetMetadataAdded WithMetadataView<TMetadataView>(this AssetMetadataAdded field)
+        where TMetadataView : IAssetMetadataComponent, new()
     {
-        api.AssetMetadata().Add<TMetadata>();
-        api.Component().RegisterAssetMetadata<TMetadataView>();
+        Type metadataType = new TMetadataView().MetadataType;
+
+        ComponentManager.Default.Add(metadataType, typeof(TMetadataView));
+
+        return field;
     }
 }

@@ -57,7 +57,13 @@ builder.Services.AddDragonFly()
                                     .Add<Product2>()
                                     .Add<Customer>()
                                     )
+                    .Init(x =>
+                    {
+                        
+                    })
                     ;
+
+
 
 var app = builder.Build();
 

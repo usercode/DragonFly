@@ -12,7 +12,7 @@
             }
         </div>
         <div class="col-lg-1">
-            @if (ShowValidationErrors && ContentItem.ValidationContext.State == Validations.ValidationState.Invalid)
+            @if (ShowValidationErrors && ContentItem.ValidationContext.State == ValidationState.Invalid)
             {
                 <i class="fa-solid fa-triangle-exclamation" title="@ContentItem.ValidationContext.GetMessage()"></i>
             }

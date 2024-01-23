@@ -23,8 +23,8 @@ public class AssetModule : ClientModule
     {
         api.MainMenu().Add("Assets", "fa-regular fa-image", "asset");
 
-        api.RegisterMetadata<ImageMetadata, ImageMetadataView>();
-        api.RegisterMetadata<PdfMetadata, PdfMetadataView>();
+        api.AssetMetadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
+        api.AssetMetadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();
 
         api.AssetPreview().Add<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
         api.AssetPreview().Add<PdfPreviewView>(MimeTypes.Pdf);

@@ -13,14 +13,6 @@ namespace DragonFly;
 /// </summary>
 public static class AssetMetadataComponentManagerExtensions
 {
-    public static void RegisterAssetMetadata<TMetadataComponent>(this ComponentManager componentManager)
-      where TMetadataComponent : IAssetMetadataComponent
-    {
-        Type metadataType = typeof(TMetadataComponent).GetProperty(nameof(IAssetMetadataComponent.Metadata)).PropertyType;
-
-        componentManager.Add(metadataType, typeof(TMetadataComponent));
-    }
-
     public static RenderFragment CreateComponent(this ComponentManager componentManager, AssetMetadata metadata)
     {
         Type componentType = componentManager.GetComponentType(metadata.GetType());

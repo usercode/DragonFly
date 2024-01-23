@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System;
 using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
@@ -19,4 +20,6 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
     ContentField IFieldComponent.Field => Field;
 
     FieldOptions IFieldComponent.Options => Options;
+
+    Type IFieldComponent.FieldType => typeof(TField);
 }

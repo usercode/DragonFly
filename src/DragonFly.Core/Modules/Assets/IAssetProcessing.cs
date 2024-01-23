@@ -18,5 +18,4 @@ public interface IAssetProcessing
     /// OnAssetChangedAsync
     /// </summary>
     Task<bool> OnAssetChangedAsync(IAssetProcessingContext context);
-
 }

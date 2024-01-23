@@ -12,10 +12,14 @@ public static class DragonFlyCoreBuilderExtensions
     public static TDragonFlyBuilder AddRestApiCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
         where TDragonFlyBuilder : IDragonFlyBuilder
     {
+        builder.PreInit(api =>
+        {
+            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
+        });
+
         builder.Init(api =>
         {
             api.JsonFields().AddDefaults();
-            api.ContentField().Added += fieldFactory => JsonFieldManager.Default.EnsureField(fieldFactory.FieldType);
         });
 
         return builder;

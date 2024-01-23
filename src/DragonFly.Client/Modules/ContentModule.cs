@@ -25,21 +25,21 @@ public class ContentModule : ClientModule
         //api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
         api.MainMenu().Add("Content", "fa-solid fa-list", "content");
 
-        api.RegisterField<ArrayField, ArrayFieldView, ArrayFieldOptionsView>();
-        api.RegisterField<AssetField, AssetFieldView, AssetFieldOptionsView, AssetFieldQueryView>();
-        api.RegisterField<ReferenceField, ReferenceFieldView, ReferenceFieldOptionsView, ReferenceFieldQueryView>();
-        api.RegisterField<BoolField, BoolFieldView, BoolFieldOptionsView, BoolFieldQueryView>();
-        api.RegisterField<ComponentField, ComponentFieldView, ComponentFieldOptionsView>();
-        api.RegisterField<DateTimeField, DateTimeFieldView>();
-        api.RegisterField<StringField, StringFieldView, StringFieldOptionsView, StringFieldQueryView>();
-        api.RegisterField<FloatField, FloatFieldView, FloatFieldOptionsView, FloatFieldQueryView>();
-        api.RegisterField<IntegerField, IntegerFieldView, IntegerFieldOptionsView, IntegerFieldQueryView>();
-        api.RegisterField<SlugField, SlugFieldView>();
-        api.RegisterField<TextField, TextFieldView>();
-        api.RegisterField<HtmlField, HtmlFieldView>();
-        api.RegisterField<XHtmlField, XHtmlFieldView>();
-        api.RegisterField<XmlField, XmlFieldView>();
-        api.RegisterField<ColorField, ColorFieldView>();
-        api.RegisterField<GeolocationField, GeolocationFieldView, GeolocationFieldOptionsView, GeolocationFieldQueryView>();
+        api.ContentField().Add<ArrayField>().WithFieldView<ArrayFieldView>().WithOptionView<ArrayFieldOptionsView>();
+        api.ContentField().Add<AssetField>().WithFieldView<AssetFieldView>().WithOptionView<AssetFieldOptionsView>().WithQueryView<AssetFieldQueryView>();
+        api.ContentField().Add<ReferenceField>().WithFieldView<ReferenceFieldView>().WithOptionView<ReferenceFieldOptionsView>().WithQueryView<ReferenceFieldQueryView>();
+        api.ContentField().Add<BoolField>().WithFieldView<BoolFieldView>().WithOptionView<BoolFieldOptionsView>().WithQueryView<BoolFieldQueryView>();
+        api.ContentField().Add<ComponentField>().WithFieldView<ComponentFieldView>().WithOptionView<ComponentFieldOptionsView>();
+        api.ContentField().Add<DateTimeField>().WithFieldView<DateTimeFieldView>();
+        api.ContentField().Add<StringField>().WithFieldView<StringFieldView>().WithOptionView<StringFieldOptionsView>().WithQueryView<StringFieldQueryView>();
+        api.ContentField().Add<FloatField>().WithFieldView<FloatFieldView>().WithOptionView<FloatFieldOptionsView>().WithQueryView<FloatFieldQueryView>();
+        api.ContentField().Add<IntegerField>().WithFieldView<IntegerFieldView>().WithOptionView<IntegerFieldOptionsView>().WithQueryView<IntegerFieldQueryView>();
+        api.ContentField().Add<SlugField>().WithFieldView<SlugFieldView>();
+        api.ContentField().Add<TextField>().WithFieldView<TextFieldView>();
+        api.ContentField().Add<HtmlField>().WithFieldView<HtmlFieldView>();
+        api.ContentField().Add<XHtmlField>().WithFieldView<XHtmlFieldView>();
+        api.ContentField().Add<XmlField>().WithFieldView<XmlFieldView>();
+        api.ContentField().Add<ColorField>().WithFieldView<ColorFieldView>();
+        api.ContentField().Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();
     }
 }

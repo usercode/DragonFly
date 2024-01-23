@@ -17,7 +17,7 @@ public sealed class AssetMetadataManager
     /// </summary>
     public static AssetMetadataManager Default { get; } = new AssetMetadataManager();
 
-    public void Add<TMetadata>()
+    public AssetMetadataAdded Add<TMetadata>()
         where TMetadata : AssetMetadata, new()
     {
         string typeName = typeof(TMetadata).Name;
@@ -31,6 +31,8 @@ public sealed class AssetMetadataManager
 
         _byName[typeName] = typeof(TMetadata);
         _byType[typeof(TMetadata)] = typeName;
+
+        return new AssetMetadataAdded(typeof(TMetadata));
     }
 
     public string GetMetadataName<T>()

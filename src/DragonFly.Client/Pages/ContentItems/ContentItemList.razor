@@ -6,16 +6,16 @@
     {
         <Toolbar Items="ToolbarItems" />
     }
-    
+
     <div style="display:flex; gap: 0.25rem;">
         <input class="form-control" type="text" style="flex:1;" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
-        <BSButton Color="BSColor.Light" OnClick="NavigateAsync" ><i class="fa-solid fa-magnifying-glass"></i></BSButton>
+        <BSButton Color="BSColor.Light" OnClick="NavigateAsync"><i class="fa-solid fa-magnifying-glass"></i></BSButton>
     </div>
 </div>
 <div class="scroll-content">
     <EditForm Model="this">
         <BSRow>
-            <BSCol Column="3">
+            <BSCol Column="auto">
                 <QuerySelector ContentItemList="@this" />
             </BSCol>
             <BSCol Column="9">
@@ -28,26 +28,15 @@
                 else
                 {
                     <BSListGroup>
-
                         @foreach (ContentItem contentItem in SearchResult.Items)
                         {
                             <button class="list-group-item list-group-item-action" @onclick="x => OpenItem(contentItem)">
                                 <BSRow>
-                                    <div class="col-lg-1">
-                                        @if (contentItem.PublishedAt != null)
-                                        {
-                                            <i class="far fa-check-square"></i>
-                                        }
-                                        else
-                                        {
-                                            <i class="far fa-check-square" style="visibility: hidden"></i>
-                                        }
+                                    <div class="col-lg-auto">
+                                        <i class="fa-solid fa-check" title="Published at @contentItem.PublishedAt" style="@(contentItem.PublishedAt == null ? "visibility: hidden" : "")"></i>
                                     </div>
-                                    <div class="col-lg-1">
-                                        @if (contentItem.ValidationContext.State == Validations.ValidationState.Invalid)
-                                        {
-                                            <i class="fa-solid fa-triangle-exclamation" title="@contentItem.ValidationContext.GetMessage()"></i>
-                                        }
+                                    <div class="col-lg-auto">
+                                        <i class="fa-solid fa-circle-exclamation text-danger" title="@contentItem.ValidationContext.GetMessage()" style="@(contentItem.ValidationContext.State == ValidationState.Valid ? "visibility: hidden" : "")"></i>
                                     </div>
                                     @* no list fields available? Show id field only *@
                                     @if (contentItem.Schema.ListFields.Any() == false)
@@ -60,7 +49,7 @@
                                     {
                                         foreach (string field in contentItem.Schema.ListFields.Take(5))
                                         {
-                                            <div class="col-lg-2">
+                                            <div class="col-lg">
                                                 <div style="white-space: nowrap; overflow: hidden;">
                                                     @{
                                                         ContentField column = contentItem.Fields[field];

@@ -14,14 +14,6 @@ namespace DragonFly;
 /// </summary>
 public static class ComponentManagerExtensions
 {
-    public static void RegisterField<TFieldComponent>(this ComponentManager componentManager)
-        where TFieldComponent : IFieldComponent
-    {
-        Type fieldType = typeof(TFieldComponent).GetProperty(nameof(IFieldComponent.Field)).PropertyType;
-
-        componentManager.Add(fieldType, typeof(TFieldComponent));
-    }
-
     public static RenderFragment CreateComponent(this ComponentManager componentManager, ContentField contentField, FieldOptions? options)
     {
         Type componentType = componentManager.GetComponentType(contentField.GetType());
@@ -33,14 +25,6 @@ public static class ComponentManagerExtensions
             builder.AddAttribute(1, nameof(IFieldComponent.Options), options);
             builder.CloseComponent();
         };
-    }
-
-    public static void RegisterOptions<TFieldOptionsComponent>(this ComponentManager componentManager)
-       where TFieldOptionsComponent : IFieldOptionsComponent
-    {
-        Type fieldOptionsType = typeof(TFieldOptionsComponent).GetProperty(nameof(IFieldOptionsComponent.Options)).PropertyType;
-
-        componentManager.Add(fieldOptionsType, typeof(TFieldOptionsComponent));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, FieldOptions options)
@@ -60,14 +44,6 @@ public static class ComponentManagerExtensions
         {
             return builder => { builder.OpenElement(0, "p"); builder.AddContent(0, $"The view for {options.GetType().Name} is not available."); builder.CloseElement(); };
         }            
-    }
-
-    public static void RegisterQuery<TQueryView>(this ComponentManager componentManager)
-        where TQueryView : IFieldQueryComponent
-    {
-        Type queryType = typeof(TQueryView).GetProperty(nameof(IFieldQueryComponent.Query)).PropertyType;
-
-        componentManager.Add(queryType, typeof(TQueryView));
     }
 
     public static RenderFragment CreateComponent(this ComponentManager componentManager, FieldQuery fieldQuery)
