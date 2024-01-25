@@ -23,8 +23,11 @@ public sealed class FieldManager
 
     public event FieldAddedHandler? Added;
 
-    public FieldAdded Add<TField>()
-        where TField : IContentField
+    /// <summary>
+    /// Adds <typeparamref name="TField"/> to field manager.
+    /// </summary>
+    public FieldAdded<TField> Add<TField>()
+        where TField : ContentField, IContentField
     {
         FieldFactory factory = TField.Factory;
 
@@ -46,7 +49,7 @@ public sealed class FieldManager
 
         Added?.Invoke(factory);
 
-        return new FieldAdded(factory.FieldType, factory.OptionsType, factory.QueryType);
+        return new FieldAdded<TField>();
     }
 
     public IEnumerable<Type> GetAllFieldTypes()

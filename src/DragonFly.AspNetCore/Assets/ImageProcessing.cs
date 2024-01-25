@@ -32,12 +32,12 @@ public class ImageProcessing : IAssetProcessing
 
         if (imageInfo != null)
         {
-            ImageMetadata imageMetadata = new ImageMetadata() { 
+            ImageMetadata metadata = new ImageMetadata() { 
                                                     Width = imageInfo.Width, 
                                                     Height = imageInfo.Height, 
                                                     BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
 
-            await context.SetMetadataAsync(imageMetadata);
+            await context.SetMetadataAsync(metadata);
 
             return true;
         }

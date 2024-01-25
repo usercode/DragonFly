@@ -23,6 +23,7 @@ public static class AssetDragonFlyApiExtensions
     {
         manager.Add<ImageMetadata>();
         manager.Add<PdfMetadata>();
+        manager.Add<VideoMetadata>();
 
         return manager;
     }

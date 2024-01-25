@@ -1,10 +1,7 @@
 @inherits AssetPreviewComponent
 
-@if (string.IsNullOrEmpty(Asset.PreviewUrl) == false)
-{
-    <div id="pdf" style="width: 100%; height: 800px">
-        <iframe src="@Asset.GetPublicUrl()" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
-            <p>It appears your web browser doesn't support iframes.</p>
-        </iframe>
-    </div>
-}
+<div id="pdf" style="width: 100%; height: 800px">
+    <iframe src="@Asset.GetPublicUrl()" style="width: 100%; height: 100%;" frameborder="0" scrolling="no">
+        <p>It appears your web browser doesn't support iframes.</p>
+    </iframe>
+</div>

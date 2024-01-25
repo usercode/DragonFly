@@ -116,7 +116,7 @@ static class AssetApiExtensions
 
         Stream assetStream = await storage.GetStreamAsync(asset);
 
-        return TypedResults.Stream(assetStream, contentType : asset.MimeType, entityTag: etag);
+        return TypedResults.Stream(assetStream, contentType: asset.MimeType, entityTag: etag, enableRangeProcessing: true);
     }
 
     private static async Task<Results<Ok, NotFound>> MapUpload(HttpContext context, IAssetStorage storage, Guid id)

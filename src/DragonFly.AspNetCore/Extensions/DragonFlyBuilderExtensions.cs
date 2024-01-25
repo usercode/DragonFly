@@ -58,6 +58,7 @@ public static class DragonFlyBuilderExtensions
         //assets
         builder.Services.AddTransient<IAssetProcessing, ImageProcessing>();
         builder.Services.AddTransient<IAssetProcessing, PdfProcessing>();
+        builder.Services.AddTransient<IAssetProcessing, VideoProcessing>();
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 

@@ -1,0 +1,6 @@
+@inherits AssetPreviewComponent
+
+<video width="1920" height="1080" controls muted style="width:100%;height:auto">
+    <source src="@Asset.GetPublicUrl()" type="@Asset.MimeType">
+    Your browser does not support the video tag.
+</video>

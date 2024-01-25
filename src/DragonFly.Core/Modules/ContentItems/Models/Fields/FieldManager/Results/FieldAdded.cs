@@ -7,27 +7,20 @@ namespace DragonFly;
 /// <summary>
 /// FieldAdded
 /// </summary>
-public sealed class FieldAdded
+public abstract class FieldAdded
 {
-    public FieldAdded(Type fieldType, Type? optionsType, Type? queryType)
-    {
-        FieldType = fieldType;
-        OptionsType = optionsType;
-        QueryType = queryType;
-    }
-
     /// <summary>
     /// FieldType
     /// </summary>
-    public Type FieldType { get; }
+    public abstract Type FieldType { get; }
+}
 
-    /// <summary>
-    /// OptionsType
-    /// </summary>
-    public Type? OptionsType { get; }
-
-    /// <summary>
-    /// QueryType
-    /// </summary>
-    public Type? QueryType { get; }
+/// <summary>
+/// FieldAdded
+/// </summary>
+/// <typeparam name="T"></typeparam>
+public class FieldAdded<T> : FieldAdded
+    where T : ContentField
+{
+    public override Type FieldType => typeof(T);
 }

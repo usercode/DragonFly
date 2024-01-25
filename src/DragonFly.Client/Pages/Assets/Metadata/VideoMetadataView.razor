@@ -1,0 +1,108 @@
+﻿@inherits AssetMetadataComponent<VideoMetadata>
+
+@if (Metadata.VideoInfo != null)
+{
+    <h4>Primary video stream</h4>
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Codec
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Codec" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Duration
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Duration" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Width
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Width" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Height
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Height" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                FPS
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Fps" readonly />
+            </div>
+        </BSRow>
+    </div>
+}
+
+@if (Metadata.AudioInfo != null)
+{
+    <h4>Primary audio stream</h4>
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Codec
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Codec" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Duration
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Duration" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Channel layout
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.ChannelLayout" readonly />
+            </div>
+        </BSRow>
+    </div>
+
+    <div class="form-group">
+        <BSRow>
+            <BSLabel class="col-sm-2 col-form-label">
+                Channels
+            </BSLabel>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Channels" readonly />
+            </div>
+        </BSRow>
+    </div>
+}

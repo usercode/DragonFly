@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
-public abstract class AssetMetadataComponent<T> : ComponentBase, IAssetMetadataComponent<T>
+public abstract class AssetMetadataComponent<T> : ComponentBase, IAssetMetadataComponent
     where T : AssetMetadata
 {
     [Parameter]
     public T Metadata { get; set; }
 
-    AssetMetadata IAssetMetadataComponent.Metadata => Metadata;
+    public Type MetadataType => typeof(T);
 
-    Type IAssetMetadataComponent.MetadataType => typeof(T);
+    AssetMetadata IAssetMetadataComponent.Metadata => Metadata;
 }

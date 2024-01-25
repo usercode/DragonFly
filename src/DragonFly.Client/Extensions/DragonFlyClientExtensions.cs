@@ -38,6 +38,18 @@ public static class DragonFlyClientExtensions
         return builder.AddDragonFly(new Uri($"{uri.Scheme}://{uri.Authority}/dragonfly/"), uri);
     }
 
+    /// <summary>
+    /// Adds DragonFly services.
+    /// <br /><br />
+    /// Default fields: <br />
+    /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/><br />
+    /// <see cref="AssetField"/>, <see cref="ReferenceField"/>
+    /// <br /><br />
+    /// Default asset metadata: <br/>
+    /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/><br /><br />
+    /// Default services::<br/>
+    /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
+    /// </summary>
     private static IDragonFlyBuilder AddDragonFly(this WebAssemblyHostBuilder hostBuilder, Uri apiBaseUri, Uri clientBaseUrl)
     {
         IDragonFlyBuilder builder = new DragonFlyBuilder(hostBuilder.Services);

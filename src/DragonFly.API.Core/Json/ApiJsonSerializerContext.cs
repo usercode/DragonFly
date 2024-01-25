@@ -33,6 +33,7 @@ namespace DragonFly.API;
 //AssetMetadata
 [JsonSerializable(typeof(ImageMetadata))]
 [JsonSerializable(typeof(PdfMetadata))]
+[JsonSerializable(typeof(VideoMetadata))]
 
 //Field
 [JsonSerializable(typeof(ArrayField))]
