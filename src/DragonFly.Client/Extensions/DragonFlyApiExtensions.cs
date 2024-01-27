@@ -9,7 +9,15 @@ namespace DragonFly;
 
 public static class DragonFlyApiExtensions
 {
-    public static FieldAdded WithFieldView<TFieldView>(this FieldAdded field)
+    //public static IFieldAdded<T> WithFieldView2<T>(this IFieldAdded<T> field, Func<IFieldComponent<T>> component)
+    //    where T : ContentField
+    //{
+    //    ComponentManager.Default.Add(typeof(T), typeof(TFieldView));
+
+    //    return field;
+    //}
+
+    public static IFieldAdded WithFieldView<TFieldView>(this IFieldAdded field)
         where TFieldView : IFieldComponent, new()
     {
         Type fieldType = new TFieldView().FieldType;
@@ -19,7 +27,7 @@ public static class DragonFlyApiExtensions
         return field;
     }
 
-    public static FieldAdded WithOptionView<TFieldOptionsView>(this FieldAdded field)       
+    public static IFieldAdded WithOptionView<TFieldOptionsView>(this IFieldAdded field)       
         where TFieldOptionsView : IFieldOptionsComponent, new()
     {
         Type optionsType = new TFieldOptionsView().OptionsType;
@@ -29,7 +37,7 @@ public static class DragonFlyApiExtensions
         return field;
     }
 
-    public static FieldAdded WithQueryView<TFieldQueryView>(this FieldAdded field)
+    public static IFieldAdded WithQueryView<TFieldQueryView>(this IFieldAdded field)
         where TFieldQueryView : IFieldQueryComponent, new()
     {
         Type queryType = new TFieldQueryView().QueryType;

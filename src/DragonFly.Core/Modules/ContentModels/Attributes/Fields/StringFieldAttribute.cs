@@ -17,9 +17,9 @@ public class StringFieldAttribute : BaseFieldAttribute
 
     public int MaxLength { get; set; }
 
-    public override void AddToSchema(ContentSchema schema, string property)
+    public override void ApplyToSchema(ContentSchema schema, string property)
     {
-        base.AddToSchema(schema, property);
+        base.ApplyToSchema(schema, property);
 
         schema.AddString(property, x =>
                                         {

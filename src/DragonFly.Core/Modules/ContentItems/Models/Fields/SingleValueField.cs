@@ -12,7 +12,6 @@ namespace DragonFly;
 /// </summary>
 public abstract class SingleValueField<T> : ContentField, ISingleValueField
 {
-
     private T? _value;
 
     /// <summary>

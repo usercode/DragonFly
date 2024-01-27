@@ -17,21 +17,16 @@ public sealed class ComponentManager
     /// </summary>
     public static ComponentManager Default { get; } = new ComponentManager();
 
-    private IDictionary<Type, Type> _cacheFieldView;
-
-    private ComponentManager()
-    {
-        _cacheFieldView = new Dictionary<Type, Type>();
-    }
+    private IDictionary<Type, Type> _cacheFieldView = new Dictionary<Type, Type>();
 
     public void Add(Type fieldType, Type componentType)
     {
         _cacheFieldView[fieldType] = componentType;
     }
 
-    public Type GetComponentType(Type type)
+    public Type GetComponentType(Type fieldType)
     {
-        if (_cacheFieldView.TryGetValue(type, out Type componentType))
+        if (_cacheFieldView.TryGetValue(fieldType, out Type componentType))
         {
             return componentType;
         }
@@ -39,8 +34,9 @@ public sealed class ComponentManager
         return null;
     }
 
-    public Type GetComponentType<T>()
+    public Type GetComponentType<TField>()
+        where TField : ContentField
     {
-        return GetComponentType(typeof(T));
+        return GetComponentType(typeof(TField));
     }
 }

@@ -11,7 +11,7 @@ public class HtmlFieldAttribute : BaseFieldAttribute
         Required = isRequired;
     }
 
-    public override void AddToSchema(ContentSchema schema, string property)
+    public override void ApplyToSchema(ContentSchema schema, string property)
     {
         schema.AddHtml(property, x =>
                                     {

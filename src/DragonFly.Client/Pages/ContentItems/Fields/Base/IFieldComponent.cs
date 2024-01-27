@@ -15,3 +15,9 @@ public interface IFieldComponent : IComponent
 
     FieldOptions Options { get; }
 }
+
+public interface IFieldComponent<TField> : IFieldComponent
+    where TField : ContentField
+{
+    new Type FieldType => typeof(TField);
+}

@@ -19,7 +19,7 @@ public abstract class BaseFieldAttribute : Attribute
 
     public bool Index { get; set; }
 
-    public virtual void AddToSchema(ContentSchema schema, string property)
+    public virtual void ApplyToSchema(ContentSchema schema, string property)
     {
         if (ListField)
         {

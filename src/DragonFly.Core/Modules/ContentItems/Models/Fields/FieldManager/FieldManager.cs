@@ -26,8 +26,8 @@ public sealed class FieldManager
     /// <summary>
     /// Adds <typeparamref name="TField"/> to field manager.
     /// </summary>
-    public FieldAdded<TField> Add<TField>()
-        where TField : ContentField, IContentField
+    public IFieldAdded<TField> Add<TField>()
+        where TField : ContentField, IContentFieldFactory
     {
         FieldFactory factory = TField.Factory;
 

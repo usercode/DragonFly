@@ -349,7 +349,7 @@ public static class SourceBuilderExtensions
                     parameters = $" {{ {property.AttributeParameters} }}";
                 }
 
-                x.AppendLine($"new {property.AttributeTypeSymbol.ToDisplayString()}(){parameters}.AddToSchema(schema, \"{property.PropertyName}\");");
+                x.AppendLine($"new {property.AttributeTypeSymbol.ToDisplayString()}(){parameters}.ApplyToSchema(schema, \"{property.PropertyName}\");");
             }
             x.AppendLine();
 

@@ -3,11 +3,11 @@
 // MIT License
 
 using System;
-using DragonFly.Query;
+using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
-public interface IFieldQueryComponent
+public interface IFieldQueryComponent : IComponent
 {
     SchemaField Field { get; }
 

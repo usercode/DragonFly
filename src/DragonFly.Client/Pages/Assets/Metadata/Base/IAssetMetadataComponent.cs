@@ -3,10 +3,11 @@
 // MIT License
 
 using System;
+using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
-public interface IAssetMetadataComponent
+public interface IAssetMetadataComponent : IComponent
 {
     AssetMetadata Metadata { get; }
 

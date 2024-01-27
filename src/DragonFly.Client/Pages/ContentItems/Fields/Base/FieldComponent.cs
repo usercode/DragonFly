@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
-public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent
+public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent<TField>
     where TField : ContentField
     where TFieldOptions : FieldOptions
 {

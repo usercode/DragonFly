@@ -3,9 +3,6 @@
 // MIT License
 
 using FFMpegCore;
-using FFMpegCore.Builders.MetaData;
-using Microsoft.AspNetCore.Components.Forms;
-using SixLabors.ImageSharp;
 
 namespace DragonFly.AspNetCore;
 
@@ -27,12 +24,6 @@ public class VideoProcessing : IAssetProcessing
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
-        GlobalFFOptions.Configure(x =>
-        {
-            x.BinaryFolder = "C:\\Users\\admin\\Downloads";
-            x.TemporaryFilesFolder = "C:\\Users\\admin\\Downloads";
-        });
-
         using Stream stream = await context.OpenAssetStreamAsync();
 
         IMediaAnalysis mediaInfo = FFProbe.Analyse(stream);

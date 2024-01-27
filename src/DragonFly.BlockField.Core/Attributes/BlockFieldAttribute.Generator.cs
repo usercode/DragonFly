@@ -12,7 +12,7 @@ public class BlockFieldAttribute : BaseFieldAttribute
     {
     }
 
-    public override void AddToSchema(ContentSchema schema, string property)
+    public override void ApplyToSchema(ContentSchema schema, string property)
     {
         schema.AddField(
                                 name: property,

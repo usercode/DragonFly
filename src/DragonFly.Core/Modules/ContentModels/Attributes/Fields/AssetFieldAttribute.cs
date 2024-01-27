@@ -12,9 +12,9 @@ public class AssetFieldAttribute : BaseFieldAttribute
 
     public bool ShowPreview { get; set; }
 
-    public override void AddToSchema(ContentSchema schema, string property)
+    public override void ApplyToSchema(ContentSchema schema, string property)
     {
-        base.AddToSchema(schema, property);
+        base.ApplyToSchema(schema, property);
 
         schema.AddAsset(property, x =>
                                     {

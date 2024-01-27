@@ -11,6 +11,7 @@ using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
 using DragonFlyABC;
 using DragonFlyTEST;
+using FFMpegCore;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
@@ -45,6 +46,12 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
+GlobalFFOptions.Configure(x =>
+{
+    x.BinaryFolder = "C:\\Users\\admin\\Downloads";
+    x.TemporaryFilesFolder = "C:\\Users\\admin\\Downloads";
+});
+
 //DragonFly services
 builder.Services.AddDragonFly()
                     .AddImageWizard()
@@ -62,8 +69,6 @@ builder.Services.AddDragonFly()
                         
                     })
                     ;
-
-
 
 var app = builder.Build();
 

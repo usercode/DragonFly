@@ -45,7 +45,7 @@ public class FieldGenerator : IIncrementalGenerator
                 baseTypes.Add("ContentField");
             }
 
-            baseTypes.Add("IContentField");
+            baseTypes.Add("IContentFieldFactory");
 
             string? optionsParameter = ar.ClassSyntax.GetFirstAttributeParameters("FieldOptions").FirstOrDefault();
             string optionsFactory = "null";
