@@ -57,7 +57,7 @@ public class DataSeeding
         document.Blocks.Add(new HeadingBlock(HeadingType.H1, "Welcome To DragonFly CMS"));
         document.Blocks.Add(new ProgressBlock(ColorType.Danger, 75));
         document.Blocks.Add(new HeadingBlock(HeadingType.H2, "Introduction"));
-        document.Blocks.Add(new HtmlBlock("<p><i>DragonFLy</i> is an open source CMS based on <b>ASP.NET</b> and Blazor. </p>"));
+        document.Blocks.Add(new HtmlBlock("<p><i>DragonFly</i> is an open source CMS based on <b>ASP.NET</b> and Blazor. </p>"));
         document.Blocks.Add(new ColumnBlock(
                                  new Column(new AlertBlock(ColorType.Success, new HtmlBlock("You can find the manager here: <b>/manager</b>"))),
                                  new Column(new AlertBlock(ColorType.Warning, new HtmlBlock("This is a warning."))),
@@ -66,28 +66,28 @@ public class DataSeeding
                                 new Column(
                                        new CodeBlock(CodeType.CSharp, """
                                                         [ContentItem]
-                                                        public class StandardPageModel : EntityPageModel
+                                                        public partial class StandardPageModel
                                                         {
                                                             [StringField(Required = true, ListField = true)]
-                                                            public virtual string Title { get; set; }
+                                                            public string _title;
                                     
                                                             [SlugField(Required = true, Index = true)]
-                                                            public virtual string Slug { get; set; }
+                                                            public string _slug;
                                     
                                                             [BoolField(Required = true, Index = true)]
-                                                            public virtual bool NoFollow { get; set; }
+                                                            public bool _noFollow;
                                     
                                                             [BoolField(Required = true, Index = true)]
-                                                            public virtual bool NoIndex { get; set; }
+                                                            public bool _noIndex;
                                     
                                                             [BoolField(Required = true, Index = true)]
-                                                            public virtual bool IsStartPage { get; set; }
+                                                            public bool _isStartPage;
                                     
                                                             [BoolField(Required = true, Index = true)]
-                                                            public virtual bool IsFooterPage { get; set; }
+                                                            public bool _isFooterPage;
                                     
                                                             [BlockField]
-                                                            public virtual BlockField MainContent { get; set; }
+                                                            public BlockField _mainContent;
                                                         } 
                                                         """)),
                                        new Column(new OpenGraphBlock("https://github.com/usercode/DragonFly"))));

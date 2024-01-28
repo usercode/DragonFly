@@ -27,6 +27,9 @@ public partial class Product2
     [FloatField(Index = true, QueryField = true)]
     private double? _quantity2;
 
+    [HtmlField]
+    private BlockField _htmlContent;
+
     [BlockField]
     private BlockField _mainContent;
 

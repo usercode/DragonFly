@@ -7,7 +7,7 @@ using DragonFly.Client;
 
 namespace DragonFly;
 
-public static class DragonFlyApiExtensions
+public static class FieldAddedExtensions
 {
     //public static IFieldAdded<T> WithFieldView2<T>(this IFieldAdded<T> field, Func<IFieldComponent<T>> component)
     //    where T : ContentField

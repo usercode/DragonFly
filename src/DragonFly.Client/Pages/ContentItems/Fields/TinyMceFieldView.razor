@@ -1,0 +1,7 @@
+﻿@inherits FieldComponent<TextBaseField>
+
+<div class="tinymce-field">
+    <TinyMCE.Blazor.Editor Field="() => Field.Value"
+                           @bind-Value="Field.Value"
+                           Conf="TinyMceConfiguration.Editor" />
+</div>

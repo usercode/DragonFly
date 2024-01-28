@@ -2,7 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.BlockField.Client.Helpers;
+using System.Collections.Generic;
+
+namespace DragonFly.Client;
 
 public class TinyMceConfiguration
 {
