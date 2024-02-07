@@ -67,5 +67,23 @@ public class SourceBuilder
         }
     }
 
+    public void AppendTryCatch(Action<SourceBuilder> tryBlock, Action<SourceBuilder>? catchBlock = null, Action<SourceBuilder>? finallyBlock = null)
+    {
+        AppendLine("try");
+        AppendBlock(tryBlock);
+
+        if (catchBlock != null)
+        {
+            AppendLine("catch (Exception ex)");
+            AppendBlock(catchBlock);
+        }
+
+        if (finallyBlock != null)
+        {
+            AppendLine("finally");
+            AppendBlock(finallyBlock);
+        }
+    }
+
     public override string ToString() => Builder.ToString();
 }

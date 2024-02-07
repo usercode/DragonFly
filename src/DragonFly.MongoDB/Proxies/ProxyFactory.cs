@@ -2,13 +2,24 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using MongoDB.Driver;
+
 namespace DragonFly.MongoDB;
 
 internal static class ProxyFactory
 {
-    public static ContentItem CreateContent(string schema, Guid id)
+    public static ContentItem? CreateContent(string schema, Guid id)
     {
-        return new ContentItemProxy(CreateSchema(schema), id);
+        var collection = MongoStorage.Default.GetMongoCollection(schema);
+
+        if (collection.AsQueryable().Where(x => x.Id == id).Any())
+        {
+            return new ContentItemProxy(CreateSchema(schema), id);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static ContentSchema CreateSchema(string schema)
@@ -16,9 +27,16 @@ internal static class ProxyFactory
         return new ContentSchemaProxy(schema);
     }
 
-    public static Asset CreateAsset(Guid assetId)
+    public static Asset? CreateAsset(Guid assetId)
     {
-        return new AssetProxy(assetId);
+        if (MongoStorage.Default.Assets.AsQueryable().Where(x => x.Id == assetId).Any())
+        {
+            return new AssetProxy(assetId);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public static AssetFolder CreateAssetFolder(Guid assetFolderId)

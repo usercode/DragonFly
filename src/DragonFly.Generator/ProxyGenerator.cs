@@ -98,6 +98,11 @@ public class ProxyGenerator : IIncrementalGenerator
                                 {
                                     bool ignoreProperty = ignoredProperties.Contains(propertySymbol.Name);
 
+                                    if (ignoreProperty)
+                                    {
+                                        continue;
+                                    }
+
                                     builder.AppendLine($"public override {propertySymbol.Type.ToDisplayString()} {propertySymbol.Name}");
                                     builder.AppendBlock(x =>
                                     {
@@ -106,13 +111,9 @@ public class ProxyGenerator : IIncrementalGenerator
                                             builder.AppendLine($"get");
                                             builder.AppendBlock(x =>
                                             {
-                                                if (ignoreProperty == false)
-                                                {
-                                                    x.AppendLine($"{methodCaller}(\"{propertySymbol.GetMethod.Name}\"){methodCallerAsyncExtensions};");
-                                                }
+                                                x.AppendLine($"{methodCaller}(\"{propertySymbol.GetMethod.Name}\"){methodCallerAsyncExtensions};");                
                                                 x.AppendLine($"return _invocationTarget.{propertySymbol.Name};");
                                             });
-
                                         }
                                         if (propertySymbol.SetMethod != null)
                                         {
@@ -136,6 +137,11 @@ public class ProxyGenerator : IIncrementalGenerator
                                 {
                                     bool ignoreMethod = ignoredMethods.Contains(methodSymbol.Name);
 
+                                    if (ignoreMethod)
+                                    {
+                                        continue;
+                                    }
+
                                     string parameterDefinition = $"{string.Join(", ", methodSymbol.Parameters.Select(x => $"{x.Type.ToDisplayString()} {x.Name}"))}";
 
                                     builder.AppendTabs();
@@ -143,10 +149,7 @@ public class ProxyGenerator : IIncrementalGenerator
                                     builder.AppendLineBreak();
                                     builder.AppendBlock(x =>
                                     {
-                                        if (ignoreMethod == false)
-                                        {
-                                            builder.AppendLine($"{methodCaller}(\"{methodSymbol.Name}\"){methodCallerAsyncExtensions};");
-                                        }
+                                        builder.AppendLine($"{methodCaller}(\"{methodSymbol.Name}\"){methodCallerAsyncExtensions};");
 
                                         builder.AppendTabs();
 

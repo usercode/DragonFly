@@ -11,15 +11,6 @@ public class Asset : ContentBase<Asset>
 {
     public Asset()
     {
-        //Name = string.Empty;
-        //Alt = string.Empty;
-        //Description = string.Empty;
-        //Slug = string.Empty;
-        //MimeType = string.Empty;
-        //Hash = string.Empty;
-        //PreviewUrl = string.Empty;
-        //Size = 0;
-        //_metaddata = new AssetMetadatas();
     }
 
     public Asset(Guid id)
