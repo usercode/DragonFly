@@ -15,16 +15,16 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.API" Version="1.0.6" />
-    <PackageReference Include="DragonFly.ImageWizard" Version="1.0.6" />
-    <PackageReference Include="DragonFly.MongoDB" Version="1.0.6" />
-    <PackageReference Include="DragonFly.BlockField" Version="1.0.6" />
-    <PackageReference Include="DragonFly.Identity" Version="1.0.6" />
-    <PackageReference Include="DragonFly.ApiKeys" Version="1.0.6" />
+    <PackageReference Include="DragonFly.API" Version="1.0.7" />
+    <PackageReference Include="DragonFly.ImageWizard" Version="1.0.7" />
+    <PackageReference Include="DragonFly.MongoDB" Version="1.0.7" />
+    <PackageReference Include="DragonFly.BlockField" Version="1.0.7" />
+    <PackageReference Include="DragonFly.Identity" Version="1.0.7" />
+    <PackageReference Include="DragonFly.ApiKeys" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Generator" Version="1.0.6">
+    <PackageReference Include="DragonFly.Generator" Version="1.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
