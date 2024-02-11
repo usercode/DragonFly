@@ -9,6 +9,8 @@ namespace DragonFly.Client;
 
 public interface IFieldComponent : IComponent
 {
+    string FieldName { get; }
+
     Type FieldType { get; }
 
     ContentField Field { get; }

@@ -16,7 +16,7 @@
                     </BSCol>
                     <BSCol Column="10">
                          <div class="field">
-                            @ComponentManager.CreateComponent(part.ContentField, part.SchemaField.Options)
+                            @ComponentManager.CreateComponent(part.FieldName, part.ContentField, part.SchemaField.Options)
                         </div>
                     </BSCol>
                 </BSRow>
@@ -35,9 +35,19 @@
     [CascadingParameter]
     public ContentItemDetail Detail { get; set; }
 
+    [Parameter]
+    public string FieldName { get; set; }
+
     private BSColor GetFieldColor(string field)
     {
-        bool valid = Detail.IsFieldValid(field);
+        string fieldPath = field;
+
+        if (FieldName != null)
+        {
+            fieldPath = $"{FieldName}.{field}";
+        }
+
+        bool valid = Detail.IsFieldValid(fieldPath);
 
         if (valid)
         {

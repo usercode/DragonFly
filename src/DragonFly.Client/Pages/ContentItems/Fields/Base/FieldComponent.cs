@@ -12,6 +12,9 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
     where TFieldOptions : FieldOptions
 {
     [Parameter]
+    public string FieldName { get; set; }
+
+    [Parameter]
     public TField Field { get; set; }
 
     [Parameter]

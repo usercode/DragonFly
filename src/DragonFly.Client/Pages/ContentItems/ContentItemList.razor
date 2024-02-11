@@ -50,38 +50,35 @@
                                         foreach (string field in contentItem.Schema.ListFields.Take(5))
                                         {
                                             <div class="col-lg">
-                                                <div style="white-space: nowrap; overflow: hidden;">
-                                                    @{
-                                                        ContentField column = contentItem.Fields[field];
-                                                    }
+                                                @{
+                                                    ContentField column = contentItem.Fields[field];
+                                                }
 
-                                                    @if (column is ISingleValueField singleValueField)
+                                                @if (column is ISingleValueField singleValueField)
+                                                {
+                                                    <span>@singleValueField.Value</span>
+                                                }
+                                                else if (column is ReferenceField referenceField)
+                                                {
+                                                    @if (referenceField.ContentItem != null)
                                                     {
-                                                        <span>@singleValueField.Value</span>
+                                                        <ReferenceFields ContentItem="@referenceField.ContentItem" />
                                                     }
+                                                }
+                                                else if (column is ComponentField embedField)
+                                                {
+                                                    @if (embedField.ContentComponent != null)
+                                                    {
 
-                                                    else if (column is ReferenceField referenceField)
-                                                    {
-                                                        @if (referenceField.ContentItem != null)
-                                                        {
-                                                            <ReferenceFields ContentItem="@referenceField.ContentItem" />
-                                                        }
                                                     }
-                                                    else if (column is ComponentField embedField)
+                                                }
+                                                else if (column is AssetField assetField)
+                                                {
+                                                    @if (assetField.Asset != null && (assetField.Asset.IsImage() || assetField.Asset.IsSVG()))
                                                     {
-                                                        @if (embedField.ContentComponent != null)
-                                                        {
-
-                                                        }
+                                                        <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
                                                     }
-                                                    else if (column is AssetField assetField)
-                                                    {
-                                                        @if (assetField.Asset != null && (assetField.Asset.IsImage() || assetField.Asset.IsSVG()))
-                                                        {
-                                                            <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
-                                                        }
-                                                    }
-                                                </div>
+                                                }
                                             </div>
                                         }
                                     }

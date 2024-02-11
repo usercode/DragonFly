@@ -14,6 +14,9 @@ public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent<TF
     where TField : ContentField
 {
     [Parameter]
+    public string FieldName { get; set; }
+
+    [Parameter]
     public TField Field { get; set; }
 
     [Parameter]
