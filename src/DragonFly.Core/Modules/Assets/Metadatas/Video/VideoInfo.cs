@@ -25,11 +25,6 @@ public class VideoInfo
     public int? Height { get; set; }
 
     /// <summary>
-    /// DUration in ms.
-    /// </summary>
-    public TimeSpan? Duration { get; set; }
-
-    /// <summary>
     /// Frames per Second
     /// </summary>
     public int? Fps { get; set; }

@@ -60,5 +60,4 @@ public sealed class AssetMetadataManager
 
         throw new Exception();
     }
- 
 }

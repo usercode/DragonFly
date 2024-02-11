@@ -10,6 +10,16 @@ namespace DragonFly;
 public class VideoMetadata : AssetMetadata
 {
     /// <summary>
+    /// FormatName
+    /// </summary>
+    public string? FormatName { get; set; }
+
+    /// <summary>
+    /// Duration
+    /// </summary>
+    public TimeSpan Duration { get; set; }
+
+    /// <summary>
     /// VideoInfo
     /// </summary>
     public VideoInfo? VideoInfo { get; set; }

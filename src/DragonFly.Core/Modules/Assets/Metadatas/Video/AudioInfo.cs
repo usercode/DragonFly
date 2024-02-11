@@ -23,9 +23,4 @@ public class AudioInfo
     /// Channels
     /// </summary>
     public int? Channels { get; set; }
-
-    /// <summary>
-    /// DUration in ms.
-    /// </summary>
-    public TimeSpan? Duration { get; set; }
 }

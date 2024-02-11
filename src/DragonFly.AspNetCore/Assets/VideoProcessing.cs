@@ -30,6 +30,9 @@ public class VideoProcessing : IAssetProcessing
 
         VideoMetadata metadata = new VideoMetadata();
 
+        metadata.FormatName = mediaInfo.Format.FormatLongName;
+        metadata.Duration = mediaInfo.Duration;
+
         //video
         if (mediaInfo.PrimaryVideoStream != null)
         {
@@ -38,7 +41,6 @@ public class VideoProcessing : IAssetProcessing
                 Codec = mediaInfo.PrimaryVideoStream.CodecLongName,
                 Width = mediaInfo.PrimaryVideoStream.Width,
                 Height = mediaInfo.PrimaryVideoStream.Height,
-                Duration = mediaInfo.PrimaryVideoStream.Duration,
                 Fps = (int)mediaInfo.PrimaryVideoStream.FrameRate
             };
         }
@@ -50,8 +52,7 @@ public class VideoProcessing : IAssetProcessing
             {
                 Codec = mediaInfo.PrimaryAudioStream.CodecLongName,
                 ChannelLayout = mediaInfo.PrimaryAudioStream.ChannelLayout,
-                Channels = mediaInfo.PrimaryAudioStream.Channels,
-                Duration = mediaInfo.PrimaryAudioStream.Duration
+                Channels = mediaInfo.PrimaryAudioStream.Channels
             };
         }
 

@@ -1,5 +1,27 @@
 ﻿@inherits AssetMetadataComponent<VideoMetadata>
 
+<div class="form-group">
+    <BSRow>
+        <BSLabel class="col-sm-2 col-form-label">
+            Format
+        </BSLabel>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" @bind-value="@Metadata.FormatName" readonly />
+        </div>
+    </BSRow>
+</div>
+
+<div class="form-group">
+    <BSRow>
+        <BSLabel class="col-sm-2 col-form-label">
+            Duration
+        </BSLabel>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" @bind-value="@Metadata.Duration" readonly />
+        </div>
+    </BSRow>
+</div>
+
 @if (Metadata.VideoInfo != null)
 {
     <h4>Primary video stream</h4>
@@ -12,18 +34,7 @@
                 <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Codec" readonly />
             </div>
         </BSRow>
-    </div>
-
-    <div class="form-group">
-        <BSRow>
-            <BSLabel class="col-sm-2 col-form-label">
-                Duration
-            </BSLabel>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Duration" readonly />
-            </div>
-        </BSRow>
-    </div>
+    </div>   
 
     <div class="form-group">
         <BSRow>
@@ -69,17 +80,6 @@
             </BSLabel>
             <div class="col-sm-10">
                 <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Codec" readonly />
-            </div>
-        </BSRow>
-    </div>
-
-    <div class="form-group">
-        <BSRow>
-            <BSLabel class="col-sm-2 col-form-label">
-                Duration
-            </BSLabel>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Duration" readonly />
             </div>
         </BSRow>
     </div>
