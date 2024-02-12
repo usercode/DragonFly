@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Validations;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -38,11 +37,6 @@ public partial class MongoStorage : IContentStorage
         return result.ToModel(contentSchema);
     }
 
-    public IMongoCollection<MongoContentItem> GetMongoCollection(ContentSchema schema, bool published = false)
-    {
-        return GetMongoCollection(schema.Name, published);
-    }
-
     public IMongoCollection<MongoContentItem> GetMongoCollection(string type, bool published = false)
     {
         string name = $"ContentItems_{type}";
@@ -57,6 +51,20 @@ public partial class MongoStorage : IContentStorage
             items = Database.GetCollection<MongoContentItem>(name);
 
             ContentItems.Add(name, items);
+        }
+
+        return items;
+    }
+
+    public IMongoCollection<MongoContentItemVersion> GetMongoCollectionVersioning(string type)
+    {
+        string name = $"ContentItems_{type}_Versioning";      
+
+        if (ContentItemsVersioning.TryGetValue(name, out IMongoCollection<MongoContentItemVersion>? items) == false)
+        {
+            items = Database.GetCollection<MongoContentItemVersion>(name);
+
+            ContentItemsVersioning.Add(name, items);
         }
 
         return items;
@@ -240,11 +248,22 @@ public partial class MongoStorage : IContentStorage
 
         IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name);
 
+        //validation
         content.Validate();
 
         if (content.ValidationContext.State == ValidationState.Invalid)
         {
             throw new Exception("Invalid state");
+        }
+
+        //versioning
+        if (DragonFlyOptions.EnableVersioning == true)
+        {
+            IMongoCollection<MongoContentItemVersion> versioning = GetMongoCollectionVersioning(content.Schema.Name);
+
+            MongoContentItem draftItem = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
+
+            await versioning.InsertOneAsync(new MongoContentItemVersion() { Content = draftItem });
         }
 
         //update all fields, version
@@ -272,7 +291,7 @@ public partial class MongoStorage : IContentStorage
     {
         await UnpublishAsync(content);
 
-        IMongoCollection<MongoContentItem> col = GetMongoCollection(content.Schema.Name, false);
+        IMongoCollection<MongoContentItem> col = GetMongoCollection(content.Schema.Name);
 
         await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
 

@@ -41,9 +41,7 @@ public class DataSeeding
 
     public async Task StartAsync()
     {
-        StandardPageModel r = await ContentStorage.FirstOrDefaultAsync<StandardPageModel>();
-
-        if (r != null)
+        if (await ContentStorage.FirstOrDefaultAsync<StandardPageModel>() != null)
         {
             return;
         }

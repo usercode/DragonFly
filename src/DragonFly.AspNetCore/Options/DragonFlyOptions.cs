@@ -6,5 +6,5 @@ namespace DragonFly.AspNet.Options;
 
 public class DragonFlyOptions
 {
-
+    public bool EnableVersioning { get; set; } = true;
 }

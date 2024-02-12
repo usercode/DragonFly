@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields;
@@ -47,6 +48,7 @@ public partial class MongoStorage
 
     public MongoStorage(
         IDateTimeService dateTimeService,
+        IOptions<DragonFlyOptions> dragonFlyOptions,
         IOptions<MongoDbOptions> options, 
         IDragonFlyApi api,
         IBackgroundTaskManager backgroundTaskService,
@@ -60,6 +62,8 @@ public partial class MongoStorage
         BackgroundTaskService = backgroundTaskService;
         SlugService = slugService;
         Options = options.Value;
+
+        DragonFlyOptions = dragonFlyOptions.Value;
 
         CreateMissingFieldSerializers(api);
 
@@ -129,7 +133,11 @@ public partial class MongoStorage
         await Client.DropDatabaseAsync(Options.Database);
     }
 
+    public DragonFlyOptions DragonFlyOptions { get; }
+
     public MongoDbOptions Options { get; }
 
     private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; } = new Dictionary<string, IMongoCollection<MongoContentItem>>();
+
+    private IDictionary<string, IMongoCollection<MongoContentItemVersion>> ContentItemsVersioning { get; } = new Dictionary<string, IMongoCollection<MongoContentItemVersion>>();
 }

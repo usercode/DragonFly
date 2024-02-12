@@ -17,6 +17,7 @@ using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
@@ -50,6 +51,11 @@ GlobalFFOptions.Configure(x =>
 {
     x.BinaryFolder = "C:\\Users\\admin\\Downloads";
     x.TemporaryFilesFolder = "C:\\Users\\admin\\Downloads";
+});
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
 });
 
 //DragonFly services

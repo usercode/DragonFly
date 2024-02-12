@@ -14,12 +14,12 @@ using ImageWizard.Caches;
 var builder = WebApplication.CreateBuilder(args);
 
 //DragonFly
-builder.Services.Configure<DragonFlyOptions>(builder.Configuration.GetSection("General"));
-builder.Services.Configure<MongoDbOptions>(builder.Configuration.GetSection("MongoDB"));
+builder.Services.AddOptions<DragonFlyOptions>().BindConfiguration("General");
+builder.Services.AddOptions<MongoDbOptions>().BindConfiguration("MongoDB");
 
 //ImageWizard
-builder.Services.Configure<ImageWizardOptions>(builder.Configuration.GetSection("ImageWizard"));
-builder.Services.Configure<FileCacheOptions>(builder.Configuration.GetSection("AssetCache"));
+builder.Services.AddOptions<ImageWizardOptions>().BindConfiguration("ImageWizard");
+builder.Services.AddOptions<FileCacheOptions>().BindConfiguration("AssetCache");
 
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<DataSeeding>();

@@ -91,32 +91,39 @@ public partial class MongoStorage : ISchemaStorage
 
     public async Task CreateIndicesAsync(ContentSchema schema)
     {
-        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
+        //index for drafts
+        await CreateIndicesInternalAsync(GetMongoCollection(schema.Name, false));
 
-        await collection.Indexes.DropAllAsync();
+        //index for published
+        await CreateIndicesInternalAsync(GetMongoCollection(schema.Name, true));
 
-        foreach (var field in schema.Fields)
+        async Task CreateIndicesInternalAsync(IMongoCollection<MongoContentItem> collection)
         {
-            if (field.Value.Options?.IsSearchable == false)
-            {
-                continue;
-            }
+            await collection.Indexes.DropAllAsync();
 
-            Type? fieldType = Api.ContentField().GetFieldType(field.Value.FieldType);
+            foreach (var field in schema.Fields)
+            {
+                if (field.Value.Options?.IsSearchable == false)
+                {
+                    continue;
+                }
 
-            if (fieldType == null)
-            {
-                throw new Exception($"Content field not found for '{field.Value.FieldType}'.");
-            }
+                Type? fieldType = Api.ContentField().GetFieldType(field.Value.FieldType);
 
-            //add new indices
-            if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
-            {
-                await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key);
-            }
-            else
-            {
-                Logger.LogWarning($"No index field found for '{fieldType.Name}'.");
+                if (fieldType == null)
+                {
+                    throw new Exception($"Content field not found for '{field.Value.FieldType}'.");
+                }
+
+                //add new indices
+                if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
+                {
+                    await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key);
+                }
+                else
+                {
+                    Logger.LogWarning($"No index field found for '{fieldType.Name}'.");
+                }
             }
         }
     }
