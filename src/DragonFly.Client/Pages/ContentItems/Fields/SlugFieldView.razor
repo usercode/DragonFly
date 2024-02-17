@@ -6,6 +6,6 @@
         <div class="input-group-prepend">
             <div class="input-group-text">@@</div>
         </div>
-        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" />
+        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" readonly="@this.GetReadOnlyAttribute()" />
     </div>
 </div>

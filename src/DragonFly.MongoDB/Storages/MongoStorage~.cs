@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.Storage.Abstractions;
 using DragonFly.Storage.MongoDB.Fields;
@@ -139,5 +138,5 @@ public partial class MongoStorage
 
     private IDictionary<string, IMongoCollection<MongoContentItem>> ContentItems { get; } = new Dictionary<string, IMongoCollection<MongoContentItem>>();
 
-    private IDictionary<string, IMongoCollection<MongoContentItemVersion>> ContentItemsVersioning { get; } = new Dictionary<string, IMongoCollection<MongoContentItemVersion>>();
+    private IDictionary<string, IMongoCollection<MongoContentVersion>> ContentVersioning { get; } = new Dictionary<string, IMongoCollection<MongoContentVersion>>();
 }

@@ -1,14 +1,14 @@
 ﻿<div class="bool-field-view options">
-    <BSButton Color="Value == true ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(true)">
+    <BSButton Color="Value == true ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(true)" IsDisabled="IsReadOnly">
         <span><i class="far fa-check-circle"></i> True</span>
     </BSButton>
 
-    <BSButton Color="Value == false ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(false)">
+    <BSButton Color="Value == false ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(false)" IsDisabled="IsReadOnly">
         <span><i class="far fa-times-circle"></i> False</span>
     </BSButton>
     @if (AllowUnset)
     {
-        <BSButton Color="Value == null ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(null)">
+        <BSButton Color="Value == null ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(null)" IsDisabled="IsReadOnly">
             <span><i class="far fa-circle"></i> Unset</span>
         </BSButton>
     }
@@ -24,6 +24,9 @@
 
     [Parameter]
     public bool AllowUnset { get; set; } 
+
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     private void OnChange(bool? value)
     {

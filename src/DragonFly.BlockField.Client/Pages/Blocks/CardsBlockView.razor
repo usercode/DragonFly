@@ -19,16 +19,16 @@
                             <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveUp(index)" title="Move card to left"><i class="fas fa-arrow-left"></i></BSButton>
                             <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => Remove(index)" title="Remove card"><i class="fas fa-times"></i></BSButton>
                             <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveDown(index)" title="Move card to right"><i class="fas fa-arrow-right"></i></BSButton>
+                        </div>                        
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Header</span>
+                            <input type="text" class="form-control" @bind-value="@column.Header" />
                         </div>
 
                         <div class="input-group mb-3">
                             <span class="input-group-text">Title</span>
                             <input type="text" class="form-control" @bind-value="@column.Title" />
-                        </div>
-
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Header</span>
-                            <input type="text" class="form-control" @bind-value="@column.Header" />
                         </div>
 
                         <div class="input-group mb-3">

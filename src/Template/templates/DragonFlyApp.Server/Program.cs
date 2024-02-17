@@ -10,6 +10,7 @@ using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,11 @@ builder.Services.AddDragonFly()
                         .Add<BlogPostModel>()
                         .Add<StandardPageModel>()
                         );
+
+//builder.Services.Configure<KestrelServerOptions>(options =>
+//{
+//    options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+//});
 
 var app = builder.Build();
 

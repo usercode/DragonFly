@@ -34,6 +34,7 @@ public static class DragonFlyBuilderExtensions
                                                 .WithDisplayName("DragonFly.API");
 
             group.MapContentItemRestApi();
+            group.MapContentRevisionRestApi();
             group.MapContentSchemaRestApi();
             group.MapContentStructureRestApi();
             group.MapContentNodeRestApi();

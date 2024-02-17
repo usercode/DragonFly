@@ -3,9 +3,8 @@
 <div class="geolocation-field">
     <div class="input-group">
         <span class="input-group-text">Latitude</span>
-        <BSInput InputType="InputType.Text" @bind-Value="Field.Latitude" />
+        <BSInput InputType="InputType.Text" @bind-Value="Field.Latitude" IsDisabled="IsReadOnly" />
         <span class="input-group-text">Longitude</span>
-        <BSInput InputType="InputType.Text" @bind-Value="Field.Longitude" />
-        <BSButton Color="BSColor.Light" title="Clear" OnClick="x => Field.Clear()"><i class="fas fa-times"></i></BSButton>
+        <BSInput InputType="InputType.Text" @bind-Value="Field.Longitude" IsDisabled="IsReadOnly" />        
     </div>
 </div>

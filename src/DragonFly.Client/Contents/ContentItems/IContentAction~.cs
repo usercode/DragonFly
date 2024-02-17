@@ -4,9 +4,9 @@
 
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Contents.ContentItems;
+namespace DragonFly.Client;
 
-public interface IContentItemAction<T>
+public interface IContentAction<T>
 {
     string Name { get; }
 

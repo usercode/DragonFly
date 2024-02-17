@@ -21,10 +21,6 @@ public static class ContentPermissions
     /// <summary>
     /// Creates permission for a specified schema and action.
     /// </summary>
-    /// <param name="schema"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
     public static Permission Create(string schema, ContentAction action)
     {
         ArgumentException.ThrowIfNullOrEmpty(schema);

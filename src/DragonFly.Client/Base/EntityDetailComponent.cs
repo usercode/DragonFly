@@ -5,6 +5,7 @@
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DragonFly.Client.Base;
@@ -37,6 +38,8 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
 
     [Parameter]
     public EventCallback<T> EntityChanged { get; set; }
+
+    public IList<NotificationItem> Notifications { get; private set; } = new List<NotificationItem>();
 
     protected override Task RefreshActionAsync()
     {

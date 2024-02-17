@@ -56,15 +56,15 @@ public partial class MongoStorage : IContentStorage
         return items;
     }
 
-    public IMongoCollection<MongoContentItemVersion> GetMongoCollectionVersioning(string type)
+    public IMongoCollection<MongoContentVersion> GetMongoCollectionVersioning(string type)
     {
-        string name = $"ContentItems_{type}_Versioning";      
+        string name = $"ContentItems_{type}_Version";
 
-        if (ContentItemsVersioning.TryGetValue(name, out IMongoCollection<MongoContentItemVersion>? items) == false)
+        if (ContentVersioning.TryGetValue(name, out IMongoCollection<MongoContentVersion>? items) == false)
         {
-            items = Database.GetCollection<MongoContentItemVersion>(name);
+            items = Database.GetCollection<MongoContentVersion>(name);
 
-            ContentItemsVersioning.Add(name, items);
+            ContentVersioning.Add(name, items);
         }
 
         return items;
@@ -246,7 +246,7 @@ public partial class MongoStorage : IContentStorage
 
         content.ApplySchema(schema);
 
-        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name);
+        IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name);
 
         //validation
         content.Validate();
@@ -257,17 +257,21 @@ public partial class MongoStorage : IContentStorage
         }
 
         //versioning
-        if (DragonFlyOptions.EnableVersioning == true)
+        if (DragonFlyOptions.EnableVersioning != ContentVersionKind.None)
         {
-            IMongoCollection<MongoContentItemVersion> versioning = GetMongoCollectionVersioning(content.Schema.Name);
+            IMongoCollection<MongoContentVersion> versioning = GetMongoCollectionVersioning(content.Schema.Name);
 
-            MongoContentItem draftItem = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
+            MongoContentItem draftItem = await drafted.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
 
-            await versioning.InsertOneAsync(new MongoContentItemVersion() { Content = draftItem });
+            if (DragonFlyOptions.EnableVersioning == ContentVersionKind.All ||
+                (DragonFlyOptions.EnableVersioning == ContentVersionKind.PublishedOnly && draftItem.PublishedAt != null))
+            {
+                await versioning.InsertOneAsync(new MongoContentVersion() { Content = draftItem });
+            }
         }
 
         //update all fields, version
-        MongoContentItem result = await drafts.FindOneAndUpdateAsync(
+        MongoContentItem result = await drafted.FindOneAndUpdateAsync(
                                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
                                     Builders<MongoContentItem>.Update
                                                                 .Set(x => x.Fields, content.Fields.ToMongo())
@@ -306,11 +310,14 @@ public partial class MongoStorage : IContentStorage
 
     public async Task PublishAsync(ContentItem content)
     {
-        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name, false);
+        IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(content.Schema.Name, true);
 
-        //find content
-        MongoContentItem found = await drafts.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
+        //find content and updated published date
+        MongoContentItem found = drafted.FindOneAndUpdate(
+                                   Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                                   Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()),
+                                   new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After });
 
         if (found == null)
         {
@@ -319,19 +326,16 @@ public partial class MongoStorage : IContentStorage
 
         //add content to published collection
         await published.ReplaceOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id), found, new ReplaceOptions() { IsUpsert = true });
-
-        //update publish date
-        await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
-                    Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()));
+                                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, found.Id), 
+                                    found, 
+                                    new ReplaceOptions() { IsUpsert = true });
 
         //refresh content
         content = await GetContentAsync(content.Schema.Name, content.Id);
 
         if (content == null)
         {
-            throw new Exception("ContentItem not found.");
+            throw new Exception($"Content item not found: {content.Schema.Name}/{content.Id}");
         }
 
         var interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
@@ -354,16 +358,16 @@ public partial class MongoStorage : IContentStorage
 
     public async Task UnpublishAsync(ContentItem content)
     {
-        IMongoCollection<MongoContentItem> drafts = GetMongoCollection(content.Schema.Name, false);
+        IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(content.Schema.Name, true);
 
-        //delete published contentitem
+        //delete published content
         await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
 
         //update publish date
-        await drafts.UpdateOneAsync(
-                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
-                    Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
+        await drafted.UpdateOneAsync(
+                            Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                            Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
         content = await GetContentAsync(content.Schema.Name, content.Id);
 

@@ -4,7 +4,7 @@
 
 namespace DragonFly.MongoDB;
 
-public class MongoContentItemVersion
+public class MongoContentVersion
 {
     public Guid Id { get; set; }
 

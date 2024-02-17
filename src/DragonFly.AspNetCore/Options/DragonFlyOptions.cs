@@ -2,9 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.AspNet.Options;
+namespace DragonFly.AspNetCore;
 
 public class DragonFlyOptions
 {
-    public bool EnableVersioning { get; set; } = true;
+    public ContentVersionKind EnableVersioning { get; set; } = ContentVersionKind.PublishedOnly;
 }

@@ -16,6 +16,7 @@ public static class StartupExtensions
     /// <br />
     /// Default services:<br />
     /// <see cref="IContentStorage"/> -> <see cref="ClientContentService"/><br />
+    /// <see cref="IContentVersionStorage"/> -> <see cref="ClientContentService"/><br />
     /// <see cref="ISchemaStorage"/> -> <see cref="ClientContentService"/><br />
     /// <see cref="IAssetStorage"/> -> <see cref="ClientContentService"/><br />
     /// <see cref="IAssetFolderStorage"/> -> <see cref="ClientContentService"/><br />
@@ -28,6 +29,7 @@ public static class StartupExtensions
 
         builder.Services.AddTransient<ClientContentService>();
         builder.Services.AddTransient<IContentStorage, ClientContentService>();
+        builder.Services.AddTransient<IContentVersionStorage, ClientContentService>();
         builder.Services.AddTransient<ISchemaStorage, ClientContentService>();
         builder.Services.AddTransient<IStructureStorage, ClientContentService>();
         builder.Services.AddTransient<IWebHookStorage, ClientContentService>();

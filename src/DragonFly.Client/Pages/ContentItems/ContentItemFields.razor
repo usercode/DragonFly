@@ -6,7 +6,6 @@
            .ToList())
 {
     <div class="field">
-        <BSAlert Color="GetFieldColor(part.FieldName)">
             <div class="form-group">
                 <BSRow>
                     <BSCol Column="2">
@@ -16,12 +15,11 @@
                     </BSCol>
                     <BSCol Column="10">
                          <div class="field">
-                            @ComponentManager.CreateComponent(part.FieldName, part.ContentField, part.SchemaField.Options)
+                            @ComponentManager.CreateComponent(false, part.FieldName, part.ContentField, part.SchemaField.Options)
                         </div>
                     </BSCol>
                 </BSRow>
             </div>
-        </BSAlert>
     </div>
 }
 
@@ -36,26 +34,5 @@
     public ContentItemDetail Detail { get; set; }
 
     [Parameter]
-    public string FieldName { get; set; }
-
-    private BSColor GetFieldColor(string field)
-    {
-        string fieldPath = field;
-
-        if (FieldName != null)
-        {
-            fieldPath = $"{FieldName}.{field}";
-        }
-
-        bool valid = Detail.IsFieldValid(fieldPath);
-
-        if (valid)
-        {
-            return BSColor.Default;
-        }
-        else
-        {
-            return BSColor.Danger;
-        }
-    }
+    public string FieldName { get; set; }    
 }

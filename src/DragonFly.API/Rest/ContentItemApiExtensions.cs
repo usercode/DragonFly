@@ -27,7 +27,7 @@ static class ContentItemApiExtensions
         groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish);
         groupRoute.MapPost("publish", MapPublishQuery);
         groupRoute.MapPost("unpublish", MapUnpublishQuery);
-    }
+    }   
 
     private static async Task<Results<Ok<QueryResult<RestContentItem>>, ForbidHttpResult>> MapQuery(IDragonFlyApi api, IContentStorage storage, ContentQuery query)
     {
@@ -47,7 +47,7 @@ static class ContentItemApiExtensions
         return TypedResults.Ok(queryResult.Convert(x => x.ToRest()));
     }
 
-    private static async Task<Results<Ok<RestContentItem>, NotFound, ForbidHttpResult>> MapGet(IDragonFlyApi api, IContentStorage contentStore, ISchemaStorage schemaStorage, HttpContext context, string schema, Guid id)
+    private static async Task<Results<Ok<RestContentItem>, NotFound, ForbidHttpResult>> MapGet(IDragonFlyApi api, IContentStorage contentStore, string schema, Guid id)
     {
         if (await api.AuthorizeContentAsync(schema, ContentAction.Read) == false)
         {

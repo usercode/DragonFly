@@ -15,6 +15,9 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
     public string FieldName { get; set; }
 
     [Parameter]
+    public bool IsReadOnly { get; set; }
+
+    [Parameter]
     public TField Field { get; set; }
 
     [Parameter]

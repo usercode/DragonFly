@@ -3,5 +3,6 @@
 <div class="tinymce-field">
     <TinyMCE.Blazor.Editor Field="() => Field.Value"
                            @bind-Value="Field.Value"
+                           Disable="IsReadOnly"
                            Conf="TinyMceConfiguration.Editor" />
 </div>

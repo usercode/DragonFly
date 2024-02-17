@@ -1,5 +1,5 @@
 ﻿@inherits FieldComponent<BoolField, BoolFieldOptions>
 
 <div class="bool-field">
-    <BoolValue @bind-Value="@Field.Value" AllowUnset="@(Options.IsRequired==false)" />
+    <BoolValue @bind-Value="@Field.Value" AllowUnset="@(Options.IsRequired==false)" IsReadOnly="IsReadOnly" />
 </div>

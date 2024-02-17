@@ -36,9 +36,9 @@
                         {
                             <BSButton Color="BSColor.Light" href="@Asset.GetPublicUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
                         }
-                        <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove"><i class="fas fa-times"></i></BSButton>               
+                        <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly"><i class="fas fa-times"></i></BSButton>               
                     }
-                        <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select"><i class="fas fa-plus"></i></BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i></BSButton>
                 </div>           
             </div>
 
@@ -91,6 +91,9 @@
 
     [Parameter]
     public bool ShowPreview { get; set;  }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     protected void Navigate()
     {

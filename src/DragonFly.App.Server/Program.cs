@@ -6,7 +6,6 @@ using System;
 using System.Threading.Tasks;
 using DragonFly;
 using DragonFly.API;
-using DragonFly.AspNet.Options;
 using DragonFly.AspNetCore;
 using DragonFly.MongoDB;
 using DragonFlyABC;

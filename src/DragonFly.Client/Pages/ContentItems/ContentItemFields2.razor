@@ -1,0 +1,59 @@
+﻿@inject ComponentManager ComponentManager
+
+@* title *@
+@if(Title != null)
+{
+    <div class="field-title" style="grid-column: @(Column+1); grid-row: 1">
+        @Title
+    </div>
+}
+
+@* ID value *@
+<div class="field" style="grid-column: @(Column+1); grid-row: 2">
+    <input type="text" class="form-control" value="@Content.Id" readonly />
+</div>
+
+@{
+    var items = Content.Schema.Fields
+               .OrderBy(x => x.Value.SortKey)
+               .Select((x, index) => new { FieldName = x.Key, FieldIndex = index, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
+               .ToList();
+}
+
+@* fields *@
+@foreach (var part in items)
+{
+    <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">
+        <BSAlert Color="GetFieldColor(part.FieldName)">
+            @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
+        </BSAlert>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public ContentItem Content { get; set; }
+
+    [Parameter]
+    public int Column { get; set; } = 1;
+
+    [Parameter]
+    public bool IsReadOnly { get; set; } = false;
+
+    private BSColor GetFieldColor(string field)
+    {
+        string fieldPath = field;
+
+        if (Content.ValidationContext.Errors.Any(x => x.Field == field))
+        {
+            return BSColor.Danger;
+        }
+        else
+        {
+            return BSColor.Default;
+        }
+    }
+}

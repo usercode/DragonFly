@@ -1,7 +1,7 @@
 ﻿@inherits FieldComponent<ReferenceField, ReferenceFieldOptions>
 	
 <div class="reference-field">
-    <ContentSelector @bind-ContentItem="Field.ContentItem" />
+    <ContentSelector @bind-ContentItem="Field.ContentItem" IsReadOnly="IsReadOnly" />
 </div>
 
 @code {

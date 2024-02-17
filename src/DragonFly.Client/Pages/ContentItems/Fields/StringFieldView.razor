@@ -1,5 +1,5 @@
 ﻿@inherits FieldComponent<StringField, StringFieldOptions>
 
 <div class="string-field">
-    <input type="text" class="form-control" @bind-value="@Field.Value" />
+    <input type="text" class="form-control" @bind-value="@Field.Value" readonly="@this.GetReadOnlyAttribute()" />
 </div>

@@ -1,5 +1,5 @@
 ﻿@inherits FieldComponent<DateTimeField, DateTimeFieldOptions>
 
 <div class="date-field">
-    <BSInput InputType="InputType.Date" class="form-control" @bind-Value="@Field.Value" />
+    <BSInput InputType="InputType.Date" class="form-control" @bind-Value="@Field.Value" IsDisabled="IsReadOnly" />
 </div>

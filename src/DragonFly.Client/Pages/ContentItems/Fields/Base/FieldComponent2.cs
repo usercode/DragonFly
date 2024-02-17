@@ -17,6 +17,9 @@ public abstract class FieldComponent<TField> : ComponentBase, IFieldComponent<TF
     public string FieldName { get; set; }
 
     [Parameter]
+    public bool IsReadOnly { get; set; }
+
+    [Parameter]
     public TField Field { get; set; }
 
     [Parameter]

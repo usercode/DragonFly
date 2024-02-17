@@ -17,6 +17,7 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(QueryResult<RestAsset>))]
 [JsonSerializable(typeof(QueryResult<RestAssetFolder>))]
 [JsonSerializable(typeof(QueryResult<RestContentItem>))]
+[JsonSerializable(typeof(QueryResult<ContentVersionEntry>))]
 [JsonSerializable(typeof(QueryResult<RestContentSchema>))]
 [JsonSerializable(typeof(QueryResult<RestContentStructure>))]
 [JsonSerializable(typeof(QueryResult<RestContentNode>))]
@@ -29,6 +30,8 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(IBackgroundTaskInfo))]
 [JsonSerializable(typeof(BackgroundTaskInfo))]
 [JsonSerializable(typeof(IEnumerable<IBackgroundTaskInfo>))]
+[JsonSerializable(typeof(ContentVersionEntry))]
+[JsonSerializable(typeof(IEnumerable<ContentVersionEntry>))]
 
 //AssetMetadata
 [JsonSerializable(typeof(ImageMetadata))]

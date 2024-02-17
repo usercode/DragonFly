@@ -1,5 +1,5 @@
 ﻿@inherits FieldComponent<TextField, TextFieldOptions>
 
 <div class="text-field">
-    <textarea type="text" class="form-control" @bind="@Field.Value" data-autoresize style="height:200px" />
+    <textarea type="text" class="form-control" @bind="@Field.Value" data-autoresize style="height:200px" readonly="@this.GetReadOnlyAttribute()" />
 </div>

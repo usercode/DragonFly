@@ -11,6 +11,8 @@ public interface IFieldComponent : IComponent
 {
     string FieldName { get; }
 
+    bool IsReadOnly { get; }
+
     Type FieldType { get; }
 
     ContentField Field { get; }

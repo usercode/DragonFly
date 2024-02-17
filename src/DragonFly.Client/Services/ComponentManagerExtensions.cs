@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.Client;
-using DragonFly.Query;
 using Microsoft.AspNetCore.Components;
 using System;
 
@@ -14,16 +13,17 @@ namespace DragonFly;
 /// </summary>
 public static class ComponentManagerExtensions
 {
-    public static RenderFragment CreateComponent(this ComponentManager componentManager, string fieldName, ContentField contentField, FieldOptions? options)
+    public static RenderFragment CreateComponent(this ComponentManager componentManager, bool isReadOnly, string fieldName, ContentField contentField, FieldOptions? options)
     {
         Type componentType = componentManager.GetComponentType(contentField.GetType());
 
         return builder =>
         {
             builder.OpenComponent(0, componentType);
-            builder.AddAttribute(0, nameof(IFieldComponent.FieldName), fieldName);
-            builder.AddAttribute(1, nameof(IFieldComponent.Field), contentField);
-            builder.AddAttribute(2, nameof(IFieldComponent.Options), options);
+            builder.AddAttribute(0, nameof(IFieldComponent.IsReadOnly), isReadOnly);
+            builder.AddAttribute(1, nameof(IFieldComponent.FieldName), fieldName);
+            builder.AddAttribute(2, nameof(IFieldComponent.Field), contentField);
+            builder.AddAttribute(3, nameof(IFieldComponent.Options), options);
             builder.CloseComponent();
         };
     }

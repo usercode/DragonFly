@@ -5,11 +5,11 @@
 using DragonFly.Client.Pages.ContentItems;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Contents.ContentItems;
+namespace DragonFly.Client;
 
-public abstract class ContentItemAction : IContentItemAction, IContentItemAction<ContentItemDetailBase>
+public abstract class ContentAction : IContentAction, IContentAction<ContentItemDetailBase>
 {
-    public ContentItemAction()
+    public ContentAction()
     {
 
     }

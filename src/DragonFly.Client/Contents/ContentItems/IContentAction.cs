@@ -5,9 +5,9 @@
 using DragonFly.Client.Pages.ContentItems;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Core.Contents.ContentItems;
+namespace DragonFly.Client;
 
-public interface IContentItemAction
+public interface IContentAction
 {
     string Name { get; }
 

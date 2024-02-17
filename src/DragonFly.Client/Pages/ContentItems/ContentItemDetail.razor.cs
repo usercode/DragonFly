@@ -4,7 +4,6 @@
 
 using BlazorStrap;
 using DragonFly.Client.Base;
-using DragonFly.Client.Core.Contents.ContentItems;
 using DragonFly.Validations;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
@@ -13,8 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
-using System.Diagnostics;
 using Microsoft.JSInterop;
+using BlazorStrap.V5;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -25,13 +24,19 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     }
 
     [Inject]
-    public IEnumerable<IContentItemAction> ContentItemActions { get; set; }
+    public IEnumerable<IContentAction> ContentActions { get; set; }
 
     [Inject]
     public IContentStorage ContentService { get; set; }
 
     [Inject]
+    public IContentVersionStorage ContentVersionStorage { get; set; }
+
+    [Inject]
     public ISchemaStorage SchemaService { get; set; }
+
+    [Inject]
+    public ComponentManager ComponentManager { get; set; }
 
     [Inject]
     public IJSRuntime JSRuntime { get; set; }
@@ -39,9 +44,46 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     [Parameter]
     public Guid? CloneFromEntityId { get; set; }
 
+    public IEnumerable<ContentVersionEntry> Versions { get; set; }
+
+    public BSOffCanvas _versionsModal;
+
+    public IList<ContentItem> SelectedVersions { get; private set; } = new List<ContentItem>();
+
     public bool IsFieldValid(string field)
     {
         return Entity.ValidationContext.Errors.All(x => x.Field != field);
+    }
+
+    protected BSColor GetFieldColor(string field)
+    {
+        bool valid = IsFieldValid(field);
+
+        if (valid)
+        {
+            return BSColor.Default;
+        }
+        else
+        {
+            return BSColor.Danger;
+        }
+    }
+
+    protected async Task ToggleVersions()
+    {
+        await _versionsModal.ToggleAsync();
+    }
+
+    protected async Task AddContentVersionsAsync(Guid id)
+    {
+        ContentItem item = await ContentVersionStorage.GetContentByVersionAsync(EntityType, id);
+
+        SelectedVersions.Add(item);
+
+        //reorder
+        SelectedVersions = SelectedVersions.OrderByDescending(x => x.ModifiedAt).ToList();
+
+        await ToggleVersions();
     }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -56,7 +98,8 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         {
             toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, PublishAsync));
             toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, UnpublishAsync));
-            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Light, CloneAsync));
+            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Dark, CloneAsync));
+            toolbarItems.Add(new ToolbarItem("Versions", BSColor.Dark, ToggleVersions));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);
@@ -67,15 +110,17 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
             }
         }
 
-        if (ContentItemActions != null)
+        if (ContentActions != null)
         {
-            ContentItemActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, BSColor.Dark, () => x.Execute(this))));
+            ContentActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, BSColor.Dark, () => x.Execute(this))));
         }
     }
 
     protected override async Task RefreshActionAsync()
     {
         await base.RefreshActionAsync();
+
+        Notifications.Clear();
 
         if (IsNewEntity)
         {
@@ -94,7 +139,31 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         {
             Entity = await ContentService.GetContentAsync(EntityType, EntityId);
 
+            Versions = await ContentVersionStorage.GetContentVersionsAsync(EntityType, EntityId);
+
             StateHasChanged();
+        }
+    }
+
+    protected override void OnRefreshed()
+    {
+        base.OnRefreshed();
+
+        if (Entity.IsNew() == false)
+        {
+            if (Entity.PublishedAt == null)
+            {
+                Notifications.Add(new NotificationItem(NotificationType.Warning, "Content is not published"));
+            }
+            else
+            {
+                Notifications.Add(new NotificationItem(NotificationType.Success, $"Content has been published at {Entity.PublishedAt.Value}"));
+            }
+        }
+
+        foreach (ValidationError error in Entity.ValidationContext.Errors)
+        {
+            Notifications.Add(new NotificationItem(NotificationType.Error, error.Message));
         }
     }
 
@@ -146,6 +215,8 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         await SaveAsync();
 
         await ContentService.PublishAsync(Entity);
+
+        await RefreshAsync();
     }
 
     public async Task UnpublishAsync()

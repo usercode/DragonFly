@@ -1,7 +1,7 @@
 ﻿@inherits FieldComponent<ArrayField, ArrayFieldOptions>
 
-<div class="array-field">
-    <BSButton Color="BSColor.Light" class="add-field" OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }"><i class="fas fa-plus"></i> Add item</BSButton>
+<div class="array-field">    
+    <BSButton Color="BSColor.Light" class="add-field" OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i> Add item</BSButton>    
 
     <BSListGroup>
         @{
