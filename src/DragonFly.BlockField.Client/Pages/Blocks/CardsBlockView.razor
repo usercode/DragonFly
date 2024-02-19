@@ -6,7 +6,7 @@
     <div class="block-layout">
         <BSRow>
             <BSCol ColumnLarge="auto">
-                <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => Add(0)" title="Insert column"><i class="fas fa-plus"></i></BSButton>
+                <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => Add(0)" IsDisabled="Field.IsReadOnly" title="Insert column"><i class="fas fa-plus"></i></BSButton>
             </BSCol>
             @for (int i = 0; i < Block.Cards.Count; i++)
             {
@@ -16,9 +16,9 @@
                 <BSCol>
                     <div class="column-content">
                         <div class="column-action options">
-                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveUp(index)" title="Move card to left"><i class="fas fa-arrow-left"></i></BSButton>
-                            <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => Remove(index)" title="Remove card"><i class="fas fa-times"></i></BSButton>
-                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveDown(index)" title="Move card to right"><i class="fas fa-arrow-right"></i></BSButton>
+                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveUp(index)" IsDisabled="Field.IsReadOnly" title="Move card to left"><i class="fas fa-arrow-left"></i></BSButton>
+                            <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => Remove(index)" IsDisabled="Field.IsReadOnly" title="Remove card"><i class="fas fa-times"></i></BSButton>
+                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Cards.MoveDown(index)" IsDisabled="Field.IsReadOnly" title="Move card to right"><i class="fas fa-arrow-right"></i></BSButton>
                         </div>                        
 
                         <div class="input-group mb-3">
@@ -40,7 +40,7 @@
                     </div>
                 </BSCol>
                 <BSCol ColumnLarge="auto">
-                    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => Add(index+1)" title="Insert card"><i class="fas fa-plus"></i></BSButton>
+                    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => Add(index+1)" IsDisabled="Field.IsReadOnly" title="Insert card"><i class="fas fa-plus"></i></BSButton>
                 </BSCol>
             }
         </BSRow>
@@ -48,6 +48,8 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 
     private void Add(int pos)
     {

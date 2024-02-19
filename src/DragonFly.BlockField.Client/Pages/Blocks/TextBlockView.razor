@@ -1,8 +1,10 @@
 ﻿@inherits BlockComponent<TextBlock>
 
 <div class="block text-block">
-    <textarea class="form-control" @bind="@Block.Text" style="height:20rem" />
+    <textarea class="form-control" @bind="@Block.Text" style="height:20rem" readonly="@Field.GetReadOnlyAttribute()" />
 </div>
-@code {
 
+@code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 }

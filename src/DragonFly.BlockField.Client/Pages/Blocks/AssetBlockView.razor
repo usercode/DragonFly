@@ -2,10 +2,13 @@
 @inject IAssetStorage AssetStorage
 
 <div class="block asset-block">
-    <AssetSelector Asset="Asset" AssetChanged="x => { Asset = x; Block.AssetId = x?.Id; }" ShowPreview="true" />
+    <AssetSelector Asset="Asset" AssetChanged="x => { Asset = x; Block.AssetId = x?.Id; }" ShowPreview="true" IsReadOnly="Field.IsReadOnly" />
 </div>
 
 @code {
+
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 
     protected override async Task OnInitializedAsync()
     {

@@ -3,9 +3,14 @@
 <div class="block section-block">
     <div class="input-group mb-3">
         <span class="input-group-text">Css</span>
-        <input type="text" class="form-control" @bind-value="@Block.Css" />
+        <BSInput class="form-control" @bind-Value="@Block.Css" IsReadonly="Field.IsReadOnly" />
     </div>
     <div class="section-block-body">
         <BlocksView Blocks="Block.Blocks" />
     </div>
 </div>
+
+@code{
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
+}

@@ -4,8 +4,11 @@
 	<TinyMCE.Blazor.Editor 
 			                Field="() => Block.HtmlText"
 			                @bind-Value="Block.HtmlText" 
-                            Conf="TinyMceConfiguration.Editor" />   
+                            Conf="TinyMceConfiguration.Editor"
+                            Disable="Field.IsReadOnly"/>   
 </div>
 
 @code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 }

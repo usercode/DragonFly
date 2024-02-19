@@ -17,5 +17,5 @@ public interface IContentVersionStorage
     /// <summary>
     /// GetContentByVersionAsync
     /// </summary>
-    Task<ContentItem> GetContentByVersionAsync(string schema, Guid id);
+    Task<ContentItem?> GetContentByVersionAsync(string schema, Guid id);
 }

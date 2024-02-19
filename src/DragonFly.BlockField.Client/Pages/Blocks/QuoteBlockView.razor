@@ -5,11 +5,16 @@
 
     <div class="input-group mb-3">
         <span class="input-group-text">Caption</span>
-        <input type="text" class="form-control" @bind-value="@Block.Caption" />
+        <BSInput class="form-control" @bind-Value="@Block.Caption" IsReadonly="Field.IsReadOnly" />
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text">URL</span>
-        <input type="text" class="form-control" @bind-value="@Block.Url" />
+        <BSInput class="form-control" @bind-Value="@Block.Url" IsReadonly="Field.IsReadOnly" />
     </div>
 </div>
+
+@code{
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
+}

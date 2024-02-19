@@ -3,12 +3,15 @@
 <div class="block youtube-block">
     <div class="input-group">
         <span class="input-group-text">Video-ID</span>
-        <input type="text" class="form-control" value="@Block.VideoId" spellcheck="false" @onchange="@(e => { Block.VideoId = e.Value.ToString(); CreateThumbnailUrl();  })" />
+        <input type="text" class="form-control" value="@Block.VideoId" spellcheck="false" @onchange="@(e => { Block.VideoId = e.Value.ToString(); CreateThumbnailUrl();  })" readonly="@Field.GetReadOnlyAttribute()" />
     </div>
     <img src="@Url" style="max-height:200px;margin-top:10px" />
 </div>
 
 @code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
+
     public string Url { get; set; }
 
     private void CreateThumbnailUrl()

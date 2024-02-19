@@ -3,7 +3,6 @@
 <div class="color-field">    
     <div class="input-group">
         <span class="input-group-text">@Field.Value</span>
-        <BSInput InputType="InputType.Color" @bind-Value="Field.Value" IsDisabled="IsReadOnly" />
-        <BSButton Color="BSColor.Light" title="Clear" OnClick="x => Field.Clear()"><i class="fas fa-times"></i></BSButton>
+        <BSInput InputType="InputType.Color" @bind-Value="Field.Value" IsReadonly="IsReadOnly" />        
     </div>
 </div>

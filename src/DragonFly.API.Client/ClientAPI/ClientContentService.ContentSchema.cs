@@ -12,7 +12,6 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : ISchemaStorage
 {
-
     public async Task<ContentSchema?> GetSchemaAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/schema/{id}");

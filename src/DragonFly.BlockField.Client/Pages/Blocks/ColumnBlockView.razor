@@ -8,7 +8,7 @@
         </div>
 	    <BSRow>
 		    <BSCol ColumnLarge="auto">
-			    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(0)" title="Insert column"><i class="fas fa-plus"></i></BSButton>
+			    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(0)" IsDisabled="Field.IsReadOnly" title="Insert column"><i class="fas fa-plus"></i></BSButton>
 		    </BSCol>
 		    @for (int i = 0; i < Block.Columns.Count; i++)
 		    {
@@ -18,16 +18,16 @@
                 <BSCol>
 				    <div class="column-content">
 					    <div class="column-action options">
-						    <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveUp(index)" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
-                            <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" title="Remove column"><i class="fas fa-times"></i></BSButton>
+						    <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveUp(index)" IsDisabled="Field.IsReadOnly" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
+                            <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" IsDisabled="Field.IsReadOnly" title="Remove column"><i class="fas fa-times"></i></BSButton>
                             <EnumView TEnum="ColumnWidth" @bind-EnumValue="@column.Width" />                                                 
-                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
+                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" IsDisabled="Field.IsReadOnly" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
 					    </div>
 					    <BlocksView Blocks="column.Blocks" />
 				    </div>
 			    </BSCol>
 			    <BSCol ColumnLarge="auto">
-				    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(index+1)" title="Insert column"><i class="fas fa-plus"></i></BSButton>				
+				    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(index+1)" IsDisabled="Field.IsReadOnly" title="Insert column"><i class="fas fa-plus"></i></BSButton>				
 			    </BSCol>
 		    }
 	    </BSRow>
@@ -35,6 +35,8 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 
 	private void AddColumn(int pos)
 	{

@@ -3,11 +3,12 @@
 <div class="block opengraph-block">
     <div class="input-group">
         <span class="input-group-text">URL</span>
-        <input type="text" class="form-control" @bind-value="@Block.Url" spellcheck="false" />
+        <BSInput class="form-control" @bind-Value="@Block.Url" IsReadonly="Field.IsReadOnly" spellcheck="false" />
     </div>
 </div>
 
 @code {
-
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 
 }

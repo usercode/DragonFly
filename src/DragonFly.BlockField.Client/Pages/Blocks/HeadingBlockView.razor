@@ -4,10 +4,11 @@
     <div class="input-group">
         <EnumView TEnum="HeadingType" @bind-EnumValue="@Block.HeadingType" />
         <EnumView TEnum="TextAlignment?" @bind-EnumValue="@Block.TextAlignment" />
-        <input class="form-control" @bind="@Block.Text" />
+        <BSInput class="form-control" @bind-Value="@Block.Text" IsReadonly="Field.IsReadOnly" />
     </div>
 </div>
 
 @code {
-
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 }

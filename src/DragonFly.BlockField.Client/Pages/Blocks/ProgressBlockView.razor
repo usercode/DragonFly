@@ -3,9 +3,14 @@
 <div class="block progess-block">
     <div class="input-group">
         <EnumView TEnum="ColorType" @bind-EnumValue="@Block.ColorType" />
-        <input class="form-control" type="number" @bind="@Block.Value" min="0" max="100" step="1" />
+        <BSInput InputType="InputType.Number" @bind-Value="@Block.Value" IsReadonly="Field.IsReadOnly" class="form-control" min="0" max="100" step="1" />
         @*<div class="progress">
             <div class="progress-bar bg-success" role="progressbar"  style="width: @(Block.Value)%"></div>
         </div>*@
     </div>    
 </div>
+
+@code{
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
+}

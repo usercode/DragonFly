@@ -2,10 +2,15 @@
 @inject IContentStorage Storage
 
 <div class="block asset-block">
-    <ContentSelector ContentItem="Content" ContentItemChanged="x => { Content = x;  Block.ContentId = x?.Id; Block.ContentSchema = x?.Schema.Name; }" />
+    <ContentSelector 
+        ContentItem="Content"         
+        ContentItemChanged="x => { Content = x;  Block.ContentId = x?.Id; Block.ContentSchema = x?.Schema.Name; }" 
+        IsReadOnly="Field.IsReadOnly" />
 </div>
 
 @code {
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
