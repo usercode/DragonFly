@@ -6,5 +6,5 @@ namespace DragonFly.AspNetCore;
 
 public class DragonFlyOptions
 {
-    public ContentVersionKind EnableVersioning { get; set; } = ContentVersionKind.PublishedOnly;
+    public ContentVersionKind Versioning { get; set; } = ContentVersionKind.None;
 }

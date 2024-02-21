@@ -5,11 +5,11 @@
     <Content>
         @if (typeof(TEnum).IsGenericType)
         {
-            <BSDropdownItem @onclick="e => EnumValue = default">(none)</BSDropdownItem>
+            <BSDropdownItem @onclick="e => EnumValue = default" IsDisabled="IsReadOnly">(none)</BSDropdownItem>
         }
         @foreach (TEnum value in Enum.GetValues(EnumType))
         {
-            <BSDropdownItem @onclick="e => EnumValue = value">@value</BSDropdownItem>
+            <BSDropdownItem @onclick="e => EnumValue = value" IsDisabled="IsReadOnly">@value</BSDropdownItem>
         }
     </Content>
 </BSDropdown>
@@ -32,6 +32,9 @@
 
         Undefined = EnumType.Name;
     }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     private TEnum _enumValue;
 

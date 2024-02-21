@@ -257,14 +257,14 @@ public partial class MongoStorage : IContentStorage
         }
 
         //versioning
-        if (DragonFlyOptions.EnableVersioning != ContentVersionKind.None)
+        if (DragonFlyOptions.Versioning != ContentVersionKind.None)
         {
             IMongoCollection<MongoContentVersion> versioning = GetMongoCollectionVersioning(content.Schema.Name);
 
             MongoContentItem draftItem = await drafted.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
 
-            if (DragonFlyOptions.EnableVersioning == ContentVersionKind.All ||
-                (DragonFlyOptions.EnableVersioning == ContentVersionKind.PublishedOnly && draftItem.PublishedAt != null))
+            if (DragonFlyOptions.Versioning == ContentVersionKind.All ||
+                (DragonFlyOptions.Versioning == ContentVersionKind.PublishedOnly && draftItem.PublishedAt != null))
             {
                 await versioning.InsertOneAsync(new MongoContentVersion() { Content = draftItem });
             }
