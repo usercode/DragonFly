@@ -4,13 +4,11 @@
 
 using DragonFly;
 using DragonFly.AspNetCore;
-using DragonFly.AspNet.Options;
 using DragonFly.MongoDB;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
 using ImageWizard;
 using ImageWizard.Caches;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 

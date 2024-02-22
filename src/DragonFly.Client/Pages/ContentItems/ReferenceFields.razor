@@ -1,7 +1,7 @@
 ﻿<BSRow>
     @foreach (var field in ContentItem.Schema.ReferenceFields)
     {
-        <div class="col-lg-2">
+        <div class="col-lg">
 
             @if (ContentItem.TryGetField(field, out ContentField contentField))
             {
