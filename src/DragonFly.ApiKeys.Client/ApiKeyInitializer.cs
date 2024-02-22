@@ -2,19 +2,18 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Threading.Tasks;
 using DragonFly.ApiKeys.Client.Components;
-using DragonFly.Client;
+using DragonFly.Init;
 
 namespace DragonFly.ApiKeys.Client;
 
-public class ApiKeyModule : ClientModule
+public class ApiKeyInitializer : IInitialize
 {
-    public override string Name => "ApiKey";
-
-    public override string Author => "DragonFly";
-
-    public override void Init(IDragonFlyApi api)
-    {
+    public Task ExecuteAsync(IDragonFlyApi api)
+    {        
         api.Settings().Add<ApiKeyList>("ApiKey");
+
+        return Task.CompletedTask;
     }
 }

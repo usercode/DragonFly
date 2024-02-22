@@ -19,7 +19,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 
-        builder.Init(api => api.Module().Add<ApiKeyModule>());
+        builder.Init<ApiKeyInitializer>();
 
         return builder;
     }

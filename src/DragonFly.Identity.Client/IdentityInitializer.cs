@@ -2,21 +2,19 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Client;
 using DragonFly.Identity.Client.Components.Roles;
 using DragonFly.Identity.Client.Components.Users;
+using DragonFly.Init;
 
 namespace DragonFly.Identity.Client;
 
-public class IdentityModule : ClientModule
+public class IdentityInitializer : IInitialize
 {
-    public override string Name => "Identity";
-
-    public override string Author => "DragonFly";
-
-    public override void Init(IDragonFlyApi api)
-    {
+    public Task ExecuteAsync(IDragonFlyApi api)
+    {        
         api.Settings().Add<UserList>("Users");
         api.Settings().Add<RoleList>("Roles");
+
+        return Task.CompletedTask;
     }
 }

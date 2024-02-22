@@ -26,7 +26,7 @@ public static class DragonFlyBuilderIdentityExtensions
         builder.Services.AddTransient<IIdentityService, IdentityService>();
         builder.Services.AddTransient<IPermissionService, ClientPermissionService>();
 
-        builder.Init(api => api.Module().Add<IdentityModule>());
+        builder.Init<IdentityInitializer>();
 
         return builder;
     }

@@ -2,23 +2,19 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Threading.Tasks;
 using DragonFly.Client.Pages.Assets.Metadata;
 using DragonFly.Client.Pages.Assets.Preview;
+using DragonFly.Init;
 
 namespace DragonFly.Client;
 
 /// <summary>
 /// AssetModule
 /// </summary>
-public class AssetModule : ClientModule
+public class AssetInitializer : IInitialize
 {
-    public override string Name => "Asset";
-
-    public override string Description => "Manage assets for content items";
-
-    public override string Author => "DragonFly";
-
-    public override void Init(IDragonFlyApi api)
+    public Task ExecuteAsync(IDragonFlyApi api)
     {
         api.MainMenu().Add("Assets", "fa-regular fa-image", "asset");
 
@@ -30,5 +26,7 @@ public class AssetModule : ClientModule
         api.AssetPreview().Add<PdfPreviewView>(MimeTypes.Pdf);
         api.AssetPreview().Add<SvgPreviewView>(MimeTypes.Svg);
         api.AssetPreview().Add<VideoPreviewView>(MimeTypes.Mp4, MimeTypes.Ogg, MimeTypes.WebM);
+
+        return Task.CompletedTask;
     }
 }

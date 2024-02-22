@@ -2,25 +2,21 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Threading.Tasks;
 using DragonFly.Client.Pages.ContentItems.Fields;
 using DragonFly.Client.Pages.ContentItems.Query;
 using DragonFly.Client.Pages.ContentSchemas.Fields;
+using DragonFly.Init;
 
 namespace DragonFly.Client;
 
 /// <summary>
 /// ContentModule
 /// </summary>
-public class ContentModule : ClientModule
+public class ContentInitializer : IInitialize
 {
-    public override string Name => "Content";
-
-    public override string Description => "Manage content schema and items";
-
-    public override string Author => "DragonFly";
-
-    public override void Init(IDragonFlyApi api)
-    {
+    public Task ExecuteAsync(IDragonFlyApi api)
+    {       
         api.MainMenu().Add("Schema", "fa-solid fa-layer-group", "schema");
         //api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
         api.MainMenu().Add("Content", "fa-solid fa-list", "content");
@@ -41,5 +37,7 @@ public class ContentModule : ClientModule
         api.ContentField().Add<XmlField>().WithFieldView<XmlFieldView>();
         api.ContentField().Add<ColorField>().WithFieldView<ColorFieldView>();
         api.ContentField().Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();
+
+        return Task.CompletedTask;
     }
 }

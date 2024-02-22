@@ -27,7 +27,7 @@ public static class DragonFlyClientExtensions
     /// <see cref="ComponentManager"/>, <see cref="FieldManager"/>, <see cref="AssetMetadataManager"/>, <see cref="AssetPreviewManager"/>
     /// <br/><br/>
     /// Default modules:<br/>
-    /// <see cref="ContentModule"/>, <see cref="AssetModule"/>, <see cref="WebHookModule"/>, <see cref="BackgroundTaskModule"/>, <see cref="SettingsModule"/>
+    /// <see cref="ContentInitializer"/>, <see cref="AssetInitializer"/>, <see cref="WebHookInitializer"/>, <see cref="BackgroundTaskInitializer"/>, <see cref="SettingsInitializer"/>
     /// </summary>
     /// <param name="builder"></param>
     /// <returns></returns>
@@ -56,21 +56,12 @@ public static class DragonFlyClientExtensions
         builder
             .AddCore()
             .AddRazorRouting()
-            .Init(api =>
-            {
-                api.Module().Add<ContentModule>();
-                api.Module().Add<AssetModule>();
-                api.Module().Add<WebHookModule>();
-                api.Module().Add<BackgroundTaskModule>();
-                api.Module().Add<SettingsModule>();
-            })
-            .PostInit(api =>
-            {
-                foreach (ClientModule module in api.Module().Modules)
-                {
-                    module.Init(api);
-                }
-            });
+            .Init<ContentInitializer>()
+            .Init<AssetInitializer>()
+            .Init<WebHookInitializer>()
+            .Init<BackgroundTaskInitializer>()
+            .Init<SettingsInitializer>()
+            ;
 
         builder.Services.AddBlazorStrap();
         

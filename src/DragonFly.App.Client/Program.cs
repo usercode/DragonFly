@@ -16,7 +16,7 @@ builder.AddDragonFly()
             .AddBlockField()
             .AddIdentity()
             .AddApiKeys()
-            .PostInit(x =>
+            .Init(x =>
             {
                 x.ContentField().Add<HtmlField>().WithTinyMceView();
             });
