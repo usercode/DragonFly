@@ -33,7 +33,6 @@ public static class JsonFieldManagerExtensions
         json.Add<SingleValueJsonFieldSerializer<FloatField>>();
         json.Add<SingleValueJsonFieldSerializer<TextField>>();
         json.Add<SingleValueJsonFieldSerializer<HtmlField>>();
-        json.Add<SingleValueJsonFieldSerializer<XHtmlField>>();
         json.Add<SingleValueJsonFieldSerializer<XmlField>>();
         json.Add<SingleValueJsonFieldSerializer<DateTimeField>>();
 

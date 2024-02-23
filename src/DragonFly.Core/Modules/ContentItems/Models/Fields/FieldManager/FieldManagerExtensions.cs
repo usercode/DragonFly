@@ -33,7 +33,6 @@ public static class FieldManagerExtensions
         manager.Add<SlugField>();
         manager.Add<StringField>();
         manager.Add<TextField>();
-        manager.Add<XHtmlField>();
         manager.Add<XmlField>();
         manager.Add<ColorField>();
         manager.Add<GeolocationField>();

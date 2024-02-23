@@ -78,7 +78,7 @@ form {
 }
 
 .field-label {
-  margin: 0.25rem 0px;
+  margin: 0.35rem 0px;
   /*font-weight: 600;*/
   text-align: right;
   width: 100%;
@@ -150,7 +150,7 @@ app {
 }
 
 .add-field {
-  margin-bottom: 0.25rem;
+  /* margin-bottom: 0.25rem;*/
 }
 
 /*.form-control {

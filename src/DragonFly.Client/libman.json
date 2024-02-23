@@ -3,7 +3,7 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
-      "library": "bootstrap@5.3.2",
+      "library": "bootstrap@5.3.3",
       "destination": "wwwroot/lib/bootstrap/"
     },
     {
@@ -11,7 +11,7 @@
       "destination": "wwwroot/lib/font-awesome/"
     },
     {
-      "library": "tinymce@6.8.1",
+      "library": "tinymce@6.8.3",
       "destination": "wwwroot/lib/tinymce/"
     }
   ]

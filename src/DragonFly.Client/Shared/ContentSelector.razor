@@ -16,36 +16,40 @@
 <div class="content-selector">
     <BSListGroup>
         <BSListGroupItem>
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-
+            <div class="row" style="align-items:center">
                 @if (ContentItem != null)
                 {
-                    <span class="badge bg-primary">@ContentItem.Schema.Name</span>
-
+                    <div class="col-lg">
+                        <span class="badge bg-primary">@ContentItem.Schema.Name</span>
+                    </div>
                     @foreach (string field in ContentItem.Schema.ReferenceFields)
                     {
-                        if (ContentItem.TryGetField(field, out ContentField column))
-                        {
-                            @if (column is ISingleValueField singleValueField)
+                        <div class="col-lg">
+                            @if (ContentItem.TryGetField(field, out ContentField column))
                             {
-                                <span>@singleValueField.Value</span>
-                            }
-                            else if (column is AssetField assetField)
-                            {
-                                @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                @if (column is ISingleValueField singleValueField)
                                 {
-                                    <img src="@assetField.Asset.PreviewUrl" style="height:2rem;object-fit:contain" />
+                                    <span>@singleValueField.Value</span>
+                                }
+                                else if (column is AssetField assetField)
+                                {
+                                    @if (assetField.Asset != null && assetField.Asset.IsImage())
+                                    {
+                                        <img src="@assetField.Asset.PreviewUrl" style="height:2rem;object-fit:contain" />
+                                    }
                                 }
                             }
-                        }
+                        </div>
                     }
                 }
                 else
                 {
-                    <span>...</span>
+                    <div class="col-lg">
+                        <span>...</span>
+                    </div>
                 }
 
-                <div class="options">
+                <div class="col-lg-auto">
                     @if (ContentItem != null)
                     {
                         <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>

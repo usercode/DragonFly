@@ -33,7 +33,6 @@ public class ContentInitializer : IInitialize
         api.ContentField().Add<SlugField>().WithFieldView<SlugFieldView>();
         api.ContentField().Add<TextField>().WithFieldView<TextFieldView>();
         api.ContentField().Add<HtmlField>().WithFieldView<HtmlFieldView>();
-        api.ContentField().Add<XHtmlField>().WithFieldView<XHtmlFieldView>();
         api.ContentField().Add<XmlField>().WithFieldView<XmlFieldView>();
         api.ContentField().Add<ColorField>().WithFieldView<ColorFieldView>();
         api.ContentField().Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();

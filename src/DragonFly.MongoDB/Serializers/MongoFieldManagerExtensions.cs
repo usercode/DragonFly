@@ -30,7 +30,6 @@ public static class MongoFieldManagerExtensions
         manager.Add<SingleValueMongoFieldSerializer<FloatField>>();
         manager.Add<SingleValueMongoFieldSerializer<TextField>>();
         manager.Add<SingleValueMongoFieldSerializer<HtmlField>>();
-        manager.Add<SingleValueMongoFieldSerializer<XHtmlField>>();
         manager.Add<SingleValueMongoFieldSerializer<XmlField>>();
         manager.Add<SingleValueMongoFieldSerializer<DateTimeField>>();        
 
