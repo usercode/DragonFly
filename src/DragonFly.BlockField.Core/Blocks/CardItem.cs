@@ -1,6 +1,4 @@
-﻿using DragonFly.BlockField;
-
-namespace DragonFly.BlockField;
+﻿namespace DragonFly.BlockField;
 
 public class CardItem
 {
@@ -28,5 +26,15 @@ public class CardItem
     /// Footer
     /// </summary>
     public string? Footer { get; set; }
+
+    /// <summary>
+    /// BackgroundColor
+    /// </summary>
+    public ColorType? BackgroundColor { get; set; }
+
+    /// <summary>
+    /// BorderColor
+    /// </summary>
+    public ColorType? BorderColor { get; set; }
 }
 

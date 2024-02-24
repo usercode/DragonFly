@@ -68,15 +68,11 @@
     {
         Position = position;
 
-        //await Modal.ShowAsync();
-
         await _offCanvas.ToggleAsync();
     }
 
     private async Task Add(BlockFactory factory)
     {
-        //await Modal.HideAsync();
-
         await _offCanvas.ToggleAsync();
 
         Blocks.Insert(Position, factory.CreateBlock());

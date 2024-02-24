@@ -5,6 +5,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using DragonFly.Client;
+using DragonFly;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<DragonFlyApp.Client.App>("app");
@@ -14,7 +15,12 @@ builder.AddDragonFly()
             .AddRestClient()
             .AddBlockField()
             .AddIdentity()
-            .AddApiKeys();
+            .AddApiKeys()
+            .Init(x =>
+            {
+                //Use TinyMCE editor for html field
+                //x.ContentField().Add<HtmlField>().WithTinyMceView();
+            });
 
 WebAssemblyHost host = builder.Build();
 

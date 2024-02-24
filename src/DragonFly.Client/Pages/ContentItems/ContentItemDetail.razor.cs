@@ -140,8 +140,6 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
             Entity = await ContentService.GetContentAsync(EntityType, EntityId);
 
             Versions = await ContentVersionStorage.GetContentVersionsAsync(EntityType, EntityId);
-
-            StateHasChanged();
         }
     }
 

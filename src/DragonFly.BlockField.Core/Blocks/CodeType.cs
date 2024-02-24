@@ -11,6 +11,7 @@ public enum CodeType
     CSharp,
     HTML,
     HLSL,
+    Java,
     JavaScript,
     JSON,
     LaTeX,
