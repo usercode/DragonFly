@@ -50,4 +50,7 @@ public partial class Product2
 
     [GeolocationField(Index = true, QueryField = true)]
     private GeolocationField _location;
+
+    [TextField]
+    private TextField _text;
 }

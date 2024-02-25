@@ -1,7 +1,13 @@
 ﻿@inherits BlockComponent<TextBlock>
 
 <div class="block text-block">
-    <textarea class="form-control" @bind="@Block.Text" style="height:20rem" readonly="@Field.GetReadOnlyAttribute()" />
+    <div class="grow-wrap" data-replicated-value="@Block.Text">
+        <textarea type="text"
+                  onInput="this.parentNode.dataset.replicatedValue = this.value"
+                  class="form-control"
+                  @bind="@Block.Text"
+                  readonly="@Field.GetReadOnlyAttribute()" />
+    </div>
 </div>
 
 @code {
