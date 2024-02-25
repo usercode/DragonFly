@@ -3,7 +3,7 @@
 <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
     <Header>Select asset</Header>
     <Content>
-        @if(Modal.Shown)
+        @if (Modal.Shown)
         {
             <AssetList ItemSelected="ItemAdded" ListMode="EntityListMode.Single" />
         }
@@ -13,53 +13,49 @@
     </Footer>
 </BSModal>
 
-<div class="asset-selector">
-    <BSListGroup>
-        <BSListGroupItem>            
-            <div style="display:flex;justify-content:space-between;align-items:center"> 
-                @if (Asset != null)
+<div class="content-selector">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+        @if (Asset != null)
+        {
+            <a href="asset/@Asset.Id" class="link-dark">
+                <span style="overflow-wrap: anywhere;">@Asset.Name (@Asset.MimeType)</span>
+            </a>
+        }
+        else
+        {
+            <span></span>
+        }
+
+        <div class="options">
+            @if (Asset != null)
+            {
+                <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                @if (ShowDownloadButton)
                 {
-                    <a href="asset/@Asset.Id" class="link-dark">
-                        <span style="overflow-wrap: anywhere;">@Asset.Name (@Asset.MimeType)</span>
-                    </a>
+                    <BSButton Color="BSColor.Light" href="@Asset.GetPublicUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                }
+                <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly"><i class="fas fa-times"></i></BSButton>
+            }
+            <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i></BSButton>
+        </div>
+    </div>
+
+    @if (Asset != null && ShowPreview)
+    {
+        <div class="image" style="margin-top:1rem">
+            @if (string.IsNullOrEmpty(Asset.PreviewUrl) == false)
+            {
+                @if (Asset.IsSVG())
+                {
+                    <img src="@Asset.PreviewUrl" style="width:100%;height:200px" />
                 }
                 else
                 {
-                    <span></span>
+                    <img src="@Asset.PreviewUrl" />
                 }
-
-                <div class="options">
-                    @if (Asset != null)
-                    {
-                        <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
-                        @if (ShowDownloadButton)
-                        {
-                            <BSButton Color="BSColor.Light" href="@Asset.GetPublicUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
-                        }
-                        <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly"><i class="fas fa-times"></i></BSButton>               
-                    }
-                    <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i></BSButton>
-                </div>           
-            </div>
-
-            @if (Asset != null && ShowPreview)
-            {
-                <div class="image" style="margin-top:1rem">
-                    @if (string.IsNullOrEmpty(Asset.PreviewUrl) == false)
-                    {
-                        @if(Asset.IsSVG())
-                        {
-                            <img src="@Asset.PreviewUrl" style="width:100%;height:200px" />
-                        }
-                        else
-                        {
-                            <img src="@Asset.PreviewUrl" />
-                        }
-                    }
-                </div>              
             }
-        </BSListGroupItem>
-    </BSListGroup>
+        </div>
+    }
 </div>
 
 @code {
@@ -69,7 +65,7 @@
     private Asset _asset;
 
     [Parameter]
-    public Asset Asset 
+    public Asset Asset
     {
         get => _asset;
         set
@@ -90,7 +86,7 @@
     public bool ShowDownloadButton { get; set; }
 
     [Parameter]
-    public bool ShowPreview { get; set;  }
+    public bool ShowPreview { get; set; }
 
     [Parameter]
     public bool IsReadOnly { get; set; }
