@@ -44,9 +44,12 @@
         get => _enumValue;
         set
         {
-            _enumValue = value;
+            if (Equals(_enumValue, value) == false)
+            {
+                _enumValue = value;
 
-            EnumValueChanged?.Invoke(_enumValue);
+                EnumValueChanged?.Invoke(_enumValue);
+            }
         }
     }
 

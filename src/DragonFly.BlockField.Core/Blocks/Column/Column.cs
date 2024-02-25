@@ -25,6 +25,11 @@ public class Column
     public ColumnWidth Width { get; set; } = ColumnWidth.Max;
 
     /// <summary>
+    /// Value
+    /// </summary>
+    public int? Value { get; set; }
+
+    /// <summary>
     /// Blocks
     /// </summary>
     public IList<Block> Blocks { get; set; } = new List<Block>();

@@ -1,0 +1,26 @@
+﻿@if (Column.Width == ColumnWidth.Value)
+{
+    <BSInput InputType="InputType.Number" @bind-Value="Column.Value" style="width: 5rem; padding: 0 0.5rem;" min="1" max="12" />
+}
+<EnumView TEnum="ColumnWidth" EnumValue="@Column.Width" EnumValueChanged="x => SetWidthValue(x)" />
+
+@code {
+    [Parameter]
+    public Column Column { get; set; }
+
+    private void SetWidthValue(ColumnWidth width)
+    {
+        Column.Width = width;
+
+        if (Column.Width == ColumnWidth.Value)
+        {
+            Column.Value = 1;
+        }
+        else
+        {
+            Column.Value = null;
+        }
+
+        StateHasChanged();
+    }
+}

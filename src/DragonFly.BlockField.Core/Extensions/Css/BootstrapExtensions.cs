@@ -76,25 +76,20 @@ public static class BootstrapExtensions
         };
     }
 
-    public static string? ToBootstrapClass(this ColumnWidth width, Breakpoint breakpoint = Breakpoint.Large)
-    {
-        return ((ColumnWidth?)width).ToBootstrapClass(breakpoint);
-    }
-
-    public static string? ToBootstrapClass(this ColumnWidth? width, Breakpoint breakpoint = Breakpoint.Large)
+    public static string? ToBootstrapClass(this Column column, Breakpoint breakpoint = Breakpoint.Large)
     {
         string? breakpointSuffix = breakpoint.ToBootstrapElement();
 
         if (breakpoint != Breakpoint.ExtraSmall)
         {
             breakpointSuffix = $"-{breakpointSuffix}";
-        }        
+        }
 
-        return width switch
+        return column.Width switch
         {
             ColumnWidth.Max => $"col{breakpointSuffix}",
             ColumnWidth.Auto => $"col{breakpointSuffix}-auto",
-            >= ColumnWidth.W1 and <= ColumnWidth.W12 => $"col{breakpointSuffix}-{(int)width}",
+            ColumnWidth.Value => $"col{breakpointSuffix}-{column.Value}",
             _ => null
         };
     }
