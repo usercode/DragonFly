@@ -46,7 +46,7 @@ public static class DragonFlyClientExtensions
     /// <see cref="AssetField"/>, <see cref="ReferenceField"/>
     /// <br /><br />
     /// Default asset metadata: <br/>
-    /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/><br /><br />
+    /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/>, <see cref="VideoMetadata"/><br /><br />
     /// Default services::<br/>
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// </summary>

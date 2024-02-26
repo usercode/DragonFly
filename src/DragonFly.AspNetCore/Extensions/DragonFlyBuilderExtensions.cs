@@ -24,11 +24,11 @@ public static class DragonFlyBuilderExtensions
     /// <see cref="AssetField"/>, <see cref="ReferenceField"/>
     /// <br /><br />
     /// Default asset metadata: <br/>
-    /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/><br /><br />
+    /// <see cref="ImageMetadata"/>, <see cref="PdfMetadata"/>, <see cref="VideoMetadata"/><br /><br />
     /// Default services::<br/>
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
-    /// <see cref="IAssetProcessing"/> -> <see cref="ImageProcessing"/>, <see cref="PdfProcessing"/>
+    /// <see cref="IAssetProcessing"/> -> <see cref="ImageProcessing"/>, <see cref="PdfProcessing"/>, <see cref="VideoProcessing"/>
     /// <br/><br/>
     /// Default permissions:<br/>
     /// <see cref="ContentPermissions"/>, <see cref="SchemaPermissions"/>, <see cref="AssetPermissions"/>, <see cref="BackgroundTaskPermissions"/>, <see cref="WebHookPermissions"/>

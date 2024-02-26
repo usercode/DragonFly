@@ -1,0 +1,12 @@
+﻿@inherits FieldComponent<TextBaseField>
+
+<div class="textarea-field">
+    <div class="grow-wrap" data-replicated-value="@Field.Value">
+        <textarea 
+                    type="text"
+                    onInput="this.parentNode.dataset.replicatedValue = this.value"
+                    class="form-control" 
+                    @bind="@Field.Value"                 
+                    readonly="@this.GetReadOnlyAttribute()" />
+    </div>
+</div>

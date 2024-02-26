@@ -57,5 +57,5 @@ public static class DragonFlyInitBuilderExtensions
         builder.Services.AddTransient<IPostInitialize, T>();
 
         return builder;
-    }        
+    }
 }

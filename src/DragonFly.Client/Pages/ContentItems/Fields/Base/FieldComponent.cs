@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
+/// <summary>
+/// FieldComponent with options.
+/// </summary>
 public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFieldComponent<TField>
     where TField : ContentField
     where TFieldOptions : FieldOptions
@@ -25,7 +28,15 @@ public abstract class FieldComponent<TField, TFieldOptions> : ComponentBase, IFi
 
     ContentField IFieldComponent.Field => Field;
 
-    FieldOptions IFieldComponent.Options => Options;
-
     Type IFieldComponent.FieldType => typeof(TField);
+
+    FieldOptions IFieldComponent.Options => Options;
+}
+
+/// <summary>
+/// FieldComponent without options.
+/// </summary>
+public abstract class FieldComponent<TField> : FieldComponent<TField, FieldOptions>
+    where TField : ContentField
+{
 }
