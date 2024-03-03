@@ -3,10 +3,10 @@
 @if (Model.Columns.Any())
 {
     <div class="block column-block">
-        <div class="row @Model.HorizontalAlignment.ToBootstrapCssClass()">
+        <div class="row @Model.HorizontalAlignment.ToBootstrapClass()">
             @for (int n = 0; n < Model.Columns.Count; n++)
             {
-                <div class="@Model.Columns[n].Width.ToBootstrapCssClass()">
+                <div class="@Model.Columns[n].ToBootstrapClass()">
                     @Html.DisplayFor(m => Model.Columns[n].Blocks)
                 </div>
             }
