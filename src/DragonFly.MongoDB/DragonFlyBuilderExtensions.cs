@@ -4,6 +4,8 @@
 
 using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
+using DragonFly.Storage.Abstractions;
+using DragonFly.Storage.MongoDB.Fields;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
 
@@ -42,10 +44,10 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton(MongoIndexManager.Default);
         builder.Services.AddSingleton(MongoQueryManager.Default);
 
-        //fix for nested field options (inside ArrayFieldOptions)
         builder.PreInit(api =>
         {
-            api.ContentField().Added += ContentFieldAdded;
+            api.ContentField().Added += factory => CreateFieldOptionsBsonClassMap(factory); //fix for nested field options (inside ArrayFieldOptions)
+            api.ContentField().Added += factory => MongoFieldManager.Default.EnsureField(factory);
         });
 
         builder.Init(api =>
@@ -60,7 +62,7 @@ public static class DragonFlyBuilderExtensions
         return builder;
     }
 
-    private static void ContentFieldAdded(FieldFactory fieldFactory)
+    private static void CreateFieldOptionsBsonClassMap(FieldFactory fieldFactory)
     {
         if (fieldFactory.OptionsType != null)
         {
@@ -74,5 +76,5 @@ public static class DragonFlyBuilderExtensions
 
             BsonClassMap.RegisterClassMap(map);
         }
-    }
+    }    
 }

@@ -3,8 +3,16 @@
 <div class="block code-block">
     <div class="mb-1">
         <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
+    </div>    
+
+    <div class="grow-wrap" data-replicated-value="@Block.Content">
+        <textarea type="text"
+                  onInput="this.parentNode.dataset.replicatedValue = this.value"
+                  class="form-control"
+                  @bind="@Block.Content"
+                  readonly="@Field.GetReadOnlyAttribute()"
+                  spellcheck="false"/>
     </div>
-    <textarea class="form-control" @bind="@Block.Content" spellcheck="false" style="height:40rem" />
 </div>
 
 @code {

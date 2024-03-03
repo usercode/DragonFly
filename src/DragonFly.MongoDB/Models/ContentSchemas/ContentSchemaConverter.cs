@@ -25,7 +25,6 @@ static class ContentSchemaConverter
 
         foreach (var field in mongoSchema.Fields)
         {
-
             Type? optionsType = FieldManager.Default.GetOptionsType(field.Value.FieldType);
             FieldOptions? options = null;
 

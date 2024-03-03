@@ -4,6 +4,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using DragonFly.Storage.Abstractions;
+using DragonFly.Storage.MongoDB.Fields;
 
 namespace DragonFly.MongoDB;
 
@@ -30,6 +31,44 @@ public sealed class MongoFieldManager
         TSerializer serializer = new TSerializer();
 
         Add(serializer);
+    }
+
+    /// <summary>
+    /// Ensures that the content field has a <see cref="SingleValueMongoFieldSerializer{T}"/>  or <see cref="DefaultMongoFieldSerializer{T}"/>.
+    /// </summary>
+    public void EnsureField(FieldFactory fieldFactory)
+    {
+        if (_fields.ContainsKey(fieldFactory.FieldType))
+        {
+            return;
+        }
+
+        IMongoFieldSerializer? fieldSerializer;
+
+        //build SingleValueSerializer?
+        if (fieldFactory.FieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
+        {
+            //create SingleValueFieldSerializer
+            fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(SingleValueMongoFieldSerializer<>).MakeGenericType(fieldFactory.FieldType));
+
+            if (fieldSerializer == null)
+            {
+                throw new Exception($"Could not create single value field serializer for '{fieldFactory.FieldType.Name}'.");
+            }
+
+            Default.Add(fieldSerializer);
+        }
+        else //build DefaultFieldSerializer
+        {
+            fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(DefaultMongoFieldSerializer<>).MakeGenericType(fieldFactory.FieldType));
+
+            if (fieldSerializer == null)
+            {
+                throw new Exception($"Could not create default field serializer for '{fieldFactory.FieldType.Name}'.");
+            }
+
+            Default.Add(fieldSerializer);
+        }
     }
 
     public IMongoFieldSerializer GetByFieldType(Type contentFieldType)

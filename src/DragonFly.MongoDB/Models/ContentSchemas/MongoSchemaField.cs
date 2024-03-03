@@ -11,12 +11,6 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoSchemaField
 {
-    public MongoSchemaField()
-    {
-        FieldType = string.Empty;
-        Options = BsonNull.Value;
-    }
-
     /// <summary>
     /// Label
     /// </summary>
@@ -30,10 +24,10 @@ public class MongoSchemaField
     /// <summary>
     /// FieldType
     /// </summary>
-    public string FieldType { get; set; }
+    public string FieldType { get; set; } = string.Empty;
 
     /// <summary>
     /// Options
     /// </summary>
-    public BsonValue Options {get;set;}
+    public BsonValue Options {get;set;} = BsonNull.Value;
 }

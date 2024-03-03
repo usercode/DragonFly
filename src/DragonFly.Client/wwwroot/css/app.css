@@ -373,7 +373,7 @@ app {
 .scroll-content {
   flex: 1;
   overflow-y: auto;
-  padding-right: 0.25rem 1rem;
+  padding: 0.25rem 1rem;
   margin: 1rem;
 }
 

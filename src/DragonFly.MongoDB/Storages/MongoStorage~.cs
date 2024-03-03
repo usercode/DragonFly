@@ -64,8 +64,6 @@ public partial class MongoStorage
 
         DragonFlyOptions = dragonFlyOptions.Value;
 
-        CreateMissingFieldSerializers(api);
-
         MongoClientSettings settings = new MongoClientSettings();
         settings.Server = new MongoServerAddress(Options.Hostname, Options.Port);
 
@@ -89,42 +87,6 @@ public partial class MongoStorage
         AssetData = new GridFSBucket(Database, new GridFSBucketOptions() { BucketName = "Assets" });
 
         DateTimeService = dateTimeService;
-    }
-
-    public void CreateMissingFieldSerializers(IDragonFlyApi api)
-    {
-        foreach (Type contentFieldType in api.ContentField().GetAllFieldTypes())
-        {
-            if (api.MongoField().TryGetByFieldType(contentFieldType, out IMongoFieldSerializer? fieldSerializer))
-            {
-                continue;
-            }
-
-            //build SingleValueSerializer?
-            if (contentFieldType.GetInterfaces().Any(x => x == typeof(ISingleValueField)))
-            {
-                //create SingleValueFieldSerializer
-                fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(SingleValueMongoFieldSerializer<>).MakeGenericType(contentFieldType));
-
-                if (fieldSerializer == null)
-                {
-                    throw new Exception($"Could not create single value field serializer for '{contentFieldType.Name}'.");
-                }
-
-                api.MongoField().Add(fieldSerializer);
-            }
-            else //build DefaultFieldSerializer
-            {
-                fieldSerializer = (IMongoFieldSerializer?)Activator.CreateInstance(typeof(DefaultMongoFieldSerializer<>).MakeGenericType(contentFieldType));
-
-                if (fieldSerializer == null)
-                {
-                    throw new Exception($"Could not create default field serializer for '{contentFieldType.Name}'.");
-                }
-
-                api.MongoField().Add(fieldSerializer);
-            }
-        }
     }    
 
     public async Task DeleteDatabaseAsync()

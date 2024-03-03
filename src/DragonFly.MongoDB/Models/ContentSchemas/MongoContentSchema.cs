@@ -9,16 +9,11 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoContentSchema : MongoContentBase
 {
-    public MongoContentSchema()
-    {
-        Name = string.Empty;
-    }
-
     /// <summary>
     /// Name
     /// </summary>
-    public virtual string Name { get; set; }
-    
+    public virtual string Name { get; set; } = string.Empty;
+
     /// <summary>
     /// Parts
     /// </summary>
