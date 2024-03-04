@@ -120,8 +120,6 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         await base.RefreshActionAsync();
 
-        Notifications.Clear();
-
         if (IsNewEntity)
         {
             Schema = await SchemaService.GetSchemaAsync(EntityType);
@@ -143,25 +141,28 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         }
     }
 
-    protected override void OnRefreshed()
+    protected override void OnGuiStateChanged()
     {
-        base.OnRefreshed();
+        base.OnGuiStateChanged();        
 
-        if (Entity.IsNew() == false)
+        if (Entity != null)
         {
-            if (Entity.PublishedAt == null)
+            if (Entity.IsNew() == false)
             {
-                Notifications.Add(new NotificationItem(NotificationType.Warning, "Content is not published"));
+                if (Entity.PublishedAt == null)
+                {
+                    Notifications.Add(new NotificationItem(NotificationType.Warning, "Content is not published"));
+                }
+                else
+                {
+                    Notifications.Add(new NotificationItem(NotificationType.Success, $"Content has been published at {Entity.PublishedAt.Value}"));
+                }
             }
-            else
-            {
-                Notifications.Add(new NotificationItem(NotificationType.Success, $"Content has been published at {Entity.PublishedAt.Value}"));
-            }
-        }
 
-        foreach (ValidationError error in Entity.ValidationContext.Errors)
-        {
-            Notifications.Add(new NotificationItem(NotificationType.Error, error.Message));
+            foreach (ValidationError error in Entity.ValidationContext.Errors)
+            {
+                Notifications.Add(new NotificationItem(NotificationType.Error, error.Message));
+            }
         }
     }
 
@@ -202,6 +203,8 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         if (Entity.Validate() == ValidationState.Invalid)
         {
+            OnGuiStateChanged();
+
             StateHasChanged();
 
             args.CanSave = false;

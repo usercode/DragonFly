@@ -13,7 +13,7 @@ public class StartComponentBase : ComponentBase
 {
     public StartComponentBase()
     {
-        RebuildToolbar();
+        OnGuiStateChanged();
     }
 
     private bool _init = false;
@@ -64,6 +64,8 @@ public class StartComponentBase : ComponentBase
 
     public IList<ToolbarItem> ToolbarItems { get; private set; }
 
+    public IList<NotificationItem> Notifications { get; private set; } = new List<NotificationItem>();
+
     public bool IsRefreshing { get; protected set; }
 
     protected virtual Task RefreshActionAsync()
@@ -86,14 +88,16 @@ public class StartComponentBase : ComponentBase
 
     protected virtual void OnRefreshed()
     {
-        RebuildToolbar();
+        OnGuiStateChanged();
     }
 
-    protected void RebuildToolbar()
+    protected virtual void OnGuiStateChanged()
     {
         List<ToolbarItem> list = new List<ToolbarItem>();
         BuildToolbarItems(list);
         ToolbarItems = list;
+
+        Notifications.Clear();
     }
 
     protected virtual void BuildToolbarItems(IList<ToolbarItem> toolbarItems)

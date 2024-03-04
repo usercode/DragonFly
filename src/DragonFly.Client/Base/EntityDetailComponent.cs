@@ -37,9 +37,7 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
     public ContentSchema Schema { get; set; }
 
     [Parameter]
-    public EventCallback<T> EntityChanged { get; set; }
-
-    public IList<NotificationItem> Notifications { get; private set; } = new List<NotificationItem>();
+    public EventCallback<T> EntityChanged { get; set; }    
 
     protected override Task RefreshActionAsync()
     {
@@ -69,7 +67,7 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
     {
         await CreateActionAsync();
 
-        RebuildToolbar();
+        OnGuiStateChanged();
     }
 
     protected virtual async Task CreateActionAsync()
@@ -81,7 +79,7 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
     {
         await UpdateActionAsync();
 
-        RebuildToolbar();
+        OnGuiStateChanged();
     }
 
     protected virtual async Task UpdateActionAsync()
@@ -122,14 +120,11 @@ public class EntityDetailComponent<T> : StartComponentBase, IEntityDetailCompone
 
     protected virtual void OnSaved()
     {
-        RebuildToolbar();
+        OnGuiStateChanged();
     }
 
     public async Task DeleteAsync()
     {
         await DeleteActionAsync();
     }
-
-  
-   
 }

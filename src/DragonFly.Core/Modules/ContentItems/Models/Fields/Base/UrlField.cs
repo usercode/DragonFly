@@ -2,31 +2,37 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Text.RegularExpressions;
 using DragonFly.Validations;
 
 namespace DragonFly;
 
 /// <summary>
-/// ColorField
+/// UrlField
 /// </summary>
 [Field]
-[FieldOptions(typeof(ColorFieldOptions))]
-public partial class ColorField : TextBaseField
+[FieldOptions(typeof(UrlFieldOptions))]
+public partial class UrlField : TextBaseField
 {
+    public UrlField()
+    {
+
+    }
+
+    public UrlField(string? text)
+    {
+        Value = text;
+    }
+
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         base.Validate(fieldName, options, context);
 
         if (HasValue)
         {
-            if (RegexHex().IsMatch(Value) == false)
+            if (Uri.IsWellFormedUriString(Value, UriKind.Absolute) == false)
             {
-                context.AddInvalidValidation(nameof(Value));
+                context.AddInvalidValidation(fieldName);
             }
         }
     }
-
-    [GeneratedRegex("^#[a-f0-9]{6}$")]
-    private static partial Regex RegexHex();
 }

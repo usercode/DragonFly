@@ -9,6 +9,18 @@ namespace DragonFly;
 /// </summary>
 public static class ContentSchemaFieldExtensions
 {
+    public static TContentSchema AddUrl<TContentSchema>(this TContentSchema schema, string name, Action<UrlFieldOptions>? configOptions = null, int sortkey = 0)
+       where TContentSchema : ISchemaElement
+    {
+        UrlFieldOptions options = new UrlFieldOptions();
+
+        configOptions?.Invoke(options);
+
+        schema.AddField(name, typeof(UrlField), options, sortkey);
+
+        return schema;
+    }
+
     public static TContentSchema AddSlug<TContentSchema>(this TContentSchema schema, string name, Action<SlugFieldOptions>? configOptions = null, int sortkey = 0)
         where TContentSchema : ISchemaElement
     {

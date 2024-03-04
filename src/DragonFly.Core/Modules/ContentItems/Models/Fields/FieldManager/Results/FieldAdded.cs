@@ -7,7 +7,6 @@ namespace DragonFly;
 /// <summary>
 /// FieldAdded
 /// </summary>
-/// <typeparam name="T"></typeparam>
 public class FieldAdded<T> : IFieldAdded<T>
     where T : ContentField
 {

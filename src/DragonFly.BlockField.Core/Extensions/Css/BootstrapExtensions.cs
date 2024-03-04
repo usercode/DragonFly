@@ -76,11 +76,11 @@ public static class BootstrapExtensions
         };
     }
 
-    public static string? ToBootstrapClass(this Column column, Breakpoint breakpoint = Breakpoint.Large)
+    public static string? ToBootstrapClass(this Column column, Breakpoint? breakpoint = Breakpoint.Large)
     {
         string? breakpointSuffix = breakpoint.ToBootstrapElement();
 
-        if (breakpoint != Breakpoint.ExtraSmall)
+        if (string.IsNullOrEmpty(breakpointSuffix) == false)
         {
             breakpointSuffix = $"-{breakpointSuffix}";
         }

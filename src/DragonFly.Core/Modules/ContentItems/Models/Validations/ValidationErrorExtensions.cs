@@ -8,37 +8,36 @@ public static class ValidationErrorExtensions
 {
     public static ValidationContext AddRequireValidation(this ValidationContext context, string field)
     {
-        context.AddError(new ValidationError(field, $"The field '{field}' is required."));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" is required."));
 
         return context;
     }
 
     public static ValidationContext AddRangeValidation(this ValidationContext context, string field, double? from, double? to)
     {
-        context.AddError(new ValidationError(field, $"The field '{field}' is out of range! The value must be between {from} and {to}."));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" is out of range! The value must be between {from} and {to}."));
 
         return context;
     }
 
     public static ValidationContext AddMinimumValidation(this ValidationContext context, string field, double? value)
     {
-        context.AddError(new ValidationError(field, $"The field '{field}' must be at least {value} characters long."));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" must be at least {value} characters long."));
 
         return context;
     }
 
     public static ValidationContext AddMaximumValidation(this ValidationContext context, string field, double? value)
     {
-        context.AddError(new ValidationError(field, $"The field '{field}' can't be longer than {value} characters."));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" can't be longer than {value} characters."));
 
         return context;
     }
 
     public static ValidationContext AddInvalidValidation(this ValidationContext context, string field)
     {
-        context.AddError(new ValidationError(field, $"The field '{field}' has no valid value!"));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" has no valid value!"));
 
         return context;
     }
-
 }

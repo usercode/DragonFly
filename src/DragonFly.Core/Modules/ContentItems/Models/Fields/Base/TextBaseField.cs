@@ -25,6 +25,8 @@ public abstract class TextBaseField : SingleValueField<string>
         return $"{Value}";
     }
 
+    public override bool HasValue => string.IsNullOrEmpty(Value) == false;
+
     protected override void OnValueChanging(ref string? newValue)
     {
         if (string.IsNullOrWhiteSpace(newValue))

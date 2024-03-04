@@ -45,6 +45,8 @@ public partial class AssetField
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
+        base.Validate(fieldName, options, context);
+
         if (options is AssetFieldOptions fieldOptions)
         {
             if (fieldOptions.IsRequired && Asset == null)

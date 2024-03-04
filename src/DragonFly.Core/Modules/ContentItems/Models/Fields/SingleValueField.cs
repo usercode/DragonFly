@@ -29,7 +29,7 @@ public abstract class SingleValueField<T> : ContentField, ISingleValueField
     }
 
     [MemberNotNullWhen(returnValue: true, member: nameof(Value))]
-    public bool HasValue => Value != null;
+    public virtual bool HasValue => Value is not null;
 
     object? ISingleValueField.Value
     {

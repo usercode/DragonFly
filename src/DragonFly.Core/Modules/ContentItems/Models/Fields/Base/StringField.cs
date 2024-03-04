@@ -26,14 +26,11 @@ public partial class StringField : TextBaseField
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
-        if (options is StringFieldOptions fieldOptions)
-        {
-            if (fieldOptions.IsRequired && HasValue == false)
-            {
-                context.AddRequireValidation(fieldName);
-            }
+        base.Validate(fieldName, options, context);
 
-            if (HasValue)
+        if (HasValue)
+        {
+            if (options is StringFieldOptions fieldOptions)
             {
                 if (Value.Length < fieldOptions.MinLength)
                 {

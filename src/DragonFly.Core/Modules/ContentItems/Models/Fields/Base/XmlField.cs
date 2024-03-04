@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Xml.Linq;
 using DragonFly.Validations;
 
 namespace DragonFly;
@@ -26,5 +27,17 @@ public partial class XmlField : TextBaseField
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         base.Validate(fieldName, options, context);
+
+        try
+        {
+            if (HasValue)
+            {
+                XElement.Load(Value);
+            }
+        }
+        catch
+        {
+            context.AddInvalidValidation(fieldName);
+        }
     }
 }

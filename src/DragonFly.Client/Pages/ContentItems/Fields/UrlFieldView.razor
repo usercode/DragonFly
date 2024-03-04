@@ -1,0 +1,10 @@
+﻿@inherits FieldComponent<UrlField, UrlFieldOptions>
+
+<div class="url-field">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">@@</div>
+        </div>
+        <BSInput class="form-control" @bind-Value="@Field.Value" IsReadonly="IsReadOnly" />
+    </div>
+</div>

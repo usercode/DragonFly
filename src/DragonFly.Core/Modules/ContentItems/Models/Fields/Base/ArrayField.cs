@@ -30,6 +30,8 @@ public partial class ArrayField
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
+        base.Validate(fieldName, options, context);
+
         if (options is ArrayFieldOptions fieldOptions)
         {
             if (fieldOptions.IsRequired && Items.Any() == false)

@@ -53,4 +53,7 @@ public partial class Product2
 
     [TextField]
     private TextField _text;
+
+    [UrlField]
+    private UrlField _url;
 }

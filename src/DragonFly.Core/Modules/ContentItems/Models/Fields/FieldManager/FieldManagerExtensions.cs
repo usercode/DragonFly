@@ -36,6 +36,7 @@ public static class FieldManagerExtensions
         manager.Add<XmlField>();
         manager.Add<ColorField>();
         manager.Add<GeolocationField>();
+        manager.Add<UrlField>();
 
         return manager;
     }
