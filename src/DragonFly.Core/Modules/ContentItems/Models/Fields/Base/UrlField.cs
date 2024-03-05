@@ -29,9 +29,22 @@ public partial class UrlField : TextBaseField
 
         if (HasValue)
         {
-            if (Uri.IsWellFormedUriString(Value, UriKind.Absolute) == false)
+            if (options is UrlFieldOptions urlOptions)
             {
-                context.AddInvalidValidation(fieldName);
+                UriKind? uriKind = urlOptions.UrlType switch
+                {
+                    UrlType.Absolute => UriKind.Absolute,
+                    UrlType.Relative => UriKind.Relative,
+                    _ => null
+                };
+
+                if (uriKind != null)
+                {
+                    if (Uri.IsWellFormedUriString(Value, uriKind.Value) == false)
+                    {
+                        context.AddInvalidValidation(fieldName);
+                    }
+                }
             }
         }
     }

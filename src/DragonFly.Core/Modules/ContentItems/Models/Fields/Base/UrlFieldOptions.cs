@@ -13,6 +13,11 @@ public class UrlFieldOptions : FieldOptions
     {
     }
 
+    /// <summary>
+    /// UrlType
+    /// </summary>
+    public UrlType UrlType { get; set; } = UrlType.Absolute;
+
     public override ContentField CreateContentField()
     {
         return new UrlField();

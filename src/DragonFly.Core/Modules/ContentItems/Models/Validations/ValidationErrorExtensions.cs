@@ -36,7 +36,7 @@ public static class ValidationErrorExtensions
 
     public static ValidationContext AddInvalidValidation(this ValidationContext context, string field)
     {
-        context.AddError(new ValidationError(field, $"The field \"{field}\" has no valid value!"));
+        context.AddError(new ValidationError(field, $"The field \"{field}\" isn't valid!"));
 
         return context;
     }

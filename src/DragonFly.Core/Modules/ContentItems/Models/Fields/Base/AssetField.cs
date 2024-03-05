@@ -47,9 +47,9 @@ public partial class AssetField
     {
         base.Validate(fieldName, options, context);
 
-        if (options is AssetFieldOptions fieldOptions)
+        if (options is AssetFieldOptions assetOptions)
         {
-            if (fieldOptions.IsRequired && Asset == null)
+            if (assetOptions.IsRequired && Asset == null)
             {
                 context.AddRequireValidation(fieldName);
             }

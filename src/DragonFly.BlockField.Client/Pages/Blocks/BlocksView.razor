@@ -7,7 +7,7 @@
         @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</BSButton>
+                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.GetDisplayName()</BSButton>
             </div>
         }
     </Content>

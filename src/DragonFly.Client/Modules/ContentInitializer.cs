@@ -36,7 +36,7 @@ public class ContentInitializer : IInitialize
         api.ContentField().Add<XmlField>().WithFieldView<XmlFieldView>();
         api.ContentField().Add<ColorField>().WithFieldView<ColorFieldView>();
         api.ContentField().Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();
-        api.ContentField().Add<UrlField>().WithFieldView<UrlFieldView>();
+        api.ContentField().Add<UrlField>().WithFieldView<UrlFieldView>().WithOptionView<UrlFieldOptionsView>();
 
         return Task.CompletedTask;
     }

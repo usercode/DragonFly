@@ -30,15 +30,15 @@ public partial class StringField : TextBaseField
 
         if (HasValue)
         {
-            if (options is StringFieldOptions fieldOptions)
+            if (options is StringFieldOptions stringOptions)
             {
-                if (Value.Length < fieldOptions.MinLength)
+                if (Value.Length < stringOptions.MinLength)
                 {
-                    context.AddMinimumValidation(fieldName, fieldOptions.MinLength);
+                    context.AddMinimumValidation(fieldName, stringOptions.MinLength);
                 }
-                else if (Value.Length > fieldOptions.MaxLength)
+                else if (Value.Length > stringOptions.MaxLength)
                 {
-                    context.AddMaximumValidation(fieldName, fieldOptions.MaxLength);
+                    context.AddMaximumValidation(fieldName, stringOptions.MaxLength);
                 }
             }
         }

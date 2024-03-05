@@ -39,4 +39,18 @@ public sealed class BlockFactory
     /// </summary>
     /// <returns></returns>
     public Block CreateBlock() => _factoryBlock();
+
+    public string GetDisplayName()
+    {
+        const string block = "Block";
+
+        if (BlockName.EndsWith(block))
+        {
+            return BlockName[0..^block.Length];
+        }
+        else
+        {
+            return BlockName;
+        }
+    }
 }
