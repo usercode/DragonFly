@@ -19,7 +19,7 @@ public static class DragonFlyCoreBuilderExtensions
 
         builder.Init(api =>
         {
-            api.JsonFields().AddDefaults();
+            api.JsonField().AddDefaults();
         });
 
         return builder;

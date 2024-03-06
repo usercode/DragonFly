@@ -13,7 +13,7 @@ public static class JsonFieldManagerExtensions
     /// </summary>
     /// <param name="api"></param>
     /// <returns></returns>
-    public static JsonFieldManager JsonFields(this IDragonFlyApi api)
+    public static JsonFieldManager JsonField(this IDragonFlyApi api)
     {
         return JsonFieldManager.Default;
     }
