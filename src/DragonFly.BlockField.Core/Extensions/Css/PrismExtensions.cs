@@ -6,26 +6,39 @@ namespace DragonFly.BlockField;
 
 public static class PrismExtensions
 {
-    public static string? ToPrismCssClass(this CodeType type)
+    public static string? ToPrismClass(this CodeType type)
     {
-        return ((CodeType?)type).ToPrismCssClass();
+        return ((CodeType?)type).ToPrismClass();
     }
 
-    public static string? ToPrismCssClass(this CodeType? type)
+    public static string? ToPrismClass(this CodeType? type)
     {
         string? language = type switch
         {
             CodeType.CSharp => "csharp",
+            CodeType.Bash => "bash",
             CodeType.CSS => "css",
+            CodeType.CSV => "csv",
             CodeType.Java => "java",
             CodeType.JavaScript => "javascript",
             CodeType.JSON => "json",
-            CodeType.HTML => "html",
+            CodeType.HTML => "markup",
+            CodeType.HTTP => "http",
             CodeType.HLSL => "hlsl",
-            CodeType.XML => "xml",
+            CodeType.GLSL => "glsl",
+            CodeType.GraphQL => "graphql",
+            CodeType.Ini => "ini",
+            CodeType.Markdown => "markdown",
+            CodeType.PHP => "php",
+            CodeType.Rust => "rust",
+            CodeType.Regex => "regex",
+            CodeType.XML => "markup",
             CodeType.SQL => "sql",
             CodeType.SVG => "svg",
+            CodeType.TypeScript => "typescript",
             CodeType.Docker => "docker",
+            CodeType.Yaml => "yaml",
+            CodeType.WebAssembly => "wasm",
             _ => null
         };
 

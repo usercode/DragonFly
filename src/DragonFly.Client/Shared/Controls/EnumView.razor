@@ -1,6 +1,6 @@
 ﻿@typeparam TEnum
 
-<BSDropdown style="margin-bottom: 1rem">
+<BSDropdown Class="enum-dropdown">
     <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@(EnumValue is null ? Undefined : EnumValue)</BSToggle></Toggler>
     <Content>
         @if (typeof(TEnum).IsGenericType)

@@ -41,18 +41,50 @@ public sealed class BlockFieldManager
         return _currentBlockFactories;
     }
 
+    private BlockFactory CreateFactory<TBlock>()
+         where TBlock : Block, new()
+    {
+        Type blockType = typeof(TBlock);
+
+        return new BlockFactory(blockType.Name, blockType, new TBlock().CssIcon, () => new TBlock());
+    }
+
     /// <summary>
-    /// Adds a new block.
+    /// Adds <typeparamref name="TBlock"/>.
     /// </summary>
     public void Add<TBlock>()
         where TBlock : Block, new()
     {
-        Type blockType = typeof(TBlock);
-
-        BlockFactory factory = new BlockFactory(blockType.Name, blockType, new TBlock().CssIcon, () => new TBlock());
+        BlockFactory factory = CreateFactory<TBlock>();
 
         _blocksByName[factory.BlockName] = factory;
         _blocksByType[factory.BlockType] = factory;
+
+        _rebuildBlockList = true;
+    }
+
+    /// <summary>
+    /// Removes <typeparamref name="TBlock"/>.
+    /// </summary>
+    /// <typeparam name="TBlock"></typeparam>
+    public void Remove<TBlock>()
+         where TBlock : Block, new()
+    {
+        BlockFactory factory = CreateFactory<TBlock>();
+
+        _blocksByName.Remove(factory.BlockName);
+        _blocksByType.Remove(factory.BlockType);
+
+        _rebuildBlockList = true;
+    }
+
+    /// <summary>
+    /// Removes all blocks.
+    /// </summary>
+    public void Clear()
+    {
+        _blocksByName.Clear();
+        _blocksByType.Clear();
 
         _rebuildBlockList = true;
     }

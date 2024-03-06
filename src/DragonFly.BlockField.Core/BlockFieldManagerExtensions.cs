@@ -2,7 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace DragonFly.BlockField;
+using DragonFly.BlockField;
+
+namespace DragonFly;
 
 public static class BlockFieldManagerExtensions
 {
