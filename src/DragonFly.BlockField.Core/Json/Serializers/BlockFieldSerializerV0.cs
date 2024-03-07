@@ -4,7 +4,7 @@
 
 using System.IO.Compression;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using DragonFly.BlockField.Json;
 
 namespace DragonFly.BlockField;
 
@@ -17,7 +17,7 @@ internal static class BlockFieldSerializerV0
     {
         Options = new JsonSerializerOptions();
         Options.Converters.Add(new BlockFieldConverter());
-        Options.Converters.Add(new JsonStringEnumConverter());
+        Options.Converters.Add(new EnumStringJsonConverterFactory());
     }
 
     /// <summary>
