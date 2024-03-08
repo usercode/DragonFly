@@ -16,19 +16,22 @@ public class EnumStringJsonConverterFactory : JsonConverterFactory
 
     public override JsonConverter? CreateConverter(Type typeToConvert, JsonSerializerOptions options)
     {
-        Type converterType;
+        Type genericType;
 
         //non-nullable enum
         if (typeToConvert.IsEnum)
         {
-            converterType = typeof(EnumToStringConverter<>);
+            genericType = typeof(EnumToStringConverter<>).MakeGenericType(typeToConvert);
         }
-        else //nullable enum
+        //nullable enum
+        else if (Nullable.GetUnderlyingType(typeToConvert) is Type underlyingType)
         {
-            converterType = typeof(NullableEnumToStringConverter<>);
+            genericType = typeof(NullableEnumToStringConverter<>).MakeGenericType(underlyingType);
         }
-
-        Type genericType = converterType.MakeGenericType(typeToConvert);
+        else
+        {
+            return null;
+        }
 
         return Activator.CreateInstance(genericType) as JsonConverter;
     }
