@@ -30,8 +30,11 @@
 
     private void OnChange(bool? value)
     {
-        Value = value;
+        if (Value != value)
+        {
+            Value = value;
 
-        ValueChanged?.Invoke(value);
+            ValueChanged?.Invoke(value);
+        }
     }
 }

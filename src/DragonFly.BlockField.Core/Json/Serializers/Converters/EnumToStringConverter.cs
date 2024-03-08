@@ -29,7 +29,7 @@ public class EnumToStringConverter<TEnum> : JsonConverter<TEnum>
             return result;
         }
 
-        return Enum.GetValues<TEnum>()[0];
+        return default;
     }
 
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)

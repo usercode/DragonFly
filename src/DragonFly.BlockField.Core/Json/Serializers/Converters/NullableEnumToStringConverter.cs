@@ -8,17 +8,11 @@ using System.Text.Json;
 namespace DragonFly.BlockField.Json;
 
 public class NullableEnumToStringConverter<TEnum> : JsonConverter<TEnum?>
+    where TEnum : struct, Enum
 {
-    private readonly Type _type;
-
-    public NullableEnumToStringConverter()
-    {
-        _type = Nullable.GetUnderlyingType(typeof(TEnum)) ?? throw new ArgumentNullException();
-    }
-
     public override bool CanConvert(Type typeToConvert)
     {
-        return typeToConvert == typeof(TEnum);
+        return Nullable.GetUnderlyingType(typeToConvert) is Type underlyingType && underlyingType.IsEnum;
     }
 
     public override TEnum? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
@@ -30,9 +24,9 @@ public class NullableEnumToStringConverter<TEnum> : JsonConverter<TEnum?>
             return default;
         }
 
-        if (Enum.TryParse(_type, value, false, out object? result))
+        if (Enum.TryParse(value, false, out TEnum result))
         {
-            return (TEnum)result;
+            return result;
         }
 
         return default;
