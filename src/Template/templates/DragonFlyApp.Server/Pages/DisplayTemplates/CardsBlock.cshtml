@@ -5,7 +5,7 @@
     <div class="card-group">
         @for (int i = 0; i < Model.Cards.Count; i++)
         {
-            <div class="card">
+            <div class="card @Model.Cards[i].BorderColor.ToBootstrapBorderColorClass() @Model.Cards[i].BackgroundColor.ToBootstrapTextBackgroundColor()">
                 @if (Model.Cards[i].AssetId != null)
                 {
                     Asset asset = await Storage.GetAssetAsync(Model.Cards[i].AssetId.Value);
