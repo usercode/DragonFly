@@ -130,8 +130,8 @@ public class GeneratorTest
     public void GetSuitableModelType()
     {
         ContentItem content = CustomerSchema.CreateContent();
-        content.SetString("Lastname", "Doe");
-        content.SetString("Firstname", "John");
+        content.SetValue("Lastname", "Doe");
+        content.SetValue("Firstname", "John");
 
         Customer model = content.ToModel<Customer>();
 
@@ -143,11 +143,11 @@ public class GeneratorTest
     {
         ContentItem content = CustomerSchema.CreateContent();
         content.Id = Guid.NewGuid();
-        content.SetString("Lastname", "Doe");
-        content.SetString("Firstname", "John");
-        content.SetBool("IsActive", true);
-        content.SetInteger("Value", 123);
-        content.SetSlug("Slug", "my-path");
+        content.SetValue("Lastname", "Doe");
+        content.SetValue("Firstname", "John");
+        content.SetValue<bool?>("IsActive", true);
+        content.SetValue<long?>("Value", 123);
+        content.SetValue("Slug", "my-path");
 
         Customer customer = content.ToModel<Customer>();
 
@@ -167,10 +167,10 @@ public class GeneratorTest
         customer.Firstname = "John";
         customer.Slug = new SlugField("my-path");
 
-        Assert.Equal("Doe", content.GetString("Lastname"));
-        Assert.Equal("John", content.GetString("Firstname"));
+        Assert.Equal("Doe", content.GetValue<string>("Lastname"));
+        Assert.Equal("John", content.GetValue<string>("Firstname"));
         //Assert.Equal(123, content.GetInteger("Value"));
-        Assert.Equal("my-path", content.GetSlug("Slug"));
+        Assert.Equal("my-path", content.GetValue<string>("Slug"));
     }
 
     //[Fact]

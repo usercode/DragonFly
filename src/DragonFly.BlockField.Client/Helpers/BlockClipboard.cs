@@ -17,6 +17,11 @@ public static class BlockClipboard
 
     public static async Task PasteAsync(int index, IList<Block> blocks)
     {
+        if (Data == null)
+        {
+            return;
+        }
+
         IEnumerable<Block> innerBlock = await BlockFieldSerializer.DeserializeBlockAsync(Data);
 
         int i = 0;

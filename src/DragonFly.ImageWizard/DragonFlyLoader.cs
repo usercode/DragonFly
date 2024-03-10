@@ -26,7 +26,7 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 
     public override async Task<LoaderResult> GetAsync(string source, ICachedData? existingCachedImage)
     {
-        int pos = source.IndexOf("?");
+        int pos = source.IndexOf('?');
 
         Guid id;
 

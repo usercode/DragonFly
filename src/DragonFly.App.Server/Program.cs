@@ -99,6 +99,10 @@ ContentItem ci = p.GetContentItem();
 ci.ToModel<Product2>();
 ci.ToModel();
 
+ci.SetValue<bool?>("IsActive", null);
+//ci.GetValueOrDefault<bool>("IsActive");
+var b = ci.GetRequiredValue<bool?>("IsActive");
+
 await contentStorage.CreateAsync(p);
 
 var products = await contentStorage.QueryAsync<Product2>(x => x

@@ -16,7 +16,7 @@ public static class ContentItemExtensions
     {
         if (contentItem.TryGetField(fieldName, out ContentField? contentField) == false)
         {
-            throw new Exception($"The field '{fieldName}' doesn't exist.");
+            throw new Exception($"The field \"{fieldName}\" doesn't exist.");
         }
 
         return contentField;
@@ -37,7 +37,7 @@ public static class ContentItemExtensions
     {
         if (TrySetField(contentElement, fieldName, contentField) == false)
         {
-            throw new Exception($"The field '{fieldName}' doesn't exist.");
+            throw new Exception($"The field \"{fieldName}\" doesn't exist.");
         }
     }
 
@@ -58,13 +58,13 @@ public static class ContentItemExtensions
     /// <summary>
     /// Gets <typeparamref name="T"/> value from <see cref="SingleValueField{T}"/>.
     /// </summary>
-    public static T? GetSingleValue<T>(this IContentElement contentItem, string name)
+    public static T? GetValue<T>(this IContentElement contentItem, string name)
     {
         ContentField field = GetField(contentItem, name);
 
         if (field is not SingleValueField<T> singleValueField)
         {
-            throw new Exception($"The field '{name}' isn't a single value field.");
+            throw new Exception($"The field \"{name}\" isn't a single value field.");
         }
 
         return singleValueField.Value;
@@ -73,21 +73,21 @@ public static class ContentItemExtensions
     /// <summary>
     /// Gets <typeparamref name="T"/> value from <see cref="SingleValueField{T}"/>.
     /// </summary>
-    public static T GetRequiredSingleValue<T>(this IContentElement contentItem, string name)
+    public static T GetRequiredValue<T>(this IContentElement contentItem, string name)
     {
-        T? value = GetSingleValue<T>(contentItem, name);
+        T? value = GetValue<T>(contentItem, name);
 
         if (value == null)
         {
-            throw new Exception($"The field '{name}' has no value.");
+            throw new Exception($"The field \"{name}\" has no value.");
         }
 
         return value;
     }
 
-    //public static T GetSingleValueOrDefault<T>(this IContentElement contentItem, string name) where T : struct
+    //public static T GetValueOrDefault<T>(this IContentElement contentItem, string name) where T : struct
     //{
-    //    T? value = GetSingleValue<T>(contentItem, name);
+    //    T? value = GetValue<T?>(contentItem, name);
 
     //    if (value == null)
     //    {
@@ -100,7 +100,7 @@ public static class ContentItemExtensions
     /// <summary>
     /// Sets <typeparamref name="T"/> value to <see cref="SingleValueField{T}"/>.
     /// </summary>
-    public static void SetSingleValue<T>(this IContentElement contentItem, string name, T? value)
+    public static void SetValue<T>(this IContentElement contentItem, string name, T? value)
     {
         ((SingleValueField<T>)contentItem.GetField(name)).Value = value;
     }

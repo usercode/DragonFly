@@ -197,8 +197,8 @@ public static class SourceBuilderExtensions
         {
             builder.AppendBlock(x =>
             {
-                x.AppendLine($"get => _contentItem.GetSingleValue<{propertyType}>(\"{property.PropertyName}\");");
-                x.AppendLine($"set => _contentItem.SetSingleValue<{propertyType}>(\"{property.PropertyName}\", value);");
+                x.AppendLine($"get => _contentItem.GetValue<{propertyType}>(\"{property.PropertyName}\");");
+                x.AppendLine($"set => _contentItem.SetValue<{propertyType}>(\"{property.PropertyName}\", value);");
             });
         }
         //ReferenceField
@@ -255,7 +255,7 @@ public static class SourceBuilderExtensions
                 x.AppendLine($"get");
                 x.AppendBlock(x =>
                 {
-                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");               
+                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");
                     x.AppendLine($"return field.Asset;");
                 });
 

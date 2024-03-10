@@ -32,7 +32,7 @@ public sealed class BlockFactory
     /// </summary>
     public string CssIcon { get; }
 
-    private Func<Block> _factoryBlock;
+    private readonly Func<Block> _factoryBlock;
 
     /// <summary>
     /// CreateBlock
