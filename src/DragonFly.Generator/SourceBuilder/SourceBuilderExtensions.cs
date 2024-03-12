@@ -208,19 +208,8 @@ public static class SourceBuilderExtensions
             {
                 builder.AppendBlock(x =>
                 {
-                    x.AppendLine($"get");
-                    x.AppendBlock(x =>
-                    {
-                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");                        
-                        x.AppendLine($"return field.ContentItem;");
-                    });
-
-                    x.AppendLine($"set");
-                    x.AppendBlock(x =>
-                    {
-                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
-                        x.AppendLine($"field.ContentItem = value;");
-                    });
+                    x.AppendLine($"get => _contentItem.GetReference(\"{property.PropertyName}\");");
+                    x.AppendLine($"set => _contentItem.SetReference(\"{property.PropertyName}\", value);");
                 });
             }
             else
@@ -230,21 +219,15 @@ public static class SourceBuilderExtensions
                     x.AppendLine($"get");
                     x.AppendBlock(x =>
                     {
-                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
-                        x.AppendLine("if (field.ContentItem == null)");
+                        x.AppendLine($"ContentItem? content = _contentItem.GetReference(\"{property.PropertyName}\");");
+                        x.AppendLine("if (content == null)");
                         x.AppendBlock(x =>
                         {
                             x.AppendLine("return null;");
                         });
-                        x.AppendLine($"return {propertyType}.Create(field.ContentItem);");
+                        x.AppendLine($"return {propertyType}.Create(content);");
                     });
-
-                    x.AppendLine($"set");
-                    x.AppendBlock(x =>
-                    {
-                        x.AppendLine($"ReferenceField field = _contentItem.GetField<ReferenceField>(\"{property.PropertyName}\");");
-                        x.AppendLine($"field.ContentItem = value?.GetContentItem();");
-                    });
+                    x.AppendLine($"set => _contentItem.SetReference(\"{property.PropertyName}\", value?.GetContentItem());");
                 });
             }
         }
@@ -252,19 +235,8 @@ public static class SourceBuilderExtensions
         {
             builder.AppendBlock(x =>
             {
-                x.AppendLine($"get");
-                x.AppendBlock(x =>
-                {
-                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");
-                    x.AppendLine($"return field.Asset;");
-                });
-
-                x.AppendLine($"set");
-                x.AppendBlock(x =>
-                {
-                    x.AppendLine($"AssetField field = _contentItem.GetField<AssetField>(\"{property.PropertyName}\");");
-                    x.AppendLine($"field.Asset = value;");
-                });
+                x.AppendLine($"get => _contentItem.GetAsset(\"{property.PropertyName}\");");
+                x.AppendLine($"set => _contentItem.SetAsset(\"{property.PropertyName}\", value);");
             });
         }
         //ContentField
