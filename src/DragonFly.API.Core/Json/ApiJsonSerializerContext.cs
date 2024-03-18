@@ -55,6 +55,7 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(TextField))]
 [JsonSerializable(typeof(UrlField))]
 [JsonSerializable(typeof(XmlField))]
+[JsonSerializable(typeof(BlockField))]
 
 //FieldOptions
 [JsonSerializable(typeof(ArrayFieldOptions))]
@@ -73,6 +74,7 @@ namespace DragonFly.API;
 [JsonSerializable(typeof(TextFieldOptions))]
 [JsonSerializable(typeof(UrlFieldOptions))]
 [JsonSerializable(typeof(XmlFieldOptions))]
+[JsonSerializable(typeof(BlockFieldOptions))]
 
 //FieldQuery
 [JsonSerializable(typeof(StringFieldQuery))]

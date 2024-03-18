@@ -45,8 +45,6 @@ public sealed class PermissionManager
     /// <summary>
     /// Gets self and implied permissions.
     /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
     public string[] Get(string permission)
     {
         if (Policies.TryGetValue(permission, out string[]? permissions))

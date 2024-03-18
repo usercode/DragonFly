@@ -63,7 +63,6 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
-                    .AddBlockField()
                     .AddApiKeys()
                     .AddModels(x => x
                                     .Add<Product2>()
@@ -101,7 +100,7 @@ ci.ToModel();
 
 ci.SetValue<bool?>("IsActive", null);
 //ci.GetValueOrDefault<bool>("IsActive");
-var b = ci.GetRequiredValue<bool?>("IsActive");
+//var b = ci.GetRequiredValue<bool?>("IsActive");
 
 await contentStorage.CreateAsync(p);
 

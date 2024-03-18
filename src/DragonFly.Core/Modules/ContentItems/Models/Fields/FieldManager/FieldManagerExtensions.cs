@@ -23,6 +23,7 @@ public static class FieldManagerExtensions
     {
         manager.Add<ArrayField>();
         manager.Add<AssetField>();
+        manager.Add<BlockField>();
         manager.Add<BoolField>();
         manager.Add<DateTimeField>();
         manager.Add<ComponentField>();

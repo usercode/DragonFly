@@ -1,0 +1,122 @@
+﻿.add-button {
+  margin: 1rem 0;
+}
+
+.enum-dropdown {
+  margin-bottom: 1rem;
+  max-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+block-field-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-field {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0px;
+}
+
+.block-field:hover .block-field-options {
+  visibility: visible;
+}
+
+.block-field .block-field-options {
+  display: flex;
+  gap: 0.25rem;
+  flex-grow: 0;
+  visibility: visible;
+  margin-bottom: 1rem;
+}
+
+.block-field .block-field-content {
+  flex-grow: 1;
+}
+
+.block-field-add-btn {
+  margin: 4px 0px;
+}
+
+.block-field .block-layout .column-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.block-field .block-layout .column-content .column-action {
+  margin-bottom: 1rem;
+}
+
+.block-layout-add-column-btn {
+  height: 100%;
+}
+
+.block-label {
+  border: solid 1px #f8f9fa;
+  background-color: #767293;
+  color: #fff;
+  display: inline-block;
+  padding: 0.275rem 0.75rem;
+}
+
+.container-block-body {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.section-block-body {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.column-action {
+  justify-content: center;
+}
+
+.alert-block-body {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.grid-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid-block-content {
+  flex: 1;
+  gap: 0.25rem;
+}
+
+.grid-item {
+  position: relative;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  border: 2px solid #ed604e;
+  background-color: #fff;
+}
+
+.grid-item .block {
+  flex: 1;
+  margin: 1rem;
+}
+
+.grid-item-label {
+  position: absolute;
+  background-color: #ed604e;
+  color: #fff;
+  padding: 2px 8px;
+}
+
+.grid-unit-value {
+  width: 4rem;
+  text-align: right;
+}
+
+.grid-span-item {
+  border: 2px solid #f5f5f5;
+  padding: 0.5rem;
+}

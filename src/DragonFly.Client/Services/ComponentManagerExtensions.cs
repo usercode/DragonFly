@@ -58,4 +58,24 @@ public static class ComponentManagerExtensions
             builder.CloseComponent();
         };
     }
+
+    public static void RegisterBlock<TBlockComponent>(this ComponentManager component)
+       where TBlockComponent : IBlockComponent
+    {
+        Type? elementType = typeof(TBlockComponent).GetProperty(nameof(IBlockComponent.Block)).PropertyType;
+
+        component.Add(elementType, typeof(TBlockComponent));
+    }
+
+    public static RenderFragment CreateComponent(this ComponentManager componentManager, Block element)
+    {
+        Type componentType = componentManager.GetComponentType(element.GetType());
+
+        return builder =>
+        {
+            builder.OpenComponent(0, componentType);
+            builder.AddAttribute(0, nameof(IBlockComponent.Block), element);
+            builder.CloseComponent();
+        };
+    }
 }

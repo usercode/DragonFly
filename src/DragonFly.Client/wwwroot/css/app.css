@@ -28,6 +28,10 @@ body {
   height: 100%;
 }
 
+.input-group {
+  gap: 0.25rem;
+}
+
 h1 {
   font-size: 1.5rem;
   margin: 0.5rem 0 1rem 0;
@@ -122,10 +126,6 @@ img {
 
 textarea.form-control {
   width: 100%;
-}
-
-.btn {
-  padding: 0.275rem 0.75rem;
 }
 
 app {
@@ -444,4 +444,8 @@ app {
   font: inherit;
   /* Place on top of each other */
   grid-area: 1/1/2/2;
+}
+
+.tox-statusbar__branding {
+  display: none;
 }

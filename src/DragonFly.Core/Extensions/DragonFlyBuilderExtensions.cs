@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Text.Json.Serialization.Metadata;
 using DragonFly.Builders;
 using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,11 +27,13 @@ public static class DragonFlyBuilderExtensions
         where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.Services.AddSingleton(FieldManager.Default);
+        builder.Services.AddSingleton(BlockFieldManager.Default);
         builder.Services.AddSingleton(AssetMetadataManager.Default);
 
         builder.Init(api =>
         {
             api.ContentField().AddDefaults();
+            api.BlockField().AddDefaults();
             api.AssetMetadata().AddDefaults();
         });
 
@@ -49,5 +52,13 @@ public static class DragonFlyBuilderExtensions
     {
         return new DragonFlyBuilder(services)
                                             .AddCore();
+    }
+
+    public static TDragonFlyBuilder AddBlockFieldSerializerResolver<TDragonFlyBuilder>(this TDragonFlyBuilder builder, IJsonTypeInfoResolver resolver)
+       where TDragonFlyBuilder : IDragonFlyBuilder
+    {
+        BlockFieldSerializer.Options.TypeInfoResolverChain.Add(resolver);
+
+        return builder;
     }
 }

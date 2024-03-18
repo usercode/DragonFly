@@ -61,7 +61,7 @@ public static class DragonFlyClientExtensions
             .Init<WebHookInitializer>()
             .Init<BackgroundTaskInitializer>()
             .Init<SettingsInitializer>()
-            ;
+           ;
 
         builder.Services.AddBlazorStrap();
         
