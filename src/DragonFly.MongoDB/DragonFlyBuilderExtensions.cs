@@ -44,8 +44,8 @@ public static class DragonFlyBuilderExtensions
 
         builder.PreInit(api =>
         {
-            api.ContentField().Added += factory => CreateFieldOptionsBsonClassMap(factory); //fix for nested field options (inside ArrayFieldOptions)
-            api.ContentField().Added += factory => MongoFieldManager.Default.EnsureField(factory);
+            api.Field().Added += factory => CreateFieldOptionsBsonClassMap(factory); //fix for nested field options (inside ArrayFieldOptions)
+            api.Field().Added += factory => MongoFieldManager.Default.EnsureField(factory);
         });
 
         builder.Init(api =>

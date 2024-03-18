@@ -27,14 +27,14 @@ public static class DragonFlyBuilderExtensions
         where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.Services.AddSingleton(FieldManager.Default);
-        builder.Services.AddSingleton(BlockFieldManager.Default);
-        builder.Services.AddSingleton(AssetMetadataManager.Default);
+        builder.Services.AddSingleton(BlockManager.Default);
+        builder.Services.AddSingleton(MetadataManager.Default);
 
         builder.Init(api =>
         {
-            api.ContentField().AddDefaults();
-            api.BlockField().AddDefaults();
-            api.AssetMetadata().AddDefaults();
+            api.Field().AddDefaults();
+            api.Block().AddDefaults();
+            api.Metadata().AddDefaults();
         });
 
         builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();

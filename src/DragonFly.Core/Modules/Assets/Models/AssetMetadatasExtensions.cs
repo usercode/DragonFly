@@ -8,7 +8,7 @@ public static class AssetMetadatasExtensions
 {
     public static Asset SetMetadata(this Asset asset, AssetMetadata metadata)
     {
-        string name = AssetMetadataManager.Default.GetMetadataName(metadata.GetType());
+        string name = MetadataManager.Default.GetMetadataName(metadata.GetType());
 
         asset.Metaddata[name] = metadata;
         
@@ -17,7 +17,7 @@ public static class AssetMetadatasExtensions
 
     public static AssetMetadata GetMetadata(this Asset asset, Type type)
     {
-        string name = AssetMetadataManager.Default.GetMetadataName(type);
+        string name = MetadataManager.Default.GetMetadataName(type);
 
         if (asset.Metaddata.TryGetValue(name, out AssetMetadata? metadata))
         {

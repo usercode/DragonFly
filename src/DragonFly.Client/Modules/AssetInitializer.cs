@@ -18,9 +18,9 @@ public class AssetInitializer : IInitialize
     {
         api.MainMenu().Add("Assets", "fa-regular fa-image", "asset");
 
-        api.AssetMetadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
-        api.AssetMetadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();
-        api.AssetMetadata().Add<VideoMetadata>().WithMetadataView<VideoMetadataView>();
+        api.Metadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
+        api.Metadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();
+        api.Metadata().Add<VideoMetadata>().WithMetadataView<VideoMetadataView>();
 
         api.AssetPreview().Add<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
         api.AssetPreview().Add<PdfPreviewView>(MimeTypes.Pdf);

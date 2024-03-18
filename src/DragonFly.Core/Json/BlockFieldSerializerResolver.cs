@@ -25,7 +25,7 @@ internal class BlockFieldSerializerResolver : IJsonTypeInfoResolver
             {
                 JsonPolymorphismOptions optionsDerivedTypes = new JsonPolymorphismOptions() { TypeDiscriminatorPropertyName = "Type" };
 
-                foreach (BlockFactory blockFactory in BlockFieldManager.Default.GetAllBlocks())
+                foreach (BlockFactory blockFactory in BlockManager.Default.GetAllBlocks())
                 {
                     optionsDerivedTypes.DerivedTypes.Add(new JsonDerivedType(blockFactory.BlockType, blockFactory.BlockName));
                 }

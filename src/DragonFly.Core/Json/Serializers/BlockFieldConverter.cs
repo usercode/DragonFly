@@ -17,7 +17,7 @@ class BlockFieldConverter : JsonConverter<Block>
             {
                 string? typeName = typeElement.GetString();
 
-                if (typeName != null && BlockFieldManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
+                if (typeName != null && BlockManager.Default.TryGetBlockTypeByName(typeName, out Type? blockType))
                 {
                     return (Block?)JsonSerializer.Deserialize(doc.RootElement, blockType, options);
                 }

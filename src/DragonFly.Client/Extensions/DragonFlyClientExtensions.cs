@@ -24,7 +24,7 @@ public static class DragonFlyClientExtensions
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br/>
     /// <br/>
     /// Default manager:<br/>
-    /// <see cref="ComponentManager"/>, <see cref="FieldManager"/>, <see cref="AssetMetadataManager"/>, <see cref="AssetPreviewManager"/>
+    /// <see cref="ComponentManager"/>, <see cref="FieldManager"/>, <see cref="MetadataManager"/>, <see cref="AssetPreviewManager"/>
     /// <br/><br/>
     /// Default modules:<br/>
     /// <see cref="ContentInitializer"/>, <see cref="AssetInitializer"/>, <see cref="WebHookInitializer"/>, <see cref="BackgroundTaskInitializer"/>, <see cref="SettingsInitializer"/>

@@ -9,12 +9,12 @@ namespace DragonFly;
 /// <summary>
 /// BlockFieldManager
 /// </summary>
-public sealed class BlockFieldManager
+public sealed class BlockManager
 {
     /// <summary>
     /// Default
     /// </summary>
-    public static BlockFieldManager Default { get; } = new BlockFieldManager();
+    public static BlockManager Default { get; } = new BlockManager();
 
     private IDictionary<string, BlockFactory> _blocksByName = new Dictionary<string, BlockFactory>();
     private IDictionary<Type, BlockFactory> _blocksByType = new Dictionary<Type, BlockFactory>();

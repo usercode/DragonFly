@@ -74,6 +74,6 @@ static class MongoAssetExtensions
 
     public static AssetMetadata ToModel(this BsonDocument document, string name)
     {
-        return (AssetMetadata)BsonSerializer.Deserialize(document, AssetMetadataManager.Default.GetMetadataType(name));
+        return (AssetMetadata)BsonSerializer.Deserialize(document, MetadataManager.Default.GetMetadataType(name));
     }
 }

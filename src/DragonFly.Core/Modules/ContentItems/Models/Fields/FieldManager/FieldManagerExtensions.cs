@@ -10,11 +10,11 @@ namespace DragonFly;
 public static class FieldManagerExtensions
 {
     /// <summary>
-    /// Gets the content field manager.
+    /// Gets the field manager.
     /// </summary>
     /// <param name="api"></param>
     /// <returns></returns>
-    public static FieldManager ContentField(this IDragonFlyApi api)
+    public static FieldManager Field(this IDragonFlyApi api)
     {
         return FieldManager.Default;
     }

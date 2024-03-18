@@ -14,12 +14,12 @@ public static class AssetDragonFlyApiExtensions
     /// </summary>
     /// <param name="api"></param>
     /// <returns></returns>
-    public static AssetMetadataManager AssetMetadata(this IDragonFlyApi api)
+    public static MetadataManager Metadata(this IDragonFlyApi api)
     {
-        return AssetMetadataManager.Default;
+        return MetadataManager.Default;
     }
 
-    public static AssetMetadataManager AddDefaults(this AssetMetadataManager manager)
+    public static MetadataManager AddDefaults(this MetadataManager manager)
     {
         manager.Add<ImageMetadata>();
         manager.Add<PdfMetadata>();

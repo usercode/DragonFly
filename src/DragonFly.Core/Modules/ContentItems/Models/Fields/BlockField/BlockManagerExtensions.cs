@@ -4,17 +4,17 @@
 
 namespace DragonFly;
 
-public static class BlockFieldManagerExtensions
+public static class BlockManagerExtensions
 {
     /// <summary>
-    /// Gets the block field manager.
+    /// Gets the block manager.
     /// </summary>
-    public static BlockFieldManager BlockField(this IDragonFlyApi api)
+    public static BlockManager Block(this IDragonFlyApi api)
     {
-        return BlockFieldManager.Default;
+        return BlockManager.Default;
     }
 
-    public static void AddDefaults(this BlockFieldManager manager)
+    public static void AddDefaults(this BlockManager manager)
     {
         manager.Add<ColumnBlock>();
         manager.Add<GridBlock>();

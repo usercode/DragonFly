@@ -108,7 +108,7 @@ public partial class MongoStorage : ISchemaStorage
                     continue;
                 }
 
-                Type? fieldType = Api.ContentField().GetFieldType(field.Value.FieldType);
+                Type? fieldType = Api.Field().GetFieldType(field.Value.FieldType);
 
                 if (fieldType == null)
                 {

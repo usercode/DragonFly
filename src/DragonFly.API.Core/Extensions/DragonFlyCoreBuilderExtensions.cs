@@ -14,7 +14,7 @@ public static class DragonFlyCoreBuilderExtensions
     {
         builder.PreInit(api =>
         {
-            api.ContentField().Added += factory => JsonFieldManager.Default.EnsureField(factory.FieldType);
+            api.Field().Added += factory => JsonFieldManager.Default.EnsureField(factory.FieldType);
         });
 
         builder.Init(api =>

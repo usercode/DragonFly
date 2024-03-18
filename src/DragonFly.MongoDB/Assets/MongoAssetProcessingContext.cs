@@ -33,7 +33,7 @@ public class MongoAssetProcessingContext : IAssetProcessingContext
     {
         await Assets.UpdateOneAsync(
                                     Builders<MongoAsset>.Filter.Eq(x => x.Id, Asset.Id),
-                                    Builders<MongoAsset>.Update.Set($"{nameof(MongoAsset.Metaddata)}.{AssetMetadataManager.Default.GetMetadataName(metadata.GetType())}", metadata.ToMongo()));
+                                    Builders<MongoAsset>.Update.Set($"{nameof(MongoAsset.Metaddata)}.{MetadataManager.Default.GetMetadataName(metadata.GetType())}", metadata.ToMongo()));
     }
 
     public async Task<Stream> OpenAssetStreamAsync()
