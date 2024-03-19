@@ -13,7 +13,6 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.AddDragonFly()
             .AddRestClient()
-            .AddBlockField()
             .AddIdentity()
             .AddApiKeys()
             .Init(x =>

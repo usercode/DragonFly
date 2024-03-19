@@ -29,7 +29,6 @@ builder.Services.AddDragonFly()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
-                    .AddBlockField()
                     .AddApiKeys()
                     .AddModels(x => x
                         .Add<BlogPostModel>()
