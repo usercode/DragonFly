@@ -18,8 +18,6 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddApiKeys(this IDragonFlyBuilder builder)
     {
-        builder.AddRestSerializerResolver(ApiKeysSerializerContext.Default);
-
         builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
 
         builder.Services.AddSingleton<MongoIdentityStore>();

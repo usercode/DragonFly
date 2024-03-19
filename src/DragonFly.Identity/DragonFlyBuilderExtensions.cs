@@ -22,8 +22,6 @@ public static class DragonFlyBuilderExtensions
 {
     public static IDragonFlyBuilder AddMongoDbIdentity(this IDragonFlyBuilder builder)
     {
-        builder.AddRestSerializerResolver(IdentitySerializerContext.Default);
-
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
 

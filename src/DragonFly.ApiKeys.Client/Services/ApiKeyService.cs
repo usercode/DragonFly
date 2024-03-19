@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
 using System.Net.Http;
+using DragonFly.API;
 
 namespace DragonFly.ApiKeys.Razor.Services;
 
@@ -24,14 +25,14 @@ class ApiKeyService : IApiKeyService
 
     public async Task CreateApiKey(ApiKey apiKey)
     {
-        HttpResponseMessage response = await Client.PostAsJsonAsync("api/apikey", apiKey, ApiKeysSerializerContext.Default.ApiKey);
+        HttpResponseMessage response = await Client.PostAsJsonAsync("api/apikey", apiKey, ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
 
     public async Task UpdateApiKey(ApiKey apiKey)
     {
-        HttpResponseMessage response = await Client.PutAsJsonAsync("api/apikey", apiKey, ApiKeysSerializerContext.Default.ApiKey);
+        HttpResponseMessage response = await Client.PutAsJsonAsync("api/apikey", apiKey, ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
     }
@@ -49,7 +50,7 @@ class ApiKeyService : IApiKeyService
 
         response.EnsureSuccessStatusCode();
 
-        IEnumerable<ApiKey>? result = await response.Content.ReadFromJsonAsync(ApiKeysSerializerContext.Default.IEnumerableApiKey);
+        IEnumerable<ApiKey>? result = await response.Content.ReadFromJsonAsync<IEnumerable<ApiKey>>(ApiJsonSerializerDefault.Options);
 
         if (result == null)
         {
@@ -66,7 +67,7 @@ class ApiKeyService : IApiKeyService
 
     public async Task<ApiKey> GetApiKey(Guid id)
     {
-        ApiKey? apikey = await Client.GetFromJsonAsync($"api/apikey/{id}", ApiKeysSerializerContext.Default.ApiKey);
+        ApiKey? apikey = await Client.GetFromJsonAsync<ApiKey>($"api/apikey/{id}", ApiJsonSerializerDefault.Options);
 
         if (apikey == null)
         {

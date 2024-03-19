@@ -20,7 +20,6 @@ public static class DragonFlyBuilderIdentityExtensions
     public static IDragonFlyBuilder AddIdentity(this IDragonFlyBuilder builder)
     {
         builder.AddRazorRouting();
-        builder.AddRestSerializerResolver(IdentitySerializerContext.Default);
 
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();

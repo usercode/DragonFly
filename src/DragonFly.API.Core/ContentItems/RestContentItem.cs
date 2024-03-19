@@ -13,11 +13,6 @@ namespace DragonFly.API;
 /// </summary>
 public class RestContentItem : RestContentBase
 {
-    public RestContentItem()
-    {
-        Fields = new JsonObject();
-    }
-
     /// <summary>
     /// Schema
     /// </summary>
@@ -41,6 +36,6 @@ public class RestContentItem : RestContentBase
     /// </summary>
     [JsonPropertyOrder(30)]
     //[JsonConverter(typeof(MyConverter))]
-    public JsonObject Fields { get; set; }
+    public JsonObject Fields { get; set; } = new JsonObject();
 
 }

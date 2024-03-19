@@ -11,11 +11,6 @@ namespace DragonFly.API;
 /// </summary>
 public class RestAsset : RestContentBase
 {
-    public RestAsset()
-    {
-        _metaddata = new JsonObject();
-    }
-
     /// <summary>
     /// Name
     /// </summary>
@@ -61,10 +56,8 @@ public class RestAsset : RestContentBase
     /// </summary>
     public virtual RestAssetFolder Folder { get; set; }
 
-    private JsonObject _metaddata;
-
     /// <summary>
     /// Metaddata
     /// </summary>
-    public virtual JsonObject Metaddata { get => _metaddata; set => _metaddata = value; }
+    public virtual JsonObject Metaddata { get; set; } = new JsonObject();
 }
