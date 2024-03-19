@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Text.Json.Serialization.Metadata;
 using DragonFly.Builders;
 using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;

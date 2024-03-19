@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys", "Dragon
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ApiKeys.Client", "DragonFly.ApiKeys.Client\DragonFly.ApiKeys.Client.csproj", "{A0E6DF4D-F14A-4310-AB2B-7A8900F93D54}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{551D7A23-7864-4CA8-B1F1-A58B25EA210E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{551D7A23-7864-4CA8-B1F1-A58B25EA210E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DragonFly.ImageWizard", "DragonFly.ImageWizard\DragonFly.ImageWizard.csproj", "{EDCDBFE9-5403-4E1E-9DD6-8D643A5249A1}"
 EndProject

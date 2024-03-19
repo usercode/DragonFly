@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System;
 using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client;
@@ -15,6 +16,8 @@ public class BlockComponent<TBlock> : ComponentBase, IBlockComponent
 {
     [Parameter]
     public TBlock Block { get; set; }
+
+    public Type BlockType => typeof(TBlock);
 
     Block IBlockComponent.Block => Block;
 }

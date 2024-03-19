@@ -10,7 +10,7 @@ namespace DragonFly;
 public static class AssetDragonFlyApiExtensions
 {
     /// <summary>
-    /// Gets the asset metadata manager.
+    /// Gets the metadata manager.
     /// </summary>
     /// <param name="api"></param>
     /// <returns></returns>

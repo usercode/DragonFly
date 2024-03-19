@@ -59,14 +59,6 @@ public static class ComponentManagerExtensions
         };
     }
 
-    public static void RegisterBlock<TBlockComponent>(this ComponentManager component)
-       where TBlockComponent : IBlockComponent
-    {
-        Type? elementType = typeof(TBlockComponent).GetProperty(nameof(IBlockComponent.Block)).PropertyType;
-
-        component.Add(elementType, typeof(TBlockComponent));
-    }
-
     public static RenderFragment CreateComponent(this ComponentManager componentManager, Block element)
     {
         Type componentType = componentManager.GetComponentType(element.GetType());

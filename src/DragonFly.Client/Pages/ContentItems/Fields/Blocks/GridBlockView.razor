@@ -43,7 +43,7 @@
             int local = i;
 
             <div style="display:flex; gap: 0.25rem; justify-content: center; align-items: center; grid-column: @((i*2)+4); grid-row: 1">
-                <DragonFly.BlockField.Client.Pages.Blocks.Grid.GridUnitView Span="Block.Columns[local]" />
+                <GridUnitView Span="Block.Columns[local]" />
             </div>
         }
 
@@ -71,7 +71,7 @@
             int local = i;
 
             <div style="display:flex; gap: 0.25rem; justify-content: center; align-items: center; grid-column: 1; grid-row: @((i*2)+4)">
-                <DragonFly.BlockField.Client.Pages.Blocks.Grid.GridUnitView Span="Block.Rows[local]" Vertical="true" />
+                <GridUnitView Span="Block.Rows[local]" Vertical="true" />
             </div>
         }
 

@@ -54,11 +54,11 @@ block-field-view {
 }
 
 .block-label {
-    border: solid 1px #f8f9fa;
     background-color: #767293;
     color: #fff;
-    display: inline-block;
-    padding: 0.275rem 0.75rem;
+    padding: 0.25rem 0.75rem;
+    display: flex;
+    align-items: center;
 }
 
 .container-block-body {

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System;
 using DragonFly.Client;
 
 namespace DragonFly;
@@ -16,9 +17,12 @@ public static class DragonFlyApiExtensions2
     /// </summary>
     public static void RegisterBlock<TBlock, TBlockView>(this IDragonFlyApi api)
         where TBlock : Block, new()
-        where TBlockView : BlockComponent<TBlock>
+        where TBlockView : BlockComponent<TBlock>, new()
     {
         api.Block().Add<TBlock>();
-        api.Component().RegisterBlock<TBlockView>();
+
+        Type elementType = new TBlockView().BlockType;
+
+        api.Component().Add(elementType, typeof(TBlockView));
     }
 }
