@@ -13,8 +13,3 @@
         <BSInput class="form-control" @bind-Value="@Block.Url" IsReadonly="Field.IsReadOnly" />
     </div>
 </div>
-
-@code{
-    [CascadingParameter]
-    public FieldComponent<BlockField> Field { get; set; }
-}

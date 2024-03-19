@@ -6,9 +6,3 @@
         <BSInput class="form-control" @bind-Value="@Block.Url" IsReadonly="Field.IsReadOnly" spellcheck="false" />
     </div>
 </div>
-
-@code {
-    [CascadingParameter]
-    public FieldComponent<BlockField> Field { get; set; }
-
-}

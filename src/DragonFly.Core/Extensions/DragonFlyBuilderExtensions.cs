@@ -29,15 +29,15 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton(BlockManager.Default);
         builder.Services.AddSingleton(MetadataManager.Default);
 
+        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
+        builder.Services.AddSingleton<ISlugService, SlugService>();
+
         builder.Init(api =>
         {
             api.Field().AddDefaults();
             api.Block().AddDefaults();
             api.Metadata().AddDefaults();
         });
-
-        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
-        builder.Services.AddSingleton<ISlugService, SlugService>();
 
         return builder;
     }

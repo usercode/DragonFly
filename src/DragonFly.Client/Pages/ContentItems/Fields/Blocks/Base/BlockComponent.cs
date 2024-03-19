@@ -20,4 +20,7 @@ public class BlockComponent<TBlock> : ComponentBase, IBlockComponent
     public Type BlockType => typeof(TBlock);
 
     Block IBlockComponent.Block => Block;
+
+    [CascadingParameter]
+    public FieldComponent<BlockField> Field { get; set; }
 }
