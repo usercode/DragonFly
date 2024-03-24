@@ -22,6 +22,11 @@
 	  <Content Remove="libman.json" />
     <None Include="compilerconfig.json" />
     <None Include="libman.json" />
+    <None Include="wwwroot\css\app.scss" />
+    <None Include="wwwroot\css\asset-detail.scss" />
+    <None Include="wwwroot\css\blockfield.scss" />
+    <None Include="wwwroot\css\bootstrap.scss" />
+    <None Include="wwwroot\css\contentitem-list.scss" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -62,12 +67,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Core\DragonFly.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js\" />
-    <Folder Include="wwwroot\lib\bootstrap\scss\" />
-    <Folder Include="wwwroot\lib\font-awesome\" />
-    <Folder Include="wwwroot\lib\tinymce\" />
   </ItemGroup>
 </Project>

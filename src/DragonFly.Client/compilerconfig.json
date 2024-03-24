@@ -1,22 +1,10 @@
 ﻿[
   {
-    "outputFile": "wwwroot/css/contentdetail.css",
-    "inputFile": "wwwroot/css/contentdetail.scss"
+    "outputFile": "wwwroot/css/all.css",
+    "inputFile": "wwwroot/css/all.scss"
   },
   {
-    "outputFile": "wwwroot/css/app.css",
-    "inputFile": "wwwroot/css/app.scss"
-  },
-  {
-    "outputFile": "wwwroot/css/asset-detail.css",
-    "inputFile": "wwwroot/css/asset-detail.scss"
-  },
-  {
-    "outputFile": "wwwroot/css/bootstrap_start.css",
-    "inputFile": "wwwroot/css/bootstrap_start.scss"
-  },
-  {
-    "outputFile": "wwwroot/css/blockfield.css",
-    "inputFile": "wwwroot/css/blockfield.scss"
+    "outputFile": "wwwroot/css/bootstrap.css",
+    "inputFile": "wwwroot/css/bootstrap.scss"
   }
 ]
