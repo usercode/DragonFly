@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Validations;
-
 namespace DragonFly;
 
 /// <summary>
@@ -36,26 +34,22 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
     /// </summary>
     public virtual ContentSchema Schema { get => _schema; set => _schema = value; }
 
-    private ContentFields _fields = new ContentFields();
-
     /// <summary>
     /// Fields
     /// </summary>
-    public virtual ContentFields Fields { get => _fields; set => _fields = value; }
-
-    private ValidationContext _validationContext = new ValidationContext();
+    public virtual ContentFields Fields { get; set; } = new ContentFields();
 
     /// <summary>
     /// ValidationContext
     /// </summary>
-    public virtual ValidationContext ValidationContext { get => _validationContext; set => _validationContext = value; }
+    public virtual ValidationState ValidationState { get; set; } = new ValidationState();
 
     /// <summary>
     /// Validates the content item.
     /// </summary>
-    public virtual ValidationState Validate()
+    public virtual ValidationResult Validate()
     {
-        ValidationContext validationContext = new ValidationContext(ValidationState.Valid);
+        ValidationContext validationContext = new ValidationContext(this);
 
         foreach (var field in Fields)
         {
@@ -67,9 +61,9 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
             }
         }
 
-        ValidationContext = validationContext;
+        ValidationState = validationContext.Execute();
 
-        return validationContext.State;
+        return ValidationState.Result;
     }
 
     public override int GetHashCode()
@@ -77,19 +71,7 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
         return HashCode.Combine(Schema.Name, Id);
     }
 
-    public override bool Equals(object? obj)
-    {
-        if (obj is ContentItem other)
-        {
-            return Equals(other);
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    public bool Equals(ContentItem? other)
+    public override bool Equals(ContentItem? other)
     {
         if (other is null)
         {

@@ -18,7 +18,7 @@ builder.AddDragonFly()
             .Init(x =>
             {
                 //Use TinyMCE editor for html field
-                //x.ContentField().Add<HtmlField>().WithTinyMceView();
+                //x.Field().Add<HtmlField>().WithTinyMceView();
             });
 
 WebAssemblyHost host = builder.Build();

@@ -37,7 +37,7 @@ public static class RestContentItemConverter
         contentItem.PublishedAt = restContentItem.PublishedAt;
         contentItem.Version = restContentItem.Version;
         contentItem.SchemaVersion = restContentItem.SchemaVersion;
-        contentItem.ValidationContext = restContentItem.ValidationContext;
+        contentItem.ValidationState = restContentItem.ValidationContext;
 
         foreach (var restField in restContentItem.Fields)
         {
@@ -97,7 +97,7 @@ public static class RestContentItemConverter
         restContentItem.PublishedAt = contentItem.PublishedAt;
         restContentItem.Version = contentItem.Version;
         restContentItem.SchemaVersion = contentItem.SchemaVersion;
-        restContentItem.ValidationContext = contentItem.ValidationContext;
+        restContentItem.ValidationContext = contentItem.ValidationState;
 
         foreach (var field in contentItem.Fields)
         {

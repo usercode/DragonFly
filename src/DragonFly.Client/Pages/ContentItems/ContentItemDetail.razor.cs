@@ -4,7 +4,6 @@
 
 using BlazorStrap;
 using DragonFly.Client.Base;
-using DragonFly.Validations;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -52,7 +51,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     public bool IsFieldValid(string field)
     {
-        return Entity.ValidationContext.Errors.All(x => x.Field != field);
+        return Entity.ValidationState.Errors.All(x => x.Field != field);
     }
 
     protected BSColor GetFieldColor(string field)
@@ -159,7 +158,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
                 }
             }
 
-            foreach (ValidationError error in Entity.ValidationContext.Errors)
+            foreach (ValidationError error in Entity.ValidationState.Errors)
             {
                 Notifications.Add(new NotificationItem(NotificationType.Error, error.Message));
             }
@@ -201,7 +200,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override void OnSaving(SavingEventArgs args)
     {
-        if (Entity.Validate() == ValidationState.Invalid)
+        if (Entity.Validate() == ValidationResult.Invalid)
         {
             OnGuiStateChanged();
 

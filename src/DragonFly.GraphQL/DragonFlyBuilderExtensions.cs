@@ -3,6 +3,8 @@
 // MIT License
 
 using DragonFly.AspNetCore.Builders;
+using DragonFly.AspNetCore.GraphQL;
+using DragonFly.GraphQL.ObjectTypes;
 using Microsoft.AspNetCore.Builder;
 
 namespace DragonFly.AspNetCore;
@@ -23,11 +25,8 @@ public static class StartupExtensions
             x.UseAuthentication();
             x.UseAuthorization();
 
-            //x.UseGraphQL<>();
-            //x.UseGraphQLPlayground(new GraphQLPlaygroundOptions
-            //{
-            //    Path = "/ui/playground"                    
-            //});
+            x.UseGraphQL<DragonFlySchema>();
+            x.UseGraphQLPlayground();
 
             x.UseEndpoints(endpoints =>
             {

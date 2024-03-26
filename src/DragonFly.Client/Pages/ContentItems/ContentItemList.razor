@@ -36,7 +36,7 @@
                                         <i class="fa-solid fa-check" title="Published at @contentItem.PublishedAt" style="@(contentItem.PublishedAt == null ? "visibility: hidden" : "")"></i>
                                     </div>
                                     <div class="col-lg-auto">
-                                        <i class="fa-solid fa-circle-exclamation text-danger" title="@contentItem.ValidationContext.GetMessage()" style="@(contentItem.ValidationContext.State == ValidationState.Valid ? "visibility: hidden" : "")"></i>
+                                        <i class="fa-solid fa-circle-exclamation text-danger" title="@contentItem.ValidationState.Message" style="@(contentItem.ValidationState.Result == ValidationResult.Valid ? "visibility: hidden" : "")"></i>
                                     </div>
                                     @* no list fields available? Show id field only *@
                                     @if (contentItem.Schema.ListFields.Any() == false)

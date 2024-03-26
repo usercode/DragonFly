@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Validations;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DragonFly;
@@ -21,7 +20,7 @@ public abstract class SingleValueField<T> : ContentField, ISingleValueField
     {
         get => _value;
         set
-        {
+        {            
             OnValueChanging(ref value);
 
             _value = value;

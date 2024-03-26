@@ -10,6 +10,8 @@ public class SlugFieldAttribute : BaseFieldAttribute
     {
     }
 
+    public string? TargetField { get; set; }
+
     public override void ApplyToSchema(ContentSchema schema, string property)
     {
         base.ApplyToSchema(schema, property);
@@ -18,7 +20,8 @@ public class SlugFieldAttribute : BaseFieldAttribute
                                     {
                                         x.IsRequired = Required;
                                         x.IsSearchable = Index;
+                                        x.TargetField = TargetField;
                                     },
-                                    SortKey);       
+                                    SortKey);
     }
 }

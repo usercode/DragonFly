@@ -4,9 +4,23 @@
 
 namespace DragonFly;
 
-public enum ValidationState
+/// <summary>
+/// ValidationState
+/// </summary>
+public class ValidationState
 {
-    Unknown,
-    Valid,
-    Invalid
+    /// <summary>
+    /// Errors
+    /// </summary>
+    public IList<ValidationError> Errors { get; set; } = new List<ValidationError>();
+
+    /// <summary>
+    /// Result
+    /// </summary>
+    public ValidationResult Result { get; set; } = ValidationResult.Unknown;
+
+    /// <summary>
+    /// Message
+    /// </summary>
+    public string Message { get; set; } = string.Empty;
 }

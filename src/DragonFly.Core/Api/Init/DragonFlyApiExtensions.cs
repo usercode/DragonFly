@@ -11,6 +11,8 @@ public static class DragonFlyApiExtensions
 {
     public static async Task InitAsync(this IDragonFlyApi api)
     {
+        DragonFlyApi.Default = api;
+
         ILogger<DragonFlyApi> logger = api.ServiceProvider.GetRequiredService<ILogger<DragonFlyApi>>();
 
         using IServiceScope scope = api.ServiceProvider.CreateScope();
@@ -34,7 +36,7 @@ public static class DragonFlyApiExtensions
             logger.LogInformation("Initializing {type}", GetName(item));
 
             await item.ExecuteAsync(api);
-        }
+        }        
     }
 
     private static string? GetName(object initializer)

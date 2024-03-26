@@ -6,6 +6,7 @@ using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Conventions;
 
 namespace DragonFly.AspNetCore;
 
@@ -56,6 +57,12 @@ public static class DragonFlyBuilderExtensions
         });
 
         builder.PostInit<CreateIndexInitializer>();
+
+        var pack = new ConventionPack()
+        {
+            new IgnoreExtraElementsConvention(true)
+        };
+        ConventionRegistry.Register("IgnoreExtraElements", pack, t => true);
 
         return builder;
     }

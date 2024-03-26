@@ -12,9 +12,9 @@
             }
         </div>
         <div class="col-lg-1">
-            @if (ShowValidationErrors && ContentItem.ValidationContext.State == ValidationState.Invalid)
+            @if (ShowValidationErrors && ContentItem.ValidationState.Result == ValidationResult.Invalid)
             {
-                <i class="fa-solid fa-triangle-exclamation" title="@ContentItem.ValidationContext.GetMessage()"></i>
+                <i class="fa-solid fa-triangle-exclamation" title="@ContentItem.ValidationState.Message"></i>
             }
         </div>
         @* no list fields available? Show id field only *@

@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Validations;
-
 namespace DragonFly;
 
 /// <summary>
@@ -15,13 +13,12 @@ public partial class ArrayField
 {
     public ArrayField()
     {
-        Items = new List<ArrayFieldItem>();
     }
 
     /// <summary>
     /// Items
     /// </summary>
-    public IList<ArrayFieldItem> Items { get; set; }
+    public IList<ArrayFieldItem> Items { get; set; }= new List<ArrayFieldItem>();
 
     public override void Clear()
     {

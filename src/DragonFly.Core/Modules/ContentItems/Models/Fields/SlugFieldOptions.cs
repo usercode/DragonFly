@@ -4,10 +4,15 @@
 
 namespace DragonFly;
 
-public class SlugFieldOptions : StringFieldOptions
+public class SlugFieldOptions : FieldOptions
 {
     public override ContentField CreateContentField()
     {
-        return new SlugField(DefaultValue);
+        return new SlugField();
     }
+
+    /// <summary>
+    /// Gets the name of a single value field which is used for the slug value.
+    /// </summary>
+    public string? TargetField { get; set; }
 }

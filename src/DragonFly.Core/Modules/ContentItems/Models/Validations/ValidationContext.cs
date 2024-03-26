@@ -4,42 +4,27 @@
 
 using System.Text;
 
-namespace DragonFly.Validations;
+namespace DragonFly;
 
 /// <summary>
 /// ValidationContext
 /// </summary>
 public class ValidationContext
 {
-    public ValidationContext()
+    public ValidationContext(ContentItem contentItem)
     {
-        State = ValidationState.Unknown;
+        ContentItem = contentItem;
     }
 
-    public ValidationContext(ValidationState state)
-        : this()
-    {
-        State = state;
-    }
-
-    private IList<ValidationError> _errors = new List<ValidationError>();
+    /// <summary>
+    /// ContentItem
+    /// </summary>
+    public ContentItem ContentItem { get; }
 
     /// <summary>
     /// Errors
     /// </summary>
-    public virtual IEnumerable<ValidationError> Errors { get => _errors; set => _errors = value.ToList(); }
-
-    /// <summary>
-    /// State
-    /// </summary>
-    public ValidationState State { get; set; }
-
-    public void AddError(ValidationError error)
-    {
-        State = ValidationState.Invalid;
-
-        _errors.Add(error);
-    }
+    public IList<ValidationError> Errors { get; } = new List<ValidationError>();
 
     public string GetMessage()
     {
@@ -51,5 +36,15 @@ public class ValidationContext
         }
 
         return stringBuilder.ToString();
+    }
+
+    public ValidationState Execute()
+    {
+        ValidationState state = new ValidationState();
+        state.Result = (Errors.Count == 0) ? ValidationResult.Valid : ValidationResult.Invalid;
+        state.Errors = Errors;
+        state.Message = GetMessage();
+
+        return state;
     }
 }

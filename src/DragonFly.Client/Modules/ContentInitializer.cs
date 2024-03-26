@@ -32,7 +32,7 @@ public class ContentInitializer : IInitialize
         api.Field().Add<StringField>().WithFieldView<StringFieldView>().WithOptionView<StringFieldOptionsView>().WithQueryView<StringFieldQueryView>();
         api.Field().Add<FloatField>().WithFieldView<FloatFieldView>().WithOptionView<FloatFieldOptionsView>().WithQueryView<FloatFieldQueryView>();
         api.Field().Add<IntegerField>().WithFieldView<IntegerFieldView>().WithOptionView<IntegerFieldOptionsView>().WithQueryView<IntegerFieldQueryView>();
-        api.Field().Add<SlugField>().WithFieldView<SlugFieldView>();
+        api.Field().Add<SlugField>().WithFieldView<SlugFieldView>().WithOptionView<SlugFieldOptionsView>();
         api.Field().Add<TextField>().WithFieldView<TextFieldView>();
         api.Field().Add<HtmlField>().WithFieldView<HtmlFieldView>();
         api.Field().Add<XmlField>().WithFieldView<XmlFieldView>();

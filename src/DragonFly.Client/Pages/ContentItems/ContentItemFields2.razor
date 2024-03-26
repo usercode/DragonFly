@@ -23,10 +23,8 @@
 @* fields *@
 @foreach (var part in items)
 {
-    <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">
-        <BSAlert Color="GetFieldColor(part.FieldName)">
+    <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">        
             @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
-        </BSAlert>
     </div>
 }
 
@@ -47,7 +45,7 @@
     {
         string fieldPath = field;
 
-        if (Content.ValidationContext.Errors.Any(x => x.Field == field))
+        if (Content.ValidationState.Errors.Any(x => x.Field == field))
         {
             return BSColor.Danger;
         }

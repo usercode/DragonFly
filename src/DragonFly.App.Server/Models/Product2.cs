@@ -14,7 +14,7 @@ public partial class Product2
     [StringField(Required = true, Index = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
     private string? _title;
 
-    [SlugField(Index = true, QueryField = true)]
+    [SlugField(Index = true, QueryField = true, TargetField = nameof(Title))]
     private SlugField _slug;
 
     [BoolField(Index = true, QueryField = true)]
@@ -23,11 +23,8 @@ public partial class Product2
     [IntegerField(Index = true, QueryField = true)]
     private long? _quantity;
 
-    [FloatField(Index = true, QueryField = true)]
+    [FloatField]
     private double? _quantity2;
-
-    [HtmlField]
-    private BlockField _htmlContent;
 
     [BlockField]
     private BlockField _mainContent;
@@ -35,10 +32,10 @@ public partial class Product2
     [AssetField(ShowPreview = true, Index = true, QueryField = true)]
     private AssetField _image;
 
-    [AssetField(ShowPreview = true, Index = true, QueryField = true)]
+    [AssetField(ShowPreview = true)]
     private Asset _image2;
 
-    [ReferenceField(Index = true, QueryField = true)]
+    [ReferenceField]
     private ReferenceField _customerA;
 
     [ReferenceField]
@@ -47,7 +44,7 @@ public partial class Product2
     [ReferenceField]
     private Customer? _customerC;
 
-    [GeolocationField(Index = true, QueryField = true)]
+    [GeolocationField]
     private GeolocationField _location;
 
     [TextField]

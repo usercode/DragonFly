@@ -245,16 +245,14 @@ public partial class MongoStorage : IContentStorage
         ContentSchema? schema = await GetSchemaAsync(content.Schema.Name);
 
         content.ApplySchema(schema);
+        content.Validate();        
 
-        IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name);
-
-        //validation
-        content.Validate();
-
-        if (content.ValidationContext.State == ValidationState.Invalid)
+        if (content.ValidationState.Result == ValidationResult.Invalid)
         {
             throw new Exception("Invalid state");
         }
+
+        IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name);
 
         //versioning
         if (DragonFlyOptions.Versioning != ContentVersionKind.None)
