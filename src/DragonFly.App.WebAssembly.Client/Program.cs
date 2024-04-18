@@ -8,10 +8,10 @@ using DragonFly.Client;
 using DragonFly;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.RootComponents.Add<DragonFly.App.Client.App>("app");
+builder.RootComponents.Add<DragonFly.App.WebAssembly.Client.App>("app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.AddDragonFly()
+builder.AddDragonFlyClient()
             .AddRestClient()
             .AddIdentity()
             .AddApiKeys()

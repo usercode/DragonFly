@@ -2,9 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Extensions.Logging;
-
 namespace DragonFly.AspNetCore;
 
 /// <summary>
@@ -12,17 +9,11 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class BackgroundTaskManager : IBackgroundTaskManager
 {
-    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
+    public BackgroundTaskManager(IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
     {
-        Hub = hub;
         ServiceProvider = serviceProvider;
         Logger = logger;
     }
-
-    /// <summary>
-    /// Hub
-    /// </summary>
-    public IHubContext<BackgroundTaskHub> Hub { get; }
 
     /// <summary>
     /// ServiceProvider
@@ -34,14 +25,22 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// </summary>
     private ILogger<BackgroundTaskManager> Logger { get; }
 
-    private readonly IDictionary<int, BackgroundTask> Tasks = new Dictionary<int, BackgroundTask>();
+    private readonly Dictionary<int, BackgroundTask> Tasks = new ();
+
+    /// <summary>
+    /// BackgroundTaskChanged
+    /// </summary>
+    public event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task>? BackgroundTaskChanged;
 
     private int _nextId = 1;
     private object _syncObject = new object();
 
-    private async Task TaskHasChangedAsync(BackgroundTaskStatusChange state, BackgroundTask task)
+    private async Task TaskHasChangedAsync(BackgroundTaskStatusChange state, IBackgroundTaskInfo task)
     {
-        await Hub.Clients.All.SendAsync("TaskChanged", state, task.ToTaskInfo());
+        if (BackgroundTaskChanged != null)
+        {
+            await BackgroundTaskChanged(state, task);
+        }
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
@@ -53,7 +52,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     {
         lock (_syncObject)
         {
-            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PermissionPrincipal.GetCurrent(), BackgroundTask.GetCurrentTask());
+            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, Principal.Current, BackgroundTask.Current);
 
             backgroundTask.Task = Task.Run(async () =>
             {
@@ -62,7 +61,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
 
                 try
                 {
-                    BackgroundTask.SetCurrentTask(backgroundTask);
+                    BackgroundTask.Current = backgroundTask;
 
                     //notify new task
                     await TaskHasChangedAsync(BackgroundTaskStatusChange.Added, backgroundTask);

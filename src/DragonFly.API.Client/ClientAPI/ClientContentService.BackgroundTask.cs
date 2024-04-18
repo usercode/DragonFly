@@ -3,7 +3,6 @@
 // MIT License
 
 using System.Net.Http.Json;
-using DragonFly.Query;
 
 namespace DragonFly.API.Client;
 
@@ -12,6 +11,8 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IBackgroundTaskService
 {
+    public event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task> BackgroundTaskChanged;
+
     public async Task<IBackgroundTaskInfo[]> GetTasksAsync()
     {
         var response = await Client.PostAsync("api/task/query", new StringContent(string.Empty));

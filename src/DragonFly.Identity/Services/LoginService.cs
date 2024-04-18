@@ -10,6 +10,8 @@ using DragonFly.AspNetCore.Identity.MongoDB.Storages.Models;
 using DragonFly.Identity.Services;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -22,11 +24,15 @@ class LoginService : ILoginService
     public LoginService(
         MongoIdentityStore store,
         IPasswordHashGenerator passwordHashGenerator,
-        IHttpContextAccessor httpcontextaccessor)
+        IPrincipalContext principalContext,
+        IHttpContextAccessor httpcontextaccessor,
+        AuthenticationStateProvider authenticationStateProvider)
     {
         Store = store;
         PasswordHashGenerator = passwordHashGenerator;
         HttpContextAccessor = httpcontextaccessor;
+        PrincipalContext = principalContext;
+        AuthenticationStateProvider = authenticationStateProvider;
     }
 
     /// <summary>
@@ -44,6 +50,16 @@ class LoginService : ILoginService
     /// </summary>
     public IHttpContextAccessor HttpContextAccessor { get; }
 
+    /// <summary>
+    /// PrincipalContext
+    /// </summary>
+    public IPrincipalContext PrincipalContext { get; }
+
+    /// <summary>
+    /// AuthenticationStateProvider
+    /// </summary>
+    public AuthenticationStateProvider AuthenticationStateProvider { get; }
+
     public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
     {
         MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
@@ -60,28 +76,42 @@ class LoginService : ILoginService
             return false;
         }
 
-        List<Claim> claims = new List<Claim>()
-        {
-            new Claim("Name", $"user:{user.Username}"),
-            new Claim("UserId", user.Id.ToString()),
-            new Claim("Username", user.Username)
-        };
+        IEnumerable<Claim> claims =
+                                    [
+                                        new Claim(ClaimTypes.Name, user.Username),
+                                        new Claim("Name", $"user:{user.Username}"),
+                                        new Claim("UserId", $"{user.Id}"),
+                                        new Claim("Username", user.Username)
+                                    ];
 
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 
-        await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+        PrincipalContext.Principal = principal;
+
+        if (AuthenticationStateProvider is ServerAuthenticationStateProvider serverAuthenticationStateProvider)
+        {
+            serverAuthenticationStateProvider.SetAuthenticationState(Task.FromResult(new AuthenticationState(principal)));
+        }
+
+        if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
+        {
+            await HttpContextAccessor.HttpContext.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+        }        
 
         return true;
     }
 
     public async Task Logout()
     {
-        await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
+        if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
+        {
+            await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
+        }
     }
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        if (PermissionPrincipal.GetCurrent() is ClaimsPrincipal principal)
+        if (PrincipalContext.Principal is ClaimsPrincipal principal)
         {
             string? claimUserId = principal.FindFirstValue("UserId");
 

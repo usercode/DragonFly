@@ -214,11 +214,7 @@ if (env.IsDevelopment())
   app.UseWebAssemblyDebugging();
 }
 
-app.UseDragonFly(x => x             
-                  .MapImageWizard()
-                  .MapApiKey()
-                  .MapIdentity()
-                  .MapRestApi());
+app.UseDragonFly();
 app.UseDragonFlyManager();
 app.UseRouting();
 app.Run();
@@ -231,7 +227,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<DragonFly.App.Client.App>("app");
 
 //Register DragonFly components
-builder.AddDragonFly()
+builder.AddDragonFlyClient()
           .AddRestApi()
           .AddBlockField()
           .AddIdentity()

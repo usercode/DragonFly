@@ -2,11 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.Builder;
-
 namespace DragonFly.AspNetCore.Builders;
 
-public interface IDragonFlyApplicationBuilder : IApplicationBuilder
-{
-
-}
+public delegate void DragonFlyEndpointHandler(IEndpointRouteBuilder endpointRouteBuilder);

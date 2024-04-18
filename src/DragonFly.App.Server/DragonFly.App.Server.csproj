@@ -11,25 +11,26 @@
   <ItemGroup>
     <None Remove="FileCache\**" />
   </ItemGroup>
-
+  
   <ItemGroup>
-	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
-    <ProjectReference Include="..\DragonFly.App.Client\DragonFly.App.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-    <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
-    <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
-    <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+    <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
     <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
+    <ProjectReference Include="..\DragonFly.ApiKeys.Client\DragonFly.ApiKeys.Client.csproj" />    
+    <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+    <ProjectReference Include="..\DragonFly.Identity.Client\DragonFly.Identity.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
+    <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />    
     <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />    
+    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   
 </Project>

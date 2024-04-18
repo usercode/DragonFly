@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>5134b33c-d7bf-45f9-b97d-d88a1033e960</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="FileCache\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.20.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
+    <ProjectReference Include="..\DragonFly.App.WebAssembly.Client\DragonFly.App.WebAssembly.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
+    <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
+    <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />
+    <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
+    <ProjectReference Include="..\DragonFly.SampleData\DragonFly.SampleData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />    
+  </ItemGroup>
+  
+</Project>

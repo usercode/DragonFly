@@ -36,8 +36,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     {
         await base.OnInitializedAsync();
 
-        _hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/background-task-hub")).Build();
-        _hubConnection.On<BackgroundTaskStatusChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
+        BackgroundTaskService.BackgroundTaskChanged += async (state, task) =>
         {
             await InvokeAsync(async () =>
             {
@@ -52,9 +51,27 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
 
                 StateHasChanged();
             });
-        });
+        };
 
-        await _hubConnection.StartAsync();
+        //_hubConnection = new HubConnectionBuilder().WithUrl(Navigation.ToAbsoluteUri("/dragonfly/background-task-hub")).Build();
+        //_hubConnection.On<BackgroundTaskStatusChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
+        //{
+        //    await InvokeAsync(async () =>
+        //    {
+        //        if (state == BackgroundTaskStatusChange.Removed)
+        //        {
+        //            Tasks.Remove(task.Id);
+        //        }
+        //        else
+        //        {
+        //            Tasks[task.Id] = task;
+        //        }
+
+        //        StateHasChanged();
+        //    });
+        //});
+
+        //await _hubConnection.StartAsync();
     }
 
     protected override async Task RefreshActionAsync()

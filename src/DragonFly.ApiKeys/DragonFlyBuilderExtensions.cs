@@ -23,7 +23,7 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<MongoIdentityStore>();
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
-        builder.Authentication.AddApiKey(ApiKeyAuthenticationDefaults.AuthenticationScheme);
+        builder.Services.AddAuthentication().AddApiKey(ApiKeyAuthenticationDefaults.AuthenticationScheme);
 
         builder.AddPermissionScheme(ApiKeyAuthenticationDefaults.AuthenticationScheme);
 
@@ -38,12 +38,7 @@ public static class DragonFlyBuilderExtensions
                             .Add(ApiKeyPermissions.DeleteApiKey);
         });
 
-        return builder;
-    }
-
-    public static IDragonFlyMiddlewareBuilder MapApiKey(this IDragonFlyMiddlewareBuilder builder)
-    {
-        builder.Endpoints(x => x.MapApiKeyApi());
+        builder.AddEndpoint(x => x.MapApiKeyApi());
 
         return builder;
     }

@@ -3,10 +3,13 @@
 // MIT License
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using DragonFly;
 using DragonFly.API;
+using DragonFly.App.Server.Components;
 using DragonFly.AspNetCore;
+using DragonFly.Client;
 using DragonFly.MongoDB;
 using DragonFlyABC;
 using DragonFlyTEST;
@@ -14,6 +17,8 @@ using FFMpegCore;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -60,7 +65,6 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 //DragonFly services
 builder.Services.AddDragonFly()
                     .AddImageWizard()
-                    .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddApiKeys()
@@ -71,8 +75,16 @@ builder.Services.AddDragonFly()
                     .Init(x =>
                     {
                            
-                    })
-                    ;
+                    });
+
+//Blazor Server client
+builder.Services.AddDragonFlyClient()
+                    .AddIdentity()
+                    .AddApiKeys()
+                    .Init(x =>
+                    {
+                        x.Field().Add<HtmlField>().WithTinyMceView();
+                    });
 
 var app = builder.Build();
 
@@ -156,22 +168,18 @@ for (int i = 0; i < 10; i++)
     });
 }
 
-IHostEnvironment env = app.Services.GetRequiredService<IHostEnvironment>();
-
-if (env.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
-    app.UseWebAssemblyDebugging();
 }
 
 app.UseForwardedHeaders();
 app.UseHttpsRedirection();
-app.UseDragonFly(x => x
-                        .MapImageWizard()
-                        .MapApiKey()
-                        .MapIdentity()
-                        .MapRestApi());
-app.UseDragonFlyManager();
+app.UseStaticFiles();
+app.UseAntiforgery();
+app.UseDragonFly();
+//app.UseDragonFlyManager();
+app.UseDragonFlyManager<App>();
 app.UseSwagger();
 app.UseSwaggerUI();
 

@@ -12,6 +12,7 @@ using DragonFly.Permissions;
 using DragonFly.Permissions.Client;
 using DragonFly.Security;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DragonFly.Client;
 
@@ -21,9 +22,9 @@ public static class DragonFlyBuilderIdentityExtensions
     {
         builder.AddRazorRouting();
 
-        builder.Services.AddTransient<ILoginService, LoginService>();
-        builder.Services.AddTransient<IIdentityService, IdentityService>();
-        builder.Services.AddTransient<IPermissionService, ClientPermissionService>();
+        builder.Services.TryAddTransient<ILoginService, LoginService>();
+        builder.Services.TryAddTransient<IIdentityService, IdentityService>();
+        builder.Services.TryAddTransient<IPermissionService, ClientPermissionService>();
 
         builder.Init<IdentityInitializer>();
 

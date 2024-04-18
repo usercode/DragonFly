@@ -5,6 +5,7 @@
 using DragonFly.Builders;
 using DragonFly.Init;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DragonFly.Core;
 
@@ -25,18 +26,20 @@ public static class DragonFlyBuilderExtensions
     public static TDragonFlyBuilder AddCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
         where TDragonFlyBuilder : IDragonFlyBuilder
     {
-        builder.Services.AddSingleton(FieldManager.Default);
-        builder.Services.AddSingleton(BlockManager.Default);
-        builder.Services.AddSingleton(MetadataManager.Default);
+        builder.Services.TryAddSingleton(FieldManager.Default);
+        builder.Services.TryAddSingleton(BlockManager.Default);
+        builder.Services.TryAddSingleton(MetadataManager.Default);
+        builder.Services.TryAddSingleton(PermissionManager.Default);
 
-        builder.Services.AddSingleton<IDragonFlyApi, DragonFlyApi>();
-        builder.Services.AddSingleton<ISlugService, SlugService>();
+        builder.Services.TryAddSingleton<IDragonFlyApi, DragonFlyApi>();
+        builder.Services.TryAddSingleton<ISlugService, SlugService>();
 
         builder.Init(api =>
         {
             api.Field().AddDefaults();
             api.Block().AddDefaults();
             api.Metadata().AddDefaults();
+            api.Permission().AddDefaults();
         });
 
         return builder;
@@ -45,8 +48,6 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Adds DragonFly core pipeline.
     /// </summary>
-    /// <param name="services"></param>
-    /// <returns></returns>
     public static IDragonFlyBuilder AddDragonFlyCore(this IServiceCollection services)
     {
         return new DragonFlyBuilder(services)

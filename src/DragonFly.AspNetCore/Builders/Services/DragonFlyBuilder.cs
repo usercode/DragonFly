@@ -11,19 +11,13 @@ namespace DragonFly.AspNetCore.Builders;
 /// </summary>
 public class DragonFlyBuilder : IDragonFlyBuilder
 {
-    public DragonFlyBuilder(IServiceCollection services, AuthenticationBuilder authenticationBuilder)
+    public DragonFlyBuilder(IServiceCollection services)
     {
         Services = services;
-        Authentication = authenticationBuilder;
     }
 
     /// <summary>
     /// Services
     /// </summary>
     public IServiceCollection Services { get; }
-
-    /// <summary>
-    /// AuthenticationBuilder
-    /// </summary>
-    public AuthenticationBuilder Authentication { get; }
 }

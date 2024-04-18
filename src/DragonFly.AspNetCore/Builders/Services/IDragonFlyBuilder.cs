@@ -8,5 +8,4 @@ namespace DragonFly.AspNetCore.Builders;
 
 public interface IDragonFlyBuilder : DragonFly.Builders.IDragonFlyBuilder
 {
-    AuthenticationBuilder Authentication { get; }
 }

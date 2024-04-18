@@ -10,7 +10,7 @@
     @if (Tasks != null)
     {
         <div class="list-group">
-            @foreach (BackgroundTaskInfo task in Tasks
+            @foreach (IBackgroundTaskInfo task in Tasks
                                                     .Select(x => x.Value)
                                                     .Where(x => x.ParentTaskId == null))
             {

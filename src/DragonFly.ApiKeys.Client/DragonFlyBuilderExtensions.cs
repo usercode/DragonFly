@@ -7,6 +7,7 @@ using DragonFly.ApiKeys;
 using DragonFly.ApiKeys.Razor.Services;
 using DragonFly.ApiKeys.Client;
 using DragonFly.Client.Builders;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DragonFly.Client;
 
@@ -16,7 +17,7 @@ public static class DragonFlyBuilderExtensions
     {
         builder.AddRazorRouting();
 
-        builder.Services.AddTransient<IApiKeyService, ApiKeyService>();
+        builder.Services.TryAddTransient<IApiKeyService, ApiKeyService>();
 
         builder.Init<ApiKeyInitializer>();
 

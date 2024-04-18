@@ -15,6 +15,8 @@ using DragonFly.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Builders;
 using Microsoft.AspNetCore.Http.Json;
+using Microsoft.AspNetCore.Routing;
+using DragonFly.Permissions;
 
 namespace DragonFly.AspNetCore;
 
@@ -24,12 +26,14 @@ public static class DragonFlyBuilderExtensions
     {
         builder.Services.AddTransient<ILoginService, LoginService>();
         builder.Services.AddTransient<IIdentityService, IdentityService>();
+        builder.Services.AddTransient<IPermissionService, PermissionService>();
 
         builder.Services.AddSingleton<MongoIdentityStore>();
         builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
-        builder.Authentication.AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme);
+        builder.Services.AddAuthentication(IdentityAuthenticationDefaults.AuthenticationScheme)
+                            .AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme, x => x.LoginPath = "/login");
 
         builder.AddPermissionScheme(IdentityAuthenticationDefaults.AuthenticationScheme);
 
@@ -53,12 +57,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.PostInit<SeedDataInitializer>();
 
-        return builder;
-    }
-
-    public static IDragonFlyMiddlewareBuilder MapIdentity(this IDragonFlyMiddlewareBuilder builder)
-    {
-        builder.Endpoints(x => x.MapIdentityApi());
+        builder.AddEndpoint(x => x.MapIdentityApi());
 
         return builder;
     }

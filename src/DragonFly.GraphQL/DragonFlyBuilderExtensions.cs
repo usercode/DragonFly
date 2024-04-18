@@ -17,23 +17,23 @@ public static class StartupExtensions
         return builder;
     }
 
-    public static IDragonFlyApplicationBuilder UseGraphQLApi(this IDragonFlyApplicationBuilder builder)
-    {
-        builder.Map("/graphql", x =>
-        {
-            x.UseRouting();
-            x.UseAuthentication();
-            x.UseAuthorization();
+    //public static IDragonFlyApplicationBuilder UseGraphQLApi(this IDragonFlyApplicationBuilder builder)
+    //{
+    //    builder.Map("/graphql", x =>
+    //    {
+    //        x.UseRouting();
+    //        x.UseAuthentication();
+    //        x.UseAuthorization();
 
-            x.UseGraphQL<DragonFlySchema>();
-            x.UseGraphQLPlayground();
+    //        x.UseGraphQL<DragonFlySchema>();
+    //        x.UseGraphQLPlayground();
 
-            x.UseEndpoints(endpoints =>
-            {
+    //        x.UseEndpoints(endpoints =>
+    //        {
                 
-            });
-        });
+    //        });
+    //    });
 
-        return builder;
-    }
+    //    return builder;
+    //}
 }

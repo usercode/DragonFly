@@ -3,7 +3,7 @@
 // MIT License
 
 using System.Reflection;
-using DragonFly.Client.Builders;
+using DragonFly.Builders;
 
 namespace DragonFly.Client;
 
@@ -12,9 +12,8 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Adds razor routing from the current assembly.
     /// </summary>
-    /// <param name="builder"></param>
-    /// <returns></returns>
-    public static IDragonFlyBuilder AddRazorRouting(this IDragonFlyBuilder builder)
+    public static TBuilder AddRazorRouting<TBuilder>(this TBuilder builder)
+        where TBuilder : IDragonFlyBuilder
     {
         RazorRoutingManager.Default.Items.Add(Assembly.GetCallingAssembly());
 

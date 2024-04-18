@@ -13,9 +13,11 @@ public class BackgroundTask : IBackgroundTaskInfo
 {
     private static readonly AsyncLocal<BackgroundTask?> _currentTask = new AsyncLocal<BackgroundTask?>();
 
-    public static BackgroundTask? GetCurrentTask() => _currentTask.Value;
-
-    public static void SetCurrentTask(BackgroundTask? task) => _currentTask.Value = task;
+    public static BackgroundTask? Current
+    {
+        get => _currentTask.Value;
+        set => _currentTask.Value = value;
+    }
 
     public BackgroundTask(int id, string name, ClaimsPrincipal? createdBy, BackgroundTask? parentTask)
     {
@@ -171,5 +173,21 @@ public class BackgroundTask : IBackgroundTaskInfo
         ExitAt = DateTimeOffset.Now;
         State = BackgroundTaskState.Completed;
         ProgressValue = ProgressMaxValue;
+    }
+
+    public static implicit operator BackgroundTaskInfo(BackgroundTask task)
+    {
+        return new BackgroundTaskInfo()
+        {
+            Id = task.Id,
+            CreatedAt = task.CreatedAt,
+            CreatedBy = task.CreatedBy?.FindFirstValue("Name"),
+            Name = task.Name,
+            ProgressValue = task.ProgressValue,
+            ProgressMaxValue = task.ProgressMaxValue,
+            Status = task.Exception?.Message ?? task.Status,
+            State = task.State,
+            ParentTaskId = task.ParentTask?.Id
+        };
     }
 }

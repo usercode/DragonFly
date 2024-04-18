@@ -1,29 +1,33 @@
 ﻿@page "/login"
+@using DragonFly.AspNetCore.Permissions
+@using System.Security.Claims
 @inject HttpClient HttpClient
 @inject AuthenticationStateProvider Auth
 @inject NavigationManager NavigationManager
 @inject ILoginService LoginService
 @inject IOptions<GeneralOptions> Options
 @inject IDragonFlyApi Api
+@attribute [AllowAnonymous]
 
 @if (ShowLoginPage)
 {
     <div style="display:flex; flex: 1; justify-content:center">
         <div class="form-signin" style="width: 100%; max-width: 350px; padding: 15px; margin: auto;">
-            <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
+            <EditForm FormName="LoginForm" Model="Credentials" OnSubmit="LoginAsync">
+                <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
 
-            <div class="form-floating mb-3">
-                <input @bind-value="Username" type="email" class="form-control" id="floatingInput" placeholder="Username">
-                <label for="floatingInput">Username</label>
-            </div>
-            <div class="form-floating">
-                <input @bind-value="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-            </div>
+                <div class="form-floating mb-3">
+                    <input @bind-value="Credentials.Username" type="text" class="form-control" id="floatingInput" placeholder="Username">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input @bind-value="Credentials.Password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Password</label>
+                </div>
 
-            <button class="btn btn-lg btn-primary btn-block mt-3" @onclick="x => LoginAsync()">Login</button>
-            <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>           
-
+                <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Login</button>
+                <p class="mt-5 mb-3 text-muted">© @DateTime.Now.Year</p>
+            </EditForm>
         </div>
     </div>
 }
@@ -32,43 +36,49 @@
 
 @code {
 
-    [Parameter]
-    public string Username { get; set; }
-
-    [Parameter]
-    public string Password { get; set; }
+    public Credentials Credentials { get; set; } = new Credentials();
 
     public bool ShowLoginPage { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
 
 #if DEBUG
-    Username = DefaultSecurity.DefaultUsername;
-    Password = DefaultSecurity.DefaultPassword;
+    Credentials.Username = DefaultSecurity.DefaultUsername;
+    Credentials.Password = DefaultSecurity.DefaultPassword;
 #endif
 
-        IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
+        // IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
 
-        if (currentUser != null)
-        {
-            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
+        // if (currentUser != null)
+        // {
+        //     ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
 
-            NavigationManager.NavigateTo(".");
-        }
+        //     NavigationManager.NavigateTo(".");
+        // }
 
         ShowLoginPage = true;
     }
 
     public async Task LoginAsync()
     {
-        bool result = await LoginService.LoginAsync(Username, Password, true);
+        bool result = await LoginService.LoginAsync(Credentials.Username, Credentials.Password, true);
 
         if (result)
         {
-            ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
+            ((BlazorClientAuthenticationStateProvider)Auth).SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity("Password")));
 
-            NavigationManager.NavigateTo(".");
+            if(ReturnUrl != null)
+            {
+                NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri(ReturnUrl).ToString());
+            }
+            else
+            {
+                NavigationManager.NavigateTo(".");
+            }
         }
         else
         {

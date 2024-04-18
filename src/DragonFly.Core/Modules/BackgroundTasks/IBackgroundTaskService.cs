@@ -9,4 +9,6 @@ public interface IBackgroundTaskService
     Task<IBackgroundTaskInfo[]> GetTasksAsync();
 
     Task CancelAsync(int id);
+
+   event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task> BackgroundTaskChanged;
 }

@@ -32,7 +32,7 @@
         </BSCol>
     </BSRow>
 </div>
-@foreach (BackgroundTaskInfo child in Tasks.Where(x => x.ParentTaskId == Task.Id))
+@foreach (IBackgroundTaskInfo child in Tasks.Where(x => x.ParentTaskId == Task.Id))
 {
     <div style="margin-left: 1rem">
         <BackgroundTaskItem Task="child" Tasks="Tasks" />
@@ -41,7 +41,7 @@
 
 @code {
     [Parameter]
-    public BackgroundTaskInfo Task { get; set; }
+    public IBackgroundTaskInfo Task { get; set; }
 
     [Parameter]
     public IEnumerable<IBackgroundTaskInfo> Tasks { get; set; }

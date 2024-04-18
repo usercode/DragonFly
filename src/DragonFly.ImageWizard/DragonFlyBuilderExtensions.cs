@@ -20,7 +20,7 @@ public static class DragonFlyBuilderExtensions
     /// Default services:<br />
     /// <see cref="IAssetPreviewUrlService"/> -> <see cref="ImageWizardAssetUrlService"/>
     /// </summary>
-    public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder, Action<IImageWizardBuilder>? action = null)
+    public static IDragonFlyBuilder AddImageWizard(this IDragonFlyBuilder builder, Action<IImageWizardBuilder>? action = null, bool requireAuthorization = true)
     {
         builder.Services.AddTransient<IAssetPreviewUrlService, ImageWizardAssetUrlService>();
         builder.Services.AddTransient<IConfigureOptions<ImageWizardClientSettings>, ConfigureImageWizardClientOptions>();
@@ -40,18 +40,13 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddImageWizardClient(x => x.BaseUrl = "/dragonfly/image");
 
-        return builder;
-    }
-
-    public static IDragonFlyMiddlewareBuilder MapImageWizard(this IDragonFlyMiddlewareBuilder builder, bool requireAuthorization = true)
-    {
         if (requireAuthorization)
         {
-            builder.Endpoints(x => x.MapImageWizard().RequirePermission());
+            builder.AddEndpoint(x => x.MapImageWizard().RequirePermission());
         }
         else
         {
-            builder.Endpoints(x => x.MapImageWizard().AllowAnonymous());
+            builder.AddEndpoint(x => x.MapImageWizard().AllowAnonymous());
         }
 
         return builder;

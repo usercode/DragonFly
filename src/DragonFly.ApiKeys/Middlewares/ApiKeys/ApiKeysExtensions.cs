@@ -14,7 +14,7 @@ namespace DragonFly.ApiKeys.AspNetCore.Middlewares;
 
 static class ApiKeysExtensions
 {
-    public static void MapApiKeyApi(this IDragonFlyEndpointBuilder endpoints)
+    public static IEndpointConventionBuilder MapApiKeyApi(this IEndpointRouteBuilder endpoints)
     {
         RouteGroupBuilder group = endpoints.MapGroup("api/apikey");
 
@@ -23,6 +23,8 @@ static class ApiKeysExtensions
         group.MapPost("", MapCreate).RequirePermission(ApiKeyPermissions.CreateApiKey);
         group.MapPut("", MapUpdate).RequirePermission(ApiKeyPermissions.UpdateApiKey);
         group.MapDelete("{id:guid}", MapDelete).RequirePermission(ApiKeyPermissions.DeleteApiKey);
+
+        return group;
     }
 
     private static async Task<Results<Ok<ApiKey>, NotFound>> MapGet(Guid id, IApiKeyService service)

@@ -15,7 +15,7 @@ namespace DragonFly.AspNetCore.Identity;
 
 internal static class IdentityApiExtensions
 {
-    public static IDragonFlyEndpointBuilder MapIdentityApi(this IDragonFlyEndpointBuilder endpoints)
+    public static IEndpointConventionBuilder MapIdentityApi(this IEndpointRouteBuilder endpoints)
     {
         RouteGroupBuilder group = endpoints.MapGroup("api/identity");
 
@@ -25,7 +25,7 @@ internal static class IdentityApiExtensions
         group.MapUserApi();
         group.MapRoleApi();
 
-        return endpoints;
+        return group;
     }
 
     private static async Task<Results<Ok, UnauthorizedHttpResult>> MapLogin(LoginData loginData, ILoginService loginService)
@@ -44,10 +44,17 @@ internal static class IdentityApiExtensions
         }
     }
 
-    private static async Task<Ok<IdentityUser>> CurrentUserAsync(ILoginService service)
+    private static async Task<Results<Ok<IdentityUser>, ForbidHttpResult>> CurrentUserAsync(ILoginService service)
     {
         IdentityUser? currentUser = await service.GetCurrentUserAsync();
 
-        return TypedResults.Ok(currentUser);
+        if (currentUser != null)
+        {
+            return TypedResults.Ok(currentUser);
+        }
+        else
+        {
+            return TypedResults.Forbid();
+        }
     }
 }

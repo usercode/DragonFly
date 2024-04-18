@@ -25,7 +25,7 @@
 	</ItemGroup>
 	
 	<ItemGroup>
-    <PackageReference Include="Bogus" Version="35.4.1" />
+    <PackageReference Include="Bogus" Version="35.5.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,16 @@
+﻿@page "/test"
+
+<h3>Test</h3>
+
+<button @onclick="DoIt">Action</button>
+
+<p>@Output</p>
+
+@code {
+    public string Output { get; set; }
+
+    public void DoIt()
+    {
+        Output = "123";
+    }
+}

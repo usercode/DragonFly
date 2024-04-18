@@ -22,14 +22,9 @@ public static class DragonFlyBuilderExtensions
 
         builder.AddRestApiCore();
 
-        return builder;
-    }
-
-    public static IDragonFlyMiddlewareBuilder MapRestApi(this IDragonFlyMiddlewareBuilder builder)
-    {
-        builder.Endpoints(endpoints =>
+        builder.AddEndpoint(x =>
         {
-            RouteGroupBuilder group = endpoints.MapGroup("api")
+            RouteGroupBuilder group = x.MapGroup("api")
                                                 .RequirePermission()
                                                 .WithDisplayName("DragonFly.API");
 

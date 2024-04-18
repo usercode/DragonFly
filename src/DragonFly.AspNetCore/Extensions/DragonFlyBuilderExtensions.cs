@@ -3,11 +3,15 @@
 // MIT License
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
 using DragonFly.Core;
 using DragonFly.Init;
 using DragonFly.Permissions;
 using DragonFly.AspNetCore.Builders;
+using Microsoft.AspNetCore.Components.Authorization;
+using DragonFly.Client;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using System.Reflection;
+using DragonFly.AspNetCore.Permissions;
 
 namespace DragonFly.AspNetCore;
 
@@ -35,23 +39,21 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
     {
-        AuthenticationBuilder authenticationBuilder = services.AddAuthentication();
-        services.AddAuthorization();
-
-        IDragonFlyBuilder builder = new DragonFlyBuilder(services, authenticationBuilder);
+        IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder
             .AddCore()
-            .Init(api =>
-            {
-                api.Permission().AddDefaults();
-            })
             .PostInit<CreateContentPermissionsInitializer>();
 
-        builder.Services.AddSingleton<IDateTimeService, LocalDateTimeService>();
-        builder.Services.AddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
+        builder.Services.AddAuthentication();
+        builder.Services.AddAuthorization();
 
-        //manager
-        builder.Services.AddSingleton(PermissionManager.Default);
+        builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents()
+                .AddInteractiveWebAssemblyComponents();
+
+        builder.Services.TryAddSingleton<IDateTimeService, LocalDateTimeService>();
+        builder.Services.TryAddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
+        builder.Services.TryAddSingleton<IBackgroundTaskService>(x => x.GetRequiredService<IBackgroundTaskManager>());
 
         builder.Services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 
@@ -60,9 +62,10 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddTransient<IAssetProcessing, PdfProcessing>();
         builder.Services.AddTransient<IAssetProcessing, VideoProcessing>();
 
-        //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        builder.Services.AddSingleton<IPrincipalContext, PrincipalContext>();
 
-        builder.Services.AddSignalR();
+        //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        //builder.Services.AddScoped<AuthenticationStateProvider, BlazorServerAuthenticationStateProvider>();
 
         return builder;
     }
@@ -79,16 +82,11 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Maps the DragonFly routings.
     /// </summary>
-    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder, Action<IDragonFlyMiddlewareBuilder>? subBuilder = null)
+    public static IApplicationBuilder UseDragonFly(this IApplicationBuilder builder)
     {
         builder.Map("/dragonfly",
                                 x =>
                                 {
-                                    DragonFlyMiddlewareBuilder end = new DragonFlyMiddlewareBuilder();
-                                    subBuilder?.Invoke(end);
-
-                                    end.Builders.Foreach(a => a(new DragonFlyApplicationBuilder(x)));
-
                                     x.UseRouting();
                                     x.UseAuthentication();
                                     x.UseAuthorization();
@@ -107,18 +105,19 @@ public static class DragonFlyBuilderExtensions
                                             }
                                         }
 
-                                        PermissionPrincipal.SetCurrent(context.User);
+                                        Principal.Current = context.User;
 
                                         await next(context);
                                     });
 
                                     x.UseEndpoints(e =>
                                     {
-                                        end.EndpointList.Foreach(a => a(new DragonFlyEndpointBuilder(e)));
+                                        IEnumerable<DragonFlyEndpointHandler> endpointHandlers =  e.ServiceProvider.GetServices<DragonFlyEndpointHandler>();
 
-                                        e.MapHub<BackgroundTaskHub>("/background-task-hub")
-                                                        .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
-                                                        .WithDisplayName("DragonFly.BackgroundTask.Hub");
+                                        foreach (DragonFlyEndpointHandler endpointHandler in endpointHandlers)
+                                        {
+                                            endpointHandler(e);
+                                        }                                       
                                     });
                                 }
             );
@@ -127,7 +126,7 @@ public static class DragonFlyBuilderExtensions
     }
 
     /// <summary>
-    /// Maps the DragonFly manager.
+    /// Maps the DragonFly manager. (Blazor WebAssembly)
     /// </summary>
     public static IApplicationBuilder UseDragonFlyManager(this IApplicationBuilder builder)
     {
@@ -139,7 +138,55 @@ public static class DragonFlyBuilderExtensions
                                     x.UseRouting();
                                     x.UseEndpoints(endpoints => endpoints.MapFallbackToFile("index.html"));
                                 }
-            );       
+            );
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Maps the DragonFly manager. (Blazor Server)
+    /// </summary>
+    public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder, Assembly[]? AdditionalAssemblies = null)
+    {
+        builder.Map("/manager", x =>
+        {
+            x.UseRouting();
+            x.UseAuthentication();
+            x.UseAuthorization();
+            x.UseAntiforgery();
+            x.UseEndpoints(endpoints =>
+            {
+                endpoints
+                        .MapRazorComponents<TApp>()
+                        .AddInteractiveServerRenderMode()
+                        .AddInteractiveWebAssemblyRenderMode()
+                        .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
+            });
+        });
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds an endpoint to DragonFly.
+    /// </summary>
+    public static IDragonFlyBuilder AddEndpoint(this IDragonFlyBuilder builder, Action<IEndpointRouteBuilder> endpoint)
+    {
+        builder.Services.AddTransient(x => new DragonFlyEndpointHandler(endpoint));
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds SignalR hub for background tasks.
+    /// </summary>
+    public static IDragonFlyBuilder AddBackgroundTaskHub(this IDragonFlyBuilder builder)
+    {
+        builder.Services.AddSignalR();
+
+        builder.AddEndpoint(x => x.MapHub<BackgroundTaskHub>("/background-task-hub")
+                                                      .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
+                                                      .WithDisplayName("DragonFly.BackgroundTask.Hub"));
 
         return builder;
     }

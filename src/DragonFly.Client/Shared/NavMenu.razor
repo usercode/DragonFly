@@ -23,10 +23,26 @@
     </ul>
 </div>
 
+<p>@CurrentUser</p>
+
 @code {
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    public string CurrentUser { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationState { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        var user = await authenticationState;
+
+        CurrentUser = $"{user.User.Identity.Name} / Claims: {user.User.Claims.Count()}";
+    }
 
     private void ToggleNavMenu()
     {

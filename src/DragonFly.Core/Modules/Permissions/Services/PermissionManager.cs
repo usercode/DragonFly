@@ -16,22 +16,22 @@ public sealed class PermissionManager
 
     public event Action<Permission>? Added;
 
-    private IDictionary<string, string[]> Policies { get; } = new Dictionary<string, string[]>();
-    private HashSet<Permission> Items { get; } = new HashSet<Permission>();
+    private Dictionary<string, string[]> Policies { get; } = new();
+    private HashSet<Permission> Items { get; } = new();
 
     /// <summary>
     /// Add
     /// </summary>
-    /// <param name="permission"></param>
-    /// <returns></returns>
     public PermissionManager Add(Permission permission)
     {
-        Items.Add(permission);
-        Policies.Add(permission.Name, new[] { permission }.Concat(permission.GetImpliedPermissions())
+        if (Items.Add(permission))
+        {
+            Policies[permission.Name] = new[] { permission }.Concat(permission.GetImpliedPermissions())
                                                             .Select(x => x.Name)
-                                                            .ToArray());
+                                                            .ToArray();
 
-        Added?.Invoke(permission);
+            Added?.Invoke(permission);
+        }
 
         return this;
     }

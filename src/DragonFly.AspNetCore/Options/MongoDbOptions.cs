@@ -11,49 +11,39 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoDbOptions
 {
-    public MongoDbOptions()
-    {
-        Database = "DragonFly_App";
-        Hostname = "localhost";
-        Port = 27017;
-        Username = string.Empty;
-        Password = string.Empty;
-        InitialUsername = DefaultSecurity.DefaultUsername;
-        InitialPassword = DefaultSecurity.DefaultPassword;
-    }
 
     /// <summary>
     /// Database
     /// </summary>
-    public string Database { get; set; }
+    public string Database { get; set; } = "DragonFly_App";
 
     /// <summary>
     /// Hostname
     /// </summary>
-    public string Hostname { get; set; }
+    public string Hostname { get; set; } = "localhost";
 
     /// <summary>
     /// Port
     /// </summary>
-    public int Port { get; set; }
+    public int Port { get; set; } = 27017;
 
     /// <summary>
     /// Username
     /// </summary>
-    public string? Username { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     /// <summary>
     /// Password
     /// </summary>
-    public string? Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 
     /// <summary>
     /// InitialUsername
     /// </summary>
-    public string InitialUsername { get; set; }
+    public string InitialUsername { get; set; } = DefaultSecurity.DefaultUsername;
 
     /// <summary>
     /// InitialPassword
     /// </summary>
-    public string InitialPassword { get; set; }
+    public string InitialPassword { get; set; } = DefaultSecurity.DefaultPassword;
 }

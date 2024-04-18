@@ -10,13 +10,13 @@ namespace DragonFly.Client.Pages;
 
 public class IndexBase : StartComponentBase
 {
-    public IDictionary<ContentSchema, IList<ContentItem>> LatestContentItems { get; set; } = new Dictionary<ContentSchema, IList<ContentItem>>();
+    //public IDictionary<ContentSchema, IList<ContentItem>> LatestContentItems { get; set; } = new Dictionary<ContentSchema, IList<ContentItem>>();
 
-    public IList<ContentSchema> Schemas { get; set; }
+    //public IList<ContentSchema> Schemas { get; set; }
 
-    [Inject]
-    public IContentStorage ContentStorage { get; set; }
+    //[Inject]
+    //public IContentStorage ContentStorage { get; set; }
 
-    [Inject]
-    public ISchemaStorage SchemaStorage { get; set; }
+    //[Inject]
+    //public ISchemaStorage SchemaStorage { get; set; }
 }
