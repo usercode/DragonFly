@@ -48,8 +48,7 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddAuthorization();
 
         builder.Services.AddRazorComponents()
-                .AddInteractiveServerComponents()
-                .AddInteractiveWebAssemblyComponents();
+                            .AddInteractiveServerComponents();
 
         builder.Services.TryAddSingleton<IDateTimeService, LocalDateTimeService>();
         builder.Services.TryAddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
@@ -65,7 +64,6 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<IPrincipalContext, PrincipalContext>();
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
-        //builder.Services.AddScoped<AuthenticationStateProvider, BlazorServerAuthenticationStateProvider>();
 
         return builder;
     }
@@ -159,7 +157,6 @@ public static class DragonFlyBuilderExtensions
                 endpoints
                         .MapRazorComponents<TApp>()
                         .AddInteractiveServerRenderMode()
-                        .AddInteractiveWebAssemblyRenderMode()
                         .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
             });
         });

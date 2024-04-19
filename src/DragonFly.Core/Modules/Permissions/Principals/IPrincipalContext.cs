@@ -12,7 +12,7 @@ namespace DragonFly;
 public interface IPrincipalContext
 {
     /// <summary>
-    /// Principal
+    /// Current
     /// </summary>
-    ClaimsPrincipal? Principal { get; set; }
+    ClaimsPrincipal? Current { get; set; }
 }

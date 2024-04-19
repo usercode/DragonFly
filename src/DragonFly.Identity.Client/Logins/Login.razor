@@ -1,7 +1,6 @@
 ﻿@page "/login"
 @using DragonFly.AspNetCore.Permissions
 @using System.Security.Claims
-@inject HttpClient HttpClient
 @inject AuthenticationStateProvider Auth
 @inject NavigationManager NavigationManager
 @inject ILoginService LoginService
@@ -51,27 +50,27 @@
     Credentials.Password = DefaultSecurity.DefaultPassword;
 #endif
 
-        // IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
+        IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
 
-        // if (currentUser != null)
-        // {
-        //     ((ApiAuthenticationStateProvider)Auth).MarkUserAsAuthenticated();
-
-        //     NavigationManager.NavigateTo(".");
-        // }
+        if (currentUser != null)
+        {
+            await MarkAsAuth();
+        }
 
         ShowLoginPage = true;
     }
 
     public async Task LoginAsync()
     {
-        bool result = await LoginService.LoginAsync(Credentials.Username, Credentials.Password, true);
+        LoginResult result = await LoginService.LoginAsync(Credentials.Username, Credentials.Password, true);
 
-        if (result)
+        if (result.Success)
         {
-            ((BlazorClientAuthenticationStateProvider)Auth).SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity("Password")));
+            Claim[] claims = result.Claims.Select(x => new Claim(x.Type, x.Value)).ToArray();
 
-            if(ReturnUrl != null)
+            ((BlazorClientAuthenticationStateProvider)Auth).SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity(claims, "Password")));
+
+            if (ReturnUrl != null)
             {
                 NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri(ReturnUrl).ToString());
             }
@@ -79,10 +78,34 @@
             {
                 NavigationManager.NavigateTo(".");
             }
+
         }
         else
         {
             throw new Exception("Login failed.");
+        }
+    }
+
+    private async Task MarkAsAuth()
+    {
+        IdentityUser? currentUser = await LoginService.GetCurrentUserAsync();
+
+        if (currentUser == null)
+        {
+            return;
+        }
+
+        Claim[] claims = [new Claim(ClaimTypes.Name, currentUser.Username)];
+
+        ((BlazorClientAuthenticationStateProvider)Auth).SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity(claims, "Password")));
+
+        if (ReturnUrl != null)
+        {
+            NavigationManager.NavigateTo(NavigationManager.ToAbsoluteUri(ReturnUrl).ToString());
+        }
+        else
+        {
+            NavigationManager.NavigateTo(".");
         }
     }
 }

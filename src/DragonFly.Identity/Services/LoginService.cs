@@ -60,20 +60,20 @@ class LoginService : ILoginService
     /// </summary>
     public AuthenticationStateProvider AuthenticationStateProvider { get; }
 
-    public async Task<bool> LoginAsync(string username, string password, bool isPersistent)
+    public async Task<LoginResult> LoginAsync(string username, string password, bool isPersistent)
     {
         MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
 
         if (user == null)
         {
-            return false;
+            return new LoginResult(false);
         }
 
         string hashed = Convert.ToBase64String(PasswordHashGenerator.Generate(user.Username, Convert.FromBase64String(user.Salt), password));
 
         if (user.Password != hashed)
         {
-            return false;
+            return new LoginResult(false);
         }
 
         IEnumerable<Claim> claims =
@@ -86,7 +86,7 @@ class LoginService : ILoginService
 
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 
-        PrincipalContext.Principal = principal;
+        PrincipalContext.Current = principal;
 
         if (AuthenticationStateProvider is ServerAuthenticationStateProvider serverAuthenticationStateProvider)
         {
@@ -96,9 +96,9 @@ class LoginService : ILoginService
         if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
         {
             await HttpContextAccessor.HttpContext.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
-        }        
+        }
 
-        return true;
+        return new LoginResult(true) { Username = user.Username, Claims = claims.Select(x=> new ClaimItem(x.Type, x.Value)).ToList() };
     }
 
     public async Task Logout()
@@ -111,7 +111,7 @@ class LoginService : ILoginService
 
     public async Task<IdentityUser?> GetCurrentUserAsync()
     {
-        if (PrincipalContext.Principal is ClaimsPrincipal principal)
+        if (PrincipalContext.Current is ClaimsPrincipal principal)
         {
             string? claimUserId = principal.FindFirstValue("UserId");
 

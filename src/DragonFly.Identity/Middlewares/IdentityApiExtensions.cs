@@ -28,20 +28,11 @@ internal static class IdentityApiExtensions
         return group;
     }
 
-    private static async Task<Results<Ok, UnauthorizedHttpResult>> MapLogin(LoginData loginData, ILoginService loginService)
+    private static async Task<Ok<LoginResult>> MapLogin(LoginData loginData, ILoginService loginService)
     {
-        bool valid = await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent);
+        LoginResult result = await loginService.LoginAsync(loginData.Username, loginData.Password, loginData.IsPersistent);
 
-        if (valid)
-        {
-            return TypedResults.Ok();
-        }
-        else
-        {
-            await Task.Delay(TimeSpan.FromSeconds(3));
-
-            return TypedResults.Unauthorized();
-        }
+        return TypedResults.Ok(result);
     }
 
     private static async Task<Results<Ok<IdentityUser>, ForbidHttpResult>> CurrentUserAsync(ILoginService service)

@@ -11,7 +11,7 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public static class Principal
 {
-    private static readonly AsyncLocal<ClaimsPrincipal?> _current = new AsyncLocal<ClaimsPrincipal?>();
+    private static readonly AsyncLocal<ClaimsPrincipal?> _current = new();
 
     /// <summary>
     /// Gets the current principal.

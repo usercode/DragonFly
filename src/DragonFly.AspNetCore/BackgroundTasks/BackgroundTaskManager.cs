@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Microsoft.AspNetCore.SignalR;
+
 namespace DragonFly.AspNetCore;
 
 /// <summary>
@@ -9,11 +11,17 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class BackgroundTaskManager : IBackgroundTaskManager
 {
-    public BackgroundTaskManager(IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
+    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
     {
+        Hub = hub;
         ServiceProvider = serviceProvider;
         Logger = logger;
     }
+
+    /// <summary>
+    /// Hub
+    /// </summary>
+    public IHubContext<BackgroundTaskHub> Hub { get; }
 
     /// <summary>
     /// ServiceProvider
@@ -30,17 +38,19 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// <summary>
     /// BackgroundTaskChanged
     /// </summary>
-    public event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task>? BackgroundTaskChanged;
+    public event Func<BackgroundTaskStatusChange, BackgroundTaskInfo, Task>? BackgroundTaskChanged;
 
     private int _nextId = 1;
     private object _syncObject = new object();
 
-    private async Task TaskHasChangedAsync(BackgroundTaskStatusChange state, IBackgroundTaskInfo task)
+    private async Task TaskHasChangedAsync(BackgroundTaskStatusChange state, BackgroundTaskInfo task)
     {
         if (BackgroundTaskChanged != null)
         {
             await BackgroundTaskChanged(state, task);
         }
+
+        await Hub.Clients.All.SendAsync("TaskChanged", state, task);
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
@@ -147,5 +157,10 @@ public class BackgroundTaskManager : IBackgroundTaskManager
 
             return Task.CompletedTask;
         }
+    }
+
+    public Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync()
+    {
+        return Task.FromResult<IBackgroundTaskNotificationProvider>(new LocalBackgroundTaskNotificationProvider(this));
     }
 }

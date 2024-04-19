@@ -33,8 +33,6 @@ public static class DragonFlyClientWebAssemblyExtensions
 
         var builder = webAssemblyBuilder.Services.AddDragonFlyClient();
 
-        builder.AddRazorRouting();
-
         builder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
         builder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
 

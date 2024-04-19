@@ -41,7 +41,7 @@
 
         var user = await authenticationState;
 
-        CurrentUser = $"{user.User.Identity.Name} / Claims: {user.User.Claims.Count()}";
+        CurrentUser = $"{user.User.Identity.Name}";
     }
 
     private void ToggleNavMenu()

@@ -3,6 +3,7 @@
 // MIT License
 
 using System.Net.Http.Json;
+using DragonFly.API.Client.BackgroundTasks;
 
 namespace DragonFly.API.Client;
 
@@ -11,8 +12,6 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IBackgroundTaskService
 {
-    public event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task> BackgroundTaskChanged;
-
     public async Task<IBackgroundTaskInfo[]> GetTasksAsync()
     {
         var response = await Client.PostAsync("api/task/query", new StringContent(string.Empty));
@@ -34,5 +33,14 @@ public partial class ClientContentService : IBackgroundTaskService
         var response = await Client.PostAsync($"api/task/{id}/cancel", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync()
+    {
+        SignalRBackgroundTaskNotificationProvider provider = new SignalRBackgroundTaskNotificationProvider(NavigationManager);
+
+        await provider.StartAsync();
+
+        return provider;
     }
 }

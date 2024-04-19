@@ -27,9 +27,9 @@ public static class DragonFlyApiPermissionExtensions
     /// </summary>
     public static async Task<bool> AuthorizeAsync(this IDragonFlyApi api, Permission permission)
     {
-        IPrincipalContext principalContext = api.ServiceProvider.GetRequiredService<IPrincipalContext>();
+        IPrincipalContext principalContext = Principal(api);
 
-        ClaimsPrincipal? principal = principalContext.Principal;
+        ClaimsPrincipal? principal = principalContext.Current;
 
         if (principal == null)
         {
@@ -41,5 +41,13 @@ public static class DragonFlyApiPermissionExtensions
         AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy());
 
         return result.Succeeded;
+    }
+
+    /// <summary>
+    /// Gets the principal context.
+    /// </summary>
+    public static IPrincipalContext Principal(this IDragonFlyApi api)
+    {
+        return api.ServiceProvider.GetRequiredService<IPrincipalContext>();
     }
 }

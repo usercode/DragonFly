@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Microsoft.AspNetCore.Components;
+
 namespace DragonFly.API.Client;
 
 /// <summary>
@@ -9,9 +11,10 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService
 {
-    public ClientContentService(HttpClient httpClient)
+    public ClientContentService(HttpClient httpClient, NavigationManager navigationManager)
     {
         Client = httpClient;
+        NavigationManager = navigationManager;
     }
 
     /// <summary>
@@ -19,5 +22,8 @@ public partial class ClientContentService
     /// </summary>
     public HttpClient Client { get; }
 
-    
+    /// <summary>
+    /// NavigationManager
+    /// </summary>
+    private NavigationManager NavigationManager { get; }
 }

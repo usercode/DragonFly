@@ -9,31 +9,23 @@ namespace DragonFly.Identity;
 /// </summary>
 public class IdentityUser : Entity<IdentityUser>
 {
-    public IdentityUser()
-    {
-        Username = string.Empty;
-        NormalizedUsername = string.Empty;
-        Email = string.Empty;
-        Roles = new List<IdentityRole>();
-    }
-
     /// <summary>
     /// Username
     /// </summary>
-    public string Username { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     /// <summary>
     /// NormalizedUsername
     /// </summary>
-    public string NormalizedUsername { get; set; }
+    public string NormalizedUsername { get; set; } = string.Empty;
 
     /// <summary>
     /// Email
     /// </summary>
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     /// <summary>
     /// Roles
     /// </summary>
-    public IList<IdentityRole> Roles { get; set; }
+    public IList<IdentityRole> Roles { get; set; } = new List<IdentityRole>();
 }

@@ -11,7 +11,7 @@ namespace DragonFly.Security;
 /// </summary>
 public interface ILoginService
 {
-    Task<bool> LoginAsync(string username, string password, bool isPersistent);
+    Task<LoginResult> LoginAsync(string username, string password, bool isPersistent);
 
     Task Logout();
 

@@ -8,9 +8,9 @@ namespace DragonFly.AspNetCore.Permissions;
 
 public class PrincipalContext : IPrincipalContext
 {
-    public ClaimsPrincipal? Principal
+    public ClaimsPrincipal? Current
     {
-        get => AspNetCore.Principal.Current;
-        set => AspNetCore.Principal.Current = value;
+        get => Principal.Current;
+        set => Principal.Current = value;
     }
 }

@@ -10,5 +10,5 @@ public interface IBackgroundTaskService
 
     Task CancelAsync(int id);
 
-   event Func<BackgroundTaskStatusChange, IBackgroundTaskInfo, Task> BackgroundTaskChanged;
+    Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync();
 }
