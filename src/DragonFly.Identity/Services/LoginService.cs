@@ -62,7 +62,7 @@ class LoginService : ILoginService
 
     public async Task<LoginResult> LoginAsync(string username, string password, bool isPersistent)
     {
-        MongoIdentityUser user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
+        MongoIdentityUser? user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
 
         if (user == null)
         {
@@ -88,11 +88,7 @@ class LoginService : ILoginService
 
         PrincipalContext.Current = principal;
 
-        if (AuthenticationStateProvider is ServerAuthenticationStateProvider serverAuthenticationStateProvider)
-        {
-            serverAuthenticationStateProvider.SetAuthenticationState(Task.FromResult(new AuthenticationState(principal)));
-        }
-
+        //Blazor WebAssembly?
         if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
         {
             await HttpContextAccessor.HttpContext.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });

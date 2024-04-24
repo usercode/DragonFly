@@ -26,17 +26,17 @@ public static class DragonFlyClientWebAssemblyExtensions
     /// Default modules:<br/>
     /// <see cref="ContentInitializer"/>, <see cref="AssetInitializer"/>, <see cref="WebHookInitializer"/>, <see cref="BackgroundTaskInitializer"/>, <see cref="SettingsInitializer"/>
     /// </summary>
-    public static IDragonFlyBuilder AddDragonFlyClient(this WebAssemblyHostBuilder webAssemblyBuilder)
+    public static WebAssemblyHostBuilder AddDragonFlyClient(this WebAssemblyHostBuilder webAssemblyBuilder, Action<IDragonFlyBuilder>? config = null)
     {
         var clientBaseUrl = new Uri(webAssemblyBuilder.HostEnvironment.BaseAddress);
         var apiBaseUri = new Uri($"{clientBaseUrl.Scheme}://{clientBaseUrl.Authority}/dragonfly/");
 
-        var builder = webAssemblyBuilder.Services.AddDragonFlyClient();
+        webAssemblyBuilder.Services.AddDragonFlyClient(config);
 
-        builder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
-        builder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
+        webAssemblyBuilder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
+        webAssemblyBuilder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
 
-        return builder;
+        return webAssemblyBuilder;
     }
 
     /// <summary>

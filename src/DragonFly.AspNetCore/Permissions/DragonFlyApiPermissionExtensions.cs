@@ -5,7 +5,7 @@
 using DragonFly.AspNetCore;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Extensions.DependencyInjection;
+using Results;
 using System.Security.Claims;
 
 namespace DragonFly;
@@ -15,7 +15,7 @@ public static class DragonFlyApiPermissionExtensions
     /// <summary>
     /// Authorizes access to a content item.
     /// </summary>
-    public static async Task<bool> AuthorizeContentAsync(this IDragonFlyApi api, string schema, ContentAction action)
+    public static async Task<Result> AuthorizeContentAsync(this IDragonFlyApi api, string schema, ContentAction action)
     {
         Permission permission = ContentPermissions.Create(schema, action);
 
@@ -25,7 +25,7 @@ public static class DragonFlyApiPermissionExtensions
     /// <summary>
     /// Authorizes a permission.
     /// </summary>
-    public static async Task<bool> AuthorizeAsync(this IDragonFlyApi api, Permission permission)
+    public static async Task<Result> AuthorizeAsync(this IDragonFlyApi api, Permission permission)
     {
         IPrincipalContext principalContext = Principal(api);
 
@@ -33,14 +33,21 @@ public static class DragonFlyApiPermissionExtensions
 
         if (principal == null)
         {
-            return false;
+            return Result.Ok();
         }
 
         IAuthorizationService authorizationService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
         AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy());
 
-        return result.Succeeded;
+        if (result.Succeeded)
+        {
+            return Result.Ok();
+        }
+        else
+        {
+            return Result.Failed(new PermissionError(permission));
+        }
     }
 
     /// <summary>

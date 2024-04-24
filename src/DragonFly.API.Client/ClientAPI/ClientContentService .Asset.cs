@@ -5,6 +5,8 @@
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using DragonFly.Query;
+using Results;
+using System.Reflection.Metadata.Ecma335;
 
 namespace DragonFly.API.Client;
 
@@ -13,7 +15,7 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IAssetStorage
 {
-    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
+    public async Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery assetQuery)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerDefault.Options);
 
@@ -22,7 +24,7 @@ public partial class ClientContentService : IAssetStorage
         return result.Convert(x => x.ToModel());
     }
 
-    public async Task UploadAsync(Asset asset, string mimetype, Stream stream)
+    public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
     {
         HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"api/asset/{asset.Id}/upload");
         requestMessage.Content = new StreamContent(stream);
@@ -31,15 +33,17 @@ public partial class ClientContentService : IAssetStorage
         var response = await Client.SendAsync(requestMessage);
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task<Stream> GetStreamAsync(Asset asset)
+    public async Task<Result<Stream>> GetStreamAsync(Asset asset)
     {
         return await Client.GetStreamAsync($"api/asset/{asset.Id}/download");
     }
 
     //assets
-    public async Task<Asset?> GetAssetAsync(Guid id)
+    public async Task<Result<Asset>> GetAssetAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/asset/{id}");
 
@@ -47,54 +51,64 @@ public partial class ClientContentService : IAssetStorage
 
         if (restAsset == null)
         {
-            return null;
+            return Result.Ok();
         }
 
         return restAsset.ToModel();
     }
 
-    public async Task CreateAsync(Asset entity)
+    public async Task<Result> CreateAsync(Asset entity)
     {
         var response = await Client.PostAsJsonAsync($"api/asset", entity.ToRest());
 
         ResourceCreated? result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
+
+        return Result.Ok();
     }
 
-    public async Task PublishAsync(Asset asset)
+    public async Task<Result> PublishAsync(Asset asset)
     {
         var response = await Client.PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(Asset entity)
+    public async Task<Result> UpdateAsync(Asset entity)
     {
         var response = await Client.PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(Asset asset)
+    public async Task<Result> DeleteAsync(Asset asset)
     {
         var response = await Client.DeleteAsync($"api/asset/{asset.Id}");
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task ApplyMetadataAsync(Asset asset)
+    public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         var response = await Client.PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public async Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/asset/metadata", query, ApiJsonSerializerDefault.Options);
 
-        response.EnsureSuccessStatusCode();
+        response.EnsureSuccessStatusCode();        
 
         return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
     }

@@ -9,6 +9,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using MongoDB.Driver.Linq;
+using Results;
 
 namespace DragonFly.MongoDB;
 
@@ -29,19 +30,19 @@ public partial class MongoStorage : IAssetStorage
         return asset;
     }
 
-    public async Task<Asset?> GetAssetAsync(Guid id)
+    public async Task<Result<Asset>> GetAssetAsync(Guid id)
     {
         MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         if (asset == null)
         {
-            return null;
+            return Result.Ok();
         }
 
         return SetPreviewUrl(asset.ToModel());
     }
 
-    public async Task CreateAsync(Asset asset)
+    public async Task<Result> CreateAsync(Asset asset)
     {
         DateTime now = DateTimeService.Current();
 
@@ -58,9 +59,11 @@ public partial class MongoStorage : IAssetStorage
         await Assets.InsertOneAsync(mongoAsset);
 
         asset.Id = mongoAsset.Id;
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(Asset asset)
+    public async Task<Result> UpdateAsync(Asset asset)
     {
         await Assets.UpdateOneAsync(
                         Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
@@ -73,9 +76,11 @@ public partial class MongoStorage : IAssetStorage
                                                 .Set(x => x.ModifiedAt, DateTimeService.Current())
                                                 .Inc(x => x.Version, 1)
                                                 );
+
+        return Result.Ok();
     }
 
-    public async Task UploadAsync(Asset asset, string mimetype, Stream stream)
+    public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
     {        
         //upload new stream to asset
         await AssetData.UploadFromStreamAsync(asset.Id.ToString(), stream);
@@ -99,14 +104,16 @@ public partial class MongoStorage : IAssetStorage
         asset = await this.GetRequiredAssetAsync(asset.Id);
 
         await ApplyMetadataAsync(asset);
+
+        return Result.Ok();
     }
 
-    public async Task<Stream> GetStreamAsync(Asset asset)
+    public async Task<Result<Stream>> GetStreamAsync(Asset asset)
     {
         return await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString());
     }
 
-    public async Task<QueryResult<Asset>> QueryAsync(AssetQuery assetQuery)
+    public async Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery assetQuery)
     {
         IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
 
@@ -145,7 +152,7 @@ public partial class MongoStorage : IAssetStorage
         return queryResult;
     }
 
-    public async Task PublishAsync(Asset asset)
+    public async Task<Result> PublishAsync(Asset asset)
     {
         IEnumerable<IContentInterceptor> interceptors = Api.ServiceProvider.GetServices<IContentInterceptor>();
 
@@ -154,9 +161,11 @@ public partial class MongoStorage : IAssetStorage
         {
             await interceptor.OnPublishedAsync(asset);
         }
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(Asset asset)
+    public async Task<Result> DeleteAsync(Asset asset)
     {
         var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, asset.Id.ToString()));
 
@@ -166,9 +175,11 @@ public partial class MongoStorage : IAssetStorage
         }
 
         var result = await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id));
+
+        return Result.Ok();
     }
 
-    public async Task ApplyMetadataAsync(Asset asset)
+    public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         MongoAssetProcessingContext context = new MongoAssetProcessingContext(asset, Assets, AssetData);
 
@@ -179,9 +190,11 @@ public partial class MongoStorage : IAssetStorage
         {
             await processing.OnAssetChangedAsync(context);
         }
+
+        return Result.Ok();
     }
 
-    public Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query)
+    public Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
         {
@@ -192,6 +205,6 @@ public partial class MongoStorage : IAssetStorage
                                 assetStorage.ApplyMetadataAsync);
         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
+        return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
+using Results;
 
 namespace DragonFly.Client.Pages.BackgroundTasks;
 
@@ -23,7 +24,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     /// <summary>
     /// Tasks
     /// </summary>
-    public IDictionary<int, IBackgroundTaskInfo> Tasks { get; set; }
+    public IDictionary<int, BackgroundTaskInfo> Tasks { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
@@ -36,7 +37,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     {
         await base.OnInitializedAsync();
 
-        Channel = await BackgroundTaskService.StartNotificationProviderAsync();
+        Channel = (await BackgroundTaskService.StartNotificationProviderAsync()).Value;
         Channel.BackgroundTaskChanged +=
                                         async (state, task) =>
                                         {
@@ -60,7 +61,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
 
     protected override async Task RefreshActionAsync()
     {
-        Tasks = (await BackgroundTaskService.GetTasksAsync()).ToDictionary(x => x.Id);
+        Tasks = (await BackgroundTaskService.GetTasksAsync()).Value.ToDictionary(x => x.Id);
     }
 
     public async ValueTask DisposeAsync()

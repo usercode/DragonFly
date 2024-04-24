@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 /// <summary>
@@ -9,13 +11,13 @@ namespace DragonFly;
 /// </summary>
 public interface IAssetFolderStorage
 {
-    Task<AssetFolder?> GetAssetFolderAsync(Guid id);
+    Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id);
 
-    Task<QueryResult<AssetFolder>> QueryAsync(AssetFolderQuery query);
+    Task<Result<QueryResult<AssetFolder>>> QueryAsync(AssetFolderQuery query);
 
-    Task CreateAsync(AssetFolder folder);
+    Task<Result> CreateAsync(AssetFolder folder);
 
-    Task UpdateAsync(AssetFolder folder);
+    Task<Result> UpdateAsync(AssetFolder folder);
 
-    Task DeleteAsync(AssetFolder folder);
+    Task<Result> DeleteAsync(AssetFolder folder);
 }

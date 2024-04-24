@@ -4,6 +4,7 @@
 
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Results;
 
 namespace DragonFly.MongoDB;
 
@@ -12,7 +13,7 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : IAssetFolderStorage
 {
-    public async Task<AssetFolder?> GetAssetFolderAsync(Guid id)
+    public async Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id)
     {
         MongoAssetFolder? entity = await AssetFolders.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -24,7 +25,7 @@ public partial class MongoStorage : IAssetFolderStorage
         return entity.ToModel();
     }
 
-    public async Task<QueryResult<AssetFolder>> QueryAsync(AssetFolderQuery queryData)
+    public async Task<Result<QueryResult<AssetFolder>>> QueryAsync(AssetFolderQuery queryData)
     {
         var query = AssetFolders.AsQueryable();
 
@@ -52,7 +53,7 @@ public partial class MongoStorage : IAssetFolderStorage
         return new QueryResult<AssetFolder>() { Offset = queryData.Skip, Count = result.Count, Items = result };
     }
 
-    public async Task CreateAsync(AssetFolder folder)
+    public async Task<Result> CreateAsync(AssetFolder folder)
     {
         folder.CreatedAt = DateTimeService.Current();
         folder.ModifiedAt = folder.CreatedAt;
@@ -62,14 +63,18 @@ public partial class MongoStorage : IAssetFolderStorage
         await AssetFolders.InsertOneAsync(mongo);
 
         folder.Id = mongo.Id;
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(AssetFolder folder)
+    public async Task<Result> UpdateAsync(AssetFolder folder)
     {
         await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id), folder.ToMongo());
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(AssetFolder folder)
+    public async Task<Result> DeleteAsync(AssetFolder folder)
     {
         //Delete sub folders
         QueryResult<AssetFolder> subFolders = await QueryAsync(new AssetFolderQuery() { Parent = folder.Id });
@@ -82,7 +87,7 @@ public partial class MongoStorage : IAssetFolderStorage
         //Delete all assets
         while (true)
         {
-            var assets = await QueryAsync(new AssetQuery() { Folder = folder.Id });
+            QueryResult<Asset> assets = await QueryAsync(new AssetQuery() { Folder = folder.Id });
 
             if (assets.Count == 0)
             {
@@ -97,5 +102,7 @@ public partial class MongoStorage : IAssetFolderStorage
         
         //Delete folder
         await AssetFolders.DeleteOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id));
+
+        return Result.Ok();
     }
 }

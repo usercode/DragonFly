@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 /// <summary>
@@ -12,10 +14,10 @@ public interface IContentVersionStorage
     /// <summary>
     /// GetContentVersionsAsync
     /// </summary>
-    Task<IEnumerable<ContentVersionEntry>> GetContentVersionsAsync(string schema, Guid id);
+    Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id);
 
     /// <summary>
     /// GetContentByVersionAsync
     /// </summary>
-    Task<ContentItem?> GetContentByVersionAsync(string schema, Guid id);
+    Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id);
 }

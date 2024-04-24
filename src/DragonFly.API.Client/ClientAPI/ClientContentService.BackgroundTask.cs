@@ -4,6 +4,7 @@
 
 using System.Net.Http.Json;
 using DragonFly.API.Client.BackgroundTasks;
+using Results;
 
 namespace DragonFly.API.Client;
 
@@ -12,7 +13,7 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IBackgroundTaskService
 {
-    public async Task<IBackgroundTaskInfo[]> GetTasksAsync()
+    public async Task<Result<BackgroundTaskInfo[]>> GetTasksAsync()
     {
         var response = await Client.PostAsync("api/task/query", new StringContent(string.Empty));
 
@@ -28,14 +29,14 @@ public partial class ClientContentService : IBackgroundTaskService
         return result;
     }
 
-    public async Task CancelAsync(int id)
+    public async Task<Result> CancelAsync(int id)
     {
         var response = await Client.PostAsync($"api/task/{id}/cancel", new StringContent(string.Empty));
 
-        response.EnsureSuccessStatusCode();
+        return await response.ToResultAsync();
     }
 
-    public async Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync()
+    public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
         SignalRBackgroundTaskNotificationProvider provider = new SignalRBackgroundTaskNotificationProvider(NavigationManager);
 

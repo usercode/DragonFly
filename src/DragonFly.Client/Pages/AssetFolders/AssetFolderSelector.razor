@@ -73,6 +73,7 @@
     protected async Task RefreshAsync()
     {
         Folders = (await Storage.QueryAsync(new AssetFolderQuery() { Parent = RootFolder?.Id }))
+                            .Value                
                             .Items
                             .Select(x => new AssetFolderNode(x))
                             .ToList();

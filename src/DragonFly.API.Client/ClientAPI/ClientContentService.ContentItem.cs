@@ -4,6 +4,7 @@
 
 using System.Net.Http.Json;
 using DragonFly.Query;
+using Results;
 
 namespace DragonFly.API.Client;
 
@@ -12,19 +13,16 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IContentStorage
 {       
-    public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
+    public async Task<Result<ContentItem>> GetContentAsync(string schema, Guid id)
     {
         RestContentItem? entity = await Client.GetFromJsonAsync<RestContentItem>($"api/content/{schema}/{id}", ApiJsonSerializerDefault.Options);
 
-        if (entity == null)
-        {
-            return null;
-        }
+        ArgumentNullException.ThrowIfNull(entity);
 
         return entity.ToModel();
     }
 
-    public async Task CreateAsync(ContentItem entity)
+    public async Task<Result> CreateAsync(ContentItem entity)
     {
         var response = await Client.PostAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
@@ -32,43 +30,50 @@ public partial class ClientContentService : IContentStorage
 
         ResourceCreated? result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
-        if (result == null)
-        {
-            throw new Exception();
-        }
+        ArgumentNullException.ThrowIfNull(result);
 
         entity.Id = result.Id;
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(ContentItem entity)
+    public async Task<Result> UpdateAsync(ContentItem entity)
     {
         var response = await Client.PutAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(ContentItem entity)
+    public async Task<Result> DeleteAsync(ContentItem entity)
     {
         var response = await Client.DeleteAsync($"api/content/{entity.Schema.Name}/{entity.Id}");
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task PublishAsync(ContentItem entity)
+    public async Task<Result> PublishAsync(ContentItem entity)
     {
         var response = await Client.PostAsync($"api/content/{entity.Schema.Name}/{entity.Id}/publish", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task UnpublishAsync(ContentItem entity)
+    public async Task<Result> UnpublishAsync(ContentItem entity)
     {
         var response = await Client.PostAsync($"api/content/{entity.Schema.Name}/{entity.Id}/unpublish", new StringContent(string.Empty));
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery queryParameters)
+    public async Task<Result<QueryResult<ContentItem>>> QueryAsync(ContentQuery queryParameters)
     {
         HttpResponseMessage response = await Client.PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerDefault.Options);
 
@@ -77,7 +82,7 @@ public partial class ClientContentService : IContentStorage
         return queryResult.Convert(x => x.ToModel());
     }
 
-    public async Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
+    public async Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/publish", query, ApiJsonSerializerDefault.Options);
 
@@ -86,7 +91,7 @@ public partial class ClientContentService : IContentStorage
         return await response.Content.ReadFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
     }
 
-    public async Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
+    public async Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query)
     {
         var response = await Client.PostAsJsonAsync($"api/content/unpublish", query, ApiJsonSerializerDefault.Options);
 

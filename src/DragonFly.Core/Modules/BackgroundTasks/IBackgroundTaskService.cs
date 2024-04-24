@@ -2,13 +2,15 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 public interface IBackgroundTaskService
 {
-    Task<IBackgroundTaskInfo[]> GetTasksAsync();
+    Task<Result<BackgroundTaskInfo[]>> GetTasksAsync();
 
-    Task CancelAsync(int id);
+    Task<Result> CancelAsync(int id);
 
-    Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync();
+    Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync();
 }

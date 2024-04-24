@@ -63,28 +63,28 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 });
 
 //DragonFly services
-builder.Services.AddDragonFly()
-                    .AddImageWizard()
-                    .AddMongoDbStorage()
-                    .AddMongoDbIdentity()
-                    .AddApiKeys()
-                    .AddModels(x => x
-                                    .Add<Product2>()
-                                    .Add<Customer>()
-                                    )
-                    .Init(x =>
-                    {
-                           
-                    });
+builder.Services.AddDragonFly(x => x
+                                    .AddImageWizard()
+                                    .AddMongoDbStorage()
+                                    .AddMongoDbIdentity()
+                                    .AddApiKeys()
+                                    .AddModels(x => x
+                                                    .Add<Product2>()
+                                                    .Add<Customer>()
+                                                    )
+                                    .Init(x =>
+                                    {
+
+                                    }));
 
 //Blazor Server client
-builder.Services.AddDragonFlyClient()
-                    .AddIdentity()
-                    .AddApiKeys()
-                    .Init(x =>
-                    {
-                        x.Field().Add<HtmlField>().WithTinyMceView();
-                    });
+builder.Services.AddDragonFlyClient(x => x
+                                        .AddIdentity()
+                                        .AddApiKeys()
+                                        .Init(x =>
+                                        {
+                                            x.Field().Add<HtmlField>().WithTinyMceView();
+                                        }));
 
 var app = builder.Build();
 

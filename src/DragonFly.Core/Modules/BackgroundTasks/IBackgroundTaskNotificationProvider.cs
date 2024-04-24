@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public delegate Task BackgroundTaskHandler(BackgroundTaskStatusChange change, IBackgroundTaskInfo taskInfo);
+public delegate Task BackgroundTaskHandler(BackgroundTaskStatusChange change, BackgroundTaskInfo taskInfo);
 
 public interface IBackgroundTaskNotificationProvider : IAsyncDisposable
 {

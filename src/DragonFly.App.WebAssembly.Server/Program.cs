@@ -59,22 +59,22 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 });
 
 //DragonFly services
-builder.Services.AddDragonFly()
-                    .AddImageWizard()
-                    .AddRestApi()
-                    .AddMongoDbStorage()
-                    .AddMongoDbIdentity()
-                    .AddApiKeys()
-                    .AddBackgroundTaskHub()
-                    .AddModels(x => x
-                                    .Add<Product2>()
-                                    .Add<Customer>()
-                                    )
-                    .Init(x =>
-                    {
+builder.Services.AddDragonFly(x => x
+                                    .AddImageWizard()
+                                    .AddRestApi()
+                                    .AddMongoDbStorage()
+                                    .AddMongoDbIdentity()
+                                    .AddApiKeys()
+                                    .AddBackgroundTaskHub()
+                                    .AddModels(x => x
+                                                    .Add<Product2>()
+                                                    .Add<Customer>()
+                                                    )
+                                    .Init(x =>
+                                    {
                            
-                    })
-                    ;
+                                    })
+                                    );
 
 var app = builder.Build();
 

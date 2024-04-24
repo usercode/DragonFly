@@ -24,7 +24,7 @@ public sealed class LocalBackgroundTaskNotificationProvider : IBackgroundTaskNot
     /// </summary>
     public event BackgroundTaskHandler? BackgroundTaskChanged;
 
-    private async Task Manager_BackgroundTaskChanged(BackgroundTaskStatusChange arg1, IBackgroundTaskInfo arg2)
+    private async Task Manager_BackgroundTaskChanged(BackgroundTaskStatusChange arg1, BackgroundTaskInfo arg2)
     {
         if (BackgroundTaskChanged != null)
         {

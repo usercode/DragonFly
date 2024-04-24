@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Net.Http.Headers;
+using Results;
 
 namespace DragonFly.API;
 
@@ -19,23 +20,23 @@ static class AssetApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
 
-        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetPermissions.QueryAsset);
-        groupRoute.MapGet("{id:guid}", MapGet).RequirePermission(AssetPermissions.ReadAsset);
-        groupRoute.MapPost("", MapCreate).RequirePermission(AssetPermissions.CreateAsset);
-        groupRoute.MapPut("", MapUpdate).RequirePermission(AssetPermissions.UpdateAsset);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(AssetPermissions.DeleteAsset);
-        groupRoute.MapPost("{id:guid}/publish", MapPublish).RequirePermission(AssetPermissions.PublishAsset);
-        groupRoute.MapGet("{id:guid}/download", MapDownload).RequirePermission(AssetPermissions.DownloadAsset);
-        groupRoute.MapPost("{id:guid}/upload", MapUpload).RequirePermission(AssetPermissions.UploadAsset);
-        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata).RequirePermission(AssetPermissions.UpdateAsset);
-        groupRoute.MapPost("metadata", MapRefreshMetadataQuery).RequirePermission(AssetPermissions.UpdateAsset);
+        groupRoute.MapPost("query", MapQuery).Produces<QueryResult<RestAsset>>();
+        groupRoute.MapGet("{id:guid}", MapGet);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{id:guid}", MapDelete);
+        groupRoute.MapPost("{id:guid}/publish", MapPublish);
+        groupRoute.MapGet("{id:guid}/download", MapDownload);
+        groupRoute.MapPost("{id:guid}/upload", MapUpload);
+        groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata);
+        groupRoute.MapPost("metadata", MapRefreshMetadataQuery);
     }
 
-    private static async Task<QueryResult<RestAsset>> MapQuery(IAssetStorage storage, AssetQuery query)
+    private static async Task<IResult> MapQuery(IAssetStorage storage, AssetQuery query)
     {
-        QueryResult<Asset> queryResult = await storage.QueryAsync(query);
-
-        return queryResult.Convert(x => x.ToRest());
+        return (await storage.QueryAsync(query))
+                        .Then(x => Result.Ok(x.Value.Convert(x => x.ToRest())))
+                        .ToHttpResult();
     }
 
     private static async Task<Results<Ok<RestAsset>, NotFound>> MapGet(IAssetStorage storage, Guid id)
@@ -119,7 +120,7 @@ static class AssetApiExtensions
         return TypedResults.Stream(assetStream, contentType: asset.MimeType, entityTag: etag, enableRangeProcessing: true);
     }
 
-    private static async Task<Results<Ok, NotFound>> MapUpload(HttpContext context, IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapUpload(HttpContext context, IAssetStorage storage, Guid id)
     {
         if (context.Request.ContentType == null)
         {
@@ -133,27 +134,19 @@ static class AssetApiExtensions
             return TypedResults.NotFound();
         }
 
-        await storage.UploadAsync(asset, context.Request.ContentType, context.Request.Body);
-
-        return TypedResults.Ok();
+        return (await storage.UploadAsync(asset, context.Request.ContentType, context.Request.Body)).ToHttpResult();
     }
 
-    private static async Task<Results<Ok, NotFound>> MapRefreshMetadata(IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapRefreshMetadata(IAssetStorage storage, Guid id)
     {
-        Asset? asset = await storage.GetAssetAsync(id);
-
-        if (asset == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        await storage.ApplyMetadataAsync(asset);
-
-        return TypedResults.Ok();
+        return await storage
+                            .GetAssetAsync(id)
+                            .ThenAsync(x => storage.ApplyMetadataAsync(x.Value))
+                            .ToHttpResultAsync();
     }
 
-    private static async Task<IBackgroundTaskInfo> MapRefreshMetadataQuery(IAssetStorage storage, AssetQuery query)
+    private static async Task<IResult> MapRefreshMetadataQuery(IAssetStorage storage, AssetQuery query)
     {   
-        return await storage.ApplyMetadataAsync(query);
+        return (await storage.ApplyMetadataAsync(query)).ToHttpResult();
     }
 }

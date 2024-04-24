@@ -17,7 +17,7 @@ static class PermissionApiExtensions
         endpoints.MapPost("permission/query", MapQuery).RequirePermission();
     }
 
-    private static async Task<Ok<IEnumerable<Permission>>> MapQuery(IDragonFlyApi api)
+    private static Ok<IEnumerable<Permission>> MapQuery(IDragonFlyApi api)
     {
         IEnumerable<Permission> items = api.Permission().GetAll();
 

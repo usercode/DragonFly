@@ -17,12 +17,12 @@ static class ContentSchemaApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("schema");
 
-        groupRoute.MapPost("query", MapQuery).RequirePermission(SchemaPermissions.QuerySchema);
-        groupRoute.MapGet("{id:guid}", MapGetById).RequirePermission(SchemaPermissions.ReadSchema);
-        groupRoute.MapGet("{name}", MapGetByName).RequirePermission(SchemaPermissions.ReadSchema);
-        groupRoute.MapPost("", MapCreate).RequirePermission(SchemaPermissions.CreateSchema);
-        groupRoute.MapPut("", MapUpdate).RequirePermission(SchemaPermissions.UpdateSchema);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(SchemaPermissions.DeleteSchema);
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGetById);
+        groupRoute.MapGet("{name}", MapGetByName);
+        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPut("", MapUpdate);
+        groupRoute.MapDelete("{id:guid}", MapDelete);
     }
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(ISchemaStorage storage)

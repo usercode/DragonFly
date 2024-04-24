@@ -11,14 +11,14 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<DragonFly.App.WebAssembly.Client.App>("app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.AddDragonFlyClient()
+builder.AddDragonFlyClient(x => x
             .AddRestClient()
             .AddIdentity()
             .AddApiKeys()
             .Init(x =>
             {
                 x.Field().Add<HtmlField>().WithTinyMceView();
-            });
+            }));
 
 WebAssemblyHost host = builder.Build();
 

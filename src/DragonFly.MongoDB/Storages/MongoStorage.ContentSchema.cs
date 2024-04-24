@@ -6,6 +6,7 @@ using DragonFly.MongoDB.Index;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Results;
 
 namespace DragonFly.MongoDB;
 
@@ -14,7 +15,7 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : ISchemaStorage
 {
-    public async Task CreateAsync(ContentSchema schema)
+    public async Task<Result> CreateAsync(ContentSchema schema)
     {
         if (schema.Id == Guid.Empty)
         {
@@ -33,23 +34,29 @@ public partial class MongoStorage : ISchemaStorage
         schema.Id = mongo.Id;
 
         await CreateIndicesAsync(schema);
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(ContentSchema schema)
+    public async Task<Result> UpdateAsync(ContentSchema schema)
     {
         schema.ModifiedAt = DateTimeService.Current();
 
         await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo());
 
         await CreateIndicesAsync(schema);
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(ContentSchema schema)
+    public async Task<Result> DeleteAsync(ContentSchema schema)
     {
         await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id));
+
+        return Result.Ok();
     }
 
-    public async Task<QueryResult<ContentSchema>> QuerySchemasAsync()
+    public async Task<Result<QueryResult<ContentSchema>>> QuerySchemasAsync()
     {
         IList<MongoContentSchema> r = await ContentSchemas.AsQueryable()
                                                             .OrderBy(x => x.Name)
@@ -63,7 +70,7 @@ public partial class MongoStorage : ISchemaStorage
         };
     }
 
-    public async Task<ContentSchema?> GetSchemaAsync(string name)
+    public async Task<Result<ContentSchema?>> GetSchemaAsync(string name)
     {
         ArgumentNullException.ThrowIfNull(name);
 
@@ -77,7 +84,7 @@ public partial class MongoStorage : ISchemaStorage
         return schema.ToModel();
     }
 
-    public async Task<ContentSchema?> GetSchemaAsync(Guid id)
+    public async Task<Result<ContentSchema?>> GetSchemaAsync(Guid id)
     {
         MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
@@ -89,7 +96,7 @@ public partial class MongoStorage : ISchemaStorage
         return schema.ToModel();
     }
 
-    public async Task CreateIndicesAsync(ContentSchema schema)
+    public async Task<Result> CreateIndicesAsync(ContentSchema schema)
     {
         //index for drafts
         await CreateIndicesInternalAsync(GetMongoCollection(schema.Name, false));
@@ -126,5 +133,7 @@ public partial class MongoStorage : ISchemaStorage
                 }
             }
         }
+
+        return Result.Ok();
     }
 }

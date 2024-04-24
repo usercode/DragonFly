@@ -3,6 +3,7 @@
 // MIT License
 
 using Microsoft.AspNetCore.SignalR;
+using Results;
 
 namespace DragonFly.AspNetCore;
 
@@ -132,21 +133,22 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         }
     }
 
-    public Task<IBackgroundTaskInfo[]> GetTasksAsync()
+    public Task<Result<BackgroundTaskInfo[]>> GetTasksAsync()
     {
         lock (_syncObject)
         {
             return Task.FromResult(
+                        Result.Ok(
                                     Tasks
                                     .Values
                                     .Select(x => x.ToTaskInfo())
                                     .OrderBy(x => x.Id)
-                                    .Cast<IBackgroundTaskInfo>()
-                                    .ToArray());
+                                    .Cast<BackgroundTaskInfo>()
+                                    .ToArray()));
         }
     }
 
-    public Task CancelAsync(int id)
+    public async Task<Result> CancelAsync(int id)
     {
         lock (_syncObject)
         {
@@ -155,12 +157,12 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                 task.SetCanceling();
             }
 
-            return Task.CompletedTask;
+            return Result.Ok();
         }
     }
 
-    public Task<IBackgroundTaskNotificationProvider> StartNotificationProviderAsync()
+    public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
-        return Task.FromResult<IBackgroundTaskNotificationProvider>(new LocalBackgroundTaskNotificationProvider(this));
+        return new LocalBackgroundTaskNotificationProvider(this);
     }
 }

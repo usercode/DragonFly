@@ -2,19 +2,19 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
+using Results;
 
 namespace DragonFly;
 
 public interface IWebHookStorage
 {
-    Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query);
+    Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query);
 
-    Task<WebHook> GetAsync(Guid id);
+    Task<Result<WebHook?>> GetAsync(Guid id);
 
-    Task CreateAsync(WebHook webHook);
+    Task<Result> CreateAsync(WebHook webHook);
 
-    Task UpdateAsync(WebHook webHook);
+    Task<Result> UpdateAsync(WebHook webHook);
 
-    Task DeleteAsync(WebHook webHook);
+    Task<Result> DeleteAsync(WebHook webHook);
 }

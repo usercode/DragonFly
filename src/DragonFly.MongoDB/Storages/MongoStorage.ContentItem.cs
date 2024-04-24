@@ -8,6 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore;
+using Results;
 
 namespace DragonFly.MongoDB;
 
@@ -16,27 +17,6 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : IContentStorage
 {
-    public async Task<ContentItem?> GetContentAsync(string schema, Guid id)
-    {
-        ContentSchema? contentSchema = await GetSchemaAsync(schema);
-
-        if (contentSchema == null)
-        {
-            throw new Exception($"The schema '{schema}' doesn't exist.");
-        }
-
-        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
-
-        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
-
-        if (result == null)
-        {
-            return null;
-        }
-
-        return result.ToModel(contentSchema);
-    }
-
     public IMongoCollection<MongoContentItem> GetMongoCollection(string type, bool published = false)
     {
         string name = $"ContentItems_{type}";
@@ -70,7 +50,28 @@ public partial class MongoStorage : IContentStorage
         return items;
     }
 
-    public async Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query)
+    public async Task<Result<ContentItem>> GetContentAsync(string schema, Guid id)
+    {
+        ContentSchema? contentSchema = await GetSchemaAsync(schema);
+
+        if (contentSchema == null)
+        {
+            throw new Exception($"The schema '{schema}' doesn't exist.");
+        }
+
+        IMongoCollection<MongoContentItem> collection = GetMongoCollection(schema);
+
+        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
+
+        if (result == null)
+        {
+            return Result.Ok();
+        }
+
+        return result.ToModel(contentSchema);
+    }
+
+    public async Task<Result<QueryResult<ContentItem>>> QueryAsync(ContentQuery query)
     {
         ContentSchema? schema = await GetSchemaAsync(query.Schema);
 
@@ -209,7 +210,7 @@ public partial class MongoStorage : IContentStorage
         return queryResult;
     }
 
-    public async Task CreateAsync(ContentItem content)
+    public async Task<Result> CreateAsync(ContentItem content)
     {
         if (content.Id == Guid.Empty)
         {
@@ -238,9 +239,11 @@ public partial class MongoStorage : IContentStorage
         {
             await interceptor.OnCreatedAsync(content);
         }
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(ContentItem content)
+    public async Task<Result> UpdateAsync(ContentItem content)
     {
         ContentSchema? schema = await GetSchemaAsync(content.Schema.Name);
 
@@ -287,9 +290,11 @@ public partial class MongoStorage : IContentStorage
         {
             await interceptor.OnUpdatedAsync(content);
         }
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(ContentItem content)
+    public async Task<Result> DeleteAsync(ContentItem content)
     {
         await UnpublishAsync(content);
 
@@ -304,9 +309,11 @@ public partial class MongoStorage : IContentStorage
         {
             await interceptor.OnDeletedAsync(content);
         }
+
+        return Result.Ok();
     }
 
-    public async Task PublishAsync(ContentItem content)
+    public async Task<Result> PublishAsync(ContentItem content)
     {
         IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(content.Schema.Name, true);
@@ -352,9 +359,11 @@ public partial class MongoStorage : IContentStorage
         }
 
         Logger.LogInformation($"Content was published: {content.Schema.Name}/{content.Id}");
+
+        return Result.Ok();
     }
 
-    public async Task UnpublishAsync(ContentItem content)
+    public async Task<Result> UnpublishAsync(ContentItem content)
     {
         IMongoCollection<MongoContentItem> drafted = GetMongoCollection(content.Schema.Name, false);
         IMongoCollection<MongoContentItem> published = GetMongoCollection(content.Schema.Name, true);
@@ -383,9 +392,11 @@ public partial class MongoStorage : IContentStorage
                 Logger.LogError(ex, "Unpublish interceptor failed.");
             }
         }
+
+        return Result.Ok();
     }
 
-    public Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query)
+    public Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start(
                                                         $"Publish all {query.Schema}",
@@ -397,10 +408,10 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
                                                         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
+        return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
     }
 
-    public Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query)
+    public Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query)
     {
         BackgroundTask task = BackgroundTaskService.Start(
                                                         $"Unpublish all {query.Schema}",
@@ -412,6 +423,6 @@ public partial class MongoStorage : IContentStorage
                                                             await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
                                                         });
 
-        return Task.FromResult<IBackgroundTaskInfo>(task.ToTaskInfo());
+        return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using DragonFly.AspNetCore.Permissions;
+using System;
 
 namespace DragonFly.Client;
 
@@ -26,7 +27,7 @@ public static class DragonFlyClientExtensions
     /// Default modules:<br/>
     /// <see cref="ContentInitializer"/>, <see cref="AssetInitializer"/>, <see cref="WebHookInitializer"/>, <see cref="BackgroundTaskInitializer"/>, <see cref="SettingsInitializer"/>
     /// </summary>
-    public static IDragonFlyBuilder AddDragonFlyClient(this IServiceCollection services)
+    public static IServiceCollection AddDragonFlyClient(this IServiceCollection services, Action<IDragonFlyBuilder>? config = null)
     {
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder
@@ -47,6 +48,8 @@ public static class DragonFlyClientExtensions
         builder.Services.AddAuthorizationCore();
         builder.Services.AddScoped<AuthenticationStateProvider, BlazorClientAuthenticationStateProvider>();
 
-        return builder;
+        config?.Invoke(builder);
+
+        return services;
     }
 }

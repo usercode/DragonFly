@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 /// <summary>
@@ -10,15 +12,15 @@ namespace DragonFly;
 public interface ISchemaStorage
 {
     //Schema
-    Task<ContentSchema?> GetSchemaAsync(Guid id);
+    Task<Result<ContentSchema?>> GetSchemaAsync(Guid id);
 
-    Task<ContentSchema?> GetSchemaAsync(string name);
+    Task<Result<ContentSchema?>> GetSchemaAsync(string name);
 
-    Task CreateAsync(ContentSchema schema);
+    Task<Result> CreateAsync(ContentSchema schema);
 
-    Task UpdateAsync(ContentSchema schema);
+    Task<Result> UpdateAsync(ContentSchema schema);
 
-    Task DeleteAsync(ContentSchema schema);
+    Task<Result> DeleteAsync(ContentSchema schema);
 
-    Task<QueryResult<ContentSchema>> QuerySchemasAsync();
+    Task<Result<QueryResult<ContentSchema>>> QuerySchemasAsync();
 }

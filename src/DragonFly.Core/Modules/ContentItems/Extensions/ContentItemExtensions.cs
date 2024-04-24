@@ -22,11 +22,19 @@ public static class ContentItemExtensions
         return contentField;
     }
 
+    /// <summary>
+    /// Gets <typeparamref name="T"/> value from <see cref="SingleValueField{T}"/>.
+    /// </summary>
     public static T GetField<T>(this IContentElement contentItem, string name)
        where T : ContentField
     {
-        return (T)GetField(contentItem, name);
-    }
+        if (GetField(contentItem, name) is T field)
+        {
+            return field;
+        }
+
+        throw new Exception($"The field \"{name}\" can't cast to type \"{typeof(T).Name}\".");
+    }    
 
     public static bool TryGetField(this IContentElement contentElement, string name, [NotNullWhen(true)] out ContentField? contentField)
     {
@@ -60,14 +68,9 @@ public static class ContentItemExtensions
     /// </summary>
     public static T? GetValue<T>(this IContentElement contentItem, string name)
     {
-        ContentField field = GetField(contentItem, name);
+        var field = GetField<SingleValueField<T>>(contentItem, name);        
 
-        if (field is not SingleValueField<T> singleValueField)
-        {
-            throw new Exception($"The field \"{name}\" isn't a single value field.");
-        }
-
-        return singleValueField.Value;
+        return field.Value;
     }
 
     /// <summary>
@@ -85,24 +88,12 @@ public static class ContentItemExtensions
         return value;
     }
 
-    //public static T GetValueOrDefault<T>(this IContentElement contentItem, string name) where T : struct
-    //{
-    //    T? value = GetValue<T?>(contentItem, name);
-
-    //    if (value == null)
-    //    {
-    //        return default;
-    //    }
-
-    //    return (T)value;
-    //}
-
     /// <summary>
     /// Sets <typeparamref name="T"/> value to <see cref="SingleValueField{T}"/>.
     /// </summary>
     public static void SetValue<T>(this IContentElement contentItem, string name, T? value)
     {
-        ((SingleValueField<T>)contentItem.GetField(name)).Value = value;
+        contentItem.GetField<SingleValueField<T>>(name).Value = value;
     }
 
     public static ContentItem CreateContent(this ContentSchema schema)

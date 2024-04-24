@@ -5,6 +5,7 @@
 using DragonFly.Query;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
+using Results;
 
 namespace DragonFly.MongoDB;
 
@@ -13,7 +14,7 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public partial class MongoStorage : IWebHookStorage
 {
-    public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
+    public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
         IMongoQueryable<MongoWebHook> q = WebHooks.AsQueryable();
 
@@ -29,34 +30,40 @@ public partial class MongoStorage : IWebHookStorage
         return new QueryResult<WebHook>() { Count = items.Count, TotalCount = items.Count, Items = items };
     }
 
-    public async Task<WebHook> GetAsync(Guid id)
+    public async Task<Result<WebHook?>> GetAsync(Guid id)
     {
         MongoWebHook? result = await WebHooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         if(result == null)
         {
-            throw new Exception();
+            return Result.Ok();
         }
 
         return result.ToModel();
     }
 
-    public async Task CreateAsync(WebHook webHook)
+    public async Task<Result> CreateAsync(WebHook webHook)
     {
         MongoWebHook m = webHook.ToMongo();
 
         await WebHooks.InsertOneAsync(m);
 
         webHook.Id = m.Id;
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(WebHook webHook)
+    public async Task<Result> UpdateAsync(WebHook webHook)
     {
         await WebHooks.ReplaceOneAsync(Builders<MongoWebHook>.Filter.Eq(x=> x.Id, webHook.Id), webHook.ToMongo());
+
+        return Result.Ok();
     }
 
-    public async Task DeleteAsync(WebHook webHook)
+    public async Task<Result> DeleteAsync(WebHook webHook)
     {
         await WebHooks.DeleteOneAsync(Builders<MongoWebHook>.Filter.Eq(x => x.Id, webHook.Id));
+
+        return Result.Ok();
     }
 }

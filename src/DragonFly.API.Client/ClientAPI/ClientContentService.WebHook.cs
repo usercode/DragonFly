@@ -4,6 +4,7 @@
 
 using System.Net.Http.Json;
 using DragonFly.Query;
+using Results;
 
 namespace DragonFly.API.Client;
 
@@ -12,37 +13,40 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IWebHookStorage
 {
-    public async Task<WebHook> GetAsync(Guid id)
+    public async Task<Result<WebHook?>> GetAsync(Guid id)
     {
         var response = await Client.GetAsync($"api/webhook/{id}");
 
-        var e = await response.Content.ReadFromJsonAsync<RestWebHook>(ApiJsonSerializerDefault.Options);
-
-        return e.ToModel();
+        return await response.ToResultAsync<RestWebHook>(ApiJsonSerializerDefault.Options)
+                                .ThenAsync(x => Result.Ok(x.Value.ToModel()));
     }
 
-    public async Task CreateAsync(WebHook entity)
+    public async Task<Result> CreateAsync(WebHook entity)
     {
         var response = await Client.PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
         var result = await response.Content.ReadFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options) ?? throw new ArgumentNullException();
 
         entity.Id = result.Id;
+
+        return Result.Ok();
     }
 
-    public async Task UpdateAsync(WebHook entity)
+    public async Task<Result> UpdateAsync(WebHook entity)
     {
         var response = await Client.PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options);
 
-        response.EnsureSuccessStatusCode();
+        return await response.ToResultAsync();
     }
 
-    public async Task DeleteAsync(WebHook webHook)
+    public async Task<Result> DeleteAsync(WebHook webHook)
     {
-        await Client.DeleteAsync($"api/webhook/{webHook.Id}");
+        var response = await Client.DeleteAsync($"api/webhook/{webHook.Id}");
+
+        return await response.ToResultAsync();
     }
 
-    public async Task<QueryResult<WebHook>> QueryAsync(WebHookQuery query)
+    public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
         var response = await Client.PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerDefault.Options);
 

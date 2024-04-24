@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 /// <summary>
@@ -9,23 +11,23 @@ namespace DragonFly;
 /// </summary>
 public interface IAssetStorage
 {
-    Task<QueryResult<Asset>> QueryAsync(AssetQuery query);
+    Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery query);
 
-    Task<Asset?> GetAssetAsync(Guid id);
+    Task<Result<Asset>> GetAssetAsync(Guid id);
 
-    Task CreateAsync(Asset asset);
+    Task<Result> CreateAsync(Asset asset);
 
-    Task UpdateAsync(Asset asset);
+    Task<Result> UpdateAsync(Asset asset);
 
-    Task DeleteAsync(Asset asset);
+    Task<Result> DeleteAsync(Asset asset);
 
-    Task PublishAsync(Asset asset);
+    Task<Result> PublishAsync(Asset asset);
 
-    Task UploadAsync(Asset asset, string mimetype, Stream stream);
+    Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream);
 
-    Task<Stream> GetStreamAsync(Asset asset);
+    Task<Result<Stream>> GetStreamAsync(Asset asset);
 
-    Task ApplyMetadataAsync(Asset asset);
+    Task<Result> ApplyMetadataAsync(Asset asset);
 
-    Task<IBackgroundTaskInfo> ApplyMetadataAsync(AssetQuery query);
+    Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query);
 }

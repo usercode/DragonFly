@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Query;
+using Results;
 using System.Net.Http.Json;
 
 namespace DragonFly.API.Client;
@@ -12,14 +13,16 @@ namespace DragonFly.API.Client;
 /// </summary>
 public partial class ClientContentService : IAssetFolderStorage
 {
-    public async Task CreateAsync(AssetFolder folder)
+    public async Task<Result> CreateAsync(AssetFolder folder)
     {
         var response = await Client.PostAsJsonAsync("api/assetfolder", folder.ToRest(), ApiJsonSerializerDefault.Options);
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 
-    public async Task<AssetFolder?> GetAssetFolderAsync(Guid id)
+    public async Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id)
     {
         RestAssetFolder? entity = await Client.GetFromJsonAsync<RestAssetFolder>($"api/assetfolder/{id}", ApiJsonSerializerDefault.Options);
 
@@ -31,7 +34,7 @@ public partial class ClientContentService : IAssetFolderStorage
         return entity.ToModel();
     }
 
-    public async Task<QueryResult<AssetFolder>> QueryAsync(AssetFolderQuery query)
+    public async Task<Result<QueryResult<AssetFolder>>> QueryAsync(AssetFolderQuery query)
     {
         var response = await Client.PostAsJsonAsync("api/assetfolder/query", query, ApiJsonSerializerDefault.Options);
 
@@ -42,15 +45,17 @@ public partial class ClientContentService : IAssetFolderStorage
         return result.Convert(x => x.ToModel());
     }
 
-    public Task UpdateAsync(AssetFolder folder)
+    public Task<Result> UpdateAsync(AssetFolder folder)
     {
         throw new NotImplementedException();
     }
 
-    public async Task DeleteAsync(AssetFolder folder)
+    public async Task<Result> DeleteAsync(AssetFolder folder)
     {
         var response = await Client.DeleteAsync($"api/assetfolder/{folder.Id}");
 
         response.EnsureSuccessStatusCode();
+
+        return Result.Ok();
     }
 }

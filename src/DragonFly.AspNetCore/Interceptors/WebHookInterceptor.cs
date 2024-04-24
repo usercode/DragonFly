@@ -143,18 +143,18 @@ public class WebHookInterceptor : IContentInterceptor
         }
     }
 
-    public async Task OnCreatedAsync(ContentItem contentItem)
+    public Task OnCreatedAsync(ContentItem contentItem)
     {
-
+        return Task.CompletedTask;
     }
 
-    public async Task OnUpdatedAsync(ContentItem contentItem)
+    public Task OnUpdatedAsync(ContentItem contentItem)
     {
-
+        return Task.CompletedTask;
     }
 
-    public async Task OnDeletedAsync(ContentItem contentItem)
+    public Task OnDeletedAsync(ContentItem contentItem)
     {
-
+        return Task.CompletedTask;
     }
 }

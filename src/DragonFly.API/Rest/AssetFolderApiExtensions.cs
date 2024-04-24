@@ -18,10 +18,10 @@ static class AssetFolderApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("assetfolder");
 
-        groupRoute.MapPost("query", MapQuery).RequirePermission(AssetFolderPermissions.QueryAssetFolder);
-        groupRoute.MapGet("{id:guid}", MapGet).RequirePermission(AssetFolderPermissions.ReadAssetFolder);
-        groupRoute.MapDelete("{id:guid}", MapDelete).RequirePermission(AssetFolderPermissions.DeleteAssetFolder);
-        groupRoute.MapPost("", MapCreate).RequirePermission(AssetFolderPermissions.CreateAssetFolder);
+        groupRoute.MapPost("query", MapQuery);
+        groupRoute.MapGet("{id:guid}", MapGet);
+        groupRoute.MapDelete("{id:guid}", MapDelete);
+        groupRoute.MapPost("", MapCreate);
     }
 
     private static async Task<QueryResult<RestAssetFolder>> MapQuery(IAssetFolderStorage storage, AssetFolderQuery query)

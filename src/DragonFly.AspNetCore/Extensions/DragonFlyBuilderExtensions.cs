@@ -12,6 +12,8 @@ using DragonFly.Client;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Reflection;
 using DragonFly.AspNetCore.Permissions;
+using AspNetCore.Decorator;
+using DragonFly.AspNetCore.Permissions.Storages;
 
 namespace DragonFly.AspNetCore;
 
@@ -36,8 +38,10 @@ public static class DragonFlyBuilderExtensions
     /// <br/><br/>
     /// Default permissions:<br/>
     /// <see cref="ContentPermissions"/>, <see cref="SchemaPermissions"/>, <see cref="AssetPermissions"/>, <see cref="BackgroundTaskPermissions"/>, <see cref="WebHookPermissions"/>
+    /// <br /><br />
+    /// At the end all storage interfaces are decorated by permission storages.
     /// </summary>
-    public static IDragonFlyBuilder AddDragonFly(this IServiceCollection services)
+    public static IServiceCollection AddDragonFly(this IServiceCollection services, Action<IDragonFlyBuilder>? config = null)
     {
         IDragonFlyBuilder builder = new DragonFlyBuilder(services);
         builder
@@ -65,7 +69,17 @@ public static class DragonFlyBuilderExtensions
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
-        return builder;
+        config?.Invoke(builder);
+
+        //adds authorization layer to storages
+        builder.Services.Decorate<IContentStorage, ContentPermissionStorage>();
+        builder.Services.Decorate<IAssetStorage, AssetPermissionStorage>();
+        builder.Services.Decorate<IAssetFolderStorage, AssetFolderPermissionStorage>();
+        builder.Services.Decorate<ISchemaStorage, SchemaPermissionStorage>();
+        builder.Services.Decorate<IWebHookStorage, WebHookPermissionStorage>();
+        builder.Services.Decorate<IBackgroundTaskManager, BackgroundTaskPermissionStorage>();
+
+        return services;
     }
 
     /// <summary>
@@ -144,7 +158,7 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Maps the DragonFly manager. (Blazor Server)
     /// </summary>
-    public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder, Assembly[]? AdditionalAssemblies = null)
+    public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)
     {
         builder.Map("/manager", x =>
         {

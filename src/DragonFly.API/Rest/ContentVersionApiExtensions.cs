@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
+using Results;
 
 namespace DragonFly.API;
 
@@ -18,43 +19,34 @@ static class ContentVersionApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("content");
 
-        groupRoute.MapGet("{schema}/{id:guid}/version", MapGet);
-        groupRoute.MapGet("{schema}/{id:guid}/versions", MapQuery);
+        groupRoute.MapGet("{schema}/{id:guid}/version", MapGet).Produces<RestContentItem>();
+        groupRoute.MapGet("{schema}/{id:guid}/versions", MapQuery).Produces<QueryResult<ContentVersionEntry>>();
     }
 
-    private static async Task<Results<Ok<RestContentItem>, NotFound, ForbidHttpResult>> MapGet(IDragonFlyApi api, IContentVersionStorage contentStore, string schema, Guid id)
+    private static async Task<IResult> MapGet(IDragonFlyApi api, IContentVersionStorage contentStore, string schema, Guid id)
     {
-        if (await api.AuthorizeContentAsync(schema, ContentAction.Read) == false)
-        {
-            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
-        }
+        return (await contentStore.GetContentByVersionAsync(schema, id))
+                                    .Then(x =>
+                                    {
+                                        if (x.Value is not null)
+                                        {
+                                            x.Value.ApplySchema();
+                                            x.Value.Validate();
 
-        ContentItem? result = await contentStore.GetContentByVersionAsync(schema, id);
+                                            return Result.Ok<RestContentItem?>(x.Value.ToRest());
+                                        }
 
-        if (result == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        result.ApplySchema();
-        result.Validate();
-
-        RestContentItem restModel = result.ToRest();
-
-        return TypedResults.Ok(restModel);
+                                        return Result.Ok<RestContentItem?>();
+                                    })
+                                    .ToHttpResult();
     }
 
     private static async Task<Results<Ok<QueryResult<ContentVersionEntry>>, ForbidHttpResult>> MapQuery(IDragonFlyApi api, IContentVersionStorage storage, string schema, Guid id)
     {
-        if (await api.AuthorizeContentAsync(schema, ContentAction.Query) == false)
-        {
-            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
-        }
-
         var result = await storage.GetContentVersionsAsync(schema, id);
 
         QueryResult<ContentVersionEntry> queryResult = new QueryResult<ContentVersionEntry>();
-        queryResult.Items = result.ToList();
+        queryResult.Items = result.Value.ToList();
         queryResult.Offset = 0;
         queryResult.Count = queryResult.Items.Count;
         queryResult.TotalCount = queryResult.Items.Count;

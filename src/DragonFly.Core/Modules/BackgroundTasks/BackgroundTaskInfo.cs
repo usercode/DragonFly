@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// BackgroundTaskInfo
 /// </summary>
-public class BackgroundTaskInfo : IBackgroundTaskInfo
+public class BackgroundTaskInfo
 {
     /// <summary>
     /// Id

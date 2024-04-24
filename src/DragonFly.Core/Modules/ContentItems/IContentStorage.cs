@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Results;
+
 namespace DragonFly;
 
 /// <summary>
@@ -9,21 +11,21 @@ namespace DragonFly;
 /// </summary>
 public interface IContentStorage
 {    
-    Task<ContentItem?> GetContentAsync(string schema, Guid id);
+    Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id);
 
-    Task CreateAsync(ContentItem content);
+    Task<Result> CreateAsync(ContentItem content);
 
-    Task UpdateAsync(ContentItem content);
+    Task<Result> UpdateAsync(ContentItem content);
 
-    Task DeleteAsync(ContentItem content);
+    Task<Result> DeleteAsync(ContentItem content);
 
-    Task PublishAsync(ContentItem content);
+    Task<Result> PublishAsync(ContentItem content);
 
-    Task UnpublishAsync(ContentItem content);
+    Task<Result> UnpublishAsync(ContentItem content);
 
-    Task<QueryResult<ContentItem>> QueryAsync(ContentQuery query);
+    Task<Result<QueryResult<ContentItem>>> QueryAsync(ContentQuery query);
 
-    Task<IBackgroundTaskInfo> PublishQueryAsync(ContentQuery query);
+    Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query);
 
-    Task<IBackgroundTaskInfo> UnpublishQueryAsync(ContentQuery query);
+    Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query);
 }
