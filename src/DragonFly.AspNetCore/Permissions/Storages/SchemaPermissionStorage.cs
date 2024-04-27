@@ -10,10 +10,11 @@ namespace DragonFly.AspNetCore.Permissions;
 
 public class SchemaPermissionStorage : ISchemaStorage
 {
-    public SchemaPermissionStorage(ISchemaStorage storage, IDragonFlyApi api)
+    public SchemaPermissionStorage(ISchemaStorage storage, IDragonFlyApi api, IPrincipalContext principalContext)
     {
         Storage = storage;
         Api = api;
+        PrincipalContext = principalContext;
     }
 
     /// <summary>
@@ -22,37 +23,42 @@ public class SchemaPermissionStorage : ISchemaStorage
     private IDragonFlyApi Api { get; }
 
     /// <summary>
+    /// PrincipalContext
+    /// </summary>
+    private IPrincipalContext PrincipalContext { get; }
+
+    /// <summary>
     /// Storage
     /// </summary>
     private ISchemaStorage Storage { get; }
 
     public async Task<Result> CreateAsync(ContentSchema schema)
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.CreateSchema).ThenAsync(x => Storage.CreateAsync(schema));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.CreateSchema).ThenAsync(x => Storage.CreateAsync(schema));
     }
 
     public async Task<Result> DeleteAsync(ContentSchema schema)
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.DeleteSchema).ThenAsync(x => Storage.DeleteAsync(schema));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.DeleteSchema).ThenAsync(x => Storage.DeleteAsync(schema));
     }
 
     public async Task<Result<ContentSchema?>> GetSchemaAsync(Guid id)
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.ReadSchema).ThenAsync(x => Storage.GetSchemaAsync(id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.ReadSchema).ThenAsync(x => Storage.GetSchemaAsync(id));
     }
 
     public async Task<Result<ContentSchema?>> GetSchemaAsync(string name)
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.ReadSchema).ThenAsync(x => Storage.GetSchemaAsync(name));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.ReadSchema).ThenAsync(x => Storage.GetSchemaAsync(name));
     }
 
     public async Task<Result<QueryResult<ContentSchema>>> QuerySchemasAsync()
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.QuerySchema).ThenAsync(x => Storage.QuerySchemasAsync());
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.QuerySchema).ThenAsync(x => Storage.QuerySchemasAsync());
     }
 
     public async Task<Result> UpdateAsync(ContentSchema schema)
     {
-        return await Api.AuthorizeAsync(SchemaPermissions.UpdateSchema).ThenAsync(x => Storage.UpdateAsync(schema));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, SchemaPermissions.UpdateSchema).ThenAsync(x => Storage.UpdateAsync(schema));
     }
 }

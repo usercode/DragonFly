@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using DragonFly.AspNetCore;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Results;
 
 namespace DragonFly.API;
 
@@ -18,29 +19,22 @@ static class AssetFolderApiExtensions
     {
         RouteGroupBuilder groupRoute = endpoints.MapGroup("assetfolder");
 
-        groupRoute.MapPost("query", MapQuery);
-        groupRoute.MapGet("{id:guid}", MapGet);
+        groupRoute.MapPost("query", MapQuery).Produces<QueryResult<RestAssetFolder>>();
+        groupRoute.MapGet("{id:guid}", MapGet).Produces<RestAssetFolder>();
         groupRoute.MapDelete("{id:guid}", MapDelete);
-        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapPost("", MapCreate).Produces<ResourceCreated>();
     }
 
-    private static async Task<QueryResult<RestAssetFolder>> MapQuery(IAssetFolderStorage storage, AssetFolderQuery query)
+    private static async Task<IResult> MapQuery(IAssetFolderStorage storage, AssetFolderQuery query)
     {
-        QueryResult<AssetFolder> queryResult = await storage.QueryAsync(query);
-
-        return queryResult.Convert(x => x.ToRest());
+        return (await storage.QueryAsync(query))
+                            .Then(x => Result.Ok(x.Value.Convert(i => i.ToRest())))
+                            .ToHttpResult();
     }
 
-    private static async Task<Results<Ok<RestAssetFolder>, NotFound>> MapGet(IAssetFolderStorage storage, Guid id)
+    private static async Task<IResult> MapGet(IAssetFolderStorage storage, Guid id)
     {
-        AssetFolder? entity = await storage.GetAssetFolderAsync(id);
-
-        if (entity == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        return TypedResults.Ok(entity.ToRest());
+        return (await storage.GetAssetFolderAsync(id)).ToHttpResult();
     }
 
     private static async Task<ResourceCreated> MapCreate(IAssetFolderStorage storage, RestAssetFolder input)
@@ -52,7 +46,7 @@ static class AssetFolderApiExtensions
         return new ResourceCreated() { Id = model.Id };
     }
 
-    private static async Task<Results<Ok, NotFound>> MapDelete(IAssetFolderStorage storage, Guid id)
+    private static async Task<IResult> MapDelete(IAssetFolderStorage storage, Guid id)
     {
         AssetFolder? entity = await storage.GetAssetFolderAsync(id);
 

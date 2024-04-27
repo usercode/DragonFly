@@ -3,16 +3,18 @@
 // MIT License
 
 
+using DragonFly.Permissions;
 using Results;
 
 namespace DragonFly.AspNetCore.Permissions.Storages;
 
 public class ContentVersionPermissionStorage : IContentVersionStorage
 {
-    public ContentVersionPermissionStorage(IContentVersionStorage storage, IDragonFlyApi api)
+    public ContentVersionPermissionStorage(IContentVersionStorage storage, IDragonFlyApi api, IPrincipalContext principalContext)
     {
         Storage = storage;
         Api = api;
+        PrincipalContext = principalContext;
     }
 
     /// <summary>
@@ -21,19 +23,24 @@ public class ContentVersionPermissionStorage : IContentVersionStorage
     private IDragonFlyApi Api { get; }
 
     /// <summary>
+    /// PrincipalContext
+    /// </summary>
+    private IPrincipalContext PrincipalContext { get; }
+
+    /// <summary>
     /// Storage
     /// </summary>
     private IContentVersionStorage Storage { get; }
 
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)
     {
-        return await Api.AuthorizeContentAsync(schema, DragonFly.Permissions.ContentAction.Read)
-                        .ThenAsync(x => Storage.GetContentByVersionAsync(schema, id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read))
+                                            .ThenAsync(x => Storage.GetContentByVersionAsync(schema, id));
     }
 
     public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
-        return await Api.AuthorizeContentAsync(schema, DragonFly.Permissions.ContentAction.Read)
-                        .ThenAsync(x => Storage.GetContentVersionsAsync(schema, id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read))
+                                            .ThenAsync(x => Storage.GetContentVersionsAsync(schema, id));
     }
 }

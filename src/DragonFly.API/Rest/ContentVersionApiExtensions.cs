@@ -23,7 +23,7 @@ static class ContentVersionApiExtensions
         groupRoute.MapGet("{schema}/{id:guid}/versions", MapQuery).Produces<QueryResult<ContentVersionEntry>>();
     }
 
-    private static async Task<IResult> MapGet(IDragonFlyApi api, IContentVersionStorage contentStore, string schema, Guid id)
+    private static async Task<IResult> MapGet(IContentVersionStorage contentStore, string schema, Guid id)
     {
         return (await contentStore.GetContentByVersionAsync(schema, id))
                                     .Then(x =>
@@ -41,7 +41,7 @@ static class ContentVersionApiExtensions
                                     .ToHttpResult();
     }
 
-    private static async Task<Results<Ok<QueryResult<ContentVersionEntry>>, ForbidHttpResult>> MapQuery(IDragonFlyApi api, IContentVersionStorage storage, string schema, Guid id)
+    private static async Task<IResult> MapQuery(IContentVersionStorage storage, string schema, Guid id)
     {
         var result = await storage.GetContentVersionsAsync(schema, id);
 

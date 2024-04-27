@@ -8,9 +8,11 @@ namespace DragonFly.AspNetCore.Permissions;
 
 public class PrincipalContext : IPrincipalContext
 {
+    private static readonly AsyncLocal<ClaimsPrincipal?> _current = new();
+
     public ClaimsPrincipal? Current
     {
-        get => Principal.Current;
-        set => Principal.Current = value;
+        get => _current.Value;
+        set => _current.Value = value;
     }
 }

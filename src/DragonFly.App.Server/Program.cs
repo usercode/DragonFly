@@ -62,6 +62,9 @@ builder.Services.Configure<KestrelServerOptions>(options =>
     options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
 });
 
+builder.Services.AddRazorComponents()
+                           .AddInteractiveServerComponents();
+
 //DragonFly services
 builder.Services.AddDragonFly(x => x
                                     .AddImageWizard()
@@ -179,7 +182,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseDragonFly();
 //app.UseDragonFlyManager();
-app.UseDragonFlyManager<App>();
+//app.UseDragonFlyManager<App>();
 app.UseSwagger();
 app.UseSwaggerUI();
 

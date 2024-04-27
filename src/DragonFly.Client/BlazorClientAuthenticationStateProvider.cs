@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Components.Authorization;
 
 namespace DragonFly.AspNetCore.Permissions;
 
-public class BlazorClientAuthenticationStateProvider : AuthenticationStateProvider
+public class BlazorClientAuthenticationStateProvider : AuthenticationStateProvider, IPrincipalContext
 {
     private ClaimsPrincipal Current { get; set; } = new ClaimsPrincipal();
+
+    ClaimsPrincipal IPrincipalContext.Current { get => Current; set => Current = value; }
 
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {

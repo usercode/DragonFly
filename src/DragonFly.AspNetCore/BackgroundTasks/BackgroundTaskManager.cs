@@ -12,10 +12,11 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class BackgroundTaskManager : IBackgroundTaskManager
 {
-    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
+    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IPrincipalContext principalContext, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
     {
         Hub = hub;
         ServiceProvider = serviceProvider;
+        PrincipalContext = principalContext;
         Logger = logger;
     }
 
@@ -28,6 +29,11 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     /// ServiceProvider
     /// </summary>
     public IServiceProvider ServiceProvider { get; }
+
+    /// <summary>
+    /// PrincipalContext
+    /// </summary>
+    public IPrincipalContext PrincipalContext { get; }
 
     /// <summary>
     /// Logger
@@ -63,7 +69,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
     {
         lock (_syncObject)
         {
-            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, Principal.Current, BackgroundTask.Current);
+            BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PrincipalContext.Current, BackgroundTask.Current);
 
             backgroundTask.Task = Task.Run(async () =>
             {
@@ -148,7 +154,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         }
     }
 
-    public async Task<Result> CancelAsync(int id)
+    public Task<Result> CancelAsync(int id)
     {
         lock (_syncObject)
         {
@@ -157,12 +163,12 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                 task.SetCanceling();
             }
 
-            return Result.Ok();
+            return Task.FromResult(Result.Ok());
         }
     }
 
-    public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
+    public Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
-        return new LocalBackgroundTaskNotificationProvider(this);
+        return Task.FromResult<Result<IBackgroundTaskNotificationProvider>>(new LocalBackgroundTaskNotificationProvider(this));
     }
 }

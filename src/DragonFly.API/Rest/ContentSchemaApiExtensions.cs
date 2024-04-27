@@ -27,24 +27,33 @@ static class ContentSchemaApiExtensions
 
     private static async Task<QueryResult<RestContentSchema>> MapQuery(ISchemaStorage storage)
     {
-        QueryResult<ContentSchema> queryResult = await storage
-                                                .QuerySchemasAsync();
+        QueryResult<ContentSchema> queryResult = await storage.QuerySchemasAsync();
 
         return queryResult.Convert(x => x.ToRest());
     }
 
-    private static async Task<RestContentSchema> MapGetById(ISchemaStorage storage, Guid id)
+    private static async Task<RestContentSchema?> MapGetById(ISchemaStorage storage, Guid id)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(id);
+
+        if (schema == null)
+        {
+            return null;
+        }
 
         RestContentSchema restSchema = schema.ToRest();
 
         return restSchema;
     }
 
-    private static async Task<RestContentSchema> MapGetByName(ISchemaStorage storage, string name)
+    private static async Task<RestContentSchema?> MapGetByName(ISchemaStorage storage, string name)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(name);
+
+        if (schema == null)
+        {
+            return null;
+        }
 
         RestContentSchema restSchema = schema.ToRest();
 
@@ -57,9 +66,7 @@ static class ContentSchemaApiExtensions
 
         await storage.CreateAsync(m);
 
-        var result = new ResourceCreated() { Id = m.Id };
-
-        return result;
+        return new ResourceCreated() { Id = m.Id };
     }
 
     private static async Task MapUpdate(ISchemaStorage storage, RestContentSchema input)
@@ -72,6 +79,11 @@ static class ContentSchemaApiExtensions
     private static async Task MapDelete(ISchemaStorage storage, Guid id)
     {
         ContentSchema? schema = await storage.GetSchemaAsync(id);
+        
+        if (schema == null)
+        {
+            return;
+        }
 
         await storage.DeleteAsync(schema);
     }

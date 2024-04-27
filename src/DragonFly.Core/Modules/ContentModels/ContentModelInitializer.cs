@@ -13,24 +13,32 @@ namespace DragonFly.Model;
 public class ContentModelInitializer<TContentModel> : IInitialize
     where TContentModel : IContentModel
 {
+    public ContentModelInitializer(ISchemaStorage schemaStorage)
+    {
+        SchemaStorage = schemaStorage;
+    }
+
+    /// <summary>
+    /// SchemaStorage
+    /// </summary>
+    private ISchemaStorage SchemaStorage { get; }
+
     public async Task ExecuteAsync(IDragonFlyApi api)
     {
-        ISchemaStorage storage = api.ServiceProvider.GetRequiredService<ISchemaStorage>();
-
         ContentSchema schema = TContentModel.Schema;
 
         //override existing schema
-        ContentSchema? existingSchema = await storage.GetSchemaAsync(schema.Name);
+        ContentSchema? existingSchema = await SchemaStorage.GetSchemaAsync(schema.Name);
 
         if (existingSchema != null)
         {
             schema.Id = existingSchema.Id;
 
-            await storage.UpdateAsync(schema);
+            await SchemaStorage.UpdateAsync(schema);
         }
         else
         {
-            await storage.CreateAsync(schema);
+            await SchemaStorage.CreateAsync(schema);
         }
     }
 }

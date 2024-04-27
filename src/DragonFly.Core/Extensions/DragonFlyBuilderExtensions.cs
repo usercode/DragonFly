@@ -49,7 +49,6 @@ public static class DragonFlyBuilderExtensions
     /// </summary>
     public static IDragonFlyBuilder AddDragonFlyCore(this IServiceCollection services)
     {
-        return new DragonFlyBuilder(services)
-                                            .AddCore();
+        return new DragonFlyBuilder(services).AddCore();
     }
 }

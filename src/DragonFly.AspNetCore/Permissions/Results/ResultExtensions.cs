@@ -28,14 +28,7 @@ public static class ResultExtensions
     {
         if (result.IsSucceeded)
         {
-            if (result.Value is null)
-            {
-                return TypedResults.NotFound();
-            }
-            else
-            {
-                return TypedResults.Ok(result.Value);
-            }
+            return TypedResults.Ok(result.Value);
         }
         else if (result.Error is PermissionError)
         {

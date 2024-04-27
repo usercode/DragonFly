@@ -21,8 +21,8 @@ static class AssetApiExtensions
         RouteGroupBuilder groupRoute = endpoints.MapGroup("asset");
 
         groupRoute.MapPost("query", MapQuery).Produces<QueryResult<RestAsset>>();
-        groupRoute.MapGet("{id:guid}", MapGet);
-        groupRoute.MapPost("", MapCreate);
+        groupRoute.MapGet("{id:guid}", MapGet).Produces<RestAsset>();
+        groupRoute.MapPost("", MapCreate).Produces<ResourceCreated>();
         groupRoute.MapPut("", MapUpdate);
         groupRoute.MapDelete("{id:guid}", MapDelete);
         groupRoute.MapPost("{id:guid}/publish", MapPublish);
@@ -39,7 +39,7 @@ static class AssetApiExtensions
                         .ToHttpResult();
     }
 
-    private static async Task<Results<Ok<RestAsset>, NotFound>> MapGet(IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapGet(IAssetStorage storage, Guid id)
     {
         Asset? entity = await storage.GetAssetAsync(id);
 
@@ -83,7 +83,7 @@ static class AssetApiExtensions
         await storage.UpdateAsync(asset);
     }
 
-    private static async Task<Results<Ok, NotFound>> MapPublish(IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapPublish(IAssetStorage storage, Guid id)
     {
         Asset? entity = await storage.GetAssetAsync(id);
 
@@ -97,7 +97,7 @@ static class AssetApiExtensions
         return TypedResults.Ok();
     }
 
-    private static async Task<Results<FileStreamHttpResult, NotFound, StatusCodeHttpResult>> MapDownload(HttpContext context, IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapDownload(HttpContext context, IAssetStorage storage, Guid id)
     {
         Asset? asset = await storage.GetAssetAsync(id);
 

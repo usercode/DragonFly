@@ -7,10 +7,7 @@ using DragonFly.Core;
 using DragonFly.Init;
 using DragonFly.Permissions;
 using DragonFly.AspNetCore.Builders;
-using Microsoft.AspNetCore.Components.Authorization;
-using DragonFly.Client;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Reflection;
 using DragonFly.AspNetCore.Permissions;
 using AspNetCore.Decorator;
 using DragonFly.AspNetCore.Permissions.Storages;
@@ -50,9 +47,6 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
-
-        builder.Services.AddRazorComponents()
-                            .AddInteractiveServerComponents();
 
         builder.Services.TryAddSingleton<IDateTimeService, LocalDateTimeService>();
         builder.Services.TryAddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
@@ -117,7 +111,8 @@ public static class DragonFlyBuilderExtensions
                                             }
                                         }
 
-                                        Principal.Current = context.User;
+                                        IPrincipalContext principal = context.RequestServices.GetRequiredService<IPrincipalContext>();
+                                        principal.Current = context.User;
 
                                         await next(context);
                                     });
@@ -158,25 +153,25 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Maps the DragonFly manager. (Blazor Server)
     /// </summary>
-    public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)
-    {
-        builder.Map("/manager", x =>
-        {
-            x.UseRouting();
-            x.UseAuthentication();
-            x.UseAuthorization();
-            x.UseAntiforgery();
-            x.UseEndpoints(endpoints =>
-            {
-                endpoints
-                        .MapRazorComponents<TApp>()
-                        .AddInteractiveServerRenderMode()
-                        .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
-            });
-        });
+    //public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)
+    //{
+    //    builder.Map("/manager", x =>
+    //    {
+    //        x.UseRouting();
+    //        x.UseAuthentication();
+    //        x.UseAuthorization();
+    //        x.UseAntiforgery();
+    //        x.UseEndpoints(endpoints =>
+    //        {
+    //            endpoints
+    //                    .MapRazorComponents<TApp>()
+    //                    .AddInteractiveServerRenderMode()
+    //                    .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
+    //        });
+    //    });
 
-        return builder;
-    }
+    //    return builder;
+    //}
 
     /// <summary>
     /// Adds an endpoint to DragonFly.

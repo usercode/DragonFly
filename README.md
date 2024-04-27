@@ -195,13 +195,13 @@ builder.Services.Configure<DragonFlyOptions>(Configuration.GetSection("General")
 builder.Services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
 
 //add DragonFly services
-builder.Services.AddDragonFly()
-                  .AddImageWizard()
-                  .AddRestApi()
-                  .AddMongoDbStorage()
-                  .AddMongoDbIdentity()
-                  .AddBlockField()
-                  .AddApiKeys();
+builder.Services.AddDragonFly(x => x
+                      .AddImageWizard()
+                      .AddRestApi()
+                      .AddMongoDbStorage()
+                      .AddMongoDbIdentity()
+                      .AddBlockField()
+                      .AddApiKeys());
 
 var app = builder.Build();
 
@@ -227,11 +227,10 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<DragonFly.App.Client.App>("app");
 
 //Register DragonFly components
-builder.AddDragonFlyClient()
-          .AddRestApi()
-          .AddBlockField()
-          .AddIdentity()
-          .AddApiKeys();
+builder.AddDragonFlyClient(x => x
+                        .AddRestClient()
+                        .AddIdentity()
+                        .AddApiKeys());
 
 WebAssemblyHost host = builder.Build();
 

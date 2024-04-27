@@ -6,15 +6,15 @@ namespace AspNetCore.Decorator;
 
 public static class ServicesExtensions
 {
-    public static IServiceCollection Decorate<TService, TDecorator>(this IServiceCollection services)
+    public static IServiceCollection Decorate<TService, TDecorator>(this IServiceCollection services, ServiceLifetime? lifetime = null)
        where TDecorator : TService
     {
-        return Decorate(services, typeof(TService), typeof(TDecorator));
+        return Decorate(services, typeof(TService), typeof(TDecorator), lifetime);
     }
 
-    public static IServiceCollection Decorate(this IServiceCollection services, Type serviceType, Type decoratorType)
+    public static IServiceCollection Decorate(this IServiceCollection services, Type serviceType, Type decoratorType, ServiceLifetime? lifetime = null)
     {
-        if (TryDecorate(services, serviceType, decoratorType) == false)
+        if (TryDecorate(services, serviceType, decoratorType, lifetime) == false)
         {
             throw new Exception("There aren't services to decorate!");
         }
@@ -22,13 +22,13 @@ public static class ServicesExtensions
         return services;
     }
 
-    public static bool TryDecorate<TService, TDecorator>(this IServiceCollection services)
+    public static bool TryDecorate<TService, TDecorator>(this IServiceCollection services, ServiceLifetime? lifetime = null)
         where TDecorator : TService    
     {
-        return TryDecorate(services, typeof(TService), typeof(TDecorator));
+        return TryDecorate(services, typeof(TService), typeof(TDecorator), lifetime);
     }
 
-    public static bool TryDecorate(this IServiceCollection services, Type serviceType, Type decoratorType)
+    public static bool TryDecorate(this IServiceCollection services, Type serviceType, Type decoratorType, ServiceLifetime? lifetime = null)
     {
         //find services to decorate
         IEnumerable<ServiceDescriptorEntry> descriptors = services
@@ -44,13 +44,15 @@ public static class ServicesExtensions
         //decorate found services
         foreach (ServiceDescriptorEntry entry in descriptors)
         {
+            ServiceLifetime currentLifetime = lifetime ?? entry.ServiceDescriptor.Lifetime;
+
             //ImplementationInstance
             if (entry.ServiceDescriptor.ImplementationInstance != null)
             {
                 services[entry.Position] = ServiceDescriptor.Describe(
                                                                 serviceType,
                                                                 provider => ActivatorUtilities.CreateInstance(provider, decoratorType, entry.ServiceDescriptor.ImplementationInstance),
-                                                                entry.ServiceDescriptor.Lifetime);
+                                                                currentLifetime);
             }
             //ImplementationType
             else if (entry.ServiceDescriptor.ImplementationType != null)
@@ -62,7 +64,7 @@ public static class ServicesExtensions
                 services[entry.Position] = ServiceDescriptor.Describe(
                                                                 serviceType,
                                                                 provider => ActivatorUtilities.CreateInstance(provider, decoratorType, provider.GetRequiredService(decoratedServiceType)),
-                                                                entry.ServiceDescriptor.Lifetime);
+                                                                currentLifetime);
             }
             //ImplementationFactory
             else if (entry.ServiceDescriptor.ImplementationFactory != null)
@@ -72,7 +74,7 @@ public static class ServicesExtensions
                 services[entry.Position] = ServiceDescriptor.Describe(
                                                                 serviceType,
                                                                 provider => ActivatorUtilities.CreateInstance(provider, decoratorType, factory(provider)),
-                                                                entry.ServiceDescriptor.Lifetime);
+                                                                currentLifetime);
             }
             else
             {

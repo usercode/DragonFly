@@ -12,11 +12,19 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class CreateContentPermissionsInitializer : IPostInitialize
 {
+    public CreateContentPermissionsInitializer(ISchemaStorage schemaStorage)
+    {
+        SchemaStorage = schemaStorage;
+    }
+
+    /// <summary>
+    /// SchemaStorage
+    /// </summary>
+    private ISchemaStorage SchemaStorage { get; }
+
     public async Task ExecuteAsync(IDragonFlyApi api)
     {
-        ISchemaStorage schemaStorage = api.ServiceProvider.GetRequiredService<ISchemaStorage>();
-
-        QueryResult<ContentSchema> result = await schemaStorage.QuerySchemasAsync();
+        QueryResult<ContentSchema> result = await SchemaStorage.QuerySchemasAsync();
 
         foreach (ContentSchema schema in result.Items)
         {

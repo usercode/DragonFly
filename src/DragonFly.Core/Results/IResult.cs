@@ -29,6 +29,4 @@ public interface IResult<TResult>
     public static abstract TResult Failed(Exception exception);
 
     public static abstract TResult Failed(IError error);
-
-    
 }

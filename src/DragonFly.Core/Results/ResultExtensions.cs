@@ -13,7 +13,6 @@ public static class ResultExtensions
         if (result.IsSucceeded)
         {
             return action(result);
-
         }
         else
         {
@@ -28,7 +27,6 @@ public static class ResultExtensions
         if (result.IsSucceeded)
         {
             return await action(result);
-
         }
         else
         {
@@ -45,7 +43,6 @@ public static class ResultExtensions
         if (r.IsSucceeded)
         {
             return action(r);
-
         }
         else
         {
@@ -62,7 +59,6 @@ public static class ResultExtensions
         if (r.IsSucceeded)
         {
             return await action(r);
-
         }
         else
         {

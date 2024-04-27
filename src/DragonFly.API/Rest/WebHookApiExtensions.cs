@@ -6,7 +6,9 @@ using DragonFly.AspNetCore;
 using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Results;
 
 namespace DragonFly.API;
 
@@ -22,16 +24,21 @@ static class WebHookApiExtensions
         groupRoute.MapPut("", MapUpdate).RequirePermission(WebHookPermissions.UpdateWebHook);
     }
 
-    private static async Task<QueryResult<RestWebHook>> MapQuery(IWebHookStorage storage)
+    private static async Task<IResult> MapQuery(IWebHookStorage storage)
     {
-        QueryResult<WebHook> queryResult = await storage.QueryAsync(new WebHookQuery());
-
-        return queryResult.Convert(x => x.ToRest());
+        return await storage.QueryAsync(new WebHookQuery())
+                            .ThenAsync(x => Result.Ok(x.Value.Convert(i => i.ToRest())))
+                            .ToHttpResultAsync();
     }
 
-    private static async Task<RestWebHook> MapGet(IWebHookStorage storage, Guid id)
+    private static async Task<RestWebHook?> MapGet(IWebHookStorage storage, Guid id)
     {
-        WebHook result = await storage.GetAsync(id);
+        WebHook? result = await storage.GetAsync(id);
+
+        if (result == null)
+        {
+            return null;
+        }
 
         RestWebHook restModel = result.ToRest();
 

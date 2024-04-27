@@ -25,14 +25,12 @@ class LoginService : ILoginService
         MongoIdentityStore store,
         IPasswordHashGenerator passwordHashGenerator,
         IPrincipalContext principalContext,
-        IHttpContextAccessor httpcontextaccessor,
-        AuthenticationStateProvider authenticationStateProvider)
+        IHttpContextAccessor httpcontextaccessor)
     {
         Store = store;
         PasswordHashGenerator = passwordHashGenerator;
         HttpContextAccessor = httpcontextaccessor;
         PrincipalContext = principalContext;
-        AuthenticationStateProvider = authenticationStateProvider;
     }
 
     /// <summary>
@@ -54,11 +52,6 @@ class LoginService : ILoginService
     /// PrincipalContext
     /// </summary>
     public IPrincipalContext PrincipalContext { get; }
-
-    /// <summary>
-    /// AuthenticationStateProvider
-    /// </summary>
-    public AuthenticationStateProvider AuthenticationStateProvider { get; }
 
     public async Task<LoginResult> LoginAsync(string username, string password, bool isPersistent)
     {

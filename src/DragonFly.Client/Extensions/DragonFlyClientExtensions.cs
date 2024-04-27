@@ -40,13 +40,15 @@ public static class DragonFlyClientExtensions
             .Init<SettingsInitializer>()
            ;
 
+        builder.Services.AddAuthorizationCore();
         builder.Services.AddBlazorStrap();
         
         builder.Services.TryAddSingleton(ComponentManager.Default);
         builder.Services.TryAddSingleton(AssetPreviewManager.Default);
 
-        builder.Services.AddAuthorizationCore();
-        builder.Services.AddScoped<AuthenticationStateProvider, BlazorClientAuthenticationStateProvider>();
+        builder.Services.AddScoped<BlazorClientAuthenticationStateProvider>();
+        builder.Services.AddScoped<AuthenticationStateProvider>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
+        //builder.Services.AddScoped<IPrincipalContext>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
 
         config?.Invoke(builder);
 

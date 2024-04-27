@@ -9,10 +9,11 @@ namespace DragonFly.AspNetCore.Permissions.Storages;
 
 public class BackgroundTaskPermissionStorage : IBackgroundTaskManager
 {
-    public BackgroundTaskPermissionStorage(IBackgroundTaskManager storage, IDragonFlyApi api)
+    public BackgroundTaskPermissionStorage(IBackgroundTaskManager storage, IDragonFlyApi api, IPrincipalContext principalContext)
     {
         Storage = storage;
         Api = api;
+        PrincipalContext = principalContext;
     }
 
     /// <summary>
@@ -21,23 +22,28 @@ public class BackgroundTaskPermissionStorage : IBackgroundTaskManager
     private IDragonFlyApi Api { get; }
 
     /// <summary>
+    /// PrincipalContext
+    /// </summary>
+    private IPrincipalContext PrincipalContext { get; }
+
+    /// <summary>
     /// Storage
     /// </summary>
     private IBackgroundTaskManager Storage { get; }
 
     public async Task<Result> CancelAsync(int id)
     {
-        return await Api.AuthorizeAsync(BackgroundTaskPermissions.CancelBackgroundTask).ThenAsync(x => Storage.CancelAsync(id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.CancelBackgroundTask).ThenAsync(x => Storage.CancelAsync(id));
     }
 
     public async Task<Result<BackgroundTaskInfo[]>> GetTasksAsync()
     {
-        return await Api.AuthorizeAsync(BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.GetTasksAsync());
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.GetTasksAsync());
     }
 
     public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
-        return await Api.AuthorizeAsync(BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.StartNotificationProviderAsync());
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.StartNotificationProviderAsync());
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
