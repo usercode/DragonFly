@@ -24,8 +24,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddSingleton<DataSeeding>();
 
 //DragonFly services
-builder.Services.AddDragonFly()
+builder.Services.AddDragonFly(x => x
                     .AddImageWizard()
+                    .AddBackgroundTaskHub()
                     .AddRestApi()
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
@@ -33,7 +34,7 @@ builder.Services.AddDragonFly()
                     .AddModels(x => x
                         .Add<BlogPostModel>()
                         .Add<StandardPageModel>()
-                        );
+                        ));
 
 //builder.Services.Configure<KestrelServerOptions>(options =>
 //{
@@ -57,11 +58,7 @@ if (env.IsDevelopment())
     app.UseWebAssemblyDebugging();
 }
 
-app.UseDragonFly(x => x
-                        .MapImageWizard(requireAuthorization : false)
-                        .MapApiKey()
-                        .MapIdentity()
-                        .MapRestApi());
+app.UseDragonFly();
 app.UseDragonFlyManager();
 app.UseStatusCodePagesWithReExecute("/StatusCode/{0}");
 app.UseStaticFiles();
