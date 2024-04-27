@@ -25,7 +25,7 @@ builder.Services.AddSingleton<DataSeeding>();
 
 //DragonFly services
 builder.Services.AddDragonFly(x => x
-                    .AddImageWizard()
+                    .AddImageWizard(requireAuthorization: false)
                     .AddBackgroundTaskHub()
                     .AddRestApi()
                     .AddMongoDbStorage()
