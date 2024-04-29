@@ -12,18 +12,12 @@ namespace DragonFly.AspNetCore;
 /// </summary>
 public class BackgroundTaskManager : IBackgroundTaskManager
 {
-    public BackgroundTaskManager(IHubContext<BackgroundTaskHub> hub, IPrincipalContext principalContext, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
+    public BackgroundTaskManager(IPrincipalContext principalContext, IServiceProvider serviceProvider, ILogger<BackgroundTaskManager> logger)
     {
-        Hub = hub;
         ServiceProvider = serviceProvider;
         PrincipalContext = principalContext;
         Logger = logger;
     }
-
-    /// <summary>
-    /// Hub
-    /// </summary>
-    public IHubContext<BackgroundTaskHub> Hub { get; }
 
     /// <summary>
     /// ServiceProvider
@@ -56,8 +50,6 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         {
             await BackgroundTaskChanged(state, task);
         }
-
-        await Hub.Clients.All.SendAsync("TaskChanged", state, task);
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)
@@ -147,9 +139,8 @@ public class BackgroundTaskManager : IBackgroundTaskManager
                         Result.Ok(
                                     Tasks
                                     .Values
-                                    .Select(x => x.ToTaskInfo())
+                                    .Select(x => (BackgroundTaskInfo)x)
                                     .OrderBy(x => x.Id)
-                                    .Cast<BackgroundTaskInfo>()
                                     .ToArray()));
         }
     }

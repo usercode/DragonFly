@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using DragonFly.AspNetCore.Permissions;
 using AspNetCore.Decorator;
 using DragonFly.AspNetCore.Permissions.Storages;
+using Microsoft.AspNetCore.SignalR;
 
 namespace DragonFly.AspNetCore;
 
@@ -49,7 +50,8 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddAuthorization();
 
         builder.Services.TryAddSingleton<IDateTimeService, LocalDateTimeService>();
-        builder.Services.TryAddSingleton<IBackgroundTaskManager, BackgroundTaskManager>();
+        builder.Services.TryAddSingleton<BackgroundTaskManager>();
+        builder.Services.TryAddSingleton<IBackgroundTaskManager>(x => x.GetRequiredService<BackgroundTaskManager>());
         builder.Services.TryAddSingleton<IBackgroundTaskService>(x => x.GetRequiredService<IBackgroundTaskManager>());
 
         builder.Services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
@@ -124,7 +126,7 @@ public static class DragonFlyBuilderExtensions
                                         foreach (DragonFlyEndpointHandler endpointHandler in endpointHandlers)
                                         {
                                             endpointHandler(e);
-                                        }                                       
+                                        }
                                     });
                                 }
             );
@@ -193,6 +195,17 @@ public static class DragonFlyBuilderExtensions
         builder.AddEndpoint(x => x.MapHub<BackgroundTaskHub>("/background-task-hub")
                                                       .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
                                                       .WithDisplayName("DragonFly.BackgroundTask.Hub"));
+
+        builder.PostInit(x =>
+        {
+            var backgroundManager = x.ServiceProvider.GetRequiredService<BackgroundTaskManager>();
+            var hub = x.ServiceProvider.GetRequiredService<IHubContext<BackgroundTaskHub>>();
+
+            backgroundManager.BackgroundTaskChanged += async (state, task) =>
+            {
+                await hub.Clients.All.SendAsync("TaskChanged", state, task);
+            };
+        });
 
         return builder;
     }

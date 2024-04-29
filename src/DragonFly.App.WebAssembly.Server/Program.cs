@@ -60,7 +60,7 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 
 //DragonFly services
 builder.Services.AddDragonFly(x => x
-                                    .AddImageWizard()
+                                    .AddImageWizard(requireAuthorization: false)
                                     .AddRestApi()
                                     .AddMongoDbStorage()
                                     .AddMongoDbIdentity()
