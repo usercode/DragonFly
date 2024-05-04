@@ -4,7 +4,7 @@
 
 
 using DragonFly.Permissions;
-using Results;
+using SmartResults;
 
 namespace DragonFly.AspNetCore.Permissions.Storages;
 

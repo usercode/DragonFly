@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 
@@ -31,7 +31,7 @@ public partial class MongoStorage : IContentVersionStorage
 
         if (contentItem == null)
         {
-            return Result.Ok();
+            return Result.Ok<ContentItem?>();
         }
 
         ContentSchema? contentSchema = await GetSchemaAsync(schema);

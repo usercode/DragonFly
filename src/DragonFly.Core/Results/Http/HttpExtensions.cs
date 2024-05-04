@@ -4,9 +4,8 @@
 
 using System.Net.Http.Json;
 using System.Text.Json;
-using DragonFly.Core.Results.Http;
 
-namespace Results;
+namespace SmartResults;
 
 public static class HttpExtensions
 {
@@ -42,7 +41,7 @@ public static class HttpExtensions
 
             ArgumentNullException.ThrowIfNull(error);
 
-            return Result.Failed(error);
+            return Result<T>.Failed(error);
         }
     }
 }

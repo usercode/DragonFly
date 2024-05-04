@@ -6,7 +6,7 @@ using DragonFly.AspNetCore;
 using DragonFly.Permissions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
-using Results;
+using SmartResults;
 
 namespace DragonFly.API;
 

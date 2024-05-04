@@ -3,7 +3,7 @@
 // MIT License
 
 using Microsoft.AspNetCore.SignalR;
-using Results;
+using SmartResults;
 
 namespace DragonFly.AspNetCore;
 

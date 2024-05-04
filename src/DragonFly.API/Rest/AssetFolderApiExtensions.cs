@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using DragonFly.AspNetCore;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Results;
+using SmartResults;
 
 namespace DragonFly.API;
 

@@ -4,29 +4,34 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-namespace Results;
+namespace SmartResults;
 
 public interface IResult<TResult>
 {
     /// <summary>
-    /// IsFailed
+    /// Is result failed?
     /// </summary>
     [MemberNotNullWhen(true, nameof(Error))]
-    public bool IsFailed => Error is not null;
+    public bool IsFailed { get; }
 
     /// <summary>
-    /// IsSucceeded
+    /// Is result succeeded?
     /// </summary>
     [MemberNotNullWhen(false, nameof(Error))]
-    public bool IsSucceeded => Error is null;
+    public bool IsSucceeded { get; }
 
+    /// <summary>
+    /// Error
+    /// </summary>
     public IError? Error { get; }
 
+    /// <summary>
+    /// Ok
+    /// </summary>
     public static abstract TResult Ok();
 
-    public static abstract TResult Failed(string message);
-
-    public static abstract TResult Failed(Exception exception);
-
+    /// <summary>
+    /// Failed
+    /// </summary>
     public static abstract TResult Failed(IError error);
 }

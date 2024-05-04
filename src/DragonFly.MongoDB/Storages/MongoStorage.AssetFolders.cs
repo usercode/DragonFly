@@ -4,7 +4,7 @@
 
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 

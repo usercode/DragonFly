@@ -194,7 +194,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.AddEndpoint(x => x.MapHub<BackgroundTaskHub>("/background-task-hub")
                                                       .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
-                                                      .WithDisplayName("DragonFly.BackgroundTask.Hub"));
+                                                      .WithDisplayName("DragonFly.BackgroundTaskHub"));
 
         builder.PostInit(x =>
         {

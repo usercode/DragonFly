@@ -5,7 +5,7 @@
 using DragonFly.Query;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 
@@ -34,9 +34,9 @@ public partial class MongoStorage : IWebHookStorage
     {
         MongoWebHook? result = await WebHooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
-        if(result == null)
+        if (result == null)
         {
-            return Result.Ok();
+            return Result.Ok<WebHook?>();
         }
 
         return result.ToModel();

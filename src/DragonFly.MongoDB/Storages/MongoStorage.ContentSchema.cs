@@ -6,7 +6,7 @@ using DragonFly.MongoDB.Index;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 

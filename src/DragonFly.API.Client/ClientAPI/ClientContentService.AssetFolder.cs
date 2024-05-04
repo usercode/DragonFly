@@ -3,7 +3,7 @@
 // MIT License
 
 using DragonFly.Query;
-using Results;
+using SmartResults;
 using System.Net.Http.Json;
 
 namespace DragonFly.API.Client;

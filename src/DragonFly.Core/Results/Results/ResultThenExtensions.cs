@@ -2,9 +2,9 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-namespace Results;
+namespace SmartResults;
 
-public static class ResultExtensions
+public static class ResultThenExtensions
 {
     public static TResultOut Then<TResultIn, TResultOut>(this TResultIn result, Func<TResultIn, TResultOut> action)
         where TResultIn : IResult<TResultIn>

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Results;
+using SmartResults;
 
 namespace DragonFly.AspNetCore;
 

@@ -1,4 +1,4 @@
-﻿namespace Results;
+﻿namespace SmartResults;
 
 /// <summary>
 /// Error

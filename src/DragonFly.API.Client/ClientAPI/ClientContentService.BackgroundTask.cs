@@ -4,7 +4,7 @@
 
 using System.Net.Http.Json;
 using DragonFly.API.Client.BackgroundTasks;
-using Results;
+using SmartResults;
 
 namespace DragonFly.API.Client;
 

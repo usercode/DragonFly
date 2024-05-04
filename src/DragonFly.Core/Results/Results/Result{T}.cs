@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Results;
+namespace SmartResults;
 
 /// <summary>
 /// Result
@@ -14,13 +14,13 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
 
     private Result(IError error)
     {
-        Error = error;
+        _error = error;
     }
 
     private readonly T _value = default!;
 
     /// <summary>
-    /// Value
+    /// Gets the result value.
     /// </summary>
     public T Value
     {
@@ -35,19 +35,27 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
         }
     }
 
-    /// <summary>
-    /// Errors
-    /// </summary>
-    public IError? Error { get; }
+    private readonly IError _error = default!;
 
     /// <summary>
-    /// IsFailed
+    /// Error
+    /// </summary>
+    public IError? Error 
+    { 
+        get
+        {
+            return _error;
+        }
+    }
+
+    /// <summary>
+    /// Is result failed?
     /// </summary>
     [MemberNotNullWhen(true, nameof(Error))]
     public bool IsFailed => Error is not null;
 
     /// <summary>
-    /// IsSucceeded
+    /// Is result succeeded?
     /// </summary>
     [MemberNotNullWhen(false, nameof(Error))]
     public bool IsSucceeded => Error is null;
@@ -74,46 +82,16 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
     {
         if (IsFailed)
         {
-            return $"Errors: {Error}";
+            return $"Error: {Error}";
         }
         else
         {
             return $"{Value}";
         }
-    }
+    }   
 
     /// <summary>
-    /// Match
-    /// </summary>
-    public void Match(Action<T> succeeded, Action<IError> failed)
-    {
-        if (IsSucceeded)
-        {
-            succeeded(Value);
-        }
-        else
-        {
-            failed(Error);
-        }
-    }
-
-    /// <summary>
-    /// Match
-    /// </summary>
-    public TResult Match<TResult>(Func<T, TResult> succeeded, Func<IError, TResult> failed)
-    {
-        if (IsSucceeded)
-        {
-            return succeeded(Value);
-        }
-        else
-        {
-            return failed(Error);
-        }
-    }
-
-    /// <summary>
-    /// Ok
+    /// Creates a succeeded result.
     /// </summary>
     public static Result<T> Ok()
     {
@@ -121,7 +99,7 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
     }
 
     /// <summary>
-    /// Ok
+    /// Creates a succeeded result with value.
     /// </summary>
     public static Result<T> Ok(T value)
     {
@@ -129,23 +107,23 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
     }
 
     /// <summary>
-    /// Failed
+    /// Creates a failed result.
     /// </summary>
     public static Result<T> Failed(string message)
     {
-        return new Result<T>(new Error("", message));
+        return new Result<T>(new Error(message));
     }
 
     /// <summary>
-    /// Failed
+    /// Creates a failed result.
     /// </summary>
     public static Result<T> Failed(Exception exception)
     {
-        return new Result<T>(new Error("", exception.Message, exception));
+        return new Result<T>(new Error(exception.Message, exception));
     }
 
     /// <summary>
-    /// Failed
+    /// Creates a failed result.
     /// </summary>
     public static Result<T> Failed(IError error)
     {
@@ -161,16 +139,16 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
     {
         if (result.IsFailed)
         {
-            throw new Exception("");
+            throw new Exception(result.Error.Message);
         }
 
         return result.Value;
     }
 
-    public static implicit operator Result<T>(Result _)
-    {
-        return new Result<T>();
-    }
+    //public static implicit operator Result<T>(Result _)
+    //{
+    //    return new Result<T>();
+    //}
 
     public static bool operator ==(Result<T> left, Result<T> right)
     {

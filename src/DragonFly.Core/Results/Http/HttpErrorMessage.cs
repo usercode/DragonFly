@@ -2,9 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Results;
-
-namespace DragonFly.Core.Results.Http;
+using SmartResults;
 
 public class HttpErrorMessage : IError
 {

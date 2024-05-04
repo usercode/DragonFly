@@ -3,7 +3,7 @@
 // MIT License
 
 using Microsoft.AspNetCore.Authorization;
-using Results;
+using SmartResults;
 using System.Security.Claims;
 
 namespace DragonFly;

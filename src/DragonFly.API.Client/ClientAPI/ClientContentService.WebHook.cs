@@ -4,7 +4,7 @@
 
 using System.Net.Http.Json;
 using DragonFly.Query;
-using Results;
+using SmartResults;
 
 namespace DragonFly.API.Client;
 

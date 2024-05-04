@@ -1,14 +1,14 @@
-﻿namespace Results;
+﻿namespace SmartResults;
 
 /// <summary>
 /// Error
 /// </summary>
-public class Error(string errorCode, string message, Exception? exception = null) : IError
+public class Error(string message, Exception? exception = null) : IError
 {
-    /// <summary>
-    /// ErrorCode
-    /// </summary>
-    public string ErrorCode { get; } = errorCode;
+    public static Error FromException(Exception ex)
+    {
+        return new Error(ex.Message, ex);
+    }
 
     /// <summary>
     /// Message

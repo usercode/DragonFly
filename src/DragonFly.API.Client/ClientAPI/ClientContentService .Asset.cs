@@ -5,7 +5,7 @@
 using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using DragonFly.Query;
-using Results;
+using SmartResults;
 using System.Reflection.Metadata.Ecma335;
 
 namespace DragonFly.API.Client;
@@ -51,7 +51,7 @@ public partial class ClientContentService : IAssetStorage
 
         if (restAsset == null)
         {
-            return Result.Ok();
+            return Result.Ok<Asset>();
         }
 
         return restAsset.ToModel();

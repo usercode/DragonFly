@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
-using Results;
+using SmartResults;
 
 namespace DragonFly.Client.Pages.BackgroundTasks;
 

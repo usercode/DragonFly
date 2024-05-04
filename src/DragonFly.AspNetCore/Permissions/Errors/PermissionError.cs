@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Results;
+using SmartResults;
 
 namespace DragonFly.AspNetCore;
 
@@ -12,7 +12,7 @@ namespace DragonFly.AspNetCore;
 public class PermissionError : Error
 {
     public PermissionError(Permission permission)
-        : base("", $"Access denied for \"{permission.Name}\"")
+        : base($"Access denied for \"{permission.Name}\"")
     {
         Permission = permission;
     }

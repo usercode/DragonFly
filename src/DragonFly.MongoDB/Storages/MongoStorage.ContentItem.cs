@@ -8,7 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using DragonFly.AspNetCore;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 
@@ -65,7 +65,7 @@ public partial class MongoStorage : IContentStorage
 
         if (result == null)
         {
-            return Result.Ok();
+            return Result.Ok<ContentItem>();
         }
 
         return result.ToModel(contentSchema);

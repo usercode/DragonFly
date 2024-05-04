@@ -9,7 +9,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.GridFS;
 using MongoDB.Driver.Linq;
-using Results;
+using SmartResults;
 
 namespace DragonFly.MongoDB;
 
@@ -36,7 +36,7 @@ public partial class MongoStorage : IAssetStorage
 
         if (asset == null)
         {
-            return Result.Ok();
+            return Result.Ok<Asset>();
         }
 
         return SetPreviewUrl(asset.ToModel());
