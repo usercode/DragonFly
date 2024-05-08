@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.MongoDB.Storages;
 using DragonFly.Query;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -9,10 +10,34 @@ using MongoDB.Driver.Linq;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// MongoStorage
+/// ContentStructureMongoStorage
 /// </summary>
-public partial class MongoStorage : IStructureStorage
+public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
 {
+    public ContentStructureMongoStorage(MongoClient client, IDateTimeService dateTimeService)
+        : base(client)
+    {
+        DateTimeService = dateTimeService;
+
+        ContentStructures = Client.Database.GetCollection<MongoContentStructure>("ContentStructures");
+        ContentNodes = Client.Database.GetCollection<MongoContentNode>("ContentNodes");
+    }
+
+    /// <summary>
+    /// ContentStructures
+    /// </summary>
+    public IMongoCollection<MongoContentStructure> ContentStructures { get; }
+
+    /// <summary>
+    /// ContentNodes
+    /// </summary>
+    public IMongoCollection<MongoContentNode> ContentNodes { get; }
+
+    /// <summary>
+    /// DateTimeService
+    /// </summary>
+    private IDateTimeService DateTimeService { get; }
+
     public async Task CreateAsync(ContentStructure structure)
     {
         if (structure.Id == Guid.Empty)

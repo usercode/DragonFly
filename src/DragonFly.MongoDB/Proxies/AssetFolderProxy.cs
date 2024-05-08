@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Generator;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.MongoDB;
 
@@ -26,7 +27,8 @@ internal partial class AssetFolderProxy : AssetFolder
 
         _loaded = true;
 
-        AssetFolder? result = await MongoStorage.Default.GetAssetFolderAsync(Id);
+        IAssetFolderStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<IAssetFolderStorage>();
+        AssetFolder? result = await storage.GetAssetFolderAsync(Id);
 
         if (result == null)
         {

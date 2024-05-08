@@ -169,7 +169,7 @@ public class ProxyGenerator : IIncrementalGenerator
                 },
                 isPartial: true,
                 isSealed: true,
-                baseTypes: new[] { "DragonFly.Generator.IProxyObject" });
+                baseTypes: ["DragonFly.Generator.IProxyObject"]);
             }, useFileScope: true);
 
             ctx.AddSource($"{ns}.{className}.g.cs", builder.ToString());

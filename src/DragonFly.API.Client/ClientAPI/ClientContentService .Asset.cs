@@ -6,7 +6,6 @@ using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using DragonFly.Query;
 using SmartResults;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DragonFly.API.Client;
 

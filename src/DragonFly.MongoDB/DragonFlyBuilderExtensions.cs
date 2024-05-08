@@ -16,12 +16,12 @@ public static class DragonFlyBuilderExtensions
     /// Adds MongoDB storage service.<br />
     /// <br />
     /// Default services:<br />
-    /// <see cref="IContentStorage"/> -> <see cref="MongoStorage"/><br />
-    /// <see cref="IContentVersionStorage"/> -> <see cref="MongoStorage"/><br />
-    /// <see cref="ISchemaStorage"/> -> <see cref="MongoStorage"/><br />
-    /// <see cref="IAssetStorage"/> -> <see cref="MongoStorage"/><br />
-    /// <see cref="IAssetFolderStorage"/> -> <see cref="MongoStorage"/><br />
-    /// <see cref="IWebHookStorage"/> -> <see cref="MongoStorage"/><br />
+    /// <see cref="IContentStorage"/> -> <see cref="ContentMongoStorage"/><br />
+    /// <see cref="IContentVersionStorage"/> -> <see cref="ContentVersionMongoStorage"/><br />
+    /// <see cref="ISchemaStorage"/> -> <see cref="SchemaMongoStorage"/><br />
+    /// <see cref="IAssetStorage"/> -> <see cref="AssetMongoStorage"/><br />
+    /// <see cref="IAssetFolderStorage"/> -> <see cref="AssetFolderMongoStorage"/><br />
+    /// <see cref="IWebHookStorage"/> -> <see cref="WebHookMongoStorage"/><br />
     /// </summary>
     public static IDragonFlyBuilder AddMongoDbStorage(this IDragonFlyBuilder builder, Action<MongoDbOptions>? options = null)
     {
@@ -30,14 +30,14 @@ public static class DragonFlyBuilderExtensions
             builder.Services.Configure(options);
         }
 
-        builder.Services.AddSingleton<MongoStorage>();
-        builder.Services.AddSingleton<IContentStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<IContentVersionStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<ISchemaStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<IStructureStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<IAssetStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<IAssetFolderStorage>(x => x.GetRequiredService<MongoStorage>());
-        builder.Services.AddSingleton<IWebHookStorage>(x => x.GetRequiredService<MongoStorage>());
+        builder.Services.AddSingleton<MongoClient>();
+        builder.Services.AddTransient<IContentStorage, ContentMongoStorage>();
+        builder.Services.AddTransient<IContentVersionStorage, ContentVersionMongoStorage>();
+        builder.Services.AddTransient<ISchemaStorage, SchemaMongoStorage>();
+        builder.Services.AddTransient<IAssetStorage, AssetMongoStorage>();
+        builder.Services.AddTransient<IAssetFolderStorage, AssetFolderMongoStorage>();
+        builder.Services.AddTransient<IWebHookStorage, WebHookMongoStorage>();
+        builder.Services.AddTransient<IStructureStorage, ContentStructureMongoStorage>();
 
         builder.Services.AddSingleton(MongoFieldManager.Default);
         builder.Services.AddSingleton(MongoIndexManager.Default);
@@ -56,13 +56,11 @@ public static class DragonFlyBuilderExtensions
             api.MongoQuery().AddDefaults();
         });
 
-        builder.PostInit<CreateIndexInitializer>();
+        builder.PostInit<AssetIndexInitializer>();
+        builder.PostInit<ContentIndexInitializer>();
+        builder.PostInit<SchemaIndexInitializer>();
 
-        var pack = new ConventionPack()
-        {
-            new IgnoreExtraElementsConvention(true)
-        };
-        ConventionRegistry.Register("IgnoreExtraElements", pack, t => true);
+        ConventionRegistry.Register("IgnoreExtraElements", new ConventionPack() { new IgnoreExtraElementsConvention(true) }, t => true);
 
         return builder;
     }

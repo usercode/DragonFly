@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Query;
+using DragonFly.MongoDB.Storages;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using SmartResults;
@@ -10,10 +10,21 @@ using SmartResults;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// MongoStore
+/// WebHookMongoStorage
 /// </summary>
-public partial class MongoStorage : IWebHookStorage
+public class WebHookMongoStorage : MongoStorage, IWebHookStorage
 {
+    public WebHookMongoStorage(MongoClient client)
+        : base(client)
+    {
+        WebHooks = Client.Database.GetCollection<MongoWebHook>("WebHooks");
+    }
+
+    /// <summary>
+    /// WebHooks
+    /// </summary>
+    private IMongoCollection<MongoWebHook> WebHooks { get; }
+
     public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
         IMongoQueryable<MongoWebHook> q = WebHooks.AsQueryable();

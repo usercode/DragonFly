@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.MongoDB.Storages;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using SmartResults;
@@ -9,10 +10,37 @@ using SmartResults;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// MongoStore
+/// AssetFolderMongoStorage
 /// </summary>
-public partial class MongoStorage : IAssetFolderStorage
+public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
 {
+    public AssetFolderMongoStorage(
+                        MongoClient client,
+                        IAssetStorage assetStorage,
+                        IDateTimeService dateTimeService)
+                        : base(client)
+    {
+        AssetStorage = assetStorage;
+        DateTimeService = dateTimeService;
+
+        AssetFolders = Client.Database.GetCollection<MongoAssetFolder>("AssetFolders");
+    }
+
+    /// <summary>
+    /// AssetStorage
+    /// </summary>
+    private IAssetStorage AssetStorage { get; }
+
+    /// <summary>
+    /// DateTimeService
+    /// </summary>
+    private IDateTimeService DateTimeService { get; }
+
+    /// <summary>
+    /// AssetFolders
+    /// </summary>
+    private IMongoCollection<MongoAssetFolder> AssetFolders { get; }
+
     public async Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id)
     {
         MongoAssetFolder? entity = await AssetFolders.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
@@ -87,7 +115,7 @@ public partial class MongoStorage : IAssetFolderStorage
         //Delete all assets
         while (true)
         {
-            QueryResult<Asset> assets = await QueryAsync(new AssetQuery() { Folder = folder.Id });
+            QueryResult<Asset> assets = await AssetStorage.QueryAsync(new AssetQuery() { Folder = folder.Id });
 
             if (assets.Count == 0)
             {
@@ -96,7 +124,7 @@ public partial class MongoStorage : IAssetFolderStorage
 
             foreach (Asset asset in assets.Items)
             {
-                await DeleteAsync(asset);
+                await AssetStorage.DeleteAsync(asset);
             }
         }
         

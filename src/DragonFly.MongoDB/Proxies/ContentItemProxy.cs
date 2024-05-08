@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.Generator;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.MongoDB;
 
@@ -27,7 +28,8 @@ internal partial class ContentItemProxy : ContentItem
 
         _loaded = true;
 
-        ContentItem? result = await MongoStorage.Default.GetContentAsync(Schema.Name, Id);
+        IContentStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<IContentStorage>();
+        ContentItem? result = await storage.GetContentAsync(Schema.Name, Id);
 
         if (result == null)
         {

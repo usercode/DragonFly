@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.MongoDB.Index;
+using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -13,8 +14,38 @@ namespace DragonFly.MongoDB;
 /// <summary>
 /// MongoStore
 /// </summary>
-public partial class MongoStorage : ISchemaStorage
+public class SchemaMongoStorage : MongoStorage, ISchemaStorage
 {
+    public SchemaMongoStorage(MongoClient client, IDateTimeService dateTimeService, IDragonFlyApi api, ILogger<SchemaMongoStorage> logger)
+        : base(client)
+    {
+        DateTimeService = dateTimeService;
+        Api = api;
+        Logger = logger;
+
+        ContentSchemas = Client.Database.GetSchemaCollection();
+    }
+
+    /// <summary>
+    /// ContentSchemas
+    /// </summary>
+    public IMongoCollection<MongoContentSchema> ContentSchemas { get; }
+
+    /// <summary>
+    /// DateTimeService
+    /// </summary>
+    private IDateTimeService DateTimeService { get; }
+
+    /// <summary>
+    /// Api
+    /// </summary>
+    private IDragonFlyApi Api { get; }
+
+    /// <summary>
+    /// Logger
+    /// </summary>
+    private ILogger<SchemaMongoStorage> Logger { get; }
+
     public async Task<Result> CreateAsync(ContentSchema schema)
     {
         if (schema.Id == Guid.Empty)
@@ -99,10 +130,10 @@ public partial class MongoStorage : ISchemaStorage
     public async Task<Result> CreateIndicesAsync(ContentSchema schema)
     {
         //index for drafts
-        await CreateIndicesInternalAsync(GetMongoCollection(schema.Name, false));
+        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, false));
 
         //index for published
-        await CreateIndicesInternalAsync(GetMongoCollection(schema.Name, true));
+        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, true));
 
         async Task CreateIndicesInternalAsync(IMongoCollection<MongoContentItem> collection)
         {

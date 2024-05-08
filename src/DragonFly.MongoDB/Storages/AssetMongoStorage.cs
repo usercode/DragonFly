@@ -4,6 +4,7 @@
 
 using System.Security.Cryptography;
 using DragonFly.AspNetCore;
+using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -14,10 +15,57 @@ using SmartResults;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// MongoStore
+/// AssetMongoStorage
 /// </summary>
-public partial class MongoStorage : IAssetStorage
+public class AssetMongoStorage : MongoStorage, IAssetStorage
 {
+    public AssetMongoStorage(
+                        MongoClient client, 
+                        IDragonFlyApi api,
+                        IDateTimeService dateTimeService,
+                        ISlugService slugService,
+                        IBackgroundTaskManager backgroundTaskManager)
+        : base(client)
+    {
+        Api = api;
+        DateTimeService = dateTimeService;
+        SlugService = slugService;
+        BackgroundTaskManager = backgroundTaskManager;
+
+        Assets = Client.Database.GetAssetCollection();
+        AssetData = new GridFSBucket(Client.Database, new GridFSBucketOptions() { BucketName = "Assets" });
+    }
+
+    /// <summary>
+    /// Api
+    /// </summary>
+    private IDragonFlyApi Api { get; }
+
+    /// <summary>
+    /// DateTimeService
+    /// </summary>
+    private IDateTimeService DateTimeService { get; }
+
+    /// <summary>
+    /// SlugService
+    /// </summary>
+    private ISlugService SlugService { get; }
+
+    /// <summary>
+    /// BackgroundTaskManager
+    /// </summary>
+    private IBackgroundTaskManager BackgroundTaskManager { get; }
+
+    /// <summary>
+    /// Assets
+    /// </summary>
+    public IMongoCollection<MongoAsset> Assets { get; }
+
+    /// <summary>
+    /// AssetData
+    /// </summary>
+    public IGridFSBucket AssetData { get; }
+
     private Asset SetPreviewUrl(Asset asset)
     {
         IAssetPreviewUrlService? previewService = Api.ServiceProvider.GetService<IAssetPreviewUrlService>();
@@ -196,7 +244,7 @@ public partial class MongoStorage : IAssetStorage
 
     public Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query)
     {
-        BackgroundTask task = BackgroundTaskService.Start("Apply metadata to assets", query, static async ctx =>
+        BackgroundTask task = BackgroundTaskManager.Start("Apply metadata to assets", query, static async ctx =>
         {
             IAssetStorage assetStorage = ctx.ServiceProvider.GetRequiredService<IAssetStorage>();
 

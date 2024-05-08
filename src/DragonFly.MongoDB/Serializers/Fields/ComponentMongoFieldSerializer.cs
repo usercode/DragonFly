@@ -4,6 +4,7 @@
 
 using MongoDB.Bson;
 using DragonFly.Storage.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.MongoDB;
 
@@ -18,7 +19,8 @@ public class ComponentMongoFieldSerializer : MongoFieldSerializer<ComponentField
 
         string schemaName = bsonValue[ReferenceField.SchemaField].AsString;
 
-        ContentSchema? schema = MongoStorage.Default.GetSchemaAsync(schemaName).GetAwaiter().GetResult();
+        ISchemaStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<ISchemaStorage>();
+        ContentSchema? schema = storage.GetSchemaAsync(schemaName).GetAwaiter().GetResult();
 
         contentField.ContentComponent = schema.CreateEmbeddedContent();
 

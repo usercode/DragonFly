@@ -1,14 +1,28 @@
-﻿using MongoDB.Driver;
+﻿using DragonFly.MongoDB.Storages;
+using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using SmartResults;
 
 namespace DragonFly.MongoDB;
 
-public partial class MongoStorage : IContentVersionStorage
+public class ContentVersionMongoStorage : MongoStorage, IContentVersionStorage
 {
+    public ContentVersionMongoStorage(
+                        MongoClient client,
+                        ISchemaStorage schemaStorage)
+                        : base(client)
+    {
+        SchemaStorage = schemaStorage;
+    }
+
+    /// <summary>
+    /// SchemaStorage
+    /// </summary>
+    private ISchemaStorage SchemaStorage { get; }
+
     public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
-        var collection = GetMongoCollectionVersioning(schema);
+        var collection = Client.Database.GetContentVersionCollection(schema);
 
         var result = await collection.AsQueryable()
                                             .Where(x => x.Content.Id == id)
@@ -25,7 +39,7 @@ public partial class MongoStorage : IContentVersionStorage
 
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)
     {        
-        IMongoCollection<MongoContentVersion> collection = GetMongoCollectionVersioning(schema);
+        IMongoCollection<MongoContentVersion> collection = Client.Database.GetContentVersionCollection(schema);
 
         MongoContentVersion contentItem = await collection.AsQueryable().FirstOrDefaultAsync(x=> x.Id == id);
 
@@ -34,7 +48,7 @@ public partial class MongoStorage : IContentVersionStorage
             return Result.Ok<ContentItem?>();
         }
 
-        ContentSchema? contentSchema = await GetSchemaAsync(schema);
+        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema);
 
         return contentItem.Content.ToModel(contentSchema);
     }
