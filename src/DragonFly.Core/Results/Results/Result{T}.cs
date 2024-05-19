@@ -14,7 +14,7 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
 
     private Result(IError error)
     {
-        _error = error;
+        Error = error;
     }
 
     private readonly T _value = default!;
@@ -35,18 +35,10 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
         }
     }
 
-    private readonly IError _error = default!;
-
     /// <summary>
     /// Error
     /// </summary>
-    public IError? Error 
-    { 
-        get
-        {
-            return _error;
-        }
-    }
+    public IError? Error { get; }
 
     /// <summary>
     /// Is result failed?
@@ -145,9 +137,9 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
         return result.Value;
     }
 
-    public static implicit operator Result(Result<T> r)
+    public static implicit operator Result(Result<T> result)
     {
-        return r.IsSucceeded ? Result.Ok() : Result.Failed(r.Error);
+        return result.IsSucceeded ? Result.Ok() : Result.Failed(result.Error);
     }
 
     public static bool operator ==(Result<T> left, Result<T> right)

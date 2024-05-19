@@ -9,21 +9,13 @@ public readonly struct Result : IResult<Result>, IEquatable<Result>
 {
     private Result(IError error)
     {
-        _error = error;
+        Error = error;
     }
-
-    private readonly IError _error = default!;
 
     /// <summary>
     /// Error
     /// </summary>
-    public IError? Error
-    {
-        get
-        {
-            return _error;
-        }
-    }
+    public IError? Error { get; } 
 
     /// <summary>
     /// Is result failed?

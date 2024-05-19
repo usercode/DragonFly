@@ -68,16 +68,9 @@ static class ContentItemApiExtensions
     {
         ContentItem model = input.ToModel();
 
-        var r = await contentStore.CreateAsync(model);
+        var result = await contentStore.CreateAsync(model);
 
-        if (r.IsSucceeded)
-        {
-            return TypedResults.Ok(new ResourceCreated() { Id = model.Id });
-        }
-        else
-        {
-            return r.ToHttpResult();
-        }
+        return result.Match(() => TypedResults.Ok(new ResourceCreated() { Id = model.Id }), x => result.ToHttpResult());
     }
 
     private static async Task<IResult> MapUpdate(IContentStorage contentStore, RestContentItem input)

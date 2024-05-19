@@ -47,7 +47,7 @@ internal class ContentApiStorage : IContentStorage
     {
         return await Client
                         .PutAsJsonAsync($"api/content", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                        .ToResultAsync();
     }
 
     public async Task<Result<bool>> DeleteAsync(ContentId id)
@@ -84,13 +84,13 @@ internal class ContentApiStorage : IContentStorage
     {
         return await Client
                         .PostAsJsonAsync($"api/content/publish", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);                                
+                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query)
     {
        return await Client
                         .PostAsJsonAsync($"api/content/unpublish", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);      
+                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
     }
 }

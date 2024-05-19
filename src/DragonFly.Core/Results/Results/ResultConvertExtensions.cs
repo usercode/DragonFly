@@ -8,7 +8,7 @@ public static class ResultConvertExtensions
 {
 
     /// <summary>
-    /// Convert
+    /// Converts value from <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
     /// </summary>
     public static Result<TOut> Convert<TIn, TOut>(this Result<TIn> self, Func<TIn, TOut> convert)
     {
@@ -23,7 +23,7 @@ public static class ResultConvertExtensions
     }
 
     /// <summary>
-    /// ConvertAsync
+    /// Converts value from <typeparamref name="TIn"/> to <typeparamref name="TOut"/>.
     /// </summary>
     public static async Task<Result<TOut>> ConvertAsync<TIn, TOut>(this Task<Result<TIn>> selfTask, Func<TIn, TOut> convert)
     {
