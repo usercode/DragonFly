@@ -24,7 +24,7 @@ public static class DragonFlyBuilderExtensions
     /// Adds DragonFly services.
     /// <br /><br />
     /// Default fields: <br />
-    /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/><br />
+    /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/>, <see cref="BlockField"/>,<br />
     /// <see cref="AssetField"/>, <see cref="ReferenceField"/>
     /// <br /><br />
     /// Default asset metadata: <br/>
@@ -33,6 +33,9 @@ public static class DragonFlyBuilderExtensions
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
     /// <see cref="IAssetProcessing"/> -> <see cref="ImageProcessing"/>, <see cref="PdfProcessing"/>, <see cref="VideoProcessing"/>
+    /// <br/><br/>
+    /// Default manager:<br/>
+    /// <see cref="FieldManager"/>, <see cref="MetadataManager"/>
     /// <br/><br/>
     /// Default permissions:<br/>
     /// <see cref="ContentPermissions"/>, <see cref="SchemaPermissions"/>, <see cref="AssetPermissions"/>, <see cref="BackgroundTaskPermissions"/>, <see cref="WebHookPermissions"/>

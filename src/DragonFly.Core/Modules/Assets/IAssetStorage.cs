@@ -13,7 +13,7 @@ public interface IAssetStorage
 {
     Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery query);
 
-    Task<Result<Asset>> GetAssetAsync(Guid id);
+    Task<Result<Asset?>> GetAssetAsync(Guid id);
 
     Task<Result> CreateAsync(Asset asset);
 

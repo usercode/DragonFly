@@ -37,19 +37,19 @@ public class ContentPermissionStorage : IContentStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(content.Schema.Name, ContentAction.Create)).ThenAsync(x => Storage.CreateAsync(content));
     }
 
-    public async Task<Result> DeleteAsync(ContentItem content)
+    public async Task<Result<bool>> DeleteAsync(ContentId id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(content.Schema.Name, ContentAction.Delete)).ThenAsync(x => Storage.DeleteAsync(content));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(id.Schema, ContentAction.Delete)).ThenAsync(x => Storage.DeleteAsync(id));
     }
 
-    public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
+    public async Task<Result<ContentItem?>> GetContentAsync(ContentId id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read)).ThenAsync(x => Storage.GetContentAsync(schema, id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(id.Schema, ContentAction.Read)).ThenAsync(x => Storage.GetContentAsync(id));
     }
 
-    public async Task<Result> PublishAsync(ContentItem content)
+    public async Task<Result<bool>> PublishAsync(ContentId id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(content.Schema.Name, ContentAction.Publish)).ThenAsync(x => Storage.PublishAsync(content));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(id.Schema, ContentAction.Publish)).ThenAsync(x => Storage.PublishAsync(id));
     }
 
     public async Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query)
@@ -62,9 +62,9 @@ public class ContentPermissionStorage : IContentStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(query.Schema, ContentAction.Query)).ThenAsync(x => Storage.QueryAsync(query));
     }
 
-    public async Task<Result> UnpublishAsync(ContentItem content)
+    public async Task<Result<bool>> UnpublishAsync(ContentId id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(content.Schema.Name, ContentAction.Unpublish)).ThenAsync(x => Storage.UnpublishAsync(content));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(id.Schema, ContentAction.Unpublish)).ThenAsync(x => Storage.UnpublishAsync(id));
     }
 
     public async Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query)

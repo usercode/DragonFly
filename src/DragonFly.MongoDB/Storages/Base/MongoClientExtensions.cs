@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Linq.Expressions;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB.Storages;
@@ -32,8 +33,19 @@ public static class MongoClientExtensions
         return database.GetCollection<MongoAsset>("Assets");
     }
 
+    public static IMongoCollection<MongoAssetFolder> GetAssetFolderCollection(this IMongoDatabase database)
+    {
+        return database.GetCollection<MongoAssetFolder>("AssetFolders");
+    }
+
     public static IMongoCollection<MongoContentSchema> GetSchemaCollection(this IMongoDatabase database)
     {
         return database.GetCollection<MongoContentSchema>("ContentSchemas");
+    }
+
+    public static async Task AddIndexAsync<T>(this IMongoCollection<T> collection, Expression<Func<T, object?>> fieldSelector)
+    {
+        await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Ascending(fieldSelector)));
+        await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Descending(fieldSelector)));
     }
 }

@@ -3,11 +3,8 @@
 // MIT License
 
 using DragonFly.AspNetCore;
-using DragonFly.Permissions;
-using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 using SmartResults;
 

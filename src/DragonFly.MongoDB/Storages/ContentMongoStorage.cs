@@ -11,6 +11,7 @@ using DragonFly.AspNetCore;
 using SmartResults;
 using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DragonFly.MongoDB;
 
@@ -67,18 +68,18 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
     /// </summary>
     private ILogger<ContentMongoStorage> Logger { get; }
 
-    public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
+    public async Task<Result<ContentItem?>> GetContentAsync(ContentId id)
     {
-        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema);
+        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(id.Schema);
 
         if (contentSchema == null)
         {
-            return Result.Failed<ContentItem?>($"The schema '{schema}' doesn't exist.");
+            return Result.Failed<ContentItem?>($"The schema '{id.Schema}' doesn't exist.");
         }
 
-        IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(schema);
+        IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(id.Schema);
 
-        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
+        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id.Id);
 
         if (result == null)
         {
@@ -307,37 +308,61 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
         return Result.Ok();
     }
 
-    public async Task<Result> DeleteAsync(ContentItem content)
+    public async Task<Result<bool>> DeleteAsync(ContentId id)
     {
-        await UnpublishAsync(content);
+        var result = await GetContentAsync(id);
 
-        IMongoCollection<MongoContentItem> col = Client.Database.GetContentCollection(content.Schema.Name);
+        if(result.IsFailed)
+        {
+            return Result.Failed<bool>(result.Error);
+        }
 
-        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
+        if (result.Value == null)
+        {
+            return Result.Ok(false);
+        }
+
+        await UnpublishAsync(id);
+
+        IMongoCollection<MongoContentItem> col = Client.Database.GetContentCollection(result.Value.Schema.Name);
+
+        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, result.Value.Id));
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in ContentInterceptors)
         {
-            await interceptor.OnDeletedAsync(content);
+            await interceptor.OnDeletedAsync(result.Value);
         }
 
-        return Result.Ok();
+        return Result.Ok(true);
     }
 
-    public async Task<Result> PublishAsync(ContentItem content)
+    public async Task<Result<bool>> PublishAsync(ContentId id)
     {
-        IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(content.Schema.Name, false);
-        IMongoCollection<MongoContentItem> published = Client.Database.GetContentCollection(content.Schema.Name, true);
+        var result = await GetContentAsync(id);
+
+        if (result.IsFailed)
+        {
+            return Result.Failed<bool>(result.Error);
+        }
+
+        if (result.Value == null)
+        {
+            return Result.Failed<bool>("Content not found");
+        }
+
+        IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(result.Value.Schema.Name, false);
+        IMongoCollection<MongoContentItem> published = Client.Database.GetContentCollection(result.Value.Schema.Name, true);
 
         //find content and updated published date
         MongoContentItem found = drafted.FindOneAndUpdate(
-                                   Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                                   Builders<MongoContentItem>.Filter.Eq(x => x.Id, result.Value.Id),
                                    Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()),
                                    new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After });
 
         if (found == null)
         {
-            return Result.Failed($"Content item not found.");
+            return Result.Failed<bool>($"Content item not found.");
         }
 
         //add content to published collection
@@ -347,60 +372,73 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                     new ReplaceOptions() { IsUpsert = true });
 
         //refresh content
-        content = await GetContentAsync(content.Schema.Name, content.Id);
+        result = await GetContentAsync(id);
 
-        if (content == null)
+        if (result.Value != null)
         {
-            return Result.Failed($"Content item not found: {content.Schema.Name}/{content.Id}");
+            //execute interceptors
+            foreach (IContentInterceptor interceptor in ContentInterceptors)
+            {
+                try
+                {
+                    await interceptor.OnPublishedAsync(result.Value);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Publish interceptor failed.");
+                }
+            }
+
+            Logger.LogInformation($"Content was published: {result.Value.Schema.Name}/{result.Value.Id}");
         }
 
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in ContentInterceptors)
-        {
-            try
-            {
-                await interceptor.OnPublishedAsync(content);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Publish interceptor failed.");
-            }
-        }
-
-        Logger.LogInformation($"Content was published: {content.Schema.Name}/{content.Id}");
-
-        return Result.Ok();
+        return Result.Ok(true);
     }
 
-    public async Task<Result> UnpublishAsync(ContentItem content)
+    public async Task<Result<bool>> UnpublishAsync(ContentId id)
     {
-        IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(content.Schema.Name, false);
-        IMongoCollection<MongoContentItem> published = Client.Database.GetContentCollection(content.Schema.Name, true);
+        var result = await GetContentAsync(id);
+
+        if (result.IsFailed)
+        {
+            return Result.Failed<bool>(result.Error);
+        }
+
+        if (result.Value == null)
+        {
+            return Result.Failed<bool>("Content not found");
+        }
+
+        IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(result.Value.Schema.Name, false);
+        IMongoCollection<MongoContentItem> published = Client.Database.GetContentCollection(result.Value.Schema.Name, true);
 
         //delete published content
-        await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
+        await published.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, result.Value.Id));
 
         //update publish date
         await drafted.UpdateOneAsync(
-                            Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                            Builders<MongoContentItem>.Filter.Eq(x => x.Id, result.Value.Id),
                             Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
-        content = await GetContentAsync(content.Schema.Name, content.Id);
+        result = await GetContentAsync(id);
 
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in ContentInterceptors)
+        if (result.Value != null)
         {
-            try
+            //execute interceptors
+            foreach (IContentInterceptor interceptor in ContentInterceptors)
             {
-                await interceptor.OnUnpublishedAsync(content);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Unpublish interceptor failed.");
+                try
+                {
+                    await interceptor.OnUnpublishedAsync(result.Value);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Unpublish interceptor failed.");
+                }
             }
         }
 
-        return Result.Ok();
+        return Result.Ok(true);
     }
 
     public Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query)
@@ -412,7 +450,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.PublishAsync);
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.PublishAsync(x));
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
@@ -427,7 +465,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, contentStorage.UnpublishAsync);
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.UnpublishAsync(x));
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);

@@ -17,6 +17,9 @@ class InitializerItem : IInitialize, IPreInitialize, IPostInitialize
     /// </summary>
     public string Name { get; set; }
 
+    /// <summary>
+    /// Action
+    /// </summary>
     private Action<IDragonFlyApi> Action { get; }
 
     public Task ExecuteAsync(IDragonFlyApi api)

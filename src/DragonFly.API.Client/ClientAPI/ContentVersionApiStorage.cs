@@ -8,10 +8,17 @@ using SmartResults;
 namespace DragonFly.API.Client;
 
 /// <summary>
-/// ContentService
+/// ContentVersionStorage
 /// </summary>
-public partial class ClientContentService : IContentVersionStorage
+internal class ContentVersionApiStorage : IContentVersionStorage
 {
+    public ContentVersionApiStorage(HttpClient client)
+    {
+        Client = client;
+    }
+
+    private HttpClient Client { get; }
+
     public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
         QueryResult<ContentVersionEntry>? result = await Client.GetFromJsonAsync<QueryResult<ContentVersionEntry>>($"api/content/{schema}/{id}/versions", ApiJsonSerializerDefault.Options);
@@ -26,13 +33,10 @@ public partial class ClientContentService : IContentVersionStorage
 
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)
     {
-        RestContentItem? entity = await Client.GetFromJsonAsync<RestContentItem>($"api/content/{schema}/{id}/version", ApiJsonSerializerDefault.Options);
+        var result = await Client
+                             .GetAsync($"api/content/{schema}/{id}/version")
+                             .ToResultAsync<RestContentItem>(ApiJsonSerializerDefault.Options);
 
-        if (entity == null)
-        {
-            return null;
-        }
-
-        return entity.ToModel();
+        return result.Convert(x => x?.ToModel());
     }
 }

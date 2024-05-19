@@ -28,16 +28,12 @@ class AssetIndexInitializer : IPostInitialize
         IMongoCollection<MongoAsset> assets = Client.Database.GetAssetCollection();
 
         //assets
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Name)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Slug)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Alt)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.MimeType)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Ascending(x => x.Size)));
-
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Descending(x => x.Name)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Descending(x => x.Slug)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Descending(x => x.Alt)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Descending(x => x.MimeType)));
-        await assets.Indexes.CreateOneAsync(new CreateIndexModel<MongoAsset>(Builders<MongoAsset>.IndexKeys.Descending(x => x.Size)));
+        await assets.AddIndexAsync(x => x.Name);
+        await assets.AddIndexAsync(x => x.Slug);
+        await assets.AddIndexAsync(x => x.Alt);
+        await assets.AddIndexAsync(x => x.MimeType);
+        await assets.AddIndexAsync(x => x.Size);
+        await assets.AddIndexAsync(x => x.CreatedAt);
+        await assets.AddIndexAsync(x => x.ModifiedAt);
     }
 }

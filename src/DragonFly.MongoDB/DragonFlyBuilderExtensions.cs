@@ -57,6 +57,7 @@ public static class DragonFlyBuilderExtensions
         });
 
         builder.PostInit<AssetIndexInitializer>();
+        builder.PostInit<AssetFolderIndexInitializer>();
         builder.PostInit<ContentIndexInitializer>();
         builder.PostInit<SchemaIndexInitializer>();
 

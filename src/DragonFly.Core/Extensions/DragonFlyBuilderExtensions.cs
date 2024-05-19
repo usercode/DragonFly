@@ -14,7 +14,7 @@ public static class DragonFlyBuilderExtensions
     /// Adds DragonFly core services.
     /// <br /><br />
     /// Default fields: <br />
-    /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/><br />
+    /// <see cref="BoolField"/>, <see cref="StringField"/>, <see cref="SlugField"/>, <see cref="TextField"/>, <see cref="IntegerField"/>, <see cref="FloatField"/>, <see cref="HtmlField"/>, <see cref="ColorField"/>, <see cref="GeolocationField"/>, <see cref="BlockField"/>,<br />
     /// <see cref="AssetField"/>, <see cref="ReferenceField"/>
     /// <br /><br />
     /// Default asset metadata: <br/>

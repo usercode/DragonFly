@@ -1,0 +1,77 @@
+﻿// Copyright (c) usercode
+// https://github.com/usercode/DragonFly
+// MIT License
+
+using System.Net.Http.Json;
+using DragonFly.Query;
+using SmartResults;
+
+namespace DragonFly.API.Client;
+
+/// <summary>
+/// SchemaApiStorage
+/// </summary>
+internal class SchemaApiStorage : ISchemaStorage
+{
+    public SchemaApiStorage(HttpClient client)
+    {
+        Client = client;
+    }
+
+    private HttpClient Client { get; }
+
+    public async Task<Result<ContentSchema?>> GetSchemaAsync(Guid id)
+    {
+        var result = await Client
+                            .GetAsync($"api/schema/{id}")
+                            .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+
+        return result.Convert(x => x?.ToModel());
+    }
+
+    public async Task<Result<ContentSchema?>> GetSchemaAsync(string name)
+    {
+        var result = await Client
+                            .GetAsync($"api/schema/{name}")
+                            .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+
+        return result.Convert(x => x?.ToModel());
+    }
+
+    public async Task<Result> CreateAsync(ContentSchema entity)
+    {
+        var result = await Client
+                                .PostAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerDefault.Options)
+                                .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+
+        if (result.IsSucceeded)
+        {
+            entity.Id = result.Value.Id;
+        }
+
+        return result;
+    }
+
+    public async Task<Result> UpdateAsync(ContentSchema entity)
+    {
+        return await Client
+                        .PutAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerDefault.Options)
+                        .ToResultAsync();
+    }
+
+    public async Task<Result> DeleteAsync(ContentSchema entity)
+    {
+        return await Client
+                        .DeleteAsync($"api/schema/{entity.Id}")
+                        .ToResultAsync();
+    }
+
+    public async Task<Result<QueryResult<ContentSchema>>> QuerySchemasAsync()
+    {
+        var result = await Client
+                                .PostAsync("api/schema/query", new StringContent(string.Empty))
+                                .ToResultAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options);
+
+        return result.Convert(x => x.Convert(x => x.ToModel()));
+    }
+}

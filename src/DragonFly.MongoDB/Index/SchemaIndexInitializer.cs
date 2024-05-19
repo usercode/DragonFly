@@ -28,8 +28,8 @@ class SchemaIndexInitializer : IPostInitialize
         IMongoCollection<MongoContentSchema> schemas = Client.Database.GetSchemaCollection();
 
         //assets
-        await schemas.Indexes.CreateOneAsync(new CreateIndexModel<MongoContentSchema>(Builders<MongoContentSchema>.IndexKeys.Ascending(x => x.Name)));
-
-        await schemas.Indexes.CreateOneAsync(new CreateIndexModel<MongoContentSchema>(Builders<MongoContentSchema>.IndexKeys.Descending(x => x.Name)));
+        await schemas.AddIndexAsync(x => x.Name);
+        await schemas.AddIndexAsync(x => x.CreatedAt);
+        await schemas.AddIndexAsync(x => x.ModifiedAt);
     }
 }

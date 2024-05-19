@@ -145,10 +145,10 @@ public readonly struct Result<T> : IResult<Result<T>>, IEquatable<Result<T>>
         return result.Value;
     }
 
-    //public static implicit operator Result<T>(Result _)
-    //{
-    //    return new Result<T>();
-    //}
+    public static implicit operator Result(Result<T> r)
+    {
+        return r.IsSucceeded ? Result.Ok() : Result.Failed(r.Error);
+    }
 
     public static bool operator ==(Result<T> left, Result<T> right)
     {

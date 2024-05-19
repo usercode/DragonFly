@@ -127,14 +127,14 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
             if (CloneFromEntityId != null)
             {
-                ContentItem original = await ContentService.GetContentAsync(EntityType, CloneFromEntityId.Value);
+                ContentItem original = await ContentService.GetContentAsync(new ContentId(EntityType, CloneFromEntityId.Value));
 
                 Entity.Fields = original.Fields;
             }
         }
         else
         {
-            Entity = await ContentService.GetContentAsync(EntityType, EntityId);
+            Entity = await ContentService.GetContentAsync(new ContentId(EntityType, EntityId));
 
             var v = await ContentVersionStorage.GetContentVersionsAsync(EntityType, EntityId);
 
@@ -186,7 +186,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
     protected override async Task DeleteActionAsync()
     {
-        await ContentService.DeleteAsync(Entity);
+        await ContentService.DeleteAsync(new ContentId(EntityType, EntityId));
 
         NavigationManager.NavigateTo($"content/{EntityType}");
     }
@@ -216,13 +216,13 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
     {
         await SaveAsync();
 
-        await ContentService.PublishAsync(Entity);
+        await ContentService.PublishAsync(new ContentId(EntityType, EntityId));
 
         await RefreshAsync();
     }
 
     public async Task UnpublishAsync()
     {
-        await ContentService.UnpublishAsync(Entity);
+        await ContentService.UnpublishAsync(new ContentId(EntityType, EntityId));
     }
 }

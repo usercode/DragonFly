@@ -48,7 +48,7 @@ static class ContentItemApiExtensions
 
     private static async Task<IResult> MapGet(IContentStorage contentStore, string schema, Guid id)
     {
-        return (await contentStore.GetContentAsync(schema, id))                                
+        return (await contentStore.GetContentAsync(new ContentId(schema, id)))
                                     .Then(x =>
                                     {
                                         if (x.Value is not null)
@@ -89,38 +89,17 @@ static class ContentItemApiExtensions
 
     private static async Task<IResult> MapDelete(IContentStorage contentStore, string schema, Guid id)
     {
-        ContentItem? content = await contentStore.GetContentAsync(schema, id);
-
-        if (content == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        return (await contentStore.DeleteAsync(content)).ToHttpResult();
+        return (await contentStore.DeleteAsync(new ContentId(schema, id))).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublish(IContentStorage contentStore, string schema, Guid id)
     {
-        ContentItem? content = await contentStore.GetContentAsync(schema, id);
-
-        if (content == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        return (await contentStore.PublishAsync(content)).ToHttpResult();
+        return (await contentStore.PublishAsync(new ContentId(schema, id))).ToHttpResult();
     }
 
     private static async Task<IResult> MapUnpublish(IContentStorage contentStore, string schema, Guid id)
     {
-        ContentItem? content = await contentStore.GetContentAsync(schema, id);
-
-        if (content == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        return (await contentStore.UnpublishAsync(content)).ToHttpResult();
+        return (await contentStore.UnpublishAsync(new ContentId(schema, id))).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublishQuery(IContentStorage contentStore, ContentQuery query)

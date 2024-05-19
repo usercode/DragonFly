@@ -23,7 +23,7 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
         AssetStorage = assetStorage;
         DateTimeService = dateTimeService;
 
-        AssetFolders = Client.Database.GetCollection<MongoAssetFolder>("AssetFolders");
+        AssetFolders = Client.Database.GetAssetFolderCollection();
     }
 
     /// <summary>

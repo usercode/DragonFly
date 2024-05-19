@@ -29,7 +29,7 @@ internal partial class ContentItemProxy : ContentItem
         _loaded = true;
 
         IContentStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<IContentStorage>();
-        ContentItem? result = await storage.GetContentAsync(Schema.Name, Id);
+        ContentItem? result = await storage.GetContentAsync(new ContentId(Schema.Name, Id));
 
         if (result == null)
         {

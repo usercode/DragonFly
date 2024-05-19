@@ -40,15 +40,24 @@ class ContentIndexInitializer : IPostInitialize
 
         foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))
         {
+            var drafts = Client.Database.GetContentCollection(schema.Name, false);
+            var published = Client.Database.GetContentCollection(schema.Name, true);            
+
             //index for drafts
-            await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, false));
+            await CreateIndicesInternalAsync(drafts);
 
             //index for published
-            await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, true));
+            await CreateIndicesInternalAsync(published);
 
             async Task CreateIndicesInternalAsync(IMongoCollection<MongoContentItem> collection)
             {
                 await collection.Indexes.DropAllAsync();
+
+                await collection.AddIndexAsync(x => x.CreatedAt);
+                await collection.AddIndexAsync(x => x.ModifiedAt);
+                await collection.AddIndexAsync(x => x.PublishedAt);
+                await collection.AddIndexAsync(x => x.Version);
+                await collection.AddIndexAsync(x => x.SchemaVersion);
 
                 foreach (var field in schema.Fields)
                 {

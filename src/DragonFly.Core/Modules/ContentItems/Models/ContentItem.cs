@@ -85,4 +85,9 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
     {
         return $"{Schema.Name}/{Id}";
     }
+
+    public static implicit operator ContentId(ContentItem contentItem)
+    {
+        return new ContentId(contentItem.Schema.Name, contentItem.Id);
+    }
 }
