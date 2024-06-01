@@ -33,33 +33,33 @@ static class ContentItemApiExtensions
     private static async Task<IResult> MapQuery(IContentStorage storage, ContentQuery query)
     {
         return (await storage.QueryAsync(query))
-                                .Then(x =>
+                                .ToResult(x =>
                                 {
-                                    foreach (ContentItem contentItem in x.Value.Items)
+                                    foreach (ContentItem contentItem in x.Items)
                                     {
                                         contentItem.ApplySchema();
                                         contentItem.Validate();
                                     }
 
-                                    return Result.Ok(x.Value.Convert(x => x.ToRest()));
+                                    return x.Convert(x => x.ToRest());
                                 })
                                 .ToHttpResult();
     }
 
     private static async Task<IResult> MapGet(IContentStorage contentStore, string schema, Guid id)
     {
-        return (await contentStore.GetContentAsync(new ContentId(schema, id)))
-                                    .Then(x =>
+        return (await contentStore.GetContentAsync(schema, id))
+                                    .ToResult(x =>
                                     {
-                                        if (x.Value is not null)
+                                        if (x is not null)
                                         {
-                                            x.Value.ApplySchema();
-                                            x.Value.Validate();
+                                            x.ApplySchema();
+                                            x.Validate();
 
-                                            return Result.Ok<RestContentItem?>(x.Value.ToRest());
+                                            return x.ToRest();
                                         }
 
-                                        return Result.Ok<RestContentItem?>();
+                                        return null;
                                     })
                                     .ToHttpResult();
     }
@@ -68,9 +68,9 @@ static class ContentItemApiExtensions
     {
         ContentItem model = input.ToModel();
 
-        var result = await contentStore.CreateAsync(model);
-
-        return result.Match(() => TypedResults.Ok(new ResourceCreated() { Id = model.Id }), x => result.ToHttpResult());
+        return (await contentStore.CreateAsync(model))
+                                  .Then(x => Result.Ok(new ResourceCreated() { Id = model.Id }))
+                                  .ToHttpResult();
     }
 
     private static async Task<IResult> MapUpdate(IContentStorage contentStore, RestContentItem input)
@@ -82,17 +82,17 @@ static class ContentItemApiExtensions
 
     private static async Task<IResult> MapDelete(IContentStorage contentStore, string schema, Guid id)
     {
-        return (await contentStore.DeleteAsync(new ContentId(schema, id))).ToHttpResult();
+        return (await contentStore.DeleteAsync(schema, id)).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublish(IContentStorage contentStore, string schema, Guid id)
     {
-        return (await contentStore.PublishAsync(new ContentId(schema, id))).ToHttpResult();
+        return (await contentStore.PublishAsync(schema, id)).ToHttpResult();
     }
 
     private static async Task<IResult> MapUnpublish(IContentStorage contentStore, string schema, Guid id)
     {
-        return (await contentStore.UnpublishAsync(new ContentId(schema, id))).ToHttpResult();
+        return (await contentStore.UnpublishAsync(schema, id)).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublishQuery(IContentStorage contentStore, ContentQuery query)

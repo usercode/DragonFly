@@ -22,10 +22,10 @@ internal class WebHookApiStorage : IWebHookStorage
 
     public async Task<Result<WebHook?>> GetAsync(Guid id)
     {
-        return await Client
+        return (await Client
                         .GetAsync($"api/webhook/{id}")
-                        .ToResultAsync<RestWebHook>(ApiJsonSerializerDefault.Options)
-                        .ConvertAsync(x => x?.ToModel());
+                        .ToResultAsync<RestWebHook>(ApiJsonSerializerDefault.Options))
+                        .ToResult(x => x?.ToModel());
     }
 
     public async Task<Result> CreateAsync(WebHook entity)
@@ -58,9 +58,9 @@ internal class WebHookApiStorage : IWebHookStorage
 
     public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
-        return await Client
+        return (await Client
                         .PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options)
-                        .ConvertAsync(x => x.Convert(e => e.ToModel()));
+                        .ToResultAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options))
+                        .ToResult(x => x.Convert(e => e.ToModel()));
     }
 }

@@ -26,7 +26,7 @@ internal class SchemaApiStorage : ISchemaStorage
                             .GetAsync($"api/schema/{id}")
                             .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x?.ToModel());
+        return result.ToResult(x => x?.ToModel());
     }
 
     public async Task<Result<ContentSchema?>> GetSchemaAsync(string name)
@@ -35,7 +35,7 @@ internal class SchemaApiStorage : ISchemaStorage
                             .GetAsync($"api/schema/{name}")
                             .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x?.ToModel());
+        return result.ToResult(x => x?.ToModel());
     }
 
     public async Task<Result> CreateAsync(ContentSchema entity)
@@ -72,6 +72,6 @@ internal class SchemaApiStorage : ISchemaStorage
                                 .PostAsync("api/schema/query", new StringContent(string.Empty))
                                 .ToResultAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(x => x.ToModel()));
+        return result.ToResult(x => x.Convert(x => x.ToModel()));
     }
 }

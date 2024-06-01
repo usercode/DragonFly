@@ -124,7 +124,7 @@ public static class DragonFlyBuilderExtensions
 
                                     x.UseEndpoints(e =>
                                     {
-                                        IEnumerable<DragonFlyEndpointHandler> endpointHandlers =  e.ServiceProvider.GetServices<DragonFlyEndpointHandler>();
+                                        IEnumerable<DragonFlyEndpointHandler> endpointHandlers = e.ServiceProvider.GetServices<DragonFlyEndpointHandler>();
 
                                         foreach (DragonFlyEndpointHandler endpointHandler in endpointHandlers)
                                         {
@@ -196,8 +196,8 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSignalR();
 
         builder.AddEndpoint(x => x.MapHub<BackgroundTaskHub>("/background-task-hub")
-                                                      .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
-                                                      .WithDisplayName("DragonFly.BackgroundTaskHub"));
+                                            .RequirePermission(BackgroundTaskPermissions.QueryBackgroundTask)
+                                            .WithDisplayName("DragonFly.BackgroundTaskHub"));
 
         builder.PostInit(x =>
         {

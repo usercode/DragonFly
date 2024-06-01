@@ -14,10 +14,10 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Gets <typeparamref name="TContentModel"/> by id.
     /// </summary>
-    public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, ContentId id)
+    public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, string schema, Guid id)
         where TContentModel : class, IContentModel
     {
-        ContentItem? content = await storage.GetContentAsync(id);
+        ContentItem? content = await storage.GetContentAsync(schema, id);
 
         if (content == null)
         {
@@ -51,7 +51,9 @@ public static class ModelStorageExtensions
     public static async Task DeleteAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        await storage.DeleteAsync(model.GetContentItem());
+        var content = model.GetContentItem();
+
+        await storage.DeleteAsync(content.Schema.Name, content.Id);
     }
 
     /// <summary>
@@ -60,7 +62,9 @@ public static class ModelStorageExtensions
     public static async Task PublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        await storage.PublishAsync(model.GetContentItem());
+        var content = model.GetContentItem();
+
+        await storage.PublishAsync(content.Schema.Name, content.Id);
     }
 
     /// <summary>
@@ -69,7 +73,9 @@ public static class ModelStorageExtensions
     public static async Task UnpublishAsync<TContentModel>(this IContentStorage storage, TContentModel model)
         where TContentModel : class, IContentModel
     {
-        await storage.UnpublishAsync(model.GetContentItem());
+        var content = model.GetContentItem();
+
+        await storage.UnpublishAsync(content.Schema.Name, content.Id);
     }
 
     /// <summary>
@@ -96,7 +102,7 @@ public static class ModelStorageExtensions
     }
 
     /// <summary>
-    /// Starts a query for <typeparamref name="TContentModel"/>.
+    /// Executes a query for <typeparamref name="TContentModel"/>.
     /// </summary>
     public static async Task<QueryResult<TContentModel>> QueryAsync<TContentModel>(this IContentStorage storage, Action<ContentQuery<TContentModel>>? action = null)
         where TContentModel : class, IContentModel

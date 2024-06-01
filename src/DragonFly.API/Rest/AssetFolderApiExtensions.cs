@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using DragonFly.AspNetCore;
-using Microsoft.AspNetCore.Http.HttpResults;
 using SmartResults;
 
 namespace DragonFly.API;
@@ -28,8 +27,8 @@ static class AssetFolderApiExtensions
     private static async Task<IResult> MapQuery(IAssetFolderStorage storage, AssetFolderQuery query)
     {
         return (await storage.QueryAsync(query))
-                            .Then(x => Result.Ok(x.Value.Convert(i => i.ToRest())))
-                            .ToHttpResult();
+                             .ToResult(x => x.Convert(i => i.ToRest()))
+                             .ToHttpResult();
     }
 
     private static async Task<IResult> MapGet(IAssetFolderStorage storage, Guid id)
@@ -37,13 +36,13 @@ static class AssetFolderApiExtensions
         return (await storage.GetAssetFolderAsync(id)).ToHttpResult();
     }
 
-    private static async Task<ResourceCreated> MapCreate(IAssetFolderStorage storage, RestAssetFolder input)
+    private static async Task<IResult> MapCreate(IAssetFolderStorage storage, RestAssetFolder input)
     {
         AssetFolder model = input.ToModel();
 
-        await storage.CreateAsync(model);
-
-        return new ResourceCreated() { Id = model.Id };
+        return (await storage.CreateAsync(model))
+                             .Then(x => Result.Ok(new ResourceCreated() { Id = model.Id }))
+                             .ToHttpResult();
     }
 
     private static async Task<IResult> MapDelete(IAssetFolderStorage storage, Guid id)
@@ -55,8 +54,6 @@ static class AssetFolderApiExtensions
             return TypedResults.NotFound();
         }
 
-        await storage.DeleteAsync(entity);
-
-        return TypedResults.Ok();
+        return (await storage.DeleteAsync(entity)).ToHttpResult();
     }
 }

@@ -27,7 +27,7 @@ internal class AssetApiStorage : IAssetStorage
                                 .PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerDefault.Options)
                                 .ToResultAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(e => e.ToModel()));
+        return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
 
     public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
@@ -51,7 +51,7 @@ internal class AssetApiStorage : IAssetStorage
                                 .GetAsync($"api/asset/{id}")
                                 .ToResultAsync<RestAsset>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x?.ToModel());
+        return result.ToResult(x => x?.ToModel());
     }
 
     public async Task<Result> CreateAsync(Asset entity)

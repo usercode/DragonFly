@@ -20,13 +20,13 @@ internal class ContentApiStorage : IContentStorage
 
     private HttpClient Client { get; }
 
-    public async Task<Result<ContentItem?>> GetContentAsync(ContentId id)
+    public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
     {
         var result = await Client
-                            .GetAsync($"api/content/{id.Schema}/{id.Id}")
+                            .GetAsync($"api/content/{schema}/{id}")
                             .ToResultAsync<RestContentItem>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x?.ToModel());
+        return result.ToResult(x => x?.ToModel());
     }
 
     public async Task<Result> CreateAsync(ContentItem entity)
@@ -50,24 +50,24 @@ internal class ContentApiStorage : IContentStorage
                         .ToResultAsync();
     }
 
-    public async Task<Result<bool>> DeleteAsync(ContentId id)
+    public async Task<Result<bool>> DeleteAsync(string schema, Guid id)
     {
         return await Client
-                        .DeleteAsync($"api/content/{id.Schema}/{id.Id}")
+                        .DeleteAsync($"api/content/{schema}/{id}")
                         .ToResultAsync<bool>();
     }
 
-    public async Task<Result<bool>> PublishAsync(ContentId id)
+    public async Task<Result<bool>> PublishAsync(string schema, Guid id)
     {
         return await Client
-                        .PostAsync($"api/content/{id.Schema}/{id.Id}/publish", new StringContent(string.Empty))
+                        .PostAsync($"api/content/{schema}/{id}/publish", new StringContent(string.Empty))
                         .ToResultAsync<bool>();
     }
 
-    public async Task<Result<bool>> UnpublishAsync(ContentId id)
+    public async Task<Result<bool>> UnpublishAsync(string schema, Guid id)
     {
         return await Client
-                        .PostAsync($"api/content/{id.Schema}/{id.Id}/unpublish", new StringContent(string.Empty))
+                        .PostAsync($"api/content/{schema}/{id}/unpublish", new StringContent(string.Empty))
                         .ToResultAsync<bool>();
     }
 
@@ -77,14 +77,15 @@ internal class ContentApiStorage : IContentStorage
                                 .PostAsJsonAsync($"api/content/query", queryParameters, ApiJsonSerializerDefault.Options)
                                 .ToResultAsync<QueryResult<RestContentItem>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(e => e.ToModel()));
+        return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
 
     public async Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query)
     {
         return await Client
                         .PostAsJsonAsync($"api/content/publish", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
+                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options)
+;
     }
 
     public async Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query)

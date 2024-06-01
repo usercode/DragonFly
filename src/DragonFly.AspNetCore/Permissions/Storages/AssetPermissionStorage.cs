@@ -51,7 +51,7 @@ public class AssetPermissionStorage : IAssetStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.DeleteAsset).ThenAsync(x => Storage.DeleteAsync(asset));
     }
 
-    public async Task<Result<Asset>> GetAssetAsync(Guid id)
+    public async Task<Result<Asset?>> GetAssetAsync(Guid id)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.ReadAsset).ThenAsync(x  => Storage.GetAssetAsync(id));
     }

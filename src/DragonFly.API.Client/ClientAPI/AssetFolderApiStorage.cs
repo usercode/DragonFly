@@ -33,7 +33,7 @@ internal class AssetFolderApiStorage : IAssetFolderStorage
                                 .GetAsync($"api/assetfolder/{id}")
                                 .ToResultAsync<RestAssetFolder>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x?.ToModel());
+        return result.ToResult(x => x?.ToModel());
     }
 
     public async Task<Result<QueryResult<AssetFolder>>> QueryAsync(AssetFolderQuery query)
@@ -42,7 +42,7 @@ internal class AssetFolderApiStorage : IAssetFolderStorage
                                 .PostAsJsonAsync("api/assetfolder/query", query, ApiJsonSerializerDefault.Options)
                                 .ToResultAsync<QueryResult<RestAssetFolder>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(e => e.ToModel()));
+        return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
 
     public Task<Result> UpdateAsync(AssetFolder folder)

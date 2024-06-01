@@ -35,8 +35,8 @@ static class AssetApiExtensions
     private static async Task<IResult> MapQuery(IAssetStorage storage, AssetQuery query)
     {
         return (await storage.QueryAsync(query))
-                        .Then(x => Result.Ok(x.Value.Convert(x => x.ToRest())))
-                        .ToHttpResult();
+                             .ToResult(x => x.Convert(x => x.ToRest()))
+                             .ToHttpResult();
     }
 
     private static async Task<IResult> MapGet(IAssetStorage storage, Guid id)
@@ -53,7 +53,7 @@ static class AssetApiExtensions
         return TypedResults.Ok(restAsset);
     }
 
-    private static async Task<Results<Ok, NotFound>> MapDelete(IAssetStorage storage, Guid id)
+    private static async Task<IResult> MapDelete(IAssetStorage storage, Guid id)
     {
         Asset? entity = await storage.GetAssetAsync(id);
 
@@ -62,25 +62,23 @@ static class AssetApiExtensions
             return TypedResults.NotFound();
         }
 
-        await storage.DeleteAsync(entity);
-
-        return TypedResults.Ok();
+        return (await storage.DeleteAsync(entity)).ToHttpResult();
     }
 
-    private static async Task<ResourceCreated> MapCreate(IAssetStorage storage, RestAsset restAsset)
+    private static async Task<IResult> MapCreate(IAssetStorage storage, RestAsset restAsset)
     {
         Asset asset = restAsset.ToModel();
 
-        await storage.CreateAsync(asset);
-
-        return new ResourceCreated() { Id = asset.Id };
+        return (await storage.CreateAsync(asset))
+                             .Then(x => Result.Ok(new ResourceCreated() { Id = asset.Id }))
+                             .ToHttpResult();
     }
 
-    private static async Task MapUpdate(IAssetStorage storage, RestAsset restAsset)
+    private static async Task<IResult> MapUpdate(IAssetStorage storage, RestAsset restAsset)
     {
         Asset asset = restAsset.ToModel();
 
-        await storage.UpdateAsync(asset);
+        return (await storage.UpdateAsync(asset)).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublish(IAssetStorage storage, Guid id)
@@ -92,9 +90,7 @@ static class AssetApiExtensions
             return TypedResults.NotFound();
         }
 
-        await storage.PublishAsync(entity);
-
-        return TypedResults.Ok();
+        return (await storage.PublishAsync(entity)).ToHttpResult();
     }
 
     private static async Task<IResult> MapDownload(HttpContext context, IAssetStorage storage, Guid id)
@@ -139,10 +135,9 @@ static class AssetApiExtensions
 
     private static async Task<IResult> MapRefreshMetadata(IAssetStorage storage, Guid id)
     {
-        return await storage
-                            .GetAssetAsync(id)
-                            .ThenAsync(x => storage.ApplyMetadataAsync(x.Value))
-                            .ToHttpResultAsync();
+        return await (await storage.GetAssetAsync(id))
+                                    .ThenAsync(async x => await storage.ApplyMetadataAsync(x.Value))
+                                    .ToHttpResultAsync();
     }
 
     private static async Task<IResult> MapRefreshMetadataQuery(IAssetStorage storage, AssetQuery query)

@@ -8,6 +8,7 @@ using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using SmartResults;
 
 namespace DragonFly.API;
 
@@ -25,66 +26,54 @@ static class ContentSchemaApiExtensions
         groupRoute.MapDelete("{id:guid}", MapDelete);
     }
 
-    private static async Task<QueryResult<RestContentSchema>> MapQuery(ISchemaStorage storage)
+    private static async Task<IResult> MapQuery(ISchemaStorage storage)
     {
-        QueryResult<ContentSchema> queryResult = await storage.QuerySchemasAsync();
-
-        return queryResult.Convert(x => x.ToRest());
+        return (await storage.QuerySchemasAsync())
+                             .ToResult(q => q.Convert(i => i.ToRest()))
+                             .ToHttpResult();
     }
 
-    private static async Task<RestContentSchema?> MapGetById(ISchemaStorage storage, Guid id)
+    private static async Task<IResult> MapGetById(ISchemaStorage storage, Guid id)
     {
-        ContentSchema? schema = await storage.GetSchemaAsync(id);
-
-        if (schema == null)
-        {
-            return null;
-        }
-
-        RestContentSchema restSchema = schema.ToRest();
-
-        return restSchema;
+        return (await storage.GetSchemaAsync(id))
+                             .ToResult(x => x.ToRest())
+                             .ToHttpResult();
     }
 
-    private static async Task<RestContentSchema?> MapGetByName(ISchemaStorage storage, string name)
+    private static async Task<IResult> MapGetByName(ISchemaStorage storage, string name)
     {
-        ContentSchema? schema = await storage.GetSchemaAsync(name);
-
-        if (schema == null)
-        {
-            return null;
-        }
-
-        RestContentSchema restSchema = schema.ToRest();
-
-        return restSchema;
+        return (await storage.GetSchemaAsync(name))
+                             .ToResult(x => x.ToRest())
+                             .ToHttpResult();
     }
 
-    private static async Task<ResourceCreated> MapCreate(ISchemaStorage storage, RestContentSchema input)
+    private static async Task<IResult> MapCreate(ISchemaStorage storage, RestContentSchema input)
     {
         ContentSchema m = input.ToModel();
 
-        await storage.CreateAsync(m);
-
-        return new ResourceCreated() { Id = m.Id };
+        return (await storage.CreateAsync(m))
+                             .Then(x => Result.Ok(new ResourceCreated() { Id = m.Id }))
+                             .ToHttpResult();
     }
 
-    private static async Task MapUpdate(ISchemaStorage storage, RestContentSchema input)
+    private static async Task<IResult> MapUpdate(ISchemaStorage storage, RestContentSchema input)
     {
         ContentSchema m = input.ToModel();
 
-        await storage.UpdateAsync(m);
+        return (await storage.UpdateAsync(m))
+                             .ToHttpResult();
     }
 
-    private static async Task MapDelete(ISchemaStorage storage, Guid id)
+    private static async Task<IResult> MapDelete(ISchemaStorage storage, Guid id)
     {
-        ContentSchema? schema = await storage.GetSchemaAsync(id);
+        var schema = await storage.GetSchemaAsync(id);
         
-        if (schema == null)
+        if (schema.IsFailed)
         {
-            return;
+            return schema.ToHttpResult();
         }
 
-        await storage.DeleteAsync(schema);
+        return (await storage.DeleteAsync(schema.Value))
+                             .ToHttpResult();
     }
 }

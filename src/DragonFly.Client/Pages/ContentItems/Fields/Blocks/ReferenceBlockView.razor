@@ -14,7 +14,7 @@
     {
         if (Block.ContentId != null)
         {
-            Content = await Storage.GetContentAsync(new ContentId(Block.ContentSchema, Block.ContentId.Value));
+            Content = await Storage.GetContentAsync(Block.ContentSchema, Block.ContentId.Value);
         }
     }
 

@@ -8,48 +8,30 @@ namespace DragonFly.AspNetCore;
 
 public static class ResultExtensions
 {
-    public static IResult ToHttpResult(this Result result)
+    public static IResult ToHttpResult<TResult>(this TResult result)
+        where TResult : IResult<TResult>
     {
-        if (result.IsSucceeded)
+        int statusCode = StatusCodes.Status200OK;
+
+        if (result.IsFailed)
         {
-            return TypedResults.Ok();
+            if (result.Error is PermissionError)
+            {
+                statusCode = StatusCodes.Status403Forbidden;
+            }
+            else
+            {
+                statusCode = StatusCodes.Status500InternalServerError;
+            }
         }
-        else if (result.Error is PermissionError)
-        {
-            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
-        }
-        else
-        {
-            return TypedResults.StatusCode(StatusCodes.Status500InternalServerError);
-        }
+
+        return TypedResults.Json(result, statusCode: statusCode);
     }
 
-    public static IResult ToHttpResult<T>(this Result<T> result)
+    public static async Task<IResult> ToHttpResultAsync<TResult>(this Task<TResult> result)
+        where TResult : IResult<TResult>
     {
-        if (result.IsSucceeded)
-        {
-            return TypedResults.Ok(result.Value);
-        }
-        else if (result.Error is PermissionError)
-        {
-            return TypedResults.Forbid(authenticationSchemes: PermissionSchemeManager.GetAll());
-        }
-        else
-        {
-            return TypedResults.StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
-
-    public static async Task<IResult> ToHttpResultAsync<T>(this Task<Result<T>> result)
-    {
-        Result<T> r = await result;
-
-        return r.ToHttpResult();
-    }
-
-    public static async Task<IResult> ToHttpResultAsync(this Task<Result> result)
-    {
-        Result r = await result;
+        TResult r = await result;
 
         return r.ToHttpResult();
     }

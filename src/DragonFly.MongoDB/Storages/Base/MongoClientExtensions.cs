@@ -43,6 +43,9 @@ public static class MongoClientExtensions
         return database.GetCollection<MongoContentSchema>("ContentSchemas");
     }
 
+    /// <summary>
+    /// Adds an ascending and descending index.
+    /// </summary>
     public static async Task AddIndexAsync<T>(this IMongoCollection<T> collection, Expression<Func<T, object?>> fieldSelector)
     {
         await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Ascending(fieldSelector)));

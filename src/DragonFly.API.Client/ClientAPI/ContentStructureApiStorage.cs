@@ -26,7 +26,7 @@ internal class ContentStructureApiStorage : IStructureStorage
                             .GetAsync($"api/structure/{id}")
                             .ToResultAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.ToModel());
+        return result.ToResult(x => x.ToModel());
     }
 
     public async Task<ContentStructure> GetStructureAsync(string name)
@@ -35,7 +35,7 @@ internal class ContentStructureApiStorage : IStructureStorage
                                 .GetAsync($"api/structure/{name}")
                                 .ToResultAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.ToModel());
+        return result.ToResult(x => x.ToModel());
     }
 
     public async Task CreateAsync(ContentStructure entity)
@@ -61,7 +61,7 @@ internal class ContentStructureApiStorage : IStructureStorage
                                 .PostAsJsonAsync("api/structure/query", query, ApiJsonSerializerDefault.Options)
                                 .ToResultAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(x => x.ToModel()));
+        return result.ToResult(x => x.Convert(x => x.ToModel()));
     }
 
     public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
@@ -70,7 +70,7 @@ internal class ContentStructureApiStorage : IStructureStorage
                                 .PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""))
                                 .ToResultAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options);
 
-        return result.Convert(x => x.Convert(x => x.ToModel()));
+        return result.ToResult(x => x.Convert(x => x.ToModel()));
     }
 
     public async Task CreateAsync(ContentNode node)

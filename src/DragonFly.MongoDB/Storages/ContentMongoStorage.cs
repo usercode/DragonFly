@@ -11,7 +11,6 @@ using DragonFly.AspNetCore;
 using SmartResults;
 using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Authentication;
 
 namespace DragonFly.MongoDB;
 
@@ -68,18 +67,18 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
     /// </summary>
     private ILogger<ContentMongoStorage> Logger { get; }
 
-    public async Task<Result<ContentItem?>> GetContentAsync(ContentId id)
+    public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
     {
-        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(id.Schema);
+        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema);
 
         if (contentSchema == null)
         {
-            return Result.Failed<ContentItem?>($"The schema '{id.Schema}' doesn't exist.");
+            return Result.Failed<ContentItem?>($"The schema '{schema}' doesn't exist.");
         }
 
-        IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(id.Schema);
+        IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(schema);
 
-        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id.Id);
+        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
 
         if (result == null)
         {
@@ -268,7 +267,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
 
         if (content.ValidationState.Result == ValidationResult.Invalid)
         {
-            return Result.Failed("Invalid state");
+            return Result.Failed(ContentErrors.InvalidState);
         }
 
         IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(content.Schema.Name);
@@ -308,9 +307,9 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
         return Result.Ok();
     }
 
-    public async Task<Result<bool>> DeleteAsync(ContentId id)
+    public async Task<Result<bool>> DeleteAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(id);
+        var result = await GetContentAsync(schema, id);
 
         if(result.IsFailed)
         {
@@ -322,7 +321,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
             return Result.Ok(false);
         }
 
-        await UnpublishAsync(id);
+        await UnpublishAsync(schema, id);
 
         IMongoCollection<MongoContentItem> col = Client.Database.GetContentCollection(result.Value.Schema.Name);
 
@@ -337,9 +336,9 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
         return Result.Ok(true);
     }
 
-    public async Task<Result<bool>> PublishAsync(ContentId id)
+    public async Task<Result<bool>> PublishAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(id);
+        var result = await GetContentAsync(schema, id);
 
         if (result.IsFailed)
         {
@@ -348,7 +347,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
 
         if (result.Value == null)
         {
-            return Result.Failed<bool>("Content not found");
+            return Result.Failed<bool>(ContentErrors.NotFound);
         }
 
         IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(result.Value.Schema.Name, false);
@@ -362,7 +361,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
 
         if (found == null)
         {
-            return Result.Failed<bool>($"Content item not found.");
+            return Result.Failed<bool>(ContentErrors.NotFound);
         }
 
         //add content to published collection
@@ -372,7 +371,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                     new ReplaceOptions() { IsUpsert = true });
 
         //refresh content
-        result = await GetContentAsync(id);
+        result = await GetContentAsync(schema, id);
 
         if (result.Value != null)
         {
@@ -395,9 +394,9 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
         return Result.Ok(true);
     }
 
-    public async Task<Result<bool>> UnpublishAsync(ContentId id)
+    public async Task<Result<bool>> UnpublishAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(id);
+        var result = await GetContentAsync(schema, id);
 
         if (result.IsFailed)
         {
@@ -406,7 +405,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
 
         if (result.Value == null)
         {
-            return Result.Failed<bool>("Content not found");
+            return Result.Failed<bool>(ContentErrors.NotFound);
         }
 
         IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(result.Value.Schema.Name, false);
@@ -420,7 +419,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                             Builders<MongoContentItem>.Filter.Eq(x => x.Id, result.Value.Id),
                             Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null));
 
-        result = await GetContentAsync(id);
+        result = await GetContentAsync(schema, id);
 
         if (result.Value != null)
         {
@@ -450,7 +449,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.PublishAsync(x));
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.PublishAsync(x.Schema.Name, x.Id));
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
@@ -465,7 +464,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.UnpublishAsync(x));
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.UnpublishAsync(x.Schema.Name, x.Id));
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);

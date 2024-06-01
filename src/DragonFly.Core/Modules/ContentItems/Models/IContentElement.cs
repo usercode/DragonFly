@@ -6,7 +6,7 @@ namespace DragonFly;
 
 /// <summary>
 /// It defines an element which owns fields.<br/>
-/// It's used by <see cref="ContentItem"/>, <see cref="ContentComponent"/> and <see cref="ArrayFieldItem"/>.
+/// It's implemented by <see cref="ContentItem"/>, <see cref="ContentComponent"/> and <see cref="ArrayFieldItem"/>.
 /// </summary>
 public interface IContentElement
 {

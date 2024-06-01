@@ -26,38 +26,32 @@ static class WebHookApiExtensions
 
     private static async Task<IResult> MapQuery(IWebHookStorage storage)
     {
-        return await storage.QueryAsync(new WebHookQuery())
-                            .ThenAsync(x => Result.Ok(x.Value.Convert(i => i.ToRest())))
-                            .ToHttpResultAsync();
+        return (await storage.QueryAsync(new WebHookQuery()))
+                             .ToResult(x => x.Convert(i => i.ToRest()))
+                             .ToHttpResult();
     }
 
-    private static async Task<RestWebHook?> MapGet(IWebHookStorage storage, Guid id)
+    private static async Task<IResult> MapGet(IWebHookStorage storage, Guid id)
     {
-        WebHook? result = await storage.GetAsync(id);
-
-        if (result == null)
-        {
-            return null;
-        }
-
-        RestWebHook restModel = result.ToRest();
-
-        return restModel;
+        return (await storage.GetAsync(id))
+                             .ToResult(x => x.ToRest())
+                             .ToHttpResult();
     }
 
-    private static async Task<ResourceCreated> MapCreate(IWebHookStorage storage, RestWebHook input)
+    private static async Task<IResult> MapCreate(IWebHookStorage storage, RestWebHook input)
     {
         WebHook model = input.ToModel();
 
-        await storage.CreateAsync(model);
-
-        return new ResourceCreated() { Id = model.Id };
+        return (await storage.CreateAsync(model))
+                             .Then(x => Result.Ok(new ResourceCreated() { Id = model.Id }))
+                             .ToHttpResult();
     }
 
-    private static async Task MapUpdate(IWebHookStorage storage, RestWebHook input)
+    private static async Task<IResult> MapUpdate(IWebHookStorage storage, RestWebHook input)
     {
         WebHook model = input.ToModel();
 
-        await storage.UpdateAsync(model);
+        return (await storage.UpdateAsync(model))
+                             .ToHttpResult();
     }
 }

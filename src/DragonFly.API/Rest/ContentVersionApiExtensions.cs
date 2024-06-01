@@ -23,32 +23,34 @@ static class ContentVersionApiExtensions
     private static async Task<IResult> MapGet(IContentVersionStorage contentStore, string schema, Guid id)
     {
         return (await contentStore.GetContentByVersionAsync(schema, id))
-                                    .Then(x =>
+                                    .ToResult(x =>
                                     {
-                                        if (x.Value is not null)
+                                        if (x is not null)
                                         {
-                                            x.Value.ApplySchema();
-                                            x.Value.Validate();
+                                            x.ApplySchema();
+                                            x.Validate();
 
-                                            return Result.Ok<RestContentItem?>(x.Value.ToRest());
+                                            return x.ToRest();
                                         }
 
-                                        return Result.Ok<RestContentItem?>();
+                                        return null;
                                     })
                                     .ToHttpResult();
     }
 
     private static async Task<IResult> MapQuery(IContentVersionStorage storage, string schema, Guid id)
     {
-        var result = await storage.GetContentVersionsAsync(schema, id);
+        return (await storage.GetContentVersionsAsync(schema, id))
+                            .ToResult(x =>
+                            {
+                                QueryResult<ContentVersionEntry> queryResult = new QueryResult<ContentVersionEntry>();
+                                queryResult.Items = x.ToList();
+                                queryResult.Offset = 0;
+                                queryResult.Count = queryResult.Items.Count;
+                                queryResult.TotalCount = queryResult.Items.Count;
 
-        QueryResult<ContentVersionEntry> queryResult = new QueryResult<ContentVersionEntry>();
-        queryResult.Items = result.Value.ToList();
-        queryResult.Offset = 0;
-        queryResult.Count = queryResult.Items.Count;
-        queryResult.TotalCount = queryResult.Items.Count;
-
-        return TypedResults.Ok(queryResult);
+                                return queryResult;
+                            })
+                            .ToHttpResult();
     }
-
 }
