@@ -24,7 +24,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                             .GetAsync($"api/structure/{id}")
-                            .ToResultAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
+                            .ReadResultFromJsonAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.ToModel());
     }
@@ -33,7 +33,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                                 .GetAsync($"api/structure/{name}")
-                                .ToResultAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<RestContentStructure>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.ToModel());
     }
@@ -42,7 +42,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                                 .PostAsJsonAsync($"api/structure", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
         {
@@ -59,7 +59,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                                 .PostAsJsonAsync("api/structure/query", query, ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<QueryResult<RestContentStructure>>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.Convert(x => x.ToModel()));
     }
@@ -68,7 +68,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                                 .PostAsync($"api/node/query/{query.Structure}?parentId={query.ParentId}", new StringContent(""))
-                                .ToResultAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<QueryResult<RestContentNode>>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.Convert(x => x.ToModel()));
     }
@@ -77,7 +77,7 @@ internal class ContentStructureApiStorage : IStructureStorage
     {
         var result = await Client
                             .PostAsJsonAsync($"api/node", node.ToRest(), ApiJsonSerializerDefault.Options)
-                            .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                            .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
         {

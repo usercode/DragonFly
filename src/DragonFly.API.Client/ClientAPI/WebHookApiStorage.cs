@@ -24,7 +24,7 @@ internal class WebHookApiStorage : IWebHookStorage
     {
         return (await Client
                         .GetAsync($"api/webhook/{id}")
-                        .ToResultAsync<RestWebHook>(ApiJsonSerializerDefault.Options))
+                        .ReadResultFromJsonAsync<RestWebHook>(ApiJsonSerializerDefault.Options))
                         .ToResult(x => x?.ToModel());
     }
 
@@ -32,7 +32,7 @@ internal class WebHookApiStorage : IWebHookStorage
     {
         var result = await Client
                                 .PostAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
         {
@@ -46,21 +46,21 @@ internal class WebHookApiStorage : IWebHookStorage
     {
         return await Client
                         .PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result> DeleteAsync(WebHook webHook)
     {
         return await Client
                         .DeleteAsync($"api/webhook/{webHook.Id}")
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
         return (await Client
                         .PostAsJsonAsync("api/webhook/query", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options))
+                        .ReadResultFromJsonAsync<QueryResult<RestWebHook>>(ApiJsonSerializerDefault.Options))
                         .ToResult(x => x.Convert(e => e.ToModel()));
     }
 }

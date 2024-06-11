@@ -25,7 +25,7 @@ internal class AssetApiStorage : IAssetStorage
     {
         var result = await Client
                                 .PostAsJsonAsync($"api/asset/query", assetQuery, ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<QueryResult<RestAsset>>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
@@ -36,7 +36,7 @@ internal class AssetApiStorage : IAssetStorage
         requestMessage.Content = new StreamContent(stream);
         requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(mimetype);
 
-        return await Client.SendAsync(requestMessage).ToResultAsync();
+        return await Client.SendAsync(requestMessage).ReadResultFromJsonAsync();
     }
 
     public async Task<Result<Stream>> GetStreamAsync(Asset asset)
@@ -49,7 +49,7 @@ internal class AssetApiStorage : IAssetStorage
     {
         var result = await Client
                                 .GetAsync($"api/asset/{id}")
-                                .ToResultAsync<RestAsset>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<RestAsset>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
     }
@@ -58,7 +58,7 @@ internal class AssetApiStorage : IAssetStorage
     {
         var result = await Client
                             .PostAsJsonAsync($"api/asset", entity.ToRest())
-                            .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                            .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
         {
@@ -72,34 +72,34 @@ internal class AssetApiStorage : IAssetStorage
     {
         return await Client
                         .PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty))
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result> UpdateAsync(Asset entity)
     {
         return await Client
                         .PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result> DeleteAsync(Asset asset)
     {
         return await Client
                         .DeleteAsync($"api/asset/{asset.Id}")
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         return await Client
                         .PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty))
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query)
     {
         return await Client
                         .PostAsJsonAsync($"api/asset/metadata", query, ApiJsonSerializerDefault.Options)
-                        .ToResultAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
+                        .ReadResultFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
     }
 }

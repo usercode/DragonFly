@@ -24,14 +24,14 @@ internal class AssetFolderApiStorage : IAssetFolderStorage
     {
         return await Client
                         .PostAsJsonAsync("api/assetfolder", folder.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id)
     {
         var result = await Client
                                 .GetAsync($"api/assetfolder/{id}")
-                                .ToResultAsync<RestAssetFolder>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<RestAssetFolder>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
     }
@@ -40,7 +40,7 @@ internal class AssetFolderApiStorage : IAssetFolderStorage
     {
         var result = await Client
                                 .PostAsJsonAsync("api/assetfolder/query", query, ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<QueryResult<RestAssetFolder>>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<QueryResult<RestAssetFolder>>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
@@ -54,6 +54,6 @@ internal class AssetFolderApiStorage : IAssetFolderStorage
     {
         return await Client
                         .DeleteAsync($"api/assetfolder/{folder.Id}")
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 }

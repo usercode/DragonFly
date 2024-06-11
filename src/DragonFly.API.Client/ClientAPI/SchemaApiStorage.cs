@@ -24,7 +24,7 @@ internal class SchemaApiStorage : ISchemaStorage
     {
         var result = await Client
                             .GetAsync($"api/schema/{id}")
-                            .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+                            .ReadResultFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
     }
@@ -33,7 +33,7 @@ internal class SchemaApiStorage : ISchemaStorage
     {
         var result = await Client
                             .GetAsync($"api/schema/{name}")
-                            .ToResultAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
+                            .ReadResultFromJsonAsync<RestContentSchema>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
     }
@@ -42,7 +42,7 @@ internal class SchemaApiStorage : ISchemaStorage
     {
         var result = await Client
                                 .PostAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                                .ToResultAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
         {
@@ -56,21 +56,21 @@ internal class SchemaApiStorage : ISchemaStorage
     {
         return await Client
                         .PutAsJsonAsync($"api/schema", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result> DeleteAsync(ContentSchema entity)
     {
         return await Client
                         .DeleteAsync($"api/schema/{entity.Id}")
-                        .ToResultAsync();
+                        .ReadResultFromJsonAsync();
     }
 
     public async Task<Result<QueryResult<ContentSchema>>> QuerySchemasAsync()
     {
         var result = await Client
                                 .PostAsync("api/schema/query", new StringContent(string.Empty))
-                                .ToResultAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options);
+                                .ReadResultFromJsonAsync<QueryResult<RestContentSchema>>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x.Convert(x => x.ToModel()));
     }

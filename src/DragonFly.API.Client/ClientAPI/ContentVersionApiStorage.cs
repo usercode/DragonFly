@@ -35,7 +35,7 @@ internal class ContentVersionApiStorage : IContentVersionStorage
     {
         var result = await Client
                              .GetAsync($"api/content/{schema}/{id}/version")
-                             .ToResultAsync<RestContentItem>(ApiJsonSerializerDefault.Options);
+                             .ReadResultFromJsonAsync<RestContentItem>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
     }
