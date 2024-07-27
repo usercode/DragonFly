@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Verify.XUnit" Version="26.0.1" />
+    <PackageReference Include="Verify.XUnit" Version="26.1.2" />
     <PackageReference Include="Verify.SourceGenerators" Version="2.2.0" />
     <PackageReference Include="coverlet.collector" Version="6.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
