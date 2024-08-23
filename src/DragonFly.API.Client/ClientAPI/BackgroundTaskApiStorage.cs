@@ -27,14 +27,14 @@ internal class BackgroundTaskApiStorage : IBackgroundTaskService
     {
         return await Client
                         .PostAsync("api/task/query", new StringContent(string.Empty))
-                        .ReadResultFromJsonAsync<BackgroundTaskInfo[]>();
+                        .ReadResultFromJsonAsync<BackgroundTaskInfo[]>(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result> CancelAsync(int id)
     {
         return await Client
                         .PostAsync($"api/task/{id}/cancel", new StringContent(string.Empty))
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()

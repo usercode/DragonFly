@@ -41,28 +41,21 @@ static class AssetApiExtensions
 
     private static async Task<IResult> MapGet(IAssetStorage storage, Guid id)
     {
-        Asset? entity = await storage.GetAssetAsync(id);
+        Result<Asset?> result = await storage.GetAssetAsync(id);
 
-        if (entity == null)
-        {
-            return TypedResults.NotFound();
-        }
-
-        RestAsset restAsset = entity.ToRest();
-
-        return TypedResults.Ok(restAsset);
+        return result.ToResult(x => x?.ToRest()).ToHttpResult();
     }
 
     private static async Task<IResult> MapDelete(IAssetStorage storage, Guid id)
     {
-        Asset? entity = await storage.GetAssetAsync(id);
+        Result<Asset?> result = await storage.GetAssetAsync(id);
 
-        if (entity == null)
+        if (result.IsFailed)
         {
-            return TypedResults.NotFound();
+            return result.ToHttpResult();
         }
 
-        return (await storage.DeleteAsync(entity)).ToHttpResult();
+        return (await storage.DeleteAsync(result.Value)).ToHttpResult();
     }
 
     private static async Task<IResult> MapCreate(IAssetStorage storage, RestAsset restAsset)

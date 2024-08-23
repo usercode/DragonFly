@@ -46,14 +46,14 @@ internal class WebHookApiStorage : IWebHookStorage
     {
         return await Client
                         .PutAsJsonAsync($"api/webhook", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result> DeleteAsync(WebHook webHook)
     {
         return await Client
                         .DeleteAsync($"api/webhook/{webHook.Id}")
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)

@@ -78,13 +78,13 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         return asset;
     }
 
-    public async Task<Result<Asset>> GetAssetAsync(Guid id)
+    public async Task<Result<Asset?>> GetAssetAsync(Guid id)
     {
         MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         if (asset == null)
         {
-            return Result.Ok<Asset>();
+            return Result.Ok<Asset?>();
         }
 
         return SetPreviewUrl(asset.ToModel());

@@ -44,7 +44,6 @@ internal class AssetApiStorage : IAssetStorage
         return await Client.GetStreamAsync($"api/asset/{asset.Id}/download");
     }
 
-    //assets
     public async Task<Result<Asset?>> GetAssetAsync(Guid id)
     {
         var result = await Client
@@ -57,7 +56,7 @@ internal class AssetApiStorage : IAssetStorage
     public async Task<Result> CreateAsync(Asset entity)
     {
         var result = await Client
-                            .PostAsJsonAsync($"api/asset", entity.ToRest())
+                            .PostAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerDefault.Options)
                             .ReadResultFromJsonAsync<ResourceCreated>(ApiJsonSerializerDefault.Options);
 
         if (result.IsSucceeded)
@@ -72,28 +71,28 @@ internal class AssetApiStorage : IAssetStorage
     {
         return await Client
                         .PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty))
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result> UpdateAsync(Asset entity)
     {
         return await Client
                         .PutAsJsonAsync($"api/asset", entity.ToRest(), ApiJsonSerializerDefault.Options)
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result> DeleteAsync(Asset asset)
     {
         return await Client
                         .DeleteAsync($"api/asset/{asset.Id}")
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         return await Client
                         .PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty))
-                        .ReadResultFromJsonAsync();
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
     public async Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query)
