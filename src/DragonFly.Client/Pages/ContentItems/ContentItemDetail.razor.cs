@@ -156,7 +156,7 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
                 }
                 else
                 {
-                    Notifications.Add(new NotificationItem(NotificationType.Success, $"Content has been published at {Entity.PublishedAt.Value}"));
+                    Notifications.Add(new NotificationItem(NotificationType.Success, $"Content was published on {Entity.PublishedAt.Value}"));
                 }
             }
 

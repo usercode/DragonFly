@@ -34,20 +34,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="8.0.8" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 	</ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.8" />
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BlazorStrap" Version="5.2.100.61524" />
-    <PackageReference Include="BlazorStrap.V5" Version="5.2.100" />
+		<PackageReference Include="BlazorStrap" Version="5.2.101" />
+    <PackageReference Include="BlazorStrap.V5" Version="5.2.101" />
 	</ItemGroup>
 
   <ItemGroup>
