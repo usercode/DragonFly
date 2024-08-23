@@ -15,7 +15,7 @@ public class CardItem
     /// <summary>
     /// Blocks
     /// </summary>
-    public IList<Block> Blocks { get; set; } = new List<Block>();
+    public IList<Block> Blocks { get; set; } = [];
 
     /// <summary>
     /// Header

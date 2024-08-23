@@ -24,17 +24,25 @@ public class GridBlock : Block, IChildBlocks
     /// <summary>
     /// Columns
     /// </summary>
-    public IList<GridSpan> Columns { get; set; } = new List<GridSpan>();
+    public IList<GridSpan> Columns { get; set; } = [];
 
     /// <summary>
     /// Rows
     /// </summary>
-    public IList<GridSpan> Rows { get; set; } = new List<GridSpan>();
+    public IList<GridSpan> Rows { get; set; } = [];
 
     /// <summary>
     /// Items
     /// </summary>
-    public IList<GridItem> Items { get; set; } = new List<GridItem>();
+    public IList<GridItem> Items { get; set; } = [];
 
-    public IEnumerable<Block> GetBlocks() => Items.Select(x => x.Block);
+    public IEnumerable<BlockContext> GetBlocks()
+    {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            GridItem column = Items[i];
+
+            yield return new BlockContext(column.Block, x => column.Block = x);
+        }
+    }
 }

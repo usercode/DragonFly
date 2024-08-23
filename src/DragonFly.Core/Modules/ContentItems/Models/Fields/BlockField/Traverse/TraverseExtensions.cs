@@ -6,15 +6,15 @@ namespace DragonFly;
 
 public static class TraverseExtensions
 {
-    public static IEnumerable<Block> EnumerateBlocks(this IChildBlocks input)
+    public static IEnumerable<BlockContext> EnumerateBlocks(this IChildBlocks input)
     {
-        foreach (Block block in input.GetBlocks())
+        foreach (BlockContext context in input.GetBlocks())
         {
-            yield return block;
+            yield return context;
 
-            if (block is IChildBlocks childBlock)
+            if (context.Block is IChildBlocks childBlock)
             {
-                foreach (Block b in EnumerateBlocks(childBlock))
+                foreach (BlockContext b in EnumerateBlocks(childBlock))
                 {
                     yield return b;
                 }

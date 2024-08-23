@@ -24,15 +24,25 @@ public class ColumnBlock : Block, IChildBlocks
     /// <summary>
     /// Columns
     /// </summary>
-    public IList<Column> Columns { get; set; } = new List<Column>();
+    public IList<Column> Columns { get; set; } = [];
 
     /// <summary>
     /// HorizontalAlignment
     /// </summary>
     public HorizontalAlignment? HorizontalAlignment { get; set; }
 
-    public IEnumerable<Block> GetBlocks()
+    public IEnumerable<BlockContext> GetBlocks()
     {
-        return Columns.SelectMany(x => x.Blocks);
+        for (int c = 0; c < Columns.Count; c++)
+        {
+            Column column = Columns[c];
+
+            for (int i = 0; i < column.Blocks.Count; i++)
+            {
+                int index = i;
+
+                yield return new BlockContext(column.Blocks[i], x => column.Blocks[index] = x);
+            }
+        }
     }
 }

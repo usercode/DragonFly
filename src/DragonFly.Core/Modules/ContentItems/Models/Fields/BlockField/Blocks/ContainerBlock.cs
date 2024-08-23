@@ -15,10 +15,15 @@ public class ContainerBlock : Block, IChildBlocks
 
     public override string CssIcon => "fa-regular fa-square";
 
-    public IList<Block> Blocks { get; set; } = new List<Block>();
+    public IList<Block> Blocks { get; set; } = [];
 
-    public IEnumerable<Block> GetBlocks()
+    public IEnumerable<BlockContext> GetBlocks()
     {
-        return Blocks;
+        for (int i = 0; i < Blocks.Count; i++)
+        {
+            int index = i;
+
+            yield return new BlockContext(Blocks[i], x => Blocks[index] = x);
+        }
     }
 }

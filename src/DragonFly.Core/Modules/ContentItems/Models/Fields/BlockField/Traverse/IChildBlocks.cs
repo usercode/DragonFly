@@ -6,5 +6,5 @@ namespace DragonFly;
 
 public interface IChildBlocks
 {
-    IEnumerable<Block> GetBlocks();
+    IEnumerable<BlockContext> GetBlocks();
 }
