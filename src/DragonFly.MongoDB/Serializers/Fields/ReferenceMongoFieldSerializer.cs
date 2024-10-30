@@ -20,7 +20,7 @@ public class ReferenceMongoFieldSerializer : MongoFieldSerializer<ReferenceField
         {
             if (bsonDocument[ReferenceField.IdField] != BsonNull.Value)
             {
-                Guid targetId = bsonDocument[ReferenceField.IdField].AsGuid;
+                Guid targetId = ((BsonBinaryData)bsonDocument[ReferenceField.IdField]).ToGuid(GuidRepresentation.CSharpLegacy);
                 string targetType = bsonDocument[ReferenceField.SchemaField].AsString;
 
                 contentField.ContentItem = ProxyFactory.CreateContent(targetType, targetId);

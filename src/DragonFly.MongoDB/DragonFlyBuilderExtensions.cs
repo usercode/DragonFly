@@ -5,8 +5,10 @@
 using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.DependencyInjection;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace DragonFly.AspNetCore;
 
@@ -62,6 +64,7 @@ public static class DragonFlyBuilderExtensions
         builder.PostInit<SchemaIndexInitializer>();
 
         ConventionRegistry.Register("IgnoreExtraElements", new ConventionPack() { new IgnoreExtraElementsConvention(true) }, t => true);
+        BsonSerializer.RegisterSerializer(new GuidSerializer(GuidRepresentation.CSharpLegacy));
 
         return builder;
     }

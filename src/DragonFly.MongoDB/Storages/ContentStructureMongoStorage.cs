@@ -104,7 +104,7 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
 
     public async Task<QueryResult<ContentNode>> QueryAsync(NodesQuery query)
     {
-        IMongoQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
+        IQueryable<MongoContentNode> q = ContentNodes.AsQueryable()
                                                             .Where(x => x.Structure == query.Structure);
 
         if (query.ParentId != null)

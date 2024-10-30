@@ -163,7 +163,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
     public async Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery assetQuery)
     {
-        IMongoQueryable<MongoAsset> query = Assets.AsQueryable();
+        IQueryable<MongoAsset> query = Assets.AsQueryable();
 
         if (assetQuery.Folder != null)
         {

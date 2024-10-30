@@ -27,7 +27,7 @@ public class WebHookMongoStorage : MongoStorage, IWebHookStorage
 
     public async Task<Result<QueryResult<WebHook>>> QueryAsync(WebHookQuery query)
     {
-        IMongoQueryable<MongoWebHook> q = WebHooks.AsQueryable();
+        IQueryable<MongoWebHook> q = WebHooks.AsQueryable();
 
         if (query.Event != null)
         {

@@ -7,6 +7,7 @@ using DragonFly.MongoDB.Index;
 using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace DragonFly.MongoDB;
 

@@ -127,9 +127,12 @@
 
                     @* referenced by *@
                     <div>
-                        @foreach (var content in ReferencedBy.Items)
+                        @if(ReferencedBy != null)
                         {
-                            <p>@content.Schema.Name @content.Id</p>
+                            foreach (var content in ReferencedBy.Items)
+                            {
+                                <p>@content.Schema.Name @content.Id</p>
+                            }
                         }
                     </div>
                 </div>

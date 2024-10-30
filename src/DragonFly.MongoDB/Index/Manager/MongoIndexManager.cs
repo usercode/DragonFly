@@ -17,7 +17,7 @@ public sealed class MongoIndexManager
     /// </summary>
     public static MongoIndexManager Default { get; } = new MongoIndexManager();
 
-    private IDictionary<Type, FieldIndex> _fields = new Dictionary<Type, FieldIndex>();
+    private Dictionary<Type, FieldIndex> _fields = new Dictionary<Type, FieldIndex>();
 
     public void Add<TFieldIndex>()
         where TFieldIndex : FieldIndex, new()

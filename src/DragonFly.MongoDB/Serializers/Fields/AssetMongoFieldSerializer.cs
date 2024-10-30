@@ -18,7 +18,7 @@ public class AssetMongoFieldSerializer : MongoFieldSerializer<AssetField>
 
         if (bsonValue is BsonBinaryData bsonBinary && bsonBinary.IsGuid)
         {
-            contentField.Asset = ProxyFactory.CreateAsset(bsonBinary.ToGuid());
+            contentField.Asset = ProxyFactory.CreateAsset(bsonBinary.ToGuid(GuidRepresentation.CSharpLegacy));
         }
 
         return contentField;
