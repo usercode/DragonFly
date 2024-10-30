@@ -119,7 +119,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
         }
 
         query.Schema = Schema.Name;
-        query.UsedAsset = UsedAsset?.Id;
+        query.Reference = UsedAsset?.ToReference();
         
         return query;
     }

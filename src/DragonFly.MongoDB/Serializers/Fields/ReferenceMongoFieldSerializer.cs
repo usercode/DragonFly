@@ -34,10 +34,11 @@ public class ReferenceMongoFieldSerializer : MongoFieldSerializer<ReferenceField
     {
         if (contentField.ContentItem != null)
         {
-            BsonDocument doc = new BsonDocument();
-
-            doc.Add(ReferenceField.IdField, new BsonBinaryData(contentField.ContentItem.Id, GuidRepresentation.Standard));
-            doc.Add(ReferenceField.SchemaField, contentField.ContentItem.Schema.Name);
+            BsonDocument doc = new BsonDocument()
+            {
+                { ReferenceField.IdField, new BsonBinaryData(contentField.ContentItem.Id, GuidRepresentation.CSharpLegacy) },
+                { ReferenceField.SchemaField, contentField.ContentItem.Schema.Name }
+            };
 
             return doc;
         }

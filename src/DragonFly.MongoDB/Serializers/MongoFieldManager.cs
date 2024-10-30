@@ -18,7 +18,7 @@ public sealed class MongoFieldManager
     /// </summary>
     public static MongoFieldManager Default { get; } = new MongoFieldManager();
 
-    private IDictionary<Type, IMongoFieldSerializer> _fields = new Dictionary<Type, IMongoFieldSerializer>();
+    private Dictionary<Type, IMongoFieldSerializer> _fields = [];
 
     public void Add(IMongoFieldSerializer fieldSerializer)
     {

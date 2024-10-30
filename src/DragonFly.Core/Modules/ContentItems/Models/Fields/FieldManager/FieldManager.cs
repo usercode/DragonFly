@@ -16,10 +16,10 @@ public sealed class FieldManager
     /// </summary>
     public static FieldManager Default { get; } = new FieldManager();
 
-    private readonly IDictionary<string, FieldFactory> _optionsByName = new Dictionary<string, FieldFactory>();
-    private readonly IDictionary<string, FieldFactory> _queryByName = new Dictionary<string, FieldFactory>();
-    private readonly IDictionary<string, FieldFactory> _fieldByName = new Dictionary<string, FieldFactory>();
-    private readonly IDictionary<Type, FieldFactory> _fieldByType = new Dictionary<Type, FieldFactory>();
+    private readonly Dictionary<string, FieldFactory> _optionsByName = new Dictionary<string, FieldFactory>();
+    private readonly Dictionary<string, FieldFactory> _queryByName = new Dictionary<string, FieldFactory>();
+    private readonly Dictionary<string, FieldFactory> _fieldByName = new Dictionary<string, FieldFactory>();
+    private readonly Dictionary<Type, FieldFactory> _fieldByType = new Dictionary<Type, FieldFactory>();
 
     public event FieldAddedHandler? Added;
 

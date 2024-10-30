@@ -39,8 +39,10 @@ public class ComponentMongoFieldSerializer : MongoFieldSerializer<ComponentField
     {
         if (contentField.ContentComponent != null)
         {
-            BsonDocument doc = new BsonDocument();
-            doc.Add(ReferenceField.SchemaField, contentField.ContentComponent.Schema.Name);
+            BsonDocument doc = new BsonDocument()
+            {
+                { ReferenceField.SchemaField, contentField.ContentComponent.Schema.Name }
+            };
             
             BsonDocument fields = new BsonDocument();
 

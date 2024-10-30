@@ -27,10 +27,12 @@ class AssetFolderIndexInitializer : IPostInitialize
     {
         IMongoCollection<MongoAssetFolder> assetFolders = Client.Database.GetAssetFolderCollection();
 
+        await assetFolders.Indexes.DropAllAsync();
+
         //AssetFolders
-        await assetFolders.AddIndexAsync(x => x.Name);
-        await assetFolders.AddIndexAsync(x => x.Parent);
-        await assetFolders.AddIndexAsync(x => x.CreatedAt);
-        await assetFolders.AddIndexAsync(x => x.ModifiedAt);
+        await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.Name)}");
+        await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.Parent)}");
+        await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.CreatedAt)}");
+        await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.ModifiedAt)}");
     }
 }

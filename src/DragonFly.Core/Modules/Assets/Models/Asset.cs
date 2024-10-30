@@ -9,6 +9,8 @@ namespace DragonFly;
 /// </summary>
 public class Asset : ContentBase<Asset>
 {
+    public readonly static string Schema = "$Asset";
+
     public Asset()
     {
     }

@@ -74,9 +74,9 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
         IList<MongoAssetFolder> resultMongo = await query.ToListAsync();
 
         var result = resultMongo
-                    .OrderBy(x => x.Name)            
-                    .Select(x => x.ToModel())
-                    .ToList();
+                            .OrderBy(x => x.Name)            
+                            .Select(x => x.ToModel())
+                            .ToList();
 
         return new QueryResult<AssetFolder>() { Offset = queryData.Skip, Count = result.Count, Items = result };
     }

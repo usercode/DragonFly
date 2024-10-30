@@ -9,7 +9,7 @@ namespace DragonFly;
 /// </summary>
 [Field]
 [FieldOptions(typeof(ArrayFieldOptions))]
-public partial class ArrayField
+public partial class ArrayField : IReferencedContent
 {
     public ArrayField()
     {
@@ -18,11 +18,21 @@ public partial class ArrayField
     /// <summary>
     /// Items
     /// </summary>
-    public IList<ArrayFieldItem> Items { get; set; }= new List<ArrayFieldItem>();
+    public IList<ArrayFieldItem> Items { get; set; }= [];
 
     public override void Clear()
     {
         Items.Clear();
+    }
+
+    public ContentReference[] GetReferences()
+    {
+        return Items
+            .SelectMany(x => x.Fields
+                                    .Select(i => i.Value)
+                                    .OfType<IReferencedContent>()
+                                    .SelectMany(f => f.GetReferences()))
+            .ToArray();
     }
 
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)

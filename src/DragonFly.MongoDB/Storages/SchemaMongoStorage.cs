@@ -64,7 +64,7 @@ public class SchemaMongoStorage : MongoStorage, ISchemaStorage
 
         schema.Id = mongo.Id;
 
-        await CreateIndicesAsync(schema);
+        await CreateContentIndicesAsync(schema);
 
         return Result.Ok();
     }
@@ -75,7 +75,7 @@ public class SchemaMongoStorage : MongoStorage, ISchemaStorage
 
         await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo());
 
-        await CreateIndicesAsync(schema);
+        await CreateContentIndicesAsync(schema);
 
         return Result.Ok();
     }
@@ -127,7 +127,7 @@ public class SchemaMongoStorage : MongoStorage, ISchemaStorage
         return schema.ToModel();
     }
 
-    public async Task<Result> CreateIndicesAsync(ContentSchema schema)
+    public async Task<Result> CreateContentIndicesAsync(ContentSchema schema)
     {
         //index for drafts
         await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, false));

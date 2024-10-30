@@ -23,7 +23,18 @@ public class DefaultFieldIndex<T> : FieldIndex
                            CreateIndexPath(fieldName)),
                            new CreateIndexOptions()
                            {
-                               Name = fieldName,
+                               Name = $"{CreateIndexPath(fieldName)}.asc",
+                               Unique = Unique,                               
+                               //Collation = new Collation(locale: "en", strength: CollationStrength.Primary)
+                           }));
+
+        //create new index
+        await indexManager.CreateOneAsync(
+                       new CreateIndexModel<MongoContentItem>(Builders<MongoContentItem>.IndexKeys.Descending(
+                           CreateIndexPath(fieldName)),
+                           new CreateIndexOptions()
+                           {
+                               Name = $"{CreateIndexPath(fieldName)}.desc",
                                Unique = Unique,
                                //Collation = new Collation(locale: "en", strength: CollationStrength.Primary)
                            }));

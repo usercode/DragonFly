@@ -10,7 +10,7 @@ namespace DragonFly;
 [Field]
 [FieldOptions(typeof(ReferenceFieldOptions))]
 [FieldQuery(typeof(ReferenceFieldQuery))]
-public partial class ReferenceField
+public partial class ReferenceField : IReferencedContent
 {
     public const string IdField = "Id";
     public const string SchemaField = "Schema";
@@ -56,5 +56,15 @@ public partial class ReferenceField
         }
 
         return ContentItem.ToString();
+    }
+
+    public ContentReference[] GetReferences()
+    {
+        if (ContentItem != null)
+        {
+            return [ContentItem.ToReference()];
+        }
+
+        return [];
     }
 }

@@ -41,7 +41,7 @@ class ContentIndexInitializer : IPostInitialize
         foreach (ContentSchema schema in schemas.Select(x=> x.ToModel()))
         {
             var drafts = Client.Database.GetContentCollection(schema.Name, false);
-            var published = Client.Database.GetContentCollection(schema.Name, true);            
+            var published = Client.Database.GetContentCollection(schema.Name, true);
 
             //index for drafts
             await CreateIndicesInternalAsync(drafts);
@@ -53,11 +53,13 @@ class ContentIndexInitializer : IPostInitialize
             {
                 await collection.Indexes.DropAllAsync();
 
-                await collection.AddIndexAsync(x => x.CreatedAt);
-                await collection.AddIndexAsync(x => x.ModifiedAt);
-                await collection.AddIndexAsync(x => x.PublishedAt);
-                await collection.AddIndexAsync(x => x.Version);
-                await collection.AddIndexAsync(x => x.SchemaVersion);
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.CreatedAt)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.ModifiedAt)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.PublishedAt)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.Version)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.SchemaVersion)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.ReferencedTo)}.{nameof(MongoReferencedContent.Id2)}");
+                await collection.AddIndexAsync($"{nameof(MongoContentItem.ReferencedTo)}.{nameof(MongoReferencedContent.Schema)}");
 
                 foreach (var field in schema.Fields)
                 {

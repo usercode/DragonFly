@@ -16,8 +16,8 @@ public sealed class BlockManager
     /// </summary>
     public static BlockManager Default { get; } = new BlockManager();
 
-    private IDictionary<string, BlockFactory> _blocksByName = new Dictionary<string, BlockFactory>();
-    private IDictionary<Type, BlockFactory> _blocksByType = new Dictionary<Type, BlockFactory>();
+    private Dictionary<string, BlockFactory> _blocksByName = new Dictionary<string, BlockFactory>();
+    private Dictionary<Type, BlockFactory> _blocksByType = new Dictionary<Type, BlockFactory>();
 
     private BlockFactory[]? _currentBlockFactories = null;
     private bool _rebuildBlockList = false;

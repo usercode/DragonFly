@@ -28,12 +28,14 @@ class AssetIndexInitializer : IPostInitialize
         IMongoCollection<MongoAsset> assets = Client.Database.GetAssetCollection();
 
         //assets
-        await assets.AddIndexAsync(x => x.Name);
-        await assets.AddIndexAsync(x => x.Slug);
-        await assets.AddIndexAsync(x => x.Alt);
-        await assets.AddIndexAsync(x => x.MimeType);
-        await assets.AddIndexAsync(x => x.Size);
-        await assets.AddIndexAsync(x => x.CreatedAt);
-        await assets.AddIndexAsync(x => x.ModifiedAt);
+        await assets.Indexes.DropAllAsync();
+
+        await assets.AddIndexAsync($"{nameof(MongoAsset.Name)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.Slug)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.Alt)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.MimeType)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.Size)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.CreatedAt)}");
+        await assets.AddIndexAsync($"{nameof(MongoAsset.ModifiedAt)}");
     }
 }

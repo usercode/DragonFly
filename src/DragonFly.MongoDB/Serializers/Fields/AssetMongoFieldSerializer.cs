@@ -28,7 +28,7 @@ public class AssetMongoFieldSerializer : MongoFieldSerializer<AssetField>
     {
         if (contentField.Asset != null)
         {
-            return new BsonBinaryData(contentField.Asset.Id, GuidRepresentation.Standard);
+            return new BsonBinaryData(contentField.Asset.Id, GuidRepresentation.CSharpLegacy);
         }
         else
         {

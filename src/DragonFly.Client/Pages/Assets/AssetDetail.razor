@@ -124,6 +124,14 @@
                         <h3>@m.Key</h3>
                         @ComponentManager.CreateComponent(m.Value)
                     }
+
+                    @* referenced by *@
+                    <div>
+                        @foreach (var content in ReferencedBy.Items)
+                        {
+                            <p>@content.Schema.Name @content.Id</p>
+                        }
+                    </div>
                 </div>
                 <div class="col-md-6">
                     @if (IsNewEntity == false)

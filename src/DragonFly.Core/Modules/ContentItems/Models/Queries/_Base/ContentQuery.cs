@@ -40,9 +40,9 @@ public class ContentQuery : QueryBase
     public bool IncludeListFieldsOnly { get; set; } = false;
 
     /// <summary>
-    /// UsedAsset
+    /// Reference
     /// </summary>
-    public Guid? UsedAsset { get; set; } = null;
+    public ContentReference? Reference { get; set; } = null;
 
     /// <summary>
     /// Published

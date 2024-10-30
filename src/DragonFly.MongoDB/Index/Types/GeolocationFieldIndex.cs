@@ -17,7 +17,7 @@ public class GeolocationFieldIndex : FieldIndex
                             CreateIndexPath(fieldName)),
                             new CreateIndexOptions()
                             {
-                                Name = fieldName
+                                Name = CreateIndexPath(fieldName)
                             }));
     }
 }

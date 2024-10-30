@@ -9,8 +9,8 @@ namespace DragonFly;
 /// </summary>
 public sealed class MetadataManager
 {
-    private IDictionary<string, Type> _byName = new Dictionary<string, Type>();
-    private IDictionary<Type, string> _byType = new Dictionary<Type, string>();
+    private Dictionary<string, Type> _byName = new Dictionary<string, Type>();
+    private Dictionary<Type, string> _byType = new Dictionary<Type, string>();
 
     /// <summary>
     /// Default

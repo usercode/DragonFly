@@ -79,7 +79,7 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
         }
 
         return Id == other.Id && Schema.Name == other.Schema.Name;
-    }
+    }    
 
     public override string ToString()
     {

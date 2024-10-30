@@ -11,8 +11,4 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoContentFields : Dictionary<string, BsonValue>
 {
-    public MongoContentFields()
-    {
-
-    }
 }

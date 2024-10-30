@@ -10,7 +10,7 @@ namespace DragonFly;
 [Field]
 [FieldOptions(typeof(AssetFieldOptions))]
 [FieldQuery(typeof(AssetFieldQuery))]
-public partial class AssetField
+public partial class AssetField : IReferencedContent
 {
     public AssetField()
     {
@@ -57,5 +57,15 @@ public partial class AssetField
     public override void Clear()
     {
         Asset = null;
-    }    
+    }
+
+    public ContentReference[] GetReferences()
+    {
+        if (Asset != null)
+        {
+            return [Asset.ToReference()];
+        }
+
+        return [];
+    }
 }

@@ -21,6 +21,11 @@ public static class BackgroundTaskContextExtensions
 
         while (true)
         {
+            if (ctx.CancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+
             QueryResult<T> result = await queryAction(ctx.Input);
 
             if (result.Items.Count == 0)
@@ -30,6 +35,11 @@ public static class BackgroundTaskContextExtensions
 
             foreach (T item in result.Items)
             {
+                if (ctx.CancellationToken.IsCancellationRequested)
+                {
+                    break;
+                }
+
                 await ctx.UpdateStatusAsync(item.ToString(), counter, result.TotalCount);
 
                 try

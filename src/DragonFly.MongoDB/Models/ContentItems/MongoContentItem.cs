@@ -17,5 +17,10 @@ public class MongoContentItem : MongoContentBase
     /// <summary>
     /// Fields
     /// </summary>
-    public MongoContentFields Fields { get; set; } = new MongoContentFields();
+    public MongoContentFields Fields { get; set; } = [];
+
+    /// <summary>
+    /// References to other content items.
+    /// </summary>
+    public IList<MongoReferencedContent> ReferencedTo { get; set; } = [];
 }

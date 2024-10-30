@@ -36,13 +36,18 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
 
     [Inject]
-    public IAssetStorage ContentService { get; set; }
+    public IAssetStorage AssetService { get; set; }
+
+    [Inject]
+    public IContentStorage ContentService { get; set; }
+
+    public QueryResult<ContentItem> ReferencedBy { get; set; }
 
     public async Task PublishAsync()
     {
         await SaveAsync();
 
-        await ContentService.PublishAsync(Entity);
+        await AssetService.PublishAsync(Entity);
     }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
@@ -78,20 +83,24 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
         }
         else
         {
-            Entity = await ContentService.GetAssetAsync(EntityId);
+            Entity = await AssetService.GetAssetAsync(EntityId);
+
+            //var result = await ContentService.QueryAsync(new ContentQuery() { Schema = "Product", Reference = Entity.ToReference(), Published = false });
+
+            //ReferencedBy = result.Value;
         }
     }
 
     protected override async Task CreateActionAsync()
     {
-        await ContentService.CreateAsync(Entity);
+        await AssetService.CreateAsync(Entity);
 
         NavigationManager.NavigateToAsset(Entity);
     }
 
     protected override async Task UpdateActionAsync()
     {
-        await ContentService.UpdateAsync(Entity);
+        await AssetService.UpdateAsync(Entity);
     }
 
     protected override async Task DeleteActionAsync()
@@ -107,7 +116,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
         using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
         {
-            await ContentService.UploadAsync(Entity, SelectedFile.ContentType, stream);
+            await AssetService.UploadAsync(Entity, SelectedFile.ContentType, stream);
         }
 
         await RefreshAsync();
@@ -115,7 +124,7 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
 
     public virtual async Task ApplyMetadata()
     {
-        await ContentService.ApplyMetadataAsync(Entity);
+        await AssetService.ApplyMetadataAsync(Entity);
 
         await RefreshAsync();
     }

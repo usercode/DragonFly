@@ -24,9 +24,9 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="8.0.0" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.0.0" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.0.0" />
+    <PackageReference Include="GraphQL" Version="8.2.1" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.1.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MinVer" Version="5.0.0">
+    <PackageReference Include="MinVer" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
