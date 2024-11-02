@@ -23,133 +23,138 @@
 
         <Toolbar Items="ToolbarItems"></Toolbar>
     </div>
+
     <div class="scroll-content">
-        <EditForm Model="Entity">
-            <BSRow>
-                <div class="col-md-6">
+        <BSNav IsTabs="true" style="margin-bottom: 1.5rem;">
+            <BSNavItem>
+                <TabLabel>Details</TabLabel>
+                <TabContent>
+                    <div class="">
+                        <EditForm Model="Entity">
+                            <BSRow>
+                                <div class="col-md-6">
 
-                    <!-- id -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">ID</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- id -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">ID</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- name -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- name -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- slug -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Slug</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- slug -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Slug</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- alt -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Alt</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Alt" />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- alt -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Alt</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" @bind-value="@Entity.Alt" />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- mimetype -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Mimetype</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.MimeType" readonly />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- mimetype -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Mimetype</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" @bind-value="@Entity.MimeType" readonly />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- size -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Size</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" value="@Entity.GetFileSize()" readonly />
-                            </div>
-                        </BSRow>
-                    </div>
+                                    <!-- size -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Size</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" value="@Entity.GetFileSize()" readonly />
+                                            </div>
+                                        </BSRow>
+                                    </div>
 
-                    <!-- folder -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Folder</label>
-                            <div class="col-sm-10">
-                                <div class="input-group">
-                                    @if (Entity.Folder != null)
+                                    <!-- folder -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Folder</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group">
+                                                    @if (Entity.Folder != null)
+                                                    {
+                                                        <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="form-control" value="" readonly />
+                                                    }
+
+                                                    <BSButton Color="BSColor.Light" OnClick="x => Modal.ShowAsync()">...</BSButton>
+                                                </div>
+                                            </div>
+                                        </BSRow>
+                                    </div>
+
+                                    <!-- description -->
+                                    <div class="form-group">
+                                        <BSRow>
+                                            <label class="col-sm-2 col-form-label">Description</label>
+                                            <div class="col-sm-10">
+                                                <textarea class="form-control" style="height:20rem" @bind="Entity.Description"></textarea>
+                                            </div>
+                                        </BSRow>
+                                    </div>
+
+                                    @foreach (var m in Entity.Metaddata)
                                     {
-                                        <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
+                                        <h3>@m.Key</h3>
+                                        @ComponentManager.CreateComponent(m.Value)
                                     }
-                                    else
-                                    {
-                                        <input type="text" class="form-control" value="" readonly />
-                                    }
-
-                                    <BSButton Color="BSColor.Light" OnClick="x => Modal.ShowAsync()">...</BSButton>
                                 </div>
-                            </div>
-                        </BSRow>
+                                <div class="col-md-6">
+                                    @if (IsNewEntity == false)
+                                    {
+                                        <div>
+                                            <InputFile OnChange="OnInputFileChange" />
+                                        </div>
+                                        @if (Entity.Hash != null)
+                                        {
+                                            @AssetPreviewManager.CreateComponent(Entity)
+                                        }
+                                    }
+                                </div>
+                            </BSRow>
+                        </EditForm>
                     </div>
-
-                    <!-- description -->
-                    <div class="form-group">
-                        <BSRow>
-                            <label class="col-sm-2 col-form-label">Description</label>
-                            <div class="col-sm-10">
-                                <textarea class="form-control" style="height:20rem" @bind="Entity.Description"></textarea>
-                            </div>
-                        </BSRow>
-                    </div>
-
-                    @foreach (var m in Entity.Metaddata)
-                    {
-                        <h3>@m.Key</h3>
-                        @ComponentManager.CreateComponent(m.Value)
-                    }
-
-                    @* referenced by *@
-                    <div>
-                        @if(ReferencedBy != null)
-                        {
-                            foreach (var content in ReferencedBy.Items)
-                            {
-                                <p>@content.Schema.Name @content.Id</p>
-                            }
-                        }
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    @if (IsNewEntity == false)
-                    {
-                        <div>
-                            <InputFile OnChange="OnInputFileChange" />
-                        </div>
-                        @if (Entity.Hash != null)
-                        {
-                            @AssetPreviewManager.CreateComponent(Entity)
-                        }
-                    }
-                </div>
-            </BSRow>
-        </EditForm>
+                </TabContent>
+            </BSNavItem>
+            <BSNavItem>
+                <TabLabel>Referenced by</TabLabel>
+                <TabContent>
+                    <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />
+                </TabContent>
+            </BSNavItem>
+        </BSNav>
     </div>
     <div class="footer-content">
         <div class="row">

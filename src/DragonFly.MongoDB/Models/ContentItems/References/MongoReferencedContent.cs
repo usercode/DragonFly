@@ -18,4 +18,9 @@ public class MongoReferencedContent
     /// Id
     /// </summary>
     public Guid Id2 { get; set; }
+
+    public override string ToString()
+    {
+        return $"{Schema}/{Id2}";
+    }
 }

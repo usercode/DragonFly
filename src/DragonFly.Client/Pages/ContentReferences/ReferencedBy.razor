@@ -1,0 +1,29 @@
+﻿<BSListGroup>
+    @if (ReferenceIndex != null)
+    {
+        foreach (var content in ReferenceIndex.Entries)
+        {
+            <BSListGroupItem>@content.Schema (@content.Count)</BSListGroupItem>
+        }
+    }
+</BSListGroup>
+
+@code {
+    [Parameter]
+    public string Schema { get; set; }
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    public ContentReferenceIndex ReferenceIndex { get; set; }
+
+    [Inject]
+    public IContentStorage ContentStorage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await ContentStorage.GetReferencedByAsync(Schema, Id);
+
+        ReferenceIndex = result.Value;
+    }
+}

@@ -41,8 +41,6 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
     [Inject]
     public IContentStorage ContentService { get; set; }
 
-    public QueryResult<ContentItem> ReferencedBy { get; set; }
-
     public async Task PublishAsync()
     {
         await SaveAsync();
@@ -84,10 +82,6 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
         else
         {
             Entity = await AssetService.GetAssetAsync(EntityId);
-
-            //var result = await ContentService.QueryAsync(new ContentQuery() { Schema = "Product", Reference = Entity.ToReference(), Published = false });
-
-            //ReferencedBy = result.Value;
         }
     }
 

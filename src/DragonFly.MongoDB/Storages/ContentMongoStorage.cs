@@ -11,7 +11,6 @@ using DragonFly.AspNetCore;
 using SmartResults;
 using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson.Serialization;
 
 namespace DragonFly.MongoDB;
 
@@ -314,7 +313,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
             return Result.Failed<bool>(ContentErrors.NotFound);
         }
 
-        content = mongoContentItem.ToModel(schema);        
+        content = mongoContentItem.ToModel(schema);
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in ContentInterceptors)
@@ -491,5 +490,55 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
+    }
+
+    public async Task<Result<ContentReferenceIndex>> GetReferencedByAsync(string schema, Guid id)
+    {
+        var result = await SchemaStorage.QuerySchemasAsync();
+
+        if (result.IsFailed)
+        {
+            return Result.Failed<ContentReferenceIndex>(result.Error);
+        }
+
+        List<ContentReferenceIndexEntry> entries = new List<ContentReferenceIndexEntry>();
+
+        foreach (ContentSchema item in result.Value.Items)
+        {
+            IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(item.Name, false);
+
+            var filter = Builders<MongoContentItem>.Filter.ElemMatch(x => x.ReferencedTo,
+                                                            Builders<MongoReferencedContent>.Filter.And(
+                                                                Builders<MongoReferencedContent>.Filter.Eq(x => x.Schema, schema),
+                                                                Builders<MongoReferencedContent>.Filter.Eq(x => x.Id2, id)));
+
+            long totalCount = await collection.CountDocumentsAsync(filter);
+
+            if (totalCount > 0)
+            {
+                entries.Add(new ContentReferenceIndexEntry() { Schema = item.Name, Count = totalCount });
+            }
+        }
+
+        return new ContentReferenceIndex() { Entries = entries };
+    }
+
+    public async Task<Result> RebuildDatabaseAsync()
+    {
+        var result = await SchemaStorage.QuerySchemasAsync();
+
+        foreach (ContentSchema s in result.Value.Items)
+        {
+            BackgroundTaskManager.Start($"Rebuild {s.Name}", new ContentQuery(s.Name) { Published = false },
+                async x =>
+                {
+                    IContentStorage contentStorage = x.ServiceProvider.GetRequiredService<IContentStorage>();
+
+                    await x.ProcessQueryAsync(contentStorage.QueryAsync, async i => await contentStorage.UpdateAsync(i));
+                }
+            );
+        }
+
+        return Result.Ok();
     }
 }

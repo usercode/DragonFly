@@ -24,10 +24,12 @@ static class ContentItemApiExtensions
         groupRoute.MapPost("", MapCreate);
         groupRoute.MapPut("", MapUpdate);
         groupRoute.MapDelete("{schema}/{id:guid}", MapDelete);
+        groupRoute.MapGet("{schema}/{id:guid}/referencedBy", MapReferencedBy);
         groupRoute.MapPost("{schema}/{id:guid}/publish", MapPublish);
         groupRoute.MapPost("{schema}/{id:guid}/unpublish", MapUnpublish);
         groupRoute.MapPost("publish", MapPublishQuery);
         groupRoute.MapPost("unpublish", MapUnpublishQuery);
+        groupRoute.MapPost("rebuildDatabase", MapRebuildDatabase);
     }
 
     private static async Task<IResult> MapQuery(IContentStorage storage, ContentQuery query)
@@ -85,6 +87,11 @@ static class ContentItemApiExtensions
         return (await contentStore.DeleteAsync(schema, id)).ToHttpResult();
     }
 
+    private static async Task<IResult> MapReferencedBy(IContentStorage contentStore, string schema, Guid id)
+    {
+        return (await contentStore.GetReferencedByAsync(schema, id)).ToHttpResult();
+    }
+
     private static async Task<IResult> MapPublish(IContentStorage contentStore, string schema, Guid id)
     {
         return (await contentStore.PublishAsync(schema, id)).ToHttpResult();
@@ -103,5 +110,10 @@ static class ContentItemApiExtensions
     private static async Task<IResult> MapUnpublishQuery(IContentStorage contentStore, ContentQuery query)
     {
         return (await contentStore.UnpublishQueryAsync(query)).ToHttpResult();
+    }
+
+    private static async Task<IResult> MapRebuildDatabase(IContentStorage contentStore)
+    {
+        return (await contentStore.RebuildDatabaseAsync()).ToHttpResult();
     }
 }

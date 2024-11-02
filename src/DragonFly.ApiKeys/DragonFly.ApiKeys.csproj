@@ -30,7 +30,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="MongoDB.Driver" Version="3.0.0" />
-		<PackageReference Include="MongoDB.Driver.GridFS" Version="2.29.0" />
 	</ItemGroup>
 	
 	<ItemGroup>

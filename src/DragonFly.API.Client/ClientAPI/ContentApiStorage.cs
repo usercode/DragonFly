@@ -94,4 +94,21 @@ internal class ContentApiStorage : IContentStorage
                         .PostAsJsonAsync($"api/content/unpublish", query, ApiJsonSerializerDefault.Options)
                         .ReadResultFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
     }
+
+    public async Task<Result<ContentReferenceIndex>> GetReferencedByAsync(string schema, Guid id)
+    {
+        var result = await Client
+                            .GetAsync($"api/content/{schema}/{id}/referencedBy")
+                            .ReadResultFromJsonAsync<ContentReferenceIndex>(ApiJsonSerializerDefault.Options);
+
+        return result;
+    }
+
+    public async Task<Result> RebuildDatabaseAsync()
+    {
+        await Client
+                       .PostAsync($"api/content/rebuildDatabase", null);
+
+        return Result.Ok();
+    }
 }

@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// AssetBlock
 /// </summary>
-public class AssetBlock : Block
+public class AssetBlock : Block, IReferencedContent
 {
     public AssetBlock()
     {
@@ -21,5 +21,18 @@ public class AssetBlock : Block
 
     public override string CssIcon => "fa-regular fa-image";
 
+    /// <summary>
+    /// AssetId
+    /// </summary>
     public Guid? AssetId { get; set; }
+
+    public ContentReference[] GetReferences()
+    {
+        if (AssetId != null)
+        {
+            return [new ContentReference(Asset.Schema, AssetId.Value)];
+        }
+
+        return [];
+    }
 }

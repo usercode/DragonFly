@@ -5,11 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.SignalR.Client;
-using SmartResults;
 
 namespace DragonFly.Client.Pages.BackgroundTasks;
 
@@ -24,7 +23,7 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     /// <summary>
     /// Tasks
     /// </summary>
-    public IDictionary<int, BackgroundTaskInfo> Tasks { get; set; }
+    public Dictionary<int, BackgroundTaskInfo> Tasks { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
@@ -32,6 +31,8 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
     }
 
     private IBackgroundTaskNotificationProvider Channel;
+
+    private PeriodicTimer _timer = new PeriodicTimer(TimeSpan.FromMilliseconds(800));
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,31 +42,33 @@ public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
         Channel.BackgroundTaskChanged +=
                                         async (state, task) =>
                                         {
-                                            await InvokeAsync(() =>
+                                            if (state == BackgroundTaskStatusChange.Removed)
                                             {
-                                                if (state == BackgroundTaskStatusChange.Removed)
-                                                {
-                                                    Tasks.Remove(task.Id);
-                                                }
-                                                else
-                                                {
-                                                    Tasks[task.Id] = task;
-                                                }
-
-                                                StateHasChanged();
-
-                                                return Task.CompletedTask;
-                                            });
+                                                Tasks.Remove(task.Id);
+                                            }
+                                            else
+                                            {
+                                                Tasks[task.Id] = task;
+                                            }
                                         };
+
+        Tasks = (await BackgroundTaskService.GetTasksAsync()).Value.ToDictionary(x => x.Id);
+
+        RefreshByTimer();
     }
 
-    protected override async Task RefreshActionAsync()
+    private async void RefreshByTimer()
     {
-        Tasks = (await BackgroundTaskService.GetTasksAsync()).Value.ToDictionary(x => x.Id);
+        while (await _timer.WaitForNextTickAsync())
+        {
+            StateHasChanged();
+        }
     }
 
     public async ValueTask DisposeAsync()
     {
+        _timer.Dispose();
+
         if (Channel is not null)
         {
             await Channel.DisposeAsync();

@@ -40,46 +40,58 @@
 
         </div>
         <div class="scroll-content">
-            
-            <BSForm Model="Entity" class="entity-content">
-                @{
-                    var items = Entity.Schema.Fields
-                    .OrderBy(x => x.Value.SortKey)
-                    .Select((x, index) => new { FieldName = x.Key, FieldIndex = index })
-                    .ToList();
-                }
+            <BSNav IsTabs="true" style="margin-bottom: 1.5rem;">
+                <BSNavItem>
+                    <TabLabel>Details</TabLabel>
+                    <TabContent>
+                        <BSForm Model="Entity" class="entity-content">
+                            @{
+                                var items = Entity.Schema.Fields
+                                .OrderBy(x => x.Value.SortKey)
+                                .Select((x, index) => new { FieldName = x.Key, FieldIndex = index })
+                                .ToList();
+                            }
 
-                @* grid for fields *@
-                <div style="display:grid; gap: 0.25rem 1rem; grid-template-columns: auto @(string.Join(" ", Enumerable.Range(0, SelectedVersions.Count + 1).Select(x=> "1fr"))); grid-template-rows: auto auto @(string.Join(" ", Enumerable.Range(0, items.Count).Select(x=> "auto")))">
+                            @* grid for fields *@
+                            <div style="display:grid; gap: 0.25rem 1rem; grid-template-columns: auto @(string.Join(" ", Enumerable.Range(0, SelectedVersions.Count + 1).Select(x=> "1fr"))); grid-template-rows: auto auto @(string.Join(" ", Enumerable.Range(0, items.Count).Select(x=> "auto")))">
 
-                    @* ID label *@
-                    <div class="field" style="grid-column: 1; grid-row: 2">
-                        <BSLabel class="field-label">ID</BSLabel>
-                    </div>
+                                @* ID label *@
+                                <div class="field" style="grid-column: 1; grid-row: 2">
+                                    <BSLabel class="field-label">ID</BSLabel>
+                                </div>
 
-                    @*  field labels *@
-                    @for (int i = 0; i < items.Count; i++)
-                    {
-                        int a = i;
-                        <div class="field" style="grid-column: 1; grid-row: @(items[i].FieldIndex + 3)">
-                            <BSAlert Color="GetFieldColor(items[i].FieldName)">
-                                <BSLabel class="field-label">@items[a].FieldName</BSLabel>
-                            </BSAlert>
-                        </div>
-                    }
+                                @*  field labels *@
+                                @for (int i = 0; i < items.Count; i++)
+                                {
+                                    int a = i;
+                                    <div class="field" style="grid-column: 1; grid-row: @(items[i].FieldIndex + 3)">
+                                        <BSAlert Color="GetFieldColor(items[i].FieldName)">
+                                            <BSLabel class="field-label">@items[a].FieldName</BSLabel>
+                                        </BSAlert>
+                                    </div>
+                                }
 
-                    @* field values *@
-                    <ContentItemFields2 Content="Entity" Title="@(SelectedVersions.Count > 0 ? "Master" : null)" />
+                                @* field values *@
+                                <ContentItemFields2 Content="Entity" Title="@(SelectedVersions.Count > 0 ? "Master" : null)" />
 
-                    @for (int i = 0; i < SelectedVersions.Count; i++)
-                    {
-                        <ContentItemFields2 Content="SelectedVersions[i]"
-                                            Column="i+2"
-                                            IsReadOnly="true"
-                                            Title="@SelectedVersions[i].ModifiedAt.ToString()" />
-                    }
-                </div>
-            </BSForm>
+                                @for (int i = 0; i < SelectedVersions.Count; i++)
+                                {
+                                    <ContentItemFields2 Content="SelectedVersions[i]"
+                                                        Column="i+2"
+                                                        IsReadOnly="true"
+                                                        Title="@SelectedVersions[i].ModifiedAt.ToString()" />
+                                }
+                            </div>
+                        </BSForm>
+                    </TabContent>
+                </BSNavItem>
+                <BSNavItem>
+                    <TabLabel>Referenced by</TabLabel>
+                    <TabContent>
+                        <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Entity.Schema.Name" Id="Entity.Id" />
+                    </TabContent>
+                </BSNavItem>
+            </BSNav>
         </div>
 
         <div class="footer-content">

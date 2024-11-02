@@ -142,13 +142,15 @@ for (int i = 0; i < 10; i++)
         Random random = new Random();
         int counter = 0;
 
+        ctx.Task.ProgressMaxValue = 100;
+
         while (ctx.CancellationToken.IsCancellationRequested == false)
         {
-            await Task.Delay(TimeSpan.FromSeconds(1), ctx.CancellationToken);
+            await Task.Delay(TimeSpan.FromMilliseconds(800), ctx.CancellationToken);
 
             await ctx.UpdateStatusAsync($"test {counter}", counter, ctx.Task.ProgressMaxValue);
 
-            counter += random.Next(1, 8);
+            counter += random.Next(1, 5);
 
             if (ctx.Task.ProgressValue >= ctx.Task.ProgressMaxValue)
             {

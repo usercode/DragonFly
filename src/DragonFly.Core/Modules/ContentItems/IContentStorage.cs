@@ -28,4 +28,8 @@ public interface IContentStorage
     Task<Result<BackgroundTaskInfo>> PublishQueryAsync(ContentQuery query);
 
     Task<Result<BackgroundTaskInfo>> UnpublishQueryAsync(ContentQuery query);
+
+    Task<Result<ContentReferenceIndex>> GetReferencedByAsync(string schema, Guid id);
+
+    Task<Result> RebuildDatabaseAsync();
 }

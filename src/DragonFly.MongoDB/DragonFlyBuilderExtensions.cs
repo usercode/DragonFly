@@ -71,17 +71,19 @@ public static class DragonFlyBuilderExtensions
 
     private static void CreateFieldOptionsBsonClassMap(FieldFactory fieldFactory)
     {
-        if (fieldFactory.OptionsType != null)
+        if (fieldFactory.OptionsType == null)
         {
-            if (BsonClassMap.IsClassMapRegistered(fieldFactory.OptionsType))
-            {
-                return;
-            }
-
-            BsonClassMap map = new BsonClassMap(fieldFactory.OptionsType);
-            map.AutoMap();
-
-            BsonClassMap.RegisterClassMap(map);
+            return;
         }
+
+        if (BsonClassMap.IsClassMapRegistered(fieldFactory.OptionsType))
+        {
+            return;
+        }
+
+        BsonClassMap map = new BsonClassMap(fieldFactory.OptionsType);
+        map.AutoMap();
+
+        BsonClassMap.RegisterClassMap(map);
     }    
 }

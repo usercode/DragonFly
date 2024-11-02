@@ -25,12 +25,7 @@ public class SettingsManager
         }
     }
 
-    public SettingsManager()
-    {
-        Items = new List<SettingsItem>();
-    }
-
-    public IList<SettingsItem> Items { get; }
+    public IList<SettingsItem> Items { get; } = new List<SettingsItem>();
 
     public void Add<T>(string title)
         where T : ComponentBase

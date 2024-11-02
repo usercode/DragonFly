@@ -1,0 +1,8 @@
+﻿<h3>Tools</h3>
+
+<BSButton Color="BSColor.Danger" OnClick="async x => await ContentStorage.RebuildDatabaseAsync()">RebuildDatabase</BSButton>
+
+@code {
+    [Inject]
+    public IContentStorage ContentStorage { get; set; }
+}

@@ -47,6 +47,13 @@ public class ContentPermissionStorage : IContentStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read)).ThenAsync(x => Storage.GetContentAsync(schema, id));
     }
 
+    public async Task<Result<ContentReferenceIndex>> GetReferencedByAsync(string schema, Guid id)
+    {
+        //return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read)).ThenAsync(x => Storage.GetReferencesBy(schema, id));
+
+        return await Storage.GetReferencedByAsync(schema, id);
+    }
+
     public async Task<Result<bool>> PublishAsync(string schema, Guid id)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Publish)).ThenAsync(x => Storage.PublishAsync(schema, id));
@@ -75,5 +82,10 @@ public class ContentPermissionStorage : IContentStorage
     public async Task<Result> UpdateAsync(ContentItem content)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(content.Schema.Name, ContentAction.Update)).ThenAsync(x => Storage.UpdateAsync(content));
+    }
+
+    public async Task<Result> RebuildDatabaseAsync()
+    {
+       return await Storage.RebuildDatabaseAsync();
     }
 }

@@ -7,7 +7,7 @@ namespace DragonFly;
 /// <summary>
 /// ReferenceBlock
 /// </summary>
-public class ReferenceBlock : Block
+public class ReferenceBlock : Block, IReferencedContent
 {
     public override string CssIcon => "fa-solid fa-list";
 
@@ -20,4 +20,14 @@ public class ReferenceBlock : Block
     /// ContentSchema
     /// </summary>
     public string? ContentSchema { get; set; }
+
+    public ContentReference[] GetReferences()
+    {
+        if (ContentId != null && ContentSchema != null)
+        {
+            return [new ContentReference(ContentSchema, ContentId.Value)];
+        }
+
+        return [];
+    }
 }
