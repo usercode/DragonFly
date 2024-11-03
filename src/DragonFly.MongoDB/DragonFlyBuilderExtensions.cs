@@ -5,6 +5,7 @@
 using DragonFly.AspNetCore.Builders;
 using DragonFly.MongoDB;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
@@ -18,9 +19,9 @@ public static class DragonFlyBuilderExtensions
     /// Adds MongoDB storage service.<br />
     /// <br />
     /// Default services:<br />
-    /// <see cref="IContentStorage"/> -> <see cref="ContentMongoStorage"/><br />
+    /// <see cref="IContentStorage"/> -> <see cref="ContentItemMongoStorage"/><br />
     /// <see cref="IContentVersionStorage"/> -> <see cref="ContentVersionMongoStorage"/><br />
-    /// <see cref="ISchemaStorage"/> -> <see cref="SchemaMongoStorage"/><br />
+    /// <see cref="ISchemaStorage"/> -> <see cref="ContentSchemaMongoStorage"/><br />
     /// <see cref="IAssetStorage"/> -> <see cref="AssetMongoStorage"/><br />
     /// <see cref="IAssetFolderStorage"/> -> <see cref="AssetFolderMongoStorage"/><br />
     /// <see cref="IWebHookStorage"/> -> <see cref="WebHookMongoStorage"/><br />
@@ -32,18 +33,18 @@ public static class DragonFlyBuilderExtensions
             builder.Services.Configure(options);
         }
 
-        builder.Services.AddSingleton<MongoClient>();
-        builder.Services.AddTransient<IContentStorage, ContentMongoStorage>();
+        builder.Services.TryAddSingleton<MongoClient>();
+        builder.Services.AddTransient<IContentStorage, ContentItemMongoStorage>();
         builder.Services.AddTransient<IContentVersionStorage, ContentVersionMongoStorage>();
-        builder.Services.AddTransient<ISchemaStorage, SchemaMongoStorage>();
+        builder.Services.AddTransient<ISchemaStorage, ContentSchemaMongoStorage>();
         builder.Services.AddTransient<IAssetStorage, AssetMongoStorage>();
         builder.Services.AddTransient<IAssetFolderStorage, AssetFolderMongoStorage>();
         builder.Services.AddTransient<IWebHookStorage, WebHookMongoStorage>();
         builder.Services.AddTransient<IStructureStorage, ContentStructureMongoStorage>();
 
-        builder.Services.AddSingleton(MongoFieldManager.Default);
-        builder.Services.AddSingleton(MongoIndexManager.Default);
-        builder.Services.AddSingleton(MongoQueryManager.Default);
+        builder.Services.TryAddSingleton(MongoFieldManager.Default);
+        builder.Services.TryAddSingleton(MongoIndexManager.Default);
+        builder.Services.TryAddSingleton(MongoQueryManager.Default);
 
         builder.PreInit(api =>
         {

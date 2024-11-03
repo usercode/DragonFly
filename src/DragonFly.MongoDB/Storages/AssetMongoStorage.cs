@@ -140,16 +140,17 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
-            await Assets.UpdateOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
+            var mongoAsset = await Assets.FindOneAndUpdateAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
                                         Builders<MongoAsset>.Update
                                                     .Set(x => x.Size, s.Length)
                                                     .Set(x => x.Hash, hashString)
                                                     .Set(x => x.MimeType, mimetype)
                                                     .Set(x => x.Metaddata, new Dictionary<string, BsonDocument>())
-                                                    .Inc(x => x.Version, 1));
-        }
+                                                    .Inc(x => x.Version, 1), 
+                                        new FindOneAndUpdateOptions<MongoAsset>() { ReturnDocument = ReturnDocument.After });
 
-        asset = await this.GetRequiredAssetAsync(asset.Id);
+            asset = mongoAsset.ToModel();
+        }
 
         await ApplyMetadataAsync(asset);
 

@@ -12,11 +12,11 @@ using SmartResults;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// MongoStore
+/// ContentSchemaMongoStorage
 /// </summary>
-public class SchemaMongoStorage : MongoStorage, ISchemaStorage
+public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
 {
-    public SchemaMongoStorage(MongoClient client, IDateTimeService dateTimeService, IDragonFlyApi api, ILogger<SchemaMongoStorage> logger)
+    public ContentSchemaMongoStorage(MongoClient client, IDateTimeService dateTimeService, IDragonFlyApi api, ILogger<ContentSchemaMongoStorage> logger)
         : base(client)
     {
         DateTimeService = dateTimeService;
@@ -44,7 +44,7 @@ public class SchemaMongoStorage : MongoStorage, ISchemaStorage
     /// <summary>
     /// Logger
     /// </summary>
-    private ILogger<SchemaMongoStorage> Logger { get; }
+    private ILogger<ContentSchemaMongoStorage> Logger { get; }
 
     public async Task<Result> CreateAsync(ContentSchema schema)
     {

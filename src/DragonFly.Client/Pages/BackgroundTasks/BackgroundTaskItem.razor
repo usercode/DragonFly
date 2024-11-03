@@ -52,5 +52,7 @@
     private async Task CancelTask()
     {
         await BackgroundTaskService.CancelAsync(Task.Id);
+
+        Task.State = BackgroundTaskState.Canceling;
     }
 }

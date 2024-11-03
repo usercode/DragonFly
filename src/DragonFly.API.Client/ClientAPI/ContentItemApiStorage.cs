@@ -9,11 +9,11 @@ using SmartResults;
 namespace DragonFly.API.Client;
 
 /// <summary>
-/// ContentApiStorage
+/// ContentItemApiStorage
 /// </summary>
-internal class ContentApiStorage : IContentStorage
+internal class ContentItemApiStorage : IContentStorage
 {
-    public ContentApiStorage(HttpClient client)
+    public ContentItemApiStorage(HttpClient client)
     {
         Client = client;
     }

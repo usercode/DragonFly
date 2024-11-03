@@ -15,18 +15,18 @@ using Microsoft.Extensions.Options;
 namespace DragonFly.MongoDB;
 
 /// <summary>
-/// ContentMongoStorage
+/// ContentItemMongoStorage
 /// </summary>
-public class ContentMongoStorage : MongoStorage, IContentStorage
+public class ContentItemMongoStorage : MongoStorage, IContentStorage
 {
-    public ContentMongoStorage(
+    public ContentItemMongoStorage(
                         MongoClient client,
                         IOptions<DragonFlyOptions> dragonFlyOptions,
                         ISchemaStorage schemaStorage,
                         IDateTimeService dateTimeService,
                         IBackgroundTaskManager backgroundTaskManager,
                         IEnumerable<IContentInterceptor> contentInterceptors,
-                        ILogger<ContentMongoStorage> logger)
+                        ILogger<ContentItemMongoStorage> logger)
         : base(client)
     {
         DragonFlyOptions = dragonFlyOptions.Value;
@@ -65,7 +65,7 @@ public class ContentMongoStorage : MongoStorage, IContentStorage
     /// <summary>
     /// Logger
     /// </summary>
-    private ILogger<ContentMongoStorage> Logger { get; }
+    private ILogger<ContentItemMongoStorage> Logger { get; }
 
     public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
     {
