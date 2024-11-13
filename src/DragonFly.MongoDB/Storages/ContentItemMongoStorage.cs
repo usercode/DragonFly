@@ -269,7 +269,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         ArgumentNullException.ThrowIfNull(schema);
 
         content.ApplySchema(schema);
-        content.Validate();       
+        content.Validate();
 
         if (content.ValidationState.Result == ValidationResult.Invalid)
         {
