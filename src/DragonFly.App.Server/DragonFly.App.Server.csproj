@@ -19,6 +19,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.FFMpeg\DragonFly.Assets.FFMpeg.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.ImageSharp\DragonFly.Assets.ImageSharp.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.Pdf\DragonFly.Assets.Pdf.csproj" />
     <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
     <ProjectReference Include="..\DragonFly.ApiKeys\DragonFly.ApiKeys.csproj" />
     <ProjectReference Include="..\DragonFly.ApiKeys.Client\DragonFly.ApiKeys.Client.csproj" />    

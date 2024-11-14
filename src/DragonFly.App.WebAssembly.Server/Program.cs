@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 using DragonFly;
 using DragonFly.API;
 using DragonFly.AspNetCore;
+using DragonFly.Assets.FFMpeg;
+using DragonFly.Assets.ImageSharp;
+using DragonFly.Assets.Pdf;
 using DragonFly.Client;
 using DragonFly.MongoDB;
 using DragonFlyABC;
 using DragonFlyTEST;
-using FFMpegCore;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
@@ -47,12 +49,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
-GlobalFFOptions.Configure(x =>
-{
-    x.BinaryFolder = "C:\\Users\\admin\\Downloads";
-    x.TemporaryFilesFolder = "C:\\Users\\admin\\Downloads";
-});
-
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
     options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
@@ -66,6 +62,9 @@ builder.Services.AddDragonFly(x => x
                                     .AddMongoDbIdentity()
                                     .AddApiKeys()
                                     .AddBackgroundTaskHub()
+                                    .AddImageMetadata()
+                                    .AddPdfMetadata()
+                                    .AddVideoMetadata()
                                     .AddModels(x => x
                                                     .Add<Product2>()
                                                     .Add<Customer>()

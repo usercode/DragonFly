@@ -21,6 +21,9 @@
     <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
     <ProjectReference Include="..\DragonFly.App.WebAssembly.Client\DragonFly.App.WebAssembly.Client.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.FFMpeg\DragonFly.Assets.FFMpeg.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.ImageSharp\DragonFly.Assets.ImageSharp.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.Pdf\DragonFly.Assets.Pdf.csproj" />
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />
     <ProjectReference Include="..\DragonFly.Identity\DragonFly.Identity.csproj" />

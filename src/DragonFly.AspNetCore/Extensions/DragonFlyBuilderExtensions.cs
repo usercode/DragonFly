@@ -32,7 +32,6 @@ public static class DragonFlyBuilderExtensions
     /// Default services::<br/>
     /// <see cref="ISlugService"/> -> <see cref="SlugService"/><br />
     /// <see cref="IDateTimeService"/> -> <see cref="LocalDateTimeService"/><br />
-    /// <see cref="IAssetProcessing"/> -> <see cref="ImageProcessing"/>, <see cref="PdfProcessing"/>, <see cref="VideoProcessing"/>
     /// <br/><br/>
     /// Default manager:<br/>
     /// <see cref="FieldManager"/>, <see cref="MetadataManager"/>
@@ -58,11 +57,6 @@ public static class DragonFlyBuilderExtensions
         builder.Services.TryAddSingleton<IBackgroundTaskService>(x => x.GetRequiredService<IBackgroundTaskManager>());
 
         builder.Services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
-
-        //assets
-        builder.Services.AddTransient<IAssetProcessing, ImageProcessing>();
-        builder.Services.AddTransient<IAssetProcessing, PdfProcessing>();
-        builder.Services.AddTransient<IAssetProcessing, VideoProcessing>();
 
         builder.Services.AddSingleton<IPrincipalContext, PrincipalContext>();
 
