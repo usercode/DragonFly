@@ -27,12 +27,12 @@ public class ContentQuery : QueryBase
     /// <summary>
     /// Fields
     /// </summary>
-    public IList<FieldQuery> Fields { get; set; } = new List<FieldQuery>();
+    public IList<FieldQuery> Fields { get; set; } = [];
 
     /// <summary>
     /// OrderFields
     /// </summary>
-    public IList<FieldOrder> OrderFields { get; set; } = new List<FieldOrder>();
+    public IList<FieldOrder> OrderFields { get; set; } = [];
 
     /// <summary>
     /// IncludeListFieldsOnly

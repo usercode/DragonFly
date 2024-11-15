@@ -9,6 +9,17 @@ namespace DragonFly.MongoDB;
 /// </summary>
 public class MongoReferencedContent
 {
+    public MongoReferencedContent()
+    {
+        
+    }
+
+    public MongoReferencedContent(string schema, Guid id)
+    {
+        Schema = schema;
+        Id2 = id;
+    }
+
     /// <summary>
     /// Schema
     /// </summary>

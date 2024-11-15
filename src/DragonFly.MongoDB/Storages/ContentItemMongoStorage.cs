@@ -133,7 +133,9 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         //use default order?
         if (query.OrderFields.Any() == false)
         {
-            query.OrderFields = schema.OrderFields.ToList();
+            query.OrderFields = schema.OrderFields
+                                            .Select(x => new FieldOrder($"Fields.{x.Name}", x.Asc))
+                                            .ToList();
         }
 
         //sort
@@ -214,7 +216,15 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         List<MongoContentItem> result = await cursor.ToListAsync();
 
         QueryResult<ContentItem> queryResult = new QueryResult<ContentItem>();
-        queryResult.Items = result.Select(x => x.ToModel(schema)).ToList();
+        queryResult.Items = result
+                                    .Select(x =>
+                                    {
+                                        var c = x.ToModel(schema);
+                                        c.Validate();
+
+                                        return c;
+                                    })
+                                    .ToList();
         queryResult.Offset = query.Skip;
         queryResult.Count = queryResult.Items.Count;
         queryResult.TotalCount = totalCount;
@@ -245,9 +255,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
         MongoContentItem mongo = content.ToMongo();
 
-        mongo.ReferencedTo = content.GetReferencedContent()
-                                   .Select(x => new MongoReferencedContent() { Id2 = x.Id, Schema = x.Schema })
-                                   .ToList();
+        mongo.ReferencedTo = content.GetReferencedContent().ToMongo();
 
         await items.InsertOneAsync(mongo);
 
@@ -290,18 +298,14 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
             {
                 await versioning.InsertOneAsync(new MongoContentVersion() { Content = draftItem });
             }
-        }
-
-        var referencedTo = content.GetReferencedContent()
-                                    .Select(x => new MongoReferencedContent() { Id2 = x.Id, Schema = x.Schema })
-                                    .ToList();
+        }       
 
         //update all fields, version
         MongoContentItem mongoContentItem = await drafted.FindOneAndUpdateAsync(
                                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
                                     Builders<MongoContentItem>.Update
                                                                 .Set(x => x.Fields, content.Fields.ToMongo())
-                                                                .Set(x => x.ReferencedTo, referencedTo)
+                                                                .Set(x => x.ReferencedTo, content.GetReferencedContent().ToMongo())
                                                                 .Set(x => x.ModifiedAt, DateTimeService.Current())
                                                                 .Set(x => x.PublishedAt, null)
                                                                 .Set(x => x.SchemaVersion, content.SchemaVersion)
@@ -530,11 +534,22 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         foreach (ContentSchema s in result.Value.Items)
         {
             BackgroundTaskManager.Start($"Rebuild {s.Name}", new ContentQuery(s.Name) { Published = false },
-                async x =>
+                static async x =>
                 {
+                    MongoClient client = x.ServiceProvider.GetRequiredService<MongoClient>();
                     IContentStorage contentStorage = x.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                    await x.ProcessQueryAsync(contentStorage.QueryAsync, async i => await contentStorage.UpdateAsync(i));
+                    await x.ProcessQueryAsync(contentStorage.QueryAsync, async content =>
+                    {
+                        IMongoCollection<MongoContentItem> drafted = client.Database.GetContentCollection(content.Schema.Name);
+
+                        //update all fields, version
+                        await drafted.UpdateOneAsync(
+                                                    Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                                                    Builders<MongoContentItem>.Update
+                                                                                .Set(x => x.Fields, content.Fields.ToMongo())
+                                                                                .Set(x => x.ReferencedTo, content.GetReferencedContent().ToMongo()));
+                    });
                 }
             );
         }

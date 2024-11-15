@@ -12,7 +12,7 @@ public class ValidationState
     /// <summary>
     /// Errors
     /// </summary>
-    public IList<ValidationError> Errors { get; set; } = new List<ValidationError>();
+    public IList<ValidationError> Errors { get; set; } = [];
 
     /// <summary>
     /// Result

@@ -4,7 +4,7 @@
 
 namespace DragonFly.MongoDB;
 
-static class MongoContentItemConverter
+static class MongoContentItemExtensions
 {
     public static ContentItem ToModel(this MongoContentItem mongoContentItem, ContentSchema schema)
     {
@@ -50,5 +50,12 @@ static class MongoContentItemConverter
         }
 
         return result;
+    }
+
+    public static MongoReferencedContent[] ToMongo(this ContentReference[] references)
+    {
+        return references
+                        .Select(x => new MongoReferencedContent(x.Schema, x.Id))
+                        .ToArray();
     }
 }
