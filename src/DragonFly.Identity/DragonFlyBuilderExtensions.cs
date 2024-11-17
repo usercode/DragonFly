@@ -14,7 +14,6 @@ using DragonFly.AspNetCore.Identity;
 using DragonFly.Identity;
 using Microsoft.AspNetCore.Authorization;
 using DragonFly.AspNetCore.Builders;
-using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Routing;
 using DragonFly.Permissions;
 
@@ -32,10 +31,8 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<IPasswordHashGenerator, PasswordHashGenerator>();
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
-        builder.Services.AddAuthentication(IdentityAuthenticationDefaults.AuthenticationScheme)
-                            .AddCookie(IdentityAuthenticationDefaults.AuthenticationScheme, x => x.LoginPath = "/login");
-
-        builder.AddPermissionScheme(IdentityAuthenticationDefaults.AuthenticationScheme);
+        builder.Services.AddAuthentication()
+                            .AddCookie(PermissionConstants.AuthenticationScheme, x => x.LoginPath = "/login");
 
         builder.Init(api =>
         {

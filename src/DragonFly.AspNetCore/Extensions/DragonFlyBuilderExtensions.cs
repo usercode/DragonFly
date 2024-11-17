@@ -95,7 +95,14 @@ public static class DragonFlyBuilderExtensions
                                     x.UseRouting();
                                     x.UseAuthentication();
                                     x.UseAuthorization();
-                                    
+
+                                    IEnumerable<DragonFlyBuilderHandler> handlers = x.ApplicationServices.GetServices<DragonFlyBuilderHandler>();
+
+                                    foreach (DragonFlyBuilderHandler handler in handlers)
+                                    {
+                                        handler(x);
+                                    }
+
                                     x.Use(async (context, next) =>
                                     {
                                         Endpoint? endpoint = context.GetEndpoint();
@@ -178,6 +185,16 @@ public static class DragonFlyBuilderExtensions
     public static IDragonFlyBuilder AddEndpoint(this IDragonFlyBuilder builder, Action<IEndpointRouteBuilder> endpoint)
     {
         builder.Services.AddTransient(x => new DragonFlyEndpointHandler(endpoint));
+
+        return builder;
+    }
+
+    /// <summary>
+    /// UseApplicationBuilder
+    /// </summary>
+    public static IDragonFlyBuilder UseApplicationBuilder(this IDragonFlyBuilder builder, Action<IApplicationBuilder> action)
+    {
+        builder.Services.AddTransient(x => new DragonFlyBuilderHandler(action));
 
         return builder;
     }

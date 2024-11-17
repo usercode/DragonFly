@@ -84,7 +84,7 @@ class LoginService : ILoginService
         //Blazor WebAssembly?
         if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
         {
-            await HttpContextAccessor.HttpContext.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+            await HttpContextAccessor.HttpContext.SignInAsync(PermissionConstants.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
         }
 
         return new LoginResult(true) { Username = user.Username, Claims = claims.Select(x=> new ClaimItem(x.Type, x.Value)).ToList() };
@@ -94,7 +94,7 @@ class LoginService : ILoginService
     {
         if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
         {
-            await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
+            await HttpContextAccessor.HttpContext!.SignOutAsync(PermissionConstants.AuthenticationScheme);
         }
     }
 

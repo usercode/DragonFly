@@ -134,7 +134,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         if (query.OrderFields.Any() == false)
         {
             query.OrderFields = schema.OrderFields
-                                            .Select(x => new FieldOrder($"Fields.{x.Name}", x.Asc))
+                                            .Select(x => new FieldOrder($"{nameof(MongoContentItem.Fields)}.{x.Name}", x.Asc))
                                             .ToList();
         }
 
@@ -209,7 +209,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         findOptions.Collation = new Collation(locale: "en", strength: CollationStrength.Primary);
 
         //execute query
-        var cursor = await collection.FindAsync(q, findOptions);
+        using var cursor = await collection.FindAsync(q, findOptions);
 
         long totalCount = await collection.CountDocumentsAsync(q);
 

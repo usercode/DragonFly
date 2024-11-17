@@ -49,5 +49,10 @@ jobs:
     - name: Publish "DragonFly.Identity.Client" to nuget
       run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}         
     - name: Publish "DragonFly.MongoDB" to nuget
-      run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-   
+      run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}   
+    - name: Publish "DragonFly.Assets.ImageSharp" to nuget
+      run: dotnet nuget push "./src/DragonFly.Assets.ImageSharp/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.Assets.Pdf" to nuget
+      run: dotnet nuget push "./src/DragonFly.Assets.Pdf/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.Assets.FFMpeg" to nuget
+      run: dotnet nuget push "./src/DragonFly.Assets.FFMpeg/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}

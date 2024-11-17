@@ -4,4 +4,5 @@
 
 namespace DragonFly.AspNetCore.Builders;
 
+public delegate void DragonFlyBuilderHandler(IApplicationBuilder builder);
 public delegate void DragonFlyEndpointHandler(IEndpointRouteBuilder endpointRouteBuilder);
