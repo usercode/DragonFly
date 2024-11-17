@@ -2,11 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Builders;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.Assets.Pdf;
+namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {

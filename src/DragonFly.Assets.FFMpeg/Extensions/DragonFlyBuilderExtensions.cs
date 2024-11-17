@@ -2,12 +2,11 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
 using DragonFly.AspNetCore.Builders;
 using FFMpegCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace DragonFly.Assets.FFMpeg;
+namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {

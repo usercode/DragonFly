@@ -4,6 +4,8 @@
 
 using DragonFly;
 using DragonFly.AspNetCore;
+using DragonFly.Assets.ImageSharp;
+using DragonFly.Assets.Pdf;
 using DragonFly.MongoDB;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;
@@ -31,6 +33,8 @@ builder.Services.AddDragonFly(x => x
                     .AddMongoDbStorage()
                     .AddMongoDbIdentity()
                     .AddApiKeys()
+                    .AddImageMetadata()
+                    .AddPdfMetadata()
                     .AddModels(x => x
                         .Add<BlogPostModel>()
                         .Add<StandardPageModel>()
