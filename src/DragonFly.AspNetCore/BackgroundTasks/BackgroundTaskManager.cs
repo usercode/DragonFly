@@ -63,7 +63,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
         {
             BackgroundTask backgroundTask = new BackgroundTask(_nextId++, name, PrincipalContext.Current, BackgroundTask.Current);
 
-            backgroundTask.Task = Task.Run(async () =>
+            backgroundTask.Task = Task.Factory.StartNew(async () =>
             {
                 BackgroundTaskContext<T> ctx = new BackgroundTaskContext<T>(backgroundTask, ServiceProvider, input, backgroundTask.CancellationTokenSource.Token);
                 ctx.StateChanged += () => TaskHasChangedAsync(BackgroundTaskStatusChange.Updated, backgroundTask);
@@ -123,7 +123,7 @@ public class BackgroundTaskManager : IBackgroundTaskManager
 
                     await TaskHasChangedAsync(BackgroundTaskStatusChange.Removed, backgroundTask);
                 }
-            });
+            }, TaskCreationOptions.LongRunning);
 
             Tasks.Add(backgroundTask.Id, backgroundTask);
 
