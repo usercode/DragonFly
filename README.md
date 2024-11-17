@@ -200,7 +200,6 @@ builder.Services.AddDragonFly(x => x
                       .AddRestApi()
                       .AddMongoDbStorage()
                       .AddMongoDbIdentity()
-                      .AddBlockField()
                       .AddApiKeys());
 
 var app = builder.Build();
