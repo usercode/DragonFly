@@ -33,7 +33,7 @@ internal class ApiKeysMiddleware
             }
             else
             {
-                httpContext.Response.StatusCode = StatusCodes.Status403Forbidden;
+                httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
 
                 return;
             }
