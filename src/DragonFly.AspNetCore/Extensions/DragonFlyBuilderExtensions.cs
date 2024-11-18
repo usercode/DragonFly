@@ -139,24 +139,6 @@ public static class DragonFlyBuilderExtensions
     }
 
     /// <summary>
-    /// Maps the DragonFly manager. (Blazor WebAssembly)
-    /// </summary>
-    public static IApplicationBuilder UseDragonFlyManager(this IApplicationBuilder builder)
-    {
-        builder.Map("/manager",
-                                x =>
-                                {
-                                    x.UseBlazorFrameworkFiles();
-                                    x.UseStaticFiles();
-                                    x.UseRouting();
-                                    x.UseEndpoints(endpoints => endpoints.MapFallbackToFile("index.html"));
-                                }
-            );
-
-        return builder;
-    }
-
-    /// <summary>
     /// Maps the DragonFly manager. (Blazor Server)
     /// </summary>
     //public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)

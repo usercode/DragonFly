@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.API\DragonFly.API.csproj" />
     <ProjectReference Include="..\DragonFly.App.WebAssembly.Client\DragonFly.App.WebAssembly.Client.csproj" />
+    <ProjectReference Include="..\DragonFly.AspNetCore.BlazorWebAssembly\DragonFly.AspNetCore.BlazorWebAssembly.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Assets.FFMpeg\DragonFly.Assets.FFMpeg.csproj" />
     <ProjectReference Include="..\DragonFly.Assets.ImageSharp\DragonFly.Assets.ImageSharp.csproj" />
