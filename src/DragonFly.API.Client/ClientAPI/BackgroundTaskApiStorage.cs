@@ -13,9 +13,9 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class BackgroundTaskApiStorage : IBackgroundTaskService
 {
-    public BackgroundTaskApiStorage(HttpClient client, NavigationManager navigationManager)
+    public BackgroundTaskApiStorage(RestApiClient client, NavigationManager navigationManager)
     {
-        Client = client; 
+        Client = client.Http; 
         NavigationManager = navigationManager;
     }
 

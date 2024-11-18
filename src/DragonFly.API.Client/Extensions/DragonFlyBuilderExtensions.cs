@@ -27,6 +27,8 @@ public static class StartupExtensions
     {
         builder.AddRestApiCore();
 
+        builder.Services.AddHttpClient<RestApiClient>(x => x.BaseAddress = DragonFlyClientWebAssemblyExtensions.BaseHttpBaseAddress);
+
         builder.Services.AddTransient<IContentStorage, ContentItemApiStorage>();
         builder.Services.AddTransient<IContentVersionStorage, ContentVersionApiStorage>();
         builder.Services.AddTransient<ISchemaStorage, ContentSchemaApiStorage>();

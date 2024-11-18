@@ -13,9 +13,9 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class ContentStructureApiStorage : IStructureStorage
 {
-    public ContentStructureApiStorage(HttpClient client)
+    public ContentStructureApiStorage(RestApiClient client)
     {
-        Client = client;
+        Client = client.Http;
     }
 
     private HttpClient Client { get; }

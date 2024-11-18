@@ -13,9 +13,9 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class WebHookApiStorage : IWebHookStorage
 {
-    public WebHookApiStorage(HttpClient client)
+    public WebHookApiStorage(RestApiClient client)
     {
-        Client = client;
+        Client = client.Http;
     }
 
     private HttpClient Client { get; }

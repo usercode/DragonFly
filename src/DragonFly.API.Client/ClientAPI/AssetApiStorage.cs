@@ -14,9 +14,9 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class AssetApiStorage : IAssetStorage
 {
-    public AssetApiStorage(HttpClient client)
+    public AssetApiStorage(RestApiClient client)
     {
-        Client = client;
+        Client = client.Http;
     }
 
     private HttpClient Client { get; }

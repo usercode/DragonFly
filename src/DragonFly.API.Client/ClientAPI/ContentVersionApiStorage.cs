@@ -12,9 +12,9 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class ContentVersionApiStorage : IContentVersionStorage
 {
-    public ContentVersionApiStorage(HttpClient client)
+    public ContentVersionApiStorage(RestApiClient client)
     {
-        Client = client;
+        Client = client.Http;
     }
 
     private HttpClient Client { get; }

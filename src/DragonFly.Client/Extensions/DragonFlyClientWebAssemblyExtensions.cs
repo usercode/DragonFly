@@ -14,6 +14,8 @@ namespace DragonFly.Client;
 
 public static class DragonFlyClientWebAssemblyExtensions
 {
+    public static Uri? BaseHttpBaseAddress = null;
+
     /// <summary>
     /// Adds DragonFly services.
     /// <br/><br/>
@@ -35,6 +37,8 @@ public static class DragonFlyClientWebAssemblyExtensions
 
         webAssemblyBuilder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
         webAssemblyBuilder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
+
+        BaseHttpBaseAddress = apiBaseUri;
 
         return webAssemblyBuilder;
     }

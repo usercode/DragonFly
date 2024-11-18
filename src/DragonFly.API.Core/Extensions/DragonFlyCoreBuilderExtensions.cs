@@ -11,7 +11,7 @@ public static class DragonFlyCoreBuilderExtensions
 {
     public static TDragonFlyBuilder AddRestApiCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder)
         where TDragonFlyBuilder : IDragonFlyBuilder
-    {
+    {    
         builder.PreInit(api =>
         {
             api.Field().Added += factory => JsonFieldManager.Default.EnsureField(factory.FieldType);
