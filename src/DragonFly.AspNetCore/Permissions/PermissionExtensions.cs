@@ -11,7 +11,7 @@ public static class PermissionExtensions
 {
     public static AuthorizationPolicy ToAuthorizationPolicy(this Permission permission)
     {
-        var policy = new AuthorizationPolicyBuilder(PermissionConstants.AuthenticationScheme);
+        var policy = new AuthorizationPolicyBuilder(PermissionSchemeManager.GetAll());
         policy.RequireAuthenticatedUser();
         policy.AddRequirements(new PermissionRequirement(permission.Name));
 

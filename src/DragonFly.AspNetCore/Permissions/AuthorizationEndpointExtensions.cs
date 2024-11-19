@@ -23,7 +23,7 @@ public static class AuthorizationExtensions
     {
         return builder.RequireAuthorization(x => x
                                                 .RequireAuthenticatedUser()
-                                                .AddAuthenticationSchemes(PermissionConstants.AuthenticationScheme)
+                                                .AddAuthenticationSchemes(PermissionSchemeManager.GetAll())
                                                 );
     }
 }
