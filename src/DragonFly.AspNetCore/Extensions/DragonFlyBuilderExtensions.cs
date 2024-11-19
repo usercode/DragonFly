@@ -93,16 +93,16 @@ public static class DragonFlyBuilderExtensions
         builder.Map("/dragonfly",
                                 x =>
                                 {
-                                    x.UseRouting();
-                                    x.UseAuthentication();
-                                    x.UseAuthorization();
-
                                     IEnumerable<DragonFlyBuilderHandler> handlers = x.ApplicationServices.GetServices<DragonFlyBuilderHandler>();
 
                                     foreach (DragonFlyBuilderHandler handler in handlers)
                                     {
                                         handler(x);
                                     }
+
+                                    x.UseRouting();
+                                    x.UseAuthentication();
+                                    x.UseAuthorization();
 
                                     x.Use(async (context, next) =>
                                     {

@@ -22,6 +22,7 @@
     <PackageReference Include="DragonFly.MongoDB" Version="1.0.20" />
     <PackageReference Include="DragonFly.Identity" Version="1.0.20" />
     <PackageReference Include="DragonFly.ApiKeys" Version="1.0.20" />
+    <PackageReference Include="DragonFly.AspNetCore" Version="1.0.20" />
     <PackageReference Include="DragonFly.AspNetCore.BlazorWebAssembly" Version="1.0.20" />
   </ItemGroup>
 
