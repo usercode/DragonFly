@@ -4,8 +4,6 @@
 
 using DragonFly;
 using DragonFly.AspNetCore;
-using DragonFly.Assets.ImageSharp;
-using DragonFly.Assets.Pdf;
 using DragonFly.MongoDB;
 using DragonFlyTemplate.Models;
 using DragonFlyTemplate.Startup;

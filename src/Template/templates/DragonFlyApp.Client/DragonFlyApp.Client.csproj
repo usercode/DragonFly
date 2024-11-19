@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Client" Version="1.0.18" />
-    <PackageReference Include="DragonFly.API.Client" Version="1.0.18" />
-    <PackageReference Include="DragonFly.ApiKeys.Client" Version="1.0.18" />
-    <PackageReference Include="DragonFly.Identity.Client" Version="1.0.18" />    
+    <PackageReference Include="DragonFly.Client" Version="1.0.20" />
+    <PackageReference Include="DragonFly.API.Client" Version="1.0.20" />
+    <PackageReference Include="DragonFly.ApiKeys.Client" Version="1.0.20" />
+    <PackageReference Include="DragonFly.Identity.Client" Version="1.0.20" />    
   </ItemGroup>
 
   <ItemGroup>
