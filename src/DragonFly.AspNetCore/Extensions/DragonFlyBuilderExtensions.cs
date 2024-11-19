@@ -12,6 +12,7 @@ using DragonFly.AspNetCore.Permissions;
 using AspNetCore.Decorator;
 using DragonFly.AspNetCore.Permissions.Storages;
 using Microsoft.AspNetCore.SignalR;
+using DragonFly.Client;
 
 namespace DragonFly.AspNetCore;
 
@@ -141,25 +142,25 @@ public static class DragonFlyBuilderExtensions
     /// <summary>
     /// Maps the DragonFly manager. (Blazor Server)
     /// </summary>
-    //public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)
-    //{
-    //    builder.Map("/manager", x =>
-    //    {
-    //        x.UseRouting();
-    //        x.UseAuthentication();
-    //        x.UseAuthorization();
-    //        x.UseAntiforgery();
-    //        x.UseEndpoints(endpoints =>
-    //        {
-    //            endpoints
-    //                    .MapRazorComponents<TApp>()
-    //                    .AddInteractiveServerRenderMode()
-    //                    .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
-    //        });
-    //    });
+    public static IApplicationBuilder UseDragonFlyManager<TApp>(this IApplicationBuilder builder)
+    {
+        builder.Map("/manager", x =>
+        {
+            x.UseRouting();
+            x.UseAuthentication();
+            x.UseAuthorization();
+            x.UseAntiforgery();
+            x.UseEndpoints(endpoints =>
+            {
+                endpoints
+                        .MapRazorComponents<TApp>()
+                        .AddInteractiveServerRenderMode()
+                        .AddAdditionalAssemblies(RazorRoutingManager.Default.Items.ToArray());
+            });
+        });
 
-    //    return builder;
-    //}
+        return builder;
+    }
 
     /// <summary>
     /// Adds an endpoint to DragonFly.

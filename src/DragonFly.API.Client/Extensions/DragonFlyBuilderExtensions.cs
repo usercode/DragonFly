@@ -5,7 +5,6 @@
 using DragonFly.API.Client;
 using DragonFly.Client.Builders;
 using DragonFly.Core;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Client;
 
@@ -25,18 +24,7 @@ public static class StartupExtensions
     /// </summary>
     public static IDragonFlyBuilder AddRestClient(this IDragonFlyBuilder builder)
     {
-        builder.AddRestApiCore();
-
-        builder.Services.AddHttpClient<RestApiClient>(x => x.BaseAddress = DragonFlyClientWebAssemblyExtensions.BaseHttpBaseAddress);
-
-        builder.Services.AddTransient<IContentStorage, ContentItemApiStorage>();
-        builder.Services.AddTransient<IContentVersionStorage, ContentVersionApiStorage>();
-        builder.Services.AddTransient<ISchemaStorage, ContentSchemaApiStorage>();
-        builder.Services.AddTransient<IStructureStorage, ContentStructureApiStorage>();
-        builder.Services.AddTransient<IWebHookStorage, WebHookApiStorage>();
-        builder.Services.AddTransient<IAssetStorage, AssetApiStorage>();
-        builder.Services.AddTransient<IAssetFolderStorage, AssetFolderApiStorage>();
-        builder.Services.AddTransient<IBackgroundTaskService, BackgroundTaskApiStorage>();
+        builder.AddClientRestApiCore(x => x.BaseAddress = DragonFlyClientWebAssemblyExtensions.BaseHttpBaseAddress);
 
         return builder;
     }

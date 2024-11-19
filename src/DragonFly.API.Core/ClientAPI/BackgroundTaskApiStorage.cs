@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.API.Client.BackgroundTasks;
-using Microsoft.AspNetCore.Components;
 using SmartResults;
 
 namespace DragonFly.API.Client;
@@ -13,15 +12,15 @@ namespace DragonFly.API.Client;
 /// </summary>
 internal class BackgroundTaskApiStorage : IBackgroundTaskService
 {
-    public BackgroundTaskApiStorage(RestApiClient client, NavigationManager navigationManager)
+    public BackgroundTaskApiStorage(RestApiClient restClient)
     {
-        Client = client.Http; 
-        NavigationManager = navigationManager;
+        RestClient = restClient;
+        Client = restClient.HttpClient;
     }
 
     private HttpClient Client { get; }
 
-    private NavigationManager NavigationManager { get; }
+    private RestApiClient RestClient { get; }
 
     public async Task<Result<BackgroundTaskInfo[]>> GetTasksAsync()
     {
@@ -39,7 +38,7 @@ internal class BackgroundTaskApiStorage : IBackgroundTaskService
 
     public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
-        SignalRBackgroundTaskNotificationProvider provider = new SignalRBackgroundTaskNotificationProvider(NavigationManager);
+        SignalRBackgroundTaskNotificationProvider provider = new SignalRBackgroundTaskNotificationProvider(RestClient);
 
         await provider.StartAsync();
 

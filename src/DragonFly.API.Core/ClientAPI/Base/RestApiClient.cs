@@ -11,11 +11,11 @@ public class RestApiClient
 {
     public RestApiClient(HttpClient httpClient)
     {
-        Http = httpClient;
+        HttpClient = httpClient;
     }
 
     /// <summary>
-    /// Http
+    /// HttpClient
     /// </summary>
-    public HttpClient Http { get; }
+    public HttpClient HttpClient { get; }
 }

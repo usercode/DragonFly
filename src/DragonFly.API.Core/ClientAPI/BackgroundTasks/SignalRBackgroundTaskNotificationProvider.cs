@@ -2,22 +2,21 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 
 namespace DragonFly.API.Client.BackgroundTasks;
 
 public sealed class SignalRBackgroundTaskNotificationProvider : IBackgroundTaskNotificationProvider
 {
-    public SignalRBackgroundTaskNotificationProvider(NavigationManager navigationManager)
+    public SignalRBackgroundTaskNotificationProvider(RestApiClient client)
     {
-        NavigationManager = navigationManager;
+        Client = client;
     }
 
     /// <summary>
     /// NavigationManager
     /// </summary>
-    private NavigationManager NavigationManager { get; }
+    private RestApiClient Client { get; }
 
     /// <summary>
     /// HubConnection
@@ -34,7 +33,7 @@ public sealed class SignalRBackgroundTaskNotificationProvider : IBackgroundTaskN
     /// </summary>
     public async Task StartAsync()
     {
-        HubConnection = new HubConnectionBuilder().WithUrl(NavigationManager.ToAbsoluteUri("/dragonfly/background-task-hub")).Build();
+        HubConnection = new HubConnectionBuilder().WithUrl(new Uri(Client.HttpClient.BaseAddress, "/dragonfly/background-task-hub")).Build();
         HubConnection.On<BackgroundTaskStatusChange, BackgroundTaskInfo>("TaskChanged", async (state, task) =>
         {
             if (BackgroundTaskChanged != null)

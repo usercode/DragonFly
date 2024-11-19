@@ -177,8 +177,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseDragonFly();
-//app.UseDragonFlyManager();
-//app.UseDragonFlyManager<App>();
+app.UseDragonFlyManager<App>();
 app.UseSwagger();
 app.UseSwaggerUI();
 
