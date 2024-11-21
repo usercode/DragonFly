@@ -11,6 +11,7 @@ using DragonFly.Client;
 using DragonFly.MongoDB;
 using DragonFlyABC;
 using DragonFlyTEST;
+using FFMpegCore;
 using ImageWizard;
 using ImageWizard.Caches;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +45,12 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.ForwardedHeaders = ForwardedHeaders.All;
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
+});
+
+GlobalFFOptions.Configure(x =>
+{
+    x.BinaryFolder = "C:\\Users\\admin\\Downloads";
+    x.TemporaryFilesFolder = "C:\\Users\\admin\\Downloads";
 });
 
 builder.Services.Configure<KestrelServerOptions>(options =>

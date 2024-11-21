@@ -29,7 +29,7 @@ internal class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthent
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        string? requestApiKey = Context.Request.Headers["ApiKey"].FirstOrDefault();
+        string? requestApiKey = Context.Request.Headers[ApiKeysConstants.ApiKeyHeaderName].FirstOrDefault();
 
         if (requestApiKey != null)
         {
