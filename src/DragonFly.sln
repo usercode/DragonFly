@@ -86,7 +86,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.Assets.Pdf", "Dra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.Assets.FFMpeg", "DragonFly.Assets.FFMpeg\DragonFly.Assets.FFMpeg.csproj", "{B3C1007D-0E66-427E-AB7F-99F44CE816E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.AspNetCore.BlazorWebAssembly", "DragonFly.AspNetCore.BlazorWebAssembly\DragonFly.AspNetCore.BlazorWebAssembly.csproj", "{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.AspNetCore.WebAssembly", "DragonFly.AspNetCore.WebAssembly\DragonFly.AspNetCore.WebAssembly.csproj", "{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DragonFly.Client.WebAssembly", "DragonFly.Client.WebAssembly\DragonFly.Client.WebAssembly.csproj", "{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -198,6 +200,10 @@ Global
 		{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,6 +243,7 @@ Global
 		{E8441CA2-5874-488A-8CD6-C46CCED834CC} = {0FF74E37-2946-4582-AA4F-EE44DD721F11}
 		{B3C1007D-0E66-427E-AB7F-99F44CE816E4} = {0FF74E37-2946-4582-AA4F-EE44DD721F11}
 		{6C04E7A9-1EA9-4410-BA18-18004AFEA2EB} = {91ADE257-5696-4B85-BADA-7638271C971B}
+		{F1708FA4-8AD1-4E0A-9D5C-4EA077A19F9B} = {7B9DA9F7-69AA-44B3-9E64-2105DBD5537E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {069E83C9-3430-4D62-843B-B52982C42093}

@@ -30,14 +30,14 @@ public static class DragonFlyCoreBuilderExtensions
     /// <summary>
     /// Adds client API for storages.
     /// </summary>
-    public static TDragonFlyBuilder AddClientRestApiCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder, Action<HttpClient>? configureClient = null)
+    public static TDragonFlyBuilder AddClientRestApiCore<TDragonFlyBuilder>(this TDragonFlyBuilder builder, Action<IServiceProvider, HttpClient>? configureClient = null)
         where TDragonFlyBuilder : IDragonFlyBuilder
     {
         builder.AddRestApiCore();
 
         if (configureClient == null)
         {
-            configureClient = x => { };
+            configureClient = (provider, client) => { };
         }
 
         builder.Services.AddHttpClient<RestApiClient>(configureClient);

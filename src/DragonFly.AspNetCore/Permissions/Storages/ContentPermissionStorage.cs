@@ -49,7 +49,9 @@ public class ContentPermissionStorage : IContentStorage
 
     public async Task<Result<ContentReferenceIndex>> GetReferencedByAsync(string schema, Guid id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Query)).ThenAsync(x => Storage.GetReferencedByAsync(schema, id));
+        //return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Query)).ThenAsync(x => Storage.GetReferencedByAsync(schema, id));
+
+        return await Storage.GetReferencedByAsync(schema, id);
     }
 
     public async Task<Result<bool>> PublishAsync(string schema, Guid id)

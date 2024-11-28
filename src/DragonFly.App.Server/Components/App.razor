@@ -11,11 +11,12 @@
     <script src="/_content/BlazorStrap/blazorstrap.js"></script>
     <script src="/_content/DragonFly.Client/lib/tinymce/tinymce.min.js"></script>
     <script src="/_content/TinyMCE.Blazor/tinymce-blazor.js"></script>
-    <HeadOutlet @rendermode="InteractiveServer" />
+    <ImportMap />
+    <HeadOutlet />
 </head>
 <body>
     <app>
-        <Routes @rendermode="InteractiveServer" />
+        <Routes />
     </app>
     <script src="_framework/blazor.web.js"></script>
 </body>

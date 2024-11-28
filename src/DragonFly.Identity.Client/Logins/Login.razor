@@ -62,7 +62,10 @@
         {
             Claim[] claims = result.Claims.Select(x => new Claim(x.Type, x.Value)).ToArray();
 
-            ((BlazorClientAuthenticationStateProvider)Auth).SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity(claims, "Password")));
+            if (Auth is BlazorClientAuthenticationStateProvider clientAuthenticationStateProvider)
+            {
+                clientAuthenticationStateProvider.SetCurrentPrincipal(new ClaimsPrincipal(new ClaimsIdentity(claims, "Password")));
+            }
 
             if (ReturnUrl != null)
             {

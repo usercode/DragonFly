@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DragonFly.Client.WebAssembly\DragonFly.Client.WebAssembly.csproj" />
     <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
     <ProjectReference Include="..\DragonFly.API.Client\DragonFly.API.Client.csproj" />
     <ProjectReference Include="..\DragonFly.ApiKeys.Client\DragonFly.ApiKeys.Client.csproj" />

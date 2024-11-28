@@ -49,6 +49,9 @@ public static class DragonFlyBuilderExtensions
             .AddCore()
             .PostInit<CreateContentPermissionsInitializer>();
 
+        builder.Services.AddRazorComponents()
+                           .AddInteractiveServerComponents();
+
         builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
 
@@ -152,6 +155,9 @@ public static class DragonFlyBuilderExtensions
             x.UseAntiforgery();
             x.UseEndpoints(endpoints =>
             {
+                endpoints
+                        .MapStaticAssets();
+
                 endpoints
                         .MapRazorComponents<TApp>()
                         .AddInteractiveServerRenderMode()

@@ -7,8 +7,6 @@ using DragonFly.Core;
 using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.AspNetCore.Components.Authorization;
-using DragonFly.AspNetCore.Permissions;
 using System;
 
 namespace DragonFly.Client;
@@ -46,8 +44,6 @@ public static class DragonFlyClientExtensions
         builder.Services.TryAddSingleton(ComponentManager.Default);
         builder.Services.TryAddSingleton(AssetPreviewManager.Default);
 
-        builder.Services.AddScoped<BlazorClientAuthenticationStateProvider>();
-        builder.Services.AddScoped<AuthenticationStateProvider>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
         //builder.Services.AddScoped<IPrincipalContext>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
 
         config?.Invoke(builder);

@@ -14,12 +14,6 @@ namespace DragonFly.Client.Pages.ContentItems;
 
 public class ContentItemListBase : EntityListComponent<ContentItem>
 {
-    public ContentItemListBase()
-    {
-        OrderFields = new List<FieldOrder>();
-        QueryFields = new List<FieldQuery>();
-    }
-
     [Parameter]
     public string SchemaName { get; set; }
 
@@ -45,12 +39,12 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     /// <summary>
     /// FieldOrder
     /// </summary>
-    public IList<FieldOrder> OrderFields { get; private set; }
+    public IList<FieldOrder> OrderFields { get; private set; } = new List<FieldOrder>();
 
     /// <summary>
     /// QueryFields
     /// </summary>
-    public IList<FieldQuery> QueryFields { get; private set; }
+    public IList<FieldQuery> QueryFields { get; private set; } = new List<FieldQuery>();
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {

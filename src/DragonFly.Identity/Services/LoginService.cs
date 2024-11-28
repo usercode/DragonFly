@@ -81,21 +81,14 @@ class LoginService : ILoginService
 
         PrincipalContext.Current = principal;
 
-        //Blazor WebAssembly?
-        if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
-        {
-            await HttpContextAccessor.HttpContext.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
-        }
-
+        await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+        
         return new LoginResult(true) { Username = user.Username, Claims = claims.Select(x=> new ClaimItem(x.Type, x.Value)).ToList() };
     }
 
     public async Task Logout()
     {
-        if (HttpContextAccessor.HttpContext?.WebSockets.IsWebSocketRequest == false)
-        {
-            await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
-        }
+        await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);        
     }
 
     public async Task<IdentityUser?> GetCurrentUserAsync()

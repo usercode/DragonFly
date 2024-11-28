@@ -5,6 +5,7 @@
 using DragonFly.API.Client;
 using DragonFly.Client.Builders;
 using DragonFly.Core;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly.Client;
 
@@ -24,7 +25,12 @@ public static class StartupExtensions
     /// </summary>
     public static IDragonFlyBuilder AddRestClient(this IDragonFlyBuilder builder)
     {
-        builder.AddClientRestApiCore(x => x.BaseAddress = DragonFlyClientWebAssemblyExtensions.BaseHttpBaseAddress);
+        builder.AddClientRestApiCore((provider, client) =>
+        {
+            DragonFlyApp app = provider.GetRequiredService<DragonFlyApp>();
+
+            client.BaseAddress = app.ApiBaseUrl;
+        });
 
         return builder;
     }

@@ -6,16 +6,14 @@ using DragonFly.Init;
 using DragonFly.Client.Builders;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
+using DragonFly.AspNetCore.Permissions;
+using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace DragonFly.Client;
 
 public static class DragonFlyClientWebAssemblyExtensions
 {
-    public static Uri? BaseHttpBaseAddress = null;
-
     /// <summary>
     /// Adds DragonFly services.
     /// <br/><br/>
@@ -38,7 +36,10 @@ public static class DragonFlyClientWebAssemblyExtensions
         webAssemblyBuilder.Services.AddSingleton(new DragonFlyApp(apiBaseUri, clientBaseUrl));
         webAssemblyBuilder.Services.AddSingleton(new HttpClient() { BaseAddress = apiBaseUri });
 
-        BaseHttpBaseAddress = apiBaseUri;
+        webAssemblyBuilder.Services.AddScoped<BlazorClientAuthenticationStateProvider>();
+        webAssemblyBuilder.Services.AddScoped<AuthenticationStateProvider>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
+
+        DragonFlyRenderMode.Current = new InteractiveWebAssemblyRenderMode(prerender: false);
 
         return webAssemblyBuilder;
     }

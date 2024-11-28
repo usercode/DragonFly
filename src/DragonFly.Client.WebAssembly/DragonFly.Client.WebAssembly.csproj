@@ -4,8 +4,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <Authors>usercode</Authors>
-    <Description>Headless CMS based on ASP.NET Core and Blazor</Description>    
-		<PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
+    <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
+    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -22,7 +22,7 @@
   <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Include="..\..\logo.png" Pack="true" PackagePath="" />
     <None Include="..\..\readme.md" Pack="true" PackagePath="" />
@@ -32,18 +32,14 @@
     <PackageReference Include="MinVer" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>    
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="2.13.1" />
-    <PackageReference Include="SmartResults" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <ProjectReference Include="..\DragonFly.Client\DragonFly.Client.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
   </ItemGroup>
 </Project>
