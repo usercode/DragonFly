@@ -14,7 +14,7 @@ public class DateFieldAttribute : BaseFieldAttribute
     {
         base.ApplyToSchema(schema, property);
 
-        schema.AddDate(property, x =>
+        schema.AddDateTime(property, x =>
                                     {
                                         x.IsRequired = Required;
                                         x.IsSearchable = Index;

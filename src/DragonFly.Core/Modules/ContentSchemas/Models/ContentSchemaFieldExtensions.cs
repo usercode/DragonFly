@@ -81,7 +81,31 @@ public static class ContentSchemaFieldExtensions
         return schema;
     }
 
-    public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateTimeFieldOptions>? configOptions = null, int sortkey = 0)
+    public static TContentSchema AddDate<TContentSchema>(this TContentSchema schema, string name, Action<DateFieldOptions>? configOptions = null, int sortkey = 0)
+        where TContentSchema : ISchemaElement
+    {
+        DateFieldOptions options = new DateFieldOptions();
+
+        configOptions?.Invoke(options);
+
+        schema.AddField(name, typeof(DateField), options, sortkey);
+
+        return schema;
+    }
+
+    public static TContentSchema AddTime<TContentSchema>(this TContentSchema schema, string name, Action<TimeFieldOptions>? configOptions = null, int sortkey = 0)
+        where TContentSchema : ISchemaElement
+    {
+        TimeFieldOptions options = new TimeFieldOptions();
+
+        configOptions?.Invoke(options);
+
+        schema.AddField(name, typeof(TimeField), options, sortkey);
+
+        return schema;
+    }
+
+    public static TContentSchema AddDateTime<TContentSchema>(this TContentSchema schema, string name, Action<DateTimeFieldOptions>? configOptions = null, int sortkey = 0)
         where TContentSchema : ISchemaElement
     {
         DateTimeFieldOptions options = new DateTimeFieldOptions();

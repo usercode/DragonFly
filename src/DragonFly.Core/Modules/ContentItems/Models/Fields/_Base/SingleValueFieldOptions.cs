@@ -5,7 +5,6 @@
 namespace DragonFly;
 
 public abstract class SingleValueFieldOptions<T> : FieldOptions
-    where T : struct
 { 
 
     public T? DefaultValue { get; set; }

@@ -5,16 +5,16 @@
 namespace DragonFly;
 
 /// <summary>
-/// DateFieldOptions
+/// TimeFieldOptions
 /// </summary>
-public class DateTimeFieldOptions : SingleValueFieldOptions<DateTime?>
+public class TimeFieldOptions : SingleValueFieldOptions<TimeOnly?>
 {
-    public DateTimeFieldOptions()
+    public TimeFieldOptions()
     {
     }
 
     public override ContentField CreateContentField()
     {
-        return new DateTimeField();
+        return new TimeField();
     }
 }

@@ -25,6 +25,8 @@ public static class FieldManagerExtensions
         manager.Add<AssetField>();
         manager.Add<BlockField>();
         manager.Add<BoolField>();
+        manager.Add<DateField>();
+        manager.Add<TimeField>();
         manager.Add<DateTimeField>();
         manager.Add<ComponentField>();
         manager.Add<FloatField>();

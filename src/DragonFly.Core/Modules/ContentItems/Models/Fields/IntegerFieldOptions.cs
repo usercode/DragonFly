@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class IntegerFieldOptions : SingleValueFieldOptions<long>
+public class IntegerFieldOptions : SingleValueFieldOptions<long?>
 {
     public long? MinValue { get; set; }
     public long? MaxValue { get; set; }

@@ -35,5 +35,13 @@
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />    
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.development.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
   
 </Project>

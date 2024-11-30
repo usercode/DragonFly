@@ -28,6 +28,8 @@ public class ContentInitializer : IInitialize
         api.Field().Add<ReferenceField>().WithFieldView<ReferenceFieldView>().WithOptionView<ReferenceFieldOptionsView>().WithQueryView<ReferenceFieldQueryView>();
         api.Field().Add<BoolField>().WithFieldView<BoolFieldView>().WithOptionView<BoolFieldOptionsView>().WithQueryView<BoolFieldQueryView>();
         api.Field().Add<ComponentField>().WithFieldView<ComponentFieldView>().WithOptionView<ComponentFieldOptionsView>();
+        api.Field().Add<DateField>().WithFieldView<DateFieldView>();
+        api.Field().Add<TimeField>().WithFieldView<TimeFieldView>();
         api.Field().Add<DateTimeField>().WithFieldView<DateTimeFieldView>();
         api.Field().Add<StringField>().WithFieldView<StringFieldView>().WithOptionView<StringFieldOptionsView>().WithQueryView<StringFieldQueryView>();
         api.Field().Add<FloatField>().WithFieldView<FloatFieldView>().WithOptionView<FloatFieldOptionsView>().WithQueryView<FloatFieldQueryView>();

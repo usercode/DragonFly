@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class FloatFieldOptions : SingleValueFieldOptions<double>
+public class FloatFieldOptions : SingleValueFieldOptions<double?>
 {
     public double? MinValue { get; set; }
     public double? MaxValue { get; set; }

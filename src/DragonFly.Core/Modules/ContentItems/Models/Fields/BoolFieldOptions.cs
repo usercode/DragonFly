@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class BoolFieldOptions : SingleValueFieldOptions<bool>
+public class BoolFieldOptions : SingleValueFieldOptions<bool?>
 {
     public override ContentField CreateContentField()
     {

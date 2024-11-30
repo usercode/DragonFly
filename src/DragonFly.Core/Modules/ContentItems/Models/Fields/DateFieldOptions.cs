@@ -7,14 +7,14 @@ namespace DragonFly;
 /// <summary>
 /// DateFieldOptions
 /// </summary>
-public class DateTimeFieldOptions : SingleValueFieldOptions<DateTime?>
+public class DateFieldOptions : SingleValueFieldOptions<DateOnly?>
 {
-    public DateTimeFieldOptions()
+    public DateFieldOptions()
     {
     }
 
     public override ContentField CreateContentField()
     {
-        return new DateTimeField();
+        return new DateField();
     }
 }

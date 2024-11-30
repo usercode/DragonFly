@@ -138,7 +138,12 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
 
             var v = await ContentVersionStorage.GetContentVersionsAsync(EntityType, EntityId);
 
-            Versions = v.Value;
+            Console.WriteLine(v);
+
+            if (v.IsSucceeded)
+            {
+                Versions = v.Value.Items;
+            }
         }
     }
 
