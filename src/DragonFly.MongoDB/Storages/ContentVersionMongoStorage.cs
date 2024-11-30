@@ -20,11 +20,11 @@ public class ContentVersionMongoStorage : MongoStorage, IContentVersionStorage
     /// </summary>
     private ISchemaStorage SchemaStorage { get; }
 
-    public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
+    public async Task<Result<QueryResult<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
         var collection = Client.Database.GetContentVersionCollection(schema);
 
-        var result = await collection.AsQueryable()
+        var items = await collection.AsQueryable()
                                             .Where(x => x.Content.Id == id)
                                             .Select(x => new ContentVersionEntry() {
                                                 Id = x.Id,
@@ -34,7 +34,11 @@ public class ContentVersionMongoStorage : MongoStorage, IContentVersionStorage
                                             .OrderByDescending(x => x.Modified)
                                             .ToListAsync();
 
-        return result;
+        QueryResult<ContentVersionEntry> result2 = new QueryResult<ContentVersionEntry>();
+        result2.Items = items;
+        result2.Count = items.Count;
+
+        return result2;
     }
 
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)

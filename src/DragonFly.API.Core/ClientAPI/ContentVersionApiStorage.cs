@@ -19,16 +19,11 @@ internal class ContentVersionApiStorage : IContentVersionStorage
 
     private HttpClient Client { get; }
 
-    public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
+    public async Task<Result<QueryResult<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
-        QueryResult<ContentVersionEntry>? result = await Client.GetFromJsonAsync<QueryResult<ContentVersionEntry>>($"api/content/{schema}/{id}/versions", ApiJsonSerializerDefault.Options);
+        var result = await Client.GetFromJsonAsync<Result<QueryResult<ContentVersionEntry>>>($"api/content/{schema}/{id}/versions", ApiJsonSerializerDefault.Options);
 
-        if (result == null)
-        {
-            return Result.Ok(Enumerable.Empty<ContentVersionEntry>());
-        }
-
-        return Result.Ok(result.Items.AsEnumerable());
+        return result;
     }
 
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)

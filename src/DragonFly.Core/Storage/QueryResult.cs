@@ -28,4 +28,9 @@ public class QueryResult<T>
     /// TotalCount
     /// </summary>
     public long TotalCount { get; set; }
+
+    public override string ToString()
+    {
+        return $"{typeof(T).Name} / Count: {Items.Count}";
+    }
 }

@@ -41,16 +41,6 @@ static class ContentVersionApiExtensions
     private static async Task<IResult> MapQuery(IContentVersionStorage storage, string schema, Guid id)
     {
         return (await storage.GetContentVersionsAsync(schema, id))
-                            .ToResult(x =>
-                            {
-                                QueryResult<ContentVersionEntry> queryResult = new QueryResult<ContentVersionEntry>();
-                                queryResult.Items = x.ToList();
-                                queryResult.Offset = 0;
-                                queryResult.Count = queryResult.Items.Count;
-                                queryResult.TotalCount = queryResult.Items.Count;
-
-                                return queryResult;
-                            })
-                            .ToHttpResult();
+                                .ToHttpResult();
     }
 }

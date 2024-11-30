@@ -38,7 +38,7 @@ public class ContentVersionPermissionStorage : IContentVersionStorage
                                             .ThenAsync(x => Storage.GetContentByVersionAsync(schema, id));
     }
 
-    public async Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
+    public async Task<Result<QueryResult<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read))
                                             .ThenAsync(x => Storage.GetContentVersionsAsync(schema, id));

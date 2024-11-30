@@ -14,7 +14,7 @@ public interface IContentVersionStorage
     /// <summary>
     /// GetContentVersionsAsync
     /// </summary>
-    Task<Result<IEnumerable<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id);
+    Task<Result<QueryResult<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id);
 
     /// <summary>
     /// GetContentByVersionAsync
