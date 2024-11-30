@@ -9,6 +9,9 @@ namespace DragonFly.AspNetCore;
 
 public static class DragonFlyBuilderExtensions
 {
+    /// <summary>
+    /// Adds <see cref="ImageProcessing"/> service for applying <see cref="ImageMetadata"/> to matching assets.
+    /// </summary>
     public static IDragonFlyBuilder AddImageMetadata(this IDragonFlyBuilder builder)
     {
         builder.Services.AddTransient<IAssetProcessing, ImageProcessing>();

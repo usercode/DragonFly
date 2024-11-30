@@ -1,6 +1,6 @@
 ﻿@inject IDragonFlyApi Api
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+<div>
     <ul class="nav flex-column">
         <li class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
@@ -28,8 +28,6 @@
 @code {
     private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
     public string CurrentUser { get; set; }
 
     [CascadingParameter]
@@ -42,10 +40,5 @@
         var user = await authenticationState;
 
         CurrentUser = $"{user.User.Identity.Name}";
-    }
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
     }
 }

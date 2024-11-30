@@ -12,8 +12,6 @@ public static class FieldManagerExtensions
     /// <summary>
     /// Gets the field manager.
     /// </summary>
-    /// <param name="api"></param>
-    /// <returns></returns>
     public static FieldManager Field(this IDragonFlyApi api)
     {
         return FieldManager.Default;
