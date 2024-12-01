@@ -1,16 +1,23 @@
 ﻿<div class="bool-field-view options">
-    <BSButton Color="Value == true ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(true)" IsDisabled="IsReadOnly">
-        <span><i class="far fa-check-circle"></i> True</span>
-    </BSButton>
 
-    <BSButton Color="Value == false ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(false)" IsDisabled="IsReadOnly">
-        <span><i class="far fa-times-circle"></i> False</span>
-    </BSButton>
+    @* <FluentRadioGroup @bind-Value=Value>
+        <FluentRadio Value="1">True</FluentRadio>
+        <FluentRadio Value="2">False</FluentRadio>
+        <FluentRadio Value="3">False</FluentRadio>
+    </FluentRadioGroup> *@
+
+    <FluentButton Appearance="@(Value == true ? Appearance.Accent : Appearance.Neutral)" IconStart="@(new Icons.Regular.Size16.CheckboxChecked())" OnClick="x => OnChange(true)" Disabled="IsReadOnly">
+        <span>True</span>
+    </FluentButton>
+
+    <FluentButton Appearance="@(Value == false ? Appearance.Accent : Appearance.Neutral)" IconStart="@(new Icons.Regular.Size16.CheckboxUnchecked())" OnClick="x => OnChange(false)" Disabled="IsReadOnly">
+        <span>False</span>
+    </FluentButton>
     @if (AllowUnset)
     {
-        <BSButton Color="Value == null ? BSColor.Dark : BSColor.Light" OnClick="x => OnChange(null)" IsDisabled="IsReadOnly">
-            <span><i class="far fa-circle"></i> Unset</span>
-        </BSButton>
+        <FluentButton Appearance="@(Value == null ? Appearance.Accent : Appearance.Neutral)" IconStart="@(new Icons.Regular.Size16.CheckboxCheckedSync())" OnClick="x => OnChange(null)" Disabled="IsReadOnly">
+            <span>Unset</span>
+        </FluentButton>
     }
 </div>
 

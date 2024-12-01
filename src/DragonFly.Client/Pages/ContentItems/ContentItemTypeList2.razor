@@ -1,29 +1,29 @@
 @inherits ContentItemTypeListBase2
 
 <div style="flex: 1">
-@if (SearchResult == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-<BSRow class="w-100">
-    <BSCol Column="2">
-        <BSListGroup>
-            @foreach (ContentSchema schema in SearchResult.Items)
-            {
-                <a class="list-group-item list-group-item-action @(SelectedItem == schema ? "active" : "")" @onclick="() => RefreshContentItemsAsync(schema)" style="cursor:pointer">
-                    <span class="oi oi-list-rich"></span> @schema.Name
-                </a>
-            }
-        </BSListGroup>
-    </BSCol>
-    <BSCol Column="10" class="h-100">
-        @if (SelectedItem != null)
-        {
-                <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" SchemaName="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />
-        }
-    </BSCol>
-</BSRow>
-}
+    @if (SearchResult == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <BSRow class="w-100">
+            <BSCol Column="2">
+                <FluentNavMenu>
+                    @foreach (ContentSchema schema in SearchResult.Items)
+                    {
+                        <FluentNavLink OnClick="() => RefreshContentItemsAsync(schema)">
+                            <span class="oi oi-list-rich"></span> @schema.Name
+                        </FluentNavLink>
+                    }
+                </FluentNavMenu>
+            </BSCol>
+            <BSCol Column="10" class="h-100">
+                @if (SelectedItem != null)
+                {
+                    <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" SchemaName="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />
+                }
+            </BSCol>
+        </BSRow>
+    }
 </div>

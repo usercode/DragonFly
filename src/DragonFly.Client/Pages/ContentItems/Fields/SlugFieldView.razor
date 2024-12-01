@@ -1,11 +1,8 @@
 ﻿@inherits FieldComponent<SlugField, SlugFieldOptions>
 @inject ISlugService SlugService
 
-<div class="slug-field">
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <div class="input-group-text">@@</div>
-        </div>
-        <input type="text" class="form-control" value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" readonly="@this.GetReadOnlyAttribute()" />
-    </div>
+<div class="slug-field">   
+    <FluentTextField value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" ReadOnly="@IsReadOnly" >
+        <FluentIcon Value="@(new Icons.Regular.Size16.Globe())" Slot="start" Color="Color.Neutral" />
+    </FluentTextField>
 </div>

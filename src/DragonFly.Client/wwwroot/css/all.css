@@ -102,6 +102,7 @@ img {
   width: auto;
   height: auto;
   object-fit: contain;
+  background-color: #fff;
 }
 
 textarea.form-control {
@@ -191,8 +192,7 @@ app {
 }
 
 .sidebar {
-  background-color: #222;
-  color: #fff;
+  display: flex;
 }
 
 .sub-sidebar {
@@ -436,6 +436,11 @@ app {
 
 .tox-statusbar__branding {
   display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
 }
 
 .asset-detail {

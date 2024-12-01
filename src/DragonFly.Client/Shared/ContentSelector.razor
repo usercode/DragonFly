@@ -18,7 +18,7 @@
         @if (ContentItem != null)
         {
             <div class="col-lg">
-                <span class="badge bg-primary">@ContentItem.Schema.Name</span>
+                <FluentBadge Appearance="Appearance.Accent">@ContentItem.Schema.Name</FluentBadge>
             </div>
             @foreach (string field in ContentItem.Schema.ReferenceFields)
             {
@@ -51,10 +51,10 @@
             <div class="options">
                 @if (ContentItem != null)
                 {
-                    <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" IsDisabled="IsReadOnly" title="Remove"><i class="fas fa-times"></i></BSButton>
+                    <FluentButton OnClick="e => Navigate()" IconStart="@(new Icons.Regular.Size16.ArrowRight())" title="Navigate"></FluentButton>
+                    <FluentButton OnClick="e => RemoveItem()" IconStart="@(new Icons.Regular.Size16.Delete())" Disabled="IsReadOnly" title="Remove"></FluentButton>
                 }
-                <BSButton Color="BSColor.Light" title="Select" IsDisabled="IsReadOnly" OnClick="e => Modal.ShowAsync()"><i class="fas fa-plus"></i></BSButton>
+                <FluentButton title="Select" Disabled="IsReadOnly" OnClick="e => Modal.ShowAsync()" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
             </div>
         </div>
     </div>

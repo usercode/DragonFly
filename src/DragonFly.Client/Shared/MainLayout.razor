@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 
+@* <FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Word" /> *@
+
 <AuthorizeView>
     <Authorized>
         <div class="sidebar">
@@ -8,6 +10,12 @@
         <div class="main">
             @Body
         </div>
+        <FluentToastProvider />
+        <FluentDialogProvider />
+        <FluentTooltipProvider />
+        <FluentMessageBarProvider />
+        <FluentMenuProvider />
+        <DragonFly.Client.Pages.BackgroundTasks.BackgroundTaskComponent />
     </Authorized>
     <NotAuthorized>
         <div class="main">

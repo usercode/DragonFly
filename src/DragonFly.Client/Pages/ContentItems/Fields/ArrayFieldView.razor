@@ -1,25 +1,25 @@
 ﻿@inherits FieldComponent<ArrayField, ArrayFieldOptions>
 
 <div class="array-field">
-    <BSButton Color="BSColor.Light" class="add-field" OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i> Add item</BSButton>
+    <FluentButton class="add-field"
+                  IconStart="@(new Icons.Regular.Size16.Add())"
+                  OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }"
+                  Disabled="IsReadOnly">Add item</FluentButton>
 
     @if (Field.Items.Any())
     {
-        <BSListGroup>
-            @{
-                int i = 1;
-            }
-            @foreach (ArrayFieldItem item in Field.Items)
-            {
-                <BSListGroupItem class="arrayitem-field" style="margin-top: 0.25rem">
-                    <BSButton Color="BSColor.Light">#@(i++)</BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveUp(item)" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveDown(item)" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.Remove(item)" title="Remove"><i class="fas fa-times"></i></BSButton>
+        int i = 1;
 
-                    <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" />
-                </BSListGroupItem>
-            }
-        </BSListGroup>
+        @foreach (ArrayFieldItem item in Field.Items)
+        {
+            <div class="arrayitem-field" style="margin-top: 0.25rem">
+                <FluentButton>#@(i++)</FluentButton>
+                <FluentButton OnClick="e => Field.Items.MoveUp(item)" IconStart="@(new Icons.Regular.Size16.ArrowUp())" title="Up"></FluentButton>
+                <FluentButton OnClick="e => Field.Items.MoveDown(item)" IconStart="@(new Icons.Regular.Size16.ArrowDown())" title="Down"></FluentButton>
+                <FluentButton OnClick="e => Field.Items.Remove(item)" IconStart="@(new Icons.Regular.Size16.Delete())" title="Remove"></FluentButton>
+
+                <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" />
+            </div>
+        }
     }
 </div>

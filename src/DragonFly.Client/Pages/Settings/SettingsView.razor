@@ -2,34 +2,34 @@
 @inject IDragonFlyApi Api
 
 <div class="settings">
-<BSRow>
-	<BSCol ColumnLarge="3">
-		<BSListGroup>
-			@foreach (SettingsItem c in Api.Settings().Items.OrderBy(x=> x.Name))
-			{
-				<a class="list-group-item @(SelectedComponent == c ? "active" : "")" @onclick="e => SelectedComponent = c">
-					<span>@c.Name</span>
-				</a>
-			}
-		</BSListGroup>
-	</BSCol>
-	<BSCol ColumnLarge="9">
-		@if (SelectedComponent != null)
-		{
-			@CreateComponent()
-		}
-	</BSCol>
-</BSRow>
+    <BSRow>
+        <BSCol ColumnLarge="3">
+            <FluentNavMenu>
+                @foreach (SettingsItem c in Api.Settings().Items.OrderBy(x => x.Name))
+                {
+                    <FluentNavLink OnClick="e => SelectedComponent = c">
+                        <span>@c.Name</span>
+                    </FluentNavLink>
+                }
+            </FluentNavMenu>
+        </BSCol>
+        <BSCol ColumnLarge="9">
+            @if (SelectedComponent != null)
+            {
+                @CreateComponent()
+            }
+        </BSCol>
+    </BSRow>
 </div>
 
 @code {
 
-	public SettingsItem SelectedComponent { get; set; }
+    public SettingsItem SelectedComponent { get; set; }
 
-	public RenderFragment CreateComponent() => builder =>
-					{
-						builder.OpenComponent(0, SelectedComponent.ComponentType);
-						builder.CloseComponent();
-					};
+    public RenderFragment CreateComponent() => builder =>
+                    {
+                        builder.OpenComponent(0, SelectedComponent.ComponentType);
+                        builder.CloseComponent();
+                    };
 
 }

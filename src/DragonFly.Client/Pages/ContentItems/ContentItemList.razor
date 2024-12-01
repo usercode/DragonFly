@@ -9,8 +9,7 @@
     }
 
     <div style="display:flex; gap: 0.25rem;">
-        <input class="form-control" type="text" style="flex:1;" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
-        <BSButton Color="BSColor.Light" OnClick="NavigateAsync"><i class="fa-solid fa-magnifying-glass"></i></BSButton>
+        <FluentSearch style="flex:1;" Placeholder="Search" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
     </div>
 </div>
 <div class="scroll-content">
@@ -28,10 +27,10 @@
                 }
                 else
                 {
-                    <BSListGroup>
+                    <FluentNavMenu>
                         @foreach (ContentItem contentItem in SearchResult.Items)
                         {
-                            <button class="list-group-item list-group-item-action" @onclick="x => OpenItem(contentItem)">
+                            <FluentNavLink OnClick="x => OpenItem(contentItem)">
                                 <BSRow>
                                     <div class="col-lg-auto">
                                         <i class="fa-solid fa-check" title="Published at @contentItem.PublishedAt" style="@(contentItem.PublishedAt == null ? "visibility: hidden" : "")"></i>
@@ -84,9 +83,9 @@
                                         }
                                     }
                                 </BSRow>
-                            </button>
+                            </FluentNavLink>
                         }
-                    </BSListGroup>
+                    </FluentNavMenu>
                 }
             </BSCol>
         </BSRow>

@@ -1,10 +1,8 @@
 ﻿@inherits FieldComponent<FloatField, FloatFieldOptions>
 
 <div class="float-field">
-    <BSInput InputType="InputType.Number" @bind-Value="@Field.Value" 
-             step="0.01" 
-             class="form-control" 
-             min="@Options.MinValue" 
-             max="@Options.MaxValue"
-             IsReadonly="IsReadOnly" />
+    <FluentNumberField 
+             @bind-Value="@Field.Value"
+             Step="0.01" 
+             ReadOnly="IsReadOnly" />
 </div>

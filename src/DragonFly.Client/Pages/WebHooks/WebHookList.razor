@@ -15,16 +15,14 @@
     }
     else
     {
-        <div class="list-group">
-
+        <FluentNavMenu>
             @foreach (var webHook in SearchResult.Items)
             {
-                <a class="list-group-item list-group-item-action" href="webhook/@webHook.Id">
+                <FluentNavLink Href="@($"webhook/{webHook.Id}")">
                     <span class="oi oi-list-rich"></span> @webHook.Name
-                </a>
+                </FluentNavLink>
             }
-
-        </div>
+        </FluentNavMenu>
     }
 
 </div>

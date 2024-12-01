@@ -1,8 +1,8 @@
 @page "/schema"
 @inherits ContentSchemaListBase
 
-<div class="content-header">   
-        <a href="schema/create" class="btn btn-success">Create</a>
+<div class="content-header">
+    <a href="schema/create" class="btn btn-success">Create</a>
 </div>
 
 <div class="scroll-content">
@@ -12,15 +12,13 @@
     }
     else
     {
-        <div class="list-group">
-
+        <FluentNavMenu>
             @foreach (ContentSchema schema in SearchResult.Items)
             {
-                <a class="list-group-item list-group-item-action" href="schema/@schema.Id">
+                <FluentNavLink Href="@($"schema/{schema.Id}")">
                     <span class="oi oi-list-rich"></span> @schema.Name
-                </a>
+                </FluentNavLink>
             }
-
-        </div>
+        </FluentNavMenu>
     }
 </div>

@@ -1,5 +1,5 @@
 ﻿@inherits FieldComponent<StringField, StringFieldOptions>
 
 <div class="string-field">
-    <BSInput class="form-control" @bind-Value="@Field.Value" IsReadonly="IsReadOnly" />
+    <FluentTextField @bind-Value="@Field.Value" ReadOnly="IsReadOnly" />
 </div>

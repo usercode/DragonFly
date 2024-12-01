@@ -8,6 +8,7 @@ using DragonFly.Client.Pages.ContentItems.Fields.Blocks;
 using DragonFly.Client.Pages.ContentItems.Query;
 using DragonFly.Client.Pages.ContentSchemas.Fields;
 using DragonFly.Init;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
@@ -18,9 +19,9 @@ public class ContentInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {       
-        api.MainMenu().Add("Schema", "fa-solid fa-layer-group", "schema");
+        api.MainMenu().Add("Schema", new Icons.Filled.Size24.AppsList(), "schema");
         //api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
-        api.MainMenu().Add("Content", "fa-solid fa-list", "content");
+        api.MainMenu().Add("Content", new Icons.Filled.Size24.AppFolder(), "content");
 
         //fields
         api.Field().Add<ArrayField>().WithFieldView<ArrayFieldView>().WithOptionView<ArrayFieldOptionsView>();

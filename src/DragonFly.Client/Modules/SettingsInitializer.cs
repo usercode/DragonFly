@@ -5,6 +5,7 @@
 using System.Threading.Tasks;
 using DragonFly.Client.Pages.SystemTools;
 using DragonFly.Init;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
@@ -15,7 +16,7 @@ public class SettingsInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {        
-        api.MainMenu().Add("Settings", "fa-solid fa-gear", "settings");
+        api.MainMenu().Add("Settings", new Icons.Filled.Size24.Settings(), "settings");
 
         SettingsManager.Default.Add<SystemTools>("Tools");
 

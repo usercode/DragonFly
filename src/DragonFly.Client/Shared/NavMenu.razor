@@ -1,26 +1,17 @@
 ﻿@inject IDragonFlyApi Api
 
-<div>
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="fa-solid fa-house" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        @foreach(MenuItem menuItem in Api.MainMenu().Items)
+<div style="background: var(--neutral-layer-3); display: flex; padding: 10px;">
+    <FluentAppBar Orientation="Orientation.Vertical">        
+        @foreach (MenuItem menuItem in Api.MainMenu().Items)
         {
-             <li class="nav-item">
-            <NavLink class="nav-link" href="@menuItem.Route">
-                <div>
-                    <span class="@menuItem.CssIcon" aria-hidden="true"></span>
-                </div>
-                <div class="text">
-                    @menuItem.Title
-                </div>
-            </NavLink>
-        </li>
+            <FluentAppBarItem 
+                              Href="@menuItem.Route"
+                              IconRest="menuItem.Icon"
+                              IconActive="menuItem.Icon"
+                              Text="@menuItem.Title">
+                            </FluentAppBarItem>
         }
-    </ul>
+    </FluentAppBar>
 </div>
 
 @* <p>@CurrentUser</p> *@

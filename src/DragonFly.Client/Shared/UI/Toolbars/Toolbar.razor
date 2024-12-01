@@ -1,15 +1,15 @@
-﻿<div class="toolbar">
+﻿<FluentToolbar>
     @foreach (ToolbarItem item in Items)
     {
-        <BSButton Class="toolbar-item" Color="item.Color" OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" disabled="@(item.IsRunning ? "disabled" : null)">
+        <FluentButton OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" disabled="@item.IsRunning">
             @if (item.IsRunning)
             {
                 <span class="fas fa-spin fa-spinner icon"></span>
             }
             <span class="title">@item.Name</span>
-        </BSButton>
+        </FluentButton>
     }
-</div>
+</FluentToolbar>
 
 @code {
     [Parameter]

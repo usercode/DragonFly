@@ -3,21 +3,19 @@
 @rendermode DragonFlyRenderMode.Current
 
 <div class="scroll-content">
-@if (SearchResult == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <div class="list-group" style="flex: 1">
-
-        @foreach (ContentSchema schema in SearchResult.Items.OrderBy(x => x.Name))
-        {
-            <a class="list-group-item list-group-item-action" @onclick="x => OpenItem(schema)" style="cursor:pointer">
-                <span class="oi oi-list-rich"></span> @schema.Name
-            </a>
-        }
-
-    </div>
-}
+    @if (SearchResult == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <FluentNavMenu>
+            @foreach (ContentSchema schema in SearchResult.Items.OrderBy(x => x.Name))
+            {
+                <FluentNavLink OnClick="x => OpenItem(schema)">
+                    <span class="oi oi-list-rich"></span> @schema.Name
+                </FluentNavLink>
+            }
+        </FluentNavMenu>
+    }
 </div>

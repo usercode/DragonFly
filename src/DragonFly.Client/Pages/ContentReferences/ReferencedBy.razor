@@ -1,12 +1,12 @@
-﻿<BSListGroup>
+﻿<FluentNavMenu>
     @if (ReferenceIndex != null)
     {
         foreach (var content in ReferenceIndex.Entries)
         {
-            <BSListGroupItem>@content.Schema (@content.Count)</BSListGroupItem>
+            <FluentNavLink>@content.Schema (@content.Count)</FluentNavLink>
         }
     }
-</BSListGroup>
+</FluentNavMenu>
 
 @code {
     [Parameter]

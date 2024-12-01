@@ -29,14 +29,14 @@
         <div class="options">
             @if (Asset != null)
             {
-                <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
+                <FluentButton OnClick="e => Navigate()" title="Navigate" IconStart="@(new Icons.Regular.Size16.ArrowRight())"></FluentButton>
                 @if (ShowDownloadButton)
                 {
-                    <BSButton Color="BSColor.Light" href="@Asset.GetPublicUrl()" target="_blank" title="Download"><i class="fas fa-arrow-down"></i></BSButton>
+                    <FluentButton OnClick="e => NavigationManager.NavigateTo(Asset.GetPublicUrl(), true)" target="_blank" title="Download" IconStart="@(new Icons.Regular.Size16.ArrowDown())"></FluentButton>
                 }
-                <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly"><i class="fas fa-times"></i></BSButton>
+                <FluentButton OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Delete())"></FluentButton>
             }
-            <BSButton Color="BSColor.Light" OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly"><i class="fas fa-plus"></i></BSButton>
+            <FluentButton OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
             {
                 @if (Asset.IsSVG())
                 {
-                    <img src="@Asset.PreviewUrl" style="width:100%;height:200px" />
+                    <img src="@Asset.PreviewUrl" style="height:200px" />
                 }
                 else
                 {
