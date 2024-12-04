@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using BlazorStrap;
+using Microsoft.FluentUI.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
 
@@ -10,10 +10,11 @@ namespace DragonFly.Client;
 
 public class ToolbarItem
 {
-    public ToolbarItem(string name, BSColor color, Func<Task> action)
+    public ToolbarItem(string name, bool isAccent, Icon? icon, Func<Task> action)
     {
         Name = name;
-        Color = color;
+        IsAccent = isAccent;
+        Icon = icon;
         _action = action;
     }
 
@@ -23,9 +24,14 @@ public class ToolbarItem
     public string Name { get; set; }
 
     /// <summary>
-    /// Color
+    /// IsAccent
     /// </summary>
-    public BSColor Color { get; set; }
+    public bool IsAccent { get; set; }
+
+    /// <summary>
+    /// Icon
+    /// </summary>
+    public Icon? Icon { get; set; }
 
     /// <summary>
     /// IsRunning

@@ -19,9 +19,9 @@ public class ContentInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {       
-        api.MainMenu().Add("Schema", new Icons.Filled.Size24.AppsList(), "schema");
+        api.MainMenu().Add("Schema", new Icons.Regular.Size24.AppsList(), "schema");
         //api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
-        api.MainMenu().Add("Content", new Icons.Filled.Size24.AppFolder(), "content");
+        api.MainMenu().Add("Content", new Icons.Regular.Size24.AppFolder(), "content");
 
         //fields
         api.Field().Add<ArrayField>().WithFieldView<ArrayFieldView>().WithOptionView<ArrayFieldOptionsView>();

@@ -25,136 +25,143 @@
     </div>
 
     <div class="scroll-content">
-        <BSNav IsTabs="true" style="margin-bottom: 1.5rem;">
-            <BSNavItem>
-                <TabLabel>Details</TabLabel>
-                <TabContent>
-                    <div class="">
-                        <EditForm Model="Entity">
-                            <BSRow>
-                                <div class="col-md-6">
 
-                                    <!-- id -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">ID</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                                            </div>
-                                        </BSRow>
-                                    </div>
+        <FluentTabs>
+            <FluentTab Label="Details">
+                <div>
+                    <EditForm Model="Entity">
+                        <BSRow>
+                            <div class="col-md-7">
 
-                                    <!-- name -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- slug -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Slug</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- alt -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Alt</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" @bind-value="@Entity.Alt" />
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- mimetype -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Mimetype</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" @bind-value="@Entity.MimeType" readonly />
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- size -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Size</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" value="@Entity.GetFileSize()" readonly />
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- folder -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Folder</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    @if (Entity.Folder != null)
-                                                    {
-                                                        <input type="text" class="form-control" value="@Entity.Folder.Name" readonly />
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="text" class="form-control" value="" readonly />
-                                                    }
-
-                                                    <BSButton Color="BSColor.Light" OnClick="x => Modal.ShowAsync()">...</BSButton>
-                                                </div>
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    <!-- description -->
-                                    <div class="form-group">
-                                        <BSRow>
-                                            <label class="col-sm-2 col-form-label">Description</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" style="height:20rem" @bind="Entity.Description"></textarea>
-                                            </div>
-                                        </BSRow>
-                                    </div>
-
-                                    @foreach (var m in Entity.Metaddata)
-                                    {
-                                        <h3>@m.Key</h3>
-                                        @ComponentManager.CreateComponent(m.Value)
-                                    }
-                                </div>
-                                <div class="col-md-6">
-                                    @if (IsNewEntity == false)
-                                    {
-                                        <div>
-                                            <InputFile OnChange="OnInputFileChange" />
+                                <!-- id -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">ID</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
                                         </div>
-                                        @if (Entity.Hash != null)
-                                        {
-                                            @AssetPreviewManager.CreateComponent(Entity)
-                                        }
-                                    }
+                                    </BSRow>
                                 </div>
-                            </BSRow>
-                        </EditForm>
-                    </div>
-                </TabContent>
-            </BSNavItem>
-            <BSNavItem>
-                <TabLabel>Referenced by</TabLabel>
-                <TabContent>
-                    <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />
-                </TabContent>
-            </BSNavItem>
-        </BSNav>
+
+                                <!-- name -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField @bind-Value="@Entity.Name" />
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- slug -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Slug</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField Value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- alt -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Alt</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField @bind-value="@Entity.Alt" />
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- mimetype -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Mimetype</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField @bind-value="@Entity.MimeType" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- size -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Size</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextField Value="@Entity.GetFileSize()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- folder -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Folder</label>
+                                        <div class="col-sm-10">
+                                            <div class="input-group">
+                                                @if (Entity.Folder != null)
+                                                {
+                                                    <FluentTextField Value="@Entity.Folder.Name" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                                }
+                                                else
+                                                {
+                                                    <FluentTextField Value="" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                                }
+
+                                                <FluentButton OnClick="x => Modal.ShowAsync()">...</FluentButton>
+                                            </div>
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                <!-- description -->
+                                <div class="form-group">
+                                    <BSRow>
+                                        <label class="col-sm-2 col-form-label">Description</label>
+                                        <div class="col-sm-10">
+                                            <FluentTextArea @bind-Value="Entity.Description"></FluentTextArea>
+                                        </div>
+                                    </BSRow>
+                                </div>
+
+                                @foreach (var m in Entity.Metaddata)
+                                {
+                                    <h3>@m.Key</h3>
+                                    @ComponentManager.CreateComponent(m.Value)
+                                }
+                            </div>
+                            <div class="col-md-5">
+                                @if (IsNewEntity == false)
+                                {
+                                    <div>
+                                        <FluentInputFile OnInputFileChange="OnInputFileChange">
+                                            <ChildContent>
+                                               
+
+                                                <div>
+                                                    Drag files here you wish to upload,
+                                                    or <label for="my-file-uploader">browse</label>
+                                                    for them<span style="color: red;">*</span>.
+                                                    <br />
+                                                    <em>Maximum of 1 files allowed.</em>
+                                                </div>
+                                            </ChildContent>
+                                        </FluentInputFile>
+                                    </div>
+                                    @if (Entity.Hash != null)
+                                    {
+                                        @AssetPreviewManager.CreateComponent(Entity)
+                                    }
+                                }
+                            </div>
+                        </BSRow>
+                    </EditForm>
+                </div>
+            </FluentTab>
+            <FluentTab Label="Referenced by">
+                <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />
+            </FluentTab>
+        </FluentTabs>        
     </div>
     <div class="footer-content">
         <div class="row">

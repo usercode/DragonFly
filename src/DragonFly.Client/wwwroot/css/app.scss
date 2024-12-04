@@ -473,3 +473,7 @@ app {
     display: flex;
     flex-direction: column;
 }
+
+fluent-text-field, fluent-text-area {
+    width: 100%;
+}

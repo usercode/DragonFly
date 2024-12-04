@@ -4,6 +4,7 @@
 
 using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,8 +27,8 @@ public class AssetListBase : EntityListComponent<Asset>
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
-        toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Danger, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
-        toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Danger, RefreshAllMetadataAsync));
+        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.New(), async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
+        toolbarItems.Add(new ToolbarItem("Apply metadata", false, new Icons.Regular.Size16.ImageEdit(), RefreshAllMetadataAsync));
     }
 
     protected virtual AssetQuery CreateQuery()

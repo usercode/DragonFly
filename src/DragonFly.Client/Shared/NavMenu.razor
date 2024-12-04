@@ -1,7 +1,13 @@
 ﻿@inject IDragonFlyApi Api
 
 <div style="background: var(--neutral-layer-3); display: flex; padding: 10px;">
-    <FluentAppBar Orientation="Orientation.Vertical">        
+    <FluentAppBar Orientation="Orientation.Vertical">
+        <FluentAppBarItem Href=""
+                          Text="Start"
+                          IconRest="new Icons.Filled.Size24.Home()"
+                          IconActive="new Icons.Filled.Size24.Home()"                          
+                          Match="NavLinkMatch.All">
+        </FluentAppBarItem>
         @foreach (MenuItem menuItem in Api.MainMenu().Items)
         {
             <FluentAppBarItem 

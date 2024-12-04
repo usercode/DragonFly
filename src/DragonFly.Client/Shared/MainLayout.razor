@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 
-@* <FluentDesignTheme Mode="DesignThemeModes.Dark" OfficeColor="OfficeColor.Word" /> *@
+<FluentDesignTheme Mode="DesignThemeModes.Light" OfficeColor="OfficeColor.Teams" />
 
 <AuthorizeView>
     <Authorized>
@@ -15,7 +15,7 @@
         <FluentTooltipProvider />
         <FluentMessageBarProvider />
         <FluentMenuProvider />
-        <DragonFly.Client.Pages.BackgroundTasks.BackgroundTaskComponent />
+        <BackgroundTaskComponent />
     </Authorized>
     <NotAuthorized>
         <div class="main">

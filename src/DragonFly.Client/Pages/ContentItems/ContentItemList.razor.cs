@@ -2,10 +2,10 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using BlazorStrap;
 using DragonFly.Client.Base;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,10 +23,8 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     [Inject]
     public FieldManager ContentFieldManager { get; set; }
 
-
     [Inject]
     public IContentStorage ContentService { get; set; }
-
 
     [Inject]
     public ISchemaStorage SchemaService { get; set; }
@@ -50,9 +48,9 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
-        toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, PublishQueryAsync));
-        toolbarItems.Add(new ToolbarItem("Unpublish all", BSColor.Danger, UnpublishQueryAsync));
+        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.New(), async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
+        toolbarItems.Add(new ToolbarItem("Publish all", false, null, PublishQueryAsync));
+        toolbarItems.Add(new ToolbarItem("Unpublish all", false, null, UnpublishQueryAsync));
         toolbarItems.AddRefreshButton(this);
     }
 
@@ -134,7 +132,7 @@ public class ContentItemListBase : EntityListComponent<ContentItem>
 
     public async Task Search(string pattern)
     {
-
+       
     }
 
     public async Task RefreshAsync(string schema)

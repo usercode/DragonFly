@@ -9,7 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using Microsoft.FluentUI.AspNetCore.Components;
-using DragonFly.Client.Pages.BackgroundTasks;
 
 namespace DragonFly.Client;
 
@@ -37,18 +36,7 @@ public static class DragonFlyClientExtensions
             .Init<AssetInitializer>()
             .Init<WebHookInitializer>()
             .Init<BackgroundTaskInitializer>()
-            .Init<SettingsInitializer>()
-            .PostInit(async x =>
-            {
-                //var toastService = x.ServiceProvider.GetRequiredService<IToastService>();
-                //var background = x.ServiceProvider.GetRequiredService<BackgroundTaskComponent>();
-
-                //toastService.ShowInfo("Ready");
-                
-                //await background.InitAsync();
-
-
-            })
+            .Init<SettingsInitializer>()            
            ;
 
         builder.Services.AddAuthorizationCore();

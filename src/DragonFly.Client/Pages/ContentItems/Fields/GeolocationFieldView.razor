@@ -1,10 +1,6 @@
 ﻿@inherits FieldComponent<GeolocationField, GeolocationFieldOptions>
 
 <div class="geolocation-field">
-    <div class="input-group">
-        <span class="input-group-text">Latitude</span>
-        <BSInput InputType="InputType.Text" @bind-Value="Field.Latitude" IsReadonly="IsReadOnly" />
-        <span class="input-group-text">Longitude</span>
-        <BSInput InputType="InputType.Text" @bind-Value="Field.Longitude" IsReadonly="IsReadOnly" />
-    </div>
+    <FluentNumberField @bind-Value="Field.Latitude" Placeholder="Latitude" ReadOnly="IsReadOnly" />
+    <FluentNumberField @bind-Value="Field.Longitude" Placeholder="Longitude" ReadOnly="IsReadOnly" />
 </div>

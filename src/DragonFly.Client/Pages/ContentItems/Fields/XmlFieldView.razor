@@ -1,5 +1,6 @@
 ﻿@inherits FieldComponent<XmlField, XmlFieldOptions>
 
 <div class="xml-field">
-    <textarea type="text" class="form-control" @bind="@Field.Value" data-autoresize style="height:200px" readonly="@this.GetReadOnlyAttribute()" />
+    <FluentTextArea @bind-Value="@Field.Value"
+                    ReadOnly="IsReadOnly" />
 </div>

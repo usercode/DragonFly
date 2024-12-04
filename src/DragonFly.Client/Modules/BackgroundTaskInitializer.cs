@@ -15,7 +15,7 @@ public class BackgroundTaskInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Tasks", new Icons.Filled.Size24.TasksApp(), "tasks");
+        api.MainMenu().Add("Tasks", new Icons.Regular.Size24.TasksApp(), "tasks");
 
         return Task.CompletedTask;
     }

@@ -1,6 +1,6 @@
 ﻿@typeparam TEnum
 
-<BSDropdown Class="enum-dropdown">
+@* <BSDropdown Class="enum-dropdown">
     <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@(EnumValue is null ? Undefined : EnumValue)</BSToggle></Toggler>
     <Content>
         @if (typeof(TEnum).IsGenericType)
@@ -12,25 +12,42 @@
             <BSDropdownItem @onclick="e => EnumValue = value" IsDisabled="IsReadOnly">@value</BSDropdownItem>
         }
     </Content>
-</BSDropdown>
+</BSDropdown> *@
+<div>
+    <FluentSelect 
+                    TOption="Option<TEnum>" 
+                    Items="EnumValues" 
+                    OptionText="x => x.Text" 
+                    OptionValue="x => x.Value?.ToString()"
+                    >
 
-@code {
-    private string Undefined { get; set; }
-    private Type EnumType { get; set; }
+    </FluentSelect>
+</div>
 
-    protected override void OnInitialized()
+@code {    
+    private static Type EnumType { get; set; } = GetEnumType();
+    private static Option<TEnum>[] EnumValues = GetEnumValues();
+    private static bool IsEnumNullable { get; } = EnumType != typeof(TEnum);
+
+    private static Option<TEnum>[] GetEnumValues()
     {
-        base.OnInitialized();
+        return Enum.GetValues(EnumType)
+                                .Cast<TEnum>()
+                                .Select(x => new Option<TEnum>() { Text = x.ToString() })
+                                .ToArray();
+    }
 
-        EnumType = typeof(TEnum);
+    private static Type GetEnumType()
+    {
+        Type type = typeof(TEnum);
 
         //is nullable type?
-        if (EnumType.IsGenericType)
+        if (Nullable.GetUnderlyingType(type) is Type nullableType)
         {
-            EnumType = EnumType.GenericTypeArguments[0];
+            type = nullableType;
         }
 
-        Undefined = EnumType.Name;
+        return type;
     }
 
     [Parameter]

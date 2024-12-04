@@ -6,7 +6,7 @@
             Width
         </BSLabel>
         <div class="col-sm-10">
-             <input type="text" class="form-control" @bind-value="@Metadata.Width" readonly />
+            <FluentTextField Value="@Metadata.Width?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             Height
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.Height" readonly />
+            <FluentTextField Value="@Metadata.Height?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -28,7 +28,7 @@
             Bits per pixel
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.BitsPerPixel" readonly />
+            <FluentTextField Value="@Metadata.BitsPerPixel?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>

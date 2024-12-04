@@ -34,4 +34,19 @@ public static class ContentSchemaExtensions
 
         return schema;
     }
+
+    public static KeyValuePair<string, SchemaField>[] GetListFields(this ContentSchema schema)
+    {
+        return schema.Fields.Where(x => schema.ListFields.Contains(x.Key)).ToArray();
+    }
+
+    public static KeyValuePair<string, SchemaField>[] GetReferenceFields(this ContentSchema schema)
+    {
+        return schema.Fields.Where(x => schema.ReferenceFields.Contains(x.Key)).ToArray();
+    }
+
+    public static KeyValuePair<string, SchemaField>[] GetROrderFields(this ContentSchema schema)
+    {
+        return schema.Fields.Where(x => schema.OrderFields.Any(o => o.Name == x.Key)).ToArray();
+    }
 }

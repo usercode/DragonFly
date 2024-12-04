@@ -6,7 +6,7 @@
             Format
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.FormatName" readonly />
+            <FluentTextField Value="@Metadata.FormatName" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             Duration
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.Duration" readonly />
+            <FluentTextField Value="@Metadata.Duration?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -31,7 +31,7 @@
                 Codec
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Codec" readonly />
+                <FluentTextField Value="@Metadata.VideoInfo.Codec" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>   
@@ -42,7 +42,7 @@
                 Width
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Width" readonly />
+                <FluentTextField Value="@Metadata.VideoInfo.Width?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>
@@ -53,7 +53,7 @@
                 Height
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Height" readonly />
+                <FluentTextField Value="@Metadata.VideoInfo.Height?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>
@@ -64,7 +64,7 @@
                 FPS
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Fps" readonly />
+                <FluentTextField Value="@Metadata.VideoInfo.Fps?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>
@@ -79,7 +79,7 @@
                 Codec
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Codec" readonly />
+                <FluentTextField Value="@Metadata.AudioInfo.Codec" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>
@@ -90,7 +90,7 @@
                 Channel layout
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.ChannelLayout" readonly />
+                <FluentTextField Value="@Metadata.AudioInfo.ChannelLayout" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>
@@ -101,7 +101,7 @@
                 Channels
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.AudioInfo.Channels" readonly />
+                <FluentTextField Value="@Metadata.AudioInfo.Channels?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </BSRow>
     </div>

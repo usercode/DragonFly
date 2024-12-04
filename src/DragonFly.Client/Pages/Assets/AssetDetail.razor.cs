@@ -58,11 +58,11 @@ public class AssetDetailBase : EntityDetailComponent<Asset>
         }
         else
         {
-            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
+            toolbarItems.Add(new ToolbarItem("Publish", true, null, () => PublishAsync()));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddUpdateButton(this);
             toolbarItems.AddDeleteButton(this);
-            toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Danger, () => ApplyMetadata()));
+            toolbarItems.Add(new ToolbarItem("Refresh metadata",false, null, () => ApplyMetadata()));
         }            
     }
 

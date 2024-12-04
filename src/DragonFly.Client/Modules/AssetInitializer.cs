@@ -17,7 +17,7 @@ public class AssetInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Assets", new Icons.Filled.Size24.Image(), "asset");
+        api.MainMenu().Add("Assets", new Icons.Regular.Size24.Image(), "asset");
 
         api.Metadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
         api.Metadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();

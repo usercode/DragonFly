@@ -1,7 +1,11 @@
 ﻿<FluentToolbar>
     @foreach (ToolbarItem item in Items)
     {
-        <FluentButton OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" disabled="@item.IsRunning">
+        <FluentButton 
+            Appearance="item.IsAccent ? Appearance.Accent : Appearance.Neutral"
+            IconStart="item.Icon"
+            OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" 
+            Disabled="@item.IsRunning">
             @if (item.IsRunning)
             {
                 <span class="fas fa-spin fa-spinner icon"></span>

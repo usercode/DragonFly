@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
 using Microsoft.JSInterop;
 using BlazorStrap.V5;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -95,23 +96,23 @@ public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
         }
         else
         {
-            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, PublishAsync));
-            toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, UnpublishAsync));
-            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Dark, CloneAsync));
-            toolbarItems.Add(new ToolbarItem("Versions", BSColor.Dark, ToggleVersions));
+            toolbarItems.Add(new ToolbarItem("Publish", true, null, PublishAsync));
+            toolbarItems.Add(new ToolbarItem("Unpublish", false, null, UnpublishAsync));
+            toolbarItems.Add(new ToolbarItem("Clone", false, null, CloneAsync));
+            toolbarItems.Add(new ToolbarItem("Versions", false, null, ToggleVersions));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);
 
             if (string.IsNullOrEmpty(Entity.Schema.Preview.Pattern) == false)
             {
-                toolbarItems.Add(new ToolbarItem("Preview", BSColor.Success, PreviewAsync));
+                toolbarItems.Add(new ToolbarItem("Preview", false, new Icons.Regular.Size16.PreviewLink(), PreviewAsync));
             }
         }
 
         if (ContentActions != null)
         {
-            ContentActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, BSColor.Dark, () => x.Execute(this))));
+            ContentActions.Foreach(x => toolbarItems.Add(new ToolbarItem(x.Name, false, null, () => x.Execute(this))));
         }
     }
 

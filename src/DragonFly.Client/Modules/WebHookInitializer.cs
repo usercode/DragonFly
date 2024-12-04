@@ -15,7 +15,7 @@ public class WebHookInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {       
-        api.MainMenu().Add("Webhook", new Icons.Filled.Size24.DesktopSignal(), "webhook");
+        api.MainMenu().Add("Webhook", new Icons.Regular.Size24.DesktopSignal(), "webhook");
 
         return Task.CompletedTask;
     }

@@ -9,6 +9,7 @@ using DragonFly.ApiKeys;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.ApiKeys.Client.Components;
 
@@ -33,7 +34,7 @@ public class ApiKeyListBase : EntityListComponent<ApiKey>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/apikey/create")));
+        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.New(), async () => Navigation.NavigateTo("settings/apikey/create")));
         toolbarItems.AddRefreshButton(this);
     }
 

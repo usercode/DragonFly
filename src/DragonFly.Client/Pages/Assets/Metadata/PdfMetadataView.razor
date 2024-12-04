@@ -6,7 +6,7 @@
             Pages
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.CountPages" readonly />
+            <FluentTextField Value="@Metadata.CountPages?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             PDF version
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.PdfVersion" readonly />
+            <FluentTextField Value="@Metadata.PdfVersion?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>
@@ -28,7 +28,7 @@
             Encrypted
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" value="@Metadata.IsEncrypted?.ToString()" readonly />            
+            <FluentTextField Value="@Metadata.IsEncrypted?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
         </div>
     </BSRow>
 </div>

@@ -61,6 +61,6 @@ public static class BackgroundTaskContextExtensions
             ctx.Input.Skip += ctx.Input.Take;
         }
 
-        await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
+        await ctx.UpdateStatusAsync($"Succeeded: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
     }
 }

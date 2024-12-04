@@ -7,26 +7,22 @@ using DragonFly.Client;
 using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Identity.Client.Components.Users;
 
 public class UserListBase : EntityListComponent<IdentityUser>
 {
-    public UserListBase()
-    {
-        Users = new List<IdentityUser>();
-    }
-
     [Inject]
     public IIdentityService UserStore { get; set; }
 
-    public IList<IdentityUser> Users { get; set; }
+    public IList<IdentityUser> Users { get; set; } = new List<IdentityUser>();
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo("settings/identity/user/create")));
+        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.ArrowClockwise(), async () => Navigation.NavigateTo("settings/identity/user/create")));
         toolbarItems.AddRefreshButton(this);
     }
 

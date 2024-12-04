@@ -17,7 +17,7 @@ public class VideoMetadata : AssetMetadata
     /// <summary>
     /// Duration
     /// </summary>
-    public TimeSpan Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
 
     /// <summary>
     /// VideoInfo

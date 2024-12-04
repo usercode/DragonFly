@@ -13,83 +13,70 @@
     </div>
 </div>
 <div class="scroll-content">
-    <EditForm Model="this">
-        <BSRow>
-            <BSCol Column="auto">
-                <QuerySelector ContentItemList="@this" />
-            </BSCol>
-            <BSCol>
-                @if (SearchResult == null)
-                {
-                    <div class="spinner-border" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                }
-                else
-                {
-                    <FluentNavMenu>
-                        @foreach (ContentItem contentItem in SearchResult.Items)
+    <BSRow>
+        <BSCol Column="auto">
+            <QuerySelector ContentItemList="@this" />
+        </BSCol>
+        <BSCol>
+            @if (SearchResult == null)
+            {
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            }
+            else
+            {
+                <FluentDataGrid 
+                    TGridItem="ContentItem" 
+                    Items="SearchResult.Items.AsQueryable()" 
+                    ShowHover="true" 
+                    OnRowClick="@(x => Navigation.NavigateTo($"content/{x.Item.Schema.Name}/{x.Item.Id}"))">
+
+                    <TemplateColumn Title="Published" Width="auto">
+                        @if (context.PublishedAt != null)
                         {
-                            <FluentNavLink OnClick="x => OpenItem(contentItem)">
-                                <BSRow>
-                                    <div class="col-lg-auto">
-                                        <i class="fa-solid fa-check" title="Published at @contentItem.PublishedAt" style="@(contentItem.PublishedAt == null ? "visibility: hidden" : "")"></i>
-                                    </div>
-                                    <div class="col-lg-auto">
-                                        <i class="fa-solid fa-circle-exclamation text-danger" title="@contentItem.ValidationState.Message" style="@(contentItem.ValidationState.Result == ValidationResult.Valid ? "visibility: hidden" : "")"></i>
-                                    </div>
-                                    @* no list fields available? Show id field only *@
-                                    @if (contentItem.Schema.ListFields.Any() == false)
-                                    {
-                                        <div class="col-lg-10">
-                                            @contentItem.Id
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        foreach (string field in contentItem.Schema.ListFields.Take(5))
-                                        {
-                                            <div class="col-lg">
-                                                @{
-                                                    ContentField column = contentItem.Fields[field];
-                                                }
-
-                                                @if (column is ISingleValueField singleValueField)
-                                                {
-                                                    <span>@singleValueField.Value</span>
-                                                }
-                                                else if (column is ReferenceField referenceField)
-                                                {
-                                                    @if (referenceField.ContentItem != null)
-                                                    {
-                                                        <ReferenceFields ContentItem="@referenceField.ContentItem" />
-                                                    }
-                                                }
-                                                else if (column is ComponentField embedField)
-                                                {
-                                                    @if (embedField.ContentComponent != null)
-                                                    {
-
-                                                    }
-                                                }
-                                                else if (column is AssetField assetField)
-                                                {
-                                                    @if (assetField.Asset != null && (assetField.Asset.IsImage() || assetField.Asset.IsSVG()))
-                                                    {
-                                                        <img src="@assetField.Asset.PreviewUrl" style="height:4rem;object-fit:contain" />
-                                                    }
-                                                }
-                                            </div>
-                                        }
-                                    }
-                                </BSRow>
-                            </FluentNavLink>
+                            <FluentIcon Value="@(new Icons.Regular.Size24.Checkmark())" Title="Published" />
                         }
-                    </FluentNavMenu>
+                        else
+                        {
+                            <FluentIcon Value="@(new Icons.Regular.Size24.Circle())" Title="Unpublished" Style="visibility:hidden" />
+                        }
+                    </TemplateColumn>
+
+                    @foreach (var field in Schema.GetListFields())
+                    {
+                        @*  <PropertyColumn Property="@(p => p.Fields[""])" Sortable="true" /> *@
+
+                        <TemplateColumn Title="@field.Key">
+                            @{
+                                var content = context.Fields[field.Key];
+                            }
+
+                            @if(content is AssetField assetField)
+                            {
+                                <img src="@assetField.Asset.PreviewUrl" style="height:50px" />
+                            }
+                            else if(content is ReferenceField referenceField && referenceField.ContentItem != null)
+                            {
+                                <ReferenceFields ContentItem="@referenceField.ContentItem" />
+                            }
+                            else if(content is BoolField boolField)
+                            {
+                                if (boolField.Value == true)
+                                {
+                                    <FluentIcon Value="@(new Icons.Regular.Size24.Check())" />
+                                }
+                            }
+                            else
+                            {
+                                <span>@content</span>
+                            }
+                            </TemplateColumn>
+                        }
+                    </FluentDataGrid>
                 }
             </BSCol>
         </BSRow>
-    </EditForm>
 </div>
 <div>
     @if (SearchResult != null)

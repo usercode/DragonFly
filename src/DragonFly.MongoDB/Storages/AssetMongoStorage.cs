@@ -185,6 +185,8 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
             query = query.OrderBy(x => x.Name);
         }
 
+        long totalCount = await query.CountAsync();
+
         query = query.Skip(assetQuery.Skip);
         query = query.Take(assetQuery.Take);
 
@@ -196,7 +198,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
                                 .ToList();
         queryResult.Offset = assetQuery.Take;
         queryResult.Count = queryResult.Items.Count;
-        queryResult.TotalCount = queryResult.Items.Count;
+        queryResult.TotalCount = totalCount;
 
         return queryResult;
     }

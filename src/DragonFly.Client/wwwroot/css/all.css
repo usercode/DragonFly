@@ -443,6 +443,10 @@ app {
   flex-direction: column;
 }
 
+fluent-text-field, fluent-text-area {
+  width: 100%;
+}
+
 .asset-detail {
   display: flex;
   flex-direction: column;
