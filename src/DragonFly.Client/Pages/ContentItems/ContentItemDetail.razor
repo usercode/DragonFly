@@ -1,8 +1,8 @@
 ﻿@page "/content/{EntityType}/{EntityId:guid}"
 @page "/content/{EntityType}/create"
 @page "/content/{EntityType}/create/{CloneFromEntityId:guid}"
-@inherits ContentItemDetailBase
 @rendermode DragonFlyRenderMode.Current
+@inherits EntityDetailComponent<ContentItem>
 
 <CascadingValue Value="this" IsFixed="true">
     @if (Entity != null)

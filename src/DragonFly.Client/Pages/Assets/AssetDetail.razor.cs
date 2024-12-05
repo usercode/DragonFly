@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using BlazorStrap;
-using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System;
@@ -11,16 +9,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
-using DragonFly.Client;
+using DragonFly.Client.Base;
 
 namespace DragonFly.Client.Pages.Assets;
 
-public class AssetDetailBase : EntityDetailComponent<Asset>
+public partial class AssetDetail
 {
-    public AssetDetailBase()
-    {
-
-    }
 
     [Inject]
     public IAssetStorage AssetStore { get; set; }

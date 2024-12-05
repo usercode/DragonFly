@@ -7,7 +7,7 @@
         @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.GetDisplayName()</BSButton>
+                <FluentButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.GetDisplayName()</FluentButton>
             </div>
         }
     </Content>
@@ -17,9 +17,9 @@
 {
 	<div class="block-field-view">
         <div style="display: flex;gap:0.25rem">
-            <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => BlockClipboard.CopyAsync(Blocks)" title="Copy all"><i class="fa-solid fa-copy"></i></BSButton>
-            <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(0, Blocks)" IsDisabled="Field.IsReadOnly" title="Paste" style="flex:0"><i class="fa-solid fa-paste"></i></BSButton>
-            <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => OpenModal(0)" IsDisabled="Field.IsReadOnly" title="Insert block" style="flex:1"><i class="fas fa-plus"></i></BSButton>
+            <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.CopyAsync(Blocks)" title="Copy all"><i class="fa-solid fa-copy"></i></FluentButton>
+            <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(0, Blocks)" IsDisabled="Field.IsReadOnly" title="Paste" style="flex:0"><i class="fa-solid fa-paste"></i></FluentButton>
+            <FluentButton class="block-field-add-btn" OnClick="e => OpenModal(0)" IsDisabled="Field.IsReadOnly" title="Insert block" style="flex:1"><i class="fas fa-plus"></i></FluentButton>
         </div>
 
 		@for (int i = 0; i < Blocks.Count; i++)
@@ -30,10 +30,10 @@
 			<div class="block-field">
 				<div class="block-field-options">
                     <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
-                    <BSButton Color="BSColor.Light" OnClick="e => Blocks.MoveUp(block)" IsDisabled="Field.IsReadOnly" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Blocks.MoveDown(block)" IsDisabled="Field.IsReadOnly" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Blocks.Remove(block)" IsDisabled="Field.IsReadOnly" title="Remove"><i class="fa-solid fa-times"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => BlockClipboard.CopyAsync(new[] { block })" title="Copy"><i class="fa-solid fa-copy"></i></BSButton>
+                    <FluentButton OnClick="e => Blocks.MoveUp(block)" IsDisabled="Field.IsReadOnly" title="Up"><i class="fas fa-arrow-up"></i></FluentButton>
+                    <FluentButton OnClick="e => Blocks.MoveDown(block)" IsDisabled="Field.IsReadOnly" title="Down"><i class="fas fa-arrow-down"></i></FluentButton>
+                    <FluentButton OnClick="e => Blocks.Remove(block)" IsDisabled="Field.IsReadOnly" title="Remove"><i class="fa-solid fa-times"></i></FluentButton>
+                    <FluentButton OnClick="e => BlockClipboard.CopyAsync(new[] { block })" title="Copy"><i class="fa-solid fa-copy"></i></FluentButton>
 				</div>
 				<div class="block-field-content">
                     @ComponentManager.CreateComponent(block)
@@ -41,11 +41,11 @@
 			</div>
 
             <div style="display: flex;gap:0.25rem">
-                <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(curIndex + 1, Blocks)" IsDisabled="Field.IsReadOnly" title="Paste" style="flex:0"><i class="fa-solid fa-paste"></i></BSButton>
+                <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(curIndex + 1, Blocks)" IsDisabled="Field.IsReadOnly" title="Paste" style="flex:0"><i class="fa-solid fa-paste"></i></FluentButton>
 
-                <BSButton Color="BSColor.Light" class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" IsDisabled="Field.IsReadOnly" title="Insert block" style="flex:1">
+                <FluentButton class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" IsDisabled="Field.IsReadOnly" title="Insert block" style="flex:1">
                     <i class="fas fa-plus"></i>
-                </BSButton>
+                </FluentButton>
             </div>
 		}
 	</div>

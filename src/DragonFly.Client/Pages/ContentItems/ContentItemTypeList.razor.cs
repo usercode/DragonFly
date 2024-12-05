@@ -4,13 +4,8 @@
 
 namespace DragonFly.Client.Pages.ContentItems;
 
-public class ContentItemTypeListBase : ContentSchemaListBase
+public partial class ContentItemTypeList
 {
-    public ContentItemTypeListBase()
-    {
-
-    }
-
     protected override string GetNavigationPath(ContentSchema entity)
     {
         return $"content/{entity.Name}";

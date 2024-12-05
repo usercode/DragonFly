@@ -3,7 +3,6 @@
 // MIT License
 
 using BlazorStrap;
-using DragonFly.Client.Base;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -17,9 +16,9 @@ using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
-public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
+public partial class ContentItemDetail
 {
-    public ContentItemDetailBase()
+    public ContentItemDetail()
     {
     }
 

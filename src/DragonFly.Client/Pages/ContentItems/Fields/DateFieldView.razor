@@ -1,5 +1,8 @@
 ﻿@inherits FieldComponent<DateField, DateFieldOptions>
 
 <div class="date-field">
-    <BSInput InputType="InputType.Date" class="form-control" @bind-Value="@Field.Value" IsReadonly="IsReadOnly" />
+    <FluentDatePicker 
+                Value="@Field.Value.Value.ToDateTime(TimeOnly.MinValue)" 
+                ValueChanged="x => Field.Value = DateOnly.FromDateTime(x.Value)" 
+                ReadOnly="IsReadOnly" />
 </div>

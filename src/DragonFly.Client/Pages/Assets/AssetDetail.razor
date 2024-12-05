@@ -1,7 +1,7 @@
 @page "/asset/{EntityId:guid}"
 @page "/asset/create"
 @page "/asset/create/{FolderId:guid}"
-@inherits AssetDetailBase
+@inherits EntityDetailComponent<Asset>
 @inject ComponentManager ComponentManager
 @inject AssetPreviewManager AssetPreviewManager
 @inject ISlugService SlugService
@@ -25,103 +25,87 @@
     </div>
 
     <div class="scroll-content">
-
         <FluentTabs>
             <FluentTab Label="Details">
                 <div>
                     <EditForm Model="Entity">
-                        <BSRow>
+                        <div class="row">
                             <div class="col-md-7">
-
                                 <!-- id -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">ID</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">ID</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                    </div>
                                 </div>
 
                                 <!-- name -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Name</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField @bind-Value="@Entity.Name" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField @bind-Value="@Entity.Name" />
+                                    </div>
                                 </div>
 
                                 <!-- slug -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Slug</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField Value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Slug</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField Value="@Entity.Slug" @onchange="x => Entity.Slug = SlugService.Transform(x.Value.ToString())" />
+                                    </div>
                                 </div>
 
                                 <!-- alt -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Alt</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField @bind-value="@Entity.Alt" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Alt</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField @bind-value="@Entity.Alt" />
+                                    </div>
                                 </div>
 
                                 <!-- mimetype -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Mimetype</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField @bind-value="@Entity.MimeType" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Mimetype</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField @bind-value="@Entity.MimeType" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                    </div>
                                 </div>
 
                                 <!-- size -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Size</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextField Value="@Entity.GetFileSize()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-                                        </div>
-                                    </BSRow>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Size</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextField Value="@Entity.GetFileSize()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                    </div>
                                 </div>
 
                                 <!-- folder -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Folder</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                @if (Entity.Folder != null)
-                                                {
-                                                    <FluentTextField Value="@Entity.Folder.Name" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-                                                }
-                                                else
-                                                {
-                                                    <FluentTextField Value="" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-                                                }
 
-                                                <FluentButton OnClick="x => Modal.ShowAsync()">...</FluentButton>
-                                            </div>
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Folder</label>
+                                    <div class="col-sm-10">
+                                        <div class="input-group">
+                                            @if (Entity.Folder != null)
+                                            {
+                                                <FluentTextField Value="@Entity.Folder.Name" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                            }
+                                            else
+                                            {
+                                                <FluentTextField Value="" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                                            }
+
+                                            <FluentButton OnClick="x => Modal.ShowAsync()">...</FluentButton>
                                         </div>
-                                    </BSRow>
+                                    </div>
                                 </div>
 
                                 <!-- description -->
-                                <div class="form-group">
-                                    <BSRow>
-                                        <label class="col-sm-2 col-form-label">Description</label>
-                                        <div class="col-sm-10">
-                                            <FluentTextArea @bind-Value="Entity.Description"></FluentTextArea>
-                                        </div>
-                                    </BSRow>
+
+                                <div class="row">
+                                    <label class="col-sm-2 col-form-label">Description</label>
+                                    <div class="col-sm-10">
+                                        <FluentTextArea @bind-Value="Entity.Description"></FluentTextArea>
+                                    </div>
                                 </div>
 
                                 @foreach (var m in Entity.Metaddata)
@@ -136,7 +120,7 @@
                                     <div>
                                         <FluentInputFile OnInputFileChange="OnInputFileChange">
                                             <ChildContent>
-                                               
+
 
                                                 <div>
                                                     Drag files here you wish to upload,
@@ -154,14 +138,14 @@
                                     }
                                 }
                             </div>
-                        </BSRow>
+                        </div>
                     </EditForm>
                 </div>
             </FluentTab>
             <FluentTab Label="Referenced by">
                 <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />
             </FluentTab>
-        </FluentTabs>        
+        </FluentTabs>
     </div>
     <div class="footer-content">
         <div class="row">

@@ -22,5 +22,5 @@ public class AudioInfo
     /// <summary>
     /// Channels
     /// </summary>
-    public int? Channels { get; set; }
+    public int Channels { get; set; }
 }

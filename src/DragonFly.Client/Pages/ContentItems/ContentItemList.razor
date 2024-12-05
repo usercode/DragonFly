@@ -1,5 +1,5 @@
 @page "/content/{SchemaName}"
-@inherits ContentItemListBase
+@inherits EntityListComponent<ContentItem>
 @rendermode DragonFlyRenderMode.Current
 
 <div class="content-header">
@@ -13,11 +13,11 @@
     </div>
 </div>
 <div class="scroll-content">
-    <BSRow>
-        <BSCol Column="auto">
+    <div class="row">
+        <div class="col-auto">
             <QuerySelector ContentItemList="@this" />
-        </BSCol>
-        <BSCol>
+        </div>
+        <div class="col">
             @if (SearchResult == null)
             {
                 <div class="spinner-border" role="status">
@@ -75,8 +75,8 @@
                         }
                     </FluentDataGrid>
                 }
-            </BSCol>
-        </BSRow>
+            </div>
+        </div>
 </div>
 <div>
     @if (SearchResult != null)

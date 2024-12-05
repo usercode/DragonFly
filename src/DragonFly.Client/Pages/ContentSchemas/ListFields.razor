@@ -1,4 +1,4 @@
-﻿<BSRow>
+﻿<div class="row">
     <div class="col-lg-6">
         <BSListGroup>
             @foreach (string i in TargetList)
@@ -7,29 +7,24 @@
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></BSButton>
-                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></BSButton>
-                        <BSButton Color="BSColor.Light" OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></BSButton>
+                        <FluentButton OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></FluentButton>
+                        <FluentButton OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></FluentButton>
+                        <FluentButton OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></FluentButton>
                     </div>
                 </BSListGroupItem>
             }
         </BSListGroup>
     </div>
     <div class="col-lg-6">
-        <BSListGroup>
-            @foreach (var i in SourceList.Where(x => TargetList.Contains(x) == false))
-            {
-                <BSListGroupItem>
-                    <div style="display:flex;align-items:center">
-                        <span>@i</span>
-                        <span style="flex-grow:1"></span>
-                        <BSButton Color="BSColor.Light" OnClick="@(e => { TargetList.Add(i);  })"><i class="fas fa-arrow-left"></i></BSButton>
-                    </div>
-                </BSListGroupItem>
-            }
-        </BSListGroup>
+        <FluentSelect TOption="Option<string>"
+                      Placeholder="Add field"
+                      Items="SourceList.Where(x => TargetList.Contains(x) == false).Select(x => new Option<string>() { Text = x, Value = x}).ToArray()"
+                      OptionText="x => x.Text"
+                      OptionValue="x => x.Value"
+                      @bind-SelectedOption="SelectedValue">
+        </FluentSelect>
     </div>
-</BSRow>
+</div>
 
 @code {
 
@@ -38,4 +33,23 @@
 
     [Parameter]
     public IList<string> SourceList { get; set; }
+
+    private Option<string> _selectedValue;
+
+    public Option<string> SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            if (_selectedValue != value)
+            {
+                _selectedValue = value;
+
+                if (_selectedValue != null)
+                {
+                    TargetList.Add(_selectedValue.Value);
+                }
+            }
+        }
+    }
 }

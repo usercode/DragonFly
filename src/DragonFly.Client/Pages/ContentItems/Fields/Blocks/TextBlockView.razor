@@ -1,11 +1,6 @@
 ﻿@inherits BlockComponent<TextBlock>
 
 <div class="block text-block">
-    <div class="grow-wrap" data-replicated-value="@Block.Text">
-        <textarea type="text"
-                  onInput="this.parentNode.dataset.replicatedValue = this.value"
-                  class="form-control"
-                  @bind="@Block.Text"
-                  readonly="@Field.GetReadOnlyAttribute()" />
-    </div>
+    <FluentTextArea @bind-Value="@Block.Text"
+                    ReadOnly="@Field.IsReadOnly" />
 </div>

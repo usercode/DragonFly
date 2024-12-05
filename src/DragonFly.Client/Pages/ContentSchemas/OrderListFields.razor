@@ -7,27 +7,22 @@
                     <div style="display:flex;align-items:center">
                         <div style="flex:1">@i.Name</div>
                         <OrderDirection Order="i"></OrderDirection>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></a>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></a>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></a>
+                        <FluentButton OnClick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></FluentButton>
+                        <FluentButton OnClick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></FluentButton>
+                        <FluentButton OnClick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></FluentButton>
                     </div>
                 </li>
             }
         </ul>
     </div>
     <div class="col-lg-6">
-        <ul class="list-group">
-            @foreach (string i in SourceList.Where(x => TargetList.Any(i => i.Name == x) == false))
-            {
-                <li class="list-group-item">
-                    <div style="display:flex;align-items:center">
-                        <span>@i</span>
-                        <span style="flex-grow:1"></span>
-                        <a class="btn btn-light" @onclick="@(e => { TargetList.Add(new FieldOrder(i, true));  })"><i class="fas fa-arrow-left"></i></a>
-                    </div>
-                </li>
-            }
-        </ul>
+        <FluentSelect TOption="Option<string>"
+                      Placeholder="Add field"
+                      Items="SourceList.Where(x => TargetList.Any(i => i.Name == x) == false).Select(x => new Option<string>() { Text = x, Value = x}).ToArray()"
+                      OptionText="x => x.Text"
+                      OptionValue="x => x.Value"
+                      @bind-SelectedOption="SelectedValue">
+        </FluentSelect>
     </div>
 </div>
 
@@ -38,4 +33,23 @@
 
     [Parameter]
     public IList<string> SourceList { get; set; }
+
+    private Option<string> _selectedValue;
+
+    public Option<string> SelectedValue
+    {
+        get => _selectedValue;
+        set
+        {
+            if (_selectedValue != value)
+            {
+                _selectedValue = value;
+
+                if (_selectedValue != null)
+                {
+                    TargetList.Add(new FieldOrder(_selectedValue.Value, true));
+                }
+            }
+        }
+    }
 }

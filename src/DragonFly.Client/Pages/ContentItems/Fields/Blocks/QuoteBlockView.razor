@@ -1,15 +1,15 @@
 ﻿@inherits BlockComponent<QuoteBlock>
 
 <div class="block quote-block">
-    <textarea class="form-control mb-3" @bind="@Block.Text" style="height:10rem" />
+    <FluentTextArea @bind-Value="@Block.Text" ReadOnly="Field.IsReadOnly" />
 
     <div class="input-group mb-3">
         <span class="input-group-text">Caption</span>
-        <BSInput class="form-control" @bind-Value="@Block.Caption" IsReadonly="Field.IsReadOnly" />
+        <FluentTextField @bind-Value="@Block.Caption" ReadOnly="Field.IsReadOnly" />
     </div>
 
     <div class="input-group mb-3">
         <span class="input-group-text">URL</span>
-        <BSInput class="form-control" @bind-Value="@Block.Url" IsReadonly="Field.IsReadOnly" />
+        <FluentTextField @bind-Value="@Block.Url" ReadOnly="Field.IsReadOnly" />
     </div>
 </div>

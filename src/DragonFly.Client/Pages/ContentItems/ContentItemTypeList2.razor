@@ -1,4 +1,4 @@
-@inherits ContentItemTypeListBase2
+@inherits ContentSchemaList
 
 <div style="flex: 1">
     @if (SearchResult == null)
@@ -7,8 +7,8 @@
     }
     else
     {
-        <BSRow class="w-100">
-            <BSCol Column="2">
+        <div class="row w-100">
+            <div class="col-2">
                 <FluentNavMenu>
                     @foreach (ContentSchema schema in SearchResult.Items)
                     {
@@ -17,13 +17,13 @@
                         </FluentNavLink>
                     }
                 </FluentNavMenu>
-            </BSCol>
-            <BSCol Column="10" class="h-100">
+            </div>
+            <div class="col-10 h-100">
                 @if (SelectedItem != null)
                 {
                     <ContentItemList @ref="ContentItemList" ListMode="EntityListMode.Single" SchemaName="@SelectedItem.Name" ItemSelected="x => SetResult(x)" />
                 }
-            </BSCol>
-        </BSRow>
+            </div>
+        </div>
     }
 </div>

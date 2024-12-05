@@ -6,31 +6,31 @@
         <div style="margin-bottom: 1rem">
             <EnumView TEnum="DragonFly.HorizontalAlignment?" @bind-EnumValue="@Block.HorizontalAlignment" />
         </div>
-	    <BSRow>
-		    <BSCol ColumnLarge="auto">
-			    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(0)" IsDisabled="Field.IsReadOnly" title="Insert column"><i class="fas fa-plus"></i></BSButton>
-		    </BSCol>
+	    <div class="row">
+		    <div class="col-lg-auto">
+                <FluentButton class="block-layout-add-column-btn" OnClick="e => AddColumn(0)" Disabled="Field.IsReadOnly" Title="Insert column"><i class="fas fa-plus"></i></FluentButton>
+		    </div>
 		    @for (int i = 0; i < Block.Columns.Count; i++)
 		    {
 			    int index = i;
 			    Column column = Block.Columns[i];
 
-                <BSCol>
+                <div class="col">
 				    <div class="column-content">
 					    <div class="column-action options">
-						    <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveUp(index)" IsDisabled="Field.IsReadOnly" title="Move column to left"><i class="fas fa-arrow-left"></i></BSButton>
-                            <BSButton class="block-layout-remove-btn" Color="BSColor.Light" OnClick="e => RemoveColumn(index)" IsDisabled="Field.IsReadOnly" title="Remove column"><i class="fas fa-times"></i></BSButton>
+						    <FluentButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveUp(index)" Disabled="Field.IsReadOnly" Title="Move column to left"><i class="fas fa-arrow-left"></i></FluentButton>
+                            <FluentButton class="block-layout-remove-btn" OnClick="e => RemoveColumn(index)" Disabled="Field.IsReadOnly" Title="Remove column"><i class="fas fa-times"></i></FluentButton>
                             <ColumnView Column="column" />
-                            <BSButton class="block-layout-add-btn" Color="BSColor.Light" OnClick="e => Block.Columns.MoveDown(index)" IsDisabled="Field.IsReadOnly" title="Move column to right"><i class="fas fa-arrow-right"></i></BSButton>
+                            <FluentButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveDown(index)" Disabled="Field.IsReadOnly" Title="Move column to right"><i class="fas fa-arrow-right"></i></FluentButton>
 					    </div>
 					    <BlocksView Blocks="column.Blocks" />
 				    </div>
-			    </BSCol>
-			    <BSCol ColumnLarge="auto">
-				    <BSButton class="block-layout-add-column-btn" Color="BSColor.Light" OnClick="e => AddColumn(index+1)" IsDisabled="Field.IsReadOnly" title="Insert column"><i class="fas fa-plus"></i></BSButton>				
-			    </BSCol>
+			    </div>
+			    <div class="col-lg-auto">
+				    <FluentButton class="block-layout-add-column-btn" OnClick="e => AddColumn(index+1)" Disabled="Field.IsReadOnly" Title="Insert column"><i class="fas fa-plus"></i></FluentButton>				
+			    </div>
 		    }
-	    </BSRow>
+	    </div>
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 @page "/webhook/{EntityId:guid}"
 @page "/webhook/create"
-@inherits WebHookDetailBase
+@inherits EntityDetailComponent<WebHook>
 
 @if (Entity != null)
 {

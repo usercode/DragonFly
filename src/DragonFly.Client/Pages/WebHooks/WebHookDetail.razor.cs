@@ -2,20 +2,14 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages.ContentItems;
+namespace DragonFly.Client.Pages.WebHooks;
 
-public class WebHookDetailBase : EntityDetailComponent<WebHook>
+public partial class WebHookDetail
 {
-    public WebHookDetailBase()
-    {
-
-    }
-
     /// <summary>
     /// WebHookStore
     /// </summary>

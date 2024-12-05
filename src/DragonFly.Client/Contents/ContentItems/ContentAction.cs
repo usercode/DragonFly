@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Client;
 
-public abstract class ContentAction : IContentAction, IContentAction<ContentItemDetailBase>
+public abstract class ContentAction : IContentAction, IContentAction<ContentItemDetail>
 {
     public ContentAction()
     {
@@ -24,7 +24,7 @@ public abstract class ContentAction : IContentAction, IContentAction<ContentItem
     /// </summary>
     /// <param name="contentItemDetail"></param>
     /// <returns></returns>
-    public virtual bool CanUse(ContentItemDetailBase contentItemDetail)
+    public virtual bool CanUse(ContentItemDetail contentItemDetail)
     {
         return true;
     }
@@ -34,5 +34,5 @@ public abstract class ContentAction : IContentAction, IContentAction<ContentItem
     /// </summary>
     /// <param name="contentItemBase"></param>
     /// <returns></returns>
-    public abstract Task Execute(ContentItemDetailBase contentItemBase);
+    public abstract Task Execute(ContentItemDetail contentItemBase);
 }

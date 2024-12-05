@@ -1,50 +1,50 @@
 ﻿@inherits FieldQueryComponent<GeolocationFieldQuery>
 
 <div>
-    <BSRow>
-        <BSCol LG="4">
-            <BSLabel class="form-label">Longitude</BSLabel>
-        </BSCol>
-        <BSCol>
+    <div class="row">
+        <div class="col-4">
+            <label>Longitude</label>
+        </div>
+        <div class="col">
             <BSInput InputType="InputType.Number"
-            @bind-Value="@Query.Longitude"
-                     class="form-control" />
-        </BSCol>
-    </BSRow>
-    <BSRow>
-        <BSCol LG="4">
-            <BSLabel class="form-label">Latitude</BSLabel>
-        </BSCol>
-        <BSCol>
+                        @bind-Value="@Query.Longitude"
+                        class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <label>Latitude</label>
+        </div>
+        <div class="col">
             <BSInput InputType="InputType.Number"
-            @bind-Value="@Query.Latitude"
-                     class="form-control" />
-        </BSCol>
-    </BSRow>
-	<BSRow>
-		<BSCol LG="4">
-            <BSLabel class="form-label">Min distance</BSLabel>
-		</BSCol>
-		<BSCol>
+                        @bind-Value="@Query.Latitude"
+                        class="form-control" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <label>Min distance</label>
+		</div>
+		<div class="col">
 				<BSInput InputType="InputType.Number"              
 										@bind-Value="@Query.MinDistance"
 										class="form-control" 
 										/>
-		</BSCol>		
-	</BSRow>
+		</div>		
+	</div>
 </div>
 <div>
-	<BSRow>
-		<BSCol LG="4">
-            <BSLabel class="form-label">Max distance</BSLabel>
-		</BSCol>
-		<BSCol>
+    <div class="row">
+        <div class="col-4">
+            <label>Max distance</label>
+		</div>
+		<div class="col">
 				<BSInput InputType="InputType.Number"              
 										@bind-Value="@Query.MaxDistance"
 										class="form-control" 
 										/>
-		</BSCol>
-	</BSRow>
+		</div>
+	</div>
 </div>
 
 @code {

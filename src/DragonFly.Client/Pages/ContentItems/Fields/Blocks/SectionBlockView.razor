@@ -3,7 +3,7 @@
 <div class="block section-block">
     <div class="input-group mb-3">
         <span class="input-group-text">Css</span>
-        <BSInput class="form-control" @bind-Value="@Block.Css" IsReadonly="Field.IsReadOnly" />
+        <FluentTextField @bind-Value="@Block.Css" ReadOnly="Field.IsReadOnly" />
     </div>
     <div class="section-block-body">
         <BlocksView Blocks="Block.Blocks" />

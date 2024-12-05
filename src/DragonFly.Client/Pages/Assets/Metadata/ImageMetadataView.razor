@@ -1,34 +1,28 @@
 ﻿@inherits AssetMetadataComponent<ImageMetadata>
 
-<div class="form-group">
-    <BSRow>
-        <BSLabel class="col-sm-2 col-form-label">
-            Width
-        </BSLabel>
-        <div class="col-sm-10">
-            <FluentTextField Value="@Metadata.Width?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-        </div>
-    </BSRow>
+<div class="row">
+    <label class="col-sm-2 col-form-label">
+        Width
+    </label>
+    <div class="col-sm-10">
+        <FluentTextField Value="@Metadata.Width.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+    </div>
 </div>
 
-<div class="form-group">
-    <BSRow>
-        <BSLabel class="col-sm-2 col-form-label">
-            Height
-        </BSLabel>
-        <div class="col-sm-10">
-            <FluentTextField Value="@Metadata.Height?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-        </div>
-    </BSRow>
+<div class="row">
+    <label class="col-sm-2 col-form-label">
+        Height
+    </label>
+    <div class="col-sm-10">
+        <FluentTextField Value="@Metadata.Height.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+    </div>
 </div>
 
-<div class="form-group">
-    <BSRow>
-        <BSLabel class="col-sm-2 col-form-label">
-            Bits per pixel
-        </BSLabel>
-        <div class="col-sm-10">
-            <FluentTextField Value="@Metadata.BitsPerPixel?.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
-        </div>
-    </BSRow>
+<div class="row">
+    <label class="col-sm-2 col-form-label">
+        Bits per pixel
+    </label>
+    <div class="col-sm-10">
+        <FluentTextField Value="@Metadata.BitsPerPixel.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+    </div>
 </div>

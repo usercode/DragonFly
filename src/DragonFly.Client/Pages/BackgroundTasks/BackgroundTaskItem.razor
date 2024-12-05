@@ -1,9 +1,9 @@
 ﻿<div class="list-group-item @Task.State.ToCss()">
-    <BSRow>
-        <BSCol ColumnLarge="1">
+    <div class="row">
+        <div class="col-lg-1">
             <span>@Task.Id </span>
-        </BSCol>
-        <BSCol ColumnLarge="1">
+        </div>
+        <div class="col-lg-1">
             <span>
                 @if (Task.State == BackgroundTaskState.Running)
                 {
@@ -11,26 +11,26 @@
                 }
                 @Task.State
             </span>
-        </BSCol>
-        <BSCol ColumnLarge="1">
+        </div>
+        <div class="col-lg-1">
             <BSProgressBar Min="0" Max="Task.ProgressMaxValue" Value="Task.ProgressValue">@(((double)Task.ProgressValue * 100 / Task.ProgressMaxValue).ToString("0"))%</BSProgressBar>
-        </BSCol>
-        <BSCol ColumnLarge="4">
+        </div>
+        <div class="col-lg-4">
             <span>@Task.Name</span>
-        </BSCol>
-        <BSCol ColumnLarge="2">
+        </div>
+        <div class="col-lg-2">
             <span>@Task.CreatedBy</span>
-        </BSCol>
-        <BSCol ColumnLarge="2">
+        </div>
+        <div class="col-lg-2">
             <span>@Task.Status</span>
-        </BSCol>
-        <BSCol ColumnLarge="1">
+        </div>
+        <div class="col-lg-1">
             @if (Task.State == BackgroundTaskState.Running)
             {
                 <BSButton Color="BSColor.Light" OnClick="async x => await CancelTask()">Cancel</BSButton>
             }
-        </BSCol>
-    </BSRow>
+        </div>
+    </div>
 </div>
 @foreach (BackgroundTaskInfo child in Tasks.Where(x => x.ParentTaskId == Task.Id))
 {

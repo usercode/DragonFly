@@ -1,23 +1,27 @@
 ﻿@inject ComponentManager ComponentManager
 
-<BSListGroupItem>
-    <div style="display: flex; align-items: center;">
-        <span style="flex-grow:1">@Key</span>
-        <BSBadge Color="BSColor.Secondary" Class="bg-secondary">@Field.FieldType</BSBadge>
-        <div>
-            <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Up(Key)"><i class="fas fa-arrow-up"></i></BSButton>
-            <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Down(Key)"><i class="fas fa-arrow-down"></i></BSButton>
-            <BSButton Color="BSColor.Light" Target="@(Key + "collapsedDetails")"><i class="fas fa-cog"></i></BSButton>
-            <BSButton Color="BSColor.Light" OnClick="x => FieldsView.Remove(Key)"><i class="fas fa-times"></i></BSButton>
-        </div>
-    </div>
-    <BSCollapse DataId="@(Key + "collapsedDetails")">
-        @if(Field.Options != null)
-        {
-            @ComponentManager.CreateComponent(Field.Options)
-        }
-    </BSCollapse>
-</BSListGroupItem>
+<FluentAccordion>
+    <FluentAccordionItem>
+        <HeadingTemplate>
+            <div style="display: flex; align-items: center;">
+                <span style="flex-grow:1">@Key</span>
+                <FluentBadge Appearance="Appearance.Accent">@Field.FieldType</FluentBadge>
+                <div>
+                    <FluentButton OnClick="x => FieldsView.Up(Key)" Title="Move up"><i class="fas fa-arrow-up"></i></FluentButton>
+                    <FluentButton OnClick="x => FieldsView.Down(Key)" Title="Move down"><i class="fas fa-arrow-down"></i></FluentButton>
+                    <FluentButton OnClick="x => FieldsView.Remove(Key)" Title="Remove"><i class="fas fa-times"></i></FluentButton>
+                </div>
+            </div>
+        </HeadingTemplate>
+        <ChildContent>
+            @if (Field.Options != null)
+            {
+                @ComponentManager.CreateComponent(Field.Options)
+            }
+        </ChildContent>
+    </FluentAccordionItem>
+</FluentAccordion>
+
 
 @code {
     [CascadingParameter]

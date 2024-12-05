@@ -12,7 +12,7 @@ public class PdfMetadata : AssetMetadata
     /// <summary>
     /// CountPages
     /// </summary>
-    public int? CountPages { get; set; }
+    public int CountPages { get; set; }
 
     /// <summary>
     /// PdfVersion
@@ -22,5 +22,5 @@ public class PdfMetadata : AssetMetadata
     /// <summary>
     /// IsEncrypted
     /// </summary>
-    public bool? IsEncrypted { get; set; }
+    public bool IsEncrypted { get; set; }
 }

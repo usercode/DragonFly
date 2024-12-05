@@ -5,12 +5,8 @@
         <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
     </div>    
 
-    <div class="grow-wrap" data-replicated-value="@Block.Content">
-        <textarea type="text"
-                  onInput="this.parentNode.dataset.replicatedValue = this.value"
-                  class="form-control"
-                  @bind="@Block.Content"
-                  readonly="@Field.GetReadOnlyAttribute()"
-                  spellcheck="false"/>
-    </div>
+    <FluentTextArea 
+                @bind-Value="@Block.Content"
+                ReadOnly="Field.IsReadOnly"
+                spellcheck="false"/>
 </div>

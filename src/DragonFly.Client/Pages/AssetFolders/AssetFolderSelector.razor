@@ -15,7 +15,7 @@
         AssetFolderNode folderNode = Folders[i];
 
         <div style="margin: 0.25rem">
-            <BSButton Color="BSColor.Light" OnClick="x => folderNode.IsExpanded = !folderNode.IsExpanded" title="Expand folder">
+            <FluentButton OnClick="x => folderNode.IsExpanded = !folderNode.IsExpanded" title="Expand folder">
                 @if (folderNode.IsExpanded)
                 {
                     <i class="fa-solid fa-folder-open"></i>
@@ -24,13 +24,13 @@
                 {
                     <i class="fa-solid fa-folder"></i>
                 }
-            </BSButton>
-            <BSButton Color="BSColor.Light" OnClick="x => FolderClicked?.Invoke(folderNode.Folder)">
+            </FluentButton>
+            <FluentButton OnClick="x => FolderClicked?.Invoke(folderNode.Folder)">
                 @folderNode.Folder.Name
-            </BSButton>
-            <BSButton Color="BSColor.Light" OnClick="async x => await DeleteAsync(folderNode)" title="Delete folder">
+            </FluentButton>
+            <FluentButton OnClick="async x => await DeleteAsync(folderNode)" title="Delete folder">
                 <i class="fas fa-times"></i>
-            </BSButton>
+            </FluentButton>
         </div>
         @if (folderNode.IsExpanded)
         {
@@ -40,9 +40,9 @@
         }
     }
     <div style="margin: 0.25rem;display:flex;gap:0.25rem">
-        <BSButton Color="BSColor.Light" OnClick="async x => await CreateNewFolderAsync()" title="Create folder">
+        <FluentButton OnClick="async x => await CreateNewFolderAsync()" title="Create folder">
             <i class="fa-solid fa-plus"></i>
-        </BSButton>
+        </FluentButton>
         <input type="text" class="form-control" style="width:50%" placeholder="Folder name" @bind-value="NewFolderName">
     </div>
 </div>

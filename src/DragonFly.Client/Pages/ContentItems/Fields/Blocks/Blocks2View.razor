@@ -7,7 +7,7 @@
         @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <BSButton Color="BSColor.Light" OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</BSButton>
+                <FluentButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</FluentButton>
             </div>
         }
     </Content>
@@ -17,13 +17,13 @@
 {
     <div>
         <div class="mb-1">
-            <BSButton Color="BSColor.Light" OnClick="e => OpenModal(0)" title="Insert block">
+            <FluentButton OnClick="e => OpenModal(0)" Title="Insert block">
                 <i class="fas fa-plus"></i> Add
-            </BSButton>
+            </FluentButton>
         </div>
 
-        <BSRow>
-            <BSCol>
+        <div class="row">
+            <div class="col">
                 <BSListGroup>
 
                     @for (int i = 0; i < Blocks.Count; i++)
@@ -34,23 +34,23 @@
                         <BSListGroupItem IsButton="true" OnClick="() => SelectedBlock = block">
                             <div class="block-field-options">
                                 <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
-                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveUp(block))" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.MoveDown(block))" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                                <BSButton Color="BSColor.Light" OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fas fa-times"></i></BSButton>
+                                <FluentButton OnClick="@(e => Blocks.MoveUp(block))" title="Up"><i class="fas fa-arrow-up"></i></FluentButton>
+                                <FluentButton OnClick="@(e => Blocks.MoveDown(block))" title="Down"><i class="fas fa-arrow-down"></i></FluentButton>
+                                <FluentButton OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fas fa-times"></i></FluentButton>
                             </div>
                             <div class="block-field-content">
                             </div>
                         </BSListGroupItem>
                     }
                 </BSListGroup>
-            </BSCol>
-            <BSCol>
+            </div>
+            <div class="col">
                 @if (SelectedBlock != null)
                 {
                     @ComponentManager.CreateComponent(SelectedBlock)
                 }
-            </BSCol>
-        </BSRow>
+            </div>
+        </div>
     </div>
 }
 

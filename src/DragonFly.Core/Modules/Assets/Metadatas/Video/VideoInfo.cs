@@ -17,15 +17,15 @@ public class VideoInfo
     /// <summary>
     /// Width
     /// </summary>
-    public int? Width { get; set; }
+    public int Width { get; set; }
 
     /// <summary>
     /// Height
     /// </summary>
-    public int? Height { get; set; }
+    public int Height { get; set; }
 
     /// <summary>
     /// Frames per Second
     /// </summary>
-    public int? Fps { get; set; }
+    public int Fps { get; set; }
 }

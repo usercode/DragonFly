@@ -1,10 +1,10 @@
 ﻿@inherits FieldQueryComponent<FloatFieldQuery>
 
-<BSRow>
-    <BSCol>
-        <input type="number" step="1" class="form-control" @bind-value="@Query.Value" />
-    </BSCol>
-    <BSCol ColumnLarge="auto">
+<div class="row">
+    <div class="col">
+        <FluentNumberField Step="1" @bind-Value="@Query.Value" />
+    </div>
+    <div class="col-auto">
         <BSDropdown>
             <Toggler>
                 <BSToggle IsButton Color="@BSColor.Light">@Query.Type</BSToggle>
@@ -16,8 +16,8 @@
                 }
             </Content>
         </BSDropdown>
-    </BSCol>
-</BSRow>
+    </div>
+</div>
 
 @code {
 

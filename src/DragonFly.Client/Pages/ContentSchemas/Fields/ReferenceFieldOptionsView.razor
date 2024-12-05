@@ -8,13 +8,13 @@
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Required</label>
             <div class="col-sm-8">
-                <CheckBoxView @bind-Value="@Options.IsRequired" />
+                <FluentCheckbox @bind-Value="@Options.IsRequired" />
             </div>
         </BSRow>        
          <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Searchable</label>
             <div class="col-sm-8">
-                <CheckBoxView @bind-Value="@Options.IsSearchable" />
+                <FluentCheckbox @bind-Value="@Options.IsSearchable" />
             </div>
         </BSRow>
     </BSCard>

@@ -1,10 +1,10 @@
 ﻿@inherits FieldQueryComponent<StringFieldQuery>
 
-<BSRow>
-	<BSCol>
-		<input type="text" class="form-control" @bind-value="@Query.Pattern" />
-	</BSCol>
-	<BSCol ColumnLarge="auto">
+<div class="row">
+	<div class="col">
+		<FluentTextField @bind-Value="@Query.Pattern" />
+	</div>
+	<div class="col-auto">
 		<BSDropdown>
 			<Toggler>
 				<BSToggle IsButton Color="@BSColor.Light">@Query.PatternType</BSToggle>
@@ -16,8 +16,8 @@
 				}
 			</Content>
 		</BSDropdown>
-	</BSCol>		
-</BSRow>
+	</div>		
+</div>
 
 @code {
 

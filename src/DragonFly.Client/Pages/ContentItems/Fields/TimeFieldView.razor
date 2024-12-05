@@ -1,5 +1,7 @@
 ﻿@inherits FieldComponent<TimeField, TimeFieldOptions>
 
 <div class="time-field">
-    <BSInput InputType="InputType.Time" class="form-control" @bind-Value="@Field.Value" IsReadonly="IsReadOnly" />
+   @*  <FluentDatePicker Value="@Field.Value.Value.ToTimeSpan()"
+                      ValueChanged="x => Field.Value = TimeOnly.FromDateTime(x.Value)"
+                      ReadOnly="IsReadOnly" /> *@
 </div>

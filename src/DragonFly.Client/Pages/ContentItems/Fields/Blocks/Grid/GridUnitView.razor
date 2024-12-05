@@ -5,7 +5,7 @@
     }
     else
     {*@
-        <BSInput InputType="InputType.Number" class="form-control grid-unit-value" step="1" @bind-Value="@Span.Value" />
+        <FluentNumberField class="form-control grid-unit-value" step="1" @bind-Value="@Span.Value" />
     @*}*@
     <EnumView TEnum="GridUnit" @bind-EnumValue="@Span.Unit" />
 </div>

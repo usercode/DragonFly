@@ -12,15 +12,15 @@ public class ImageMetadata : AssetMetadata
     /// <summary>
     /// Width
     /// </summary>
-    public int? Width { get; set; }
+    public int Width { get; set; }
 
     /// <summary>
     /// Height
     /// </summary>
-    public int? Height { get; set; }
+    public int Height { get; set; }
 
     /// <summary>
     /// BitsPerPixel
     /// </summary>
-    public int? BitsPerPixel { get; set; }
+    public int BitsPerPixel { get; set; }
 }
