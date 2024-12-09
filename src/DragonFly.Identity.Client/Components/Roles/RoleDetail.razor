@@ -4,40 +4,40 @@
 
 @if (Entity != null)
 {
-        <div class="content-header">
-            <h1>Role</h1>
+    <div class="content-header">
+        <h1>Role</h1>
 
-            <Toolbar Items="ToolbarItems" />
-        </div>
-        <div class="scroll-content">
-            <EditForm Model="Entity">
-                <div>
-                        @if (IsNewEntity == false)
-                        {
-                            <!-- id -->
-                            <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Id</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                                </div>
-                            </BSRow>
-                        }
+        <Toolbar Items="ToolbarItems" />
+    </div>
+    <div class="scroll-content">
+        <EditForm Model="Entity">
+            <div>
+                @if (IsNewEntity == false)
+                {
+                    <!-- id -->
+                    <div class="row form-group">
+                        <label class="col-sm-2 col-form-label">Id</label>
+                        <div class="col-sm-10">
+                            <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                        </div>
+                    </div>
+                }
 
-                        <!-- name -->
-                        <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">Name</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Name" />
-                            </div>
-                        </BSRow>
+                <!-- name -->
+                <div class="row form-group">
+                    <label class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <FluentTextField @bind-Value="@Entity.Name" />
+                    </div>
+                </div>
 
-                        <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Permissions</label>
-                                <div class="col-sm-10">
-                                       <PermissionItemView Permissions="Permissions" />
-                                </div>                                
-                        </BSRow>                        
-                 </div>
-          </EditForm>
-        </div>
+                <div class="row form-group">
+                    <label class="col-sm-2 col-form-label">Permissions</label>
+                    <div class="col-sm-10">
+                        <PermissionItemView Permissions="Permissions" />
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div>
 }

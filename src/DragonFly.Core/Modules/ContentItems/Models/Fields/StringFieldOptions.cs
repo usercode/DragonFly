@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class StringFieldOptions : FieldOptions
+public class StringFieldOptions : SingleValueFieldOptions<string?>
 {
     public const int DefaultMaxLength = 2048;
 
@@ -13,11 +13,6 @@ public class StringFieldOptions : FieldOptions
         MinLength = 0;
         MaxLength = DefaultMaxLength;
     }
-
-    /// <summary>
-    /// DefaultValue
-    /// </summary>
-    public string? DefaultValue { get; set; }
 
     /// <summary>
     /// MinLength

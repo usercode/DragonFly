@@ -32,19 +32,19 @@
                 <div class="row form-group">
                     <label class="col-sm-2 col-form-label">List fields</label>
                     <div class="col-sm-10">
-                        <ListFields TargetList="Entity.ListFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                        <ListFields TargetList="Entity.ListFields" SchemaFields="Entity.Fields" />
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-sm-2 col-form-label">Reference fields</label>
                     <div class="col-sm-10">
-                        <ListFields TargetList="Entity.ReferenceFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                        <ListFields TargetList="Entity.ReferenceFields" SchemaFields="Entity.Fields" />
                     </div>
                 </div>
                 <div class="row form-group">
                     <label class="col-sm-2 col-form-label">Query fields</label>
                     <div class="col-sm-10">
-                        <ListFields TargetList="Entity.QueryFields" SourceList="Entity.Fields.Select(x => x.Key).ToList()" />
+                        <ListFields TargetList="Entity.QueryFields" SchemaFields="Entity.Fields" />
                     </div>
                 </div>
                 <div class="row form-group">

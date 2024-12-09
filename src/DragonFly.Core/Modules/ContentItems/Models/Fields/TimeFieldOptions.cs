@@ -9,10 +9,6 @@ namespace DragonFly;
 /// </summary>
 public class TimeFieldOptions : SingleValueFieldOptions<TimeOnly?>
 {
-    public TimeFieldOptions()
-    {
-    }
-
     public override ContentField CreateContentField()
     {
         return new TimeField();

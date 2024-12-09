@@ -4,13 +4,8 @@
 
 namespace DragonFly;
 
-public class ColorFieldOptions : FieldOptions
+public class ColorFieldOptions : SingleValueFieldOptions<string?>
 {
-    public ColorFieldOptions()
-    {
-        
-    }
-
     public override ContentField CreateContentField()
     {
         return new ColorField();

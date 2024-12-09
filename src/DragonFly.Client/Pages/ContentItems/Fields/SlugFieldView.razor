@@ -3,6 +3,6 @@
 
 <div class="slug-field">   
     <FluentTextField Value="@Field.Value" @onchange="x=> Field.Value = SlugService.Transform(x.Value.ToString())" ReadOnly="@IsReadOnly" >
-        <FluentIcon Value="@(new Icons.Regular.Size16.Globe())" />
+        <FluentIcon Value="@(new Icons.Regular.Size16.Globe())" Slot="start" Color="Color.Neutral" />
     </FluentTextField>
 </div>

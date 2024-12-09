@@ -5,17 +5,7 @@
         <FluentNumberField Step="1" @bind-Value="@Query.Value" />
     </div>
     <div class="col-auto">
-        <BSDropdown>
-            <Toggler>
-                <BSToggle IsButton Color="@BSColor.Light">@Query.Type</BSToggle>
-             </Toggler>
-             <Content>
-                 @foreach (var value in Enum.GetValues(typeof(NumberQueryType)))
-                {
-                    <BSDropdownItem @onclick="e => { Query.Type = (NumberQueryType)value; }">@value</BSDropdownItem>
-                }
-            </Content>
-        </BSDropdown>
+        <EnumView @bind-EnumValue="Query.Type" />
     </div>
 </div>
 

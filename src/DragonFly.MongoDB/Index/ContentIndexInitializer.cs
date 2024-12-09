@@ -66,7 +66,7 @@ class ContentIndexInitializer : IPostInitialize
 
                 foreach (var field in schema.Fields)
                 {
-                    if (field.Value.Options?.IsSearchable == false)
+                    if (field.Value.Options?.HasIndex == false)
                     {
                         continue;
                     }

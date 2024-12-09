@@ -17,8 +17,12 @@
     </div>
     <div class="col-lg-6">
         <FluentSelect TOption="Option<string>"
-                      Placeholder="Add field"
-                      Items="SourceList.Where(x => TargetList.Contains(x) == false).Select(x => new Option<string>() { Text = x, Value = x}).ToArray()"
+                      Placeholder="Add indexed field"
+                      Items="SchemaFields
+                                        .Where(x => x.Value.Options.HasIndex)
+                                        .Where(x => TargetList.Contains(x.Key) == false)
+                                        .Select(x => new Option<string>() { Text = x.Key, Value = x.Key})
+                                        .ToArray()"
                       OptionText="x => x.Text"
                       OptionValue="x => x.Value"
                       @bind-SelectedOption="SelectedValue">
@@ -32,7 +36,7 @@
     public IList<string> TargetList { get; set; }
 
     [Parameter]
-    public IList<string> SourceList { get; set; }
+    public SchemaFields SchemaFields { get; set; }
 
     private Option<string> _selectedValue;
 

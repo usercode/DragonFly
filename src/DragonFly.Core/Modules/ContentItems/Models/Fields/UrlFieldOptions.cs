@@ -7,12 +7,8 @@ namespace DragonFly;
 /// <summary>
 /// UrlFieldOptions
 /// </summary>
-public class UrlFieldOptions : FieldOptions
+public class UrlFieldOptions : SingleValueFieldOptions<string?>
 {
-    public UrlFieldOptions()
-    {
-    }
-
     /// <summary>
     /// UrlType
     /// </summary>

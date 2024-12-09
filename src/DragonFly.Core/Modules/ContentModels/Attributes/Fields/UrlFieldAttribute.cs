@@ -16,7 +16,7 @@ public class UrlFieldAttribute : BaseFieldAttribute
 
         schema.AddUrl(property, x =>
                                         {
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                             x.IsRequired = Required;                                    
                                         },
                                         SortKey);

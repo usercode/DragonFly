@@ -16,11 +16,11 @@
                 <h1 class="h3 mb-3 font-weight-normal">@Options.Value.Name</h1>
 
                 <div class="form-floating mb-3">
-                    <InputText @bind-Value="Credentials.Username" type="text" class="form-control" placeholder="Username"></InputText>
+                    <input @bind="Credentials.Username" type="text" class="form-control" placeholder="Username"></input>
                     <label>Username</label>
                 </div>
                 <div class="form-floating">
-                    <InputText @bind-Value="Credentials.Password" type="password" class="form-control"  placeholder="Password"></InputText>
+                    <input @bind="Credentials.Password" type="password" class="form-control"  placeholder="Password"></input>
                     <label>Password</label>
                 </div>
 

@@ -14,7 +14,7 @@ public class BoolFieldAttribute : BaseFieldAttribute
                                     { 
                                         x.DefaultValue = false; 
                                         x.IsRequired = Required; 
-                                        x.IsSearchable = Index;
+                                        x.HasIndex = Index;
                                     }, 
                                     SortKey);
     }

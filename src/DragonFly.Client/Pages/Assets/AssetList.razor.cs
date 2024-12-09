@@ -22,7 +22,7 @@ public partial class AssetList
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
-        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.New(), async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
+        toolbarItems.Add(new ToolbarItem("Create", true, null, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
         toolbarItems.Add(new ToolbarItem("Apply metadata", false, new Icons.Regular.Size16.ImageEdit(), RefreshAllMetadataAsync));
     }
 

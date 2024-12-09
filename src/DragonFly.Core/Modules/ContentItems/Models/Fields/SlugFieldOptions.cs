@@ -4,7 +4,7 @@
 
 namespace DragonFly;
 
-public class SlugFieldOptions : FieldOptions
+public class SlugFieldOptions : SingleValueFieldOptions<string?>
 {
     public override ContentField CreateContentField()
     {

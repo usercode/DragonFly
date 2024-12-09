@@ -4,59 +4,52 @@
 
 @if (Entity != null)
 {
-        <div class="content-header">
-            <h1>User</h1>
-            <Toolbar Items="ToolbarItems"></Toolbar>
-        </div>
-        <div class="scroll-content">
-            <EditForm Model="Entity">
-               
-                        @if (IsNewEntity == false)
-                        {
-                            <!-- id -->
-                            <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Id</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
-                                </div>
-                            </BSRow>
-                        }
+    <div class="content-header">
+        <h1>User</h1>
+        <Toolbar Items="ToolbarItems"></Toolbar>
+    </div>
+    <div class="scroll-content">
+        <EditForm Model="Entity">
+            @if (IsNewEntity == false)
+            {
+                <!-- id -->
+                <div class="row form-group">
+                    <label class="col-sm-2 col-form-label">Id</label>
+                    <div class="col-sm-10">
+                        <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                    </div>
+                </div>
+            }
 
-                        <!-- username -->
-                        <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">Username</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Username" />
-                            </div>
-                        </BSRow>
+            <!-- username -->
+            <div class="row form-group">
+                <label class="col-sm-2 col-form-label">Username</label>
+                <div class="col-sm-10">
+                    <FluentTextField @bind-Value="@Entity.Username" />
+                </div>
+            </div>
 
-                        <BSRow class="form-group">
-                                <label class="col-sm-2 col-form-label">Roles</label>
-                                <div class="col-sm-10">                                    
-                                        @foreach(var role in Roles.OrderBy(x => x.Element.Name).ToList())
-                                        {
-                                            <div class="form-check">
-                                                 <input type="checkbox" class="form-check-input" value="" @bind="role.IsSelected" />
-                                            
-                                            <label class="form-check-label" for="checkRole">
-                                                @role.Element.Name
-                                                </label>
-                                            </div>
-                                        }                                    
-                                </div>
-                        </BSRow>
+            <div class="row form-group">
+                <label class="col-sm-2 col-form-label">Roles</label>
+                <div class="col-sm-10">
+                    @foreach (var role in Roles.OrderBy(x => x.Element.Name).ToList())
+                    {
+                        <FluentCheckbox @bind-Value="role.IsSelected" Label="@role.Element.Name" />
+                    }
+                </div>
+            </div>
 
-                          <!-- new password -->
-                        <BSRow class="form-group">
-                            <label class="col-sm-2 col-form-label">New password</label>
-                            <div class="col-sm-10">
-                                <input type="password" class="form-control" @bind-value="@NewPassword" />
-                            </div>
-                        </BSRow>                  
-          </EditForm>
-        </div>
-        <div class="content-footer">
-            @*<div class="row">
+            <!-- new password -->
+            <BSRow class="form-group">
+                <label class="col-sm-2 col-form-label">New password</label>
+                <div class="col-sm-10">
+                    <FluentTextField TextFieldType="TextFieldType.Password" @bind-Value="@NewPassword" />
+                </div>
+            </BSRow>
+        </EditForm>
+    </div>
+    <div class="content-footer">
+        @*<div class="row">
                     <div class="col-sm-4">
                         <p>Created: @Entity.CreatedAt</p>
                     </div>
@@ -67,5 +60,5 @@
                         <p>Published: @Entity.PublishedAt</p>
                     </div>
                 </div>*@
-        </div>
+    </div>
 }

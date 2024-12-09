@@ -1,9 +1,7 @@
 ﻿@inherits BlockComponent<HeadingBlock>
 
 <div class="block heading-block">
-    <div class="input-group">
-        <EnumView @bind-EnumValue="@Block.HeadingType" IsReadOnly="Field.IsReadOnly" />
-        <EnumView @bind-EnumValue="@Block.TextAlignment" IsReadOnly="Field.IsReadOnly" />
-        <FluentTextField @bind-Value="@Block.Text" ReadOnly="Field.IsReadOnly" />
-    </div>
+    <EnumView @bind-EnumValue="@Block.HeadingType" IsReadOnly="Field.IsReadOnly" />
+    <EnumView @bind-EnumValue="@Block.TextAlignment" IsReadOnly="Field.IsReadOnly" />
+    <FluentTextField class="text" @bind-Value="@Block.Text" ReadOnly="Field.IsReadOnly" />
 </div>

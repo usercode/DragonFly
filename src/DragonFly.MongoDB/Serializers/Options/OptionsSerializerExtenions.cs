@@ -16,7 +16,6 @@ public static class OptionsSerializerExtenions
         BsonDocument bsonDocument = new BsonDocument();
 
         bsonDocument.Add(nameof(ArrayFieldOptions.IsRequired), options.IsRequired);
-        bsonDocument.Add(nameof(ArrayFieldOptions.IsSearchable), options.IsSearchable);
         bsonDocument.Add(nameof(ArrayFieldOptions.MinItems), options.MinItems);
         bsonDocument.Add(nameof(ArrayFieldOptions.MaxItems), options.MaxItems);
 

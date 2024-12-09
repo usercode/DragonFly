@@ -6,8 +6,6 @@ namespace DragonFly;
 
 public class ReferenceFieldOptions : FieldOptions
 {
-
-
     public override ContentField CreateContentField()
     {
         return new ReferenceField();

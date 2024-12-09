@@ -13,27 +13,26 @@
         }
     </Content>
 </BSDropdown> *@
-<div>
+<div class="enum-field">
     <FluentSelect 
-                    TOption="Option<TEnum>" 
+                    TOption="TEnum" 
                     Items="EnumValues" 
-                    OptionText="x => x.Text" 
-                    OptionValue="x => x.Value?.ToString()"
-                    >
-
-    </FluentSelect>
+                    OptionText="x => x.ToString()" 
+                    OptionValue="x => x.ToString()"
+                    @bind-SelectedOption="EnumValue"
+                    
+                    />
 </div>
 
 @code {    
     private static Type EnumType { get; set; } = GetEnumType();
-    private static Option<TEnum>[] EnumValues = GetEnumValues();
+    private static TEnum[] EnumValues = GetEnumValues();
     private static bool IsEnumNullable { get; } = EnumType != typeof(TEnum);
 
-    private static Option<TEnum>[] GetEnumValues()
+    private static TEnum[] GetEnumValues()
     {
         return Enum.GetValues(EnumType)
                                 .Cast<TEnum>()
-                                .Select(x => new Option<TEnum>() { Text = x.ToString() })
                                 .ToArray();
     }
 

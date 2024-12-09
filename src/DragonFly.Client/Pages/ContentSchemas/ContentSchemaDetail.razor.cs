@@ -10,11 +10,6 @@ namespace DragonFly.Client.Pages.ContentSchemas;
 
 public partial class ContentSchemaDetail
 {
-    public ContentSchemaDetail()
-    {
-        Entity = new ContentSchema(string.Empty);
-    }
-
     [Inject]
     public ISchemaStorage ContentService { get; set; }
 
@@ -22,14 +17,14 @@ public partial class ContentSchemaDetail
     {
         base.BuildToolbarItems(toolbarItems);
 
-        if(IsNewEntity)
+        if (IsNewEntity)
         {
             toolbarItems.AddCreateButton(this);
         }
         else
         {
-            toolbarItems.AddRefreshButton(this);
             toolbarItems.AddUpdateButton(this);
+            toolbarItems.AddRefreshButton(this);            
             toolbarItems.AddDeleteButton(this);
         }
     }

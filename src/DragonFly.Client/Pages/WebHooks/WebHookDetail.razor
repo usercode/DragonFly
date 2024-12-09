@@ -12,46 +12,46 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Id</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                <FluentTextField @bind-Value="@Entity.Name" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Event</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Entity.EventName" />
+                <FluentTextField @bind-Value="@Entity.EventName" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Url</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Entity.TargetUrl" />
+                <FluentTextField @bind-Value="@Entity.TargetUrl" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Headers</label>
             <div class="col-sm-10">
-                <BSButton Color="BSColor.Light" OnClick="e => Entity.Headers.Add(new ())">Add</BSButton>
+                <FluentButton OnClick="e => Entity.Headers.Add(new ())" IconStart="new Icons.Regular.Size16.Add()">Add</FluentButton>
                 @foreach(HeaderItem header in Entity.Headers)
                 {
                     <div class="row">
                         <div class="col-lg">
-                            <input type="text" class="form-control" @bind-value="@header.Name" />
+                            <FluentTextField @bind-Value="@header.Name" Placeholder="Name" />
                         </div>
                         <div class="col-lg">
-                            <input type="text" class="form-control" @bind-value="@header.Value" />
+                            <FluentTextField @bind-Value="@header.Value" Placeholder="Value" />
                         </div>
                         <div class="col-lg-auto">
-                            <BSButton Color="BSColor.Light" OnClick="e => Entity.Headers.Remove(header)" title="Remove"><i class="fas fa-times"></i></BSButton>
+                            <FluentButton OnClick="e => Entity.Headers.Remove(header)" title="Remove" IconStart="new Icons.Regular.Size16.Delete()" />
                         </div>
                     </div>
                 }

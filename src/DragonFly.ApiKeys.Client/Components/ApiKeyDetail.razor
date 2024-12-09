@@ -17,36 +17,36 @@
                     @if (IsNewEntity == false)
                     {
                         <!-- id -->
-                        <BSRow class="form-group">
+                        <div class="row form-group">
                             <label class="col-sm-2 col-form-label">Id</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" @bind-value="@Entity.Id" readonly />
+                                <FluentTextField type="text" Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
                             </div>
-                        </BSRow>
+                        </div>
                     }
 
                     <!-- name -->
-                    <BSRow class="form-group">
+                    <div class="row form-group">
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" @bind-value="@Entity.Name" />
+                            <FluentTextField @bind-Value="@Entity.Name" />
                         </div>
-                    </BSRow>
+                    </div>
 
                     <!-- value -->
-                    <BSRow class="form-group">
+                    <div class="row form-group">
                         <label class="col-sm-2 col-form-label">Value</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" @bind-value="@Entity.Value" />
+                            <FluentTextField @bind-Value="@Entity.Value" />
                         </div>
-                    </BSRow>
+                    </div>
 
-                    <BSRow class="form-group">
+                    <div class="row form-group">
                         <label class="col-sm-2 col-form-label">Permissions</label>
                         <div class="col-sm-10">
                            <PermissionItemView Permissions="Permissions" />                            
                         </div>
-                    </BSRow>
+                    </div>
 
                 </div>
             </div>

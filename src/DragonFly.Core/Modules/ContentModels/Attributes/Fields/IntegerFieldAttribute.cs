@@ -17,7 +17,7 @@ public class IntegerFieldAttribute : BaseFieldAttribute
         schema.AddInteger(property, x =>
                                         {
                                             x.IsRequired = Required;
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                         },
                                         SortKey);
     }

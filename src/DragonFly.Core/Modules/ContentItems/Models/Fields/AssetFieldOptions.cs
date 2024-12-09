@@ -9,10 +9,9 @@ namespace DragonFly;
 /// </summary>
 public class AssetFieldOptions : FieldOptions
 {
-    public AssetFieldOptions()
-    {
-    }
-
+    /// <summary>
+    /// ShowPreview
+    /// </summary>
     public bool ShowPreview { get; set; }
 
     public override ContentField CreateContentField()

@@ -5,7 +5,9 @@
 namespace DragonFly;
 
 public abstract class SingleValueFieldOptions<T> : FieldOptions
-{ 
-
+{
+    /// <summary>
+    /// DefaultValue
+    /// </summary>
     public T? DefaultValue { get; set; }
 }

@@ -9,15 +9,10 @@ namespace DragonFly;
 /// </summary>
 public class ArrayFieldOptions : FieldOptions, ISchemaElement
 {
-    public ArrayFieldOptions()
-    {
-        Fields = new SchemaFields();
-    }
-
     /// <summary>
     /// Fields
     /// </summary>
-    public SchemaFields Fields { get; set; }
+    public SchemaFields Fields { get; set; } = [];
 
     /// <summary>
     /// MinItems

@@ -4,18 +4,8 @@
 
 namespace DragonFly;
 
-public class XmlFieldOptions : FieldOptions
+public class XmlFieldOptions : SingleValueFieldOptions<string?>
 {
-    public XmlFieldOptions()
-    {
-        DefaultValue = string.Empty;
-    }
-
-    /// <summary>
-    /// DefaultValue
-    /// </summary>
-    public string DefaultValue { get; set; }
-
     /// <summary>
     /// MinLength
     /// </summary>

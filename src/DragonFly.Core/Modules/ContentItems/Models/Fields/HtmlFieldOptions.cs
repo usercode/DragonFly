@@ -9,10 +9,6 @@ namespace DragonFly;
 /// </summary>
 public class HtmlFieldOptions : FieldOptions
 {
-    public HtmlFieldOptions()
-    {
-    }
-
     public override ContentField CreateContentField()
     {
         return new HtmlField();

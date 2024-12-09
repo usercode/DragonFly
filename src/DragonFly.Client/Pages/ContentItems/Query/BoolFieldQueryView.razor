@@ -1,12 +1,10 @@
 ﻿@inherits FieldQueryComponent<BoolFieldQuery>
 
-<div>
-    <div class="row">
-        <div class="col">
-            <label>Value</label>
-        </div>
-        <div class="col-auto">
-            <BoolValue @bind-Value="Query.Value" AllowUnset="true" />
-        </div>
+<div class="row">
+    <div class="col">
+        <label>Value</label>
+    </div>
+    <div class="col-auto">
+        <BoolValue @bind-Value="Query.Value" AllowUnset="true" />
     </div>
 </div>

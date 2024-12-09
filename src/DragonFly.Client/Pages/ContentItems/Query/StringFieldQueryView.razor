@@ -5,17 +5,7 @@
 		<FluentTextField @bind-Value="@Query.Pattern" />
 	</div>
 	<div class="col-auto">
-		<BSDropdown>
-			<Toggler>
-				<BSToggle IsButton Color="@BSColor.Light">@Query.PatternType</BSToggle>
-			</Toggler>
-			<Content>
-				@foreach(var value in Enum.GetValues(typeof(StringQueryType)))
-				{
-					<BSDropdownItem @onclick="e => { Query.PatternType = (StringQueryType)value; }">@value</BSDropdownItem>
-				}
-			</Content>
-		</BSDropdown>
+        <EnumView @bind-EnumValue="Query.PatternType" />
 	</div>		
 </div>
 

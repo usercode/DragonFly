@@ -12,16 +12,9 @@
             Permission[] impliedBy = p1.Element.GetImpliedPermissions().Where(i => Permissions.Where(x => x.IsSelected).Any(p => p.Element == i)).ToArray();
 
             <li class="list-group-item">
-                <input id="check_@permission.Element.Name" type="checkbox" class="form-check-input me-2" @bind="permission.IsSelected" @bind:after="() => PermissionSelected(p1)" />
+                <FluentCheckbox @bind-Value="permission.IsSelected" />
 
-                @if (impliedBy.Length > 0)
-                {
-                    <input type="checkbox" class="form-check-input me-2" disabled="disabled" checked="checked" />                   
-                }
-                else
-                {
-                    <input type="checkbox" class="form-check-input me-2" disabled="disabled" />
-                }
+                <FluentCheckbox ThreeState="true" CheckState="impliedBy.Length > 0" Disabled="true" />               
 
                 <label class="form-check-label" for="check_@permission.Element.Name" style="opacity:initial">
                     @if (string.IsNullOrEmpty(permission.Element.DisplayName) == false)
@@ -43,8 +36,4 @@
     [Parameter]
     public IEnumerable<SelectableElement<Permission>> Permissions { get; set; }
 
-    private void PermissionSelected(SelectableElement<Permission> permission)
-    {
-
-    }
 }

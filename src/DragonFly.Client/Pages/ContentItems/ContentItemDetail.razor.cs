@@ -18,10 +18,6 @@ namespace DragonFly.Client.Pages.ContentItems;
 
 public partial class ContentItemDetail
 {
-    public ContentItemDetail()
-    {
-    }
-
     [Inject]
     public IEnumerable<IContentAction> ContentActions { get; set; }
 
@@ -47,7 +43,7 @@ public partial class ContentItemDetail
 
     public BSOffCanvas _versionsModal;
 
-    public IList<ContentItem> SelectedVersions { get; private set; } = new List<ContentItem>();
+    public IList<ContentItem> SelectedVersions { get; private set; } = [];
 
     public bool IsFieldValid(string field)
     {

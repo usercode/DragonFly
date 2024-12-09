@@ -9,10 +9,6 @@ namespace DragonFly;
 /// </summary>
 public class DateTimeFieldOptions : SingleValueFieldOptions<DateTime?>
 {
-    public DateTimeFieldOptions()
-    {
-    }
-
     public override ContentField CreateContentField()
     {
         return new DateTimeField();

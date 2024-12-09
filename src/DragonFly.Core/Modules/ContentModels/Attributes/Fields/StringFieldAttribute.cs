@@ -23,7 +23,7 @@ public class StringFieldAttribute : BaseFieldAttribute
 
         schema.AddString(property, x =>
                                         {
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                             x.IsRequired = Required;
                                             x.DefaultValue = DefaultValue;
                                             x.MinLength = MinLength;

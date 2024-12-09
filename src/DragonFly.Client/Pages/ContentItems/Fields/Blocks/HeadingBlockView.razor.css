@@ -1,0 +1,11 @@
+﻿.heading-block {
+    display: flex;
+}
+
+.text {
+    flex: 1;
+}
+
+::deep .enum-field {
+    flex: 0;
+}
