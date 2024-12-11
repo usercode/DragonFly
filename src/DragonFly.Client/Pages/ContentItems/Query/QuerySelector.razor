@@ -4,45 +4,40 @@
 {
     <h4 class="query-title">Order</h4>
 
-    <BSListGroup>
-        @foreach (FieldOrder field in ContentItemList.OrderFields)
+    <FluentAccordion>
+        <FluentAccordionItem Heading="Order" Expanded="true">
+            @foreach (FieldOrder field in ContentItemList.OrderFields)
+            {
+                <BSListGroupItem style="display:flex;align-items:center">
+                    <span>@field.Name</span>
+                    <div style="flex-grow:1"></div>
+
+                    <OrderDirection Order="field" />
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowUp())" OnClick="x => ContentItemList.OrderFields.MoveUp(field)" Title="Up" />
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowDown())" OnClick="x => ContentItemList.OrderFields.MoveDown(field)" Title="Down" />
+                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="x => ContentItemList.OrderFields.Remove(field)" Title="Remove" />
+                </BSListGroupItem>
+            }
+        </FluentAccordionItem>
+    </FluentAccordion>
+
+    <FluentMenuButton Text="Add indexed field">
+        @foreach (var field in GetUnsedOrderFields())
         {
-            <BSListGroupItem style="display:flex;align-items:center">
-                <span>@field.Name</span>
-                <div style="flex-grow:1"></div>
-
-                <OrderDirection Order="field" />
-                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveUp(field)"><i class="fas fa-arrow-up"></i></BSButton>
-                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.MoveDown(field)"><i class="fas fa-arrow-down"></i></BSButton>
-                <BSButton Color="BSColor.Light" OnClick="x => ContentItemList.OrderFields.Remove(field)"><i class="fas fa-times"></i></BSButton>
-            </BSListGroupItem>
+            <FluentMenuItem Id="@field.Key" OnClick="x => ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true))">@field.Key</FluentMenuItem>
         }
-    </BSListGroup>
-
-    @if (GetUnsedOrderFields().Any())
-    {
-        <BSDropdown>
-            <Toggler><BSToggle IsButton="true" Color="BSColor.Light">Add field</BSToggle></Toggler>
-            <Content>
-                @foreach (var field in GetUnsedOrderFields())
-                {
-                    <BSDropdownItem OnClick="x => ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true))">@field.Key</BSDropdownItem>
-                }
-            </Content>
-        </BSDropdown>
-    }
-
+    </FluentMenuButton>
+    
     <h4 class="query-title">Filter</h4>
-    <BSListGroup>
 
+    <FluentAccordion>
         @foreach (var fieldQuery in ContentItemList.QueryFields)
         {
-            <BSListGroupItem>
-                <BSLabel class="form-label badge bg-secondary">@fieldQuery.FieldName</BSLabel>
+            <FluentAccordionItem Heading="@fieldQuery.FieldName" Expanded="true">
                 @FieldComponentManager.CreateComponent(fieldQuery)
-            </BSListGroupItem>
+            </FluentAccordionItem>
         }
-    </BSListGroup>
+    </FluentAccordion>
 }
 
 @code {
@@ -53,11 +48,11 @@
     [Parameter]
     public ISchemaElement Schema { get; set; }
 
-    public IEnumerable<KeyValuePair<string, SchemaField>> GetUnsedOrderFields()
+    private IDictionary<string, SchemaField> GetUnsedOrderFields()
     {
         return ContentItemList.Schema.Fields
-                                          //.Where(x => FieldManager.Default.CreateField(x.Value.FieldType).CanSorting)
+                                          .Where(x => x.Value.Options?.HasIndex == true)
                                           .Where(f => ContentItemList.OrderFields.Any(a => a.Name == f.Key) == false)
-                                          ;
+                                          .ToDictionary();
     }
 }

@@ -17,7 +17,7 @@ public class StringFieldQuery : FieldQuery
     /// <summary>
     /// PatternType
     /// </summary>
-    public StringQueryType PatternType { get; set; }
+    public StringQueryType PatternType { get; set; } = StringQueryType.Equal;
 
     public override bool IsEmpty()
     {

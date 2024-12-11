@@ -1,4 +1,4 @@
-﻿<button class="btn btn-light" @onclick="e => { Order.Asc = !Order.Asc; }">
+﻿<FluentButton OnClick="e => { Order.Asc = !Order.Asc; }">
     @if (Order.Asc == true)
     {
         <span>ASC</span>
@@ -7,7 +7,7 @@
     {
         <span>DESC</span>
     }
-</button>
+</FluentButton>
 
     @code {
         [Parameter]

@@ -6,9 +6,7 @@
             <label>Longitude</label>
         </div>
         <div class="col">
-            <BSInput InputType="InputType.Number"
-                        @bind-Value="@Query.Longitude"
-                        class="form-control" />
+            <FluentNumberField @bind-Value="@Query.Longitude" />
         </div>
     </div>
     <div class="row">
@@ -16,35 +14,27 @@
             <label>Latitude</label>
         </div>
         <div class="col">
-            <BSInput InputType="InputType.Number"
-                        @bind-Value="@Query.Latitude"
-                        class="form-control" />
+            <FluentNumberField @bind-Value="@Query.Latitude" />
         </div>
     </div>
     <div class="row">
         <div class="col-4">
             <label>Min distance</label>
-		</div>
-		<div class="col">
-				<BSInput InputType="InputType.Number"              
-										@bind-Value="@Query.MinDistance"
-										class="form-control" 
-										/>
-		</div>		
-	</div>
+        </div>
+        <div class="col">
+            <FluentNumberField @bind-Value="@Query.MinDistance" />
+        </div>
+    </div>
 </div>
 <div>
     <div class="row">
         <div class="col-4">
             <label>Max distance</label>
-		</div>
-		<div class="col">
-				<BSInput InputType="InputType.Number"              
-										@bind-Value="@Query.MaxDistance"
-										class="form-control" 
-										/>
-		</div>
-	</div>
+        </div>
+        <div class="col">
+            <FluentNumberField @bind-Value="@Query.MaxDistance" />
+        </div>
+    </div>
 </div>
 
 @code {

@@ -1,0 +1,12 @@
+﻿.split {
+    display: flex;
+    flex-direction: row;
+}
+
+.pattern {
+    flex: 4;
+}
+
+.pattern-type {
+    flex: 1;
+}

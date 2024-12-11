@@ -1,12 +1,12 @@
 ﻿@inherits FieldQueryComponent<StringFieldQuery>
 
-<div class="row">
-	<div class="col">
-		<FluentTextField @bind-Value="@Query.Pattern" />
-	</div>
-	<div class="col-auto">
-        <EnumView @bind-EnumValue="Query.PatternType" />
-	</div>		
+<div class="split">
+	    <div class="pattern">
+		    <FluentTextField @bind-Value="@Query.Pattern" />
+        </div>
+        <div class="pattern-type">
+            <EnumView @bind-EnumValue="Query.PatternType" />
+    </div>
 </div>
 
 @code {

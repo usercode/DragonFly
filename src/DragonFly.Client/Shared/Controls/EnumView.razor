@@ -1,18 +1,5 @@
 ﻿@typeparam TEnum
 
-@* <BSDropdown Class="enum-dropdown">
-    <Toggler><BSToggle IsButton="true" Color="BSColor.Light">@(EnumValue is null ? Undefined : EnumValue)</BSToggle></Toggler>
-    <Content>
-        @if (typeof(TEnum).IsGenericType)
-        {
-            <BSDropdownItem @onclick="e => EnumValue = default" IsDisabled="IsReadOnly">(none)</BSDropdownItem>
-        }
-        @foreach (TEnum value in Enum.GetValues(EnumType))
-        {
-            <BSDropdownItem @onclick="e => EnumValue = value" IsDisabled="IsReadOnly">@value</BSDropdownItem>
-        }
-    </Content>
-</BSDropdown> *@
 <div class="enum-field">
     <FluentSelect 
                     TOption="TEnum" 
@@ -20,7 +7,7 @@
                     OptionText="x => x.ToString()" 
                     OptionValue="x => x.ToString()"
                     @bind-SelectedOption="EnumValue"
-                    
+                    Placeholder="@EnumType.Name"
                     />
 </div>
 
