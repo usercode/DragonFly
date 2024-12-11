@@ -8,7 +8,7 @@ using DragonFly.Client.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
-using Microsoft.FluentUI.AspNetCore.Components;
+using MudBlazor.Services;
 
 namespace DragonFly.Client;
 
@@ -36,12 +36,12 @@ public static class DragonFlyClientExtensions
             .Init<AssetInitializer>()
             .Init<WebHookInitializer>()
             .Init<BackgroundTaskInitializer>()
-            .Init<SettingsInitializer>()            
+            .Init<SettingsInitializer>()
            ;
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddBlazorStrap();
-        builder.Services.AddFluentUIComponents();
+        builder.Services.AddMudServices();
         
         builder.Services.TryAddSingleton(ComponentManager.Default);
         builder.Services.TryAddSingleton(AssetPreviewManager.Default);

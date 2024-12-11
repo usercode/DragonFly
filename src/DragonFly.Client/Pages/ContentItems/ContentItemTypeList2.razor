@@ -9,14 +9,14 @@
     {
         <div class="row w-100">
             <div class="col-2">
-                <FluentNavMenu>
+                <MudList T="string">
                     @foreach (ContentSchema schema in SearchResult.Items)
                     {
-                        <FluentNavLink OnClick="() => RefreshContentItemsAsync(schema)">
-                            <span class="oi oi-list-rich"></span> @schema.Name
-                        </FluentNavLink>
+                        <MudListItem  OnClick="() => RefreshContentItemsAsync(schema)" Icon="@Icons.Material.Filled.List">
+                            @schema.Name
+                        </MudListItem>
                     }
-                </FluentNavMenu>
+                </MudList>
             </div>
             <div class="col-10 h-100">
                 @if (SelectedItem != null)

@@ -8,19 +8,19 @@
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Required</label>
             <div class="col-sm-8">
-                <FluentCheckbox @bind-Value="@Options.IsRequired" />
+                <MudCheckBox @bind-Value="@Options.IsRequired" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Index</label>
             <div class="col-sm-8">
-                <FluentCheckbox @bind-Value="@Options.HasIndex" />
+                <MudCheckBox @bind-Value="@Options.HasIndex" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Target field</label>
             <div class="col-sm-8">
-                <FluentTextField @bind-Value="@Options.TargetField" />
+                <MudTextField @bind-Value="@Options.TargetField" />
             </div>
         </BSRow>       
     </BSCard>

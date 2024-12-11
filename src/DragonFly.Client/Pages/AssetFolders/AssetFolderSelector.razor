@@ -15,7 +15,7 @@
         AssetFolderNode folderNode = Folders[i];
 
         <div style="margin: 0.25rem">
-            <FluentButton OnClick="x => folderNode.IsExpanded = !folderNode.IsExpanded" title="Expand folder">
+            <MudButton OnClick="x => folderNode.IsExpanded = !folderNode.IsExpanded" title="Expand folder">
                 @if (folderNode.IsExpanded)
                 {
                     <i class="fa-solid fa-folder-open"></i>
@@ -24,13 +24,13 @@
                 {
                     <i class="fa-solid fa-folder"></i>
                 }
-            </FluentButton>
-            <FluentButton OnClick="x => FolderClicked?.Invoke(folderNode.Folder)">
+            </MudButton>
+            <MudButton OnClick="x => FolderClicked?.Invoke(folderNode.Folder)">
                 @folderNode.Folder.Name
-            </FluentButton>
-            <FluentButton OnClick="async x => await DeleteAsync(folderNode)" title="Delete folder">
+            </MudButton>
+            <MudButton OnClick="async x => await DeleteAsync(folderNode)" title="Delete folder">
                 <i class="fas fa-times"></i>
-            </FluentButton>
+            </MudButton>
         </div>
         @if (folderNode.IsExpanded)
         {
@@ -40,9 +40,9 @@
         }
     }
     <div style="margin: 0.25rem;display:flex;gap:0.25rem">
-        <FluentButton OnClick="async x => await CreateNewFolderAsync()" title="Create folder">
+        <MudButton OnClick="async x => await CreateNewFolderAsync()" title="Create folder">
             <i class="fa-solid fa-plus"></i>
-        </FluentButton>
+        </MudButton>
         <input type="text" class="form-control" style="width:50%" placeholder="Folder name" @bind-value="NewFolderName">
     </div>
 </div>

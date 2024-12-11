@@ -4,13 +4,13 @@
 
 @if (_show)
 {
-    <BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+    <BSOffCanvas @ref="_offCanvas" Placement="BlazorStrap.Placement.Right">
         <Header>Select block</Header>
         <Content>
             @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
             {
                 <div>
-                    <FluentButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</FluentButton>
+                    <MudButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</MudButton>
                 </div>
             }
         </Content>
@@ -20,9 +20,9 @@
 <div class="block grid-block">
 
     <div>
-        <FluentButton class="block-field-add-btn" OnClick="e => OpenModal()" title="Add block">
+        <MudButton class="block-field-add-btn" OnClick="e => OpenModal()" title="Add block">
             <i class="fas fa-plus"></i> Add block
-        </FluentButton>
+        </MudButton>
     </div>
 
     <div class="grid-block-content" style="display:grid; grid-template-columns: @GetTemplateColumns(); grid-template-rows:@GetTemplateRows()">
@@ -92,7 +92,7 @@
                 int r = k + 1;
 
                 <div class="grid-span-item" style="display:flex; justify-content: center; align-items: center; grid-column: @((i*2)+4); grid-row: @((k*2)+4)">
-                    <FluentButton OnClick="e => OpenModal(c,r)" style="width:100%; height:100%; aspect-ratio: 1 / 1;">@c / @r</FluentButton>
+                    <MudButton OnClick="e => OpenModal(c,r)" style="width:100%; height:100%; aspect-ratio: 1 / 1;">@c / @r</MudButton>
                 </div>
             }
         }
@@ -109,27 +109,27 @@
                 <div style="display:grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto 1fr auto; flex:1">
                     <!--left-->
                     <div style="display:flex; flex-direction: column; align-items: stretch; justify-content: center; grid-column: 1; grid-row: 2">
-                        <FluentButton OnClick="x => currentItem.ColumnStart--"><i class="fas fa-arrow-left"></i></FluentButton>
-                        <FluentButton OnClick="x => currentItem.ColumnStart++"><i class="fas fa-arrow-right"></i></FluentButton>
+                        <MudButton OnClick="x => currentItem.ColumnStart--"><i class="fas fa-arrow-left"></i></MudButton>
+                        <MudButton OnClick="x => currentItem.ColumnStart++"><i class="fas fa-arrow-right"></i></MudButton>
                     </div>
                     <!--right-->
                     <div style="display:flex; flex-direction: column; align-items: stretch; justify-content: center; grid-column: 3; grid-row: 2">
-                        <FluentButton OnClick="x => currentItem.ColumnEnd++"><i class="fas fa-arrow-right"></i></FluentButton>
-                        <FluentButton OnClick="x => currentItem.ColumnEnd--"><i class="fas fa-arrow-left"></i></FluentButton>
+                        <MudButton OnClick="x => currentItem.ColumnEnd++"><i class="fas fa-arrow-right"></i></MudButton>
+                        <MudButton OnClick="x => currentItem.ColumnEnd--"><i class="fas fa-arrow-left"></i></MudButton>
                     </div>
                     <!--top-->
                     <div style="display:flex; flex-direction: row; align-items: stretch; justify-content: center; grid-column: 2; grid-row: 1">
-                        <FluentButton OnClick="x => currentItem.RowStart--"><i class="fas fa-arrow-up"></i></FluentButton>
-                        <FluentButton OnClick="x => currentItem.RowStart++"><i class="fas fa-arrow-down"></i></FluentButton>
+                        <MudButton OnClick="x => currentItem.RowStart--"><i class="fas fa-arrow-up"></i></MudButton>
+                        <MudButton OnClick="x => currentItem.RowStart++"><i class="fas fa-arrow-down"></i></MudButton>
                     </div>
                     <!--bottom-->
                     <div style="display:flex; flex-direction: row; align-items: stretch; justify-content: center; grid-column: 2; grid-row: 3">
-                        <FluentButton OnClick="x => currentItem.RowEnd++"><i class="fas fa-arrow-down"></i></FluentButton>
-                        <FluentButton OnClick="x => currentItem.RowEnd--"><i class="fas fa-arrow-up"></i></FluentButton>
+                        <MudButton OnClick="x => currentItem.RowEnd++"><i class="fas fa-arrow-down"></i></MudButton>
+                        <MudButton OnClick="x => currentItem.RowEnd--"><i class="fas fa-arrow-up"></i></MudButton>
                     </div>
                     <!--remove button-->
                     <div style="display:flex; grid-column: 3; grid-row: 1">
-                        <FluentButton OnClick="x => Block.Items.Remove(currentItem)" title="Remove block"><i class="fas fa-times"></i></FluentButton>
+                        <MudButton OnClick="x => Block.Items.Remove(currentItem)" title="Remove block"><i class="fas fa-times"></i></MudButton>
                     </div>
                    
                     <!--field-->

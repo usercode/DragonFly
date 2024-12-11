@@ -8,31 +8,31 @@
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Required</label>
             <div class="col-sm-8">
-                <FluentCheckbox @bind-Value="@Options.IsRequired" />
+                <MudCheckBox @bind-Value="@Options.IsRequired" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Index</label>
             <div class="col-sm-8">
-                <FluentCheckbox @bind-Value="@Options.HasIndex" />
+                <MudCheckBox @bind-Value="@Options.HasIndex" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Default value</label>
             <div class="col-sm-8">
-                <FluentNumberField @bind-Value="@Options.DefaultValue" />
+                <MudNumericField @bind-Value="@Options.DefaultValue" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Min value</label>
             <div class="col-sm-8">
-                <FluentNumberField @bind-Value="@Options.MinValue" />
+                <MudNumericField @bind-Value="@Options.MinValue" />
             </div>
         </BSRow>
         <BSRow class="form-group">
             <label class="col-sm-2 col-form-label">Max value</label>
             <div class="col-sm-8">
-                <FluentNumberField @bind-Value="@Options.MaxValue" />
+                <MudNumericField @bind-Value="@Options.MaxValue" />
             </div>
         </BSRow>
     </BSCard>

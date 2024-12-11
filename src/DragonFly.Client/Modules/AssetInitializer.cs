@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DragonFly.Client.Pages.Assets.Metadata;
 using DragonFly.Client.Pages.Assets.Preview;
 using DragonFly.Init;
-using Microsoft.FluentUI.AspNetCore.Components;
+using MudBlazor;
 
 namespace DragonFly.Client;
 
@@ -17,7 +17,7 @@ public class AssetInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Assets", new Icons.Regular.Size24.Image(), "asset");
+        api.MainMenu().Add("Assets", Icons.Material.Filled.Image, "asset");
 
         api.Metadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
         api.Metadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();

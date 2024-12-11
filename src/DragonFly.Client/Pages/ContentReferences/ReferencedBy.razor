@@ -1,12 +1,12 @@
-﻿<FluentNavMenu>
+﻿<MudList T="string">
     @if (ReferenceIndex != null)
     {
         foreach (var content in ReferenceIndex.Entries)
         {
-            <FluentNavLink>@content.Schema (@content.Count)</FluentNavLink>
+            <MudListItem>@content.Schema (@content.Count)</MudListItem>
         }
     }
-</FluentNavMenu>
+</MudList>
 
 @code {
     [Parameter]

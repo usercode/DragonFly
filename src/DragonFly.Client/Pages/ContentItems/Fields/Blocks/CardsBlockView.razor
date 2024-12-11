@@ -5,7 +5,7 @@
     <div class="block-layout">
         <div class="row">
             <BSCol ColumnLarge="auto">
-                <FluentButton class="block-layout-add-column-btn" OnClick="e => Add(0)" Disabled="Field.IsReadOnly" Title="Insert column"><i class="fas fa-plus"></i></FluentButton>
+                <MudButton class="block-layout-add-column-btn" OnClick="e => Add(0)" Disabled="Field.IsReadOnly" Title="Insert column"><i class="fas fa-plus"></i></MudButton>
             </BSCol>
             @for (int i = 0; i < Block.Cards.Count; i++)
             {
@@ -15,9 +15,9 @@
                 <BSCol>
                     <div class="column-content">
                         <div class="column-action options">
-                            <FluentButton class="block-layout-add-btn" OnClick="e => Block.Cards.MoveUp(index)" IsDisabled="Field.IsReadOnly" title="Move card to left"><i class="fas fa-arrow-left"></i></FluentButton>
-                            <FluentButton class="block-layout-remove-btn" OnClick="e => Remove(index)" IsDisabled="Field.IsReadOnly" title="Remove card"><i class="fas fa-times"></i></FluentButton>
-                            <FluentButton class="block-layout-add-btn" OnClick="e => Block.Cards.MoveDown(index)" IsDisabled="Field.IsReadOnly" title="Move card to right"><i class="fas fa-arrow-right"></i></FluentButton>
+                            <MudButton class="block-layout-add-btn" OnClick="e => Block.Cards.MoveUp(index)" IsDisabled="Field.IsReadOnly" title="Move card to left"><i class="fas fa-arrow-left"></i></MudButton>
+                            <MudButton class="block-layout-remove-btn" OnClick="e => Remove(index)" IsDisabled="Field.IsReadOnly" title="Remove card"><i class="fas fa-times"></i></MudButton>
+                            <MudButton class="block-layout-add-btn" OnClick="e => Block.Cards.MoveDown(index)" IsDisabled="Field.IsReadOnly" title="Move card to right"><i class="fas fa-arrow-right"></i></MudButton>
                         </div>         
 
                         <div class="input-group mb-3">
@@ -49,7 +49,7 @@
                     </div>
                 </BSCol>
                 <BSCol ColumnLarge="auto">
-                    <FluentButton class="block-layout-add-column-btn" OnClick="e => Add(index+1)" Disabled="Field.IsReadOnly" Title="Insert card"><i class="fas fa-plus"></i></FluentButton>
+                    <MudButton class="block-layout-add-column-btn" OnClick="e => Add(index+1)" Disabled="Field.IsReadOnly" Title="Insert card"><i class="fas fa-plus"></i></MudButton>
                 </BSCol>
             }
         </div>

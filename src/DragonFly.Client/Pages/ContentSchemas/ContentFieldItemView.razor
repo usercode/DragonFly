@@ -1,26 +1,25 @@
 ﻿@inject ComponentManager ComponentManager
 
-<FluentAccordion>
-    <FluentAccordionItem>
-        <HeadingTemplate>
+<MudExpansionPanels>
+    <MudExpansionPanel Text="@Field.FieldType">
+       @*  <HeadingTemplate>
             <div style="display: flex; align-items: center;">
                 <span style="flex-grow:1">@Key</span>
                 <FluentBadge Appearance="Appearance.Accent">@Field.FieldType</FluentBadge>
                 <div>
-                    <FluentButton OnClick="x => FieldsView.Up(Key)" Title="Move up"><i class="fas fa-arrow-up"></i></FluentButton>
-                    <FluentButton OnClick="x => FieldsView.Down(Key)" Title="Move down"><i class="fas fa-arrow-down"></i></FluentButton>
-                    <FluentButton OnClick="x => FieldsView.Remove(Key)" Title="Remove"><i class="fas fa-times"></i></FluentButton>
+                    <MudButton OnClick="x => FieldsView.Up(Key)" Title="Move up"><i class="fas fa-arrow-up"></i></MudButton>
+                    <MudButton OnClick="x => FieldsView.Down(Key)" Title="Move down"><i class="fas fa-arrow-down"></i></MudButton>
+                    <MudButton OnClick="x => FieldsView.Remove(Key)" Title="Remove"><i class="fas fa-times"></i></MudButton>
                 </div>
             </div>
-        </HeadingTemplate>
-        <ChildContent>
-            @if (Field.Options != null)
+        </HeadingTemplate> *@
+
+        @if (Field.Options != null)
             {
                 @ComponentManager.CreateComponent(Field.Options)
-            }
-        </ChildContent>
-    </FluentAccordionItem>
-</FluentAccordion>
+            }        
+    </MudExpansionPanel>
+</MudExpansionPanels>
 
 
 @code {

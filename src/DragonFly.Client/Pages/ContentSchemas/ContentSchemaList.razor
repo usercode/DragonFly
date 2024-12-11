@@ -12,13 +12,11 @@
     }
     else
     {
-        <FluentNavMenu>
+        <MudList T="string">
             @foreach (ContentSchema schema in SearchResult.Items)
             {
-                <FluentNavLink Href="@($"schema/{schema.Id}")">
-                    <span class="oi oi-list-rich"></span> @schema.Name
-                </FluentNavLink>
+                <MudListItem Href="@($"schema/{schema.Id}")" Icon="@Icons.Material.Filled.List">@schema.Name</MudListItem>
             }
-        </FluentNavMenu>
+        </MudList>
     }
 </div>

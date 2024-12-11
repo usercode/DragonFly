@@ -1,32 +1,32 @@
 ﻿<div class="row">
     <div class="col-lg-6">
-        <BSListGroup>
-            @foreach (string i in TargetList)
+        <MudList T="string">
+            @foreach (string item in TargetList)
             {
-                <BSListGroupItem>
+                <MudListItem Text="@item">
                     <div style="display:flex;align-items:center">
-                        <span>@i</span>
+                        <span>@item</span>
                         <span style="flex-grow:1"></span>
-                        <FluentButton OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></FluentButton>
-                        <FluentButton OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></FluentButton>
-                        <FluentButton OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></FluentButton>
+                        <MudButton OnClick="e => TargetList.MoveUp(item)" StartIcon="@Icons.Material.Filled.ArrowUpward" />
+                        <MudButton OnClick="e => TargetList.MoveDown(item)" StartIcon="@Icons.Material.Filled.ArrowDownward" />
+                        <MudButton OnClick="e => TargetList.Remove(item)" StartIcon="@Icons.Material.Filled.Delete" />
                     </div>
-                </BSListGroupItem>
+                </MudListItem>
             }
-        </BSListGroup>
+        </MudList>
     </div>
     <div class="col-lg-6">
-        <FluentSelect TOption="Option<string>"
-                      Placeholder="Add indexed field"
-                      Items="SchemaFields
+        <MudSelect
+                   Placeholder="Add indexed field"
+                   @bind-Value="SelectedValue">
+            @foreach (var item in SchemaFields
                                         .Where(x => x.Value.Options.HasIndex)
                                         .Where(x => TargetList.Contains(x.Key) == false)
-                                        .Select(x => new Option<string>() { Text = x.Key, Value = x.Key})
-                                        .ToArray()"
-                      OptionText="x => x.Text"
-                      OptionValue="x => x.Value"
-                      @bind-SelectedOption="SelectedValue">
-        </FluentSelect>
+                                        .ToArray())
+            {
+                <MudSelectItem Value="@item.Key">@item.Key</MudSelectItem>
+            }
+        </MudSelect>
     </div>
 </div>
 
@@ -38,9 +38,9 @@
     [Parameter]
     public SchemaFields SchemaFields { get; set; }
 
-    private Option<string> _selectedValue;
+    private string _selectedValue;
 
-    public Option<string> SelectedValue
+    public string SelectedValue
     {
         get => _selectedValue;
         set
@@ -51,7 +51,7 @@
 
                 if (_selectedValue != null)
                 {
-                    TargetList.Add(_selectedValue.Value);
+                    TargetList.Add(_selectedValue);
                 }
             }
         }

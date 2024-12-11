@@ -3,7 +3,7 @@
 <div class="block progess-block">
     <div class="input-group">
         <EnumView TEnum="ColorType" @bind-EnumValue="@Block.ColorType" />
-        <FluentNumberField @bind-Value="@Block.Value" ReadOnly="Field.IsReadOnly" min="0" max="100" step="1" />
+        <MudNumericField @bind-Value="@Block.Value" ReadOnly="Field.IsReadOnly" min="0" max="100" step="1" />
         @*<div class="progress">
             <div class="progress-bar bg-success" role="progressbar"  style="width: @(Block.Value)%"></div>
         </div>*@

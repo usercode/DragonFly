@@ -3,7 +3,7 @@
 // MIT License
 
 using Microsoft.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components;
+using MudBlazor;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,7 +23,7 @@ public partial class AssetList
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
         toolbarItems.Add(new ToolbarItem("Create", true, null, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
-        toolbarItems.Add(new ToolbarItem("Apply metadata", false, new Icons.Regular.Size16.ImageEdit(), RefreshAllMetadataAsync));
+        toolbarItems.Add(new ToolbarItem("Apply metadata", false, Icons.Material.Filled.Image, RefreshAllMetadataAsync));
     }
 
     protected virtual AssetQuery CreateQuery()

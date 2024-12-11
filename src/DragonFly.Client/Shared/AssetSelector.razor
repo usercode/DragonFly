@@ -1,6 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 
-<BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
+<BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true">
     <Header>Select asset</Header>
     <Content>
         @if (Modal.Shown)
@@ -29,14 +29,14 @@
         <div class="options">
             @if (Asset != null)
             {
-                <FluentButton OnClick="e => Navigate()" title="Navigate" IconStart="@(new Icons.Regular.Size16.ArrowRight())"></FluentButton>
+                <MudButton OnClick="e => Navigate()" title="Navigate" StartIcon="@Icons.Material.Filled.ArrowRight" />
                 @if (ShowDownloadButton)
                 {
-                    <FluentButton OnClick="e => NavigationManager.NavigateTo(Asset.GetPublicUrl(), true)" target="_blank" title="Download" IconStart="@(new Icons.Regular.Size16.ArrowDown())"></FluentButton>
+                    <MudButton OnClick="e => NavigationManager.NavigateTo(Asset.GetPublicUrl(), true)" target="_blank" title="Download" StartIcon="@Icons.Material.Filled.ArrowDownward" />
                 }
-                <FluentButton OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Delete())"></FluentButton>
+                <MudButton OnClick="e => RemoveItem()" title="Remove" Disabled="IsReadOnly" StartIcon="@Icons.Material.Filled.Delete" />
             }
-            <FluentButton OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
+            <MudButton OnClick="e => OpenModal()" title="Select" Disabled="IsReadOnly" StartIcon="@Icons.Material.Filled.Add" />
         </div>
     </div>
 

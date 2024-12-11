@@ -1,4 +1,4 @@
-﻿<FluentButton OnClick="e => { Order.Asc = !Order.Asc; }">
+﻿<MudButton OnClick="e => { Order.Asc = !Order.Asc; }">
     @if (Order.Asc == true)
     {
         <span>ASC</span>
@@ -7,7 +7,7 @@
     {
         <span>DESC</span>
     }
-</FluentButton>
+</MudButton>
 
     @code {
         [Parameter]

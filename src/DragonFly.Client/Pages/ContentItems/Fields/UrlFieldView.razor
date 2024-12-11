@@ -1,7 +1,5 @@
 ﻿@inherits FieldComponent<UrlField, UrlFieldOptions>
 
 <div class="url-field">   
-    <FluentTextField @bind-Value="@Field.Value" ReadOnly="IsReadOnly" >
-        <FluentIcon Value="@(new Icons.Regular.Size16.Globe())" />
-    </FluentTextField>
+    <MudTextField @bind-Value="@Field.Value" ReadOnly="IsReadOnly" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Web" />
 </div>

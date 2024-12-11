@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using DragonFly.Init;
-using Microsoft.FluentUI.AspNetCore.Components;
+using MudBlazor;
 
 namespace DragonFly.Client;
 
@@ -15,7 +15,7 @@ public class BackgroundTaskInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Tasks", new Icons.Regular.Size24.TasksApp(), "tasks");
+        api.MainMenu().Add("Tasks", Icons.Material.Filled.Task, "tasks");
 
         return Task.CompletedTask;
     }

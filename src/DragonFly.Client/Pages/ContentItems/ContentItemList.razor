@@ -9,7 +9,14 @@
     }
 
     <div style="display:flex; gap: 0.25rem;">
-        <FluentSearch style="flex:1;" Placeholder="Search" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
+        <MudTextField Style="flex:1;"
+        Placeholder="Search"
+        Adornment="Adornment.Start"
+        AdornmentIcon="@Icons.Material.Filled.Search"
+        Variant="Variant.Outlined"
+        Value="@SearchPattern"
+        Clearable="true"
+        @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
     </div>
 </div>
 <div class="scroll-content">
@@ -26,57 +33,58 @@
             }
             else
             {
-                <FluentDataGrid 
-                    TGridItem="ContentItem" 
-                    Items="SearchResult.Items.AsQueryable()" 
-                    ShowHover="true" 
-                    OnRowClick="@(x => Navigation.NavigateTo($"content/{x.Item.Schema.Name}/{x.Item.Id}"))">
+                <MudTable T="ContentItem"
+                Items="SearchResult.Items"
+                Hover="true"
+                OnRowClick="@(x => Navigation.NavigateTo($"content/{x.Item.Schema.Name}/{x.Item.Id}"))">
+                    <HeaderContent>
 
-                    <TemplateColumn Title="Published" Width="auto">
+                        <MudTh>Published</MudTh>
+                        @foreach (var field in Schema.GetListFields())
+                        {
+                            <MudTh>@field.Key</MudTh>
+                        }
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>
                         @if (context.PublishedAt != null)
                         {
-                            <FluentIcon Value="@(new Icons.Regular.Size24.Checkmark())" Title="Published" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Check" />
                         }
-                        else
+                        </MudTd>
+                        @foreach (var field in Schema.GetListFields())
                         {
-                            <FluentIcon Value="@(new Icons.Regular.Size24.Circle())" Title="Unpublished" Style="visibility:hidden" />
-                        }
-                    </TemplateColumn>
+                            var content = context.Fields[field.Key];
 
-                    @foreach (var field in Schema.GetListFields())
-                    {
-                        @*  <PropertyColumn Property="@(p => p.Fields[""])" Sortable="true" /> *@
-
-                        <TemplateColumn Title="@field.Key">
-                            @{
-                                var content = context.Fields[field.Key];
-                            }
-
-                            @if(content is AssetField assetField)
-                            {
-                                <img src="@assetField.Asset.PreviewUrl" style="height:50px" />
-                            }
-                            else if(content is ReferenceField referenceField && referenceField.ContentItem != null)
-                            {
-                                <ReferenceFields ContentItem="@referenceField.ContentItem" />
-                            }
-                            else if(content is BoolField boolField)
-                            {
-                                if (boolField.Value == true)
+                            <MudTd>
+                                @if (content is AssetField assetField)
                                 {
-                                    <FluentIcon Value="@(new Icons.Regular.Size24.Check())" />
+                                    <img src="@assetField.Asset.PreviewUrl" style="height:50px" />
                                 }
-                            }
-                            else
-                            {
-                                <span>@content</span>
-                            }
-                            </TemplateColumn>
+                                else if (content is ReferenceField referenceField && referenceField.ContentItem != null)
+                                {
+                                    <MudTd>
+                                        <ReferenceFields ContentItem="@referenceField.ContentItem" />
+                                    </MudTd>
+                                }
+                                else if (content is BoolField boolField)
+                                {
+                                    if (boolField.Value == true)
+                                    {
+                                        <MudIcon Icon="@Icons.Material.Filled.Check" />
+                                    }
+                                }
+                                else
+                                {
+                                    <span>@content</span>
+                                }
+                            </MudTd>
                         }
-                    </FluentDataGrid>
-                }
-            </div>
+                    </RowTemplate>
+                </MudTable>
+            }
         </div>
+    </div>
 </div>
 <div>
     @if (SearchResult != null)

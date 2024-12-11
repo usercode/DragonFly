@@ -1,9 +1,10 @@
-﻿<FluentToolbar>
+﻿<div style="display: flex; gap: 0.5rem; margin-bottom: 1rem">
     @foreach (ToolbarItem item in Items)
     {
-        <FluentButton 
-            Appearance="item.IsAccent ? Appearance.Accent : Appearance.Neutral"
-            IconStart="item.Icon"
+        <MudButton 
+            StartIcon="@item.Icon" 
+            Variant="Variant.Filled"
+            Color="item.IsAccent ? Color.Primary : Color.Default"
             OnClick="@(async x => { await item.ExecuteAsync(); this.StateHasChanged(); })" 
             Disabled="@item.IsRunning">
             @if (item.IsRunning)
@@ -11,9 +12,9 @@
                 <span class="fas fa-spin fa-spinner icon"></span>
             }
             <span class="title">@item.Name</span>
-        </FluentButton>
+        </MudButton>
     }
-</FluentToolbar>
+</div>
 
 @code {
     [Parameter]

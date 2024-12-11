@@ -98,9 +98,9 @@ public partial class AssetDetail
         NavigationManager.NavigateToAssets();
     }
 
-    protected async Task OnInputFileChange(InputFileChangeEventArgs e)
+    protected async Task OnInputFileChange(IBrowserFile e)
     {
-        SelectedFile = e.File;
+        SelectedFile = e;
 
         using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
         {

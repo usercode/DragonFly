@@ -7,7 +7,7 @@
 <CascadingValue Value="this" IsFixed="true">
     @if (Entity != null)
     {
-        <BSOffCanvas @ref="_versionsModal" Placement="Placement.Right">
+        <BSOffCanvas @ref="_versionsModal" Placement="BlazorStrap.Placement.Right">
             <Header>Versions</Header>
             <Content>
                 @if (Versions != null)
@@ -15,15 +15,13 @@
                     @foreach (var item in Versions)
                     {
                         <div style="margin:0.5rem 0">
-                            <FluentButton style="width:100%;text-align:left" OnClick="async x => await AddContentVersionsAsync(item.Id)">
+                            <MudButton style="width:100%;text-align:left" OnClick="async x => await AddContentVersionsAsync(item.Id)">
                                 <span>@item.Modified.Value.ToString()</span>
                                 @if (item.PublishedAt != null)
                                 {
-                                    <FluentBadge Appearance="Appearance.Accent">
-                                        Published
-                                    </FluentBadge>
+                                    <MudBadge>Published</MudBadge>
                                 }
-                            </FluentButton>
+                            </MudButton>
                         </div>
                     }
                 }
@@ -40,14 +38,14 @@
             @foreach (NotificationItem notification in Notifications)
             {
                 <div style="margin-top: 1rem">
-                    <FluentBadge Appearance="Appearance.Accent">@notification.Message</FluentBadge>
+                    <MudAlert Severity="@notification.Type.ToAlertCss()">@notification.Message</MudAlert>
                 </div>
             }
         </div>
         <div class="scroll-content">
-            <FluentTabs>
-                <FluentTab Label="Details">                   
-                        <BSForm Model="Entity" class="entity-content">
+            <MudTabs>
+                <MudTabPanel Text="Details">
+                    <BSForm Model="Entity" class="entity-content">
                             @{
                                 var items = Entity.Schema.Fields
                                 .OrderBy(x => x.Value.SortKey)
@@ -86,11 +84,11 @@
                                 }
                             </div>
                         </BSForm>
-                </FluentTab>
-                <FluentTab Label="Referenced by">                   
-                        <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Entity.Schema.Name" Id="Entity.Id" />                   
-                </FluentTab>
-            </FluentTabs>
+                </MudTabPanel>
+                <MudTabPanel Text="Referenced by">
+                    <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Entity.Schema.Name" Id="Entity.Id" />                   
+                </MudTabPanel>
+            </MudTabs>
         </div>
 
         <div class="footer-content">

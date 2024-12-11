@@ -3,19 +3,20 @@
 // MIT License
 
 using BlazorStrap;
+using MudBlazor;
 
 namespace DragonFly.Client;
 
 public static class NotificationExtensions
 {
-    public static BSColor ToAlertCss(this NotificationType type)
+    public static Severity ToAlertCss(this NotificationType type)
     {
         return type switch
         {
-            NotificationType.Success => BSColor.Success,
-            NotificationType.Warning => BSColor.Warning,
-            NotificationType.Error => BSColor.Danger,
-            _ => BSColor.Default
+            NotificationType.Success => Severity.Success,
+            NotificationType.Warning => Severity.Warning,
+            NotificationType.Error => Severity.Error,
+            _ => Severity.Normal
         };
     }
 }

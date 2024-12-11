@@ -7,22 +7,24 @@
                     <div style="display:flex;align-items:center">
                         <div style="flex:1">@i.Name</div>
                         <OrderDirection Order="i"></OrderDirection>
-                        <FluentButton OnClick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></FluentButton>
-                        <FluentButton OnClick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></FluentButton>
-                        <FluentButton OnClick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></FluentButton>
+                        <MudButton OnClick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></MudButton>
+                        <MudButton OnClick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></MudButton>
+                        <MudButton OnClick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></MudButton>
                     </div>
                 </li>
             }
         </ul>
     </div>
     <div class="col-lg-6">
-        <FluentSelect TOption="Option<string>"
-                      Placeholder="Add field"
-                      Items="SourceList.Where(x => TargetList.Any(i => i.Name == x) == false).Select(x => new Option<string>() { Text = x, Value = x}).ToArray()"
-                      OptionText="x => x.Text"
-                      OptionValue="x => x.Value"
-                      @bind-SelectedOption="SelectedValue">
-        </FluentSelect>
+        <MudSelect Placeholder="Add field"
+                   @bind-Value="SelectedValue">
+            @foreach (var item in SourceList
+            .Where(x => TargetList.Any(i => i.Name == x) == false)
+            .ToArray())
+            {
+                <MudSelectItem Value="@item">@item</MudSelectItem>
+            }
+        </MudSelect>
     </div>
 </div>
 
@@ -34,9 +36,9 @@
     [Parameter]
     public IList<string> SourceList { get; set; }
 
-    private Option<string> _selectedValue;
+    private string _selectedValue;
 
-    private Option<string> SelectedValue
+    private string SelectedValue
     {
         get => _selectedValue;
         set
@@ -47,7 +49,7 @@
 
                 if (_selectedValue != null)
                 {
-                    TargetList.Add(new FieldOrder(_selectedValue.Value, true));
+                    TargetList.Add(new FieldOrder(_selectedValue, true));
                 }
             }
         }

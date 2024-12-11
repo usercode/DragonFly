@@ -3,7 +3,6 @@
 // MIT License
 
 using System.Collections.Generic;
-using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
@@ -29,7 +28,7 @@ public class MenuItemManager
 
     public IList<MenuItem> Items { get; private set; } = new List<MenuItem>();
 
-    public void Add(string title, Icon icon, string route)
+    public void Add(string title, string icon, string route)
     {
         Items.Add(new MenuItem(title, icon, route));
     }

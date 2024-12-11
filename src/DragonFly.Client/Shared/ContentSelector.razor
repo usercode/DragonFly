@@ -1,6 +1,6 @@
 ﻿@inject NavigationManager NavigationManager
 
-<BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" Size="Size.ExtraLarge">
+<BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true">
     <Header>Select asset</Header>
     <Content>
         @if (Modal.Shown)
@@ -18,7 +18,7 @@
         @if (ContentItem != null)
         {
             <div class="col-lg">
-                <FluentBadge Appearance="Appearance.Accent">@ContentItem.Schema.Name</FluentBadge>
+                <MudChip T="string">@ContentItem.Schema.Name</MudChip>
             </div>
             @foreach (string field in ContentItem.Schema.ReferenceFields)
             {
@@ -51,10 +51,10 @@
             <div class="options">
                 @if (ContentItem != null)
                 {
-                    <FluentButton OnClick="e => Navigate()" IconStart="@(new Icons.Regular.Size16.ArrowRight())" title="Navigate"></FluentButton>
-                    <FluentButton OnClick="e => RemoveItem()" IconStart="@(new Icons.Regular.Size16.Delete())" Disabled="IsReadOnly" title="Remove"></FluentButton>
+                    <MudButton OnClick="e => Navigate()" StartIcon="@Icons.Material.Filled.ArrowRight" title="Navigate"></MudButton>
+                    <MudButton OnClick="e => RemoveItem()" StartIcon="@Icons.Material.Filled.Delete" Disabled="IsReadOnly" title="Remove"></MudButton>
                 }
-                <FluentButton title="Select" Disabled="IsReadOnly" OnClick="e => Modal.ShowAsync()" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
+                <MudButton title="Select" Disabled="IsReadOnly" OnClick="e => Modal.ShowAsync()" StartIcon="@Icons.Material.Filled.Add"></MudButton>
             </div>
         </div>
     </div>

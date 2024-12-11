@@ -1,13 +1,13 @@
 ﻿@inject ComponentManager ComponentManager
 @inject BlockManager BlockFieldManager
 
-<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+<BSOffCanvas @ref="_offCanvas" Placement="BlazorStrap.Placement.Right">
     <Header>Select block</Header>
     <Content>
         @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <FluentButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.GetDisplayName()</FluentButton>
+                <MudButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.GetDisplayName()</MudButton>
             </div>
         }
     </Content>
@@ -17,23 +17,23 @@
 {
 	<div class="block-field-view">
         <div style="display: flex;gap:0.25rem">
-            <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.CopyAsync(Blocks)" title="Copy all" IconStart="new Icons.Filled.Size16.Copy()" />
-            <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(0, Blocks)" Disabled="Field.IsReadOnly" title="Paste" IconStart="new Icons.Filled.Size16.ClipboardPaste()" style="flex:0" />
-            <FluentButton class="block-field-add-btn" OnClick="e => OpenModal(0)" Disabled="Field.IsReadOnly" title="Insert block" style="flex:1" IconStart="new Icons.Filled.Size16.Add()" />
+            <MudButton class="block-field-add-btn" OnClick="e => BlockClipboard.CopyAsync(Blocks)" title="Copy all" StartIcon="new Icons.Filled.Size16.Copy()" />
+            <MudButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(0, Blocks)" Disabled="Field.IsReadOnly" title="Paste" StartIcon="new Icons.Filled.Size16.ClipboardPaste()" style="flex:0" />
+            <MudButton class="block-field-add-btn" OnClick="e => OpenModal(0)" Disabled="Field.IsReadOnly" title="Insert block" style="flex:1" StartIcon="new Icons.Filled.Size16.Add()" />
         </div>
 
 		@for (int i = 0; i < Blocks.Count; i++)
 		{
 			int curIndex = i;
-            Block block = Blocks[curIndex];
+            DragonFly.Block block = Blocks[curIndex];
 
 			<div class="block-field">
 				<div class="block-field-options">
                     <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
-                    <FluentButton OnClick="e => Blocks.MoveUp(block)" Disabled="Field.IsReadOnly" title="Up" IconStart="new Icons.Filled.Size16.ArrowUp()" />
-                    <FluentButton OnClick="e => Blocks.MoveDown(block)" Disabled="Field.IsReadOnly" title="Down" IconStart="new Icons.Filled.Size16.ArrowDown()" />
-                    <FluentButton OnClick="e => Blocks.Remove(block)" Disabled="Field.IsReadOnly" title="Remove" IconStart="new Icons.Filled.Size16.Delete()" />
-                    <FluentButton OnClick="e => BlockClipboard.CopyAsync(new[] { block })" title="Copy" IconStart="new Icons.Filled.Size16.Copy()" />
+                    <MudButton OnClick="e => Blocks.MoveUp(block)" Disabled="Field.IsReadOnly" title="Up" StartIcon="new Icons.Filled.Size16.ArrowUp()" />
+                    <MudButton OnClick="e => Blocks.MoveDown(block)" Disabled="Field.IsReadOnly" title="Down" StartIcon="new Icons.Filled.Size16.ArrowDown()" />
+                    <MudButton OnClick="e => Blocks.Remove(block)" Disabled="Field.IsReadOnly" title="Remove" StartIcon="new Icons.Filled.Size16.Delete()" />
+                    <MudButton OnClick="e => BlockClipboard.CopyAsync(new[] { block })" title="Copy" StartIcon="new Icons.Filled.Size16.Copy()" />
 				</div>
 				<div class="block-field-content">
                     @ComponentManager.CreateComponent(block)
@@ -41,8 +41,8 @@
 			</div>
 
             <div style="display: flex;gap:0.25rem">
-                <FluentButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(curIndex + 1, Blocks)" Disabled="Field.IsReadOnly" title="Paste" style="flex:0" IconStart="new Icons.Filled.Size16.ClipboardPaste()" />
-                <FluentButton class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" Disabled="Field.IsReadOnly" title="Insert block" style="flex:1" IconStart="new Icons.Filled.Size16.Add()" />
+                <MudButton class="block-field-add-btn" OnClick="e => BlockClipboard.PasteAsync(curIndex + 1, Blocks)" Disabled="Field.IsReadOnly" title="Paste" style="flex:0" StartIcon="new Icons.Filled.Size16.ClipboardPaste()" />
+                <MudButton class="block-field-add-btn" OnClick="e => OpenModal(curIndex + 1)" Disabled="Field.IsReadOnly" title="Insert block" style="flex:1" StartIcon="new Icons.Filled.Size16.Add()" />
             </div>
 		}
 	</div>
@@ -59,7 +59,7 @@
     public BSModal Modal { get; set; }
 
     [Parameter]
-    public IList<Block> Blocks { get; set; }
+    public IList<DragonFly.Block> Blocks { get; set; }
 
     public async Task OpenModal(int position)
     {

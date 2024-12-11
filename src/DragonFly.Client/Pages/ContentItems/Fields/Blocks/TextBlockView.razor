@@ -1,6 +1,8 @@
 ﻿@inherits BlockComponent<TextBlock>
 
 <div class="block text-block">
-    <FluentTextArea @bind-Value="@Block.Text"
-                    ReadOnly="@Field.IsReadOnly" />
+    <MudTextField AutoGrow
+                  Lines="3"
+                  @bind-Value="@Block.Text"
+                  ReadOnly="@Field.IsReadOnly" />
 </div>

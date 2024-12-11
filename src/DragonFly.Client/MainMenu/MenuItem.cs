@@ -3,7 +3,6 @@
 // MIT License
 
 using System;
-using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client;
 
@@ -12,7 +11,7 @@ namespace DragonFly.Client;
 /// </summary>
 public class MenuItem
 {
-    public MenuItem(string title, Icon icon, string route)
+    public MenuItem(string title, string icon, string route)
     {
         Title = title;
         Icon = icon;
@@ -38,12 +37,12 @@ public class MenuItem
         }
     }
 
-    private Icon _icon;
+    private string _icon;
 
     /// <summary>
     /// CssIcon
     /// </summary>
-    public Icon? Icon 
+    public string? Icon 
     {
         get => _icon;
         set

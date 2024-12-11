@@ -12,46 +12,46 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Id</label>
             <div class="col-sm-10">
-                <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                <MudTextField Value="@Entity.Id.ToString()" ReadOnly="true" Variant="Variant.Filled" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <FluentTextField @bind-Value="@Entity.Name" />
+                <MudTextField @bind-Value="@Entity.Name" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Event</label>
             <div class="col-sm-10">
-                <FluentTextField @bind-Value="@Entity.EventName" />
+                <MudTextField @bind-Value="@Entity.EventName" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Url</label>
             <div class="col-sm-10">
-                <FluentTextField @bind-Value="@Entity.TargetUrl" />
+                <MudTextField @bind-Value="@Entity.TargetUrl" />
             </div>
         </div>
 
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Headers</label>
             <div class="col-sm-10">
-                <FluentButton OnClick="e => Entity.Headers.Add(new ())" IconStart="new Icons.Regular.Size16.Add()">Add</FluentButton>
+                <MudButton OnClick="e => Entity.Headers.Add(new ())" StartIcon="new Icons.Regular.Size16.Add()">Add</MudButton>
                 @foreach(HeaderItem header in Entity.Headers)
                 {
                     <div class="row">
                         <div class="col-lg">
-                            <FluentTextField @bind-Value="@header.Name" Placeholder="Name" />
+                            <MudTextField @bind-Value="@header.Name" Placeholder="Name" />
                         </div>
                         <div class="col-lg">
-                            <FluentTextField @bind-Value="@header.Value" Placeholder="Value" />
+                            <MudTextField @bind-Value="@header.Value" Placeholder="Value" />
                         </div>
                         <div class="col-lg-auto">
-                            <FluentButton OnClick="e => Entity.Headers.Remove(header)" title="Remove" IconStart="new Icons.Regular.Size16.Delete()" />
+                            <MudButton OnClick="e => Entity.Headers.Remove(header)" title="Remove" StartIcon="new Icons.Regular.Size16.Delete()" />
                         </div>
                     </div>
                 }

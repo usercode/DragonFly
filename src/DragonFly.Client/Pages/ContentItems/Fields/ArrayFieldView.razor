@@ -1,10 +1,10 @@
 ﻿@inherits FieldComponent<ArrayField, ArrayFieldOptions>
 
 <div class="array-field">
-    <FluentButton class="add-field"
-                  IconStart="@(new Icons.Regular.Size16.Add())"
+    <MudButton class="add-field"
+                  StartIcon="@Icons.Material.Filled.Add"
                   OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }"
-                  Disabled="IsReadOnly">Add item</FluentButton>
+                  Disabled="IsReadOnly">Add item</MudButton>
 
     @if (Field.Items.Any())
     {
@@ -13,10 +13,10 @@
         @foreach (ArrayFieldItem item in Field.Items)
         {
             <div class="arrayitem-field" style="margin-top: 0.25rem">
-                <FluentButton>#@(i++)</FluentButton>
-                <FluentButton OnClick="e => Field.Items.MoveUp(item)" IconStart="@(new Icons.Regular.Size16.ArrowUp())" title="Up"></FluentButton>
-                <FluentButton OnClick="e => Field.Items.MoveDown(item)" IconStart="@(new Icons.Regular.Size16.ArrowDown())" title="Down"></FluentButton>
-                <FluentButton OnClick="e => Field.Items.Remove(item)" IconStart="@(new Icons.Regular.Size16.Delete())" title="Remove"></FluentButton>
+                <MudButton>#@(i++)</MudButton>
+                <MudIconButton OnClick="e => Field.Items.MoveUp(item)" Icon="@Icons.Material.Filled.ArrowUpward" title="Up"></MudIconButton>
+                <MudIconButton OnClick="e => Field.Items.MoveDown(item)" Icon="@Icons.Material.Filled.ArrowDownward" title="Down"></MudIconButton>
+                <MudIconButton OnClick="e => Field.Items.Remove(item)" Icon="@Icons.Material.Filled.Delete" title="Remove"></MudIconButton>
 
                 <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" />
             </div>

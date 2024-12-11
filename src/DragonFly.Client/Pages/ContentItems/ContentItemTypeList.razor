@@ -9,13 +9,13 @@
     }
     else
     {
-        <FluentNavMenu>
+        <MudList T="string">
             @foreach (ContentSchema schema in SearchResult.Items.OrderBy(x => x.Name))
             {
-                <FluentNavLink OnClick="x => OpenItem(schema)">
-                    <span class="oi oi-list-rich"></span> @schema.Name
-                </FluentNavLink>
+                <MudListItem OnClick="x => OpenItem(schema)" Icon="@Icons.Material.Filled.List">
+                    @schema.Name
+                </MudListItem>
             }
-        </FluentNavMenu>
+        </MudList>
     }
 </div>

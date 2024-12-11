@@ -3,10 +3,11 @@
 <div class="block code-block">
     <div class="mb-1">
         <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
-    </div>    
+    </div>
 
-    <FluentTextArea 
-                @bind-Value="@Block.Content"
-                ReadOnly="Field.IsReadOnly"
-                spellcheck="false"/>
+    <MudTextField AutoGrow
+                  Lines="3"
+                  @bind-Value="@Block.Content"
+                  ReadOnly="Field.IsReadOnly"
+                  spellcheck="false" />
 </div>

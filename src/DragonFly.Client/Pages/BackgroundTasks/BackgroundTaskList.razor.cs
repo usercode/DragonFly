@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components;
 
 namespace DragonFly.Client.Pages.BackgroundTasks;
 
@@ -20,8 +19,8 @@ public partial class BackgroundTaskList : IAsyncDisposable
     [Inject]
     public NavigationManager Navigation { get; set; }
 
-    [Inject]
-    public IToastService ToastService { get; set; }
+    //[Inject]
+    //public IToastService ToastService { get; set; }
 
     /// <summary>
     /// Tasks

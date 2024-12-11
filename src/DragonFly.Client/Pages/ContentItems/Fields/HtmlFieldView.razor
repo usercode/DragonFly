@@ -1,7 +1,8 @@
 ﻿@inherits FieldComponent<HtmlField, HtmlFieldOptions>
 
 <div class="html-field">
-    <FluentTextArea 
-                @bind-Value="@Field.Value"
-                ReadOnly="IsReadOnly" />
+    <MudTextField AutoGrow
+                  Lines="3"
+                  @bind-Value="@Field.Value"
+                  ReadOnly="IsReadOnly" />
 </div>

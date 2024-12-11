@@ -4,8 +4,8 @@
 {
     <h4 class="query-title">Order</h4>
 
-    <FluentAccordion>
-        <FluentAccordionItem Heading="Order" Expanded="true">
+    <MudExpansionPanels>
+        <MudExpansionPanel Text="Order" Expanded="true">
             @foreach (FieldOrder field in ContentItemList.OrderFields)
             {
                 <BSListGroupItem style="display:flex;align-items:center">
@@ -13,13 +13,13 @@
                     <div style="flex-grow:1"></div>
 
                     <OrderDirection Order="field" />
-                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowUp())" OnClick="x => ContentItemList.OrderFields.MoveUp(field)" Title="Up" />
-                    <FluentButton IconStart="@(new Icons.Regular.Size16.ArrowDown())" OnClick="x => ContentItemList.OrderFields.MoveDown(field)" Title="Down" />
-                    <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="x => ContentItemList.OrderFields.Remove(field)" Title="Remove" />
+                    <MudIconButton Icon="@Icons.Material.Filled.ArrowUpward" OnClick="x => ContentItemList.OrderFields.MoveUp(field)" Title="Up" />
+                    <MudIconButton Icon="@Icons.Material.Filled.ArrowDownward" OnClick="x => ContentItemList.OrderFields.MoveDown(field)" Title="Down" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="x => ContentItemList.OrderFields.Remove(field)" Title="Remove" />
                 </BSListGroupItem>
             }
-        </FluentAccordionItem>
-    </FluentAccordion>
+        </MudExpansionPanel>
+    </MudExpansionPanels>
 
     <FluentMenuButton Text="Add indexed field">
         @foreach (var field in GetUnsedOrderFields())
@@ -30,14 +30,14 @@
     
     <h4 class="query-title">Filter</h4>
 
-    <FluentAccordion>
+    <MudExpansionPanels>
         @foreach (var fieldQuery in ContentItemList.QueryFields)
         {
-            <FluentAccordionItem Heading="@fieldQuery.FieldName" Expanded="true">
+            <MudExpansionPanel Text="@fieldQuery.FieldName" Expanded="true">
                 @FieldComponentManager.CreateComponent(fieldQuery)
-            </FluentAccordionItem>
+            </MudExpansionPanel>
         }
-    </FluentAccordion>
+    </MudExpansionPanels>
 }
 
 @code {

@@ -8,7 +8,7 @@
         </div>
 	    <div class="row">
 		    <div class="col-lg-auto">
-                <FluentButton class="block-layout-add-column-btn" OnClick="e => AddColumn(0)" Disabled="Field.IsReadOnly" Title="Insert column" IconStart="new Icons.Filled.Size16.Add()" />
+                <MudButton class="block-layout-add-column-btn" OnClick="e => AddColumn(0)" Disabled="Field.IsReadOnly" Title="Insert column" StartIcon="new Icons.Filled.Size16.Add()" />
 		    </div>
 		    @for (int i = 0; i < Block.Columns.Count; i++)
 		    {
@@ -18,16 +18,16 @@
                 <div class="col">
 				    <div class="column-content">
 					    <div class="column-action options">
-                            <FluentButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveUp(index)" Disabled="Field.IsReadOnly" Title="Move column to left" IconStart="new Icons.Filled.Size16.ArrowLeft()" />
-                            <FluentButton class="block-layout-remove-btn" OnClick="e => RemoveColumn(index)" Disabled="Field.IsReadOnly" Title="Remove column" IconStart="new Icons.Filled.Size16.Delete()" />
+                            <MudButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveUp(index)" Disabled="Field.IsReadOnly" Title="Move column to left" StartIcon="new Icons.Filled.Size16.ArrowLeft()" />
+                            <MudButton class="block-layout-remove-btn" OnClick="e => RemoveColumn(index)" Disabled="Field.IsReadOnly" Title="Remove column" StartIcon="new Icons.Filled.Size16.Delete()" />
                             <ColumnView Column="column" />
-                            <FluentButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveDown(index)" Disabled="Field.IsReadOnly" Title="Move column to right" IconStart="new Icons.Filled.Size16.ArrowRight()" />
+                            <MudButton class="block-layout-add-btn" OnClick="e => Block.Columns.MoveDown(index)" Disabled="Field.IsReadOnly" Title="Move column to right" StartIcon="new Icons.Filled.Size16.ArrowRight()" />
 					    </div>
 					    <BlocksView Blocks="column.Blocks" />
 				    </div>
 			    </div>
 			    <div class="col-lg-auto">
-                    <FluentButton class="block-layout-add-column-btn" OnClick="e => AddColumn(index+1)" Disabled="Field.IsReadOnly" Title="Insert column" IconStart="new Icons.Filled.Size16.Add()" />
+                    <MudButton class="block-layout-add-column-btn" OnClick="e => AddColumn(index+1)" Disabled="Field.IsReadOnly" Title="Insert column" StartIcon="new Icons.Filled.Size16.Add()" />
                 </div>
 		    }
 	    </div>

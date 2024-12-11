@@ -1,13 +1,13 @@
 ﻿@inject ComponentManager ComponentManager
 @inject BlockManager BlockFieldManager
 
-<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+<BSOffCanvas @ref="_offCanvas" Placement="BlazorStrap.Placement.Right">
     <Header>Select block</Header>
     <Content>
         @foreach (BlockFactory block in BlockFieldManager.GetAllBlocks())
         {
             <div>
-                <FluentButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</FluentButton>
+                <MudButton OnClick="e => Add(block)" style="width: 100%;text-align:left;margin-bottom:0.5rem"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.BlockName</MudButton>
             </div>
         }
     </Content>
@@ -17,9 +17,7 @@
 {
     <div>
         <div class="mb-1">
-            <FluentButton OnClick="e => OpenModal(0)" Title="Insert block">
-                <i class="fas fa-plus"></i> Add
-            </FluentButton>
+            <MudButton OnClick="e => OpenModal(0)" Title="Insert block" StartIcon="@Icons.Material.Filled.Add" />
         </div>
 
         <div class="row">
@@ -29,14 +27,14 @@
                     @for (int i = 0; i < Blocks.Count; i++)
                     {
                         int curIndex = i;
-                        Block block = Blocks[curIndex];
+                        DragonFly.Block block = Blocks[curIndex];
 
                         <BSListGroupItem IsButton="true" OnClick="() => SelectedBlock = block">
                             <div class="block-field-options">
                                 <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
-                                <FluentButton OnClick="@(e => Blocks.MoveUp(block))" title="Up"><i class="fas fa-arrow-up"></i></FluentButton>
-                                <FluentButton OnClick="@(e => Blocks.MoveDown(block))" title="Down"><i class="fas fa-arrow-down"></i></FluentButton>
-                                <FluentButton OnClick="@(e => Blocks.Remove(block))" title="Remove"><i class="fas fa-times"></i></FluentButton>
+                                <MudButton OnClick="@(e => Blocks.MoveUp(block))" title="Up" StartIcon="@Icons.Material.Filled.ArrowUpward" />
+                                <MudButton OnClick="@(e => Blocks.MoveDown(block))" title="Down" StartIcon="@Icons.Material.Filled.ArrowDownward" />
+                                <MudButton OnClick="@(e => Blocks.Remove(block))" title="Remove" StartIcon="@Icons.Material.Filled.Delete" />
                             </div>
                             <div class="block-field-content">
                             </div>
@@ -63,11 +61,11 @@
     public BSModal Modal { get; set; }
 
     [Parameter]
-    public IList<Block> Blocks { get; set; }
+    public IList<DragonFly.Block> Blocks { get; set; }
 
-    private Block _selectedBlock;
+    private DragonFly.Block _selectedBlock;
 
-    public Block SelectedBlock
+    public DragonFly.Block SelectedBlock
     {
         get => _selectedBlock;
         set

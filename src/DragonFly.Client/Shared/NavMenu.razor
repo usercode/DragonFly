@@ -1,24 +1,19 @@
 ﻿@inject IDragonFlyApi Api
 
-<div style="background: var(--neutral-layer-3); display: flex; padding: 10px;">
-    <FluentAppBar Orientation="Orientation.Vertical">
-        <FluentAppBarItem Href=""
-                          Text="Start"
-                          IconRest="new Icons.Filled.Size24.Home()"
-                          IconActive="new Icons.Filled.Size24.Home()"                          
-                          Match="NavLinkMatch.All">
-        </FluentAppBarItem>
+<MudPaper Style="min-width:10rem">
+    <MudNavMenu>
+        <MudText Typo="Typo.h6" Class="px-4">DragonFly</MudText>
+        <MudText Typo="Typo.body2" Class="px-4 mud-text-secondary">CMS</MudText>
+        <MudNavLink 
+            Href="" 
+            Icon="@Icons.Material.Filled.Dashboard"                                             
+            Match="NavLinkMatch.All">Start</MudNavLink>
         @foreach (MenuItem menuItem in Api.MainMenu().Items)
         {
-            <FluentAppBarItem 
-                              Href="@menuItem.Route"
-                              IconRest="menuItem.Icon"
-                              IconActive="menuItem.Icon"
-                              Text="@menuItem.Title">
-                            </FluentAppBarItem>
+            <MudNavLink Href="@menuItem.Route" Icon="@menuItem.Icon">@menuItem.Title</MudNavLink>
         }
-    </FluentAppBar>
-</div>
+    </MudNavMenu>
+</MudPaper>
 
 @* <p>@CurrentUser</p> *@
 

@@ -18,7 +18,7 @@
                     <div class="row form-group">
                         <label class="col-sm-2 col-form-label">Id</label>
                         <div class="col-sm-10">
-                            <FluentTextField Value="@Entity.Id.ToString()" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
+                            <MudTextField Value="@Entity.Id" ReadOnly="true" Variant="Variant.Filled" />
                         </div>
                     </div>
                 }
@@ -27,7 +27,7 @@
                 <div class="row form-group">
                     <label class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <FluentTextField @bind-Value="@Entity.Name" />
+                        <MudTextField @bind-Value="@Entity.Name" />
                     </div>
                 </div>
 

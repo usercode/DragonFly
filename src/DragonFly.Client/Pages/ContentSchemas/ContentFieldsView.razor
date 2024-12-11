@@ -1,12 +1,12 @@
-﻿<FluentButton class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</FluentButton>
+﻿<MudButton class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</MudButton>
 
-<BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
+<BSOffCanvas @ref="_offCanvas">
     <Header>Add field</Header>
     <Content>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="col-sm-10">
-                <FluentTextField @bind-Value="@Name" />
+                <MudTextField @bind-Value="@Name" />
             </div>
         </div>
 
@@ -17,13 +17,13 @@
                     @foreach (Type p in FieldManager.Default.GetAllFieldTypes())
                     {
                         <div class="col-lg-12">
-                            <FluentButton OnClick="x => SelectedFieldType = p"
+                            <MudButton OnClick="x => SelectedFieldType = p"
                                           Appearance="p == SelectedFieldType ? Appearance.Accent : Appearance.Neutral"
                                           style="width:100%; cursor:pointer;margin-bottom:0.5rem;">
                                 <div class="text-start">
                                     @p.Name
                                 </div>
-                            </FluentButton>
+                            </MudButton>
                         </div>
                     }
                 </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="mb-3">
-            <FluentButton OnClick="()=> { _offCanvas.ToggleAsync(); AddItem(); }">Add field</FluentButton>
+            <MudButton OnClick="()=> { _offCanvas.ToggleAsync(); AddItem(); }">Add field</MudButton>
         </div>
     </Content>
 </BSOffCanvas>
