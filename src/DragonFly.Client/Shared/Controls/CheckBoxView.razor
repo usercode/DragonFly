@@ -1,11 +1,5 @@
-﻿@if (Value)
-{
-    <input type="checkbox" checked @onchange="@(e => OnChange(false))" />
-}
-else
-{
-    <input type="checkbox" @onchange="@(e => OnChange(true))" />
-}
+﻿<BSInputCheckbox @bind-Value="Value" />
+
 
 @code {
     [Parameter]

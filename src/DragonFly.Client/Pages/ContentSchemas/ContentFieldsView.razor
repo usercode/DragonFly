@@ -1,4 +1,6 @@
-﻿<BSButton Color="BSColor.Light" class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</BSButton>
+﻿@inject ComponentManager ComponentManager
+
+<BSButton Color="BSColor.Light" class="add-field" OnClick="x => OpenModalAsync()"><i class="fas fa-plus"></i> Add Field</BSButton>
 
 <BSOffCanvas @ref="_offCanvas" Placement="Placement.Right">
     <Header>Add field</Header>
@@ -34,14 +36,32 @@
     </Content>
 </BSOffCanvas>
 
-<BSListGroup>
-    <CascadingValue Value="this" IsFixed="true">
-    @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
-    {
-        <ContentFieldItemView Key="@field.Key" Field="@field.Value" />
-    }
-    </CascadingValue>
-</BSListGroup>
+<CascadingValue Value="this" IsFixed="true">
+    <BSAccordion>
+        @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
+        {
+            <BSAccordionItem DefaultShown="false">
+                <Header>
+                    <div style="display: flex; align-items: center;width:100%">
+                        <span style="flex-grow:1">@field.Key</span>
+                        <BSBadge Color="BSColor.Secondary" Class="bg-secondary">@field.Value.FieldType</BSBadge>
+                        <div>
+                            <BSButton Color="BSColor.Light" OnClick="x => Up(field.Key)"><i class="fas fa-arrow-up"></i></BSButton>
+                            <BSButton Color="BSColor.Light" OnClick="x => Down(field.Key)"><i class="fas fa-arrow-down"></i></BSButton>
+                            <BSButton Color="BSColor.Light" OnClick="x => Remove(field.Key)"><i class="fas fa-times"></i></BSButton>
+                        </div>
+                    </div>
+                </Header>
+                <Content>
+                    @if (field.Value.Options != null)
+                    {
+                        @ComponentManager.CreateComponent(field.Value.Options)
+                    }
+                </Content>
+            </BSAccordionItem>
+        }
+    </BSAccordion>
+</CascadingValue>
 
 @code {
     private BSOffCanvas _offCanvas;
