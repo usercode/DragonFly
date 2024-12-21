@@ -7,9 +7,9 @@
                 <span style="flex-grow:1">@Key</span>
                 <FluentBadge Appearance="Appearance.Accent">@Field.FieldType</FluentBadge>
                 <div>
-                    <FluentButton OnClick="x => FieldsView.Up(Key)" Title="Move up"><i class="fas fa-arrow-up"></i></FluentButton>
-                    <FluentButton OnClick="x => FieldsView.Down(Key)" Title="Move down"><i class="fas fa-arrow-down"></i></FluentButton>
-                    <FluentButton OnClick="x => FieldsView.Remove(Key)" Title="Remove"><i class="fas fa-times"></i></FluentButton>
+                    <FluentButton OnClick="x => FieldsView.Up(Key)" Title="Move up" IconStart="new Icons.Regular.Size16.ArrowUp()" />
+                    <FluentButton OnClick="x => FieldsView.Down(Key)" Title="Move down" IconStart="new Icons.Regular.Size16.ArrowDown()" />
+                    <FluentButton OnClick="x => FieldsView.Remove(Key)" Title="Remove" IconStart="new Icons.Regular.Size16.Delete()" />
                 </div>
             </div>
         </HeadingTemplate>

@@ -5,6 +5,7 @@
 using System.Threading.Tasks;
 using DragonFly.Init;
 using Microsoft.FluentUI.AspNetCore.Components;
+using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size24;
 
 namespace DragonFly.Client;
 
@@ -15,7 +16,7 @@ public class WebHookInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {       
-        api.MainMenu().Add("Webhook", new Icons.Regular.Size24.DesktopSignal(), "webhook");
+        api.MainMenu().Add("Webhook", new DesktopSignal(), "webhook");
 
         return Task.CompletedTask;
     }

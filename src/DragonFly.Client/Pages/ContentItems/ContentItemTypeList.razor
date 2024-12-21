@@ -12,8 +12,8 @@
         <FluentNavMenu>
             @foreach (ContentSchema schema in SearchResult.Items.OrderBy(x => x.Name))
             {
-                <FluentNavLink OnClick="x => OpenItem(schema)">
-                    <span class="oi oi-list-rich"></span> @schema.Name
+                <FluentNavLink OnClick="x => OpenItem(schema)" Icon="new Icons.Filled.Size16.List()">
+                    @schema.Name
                 </FluentNavLink>
             }
         </FluentNavMenu>

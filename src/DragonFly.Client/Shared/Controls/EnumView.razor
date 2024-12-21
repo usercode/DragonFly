@@ -3,11 +3,9 @@
 <div class="enum-field">
     <FluentSelect 
                     TOption="TEnum" 
-                    Items="EnumValues" 
-                    OptionText="x => x.ToString()" 
-                    OptionValue="x => x.ToString()"
+                    Items="EnumValues"                    
+                    Disabled="IsReadOnly"
                     @bind-SelectedOption="EnumValue"
-                    Placeholder="@EnumType.Name"
                     />
 </div>
 

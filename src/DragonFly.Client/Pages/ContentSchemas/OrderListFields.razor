@@ -7,9 +7,9 @@
                     <div style="display:flex;align-items:center">
                         <div style="flex:1">@i.Name</div>
                         <OrderDirection Order="i"></OrderDirection>
-                        <FluentButton OnClick="@(e => { TargetList.MoveUp(i);  })"><i class="fas fa-arrow-up"></i></FluentButton>
-                        <FluentButton OnClick="@(e => { TargetList.MoveDown(i); })"><i class="fas fa-arrow-down"></i></FluentButton>
-                        <FluentButton OnClick="@(e => { TargetList.Remove(i);  })"><i class="fas fa-times"></i></FluentButton>
+                        <FluentButton OnClick="@(e => { TargetList.MoveUp(i);  })" IconStart="new Icons.Regular.Size16.ArrowUp()" />
+                        <FluentButton OnClick="@(e => { TargetList.MoveDown(i); })" IconStart="new Icons.Regular.Size16.ArrowDown()" />
+                        <FluentButton OnClick="@(e => { TargetList.Remove(i);  })" IconStart="new Icons.Regular.Size16.Delete()" />
                     </div>
                 </li>
             }
@@ -18,7 +18,10 @@
     <div class="col-lg-6">
         <FluentSelect TOption="Option<string>"
                       Placeholder="Add field"
-                      Items="SourceList.Where(x => TargetList.Any(i => i.Name == x) == false).Select(x => new Option<string>() { Text = x, Value = x}).ToArray()"
+                      Items="SourceList
+                                .Where(x => TargetList.Any(i => i.Name == x) == false)
+                                .Select(x => new Option<string>() { Text = x, Value = x})
+                                .ToArray()"
                       OptionText="x => x.Text"
                       OptionValue="x => x.Value"
                       @bind-SelectedOption="SelectedValue">

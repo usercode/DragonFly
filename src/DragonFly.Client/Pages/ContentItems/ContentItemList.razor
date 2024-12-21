@@ -1,4 +1,5 @@
 @page "/content/{SchemaName}"
+@using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size24
 @inherits EntityListComponent<ContentItem>
 @rendermode DragonFlyRenderMode.Current
 
@@ -28,6 +29,7 @@
             {
                 <FluentDataGrid 
                     TGridItem="ContentItem" 
+                    AutoFit="true"
                     Items="SearchResult.Items.AsQueryable()" 
                     ShowHover="true" 
                     OnRowClick="@(x => Navigation.NavigateTo($"content/{x.Item.Schema.Name}/{x.Item.Id}"))">
@@ -35,11 +37,11 @@
                     <TemplateColumn Title="Published" Width="auto">
                         @if (context.PublishedAt != null)
                         {
-                            <FluentIcon Value="@(new Icons.Regular.Size24.Checkmark())" Title="Published" />
+                            <FluentIcon Value="@(new Checkmark())" Title="Published" />
                         }
                         else
                         {
-                            <FluentIcon Value="@(new Icons.Regular.Size24.Circle())" Title="Unpublished" Style="visibility:hidden" />
+                            <FluentIcon Value="@(new Circle())" Title="Unpublished" Style="visibility:hidden" />
                         }
                     </TemplateColumn>
 
@@ -64,7 +66,7 @@
                             {
                                 if (boolField.Value == true)
                                 {
-                                    <FluentIcon Value="@(new Icons.Regular.Size24.Check())" />
+                                    <FluentIcon Value="@(new Check())" />
                                 }
                             }
                             else

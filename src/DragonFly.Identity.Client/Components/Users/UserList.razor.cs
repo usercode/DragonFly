@@ -8,6 +8,7 @@ using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
+using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size16;
 
 namespace DragonFly.Identity.Client.Components.Users;
 
@@ -22,7 +23,7 @@ public class UserListBase : EntityListComponent<IdentityUser>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.ArrowClockwise(), async () => Navigation.NavigateTo("settings/identity/user/create")));
+        toolbarItems.Add(new ToolbarItem("Create", true, new ArrowClockwise(), async () => Navigation.NavigateTo("settings/identity/user/create")));
         toolbarItems.AddRefreshButton(this);
     }
 

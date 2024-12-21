@@ -1,8 +1,9 @@
-﻿@inherits FieldComponent<ArrayField, ArrayFieldOptions>
+﻿@using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size16
+@inherits FieldComponent<ArrayField, ArrayFieldOptions>
 
 <div class="array-field">
     <FluentButton class="add-field"
-                  IconStart="@(new Icons.Regular.Size16.Add())"
+                  IconStart="@(new Add())"
                   OnClick="e => { Field.Items.Add(Options.CreateArrayItem()); }"
                   Disabled="IsReadOnly">Add item</FluentButton>
 
@@ -14,11 +15,11 @@
         {
             <div class="arrayitem-field" style="margin-top: 0.25rem">
                 <FluentButton>#@(i++)</FluentButton>
-                <FluentButton OnClick="e => Field.Items.MoveUp(item)" IconStart="@(new Icons.Regular.Size16.ArrowUp())" title="Up"></FluentButton>
-                <FluentButton OnClick="e => Field.Items.MoveDown(item)" IconStart="@(new Icons.Regular.Size16.ArrowDown())" title="Down"></FluentButton>
-                <FluentButton OnClick="e => Field.Items.Remove(item)" IconStart="@(new Icons.Regular.Size16.Delete())" title="Remove"></FluentButton>
+                <FluentButton OnClick="e => Field.Items.MoveUp(item)" IconStart="@(new Icons.Regular.Size16.ArrowUp())" title="Up" Disabled="IsReadOnly" />
+                <FluentButton OnClick="e => Field.Items.MoveDown(item)" IconStart="@(new Icons.Regular.Size16.ArrowDown())" title="Down" Disabled="IsReadOnly" />
+                <FluentButton OnClick="e => Field.Items.Remove(item)" IconStart="@(new Icons.Regular.Size16.Delete())" title="Remove" Disabled="IsReadOnly" />
 
-                <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" />
+                <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" IsReadOnly="IsReadOnly" />
             </div>
         }
     }

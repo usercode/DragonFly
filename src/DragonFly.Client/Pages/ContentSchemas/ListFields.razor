@@ -7,9 +7,9 @@
                     <div style="display:flex;align-items:center">
                         <span>@i</span>
                         <span style="flex-grow:1"></span>
-                        <FluentButton OnClick="e => TargetList.MoveUp(i)"><i class="fas fa-arrow-up"></i></FluentButton>
-                        <FluentButton OnClick="e => TargetList.MoveDown(i)"><i class="fas fa-arrow-down"></i></FluentButton>
-                        <FluentButton OnClick="e => TargetList.Remove(i)"><i class="fas fa-times"></i></FluentButton>
+                        <FluentButton OnClick="e => TargetList.MoveUp(i)" IconStart="new Icons.Regular.Size16.ArrowUp()" />
+                        <FluentButton OnClick="e => TargetList.MoveDown(i)" IconStart="new Icons.Regular.Size16.ArrowDown()" />
+                        <FluentButton OnClick="e => TargetList.Remove(i)" IconStart="new Icons.Regular.Size16.Delete()" />
                     </div>
                 </BSListGroupItem>
             }
@@ -17,7 +17,7 @@
     </div>
     <div class="col-lg-6">
         <FluentSelect TOption="Option<string>"
-                      Placeholder="Add indexed field"
+                      Placeholder="Add field"
                       Items="SchemaFields
                                         .Where(x => x.Value.Options.HasIndex)
                                         .Where(x => TargetList.Contains(x.Key) == false)

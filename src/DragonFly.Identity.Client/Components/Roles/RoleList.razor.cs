@@ -8,6 +8,7 @@ using DragonFly.Client.Base;
 using DragonFly.Identity.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.FluentUI.AspNetCore.Components;
+using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size16;
 
 namespace DragonFly.Identity.Client.Components.Roles;
 
@@ -27,7 +28,7 @@ public partial class RoleListBase : EntityListComponent<IdentityRole>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", true, new Icons.Regular.Size16.New(), async () => Navigation.NavigateTo("settings/identity/role/create")));
+        toolbarItems.Add(new ToolbarItem("Create", true, new New(), async () => Navigation.NavigateTo("settings/identity/role/create")));
         toolbarItems.AddRefreshButton(this);
     }
 

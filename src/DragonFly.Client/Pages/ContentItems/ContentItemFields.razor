@@ -1,9 +1,9 @@
 ﻿@inject ComponentManager ComponentManager
 
 @foreach (var part in Schema.Fields
-                              .OrderBy(x => x.Value.SortKey)
-                              .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
-                              .ToList())
+                            .OrderBy(x => x.Value.SortKey)
+                            .Select(x => new { FieldName = x.Key, ContentField = Content.Fields[x.Key], SchemaField = x.Value })
+                            .ToList())
 {
     <div class="field">
         <div class="form-group">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-10">
                     <div class="field">
-                        @ComponentManager.CreateComponent(false, part.FieldName, part.ContentField, part.SchemaField.Options)
+                        @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
                     </div>
                 </div>
             </div>
@@ -35,4 +35,7 @@
 
     [Parameter]
     public string FieldName { get; set; }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; } = false;
 }

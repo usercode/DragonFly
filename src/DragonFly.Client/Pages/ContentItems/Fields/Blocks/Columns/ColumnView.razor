@@ -1,12 +1,15 @@
 ﻿@if (Column.Width == ColumnWidth.Value)
 {
-    <FluentNumberField @bind-Value="Column.Value" Style=" width: 6rem;" min="1" max="12" />
+    <FluentNumberField @bind-Value="Column.Value" Style=" width: 6rem;" min="1" max="12" Disabled="IsReadOnly" />
 }
-<EnumView TEnum="ColumnWidth" EnumValue="@Column.Width" EnumValueChanged="x => SetWidthValue(x)" />
+<EnumView EnumValue="@Column.Width" EnumValueChanged="x => SetWidthValue(x)" IsReadOnly="IsReadOnly" />
 
 @code {
     [Parameter]
     public Column Column { get; set; }
+
+    [Parameter]
+    public bool IsReadOnly { get; set; } = false;
 
     private void SetWidthValue(ColumnWidth width)
     {

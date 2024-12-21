@@ -51,10 +51,10 @@
             <div class="options">
                 @if (ContentItem != null)
                 {
-                    <FluentButton OnClick="e => Navigate()" IconStart="@(new Icons.Regular.Size16.ArrowRight())" title="Navigate"></FluentButton>
-                    <FluentButton OnClick="e => RemoveItem()" IconStart="@(new Icons.Regular.Size16.Delete())" Disabled="IsReadOnly" title="Remove"></FluentButton>
+                    <FluentButton OnClick="e => Navigate()" IconStart="@(new Icons.Regular.Size16.ArrowRight())" title="Navigate" />
+                    <FluentButton OnClick="e => RemoveItem()" IconStart="@(new Icons.Regular.Size16.Delete())" Disabled="IsReadOnly" title="Remove" />
                 }
-                <FluentButton title="Select" Disabled="IsReadOnly" OnClick="e => Modal.ShowAsync()" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
+                <FluentButton title="Select" Disabled="IsReadOnly" OnClick="e => Modal.ShowAsync()" IconStart="@(new Icons.Regular.Size16.Add())" />
             </div>
         </div>
     </div>

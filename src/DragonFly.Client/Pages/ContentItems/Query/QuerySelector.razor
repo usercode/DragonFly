@@ -18,16 +18,15 @@
                     <FluentButton IconStart="@(new Icons.Regular.Size16.Delete())" OnClick="x => ContentItemList.OrderFields.Remove(field)" Title="Remove" />
                 </BSListGroupItem>
             }
+            <FluentMenuButton Text="Add field">
+                @foreach (var field in GetUnsedOrderFields())
+                {
+                    <FluentMenuItem Id="@field.Key" OnClick="x => ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true))">@field.Key</FluentMenuItem>
+                }
+            </FluentMenuButton>
         </FluentAccordionItem>
-    </FluentAccordion>
+    </FluentAccordion>    
 
-    <FluentMenuButton Text="Add indexed field">
-        @foreach (var field in GetUnsedOrderFields())
-        {
-            <FluentMenuItem Id="@field.Key" OnClick="x => ContentItemList.OrderFields.Add(new FieldOrder(field.Key, true))">@field.Key</FluentMenuItem>
-        }
-    </FluentMenuButton>
-    
     <h4 class="query-title">Filter</h4>
 
     <FluentAccordion>
@@ -41,7 +40,6 @@
 }
 
 @code {
-
     [Parameter]
     public ContentItemList ContentItemList { get; set; }
 

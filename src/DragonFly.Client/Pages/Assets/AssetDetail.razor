@@ -8,16 +8,6 @@
 
 @if (Entity != null)
 {
-    <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" IsCentered="true" Size="Size.ExtraLarge">
-        <Header>Select folder</Header>
-        <Content>
-            <AssetFolderSelector FolderClicked="async x => await FolderSelected(x)" />
-        </Content>
-        <Footer>
-            <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync()">Ok</BSButton>
-        </Footer>
-    </BSModal>
-
     <div class="content-header">
         <h1>Asset</h1>
 
@@ -94,7 +84,7 @@
                                                 <FluentTextField Value="" ReadOnly="true" Appearance="FluentInputAppearance.Filled" />
                                             }
 
-                                            <FluentButton OnClick="x => Modal.ShowAsync()">...</FluentButton>
+                                            <FluentButton OnClick="OpenFolderSelectorAsync">...</FluentButton>
                                         </div>
                                     </div>
                                 </div>
@@ -160,17 +150,4 @@
             </div>
         </div>
     </div>
-}
-
-@code {
-    private BSModal Modal;
-
-    private async Task FolderSelected(AssetFolder folder)
-    {
-        await Modal.HideAsync();
-
-        Entity.Folder = folder;
-
-        StateHasChanged();
-    }
 }

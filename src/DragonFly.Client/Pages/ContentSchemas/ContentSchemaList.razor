@@ -15,7 +15,7 @@
         <FluentNavMenu>
             @foreach (ContentSchema schema in SearchResult.Items)
             {
-                <FluentNavLink Href="@($"schema/{schema.Id}")">
+                <FluentNavLink Href="@($"schema/{schema.Id}")" Icon="new Icons.Filled.Size16.List()">
                     <span class="oi oi-list-rich"></span> @schema.Name
                 </FluentNavLink>
             }

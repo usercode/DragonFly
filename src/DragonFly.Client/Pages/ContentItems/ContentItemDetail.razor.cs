@@ -13,6 +13,7 @@ using DragonFly.Razor.Extensions;
 using Microsoft.JSInterop;
 using BlazorStrap.V5;
 using Microsoft.FluentUI.AspNetCore.Components;
+using static Microsoft.FluentUI.AspNetCore.Components.Icons.Regular.Size16;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -101,7 +102,7 @@ public partial class ContentItemDetail
 
             if (string.IsNullOrEmpty(Entity.Schema.Preview.Pattern) == false)
             {
-                toolbarItems.Add(new ToolbarItem("Preview", false, new Icons.Regular.Size16.PreviewLink(), PreviewAsync));
+                toolbarItems.Add(new ToolbarItem("Preview", false, new PreviewLink(), PreviewAsync));
             }
         }
 

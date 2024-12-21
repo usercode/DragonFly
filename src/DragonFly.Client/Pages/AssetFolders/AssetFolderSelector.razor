@@ -1,14 +1,5 @@
 ﻿@inject IAssetFolderStorage Storage
 
-<BSModal IsStaticBackdrop="true" @ref="DeletionModal">
-    <Header>Delete folder?</Header>
-    <Content>Are you sure you want to delete the folder?</Content>
-    <Footer Context="modal">
-        <BSButton Color="BSColor.Secondary" OnClick="DeletionModal.HideAsync">No</BSButton>
-        <BSButton Color="BSColor.Primary" OnClick="DeleteActionAsync">Yes</BSButton>
-    </Footer>
-</BSModal>
-
 <div>
     @for(int i = 0; i < Folders.Count; i++)
     {
@@ -49,67 +40,5 @@
 
 @code {
 
-    private BSModal DeletionModal { get; set; }
-
-    [Parameter]
-    public AssetFolder RootFolder { get; set; }
-
-    [Parameter]
-    public Action<AssetFolder> FolderClicked { get; set; }
-
-    public IList<AssetFolderNode> Folders { get; set; } = new List<AssetFolderNode>();
-
-    public string NewFolderName { get; set; }
-
-    public AssetFolderNode FolderToDelete { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-
-        await RefreshAsync();
-    }
-
-    protected async Task RefreshAsync()
-    {
-        Folders = (await Storage.QueryAsync(new AssetFolderQuery() { Parent = RootFolder?.Id }))
-                            .Value                
-                            .Items
-                            .Select(x => new AssetFolderNode(x))
-                            .ToList();
-    }
-
-    protected async Task DeleteAsync(AssetFolderNode node)
-    {
-        await DeletionModal.ShowAsync();
-
-        FolderToDelete = node;
-    }
-
-    protected async Task DeleteActionAsync()
-    {
-        await DeletionModal.HideAsync();
-
-        await Storage.DeleteAsync(FolderToDelete.Folder);
-
-        Folders.Remove(FolderToDelete);
-    }
-
-    protected async Task CreateNewFolderAsync()
-    {
-        if (string.IsNullOrEmpty(NewFolderName))
-        {
-            return;
-        }
-
-        AssetFolder folder = new AssetFolder();
-        folder.Name = NewFolderName;
-        folder.Parent = RootFolder;
-
-        await Storage.CreateAsync(folder);
-
-        NewFolderName = string.Empty;
-
-        await RefreshAsync();
-    }
+   
 }

@@ -34,20 +34,20 @@
                 {
                     <FluentButton OnClick="e => NavigationManager.NavigateTo(Asset.GetPublicUrl(), true)" target="_blank" title="Download" IconStart="@(new Icons.Regular.Size16.ArrowDown())"></FluentButton>
                 }
-                <FluentButton OnClick="e => RemoveItem()" title="Remove" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Delete())"></FluentButton>
+                <FluentButton OnClick="e => RemoveItem()" title="Remove" Disabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Delete())"></FluentButton>
             }
-            <FluentButton OnClick="e => OpenModal()" title="Select" IsDisabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
+            <FluentButton OnClick="e => OpenModal()" title="Select" Disabled="IsReadOnly" IconStart="@(new Icons.Regular.Size16.Add())"></FluentButton>
         </div>
     </div>
 
     @if (Asset != null && ShowPreview)
     {
-        <div class="image" style="margin: 1rem 0;">
+        <div class="image-box">
             @if (string.IsNullOrEmpty(Asset.PreviewUrl) == false)
             {
                 @if (Asset.IsSVG())
                 {
-                    <img src="@Asset.PreviewUrl" style="height:200px" />
+                    <img src="@Asset.PreviewUrl" class="svg" />
                 }
                 else
                 {

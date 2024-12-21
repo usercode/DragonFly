@@ -40,7 +40,7 @@
             @foreach (NotificationItem notification in Notifications)
             {
                 <div style="margin-top: 1rem">
-                     <FluentMessageBar Intent="@notification.Type.ToAlertCss()">
+                     <FluentMessageBar Intent="@notification.Type.ToAlertCss()" AllowDismiss="false">
                         @notification.Message
                     </FluentMessageBar>
                 </div>

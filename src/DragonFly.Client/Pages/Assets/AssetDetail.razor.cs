@@ -10,6 +10,9 @@ using System.IO;
 using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
 using DragonFly.Client.Base;
+using Microsoft.FluentUI.AspNetCore.Components;
+using BlazorStrap.V5;
+using DragonFly.Client.Pages.AssetFolders;
 
 namespace DragonFly.Client.Pages.Assets;
 
@@ -34,6 +37,9 @@ public partial class AssetDetail
 
     [Inject]
     public IContentStorage ContentService { get; set; }
+
+    [Inject]
+    public IDialogService DialogService { get; set; }
 
     public async Task PublishAsync()
     {
@@ -115,5 +121,21 @@ public partial class AssetDetail
         await AssetService.ApplyMetadataAsync(Entity);
 
         await RefreshAsync();
+    }
+
+    private async Task OpenFolderSelectorAsync()
+    {
+        IDialogReference d = await DialogService.ShowDialogAsync<AssetFolderSelector>(new DialogParameters());
+
+        var result = await d.Result;
+
+        if (result.Cancelled == false)
+        {
+            Entity.Folder = (AssetFolder)result.Data;
+        }
+
+        //Entity.Folder = folder;
+
+        //StateHasChanged();
     }
 }
