@@ -56,8 +56,8 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BlazorStrap" Version="5.2.103.120724" />
-    <PackageReference Include="BlazorStrap.V5" Version="5.2.103" />
+		<PackageReference Include="BlazorStrap" Version="5.2.103.122024" />
+    <PackageReference Include="BlazorStrap.V5" Version="5.2.103.122024" />
 	</ItemGroup>
 
   <ItemGroup>

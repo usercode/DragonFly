@@ -15,13 +15,8 @@ using DragonFly.Client;
 
 namespace DragonFly.Client.Pages.Assets;
 
-public class AssetDetailBase : EntityDetailComponent<Asset>
+public partial class AssetDetail
 {
-    public AssetDetailBase()
-    {
-
-    }
-
     [Inject]
     public IAssetStorage AssetStore { get; set; }
 

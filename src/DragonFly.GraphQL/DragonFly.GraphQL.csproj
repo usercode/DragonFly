@@ -25,8 +25,8 @@
   
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="8.2.1" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.1.0" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.1.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.2.0" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.2.0" />
   </ItemGroup>
 
   <ItemGroup>

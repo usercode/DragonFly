@@ -7,12 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 
 namespace DragonFly.Client.Pages.BackgroundTasks;
 
-public class BackgroundTaskListBase : StartComponentBase, IAsyncDisposable
+public partial class BackgroundTaskList : IAsyncDisposable
 {
     [Inject]
     public IBackgroundTaskService BackgroundTaskService { get; set; }

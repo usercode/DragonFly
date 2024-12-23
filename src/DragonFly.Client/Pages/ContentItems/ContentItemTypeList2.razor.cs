@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
-public class ContentItemTypeListBase2 : ContentSchemaListBase
+public partial class ContentItemTypeList2
 {
-    public ContentItemTypeListBase2()
-    {
-
-    }
-
     [Parameter]
     public ContentItem SelectedContentItem { get; set; }
 

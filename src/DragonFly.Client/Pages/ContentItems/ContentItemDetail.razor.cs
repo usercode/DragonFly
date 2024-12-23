@@ -3,24 +3,20 @@
 // MIT License
 
 using BlazorStrap;
-using DragonFly.Client.Base;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DragonFly.Razor.Extensions;
 using Microsoft.JSInterop;
 using BlazorStrap.V5;
+using DragonFly.Razor.Extensions;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
-public class ContentItemDetailBase : EntityDetailComponent<ContentItem>
+public partial class ContentItemDetail
 {
-    public ContentItemDetailBase()
-    {
-    }
 
     [Inject]
     public IEnumerable<IContentAction> ContentActions { get; set; }

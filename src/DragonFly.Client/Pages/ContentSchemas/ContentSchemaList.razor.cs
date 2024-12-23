@@ -6,16 +6,10 @@ using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages;
+namespace DragonFly.Client.Pages.ContentSchemas;
 
-public class ContentSchemaListBase : EntityListComponent<ContentSchema>
+public partial class ContentSchemaList
 {
-    public ContentSchemaListBase()
-    {
-
-    }
-
-
     [Inject]
     public ISchemaStorage ContentService { get; set; }
 

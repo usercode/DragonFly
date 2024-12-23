@@ -11,7 +11,7 @@ public interface IContentAction
 {
     string Name { get; }
 
-    bool CanUse(ContentItemDetailBase contentItemDetail);
+    bool CanUse(ContentItemDetail contentItemDetail);
 
-    Task Execute(ContentItemDetailBase contentItemBase);
+    Task Execute(ContentItemDetail contentItemBase);
 }

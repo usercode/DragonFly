@@ -1,6 +1,6 @@
 ﻿@page "/schema/{EntityId:guid}"
 @page "/schema/create"
-@inherits ContentSchemaDetailBase
+@inherits EntityDetailComponent<ContentSchema>
 
 @if (Entity != null)
 {

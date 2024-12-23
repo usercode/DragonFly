@@ -2,19 +2,14 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages;
+namespace DragonFly.Client.Pages.Assets;
 
-public class AssetListBase : EntityListComponent<Asset>
+public partial class AssetList
 {
-    public AssetListBase()
-    {
-    }
-
     [Inject]
     public IAssetFolderStorage AssetFolderStore { get; set; }
 

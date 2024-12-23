@@ -3,8 +3,6 @@
 // MIT License
 
 using BlazorStrap;
-using DragonFly.Client.Base;
-using DragonFly.Query;
 using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
-public class ContentItemListBase : EntityListComponent<ContentItem>
+public partial class ContentItemList
 {
     [Parameter]
     public string SchemaName { get; set; }

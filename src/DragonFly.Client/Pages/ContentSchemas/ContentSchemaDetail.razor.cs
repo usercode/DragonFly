@@ -7,15 +7,10 @@ using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DragonFly.Client.Pages;
+namespace DragonFly.Client.Pages.ContentSchemas;
 
-public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
+public partial class ContentSchemaDetail
 {
-    public ContentSchemaDetailBase()
-    {
-        Entity = new ContentSchema(string.Empty);
-    }
-
 
     [Inject]
     public ISchemaStorage ContentService { get; set; }
@@ -24,7 +19,7 @@ public class ContentSchemaDetailBase : EntityDetailComponent<ContentSchema>
     {
         base.BuildToolbarItems(toolbarItems);
 
-        if(IsNewEntity)
+        if (IsNewEntity)
         {
             toolbarItems.AddCreateButton(this);
         }
