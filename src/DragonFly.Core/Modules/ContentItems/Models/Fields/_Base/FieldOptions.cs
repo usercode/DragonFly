@@ -15,9 +15,9 @@ public abstract class FieldOptions
     public bool IsRequired { get; set; }
 
     /// <summary>
-    /// IsSearchable
+    /// HasIndex
     /// </summary>
-    public bool IsSearchable { get; set; }
+    public bool HasIndex { get; set; }
 
     /// <summary>
     /// CreateContentField

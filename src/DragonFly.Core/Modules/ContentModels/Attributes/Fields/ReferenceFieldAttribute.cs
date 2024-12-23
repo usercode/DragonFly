@@ -17,7 +17,7 @@ public class ReferenceFieldAttribute : BaseFieldAttribute
         schema.AddReference(property, x =>
                                         {
                                             x.IsRequired = Required;
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                         },
                                         SortKey);
     }

@@ -17,7 +17,7 @@ public class FloatFieldAttribute : BaseFieldAttribute
         schema.AddFloat(property, x =>
                                         {
                                             x.IsRequired = Required;
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                         },
                                         SortKey);
     }

@@ -13,12 +13,13 @@ public static class OptionsSerializerExtenions
 {
     public static BsonValue ToMongo(this ArrayFieldOptions options)
     {
-        BsonDocument bsonDocument = new BsonDocument();
-
-        bsonDocument.Add(nameof(ArrayFieldOptions.IsRequired), options.IsRequired);
-        bsonDocument.Add(nameof(ArrayFieldOptions.IsSearchable), options.IsSearchable);
-        bsonDocument.Add(nameof(ArrayFieldOptions.MinItems), options.MinItems);
-        bsonDocument.Add(nameof(ArrayFieldOptions.MaxItems), options.MaxItems);
+        BsonDocument bsonDocument = new BsonDocument
+        {
+            { nameof(ArrayFieldOptions.IsRequired), options.IsRequired },
+            { nameof(ArrayFieldOptions.HasIndex), options.HasIndex },
+            { nameof(ArrayFieldOptions.MinItems), options.MinItems },
+            { nameof(ArrayFieldOptions.MaxItems), options.MaxItems }
+        };
 
         BsonDocument bsonFields = new BsonDocument();
 

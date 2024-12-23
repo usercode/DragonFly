@@ -19,7 +19,7 @@ public class SlugFieldAttribute : BaseFieldAttribute
         schema.AddSlug(property, x =>
                                     {
                                         x.IsRequired = Required;
-                                        x.IsSearchable = Index;
+                                        x.HasIndex = Index;
                                         x.TargetField = TargetField;
                                     },
                                     SortKey);

@@ -17,7 +17,7 @@ public class GeolocationFieldAttribute : BaseFieldAttribute
         schema.AddGeolocation(property, x =>
                                         {
                                             x.IsRequired = Required;
-                                            x.IsSearchable = Index;
+                                            x.HasIndex = Index;
                                         },
                                         SortKey);
     }
