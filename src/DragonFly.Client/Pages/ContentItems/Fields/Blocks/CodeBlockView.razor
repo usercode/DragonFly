@@ -2,7 +2,7 @@
 
 <div class="block code-block">
     <div class="mb-1">
-        <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" />
+        <EnumView TEnum="CodeType" @bind-EnumValue="@Block.CodeType" IsReadOnly="Field.IsReadOnly" />
     </div>    
 
     <div class="grow-wrap" data-replicated-value="@Block.Content">

@@ -1,0 +1,32 @@
+﻿.nav-item {
+    font-size: 0.9rem;
+}
+
+.nav-item:first-of-type {
+    padding-top: 1rem;
+}
+
+.nav-item:last-of-type {
+    padding-bottom: 1rem;
+}
+
+::deep .nav-link {
+    color: #fff;
+    border-radius: 0px;
+    display: flex;
+    line-height: 1.5rem;
+    padding: 8px 14px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+::deep .nav-link.active {
+    background-color: rgba(255,255,255,0.25);
+    color: white;
+}
+
+::deep .nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}

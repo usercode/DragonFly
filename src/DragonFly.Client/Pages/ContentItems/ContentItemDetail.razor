@@ -14,13 +14,21 @@
                 {
                     @foreach (var item in Versions)
                     {
+                        bool alreadySelected = false; @* SelectedVersions.Any(x => x.Id == item.Id); *@
+
                         <div style="margin:0.5rem 0">
-                            <BSButton Color="BSColor.Light" style="width:100%;text-align:left" OnClick="async x => await AddContentVersionsAsync(item.Id)">
-                                <span>@item.Modified.Value.ToString()</span>
-                                @if (item.PublishedAt != null)
-                                {
-                                    <span class="badge bg-primary" style="margin-left: 1rem">Published</span>
-                                }
+                            <BSButton Color="alreadySelected ? BSColor.Success : BSColor.Light" IsOutlined="alreadySelected" style="width:100%;text-align:left" OnClick="async x => await AddContentVersionsAsync(item.Id)">
+                                <BSRow>
+                                    <BSCol>
+                                        <span>@item.Modified.Value.ToString()</span>
+                                    </BSCol>
+                                    @if (item.PublishedAt != null)
+                                    {
+                                        <BSCol Auto="true">
+                                            <span class="badge bg-primary" style="margin-left: 1rem">Published</span>
+                                        </BSCol>
+                                    }
+                                </BSRow>
                             </BSButton>
                         </div>
                     }
@@ -41,16 +49,16 @@
 
         </div>
         <div class="scroll-content">
-            <BSNav IsTabs="true" style="margin-bottom: 1.5rem;">
+            <BSNav IsTabs="true" IsPills="true" style="margin-bottom: 1.5rem;">
                 <BSNavItem>
                     <TabLabel>Details</TabLabel>
                     <TabContent>
                         <BSForm Model="Entity" class="entity-content">
                             @{
                                 var items = Entity.Schema.Fields
-                                .OrderBy(x => x.Value.SortKey)
-                                .Select((x, index) => new { FieldName = x.Key, FieldIndex = index })
-                                .ToList();
+                                                    .OrderBy(x => x.Value.SortKey)
+                                                    .Select((x, index) => new { FieldName = x.Key, FieldIndex = index })
+                                                    .ToList();
                             }
 
                             @* grid for fields *@
@@ -66,21 +74,31 @@
                                 {
                                     int a = i;
                                     <div class="field" style="grid-column: 1; grid-row: @(items[i].FieldIndex + 3)">
-                                        <BSAlert Color="GetFieldColor(items[i].FieldName)">
+                                        @if (IsFieldValid(items[i].FieldName))
+                                        {
                                             <BSLabel class="field-label">@items[a].FieldName</BSLabel>
-                                        </BSAlert>
+                                        }
+                                        else
+                                        {
+                                            <BSAlert Color="GetFieldColor(items[i].FieldName)" style="padding-right:1rem">
+                                                <BSLabel class="field-label">@items[a].FieldName</BSLabel>
+                                            </BSAlert>
+                                        }
                                     </div>
                                 }
 
                                 @* field values *@
-                                <ContentItemFields2 Content="Entity" Title="@(SelectedVersions.Count > 0 ? "Master" : null)" />
+                                <ContentItemFields2 Content="Entity" Title="@(SelectedVersions.Count > 0 ? "Current" : null)" />
 
                                 @for (int i = 0; i < SelectedVersions.Count; i++)
                                 {
-                                    <ContentItemFields2 Content="SelectedVersions[i]"
+                                    var currentItem = SelectedVersions[i];
+
+                                    <ContentItemFields2 Content="currentItem"
                                                         Column="i+2"
                                                         IsReadOnly="true"
-                                                        Title="@SelectedVersions[i].ModifiedAt.ToString()" />
+                                                        CloseAction="() => RemoveSelectedVersion(currentItem)"
+                                                        Title="@currentItem.ModifiedAt.ToString()" />
                                 }
                             </div>
                         </BSForm>

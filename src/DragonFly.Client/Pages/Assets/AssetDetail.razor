@@ -25,7 +25,7 @@
     </div>
 
     <div class="scroll-content">
-        <BSNav IsTabs="true" style="margin-bottom: 1.5rem;">
+        <BSNav IsTabs="true" IsPills="true" style="margin-bottom: 1.5rem;">
             <BSNavItem>
                 <TabLabel>Details</TabLabel>
                 <TabContent>
@@ -139,7 +139,9 @@
                                         </div>
                                         @if (Entity.Hash != null)
                                         {
-                                            @AssetPreviewManager.CreateComponent(Entity)
+                                            <div style="margin: 2rem 0;">
+                                                @AssetPreviewManager.CreateComponent(Entity)
+                                            </div>
                                         }
                                     }
                                 </div>
@@ -151,7 +153,7 @@
             <BSNavItem>
                 <TabLabel>Referenced by</TabLabel>
                 <TabContent>
-                    <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />
+                   <DragonFly.Client.Pages.ContentReferences.ReferencedBy Schema="@Asset.Schema" Id="Entity.Id" />           
                 </TabContent>
             </BSNavItem>
         </BSNav>

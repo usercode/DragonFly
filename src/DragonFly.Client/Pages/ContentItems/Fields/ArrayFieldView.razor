@@ -5,19 +5,20 @@
 
     @if (Field.Items.Any())
     {
-        <BSListGroup>
+        <BSListGroup style="margin-top:0.25rem">
             @{
                 int i = 1;
             }
             @foreach (ArrayFieldItem item in Field.Items)
             {
-                <BSListGroupItem class="arrayitem-field" style="margin-top: 0.25rem">
-                    <BSButton Color="BSColor.Light">#@(i++)</BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveUp(item)" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveDown(item)" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.Remove(item)" title="Remove"><i class="fas fa-times"></i></BSButton>
-
-                    <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" />
+                <BSListGroupItem class="arrayitem-field">
+                    <div class="options">
+                    <BSButton Color="BSColor.Light" IsDisabled="true">#@(i++)</BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveUp(item)" title="Up" IsDisabled="IsReadOnly"><i class="fas fa-arrow-up"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => Field.Items.MoveDown(item)" title="Down" IsDisabled="IsReadOnly"><i class="fas fa-arrow-down"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="e => Field.Items.Remove(item)" title="Remove" IsDisabled="IsReadOnly"><i class="fas fa-trash"></i></BSButton>
+                    </div>
+                    <ContentItemFields Content="item" Schema="Options" FieldName="@FieldName" IsReadOnly="IsReadOnly" />
                 </BSListGroupItem>
             }
         </BSListGroup>

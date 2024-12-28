@@ -32,7 +32,7 @@
                     <span class="block-label"><i class="@block.CssIcon" style="margin-right: 0.5rem;" />@block.Name</span>
                     <BSButton Color="BSColor.Light" OnClick="e => Blocks.MoveUp(block)" IsDisabled="Field.IsReadOnly" title="Up"><i class="fas fa-arrow-up"></i></BSButton>
                     <BSButton Color="BSColor.Light" OnClick="e => Blocks.MoveDown(block)" IsDisabled="Field.IsReadOnly" title="Down"><i class="fas fa-arrow-down"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => Blocks.Remove(block)" IsDisabled="Field.IsReadOnly" title="Remove"><i class="fa-solid fa-times"></i></BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="e => Blocks.Remove(block)" IsDisabled="Field.IsReadOnly" title="Remove"><i class="fa-solid fa-trash"></i></BSButton>
                     <BSButton Color="BSColor.Light" OnClick="e => BlockClipboard.CopyAsync(new[] { block })" title="Copy"><i class="fa-solid fa-copy"></i></BSButton>
 				</div>
 				<div class="block-field-content">

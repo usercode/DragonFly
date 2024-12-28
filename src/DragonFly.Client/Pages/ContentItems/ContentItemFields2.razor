@@ -5,6 +5,10 @@
 {
     <div class="field-title" style="grid-column: @(Column+1); grid-row: 1">
         @Title
+        @if(CloseAction != null)
+        {
+            <button type="button" class="btn-close" aria-label="Close" title="Remove" @onclick="CloseAction"></button>
+        }
     </div>
 }
 
@@ -24,7 +28,7 @@
 @foreach (var part in items)
 {
     <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">        
-            @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
+        @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
     </div>
 }
 
@@ -40,6 +44,9 @@
 
     [Parameter]
     public bool IsReadOnly { get; set; } = false;
+
+    [Parameter]
+    public Action CloseAction { get; set; }
 
     private BSColor GetFieldColor(string field)
     {

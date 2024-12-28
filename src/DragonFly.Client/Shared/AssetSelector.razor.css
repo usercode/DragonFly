@@ -1,0 +1,10 @@
+﻿.asset-field .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+}
+
+.svg {
+    width: 100%;
+}

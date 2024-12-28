@@ -34,5 +34,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.Generator\DragonFly.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>  
+  </ItemGroup>
 </Project>

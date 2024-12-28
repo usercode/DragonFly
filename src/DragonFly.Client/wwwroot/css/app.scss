@@ -25,6 +25,16 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+}
+
+input:read-only {
+    cursor: not-allowed;
+    background: #f5f5f5 !important;
+}
+
 .pagination {
     flex-wrap: wrap;
 }
@@ -152,13 +162,6 @@ app {
     overflow: hidden;
 }
 
-.asset-field .image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
-}
-
 .main {
     display: flex;
     flex-direction: column;
@@ -195,56 +198,6 @@ app {
                 padding: 4rem;
             }
 
-.sidebar {
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
-.sub-sidebar {
-    background-color: #444444;
-    color: #fff;
-    height: 100vh;
-    padding-top:4rem;
-    
-}
-
-.sidebar .nav-item {
-    font-size: 0.9rem;
-}
-
-    .sidebar .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
-
-    .sidebar .nav-item:last-of-type {
-        padding-bottom: 1rem;
-    }
-
-.sidebar .nav-item a {
-    color: #fff;
-    border-radius: 0px;
-    display: flex;
-    line-height: 1.5rem;
-    padding: 8px 24px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-        .sidebar .nav-item a.active {
-            background-color: rgba(255,255,255,0.25);
-            color: white;
-        }
-
-        .sidebar .nav-item a:hover {
-            background-color: rgba(255,255,255,0.1);
-            color: white;
-        }
-
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
@@ -278,6 +231,13 @@ app {
     }
 }
 
+.sidebar {
+    background-color: #1a1a1a;
+    color: #fff;
+    box-shadow: 0px 0px 1rem rgba(0, 0, 0, .15);
+}
+
+
 @media (min-width: 768px) {
     app {
         flex-direction: row;
@@ -285,15 +245,6 @@ app {
 
     .sidebar {
         flex: 0;
-    }
-
-    .navbar-toggler {
-        display: none;
-    }
-
-    .sidebar .collapse {
-        /* Never collapse the sidebar for wide screens */
-        display: block;
     }
 }
 
@@ -368,7 +319,7 @@ app {
 .scroll-content {
     flex: 1;
     overflow-y: auto;
-    padding: 0.25rem 1rem;
+    padding: 0rem 1rem 0rem 0px;
     margin: 1rem;
 }
 
@@ -468,3 +419,4 @@ app {
 .tox-statusbar__branding {
     display: none;
 }
+

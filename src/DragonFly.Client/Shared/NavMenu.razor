@@ -7,18 +7,18 @@
                 <span class="fa-solid fa-house" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        @foreach(MenuItem menuItem in Api.MainMenu().Items)
+        @foreach (MenuItem menuItem in Api.MainMenu().Items)
         {
-             <li class="nav-item">
-            <NavLink class="nav-link" href="@menuItem.Route">
-                <div>
-                    <span class="@menuItem.CssIcon" aria-hidden="true"></span>
-                </div>
-                <div class="text">
-                    @menuItem.Title
-                </div>
-            </NavLink>
-        </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="@menuItem.Route">
+                    <div>
+                        <span class="@menuItem.CssIcon" aria-hidden="true"></span>
+                    </div>
+                    <div class="text">
+                        @menuItem.Title
+                    </div>
+                </NavLink>
+            </li>
         }
     </ul>
 </div>

@@ -48,8 +48,8 @@ public partial class ContentItemList
     {
         base.BuildToolbarItems(toolbarItems);
 
-        toolbarItems.Add(new ToolbarItem("Create", BSColor.Success, async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
-        toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Success, PublishQueryAsync));
+        toolbarItems.Add(new ToolbarItem("Create", BSColor.Primary, async () => Navigation.NavigateTo($"content/{SchemaName}/create")));
+        toolbarItems.Add(new ToolbarItem("Publish all", BSColor.Primary, PublishQueryAsync));
         toolbarItems.Add(new ToolbarItem("Unpublish all", BSColor.Danger, UnpublishQueryAsync));
         toolbarItems.AddRefreshButton(this);
     }

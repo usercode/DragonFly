@@ -43,7 +43,7 @@ public partial class ContentItemDetail
 
     public BSOffCanvas _versionsModal;
 
-    public IList<ContentItem> SelectedVersions { get; private set; } = new List<ContentItem>();
+    public IList<ContentItem> SelectedVersions { get; private set; } = [];
 
     public bool IsFieldValid(string field)
     {
@@ -71,13 +71,13 @@ public partial class ContentItemDetail
 
     protected async Task AddContentVersionsAsync(Guid id)
     {
-        ContentItem item = await ContentVersionStorage.GetContentByVersionAsync(EntityType, id);
+        var item = await ContentVersionStorage.GetContentByVersionAsync(EntityType, id);
 
         SelectedVersions.Add(item);
 
         //reorder
         SelectedVersions = SelectedVersions.OrderByDescending(x => x.ModifiedAt).ToList();
-
+        
         await ToggleVersions();
     }
 
@@ -91,17 +91,17 @@ public partial class ContentItemDetail
         }
         else
         {
-            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, PublishAsync));
-            toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Dark, UnpublishAsync));
-            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Dark, CloneAsync));
-            toolbarItems.Add(new ToolbarItem("Versions", BSColor.Dark, ToggleVersions));
+            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Primary, PublishAsync));
+            toolbarItems.Add(new ToolbarItem("Unpublish", BSColor.Primary, UnpublishAsync));
+            toolbarItems.Add(new ToolbarItem("Clone", BSColor.Primary, CloneAsync));
+            toolbarItems.Add(new ToolbarItem("Versions", BSColor.Primary, ToggleVersions));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddSaveButton(this);
             toolbarItems.AddDeleteButton(this);
 
             if (string.IsNullOrEmpty(Entity.Schema.Preview.Pattern) == false)
             {
-                toolbarItems.Add(new ToolbarItem("Preview", BSColor.Success, PreviewAsync));
+                toolbarItems.Add(new ToolbarItem("Preview", BSColor.Primary, PreviewAsync));
             }
         }
 
@@ -225,5 +225,12 @@ public partial class ContentItemDetail
     public async Task UnpublishAsync()
     {
         await ContentService.UnpublishAsync(EntityType, EntityId);
+    }
+
+    private void RemoveSelectedVersion(ContentItem contentItem)
+    {
+        SelectedVersions.Remove(contentItem);
+
+        StateHasChanged();
     }
 }

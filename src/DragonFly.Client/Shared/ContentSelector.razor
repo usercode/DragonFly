@@ -52,7 +52,7 @@
                 @if (ContentItem != null)
                 {
                     <BSButton Color="BSColor.Light" OnClick="e => Navigate()" title="Navigate"><i class="fas fa-arrow-right"></i></BSButton>
-                    <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" IsDisabled="IsReadOnly" title="Remove"><i class="fas fa-times"></i></BSButton>
+                    <BSButton Color="BSColor.Light" OnClick="e => RemoveItem()" IsDisabled="IsReadOnly" title="Remove"><i class="fas fa-trash"></i></BSButton>
                 }
                 <BSButton Color="BSColor.Light" title="Select" IsDisabled="IsReadOnly" OnClick="e => Modal.ShowAsync()"><i class="fas fa-plus"></i></BSButton>
             </div>
