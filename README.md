@@ -16,7 +16,7 @@
 
 ## Features
 
-![Bildschirmfoto am 2024-12-30 um 19 35 07](https://github.com/user-attachments/assets/22c5a91b-fd5c-4c54-ba03-5d76b1e1feac)
+![grafik](https://github.com/user-attachments/assets/76668e7f-877b-4b67-9eb5-eb7259e4d0d9)
 
 
 * Define schema with custom fields
