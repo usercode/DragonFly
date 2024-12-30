@@ -9,6 +9,7 @@ using DragonFly;
 using DragonFly.API;
 using DragonFly.App.Server.Components;
 using DragonFly.AspNetCore;
+using DragonFly.AspNetCore.Permissions;
 using DragonFly.Client;
 using DragonFly.MongoDB;
 using DragonFlyABC;
@@ -81,6 +82,8 @@ builder.Services.AddDragonFlyClient(x => x
                                         {
                                             x.Field().Add<HtmlField>().WithTinyMceView();
                                         }));
+
+builder.Services.AddSingleton<IPrincipalContext, PrincipalHttpContext>();
 
 var app = builder.Build();
 
