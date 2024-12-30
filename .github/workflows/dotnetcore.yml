@@ -22,8 +22,8 @@ jobs:
       run: dotnet pack --configuration Release "./src/DragonFly.sln"
     - name: Publish "DragonFly.AspNetCore" to nuget
       run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.BlazorWebAssembly" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.BlazorWebAssembly/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+    - name: Publish "DragonFly.AspNetCore.WebAssembly" to nuget
+      run: dotnet nuget push "./src/DragonFly.AspNetCore.WebAssembly/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.API" to nuget
       run: dotnet nuget push "./src/DragonFly.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.API.Client" to nuget
@@ -38,6 +38,8 @@ jobs:
       run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.Client" to nuget
       run: dotnet nuget push "./src/DragonFly.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
+    - name: Publish "DragonFly.Client.WebAssembly" to nuget
+      run: dotnet nuget push "./src/DragonFly.Client.WebAssembly/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
     - name: Publish "DragonFly.ApiKeys.Core" to nuget
       run: dotnet nuget push "./src/DragonFly.ApiKeys.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
     - name: Publish "DragonFly.ApiKeys" to nuget
