@@ -16,7 +16,8 @@
 
 ## Features
 
-![grafik](https://user-images.githubusercontent.com/2958488/208325922-9e55b4d0-9e08-4e0a-96c1-855fe1361584.png)
+![Bildschirmfoto am 2024-12-30 um 19 35 07](https://github.com/user-attachments/assets/22c5a91b-fd5c-4c54-ba03-5d76b1e1feac)
+
 
 * Define schema with custom fields
 * Create, update, delete and publish/unpublish content items based on schema
