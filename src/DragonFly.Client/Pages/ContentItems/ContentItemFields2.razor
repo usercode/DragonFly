@@ -1,11 +1,11 @@
 ﻿@inject ComponentManager ComponentManager
 
 @* title *@
-@if(Title != null)
+@if (Title != null)
 {
     <div class="field-title" style="grid-column: @(Column+1); grid-row: 1">
-        @Title
-        @if(CloseAction != null)
+        <span>@Title</span>
+        @if (CloseAction != null)
         {
             <button type="button" class="btn-close" aria-label="Close" title="Remove" @onclick="CloseAction"></button>
         }
@@ -14,7 +14,7 @@
 
 @* ID value *@
 <div class="field" style="grid-column: @(Column+1); grid-row: 2">
-    <input type="text" class="form-control" value="@Content.Id" readonly />
+    <BSInput Value="@Content.Id" IsReadonly="true" />
 </div>
 
 @{
@@ -27,7 +27,7 @@
 @* fields *@
 @foreach (var part in items)
 {
-    <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">        
+    <div class="field" style="grid-column: @(Column+1); grid-row: @(part.FieldIndex + 3)">
         @ComponentManager.CreateComponent(IsReadOnly, part.FieldName, part.ContentField, part.SchemaField.Options)
     </div>
 }
@@ -47,18 +47,4 @@
 
     [Parameter]
     public Action CloseAction { get; set; }
-
-    private BSColor GetFieldColor(string field)
-    {
-        string fieldPath = field;
-
-        if (Content.ValidationState.Errors.Any(x => x.Field == field))
-        {
-            return BSColor.Danger;
-        }
-        else
-        {
-            return BSColor.Default;
-        }
-    }
 }

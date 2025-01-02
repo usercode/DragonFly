@@ -12,15 +12,15 @@ public class PdfMetadata : AssetMetadata
     /// <summary>
     /// CountPages
     /// </summary>
-    public int? CountPages { get; set; }
+    public int CountPages { get; set; }
 
     /// <summary>
     /// PdfVersion
     /// </summary>
-    public string? PdfVersion { get; set; }
+    public string PdfVersion { get; set; } = string.Empty;
 
     /// <summary>
     /// IsEncrypted
     /// </summary>
-    public bool? IsEncrypted { get; set; }
+    public bool IsEncrypted { get; set; }
 }

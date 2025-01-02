@@ -12,15 +12,15 @@ public class AudioInfo
     /// <summary>
     /// Codec
     /// </summary>
-    public string? Codec { get; set; }
+    public string Codec { get; set; }
 
     /// <summary>
     /// ChannelLayout
     /// </summary>
-    public string? ChannelLayout { get; set; }
+    public string ChannelLayout { get; set; }
 
     /// <summary>
     /// Channels
     /// </summary>
-    public int? Channels { get; set; }
+    public int Channels { get; set; }
 }

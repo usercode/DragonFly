@@ -6,7 +6,7 @@
             Pages
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.CountPages" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.CountPages" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             PDF version
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.PdfVersion" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.PdfVersion" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -28,7 +28,7 @@
             Encrypted
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" value="@Metadata.IsEncrypted?.ToString()" readonly />            
+            <BSInput InputType="InputType.Text" Value="@Metadata.IsEncrypted" IsReadonly="true" />
         </div>
     </BSRow>
 </div>

@@ -12,7 +12,7 @@ public class VideoMetadata : AssetMetadata
     /// <summary>
     /// FormatName
     /// </summary>
-    public string? FormatName { get; set; }
+    public string FormatName { get; set; } = string.Empty;
 
     /// <summary>
     /// Duration

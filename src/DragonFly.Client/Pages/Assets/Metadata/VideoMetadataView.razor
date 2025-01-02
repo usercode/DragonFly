@@ -6,7 +6,7 @@
             Format
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.FormatName" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.FormatName" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             Duration
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.Duration" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.Duration" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -31,7 +31,7 @@
                 Codec
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Codec" readonly />
+                <BSInput InputType="InputType.Text" Value="@Metadata.VideoInfo.Codec" IsReadonly="true" />
             </div>
         </BSRow>
     </div>   
@@ -42,7 +42,7 @@
                 Width
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Width" readonly />
+                <BSInput InputType="InputType.Text" Value="@Metadata.VideoInfo.Width" IsReadonly="true" />
             </div>
         </BSRow>
     </div>
@@ -53,7 +53,7 @@
                 Height
             </BSLabel>
             <div class="col-sm-10">
-                <input type="text" class="form-control" @bind-value="@Metadata.VideoInfo.Height" readonly />
+                <BSInput InputType="InputType.Text" Value="@Metadata.VideoInfo.Height" IsReadonly="true" />
             </div>
         </BSRow>
     </div>

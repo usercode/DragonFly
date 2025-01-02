@@ -6,7 +6,7 @@
             Width
         </BSLabel>
         <div class="col-sm-10">
-             <input type="text" class="form-control" @bind-value="@Metadata.Width" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.Width" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -17,7 +17,7 @@
             Height
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.Height" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.Height" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
@@ -28,7 +28,7 @@
             Bits per pixel
         </BSLabel>
         <div class="col-sm-10">
-            <input type="text" class="form-control" @bind-value="@Metadata.BitsPerPixel" readonly />
+            <BSInput InputType="InputType.Text" Value="@Metadata.BitsPerPixel" IsReadonly="true" />
         </div>
     </BSRow>
 </div>
