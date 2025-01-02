@@ -3,13 +3,10 @@
 <BSModal @ref="Modal" IsFullScreen="true" IsScrollable="true" Size="Size.ExtraLarge">
     <Header>Select asset</Header>
     <Content>
-        @if (Modal.Shown)
-        {
-            <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>
-        }
+        <ContentItemTypeList2 Closed="(a, x) => { if (x == true) ItemAdded((ContentItemTypeList2)a); }" ListMode="EntityListMode.Single"></ContentItemTypeList2>        
     </Content>
     <Footer>
-        <BSButton Color="BSColor.Primary" @onclick="() => Modal.HideAsync() ">Ok</BSButton>
+        <BSButton Color="BSColor.Primary" @onclick="() => context.HideAsync() ">Ok</BSButton>
     </Footer>
 </BSModal>
 
