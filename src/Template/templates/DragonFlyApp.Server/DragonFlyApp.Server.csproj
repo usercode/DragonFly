@@ -15,19 +15,19 @@
   </ItemGroup>  
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.API" Version="1.0.24" />
-    <PackageReference Include="DragonFly.Assets.ImageSharp" Version="1.0.24" />
-    <PackageReference Include="DragonFly.Assets.Pdf" Version="1.0.24" />
-    <PackageReference Include="DragonFly.ImageWizard" Version="1.0.24" />
-    <PackageReference Include="DragonFly.MongoDB" Version="1.0.24" />
-    <PackageReference Include="DragonFly.Identity" Version="1.0.24" />
-    <PackageReference Include="DragonFly.ApiKeys" Version="1.0.24" />
-    <PackageReference Include="DragonFly.AspNetCore" Version="1.0.24" />
-    <PackageReference Include="DragonFly.AspNetCore.WebAssembly" Version="1.0.24" />
+    <PackageReference Include="DragonFly.API" Version="1.0.25" />
+    <PackageReference Include="DragonFly.Assets.ImageSharp" Version="1.0.25" />
+    <PackageReference Include="DragonFly.Assets.Pdf" Version="1.0.25" />
+    <PackageReference Include="DragonFly.ImageWizard" Version="1.0.25" />
+    <PackageReference Include="DragonFly.MongoDB" Version="1.0.25" />
+    <PackageReference Include="DragonFly.Identity" Version="1.0.25" />
+    <PackageReference Include="DragonFly.ApiKeys" Version="1.0.25" />
+    <PackageReference Include="DragonFly.AspNetCore" Version="1.0.25" />
+    <PackageReference Include="DragonFly.AspNetCore.WebAssembly" Version="1.0.25" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Generator" Version="1.0.24">
+    <PackageReference Include="DragonFly.Generator" Version="1.0.25">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
