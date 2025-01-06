@@ -30,9 +30,9 @@ internal class AssetApiStorage : IAssetStorage
         return result.ToResult(x => x.Convert(e => e.ToModel()));
     }
 
-    public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
+    public async Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream)
     {
-        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"api/asset/{asset.Id}/upload");
+        HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, $"api/asset/{assetId}/upload");
         requestMessage.Content = new StreamContent(stream);
         requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(mimetype);
 

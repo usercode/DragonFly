@@ -105,7 +105,7 @@ public partial class AssetDetail
 
         using (Stream stream = SelectedFile.OpenReadStream(long.MaxValue))
         {
-            await AssetService.UploadAsync(Entity, SelectedFile.ContentType, stream);
+            await AssetService.UploadAsync(Entity.Id, SelectedFile.ContentType, stream);
         }
 
         await RefreshAsync();

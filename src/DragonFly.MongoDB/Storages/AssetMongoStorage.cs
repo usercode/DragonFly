@@ -128,19 +128,21 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         return Result.Ok();
     }
 
-    public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
+    public async Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream)
     {        
         //upload new stream to asset
-        await AssetData.UploadFromStreamAsync(asset.Id.ToString(), stream);
+        await AssetData.UploadFromStreamAsync(assetId.ToString(), stream);
+
+        Asset? asset = null;
 
         //refresh asset info
-        using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString()))
+        using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString()))
         {
             byte[] hash = await SHA256.HashDataAsync(s);
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
-            var mongoAsset = await Assets.FindOneAndUpdateAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id),
+            var mongoAsset = await Assets.FindOneAndUpdateAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, assetId),
                                         Builders<MongoAsset>.Update
                                                     .Set(x => x.Size, s.Length)
                                                     .Set(x => x.Hash, hashString)

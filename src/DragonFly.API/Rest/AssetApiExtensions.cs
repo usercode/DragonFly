@@ -123,7 +123,7 @@ static class AssetApiExtensions
             return TypedResults.NotFound();
         }
 
-        return (await storage.UploadAsync(asset, context.Request.ContentType, context.Request.Body)).ToHttpResult();
+        return (await storage.UploadAsync(asset.Id, context.Request.ContentType, context.Request.Body)).ToHttpResult();
     }
 
     private static async Task<IResult> MapRefreshMetadata(IAssetStorage storage, Guid id)

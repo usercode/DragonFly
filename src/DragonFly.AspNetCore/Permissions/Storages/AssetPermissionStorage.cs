@@ -76,8 +76,8 @@ public class AssetPermissionStorage : IAssetStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.UpdateAsset).ThenAsync(x => Storage.UpdateAsync(asset));
     }
 
-    public async Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream)
+    public async Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.UploadAsset).ThenAsync(x => Storage.UploadAsync(asset, mimetype, stream));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.UploadAsset).ThenAsync(x => Storage.UploadAsync(assetId, mimetype, stream));
     }
 }

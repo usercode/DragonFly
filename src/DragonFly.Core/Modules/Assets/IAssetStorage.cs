@@ -23,7 +23,7 @@ public interface IAssetStorage
 
     Task<Result> PublishAsync(Asset asset);
 
-    Task<Result> UploadAsync(Asset asset, string mimetype, Stream stream);
+    Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream);
 
     Task<Result<Stream>> GetStreamAsync(Asset asset);
 
