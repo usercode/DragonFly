@@ -61,7 +61,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TinyMCE.Blazor" Version="1.0.4" />
+    <PackageReference Include="TinyMCE.Blazor" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
