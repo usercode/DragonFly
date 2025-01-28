@@ -159,9 +159,9 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         return Result.Ok();
     }
 
-    public async Task<Result<Stream>> GetStreamAsync(Asset asset)
+    public async Task<Result<Stream>> GetStreamAsync(Guid assetId)
     {
-        return await AssetData.OpenDownloadStreamByNameAsync(asset.Id.ToString());
+        return await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString());
     }
 
     public async Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery assetQuery)

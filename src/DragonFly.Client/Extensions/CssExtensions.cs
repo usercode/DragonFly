@@ -15,7 +15,7 @@ public static class CssExtensions
             BackgroundTaskState.Failed => "list-group-item-danger",
             BackgroundTaskState.Canceled => "list-group-item-warning",
             BackgroundTaskState.Canceling => "list-group-item-warning",
-            _ => "list-group-item-light"
+            _ => null
         };
     }
 }

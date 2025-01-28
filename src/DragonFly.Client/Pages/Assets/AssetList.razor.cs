@@ -21,8 +21,8 @@ public partial class AssetList
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
-        toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Danger, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
-        toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Danger, RefreshAllMetadataAsync));
+        toolbarItems.Add(new ToolbarItem("Create", BlazorStrap.BSColor.Primary, async () => Navigation.NavigateTo($"asset/create/{SelectedFolder?.Id}")));
+        toolbarItems.Add(new ToolbarItem("Apply metadata", BlazorStrap.BSColor.Primary, RefreshAllMetadataAsync));
     }
 
     protected virtual AssetQuery CreateQuery()

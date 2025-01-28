@@ -13,7 +13,7 @@
             </span>
         </BSCol>
         <BSCol ColumnLarge="1">
-            <BSProgressBar Min="0" Max="Task.ProgressMaxValue" Value="Task.ProgressValue">@(((double)Task.ProgressValue * 100 / Task.ProgressMaxValue).ToString("0"))%</BSProgressBar>
+            <BSProgressBar Color="BSColor.Light" Min="0" Max="Task.ProgressMaxValue" Value="Task.ProgressValue">@(((double)Task.ProgressValue * 100 / Task.ProgressMaxValue).ToString("0"))%</BSProgressBar>
         </BSCol>
         <BSCol ColumnLarge="4">
             <span>@Task.Name</span>

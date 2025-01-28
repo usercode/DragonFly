@@ -50,13 +50,13 @@
   </ItemGroup>
   
   <ItemGroup>   
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.1" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" PrivateAssets="All" />
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BlazorStrap" Version="5.2.103.122024" />
+		<PackageReference Include="BlazorStrap" Version="5.2.103.250102" />
     <PackageReference Include="BlazorStrap.V5" Version="5.2.103.122024" />
 	</ItemGroup>
 

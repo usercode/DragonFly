@@ -13,7 +13,9 @@
             <div class="col-lg-3">
                 <div class="heading-index">
                     <div class="list-group">
-                            @foreach (HeadingBlock heading in Model.Document.EnumerateBlocks().OfType<HeadingBlock>())
+                            @foreach (HeadingBlock heading in Model.Document.EnumerateBlocks()
+                                                                                .Select(x => x.Block)
+                                                                                .OfType<HeadingBlock>())
                             {
                             <a href="#@SlugService.Transform(heading.Text)" class="list-group-item list-group-item-action">@heading.Text</a>
                             }

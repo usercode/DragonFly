@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.AspNetCore;
+using DragonFly.AspNetCore.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using SmartResults;
 using System.Security.Claims;
@@ -31,5 +32,12 @@ public static class AuthorizationExtensions
         {
             return Result.Failed(new PermissionError(permission));
         }
+    }
+
+    public static IDisposable DisableAuthorization(this IDragonFlyApi api)
+    {
+        var context = api.ServiceProvider.GetRequiredService<IPrincipalContext>();
+
+        return new DisableAuthorization(context);
     }
 }

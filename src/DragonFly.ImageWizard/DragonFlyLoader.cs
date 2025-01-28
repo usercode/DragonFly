@@ -13,11 +13,17 @@ namespace DragonFly.ImageWizard;
 /// </summary>
 public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 {
-    public DragonFlyLoader(IAssetStorage storage, IOptions<DragonFlyLoaderOptions> options)
+    public DragonFlyLoader(IDragonFlyApi api, IAssetStorage storage, IOptions<DragonFlyLoaderOptions> options)
         : base(options)
     {
+        Api = api;
         Storage = storage;
     }
+
+    /// <summary>
+    /// Api
+    /// </summary>
+    private IDragonFlyApi Api { get; }
 
     /// <summary>
     /// Storage
@@ -38,17 +44,20 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
         else
         {
             id = Guid.Parse(source);
-        }            
-
-        Asset? asset = await Storage.GetAssetAsync(id);
-
-        if (asset == null)
-        {
-            return LoaderResult.Failed();
         }
 
-        Stream stream = await Storage.GetStreamAsync(asset);
+        using (Api.DisableAuthorization())
+        {
+            Asset? asset = await Storage.GetAssetAsync(id);
 
-        return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
+            if (asset == null)
+            {
+                return LoaderResult.Failed();
+            }
+
+            Stream stream = await Storage.GetStreamAsync(asset.Id);
+
+            return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
+        }
     }
 }

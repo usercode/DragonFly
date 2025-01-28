@@ -53,11 +53,11 @@ public partial class AssetDetail
         }
         else
         {
-            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Success, () => PublishAsync()));
+            toolbarItems.Add(new ToolbarItem("Publish", BSColor.Primary, () => PublishAsync()));
             toolbarItems.AddRefreshButton(this);
             toolbarItems.AddUpdateButton(this);
             toolbarItems.AddDeleteButton(this);
-            toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Danger, () => ApplyMetadata()));
+            toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Primary, () => ApplyMetadata()));
         }            
     }
 

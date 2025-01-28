@@ -14,10 +14,10 @@ public static class ModelStorageExtensions
     /// <summary>
     /// Gets <typeparamref name="TContentModel"/> by id.
     /// </summary>
-    public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, string schema, Guid id)
+    public static async Task<TContentModel?> GetContentAsync<TContentModel>(this IContentStorage storage, Guid id)
         where TContentModel : class, IContentModel
     {
-        ContentItem? content = await storage.GetContentAsync(schema, id);
+        ContentItem? content = await storage.GetContentAsync(TContentModel.Schema.Name, id);
 
         if (content == null)
         {
