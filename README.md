@@ -143,22 +143,22 @@ DragonFly.Generator
 public partial class BlogPost
 {
     [DateField(Required = true)]
-    private DateTime? _date;
+    public partial DateTime? Date { get; set; }
 
     [StringField(Required = true, Searchable = true, ListField = true, MinLength = 8, MaxLength = 512)]
-    private string? _title;
+    public partial string? Title { get; set; }
 
     [TextField]
-    private string? _description;
+    public partial string? Description { get; set; }
 
     [SlugField(Required = true, Index = true)]
-    private string? _slug;
+    public partial string? Slug { get; set; }
 
     [AssetField(ListField = true, ShowPreview = true)]
-    private AssetField _image;
+    public partial AssetField Image { get; set; }
 
     [BlockField]
-    private BlockField _mainContent;
+    public partial BlockField MainContent { get; set; }
 }
 ```
 #### Register typed content
