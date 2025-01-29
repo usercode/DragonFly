@@ -11,12 +11,12 @@ namespace DragonFlyABC;
 public partial class Customer
 {
     [StringField(Required = true, MaxLength = 1024)]
-    private string? _title;
+    public partial string? Title { get; set; }
 
     [StringField]
-    private string? _lastname;
+    public partial string? Lastname { get; set; }
 
     [StringField]
-    private string? _firstname;
+    public partial string? Firstname { get; set; }
 
 }

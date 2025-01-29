@@ -10,8 +10,8 @@ namespace DragonFly.Tests;
 public partial class Product
 {
     [StringField(Required = true, MaxLength = 1024)]
-    private string? _title;
+    public partial string? Title { get; set; }
 
     [SlugField]
-    private SlugField _slug;
+    public partial SlugField Slug { get;set; }
 }

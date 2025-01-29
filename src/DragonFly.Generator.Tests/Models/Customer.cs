@@ -10,17 +10,17 @@ namespace DragonFly.Tests;
 public partial class Customer
 {
     [StringField]
-    private string? _firstname;
+    public partial string? Firstname { get; set; }
 
     [StringField]
-    private string? _lastname;
+    public partial string? Lastname { get; set; }
 
     [StringField]
-    private string? _street;
+    public partial string? Street { get;set; }
 
     [SlugField]
-    private SlugField _slug;
+    public partial SlugField Slug { get; set; }
 
     [StringField]
-    private string? _remark;
+    public partial string? Remark { get; set; }
 }

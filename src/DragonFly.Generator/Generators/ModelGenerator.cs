@@ -52,7 +52,7 @@ public class ModelGenerator : IIncrementalGenerator
                 string? contentAttributeParameters = item.ClassSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString();
 
                 //properties of contentitems
-                foreach (var field in item.ClassSyntax.Members.OfType<FieldDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
+                foreach (var field in item.ClassSyntax.Members.OfType<PropertyDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
                 {
                     TypeInfo attributeTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.AttributeLists[0].Attributes[0]);
 
@@ -61,7 +61,7 @@ public class ModelGenerator : IIncrementalGenerator
                         continue;
                     }
 
-                    TypeInfo propertyTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.Declaration.Type);
+                    TypeInfo propertyTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.Type);
 
                     if (propertyTypeInfo.Type == null)
                     {
@@ -70,8 +70,7 @@ public class ModelGenerator : IIncrementalGenerator
 
                     string attributeParameters = field.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString() ?? string.Empty;
 
-                    string fieldName = field.Declaration.Variables[0].Identifier.Text;
-                    string propertyName = fieldName.TrimStart('_').FirstCharToUpper();
+                    string propertyName = field.Identifier.ValueText;
 
                     properties.Add(new ContentItemProperty()
                     {

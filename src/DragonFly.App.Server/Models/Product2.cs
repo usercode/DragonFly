@@ -12,44 +12,44 @@ namespace DragonFlyTEST;
 public partial class Product2
 {
     [StringField(Required = true, Index = true, MaxLength = 1024, ReferenceField = true, ListField = true, QueryField = true)]
-    private string? _title;
+    public partial string? Title { get; set; }
 
     [SlugField(Index = true, QueryField = true, TargetField = nameof(Title))]
-    private SlugField _slug;
+    public partial SlugField Slug { get; set; }
 
     [BoolField(Index = true, QueryField = true)]
-    private bool? _isActive;
+    public partial bool? IsActive { get; set; }
 
     [IntegerField(Index = true, QueryField = true)]
-    private long? _quantity;
+    public partial long? Quantity { get; set; }
 
     [FloatField]
-    private double? _quantity2;
+    public partial double? Quantity2 { get; set; }
 
     [BlockField]
-    private BlockField _mainContent;
+    public partial BlockField MainContent { get; set; }
 
     [AssetField(ShowPreview = true, Index = true, QueryField = true)]
-    private AssetField _image;
+    public partial AssetField Image { get; set; }
 
     [AssetField(ShowPreview = true)]
-    private Asset _image2;
+    public partial Asset Image2 { get; set; }
 
     [ReferenceField]
-    private ReferenceField _customerA;
+    public partial ReferenceField CustomerA { get; set; }
 
     [ReferenceField]
-    private ContentItem? _customerB;
+    public partial ContentItem? CustomerB { get; set; }
 
     [ReferenceField]
-    private Customer? _customerC;
+    public partial Customer? CustomerC { get; set; }
 
     [GeolocationField]
-    private GeolocationField _location;
+    public partial GeolocationField Location { get; set; }
 
     [TextField]
-    private TextField _text;
+    public partial TextField Text { get; set; }
 
     [UrlField]
-    private UrlField _url;
+    public partial UrlField Url { get; set; }
 }

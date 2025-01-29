@@ -4,7 +4,7 @@
 
 namespace DragonFly.Generator;
 
-[AttributeUsage(AttributeTargets.Field)]
+[AttributeUsage(AttributeTargets.Property)]
 public abstract class BaseFieldAttribute : Attribute
 {
     public bool Required { get; set; }

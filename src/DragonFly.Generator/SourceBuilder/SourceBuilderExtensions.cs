@@ -183,13 +183,13 @@ public static class SourceBuilderExtensions
         builder.AppendTabs();
 
         string propertyType = property.PropertyTypeSymbol.ToDisplayString();
-        string propertyTypeMaybeNull = property.PropertyTypeSymbol.ToDisplayString(NullableFlowState.MaybeNull);
+        string propertyTypeMaybeNull = property.PropertyTypeSymbol.ToDisplayString(property.PropertyTypeSymbol.NullableAnnotation == NullableAnnotation.Annotated ? NullableFlowState.MaybeNull : NullableFlowState.NotNull);
 
         bool IsSingleValueType = property.PropertyTypeSymbol.IsValueType == true || property.PropertyTypeSymbol.Name == "String";
         bool isDirectReferenceField = property.AttributeTypeSymbol.Name == "ReferenceFieldAttribute" && property.PropertyTypeSymbol.Name != "ReferenceField";
         bool isDirectAssetField = property.AttributeTypeSymbol.Name == "AssetFieldAttribute" && property.PropertyTypeSymbol.Name != "AssetField";
 
-        builder.Append($"public {(IsSingleValueType || isDirectReferenceField || isDirectAssetField ? propertyTypeMaybeNull : propertyType)} {property.PropertyName}");
+        builder.Append($"public partial {propertyTypeMaybeNull} {property.PropertyName}");
         builder.AppendLineBreak();
 
         //primitive type or string?
