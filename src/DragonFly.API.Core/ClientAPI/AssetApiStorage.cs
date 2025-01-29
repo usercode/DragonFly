@@ -39,7 +39,7 @@ internal class AssetApiStorage : IAssetStorage
         return await Client.SendAsync(requestMessage).ReadResultFromJsonAsync();
     }
 
-    public async Task<Result<Stream>> GetStreamAsync(Guid assetId)
+    public async Task<Result<Stream>> OpenStreamAsync(Guid assetId)
     {
         return await Client.GetStreamAsync($"api/asset/{assetId}/download");
     }

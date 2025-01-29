@@ -40,4 +40,29 @@ public static class AuthorizationExtensions
 
         return new DisableAuthorization(context);
     }
+
+    public static async Task UseNoAuthorizationAsync(this IDragonFlyApi api, Func<Task> action)
+    {
+        using (DisableAuthorization(api))
+        {
+            await action();
+        }
+    }
+
+    public static async Task<T> UseNoAuthorizationAsync<T>(this IDragonFlyApi api, Func<Task<T>> action)
+    {
+        using (DisableAuthorization(api))
+        {
+            return await action();
+        }
+    }
+
+    public static void UseNoAuthorization(this IDragonFlyApi api, Action action)
+    {
+        using (DisableAuthorization(api))
+        {
+            action();
+        }
+    }
+
 }

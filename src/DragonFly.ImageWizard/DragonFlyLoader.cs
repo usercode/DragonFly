@@ -55,7 +55,7 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
                 return LoaderResult.Failed();
             }
 
-            Stream stream = await Storage.GetStreamAsync(asset.Id);
+            Stream stream = await Storage.OpenStreamAsync(asset.Id);
 
             return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
         }

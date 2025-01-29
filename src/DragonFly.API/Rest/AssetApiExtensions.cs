@@ -104,7 +104,7 @@ static class AssetApiExtensions
 
         context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue() { Public = true, MaxAge = TimeSpan.FromDays(30) };
 
-        Stream assetStream = await storage.GetStreamAsync(asset.Id);
+        Stream assetStream = await storage.OpenStreamAsync(asset.Id);
 
         return TypedResults.Stream(assetStream, contentType: asset.MimeType, entityTag: etag, enableRangeProcessing: true);
     }

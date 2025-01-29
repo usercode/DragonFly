@@ -25,7 +25,7 @@ public interface IAssetStorage
 
     Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream);
 
-    Task<Result<Stream>> GetStreamAsync(Guid assetId);
+    Task<Result<Stream>> OpenStreamAsync(Guid assetId);
 
     Task<Result> ApplyMetadataAsync(Asset asset);
 

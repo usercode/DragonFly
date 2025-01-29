@@ -56,9 +56,9 @@ public class AssetPermissionStorage : IAssetStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.ReadAsset).ThenAsync(x  => Storage.GetAssetAsync(id));
     }
 
-    public async Task<Result<Stream>> GetStreamAsync(Guid assetId)
+    public async Task<Result<Stream>> OpenStreamAsync(Guid assetId)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.DownloadAsset).ThenAsync(x => Storage.GetStreamAsync(assetId));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.DownloadAsset).ThenAsync(x => Storage.OpenStreamAsync(assetId));
     }
 
     public async Task<Result> PublishAsync(Asset asset)
