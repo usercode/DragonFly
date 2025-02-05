@@ -37,30 +37,30 @@
 </BSOffCanvas>
 
 <CascadingValue Value="this" IsFixed="true">
-    <BSAccordion>
+    <BSListGroup>
         @foreach (var field in Schema.Fields.OrderBy(x => x.Value.SortKey))
         {
-            <BSAccordionItem DefaultShown="false">
-                <Header>
-                    <div style="display: flex; align-items: center;width:100%">
-                        <span style="flex-grow:1">@field.Key</span>
-                        <BSBadge Color="BSColor.Secondary" Class="bg-secondary">@field.Value.FieldType</BSBadge>
-                        <div>
-                            <BSButton Color="BSColor.Light" OnClick="x => Up(field.Key)"><i class="fas fa-arrow-up"></i></BSButton>
-                            <BSButton Color="BSColor.Light" OnClick="x => Down(field.Key)"><i class="fas fa-arrow-down"></i></BSButton>
-                            <BSButton Color="BSColor.Light" OnClick="x => Remove(field.Key)"><i class="fas fa-times"></i></BSButton>
-                        </div>
+            <BSListGroupItem>
+                <div style="display: flex; align-items: center;width:100%">
+                    <span style="flex-grow:1">@field.Key</span>
+                    <BSBadge Color="BSColor.Secondary" Class="bg-secondary">@field.Value.FieldType</BSBadge>
+                    <div>
+                        <BSButton Color="BSColor.Light" Target="@($"{field.Key}_collapse")"><i class="fa-solid fa-gear"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="x => Up(field.Key)"><i class="fas fa-arrow-up"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="x => Down(field.Key)"><i class="fas fa-arrow-down"></i></BSButton>
+                        <BSButton Color="BSColor.Light" OnClick="x => Remove(field.Key)"><i class="fas fa-times"></i></BSButton>
                     </div>
-                </Header>
-                <Content>
+                </div>
+
+                <BSCollapse DataId="@($"{field.Key}_collapse")">
                     @if (field.Value.Options != null)
                     {
                         @ComponentManager.CreateComponent(field.Value.Options)
                     }
-                </Content>
-            </BSAccordionItem>
+                </BSCollapse>
+            </BSListGroupItem>
         }
-    </BSAccordion>
+    </BSListGroup>
 </CascadingValue>
 
 @code {
