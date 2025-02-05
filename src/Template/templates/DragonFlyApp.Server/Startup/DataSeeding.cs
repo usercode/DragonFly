@@ -116,7 +116,7 @@ public class DataSeeding
 
         using Stream stream = filename.CreateReadStream();
 
-        await AssetStorage.UploadAsync(asset, MimeTypes.Jpeg, stream);
+        await AssetStorage.UploadAsync(asset.Id, MimeTypes.Jpeg, stream);
 
         return asset;
     }

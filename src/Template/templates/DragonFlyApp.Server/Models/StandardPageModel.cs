@@ -11,23 +11,23 @@ namespace DragonFlyTemplate.Models;
 public partial class StandardPageModel
 {
     [StringField(Required = true, ListField = true)]
-    private string? _title;
+    public partial string? Title { get; set; }
 
     [SlugField(Required = true, Index = true)]
-    private string? _slug;
+    public partial string? Slug { get; set; }
 
     [BoolField(Required = true, Index = true)]
-    private bool? _noFollow;
+    public partial bool? NoFollow { get; set; }
 
     [BoolField(Required = true, Index = true)]
-    private bool? _noIndex;
+    public partial bool? NoIndex { get; set; }
 
     [BoolField(Required = true, Index = true)]
-    private bool? _isStartPage;
+    public partial bool? IsStartPage { get; set; }
 
     [BoolField(Required = true, Index = true)]
-    private bool? _isFooterPage;
+    public partial bool? IsFooterPage { get; set; }
 
     [BlockField]
-    private BlockField _mainContent;
+    public partial BlockField MainContent { get; set; }
 }
