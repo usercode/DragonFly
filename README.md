@@ -197,7 +197,7 @@ builder.Services.Configure<MongoDbOptions>(Configuration.GetSection("MongoDB"));
 
 //add DragonFly services
 builder.Services.AddDragonFly(x => x
-                      .AddImageWizard()
+                      .AddImageWizard(requireAuthorization: false)
                       .AddRestApi()
                       .AddMongoDbStorage()
                       .AddMongoDbIdentity()
