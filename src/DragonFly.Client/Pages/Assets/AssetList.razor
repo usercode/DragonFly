@@ -12,41 +12,38 @@
     <input class="form-control" type="text" style="width:100%" value="@SearchPattern" @onchange="async (x) => { Page = 0; SearchPattern = x.Value.ToString(); await NavigateAsync(); }" />
 </div>
 
-<div class="scroll-content">
-    <BSRow>
-        <BSCol Column="3">
-            <AssetFolderSelector FolderClicked="async x => await OpenFolder(x)" />
-        </BSCol>
-        <BSCol Column="9">
-            <div style="flex: 1">
-                @if (SearchResult == null)
+<div style="display: flex;flex-direction: row;flex: 1;overflow: auto;">
+    <div class="scroll-content" style="flex: 1">
+        <AssetFolderSelector FolderClicked="async x => await OpenFolder(x)" />
+    </div>
+    <div class="scroll-content" style="flex: 4">
+
+        @if (SearchResult == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="row">
+                @foreach (Asset asset in SearchResult.Items)
                 {
-                    <p><em>Loading...</em></p>
-                }
-                else
-                {
-                    <div class="row">
-                        @foreach (Asset asset in SearchResult.Items)
-                        {
-                            <div class="col-md-3">
-                                <div class="box-item zoom action" style="height:320px">
-                                    <a @onclick="x => OpenItem(asset)">
-                                        <div class="image">
-                                            @if (string.IsNullOrEmpty(asset.PreviewUrl) == false)
-                                            {
-                                                <img src="@asset.PreviewUrl" alt="@asset.Name" />
-                                            }
-                                        </div>
-                                        <div>
-                                            <p class="title">@asset.Name</p>
-                                        </div>
-                                    </a>
+                    <div class="col-md-3">
+                        <div class="box-item zoom action" style="height:320px">
+                            <a @onclick="x => OpenItem(asset)">
+                                <div class="image">
+                                    @if (string.IsNullOrEmpty(asset.PreviewUrl) == false)
+                                    {
+                                        <img src="@asset.PreviewUrl" alt="@asset.Name" />
+                                    }
                                 </div>
-                            </div>
-                        }
+                                <div>
+                                    <p class="title">@asset.Name</p>
+                                </div>
+                            </a>
+                        </div>
                     </div>
                 }
             </div>
-        </BSCol>
-    </BSRow>
+        }
+    </div>
 </div>
