@@ -15,7 +15,7 @@ public class SlideshowBlock : Block, IChildBlocks
 
     public override string CssIcon => "fa-regular fa-images";
 
-    public IList<Block> Blocks { get; set; } = new List<Block>();
+    public IList<Block> Blocks { get; set; } = [];
 
     public IEnumerable<BlockContext> GetBlocks()
     {

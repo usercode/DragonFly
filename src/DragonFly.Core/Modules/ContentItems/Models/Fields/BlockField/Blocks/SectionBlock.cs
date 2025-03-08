@@ -11,7 +11,6 @@ public class SectionBlock : Block, IChildBlocks
 {
     public SectionBlock()
     {
-        Blocks = new List<Block>();
     }
 
     public override string CssIcon => "fa-regular fa-square";
@@ -21,7 +20,7 @@ public class SectionBlock : Block, IChildBlocks
     /// </summary>
     public string? Css { get; set; }
 
-    public IList<Block> Blocks { get; set; }
+    public IList<Block> Blocks { get; set; } = [];
 
     public IEnumerable<BlockContext> GetBlocks()
     {

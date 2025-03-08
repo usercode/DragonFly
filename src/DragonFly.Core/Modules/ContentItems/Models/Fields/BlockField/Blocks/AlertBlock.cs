@@ -22,8 +22,14 @@ public class AlertBlock : Block, IChildBlocks
 
     public override string CssIcon => "fa-solid fa-circle-info";
 
+    /// <summary>
+    /// Blocks
+    /// </summary>
     public IList<Block> Blocks { get; set; } = [];
 
+    /// <summary>
+    /// ColorType
+    /// </summary>
     public ColorType ColorType { get; set; } = ColorType.Info;
 
     public IEnumerable<BlockContext> GetBlocks()

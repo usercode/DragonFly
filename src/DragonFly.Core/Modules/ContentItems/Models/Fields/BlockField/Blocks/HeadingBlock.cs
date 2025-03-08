@@ -28,11 +28,6 @@ public class HeadingBlock : Block
     public string? Text { get; set; }
 
     /// <summary>
-    /// TextAlignment
-    /// </summary>
-    public TextAlignment? TextAlignment { get; set; }
-
-    /// <summary>
     /// HeadingType
     /// </summary>
     public HeadingType HeadingType { get; set; } = HeadingType.H1;

@@ -11,7 +11,6 @@ public class CodeBlock : Block
 {
     public CodeBlock()
     {
-        CodeType = CodeType.Plain;
     }
 
     public CodeBlock(CodeType codeType, string content)
@@ -26,7 +25,7 @@ public class CodeBlock : Block
     /// <summary>
     /// CodeType
     /// </summary>
-    public CodeType CodeType { get; set; }
+    public CodeType CodeType { get; set; } = CodeType.Plain;
 
     /// <summary>
     /// Content

@@ -15,6 +15,9 @@ public class ContainerBlock : Block, IChildBlocks
 
     public override string CssIcon => "fa-regular fa-square";
 
+    /// <summary>
+    /// Blocks
+    /// </summary>
     public IList<Block> Blocks { get; set; } = [];
 
     public IEnumerable<BlockContext> GetBlocks()

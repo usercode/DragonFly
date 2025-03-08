@@ -10,17 +10,17 @@ namespace DragonFly;
 public enum GridUnit
 {
     /// <summary>
+    /// auto
+    /// </summary>
+    Auto,
+    /// <summary>
     /// px
     /// </summary>
     Pixel,
     /// <summary>
     /// %
     /// </summary>
-    Percent,
-    /// <summary>
-    /// auto
-    /// </summary>
-    Auto,
+    Percent,    
     /// <summary>
     /// fr
     /// </summary>

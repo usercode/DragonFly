@@ -28,5 +28,5 @@ public class AssetType
     /// <summary>
     /// UsedMimeTypes
     /// </summary>
-    public IEnumerable<string> UsedMimeTypes { get; set; }
+    public string[] UsedMimeTypes { get; set; }
 }

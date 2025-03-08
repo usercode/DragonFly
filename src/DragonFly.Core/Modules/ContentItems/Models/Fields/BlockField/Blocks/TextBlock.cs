@@ -21,5 +21,8 @@ public class TextBlock : Block
 
     public override string CssIcon => "fa-solid fa-align-left";
 
+    /// <summary>
+    /// Text
+    /// </summary>
     public string? Text { get; set; }
 }

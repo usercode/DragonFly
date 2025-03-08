@@ -10,5 +10,5 @@ public class CardsBlock : Block
     /// <summary>
     /// Cards
     /// </summary>
-    public IList<CardItem> Cards { get; set; } = new List<CardItem>();
+    public IList<CardItem> Cards { get; set; } = [];
 }

@@ -20,9 +20,9 @@ public partial class BlockField : SingleValueField<string>, IReferencedContent
         Document document = BlockFieldSerializer.DeserializeAsync(Value).GetAwaiter().GetResult();
 
         return document.EnumerateBlocks()
-                        .Select(x => x.Block)
-                        .OfType<IReferencedContent>()
-                        .SelectMany(x => x.GetReferences())
-                        .ToArray();
+                                .Select(x => x.Block)
+                                .OfType<IReferencedContent>()
+                                .SelectMany(x => x.GetReferences())
+                                .ToArray();
     }
 }

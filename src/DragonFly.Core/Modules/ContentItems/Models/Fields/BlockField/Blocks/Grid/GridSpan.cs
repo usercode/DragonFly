@@ -11,8 +11,6 @@ public class GridSpan
 {
     public GridSpan()
     {
-        Value = 1;
-        Unit = GridUnit.Fraction;
     }
 
     public GridSpan(double value, GridUnit unit)
@@ -24,10 +22,10 @@ public class GridSpan
     /// <summary>
     /// Value
     /// </summary>
-    public double Value { get; set; }
+    public double Value { get; set; } = 1;
 
     /// <summary>
     /// Unit
     /// </summary>
-    public GridUnit Unit { get; set; }
+    public GridUnit Unit { get; set; } = GridUnit.Fraction;
 }
