@@ -4,6 +4,7 @@
 
 using BlazorStrap;
 using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,12 +38,15 @@ public partial class ContentItemList
     /// <summary>
     /// FieldOrder
     /// </summary>
-    public IList<FieldOrder> OrderFields { get; private set; } = new List<FieldOrder>();
+    public IList<FieldOrder> OrderFields { get; private set; } = [];
 
     /// <summary>
     /// QueryFields
     /// </summary>
-    public IList<FieldQuery> QueryFields { get; private set; } = new List<FieldQuery>();
+    public IList<FieldQuery> QueryFields { get; private set; } = [];
+
+    [SupplyParameterFromQuery]
+    public string State { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
