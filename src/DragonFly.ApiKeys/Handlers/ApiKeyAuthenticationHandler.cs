@@ -33,7 +33,7 @@ internal class ApiKeyAuthenticationHandler : AuthenticationHandler<ApiKeyAuthent
 
         if (requestApiKey != null)
         {
-            ApiKey? apiKey = await ApiKeyService.GetApiKey(requestApiKey);
+            ApiKey? apiKey = await ApiKeyService.GetApiKey(requestApiKey).ConfigureAwait(false);
 
             if (apiKey != null)
             {

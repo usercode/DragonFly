@@ -22,7 +22,7 @@ public static class AuthorizationExtensions
             return Result.Ok();
         }
 
-        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy());
+        AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy()).ConfigureAwait(false);
 
         if (result.Succeeded)
         {

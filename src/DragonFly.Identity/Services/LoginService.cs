@@ -2,16 +2,12 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.AspNetCore;
-using DragonFly.AspNetCore.Identity.MongoDB;
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using DragonFly.AspNetCore.Identity.MongoDB.Services.Base;
 using DragonFly.AspNetCore.Identity.MongoDB.Storages.Models;
 using DragonFly.Identity.Services;
 using DragonFly.Security;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Http;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
@@ -55,7 +51,7 @@ class LoginService : ILoginService
 
     public async Task<LoginResult> LoginAsync(string username, string password, bool isPersistent)
     {
-        MongoIdentityUser? user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username);
+        MongoIdentityUser? user = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Username == username).ConfigureAwait(false);
 
         if (user == null)
         {
@@ -81,7 +77,7 @@ class LoginService : ILoginService
 
         PrincipalContext.Current = principal;
 
-        await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent });
+        await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }).ConfigureAwait(false);
         
         return new LoginResult(true) { Username = user.Username, Claims = claims.Select(x=> new ClaimItem(x.Type, x.Value)).ToList() };
     }
@@ -101,7 +97,7 @@ class LoginService : ILoginService
             {
                 Guid userIdGuid = Guid.Parse(claimUserId);
 
-                MongoIdentityUser? currentUser = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == userIdGuid);
+                MongoIdentityUser? currentUser = await Store.Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == userIdGuid).ConfigureAwait(false);
 
                 if (currentUser != null)
                 {
