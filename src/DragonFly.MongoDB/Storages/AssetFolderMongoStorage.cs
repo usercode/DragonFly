@@ -43,7 +43,7 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
 
     public async Task<Result<AssetFolder?>> GetAssetFolderAsync(Guid id)
     {
-        MongoAssetFolder? entity = await AssetFolders.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoAssetFolder? entity = await AssetFolders.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (entity == null)
         {
@@ -71,7 +71,7 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
             query = query.Where(x => x.Parent == null);
         }
 
-        IList<MongoAssetFolder> resultMongo = await query.ToListAsync();
+        IList<MongoAssetFolder> resultMongo = await query.ToListAsync().ConfigureAwait(false);
 
         var result = resultMongo
                             .OrderBy(x => x.Name)            
@@ -88,7 +88,7 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
 
         MongoAssetFolder mongo = folder.ToMongo();
 
-        await AssetFolders.InsertOneAsync(mongo);
+        await AssetFolders.InsertOneAsync(mongo).ConfigureAwait(false);
 
         folder.Id = mongo.Id;
 
@@ -97,7 +97,7 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
 
     public async Task<Result> UpdateAsync(AssetFolder folder)
     {
-        await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id), folder.ToMongo());
+        await AssetFolders.ReplaceOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id), folder.ToMongo()).ConfigureAwait(false);
 
         return Result.Ok();
     }
@@ -105,11 +105,11 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
     public async Task<Result> DeleteAsync(AssetFolder folder)
     {
         //Delete sub folders
-        QueryResult<AssetFolder> subFolders = await QueryAsync(new AssetFolderQuery() { Parent = folder.Id });
+        QueryResult<AssetFolder> subFolders = await QueryAsync(new AssetFolderQuery() { Parent = folder.Id }).ConfigureAwait(false);
 
         foreach (AssetFolder subFolder in subFolders.Items)
         {
-            await DeleteAsync(subFolder);
+            await DeleteAsync(subFolder).ConfigureAwait(false);
         }
 
         //Delete all assets
@@ -124,12 +124,12 @@ public class AssetFolderMongoStorage : MongoStorage, IAssetFolderStorage
 
             foreach (Asset asset in assets.Items)
             {
-                await AssetStorage.DeleteAsync(asset);
+                await AssetStorage.DeleteAsync(asset).ConfigureAwait(false);
             }
         }
         
         //Delete folder
-        await AssetFolders.DeleteOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id));
+        await AssetFolders.DeleteOneAsync(Builders<MongoAssetFolder>.Filter.Eq(x => x.Id, folder.Id)).ConfigureAwait(false);
 
         return Result.Ok();
     }

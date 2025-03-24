@@ -52,7 +52,7 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
 
         MongoContentStructure mongo = structure.ToMongo();
 
-        await ContentStructures.InsertOneAsync(mongo);
+        await ContentStructures.InsertOneAsync(mongo).ConfigureAwait(false);
 
         structure.Id = mongo.Id;
     }
@@ -61,12 +61,12 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
     {
         entity.ModifiedAt = DateTimeService.Current();
 
-        await ContentStructures.FindOneAndReplaceAsync(Builders<MongoContentStructure>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo());
+        await ContentStructures.FindOneAndReplaceAsync(Builders<MongoContentStructure>.Filter.Eq(x => x.Id, entity.Id), entity.ToMongo()).ConfigureAwait(false);
     }
 
     public async Task<ContentStructure> GetStructureAsync(Guid id)
     {
-        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (structure == null)
         {
@@ -78,7 +78,7 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
 
     public async Task<ContentStructure> GetStructureAsync(string name)
     {
-        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
+        MongoContentStructure? structure = await ContentStructures.AsQueryable().FirstOrDefaultAsync(x => x.Name == name).ConfigureAwait(false);
 
         if (structure == null)
         {
@@ -92,7 +92,8 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
     {
         IList<MongoContentStructure> result = await ContentStructures.AsQueryable()
                                                                             .OrderBy(x => x.Name)
-                                                                            .ToListAsync();
+                                                                            .ToListAsync()
+                                                                            .ConfigureAwait(false);
 
         return new QueryResult<ContentStructure>()
         {
@@ -116,7 +117,7 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
             q = q.Where(x => x.Parent == null);
         }
 
-        var result = await q.ToListAsync();
+        var result = await q.ToListAsync().ConfigureAwait(false);
 
         return new QueryResult<ContentNode>()
         {
@@ -140,7 +141,7 @@ public class ContentStructureMongoStorage : MongoStorage, IStructureStorage
 
         MongoContentNode mongo = node.ToMongo();
 
-        await ContentNodes.InsertOneAsync(mongo);
+        await ContentNodes.InsertOneAsync(mongo).ConfigureAwait(false);
 
         node.Id = mongo.Id;
     }

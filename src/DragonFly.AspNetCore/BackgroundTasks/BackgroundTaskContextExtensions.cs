@@ -26,7 +26,7 @@ public static class BackgroundTaskContextExtensions
                 break;
             }
 
-            QueryResult<T> result = await queryAction(ctx.Input);
+            QueryResult<T> result = await queryAction(ctx.Input).ConfigureAwait(false);
 
             if (result.Items.Count == 0)
             {
@@ -40,7 +40,7 @@ public static class BackgroundTaskContextExtensions
                     break;
                 }
 
-                await ctx.UpdateStatusAsync(item.ToString(), counter, result.TotalCount);
+                await ctx.UpdateStatusAsync(item.ToString(), counter, result.TotalCount).ConfigureAwait(false);
 
                 try
                 {
@@ -61,6 +61,6 @@ public static class BackgroundTaskContextExtensions
             ctx.Input.Skip += ctx.Input.Take;
         }
 
-        await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter);
+        await ctx.UpdateStatusAsync($"Succeed: {counterSucceed} / Failed: {counterFailed}", progressValue: counter).ConfigureAwait(false);
     }
 }

@@ -80,7 +80,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
     public async Task<Result<Asset?>> GetAssetAsync(Guid id)
     {
-        MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoAsset asset = await Assets.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (asset == null)
         {
@@ -104,7 +104,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
             asset.Slug = SlugService.Transform(asset.Name);
         }
 
-        await Assets.InsertOneAsync(mongoAsset);
+        await Assets.InsertOneAsync(mongoAsset).ConfigureAwait(false);
 
         asset.Id = mongoAsset.Id;
 
@@ -123,7 +123,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
                                                 .Set(x => x.Folder, asset.Folder?.Id)
                                                 .Set(x => x.ModifiedAt, DateTimeService.Current())
                                                 .Inc(x => x.Version, 1)
-                                                );
+                                                ).ConfigureAwait(false);
 
         return Result.Ok();
     }
@@ -131,14 +131,14 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
     public async Task<Result> UploadAsync(Guid assetId, string mimetype, Stream stream)
     {        
         //upload new stream to asset
-        await AssetData.UploadFromStreamAsync(assetId.ToString(), stream);
+        await AssetData.UploadFromStreamAsync(assetId.ToString(), stream).ConfigureAwait(false);
 
         Asset? asset = null;
 
         //refresh asset info
-        using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString()))
+        using (Stream s = await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString()).ConfigureAwait(false))
         {
-            byte[] hash = await SHA256.HashDataAsync(s);
+            byte[] hash = await SHA256.HashDataAsync(s).ConfigureAwait(false);
 
             string hashString = Convert.ToHexString(hash).ToLowerInvariant();
 
@@ -149,19 +149,19 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
                                                     .Set(x => x.MimeType, mimetype)
                                                     .Set(x => x.Metaddata, new Dictionary<string, BsonDocument>())
                                                     .Inc(x => x.Version, 1), 
-                                        new FindOneAndUpdateOptions<MongoAsset>() { ReturnDocument = ReturnDocument.After });
+                                        new FindOneAndUpdateOptions<MongoAsset>() { ReturnDocument = ReturnDocument.After }).ConfigureAwait(false);
 
             asset = mongoAsset.ToModel();
         }
 
-        await ApplyMetadataAsync(asset);
+        await ApplyMetadataAsync(asset).ConfigureAwait(false);
 
         return Result.Ok();
     }
 
     public async Task<Result<Stream>> OpenStreamAsync(Guid assetId)
     {
-        return await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString());
+        return await AssetData.OpenDownloadStreamByNameAsync(assetId.ToString()).ConfigureAwait(false);
     }
 
     public async Task<Result<QueryResult<Asset>>> QueryAsync(AssetQuery assetQuery)
@@ -190,7 +190,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         query = query.Skip(assetQuery.Skip);
         query = query.Take(assetQuery.Take);
 
-        IList<MongoAsset> result = await query.ToListAsync();
+        IList<MongoAsset> result = await query.ToListAsync().ConfigureAwait(false);
 
         QueryResult<Asset> queryResult = new QueryResult<Asset>();
         queryResult.Items = result
@@ -210,7 +210,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         //execute interceptors
         foreach (IContentInterceptor interceptor in interceptors)
         {
-            await interceptor.OnPublishedAsync(asset);
+            await interceptor.OnPublishedAsync(asset).ConfigureAwait(false);
         }
 
         return Result.Ok();
@@ -218,14 +218,14 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
     public async Task<Result> DeleteAsync(Asset asset)
     {
-        var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, asset.Id.ToString()));
+        var fileData = await AssetData.FindAsync(Builders<GridFSFileInfo>.Filter.Eq(x => x.Filename, asset.Id.ToString())).ConfigureAwait(false);
 
-        foreach (GridFSFileInfo f in await fileData.ToListAsync())
+        foreach (GridFSFileInfo f in await fileData.ToListAsync().ConfigureAwait(false))
         {
-            await AssetData.DeleteAsync(f.Id);
+            await AssetData.DeleteAsync(f.Id).ConfigureAwait(false);
         }
 
-        var result = await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id));
+        var result = await Assets.DeleteOneAsync(Builders<MongoAsset>.Filter.Eq(x => x.Id, asset.Id)).ConfigureAwait(false);
 
         return Result.Ok();
     }
@@ -239,7 +239,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         //add metadata
         foreach (IAssetProcessing processing in processings.Where(x => x.CanUse(asset.MimeType)))
         {
-            await processing.OnAssetChangedAsync(context);
+            await processing.OnAssetChangedAsync(context).ConfigureAwait(false);
         }
 
         return Result.Ok();
@@ -253,7 +253,8 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
             await ctx.ProcessQueryAsync(
                                 assetStorage.QueryAsync,
-                                assetStorage.ApplyMetadataAsync);
+                                assetStorage.ApplyMetadataAsync)
+                        .ConfigureAwait(false);
         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);

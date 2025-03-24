@@ -46,6 +46,6 @@ public class MongoClient
 
     public async Task DeleteDatabaseAsync()
     {
-        await Client.DropDatabaseAsync(Options.Database);
+        await Client.DropDatabaseAsync(Options.Database).ConfigureAwait(false);
     }
 }

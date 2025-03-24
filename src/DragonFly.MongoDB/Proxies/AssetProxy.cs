@@ -10,25 +10,21 @@ namespace DragonFly.MongoDB;
 [Proxy]
 internal partial class AssetProxy : Asset
 {
-    private bool _loaded = false;
-
     [Intercept]
     [IgnoreProperty(nameof(Id))]
     [IgnoreMethod(nameof(IsNew))]
     [IgnoreMethod(nameof(Equals))]
     [IgnoreMethod(nameof(GetHashCode))]
     [IgnoreMethod(nameof(ToString))]
-    private async ValueTask OnMethodCalling(string name)
+    private async Task OnMethodCalling(string name)
     {
-        if (_loaded == true)
-        {
-            return;
-        }
+        await LoadAsync().ConfigureAwait(false);
+    }
 
-        _loaded = true;
-
+    public async Task LoadAsync()
+    {
         IAssetStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<IAssetStorage>();
-        Asset? result = await storage.GetAssetAsync(Id);
+        Asset? result = await storage.GetAssetAsync(Id).ConfigureAwait(false);
 
         if (result == null)
         {

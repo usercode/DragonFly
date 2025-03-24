@@ -34,7 +34,7 @@ public class WebHookMongoStorage : MongoStorage, IWebHookStorage
             q = q.Where(x => x.EventName == query.Event);
         }
 
-        IList<MongoWebHook> result = await q.ToListAsync();
+        IList<MongoWebHook> result = await q.ToListAsync().ConfigureAwait(false);
 
         var items = result.Select(x => x.ToModel()).ToList();
 
@@ -43,7 +43,7 @@ public class WebHookMongoStorage : MongoStorage, IWebHookStorage
 
     public async Task<Result<WebHook?>> GetAsync(Guid id)
     {
-        MongoWebHook? result = await WebHooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoWebHook? result = await WebHooks.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (result == null)
         {
@@ -57,7 +57,7 @@ public class WebHookMongoStorage : MongoStorage, IWebHookStorage
     {
         MongoWebHook m = webHook.ToMongo();
 
-        await WebHooks.InsertOneAsync(m);
+        await WebHooks.InsertOneAsync(m).ConfigureAwait(false);
 
         webHook.Id = m.Id;
 
@@ -66,14 +66,14 @@ public class WebHookMongoStorage : MongoStorage, IWebHookStorage
 
     public async Task<Result> UpdateAsync(WebHook webHook)
     {
-        await WebHooks.ReplaceOneAsync(Builders<MongoWebHook>.Filter.Eq(x=> x.Id, webHook.Id), webHook.ToMongo());
+        await WebHooks.ReplaceOneAsync(Builders<MongoWebHook>.Filter.Eq(x=> x.Id, webHook.Id), webHook.ToMongo()).ConfigureAwait(false);
 
         return Result.Ok();
     }
 
     public async Task<Result> DeleteAsync(WebHook webHook)
     {
-        await WebHooks.DeleteOneAsync(Builders<MongoWebHook>.Filter.Eq(x => x.Id, webHook.Id));
+        await WebHooks.DeleteOneAsync(Builders<MongoWebHook>.Filter.Eq(x => x.Id, webHook.Id)).ConfigureAwait(false);
 
         return Result.Ok();
     }

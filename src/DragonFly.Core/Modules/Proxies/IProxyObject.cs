@@ -6,4 +6,5 @@ namespace DragonFly.Generator;
 
 public interface IProxyObject
 {
+    Task LoadAsync();
 }

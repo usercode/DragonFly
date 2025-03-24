@@ -31,13 +31,14 @@ public class EventMongoStorage : MongoStorage, IEventStorage
         var result = await Events.AsQueryable()
                                     .OrderByDescending(x => x.Date)
                                     .Take(100)
-                                    .ToListAsync();
+                                    .ToListAsync()
+                                    .ConfigureAwait(false);
 
         return result.Select(x => x.ToModel()).ToList();
     }
 
     public async Task SaveAsync(EventEntry dragonFlyEvent)
     {
-        await Events.InsertOneAsync(dragonFlyEvent.ToMongo());
+        await Events.InsertOneAsync(dragonFlyEvent.ToMongo()).ConfigureAwait(false);
     }
 }

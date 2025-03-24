@@ -50,9 +50,9 @@ public class SingleValueMongoFieldSerializer<TContentField> : MongoFieldSerializ
         {
             doubleField.Value = (double?)bsonValue;
         }
-        else if (contentField is SingleValueField<DateTime?> dateField)
+        else if (contentField is SingleValueField<DateTime?> dateTimeField)
         {
-            dateField.Value = (DateTime?)bsonValue;
+            dateTimeField.Value = (DateTime?)bsonValue;
         }
         else if (contentField is SingleValueField<Guid?> guidField)
         {

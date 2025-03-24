@@ -69,7 +69,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result<ContentItem?>> GetContentAsync(string schema, Guid id)
     {
-        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema);
+        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema).ConfigureAwait(false);
 
         if (contentSchema == null)
         {
@@ -78,7 +78,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
         IMongoCollection<MongoContentItem> collection = Client.Database.GetContentCollection(schema);
 
-        MongoContentItem? result = collection.AsQueryable().FirstOrDefault(x => x.Id == id);
+        MongoContentItem? result = await collection.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (result == null)
         {
@@ -90,7 +90,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result<QueryResult<ContentItem>>> QueryAsync(ContentQuery query)
     {
-        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(query.Schema);
+        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(query.Schema).ConfigureAwait(false);
 
         ArgumentNullException.ThrowIfNull(schema);
 
@@ -209,11 +209,11 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         findOptions.Collation = new Collation(locale: "en", strength: CollationStrength.Primary);
 
         //execute query
-        using var cursor = await collection.FindAsync(q, findOptions);
+        using var cursor = await collection.FindAsync(q, findOptions).ConfigureAwait(false);
 
-        long totalCount = await collection.CountDocumentsAsync(q);
+        long totalCount = await collection.CountDocumentsAsync(q).ConfigureAwait(false);
 
-        List<MongoContentItem> result = await cursor.ToListAsync();
+        List<MongoContentItem> result = await cursor.ToListAsync().ConfigureAwait(false);
 
         QueryResult<ContentItem> queryResult = new QueryResult<ContentItem>();
         queryResult.Items = result
@@ -248,7 +248,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
         var items = Client.Database.GetContentCollection(content.Schema.Name);
 
-        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name);
+        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name).ConfigureAwait(false);
 
         content.ApplySchema(schema);
         content.Validate();
@@ -257,14 +257,14 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
         mongo.ReferencedTo = content.GetReferencedContent().ToMongo();
 
-        await items.InsertOneAsync(mongo);
+        await items.InsertOneAsync(mongo).ConfigureAwait(false);
 
         content.Id = mongo.Id;
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in ContentInterceptors)
         {
-            await interceptor.OnCreatedAsync(content);
+            await interceptor.OnCreatedAsync(content).ConfigureAwait(false);
         }
 
         return Result.Ok();
@@ -272,7 +272,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result> UpdateAsync(ContentItem content)
     {
-        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name);
+        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name).ConfigureAwait(false);
 
         ArgumentNullException.ThrowIfNull(schema);
 
@@ -291,12 +291,12 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         {
             IMongoCollection<MongoContentVersion> versioning = Client.Database.GetContentVersionCollection(content.Schema.Name);
 
-            MongoContentItem draftItem = await drafted.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id);
+            MongoContentItem draftItem = await drafted.AsQueryable().FirstOrDefaultAsync(x => x.Id == content.Id).ConfigureAwait(false);
 
             if (DragonFlyOptions.Versioning == ContentVersionKind.All ||
                 (DragonFlyOptions.Versioning == ContentVersionKind.PublishedOnly && draftItem.PublishedAt != null))
             {
-                await versioning.InsertOneAsync(new MongoContentVersion() { Content = draftItem });
+                await versioning.InsertOneAsync(new MongoContentVersion() { Content = draftItem }).ConfigureAwait(false);
             }
         }       
 
@@ -310,7 +310,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                                                 .Set(x => x.PublishedAt, null)
                                                                 .Set(x => x.SchemaVersion, content.SchemaVersion)
                                                                 .Inc(x => x.Version, 1),
-                                    new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After });
+                                    new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After }).ConfigureAwait(false);
 
         if (mongoContentItem == null)
         {
@@ -322,7 +322,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         //execute interceptors
         foreach (IContentInterceptor interceptor in ContentInterceptors)
         {
-            await interceptor.OnUpdatedAsync(content);
+            await interceptor.OnUpdatedAsync(content).ConfigureAwait(false);
         }
 
         return Result.Ok();
@@ -330,7 +330,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result<bool>> DeleteAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(schema, id);
+        var result = await GetContentAsync(schema, id).ConfigureAwait(false);
 
         if (result.IsFailed)
         {
@@ -348,12 +348,12 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
         IMongoCollection<MongoContentItem> col = Client.Database.GetContentCollection(content.Schema.Name);
 
-        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id));
+        await col.DeleteOneAsync(Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id)).ConfigureAwait(false);
 
         //execute interceptors
         foreach (IContentInterceptor interceptor in ContentInterceptors)
         {
-            await interceptor.OnDeletedAsync(content);
+            await interceptor.OnDeletedAsync(content).ConfigureAwait(false);
         }
 
         return Result.Ok(true);
@@ -361,7 +361,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result<bool>> PublishAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(schema, id);
+        var result = await GetContentAsync(schema, id).ConfigureAwait(false);
 
         if (result.IsFailed)
         {
@@ -379,10 +379,10 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         IMongoCollection<MongoContentItem> published = Client.Database.GetContentCollection(content.Schema.Name, true);
 
         //find content and updated published date
-        MongoContentItem found = drafted.FindOneAndUpdate(
-                                   Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
-                                   Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()),
-                                   new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After });
+        MongoContentItem found = await drafted.FindOneAndUpdateAsync(
+                                                   Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
+                                                   Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, DateTimeService.Current()),
+                                                   new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After }).ConfigureAwait(false);
 
         if (found == null)
         {
@@ -393,7 +393,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         await published.ReplaceOneAsync(
                                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, found.Id), 
                                     found, 
-                                    new ReplaceOptions() { IsUpsert = true });
+                                    new ReplaceOptions() { IsUpsert = true }).ConfigureAwait(false);
 
         content = found.ToModel(content.Schema);
 
@@ -402,7 +402,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         {
             try
             {
-                await interceptor.OnPublishedAsync(content);
+                await interceptor.OnPublishedAsync(content).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -417,7 +417,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result<bool>> UnpublishAsync(string schema, Guid id)
     {
-        var result = await GetContentAsync(schema, id);
+        var result = await GetContentAsync(schema, id).ConfigureAwait(false);
 
         if (result.IsFailed)
         {
@@ -441,7 +441,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         MongoContentItem found = await drafted.FindOneAndUpdateAsync(
                                                         Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
                                                         Builders<MongoContentItem>.Update.Set(x => x.PublishedAt, null),
-                                                        new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After });
+                                                        new FindOneAndUpdateOptions<MongoContentItem>() { ReturnDocument = ReturnDocument.After }).ConfigureAwait(false);
 
         if (found == null)
         {
@@ -455,7 +455,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
         {
             try
             {
-                await interceptor.OnUnpublishedAsync(content);
+                await interceptor.OnUnpublishedAsync(content).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -475,7 +475,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.PublishAsync(x.Schema.Name, x.Id));
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.PublishAsync(x.Schema.Name, x.Id).ConfigureAwait(false)).ConfigureAwait(false);
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
@@ -490,7 +490,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                                         {
                                                             IContentStorage contentStorage = ctx.ServiceProvider.GetRequiredService<IContentStorage>();
 
-                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.UnpublishAsync(x.Schema.Name, x.Id));
+                                                            await ctx.ProcessQueryAsync(contentStorage.QueryAsync, async x => await contentStorage.UnpublishAsync(x.Schema.Name, x.Id).ConfigureAwait(false)).ConfigureAwait(false);
                                                         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
@@ -516,7 +516,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                                                 Builders<MongoReferencedContent>.Filter.Eq(x => x.Schema, schema),
                                                                 Builders<MongoReferencedContent>.Filter.Eq(x => x.Id2, id)));
 
-            long totalCount = await collection.CountDocumentsAsync(filter);
+            long totalCount = await collection.CountDocumentsAsync(filter).ConfigureAwait(false);
 
             if (totalCount > 0)
             {
@@ -529,7 +529,7 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result> RebuildDatabaseAsync()
     {
-        var result = await SchemaStorage.QuerySchemasAsync();
+        var result = await SchemaStorage.QuerySchemasAsync().ConfigureAwait(false);
 
         foreach (ContentSchema s in result.Value.Items)
         {
@@ -548,8 +548,9 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                                     Builders<MongoContentItem>.Filter.Eq(x => x.Id, content.Id),
                                                     Builders<MongoContentItem>.Update
                                                                                 .Set(x => x.Fields, content.Fields.ToMongo())
-                                                                                .Set(x => x.ReferencedTo, content.GetReferencedContent().ToMongo()));
-                    });
+                                                                                .Set(x => x.ReferencedTo, content.GetReferencedContent().ToMongo()))
+                                                    .ConfigureAwait(false);
+                    }).ConfigureAwait(false);
                 }
             );
         }

@@ -32,7 +32,8 @@ public class ContentVersionMongoStorage : MongoStorage, IContentVersionStorage
                                                 PublishedAt = x.Content.PublishedAt,
                                                 Version = x.Content.Version })
                                             .OrderByDescending(x => x.Modified)
-                                            .ToListAsync();
+                                            .ToListAsync()
+                                            .ConfigureAwait(false);
 
         QueryResult<ContentVersionEntry> result2 = new QueryResult<ContentVersionEntry>();
         result2.Items = items;
@@ -45,14 +46,14 @@ public class ContentVersionMongoStorage : MongoStorage, IContentVersionStorage
     {        
         IMongoCollection<MongoContentVersion> collection = Client.Database.GetContentVersionCollection(schema);
 
-        MongoContentVersion contentItem = await collection.AsQueryable().FirstOrDefaultAsync(x=> x.Id == id);
+        MongoContentVersion contentItem = await collection.AsQueryable().FirstOrDefaultAsync(x=> x.Id == id).ConfigureAwait(false);
 
         if (contentItem == null)
         {
             return Result.Ok<ContentItem?>();
         }
 
-        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema);
+        ContentSchema? contentSchema = await SchemaStorage.GetSchemaAsync(schema).ConfigureAwait(false);
 
         return contentItem.Content.ToModel(contentSchema);
     }

@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Security.Claims;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -37,7 +36,7 @@ public static class DragonFlyApiExtensions
             logger.LogInformation("Initializing {type}", GetName(item));
 
             await item.ExecuteAsync(api);
-        }        
+        }
     }
 
     private static string? GetName(object initializer)

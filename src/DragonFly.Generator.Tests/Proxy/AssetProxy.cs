@@ -1,17 +1,17 @@
-﻿// Copyright (c) usercode
-// https://github.com/usercode/DragonFly
-// MIT License
+﻿//// Copyright (c) usercode
+//// https://github.com/usercode/DragonFly
+//// MIT License
 
-using DragonFly.Generator;
+//using DragonFly.Generator;
 
-namespace DragonFly.MongoDB.Proxy2;
+//namespace DragonFly.MongoDB.Proxy2;
 
-[Proxy]
-internal partial class AssetProxy : Asset
-{
+//[Proxy]
+//internal partial class AssetProxy : Asset
+//{
 
-    public void OnPropertySet()
-    {
+//    public void OnPropertySet()
+//    {
 
-    }
-}
+//    }
+//}

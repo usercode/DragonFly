@@ -66,7 +66,7 @@ public class ProxyGenerator : IIncrementalGenerator
                     builder.AppendBlock(x =>
                     {
                         x.AppendLine($"_invocationTarget = new {baseClassSymbol.ToDisplayString()}({parameters});");
-                    });                    
+                    });
 
                     //InvocationTarget
                     builder.AddField(Modifier.Private, baseClassSymbol.ToDisplayString(), "_invocationTarget");
@@ -75,6 +75,8 @@ public class ProxyGenerator : IIncrementalGenerator
                     {
                         x.AppendLine($"_invocationTarget = obj;");
                     });
+
+                    builder.AppendLine("private bool _invocationTargetLoaded = false;");
 
                     if (FindMethodWithAttribute(ar.ClassSyntax, "Intercept", out string? methodCaller, out bool isTask, out string[] ignoredProperties, out string[] ignoredMethods))
                     {
@@ -111,7 +113,12 @@ public class ProxyGenerator : IIncrementalGenerator
                                             builder.AppendLine($"get");
                                             builder.AppendBlock(x =>
                                             {
-                                                x.AppendLine($"{methodCaller}(\"{propertySymbol.GetMethod.Name}\"){methodCallerAsyncExtensions};");                
+                                                x.AppendLine("if (_invocationTargetLoaded == false)");
+                                                x.AppendBlock(x =>
+                                                {
+                                                    x.AppendLine($"{methodCaller}(\"{propertySymbol.GetMethod.Name}\"){methodCallerAsyncExtensions};");
+                                                    x.AppendLine("_invocationTargetLoaded = true;");
+                                                });
                                                 x.AppendLine($"return _invocationTarget.{propertySymbol.Name};");
                                             });
                                         }
@@ -122,7 +129,12 @@ public class ProxyGenerator : IIncrementalGenerator
                                             {
                                                 if (ignoreProperty == false)
                                                 {
-                                                    x.AppendLine($"{methodCaller}(\"{propertySymbol.SetMethod.Name}\"){methodCallerAsyncExtensions};");
+                                                    x.AppendLine("if (_invocationTargetLoaded == false)");
+                                                    x.AppendBlock(x =>
+                                                    {
+                                                        x.AppendLine($"{methodCaller}(\"{propertySymbol.SetMethod.Name}\"){methodCallerAsyncExtensions};");
+                                                        x.AppendLine("_invocationTargetLoaded = true;");
+                                                    });
                                                 }
                                                 x.AppendLine($"_invocationTarget.{propertySymbol.Name} = value;");
                                             });

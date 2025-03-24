@@ -10,25 +10,21 @@ namespace DragonFly.MongoDB;
 [Proxy]
 internal partial class ContentSchemaProxy : ContentSchema
 {
-    private bool _loaded = false;
-
     [Intercept]
     [IgnoreProperty(nameof(Name))]
     [IgnoreMethod(nameof(IsNew))]
     [IgnoreMethod(nameof(Equals))]
     [IgnoreMethod(nameof(GetHashCode))]
     [IgnoreMethod(nameof(ToString))]
-    private async ValueTask OnMethodCalling(string name)
+    private async Task OnMethodCalling(string name)
     {
-        if (_loaded == true)
-        {
-            return;
-        }
+        await LoadAsync().ConfigureAwait(false);
+    }
 
-        _loaded = true;
-
+    public async Task LoadAsync()
+    {
         ISchemaStorage storage = DragonFlyApi.Default.ServiceProvider.GetRequiredService<ISchemaStorage>();
-        ContentSchema? result = await storage.GetSchemaAsync(Name);
+        ContentSchema? result = await storage.GetSchemaAsync(Name).ConfigureAwait(false);
 
         if (result == null)
         {

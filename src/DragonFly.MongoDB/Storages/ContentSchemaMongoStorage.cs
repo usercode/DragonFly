@@ -60,11 +60,11 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
 
         MongoContentSchema mongo = schema.ToMongo();
 
-        await ContentSchemas.InsertOneAsync(mongo);
+        await ContentSchemas.InsertOneAsync(mongo).ConfigureAwait(false);
 
         schema.Id = mongo.Id;
 
-        await CreateContentIndicesAsync(schema);
+        await CreateContentIndicesAsync(schema).ConfigureAwait(false);
 
         return Result.Ok();
     }
@@ -73,16 +73,16 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
     {
         schema.ModifiedAt = DateTimeService.Current();
 
-        await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo());
+        await ContentSchemas.FindOneAndReplaceAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id), schema.ToMongo()).ConfigureAwait(false);
 
-        await CreateContentIndicesAsync(schema);
+        await CreateContentIndicesAsync(schema).ConfigureAwait(false);
 
         return Result.Ok();
     }
 
     public async Task<Result> DeleteAsync(ContentSchema schema)
     {
-        await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id));
+        await ContentSchemas.DeleteManyAsync(Builders<MongoContentSchema>.Filter.Eq(x => x.Id, schema.Id)).ConfigureAwait(false);
 
         return Result.Ok();
     }
@@ -91,7 +91,8 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
     {
         IList<MongoContentSchema> r = await ContentSchemas.AsQueryable()
                                                             .OrderBy(x => x.Name)
-                                                            .ToListAsync();
+                                                            .ToListAsync()
+                                                            .ConfigureAwait(false);
 
         return new QueryResult<ContentSchema>()
         {
@@ -105,7 +106,7 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
     {
         ArgumentNullException.ThrowIfNull(name);
 
-        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Name == name);
+        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Name == name).ConfigureAwait(false);
 
         if (schema == null)
         {
@@ -117,7 +118,7 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
 
     public async Task<Result<ContentSchema?>> GetSchemaAsync(Guid id)
     {
-        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+        MongoContentSchema? schema = await ContentSchemas.AsQueryable().FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
 
         if (schema == null)
         {
@@ -130,14 +131,14 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
     public async Task<Result> CreateContentIndicesAsync(ContentSchema schema)
     {
         //index for drafts
-        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, false));
+        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, false)).ConfigureAwait(false);
 
         //index for published
-        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, true));
+        await CreateIndicesInternalAsync(Client.Database.GetContentCollection(schema.Name, true)).ConfigureAwait(false);
 
         async Task CreateIndicesInternalAsync(IMongoCollection<MongoContentItem> collection)
         {
-            await collection.Indexes.DropAllAsync();
+            await collection.Indexes.DropAllAsync().ConfigureAwait(false);
 
             foreach (var field in schema.Fields)
             {
@@ -156,7 +157,7 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
                 //add new indices
                 if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
                 {
-                    await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key);
+                    await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key).ConfigureAwait(false);
                 }
                 else
                 {

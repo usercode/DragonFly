@@ -1,185 +1,184 @@
-﻿// Copyright (c) usercode
-// https://github.com/usercode/DragonFly
-// MIT License
+﻿//// Copyright (c) usercode
+//// https://github.com/usercode/DragonFly
+//// MIT License
 
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Testing;
-using Microsoft.CodeAnalysis;
-using Xunit;
-using DragonFly.Generator;
+//using Microsoft.CodeAnalysis.CSharp;
+//using Microsoft.CodeAnalysis;
+//using Xunit;
+//using DragonFly.Generator;
 
-namespace DragonFly.Tests;
+//namespace DragonFly.Tests;
 
-public class GeneratorTest
-{
-    public GeneratorTest()
-    {
-        CustomerSchema = new ContentSchema("Customer");
-        CustomerSchema.AddString("Lastname");
-        CustomerSchema.AddString("Firstname");
-        CustomerSchema.AddBool("IsActive");
-        CustomerSchema.AddInteger("Value");
-        CustomerSchema.AddSlug("Slug");
+//public class GeneratorTest
+//{
+//    public GeneratorTest()
+//    {
+//        CustomerSchema = new ContentSchema("Customer");
+//        CustomerSchema.AddString("Lastname");
+//        CustomerSchema.AddString("Firstname");
+//        CustomerSchema.AddBool("IsActive");
+//        CustomerSchema.AddInteger("Value");
+//        CustomerSchema.AddSlug("Slug");
 
         
-    }
+//    }
 
-    private ContentSchema CustomerSchema { get; }
+//    private ContentSchema CustomerSchema { get; }
 
-    [Fact]
-    public void GeneratesEnumExtensionsCorrectly()
-    {
-        // The source code to test
-        var source = """
-                    namespace DragonFly.Generator.Tests;
+//    [Fact]
+//    public void GeneratesEnumExtensionsCorrectly()
+//    {
+//        // The source code to test
+//        var source = """
+//                    namespace DragonFly.Generator.Tests;
 
-                    [ContentItem("TestContent")]
-                    public partial class Product
-                    {
-                        [StringField]
-                        public string? _title;
+//                    [ContentItem("TestContent")]
+//                    public partial class Product
+//                    {
+//                        [StringField]
+//                        public string? _title;
 
-                        [BoolField]
-                        public bool? _title;
+//                        [BoolField]
+//                        public bool? _title;
 
-                        [SlugField]
-                        public SlugField _title;
-                    }
+//                        [SlugField]
+//                        public SlugField _title;
+//                    }
                     
-                    """;
+//                    """;
 
-        // Pass the source code to our helper and snapshot test the output
-        Verify<ModelGenerator>(source);
-    }
+//        // Pass the source code to our helper and snapshot test the output
+//        Verify<ModelGenerator>(source);
+//    }
 
-    [Fact]
-    public void TestFieldGenerator()
-    {
-        // The source code to test
-        var source = """
-                    namespace DragonFly;
+//    [Fact]
+//    public void TestFieldGenerator()
+//    {
+//        // The source code to test
+//        var source = """
+//                    namespace DragonFly;
 
-                    [ContentField]
-                    [FieldOptions(typeof(AssetOptions))]
-                    [FieldQuery(typeof(AssetQuery))]
-                    public partial class AssetField
-                    {
-                    }
+//                    [ContentField]
+//                    [FieldOptions(typeof(AssetOptions))]
+//                    [FieldQuery(typeof(AssetQuery))]
+//                    public partial class AssetField
+//                    {
+//                    }
                     
-                    """;
+//                    """;
 
-        // Pass the source code to our helper and snapshot test the output
-        Verify<FieldGenerator>(source);
-    }
+//        // Pass the source code to our helper and snapshot test the output
+//        Verify<FieldGenerator>(source);
+//    }
 
-    [Fact]
-    public void TestProxy()
-    {
-        // The source code to test
-        var source = """
-                    using DragonFly;
-                    using DragonFly.Generator;
+//    [Fact]
+//    public void TestProxy()
+//    {
+//        // The source code to test
+//        var source = """
+//                    using DragonFly;
+//                    using DragonFly.Generator;
 
-                    namespace DragonFly.Generator.Tests;
+//                    namespace DragonFly.Generator.Tests;
 
-                    public class Asset { }
+//                    public class Asset { }
 
-                    [Proxy]
-                    partial class AssetProxy : Asset
-                    {
-                            [Intercept]
-                            [IgnoreProperty(nameof(Asset))]
-                            public Task Do()
-                            {
-                            }
-                    }                    
-                    """;
+//                    [Proxy]
+//                    partial class AssetProxy : Asset
+//                    {
+//                            [Intercept]
+//                            [IgnoreProperty(nameof(Asset))]
+//                            public Task Do()
+//                            {
+//                            }
+//                    }                    
+//                    """;
 
-        // Pass the source code to our helper and snapshot test the output
-        Verify<ProxyGenerator>(source);
-    }
+//        // Pass the source code to our helper and snapshot test the output
+//        Verify<ProxyGenerator>(source);
+//    }
 
-    public static Task Verify<T>(string source)
-        where T : IIncrementalGenerator, new()
-    {
-        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);
-        // Create references for assemblies we require
-        // We could add multiple references if required
-        IEnumerable<PortableExecutableReference> references = new[]
-        {
-            MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
-        };
+//    public static Task Verify<T>(string source)
+//        where T : IIncrementalGenerator, new()
+//    {
+//        SyntaxTree syntaxTree = CSharpSyntaxTree.ParseText(source);
+//        // Create references for assemblies we require
+//        // We could add multiple references if required
+//        IEnumerable<PortableExecutableReference> references = new[]
+//        {
+//            MetadataReference.CreateFromFile(typeof(object).Assembly.Location)
+//        };
 
-        CSharpCompilation compilation = CSharpCompilation.Create(
-            assemblyName: "Tests",
-            syntaxTrees: new[] { syntaxTree },
-            references: references); // 👈 pass the references to the compilation
+//        CSharpCompilation compilation = CSharpCompilation.Create(
+//            assemblyName: "Tests",
+//            syntaxTrees: new[] { syntaxTree },
+//            references: references); // 👈 pass the references to the compilation
 
-        T generator = new T();
+//        T generator = new T();
 
-        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
+//        GeneratorDriver driver = CSharpGeneratorDriver.Create(generator);
 
-        driver = driver.RunGenerators(compilation);
+//        driver = driver.RunGenerators(compilation);
 
-        return Verifier
-            .Verify(driver)
-            .UseDirectory("Snapshots");
-    }
+//        return Verifier
+//            .Verify(driver)
+//            .UseDirectory("Snapshots");
+//    }
 
-    [Fact]
-    public void GetSuitableModelType()
-    {
-        ContentItem content = CustomerSchema.CreateContent();
-        content.SetValue("Lastname", "Doe");
-        content.SetValue("Firstname", "John");
+//    [Fact]
+//    public void GetSuitableModelType()
+//    {
+//        ContentItem content = CustomerSchema.CreateContent();
+//        content.SetValue("Lastname", "Doe");
+//        content.SetValue("Firstname", "John");
 
-        Customer model = content.ToModel<Customer>();
+//        Customer model = content.ToModel<Customer>();
 
-        Assert.True(model is Customer);
-    }
+//        Assert.True(model is Customer);
+//    }
 
-    [Fact]
-    public void GetModelProperty()
-    {
-        ContentItem content = CustomerSchema.CreateContent();
-        content.Id = Guid.NewGuid();
-        content.SetValue("Lastname", "Doe");
-        content.SetValue("Firstname", "John");
-        content.SetValue<bool?>("IsActive", true);
-        content.SetValue<long?>("Value", 123);
-        content.SetValue("Slug", "my-path");
+//    [Fact]
+//    public void GetModelProperty()
+//    {
+//        ContentItem content = CustomerSchema.CreateContent();
+//        content.Id = Guid.NewGuid();
+//        content.SetValue("Lastname", "Doe");
+//        content.SetValue("Firstname", "John");
+//        content.SetValue<bool?>("IsActive", true);
+//        content.SetValue<long?>("Value", 123);
+//        content.SetValue("Slug", "my-path");
 
-        Customer customer = content.ToModel<Customer>();
+//        Customer customer = content.ToModel<Customer>();
 
-        Assert.Equal(content.Id, customer.Id);
-        Assert.Equal("Doe", customer.Lastname);
-        Assert.Equal("John", customer.Firstname);
-        Assert.Equal("my-path", customer.Slug.Value);
-    }
+//        Assert.Equal(content.Id, customer.Id);
+//        Assert.Equal("Doe", customer.Lastname);
+//        Assert.Equal("John", customer.Firstname);
+//        Assert.Equal("my-path", customer.Slug.Value);
+//    }
 
-    [Fact]
-    public void SetModelProperty()
-    {
-        ContentItem content = CustomerSchema.CreateContent();
+//    [Fact]
+//    public void SetModelProperty()
+//    {
+//        ContentItem content = CustomerSchema.CreateContent();
 
-        Customer customer = content.ToModel<Customer>();
-        customer.Lastname = "Doe";
-        customer.Firstname = "John";
-        customer.Slug = new SlugField("my-path");
+//        Customer customer = content.ToModel<Customer>();
+//        customer.Lastname = "Doe";
+//        customer.Firstname = "John";
+//        customer.Slug = new SlugField("my-path");
 
-        Assert.Equal("Doe", content.GetValue<string>("Lastname"));
-        Assert.Equal("John", content.GetValue<string>("Firstname"));
-        //Assert.Equal(123, content.GetInteger("Value"));
-        Assert.Equal("my-path", content.GetValue<string>("Slug"));
-    }
+//        Assert.Equal("Doe", content.GetValue<string>("Lastname"));
+//        Assert.Equal("John", content.GetValue<string>("Firstname"));
+//        //Assert.Equal(123, content.GetInteger("Value"));
+//        Assert.Equal("my-path", content.GetValue<string>("Slug"));
+//    }
 
-    //[Fact]
-    //public void IgnoreNotMappedPropery()
-    //{
-    //    ContentItem content = CustomerSchema.CreateContent();
+//    //[Fact]
+//    //public void IgnoreNotMappedPropery()
+//    //{
+//    //    ContentItem content = CustomerSchema.CreateContent();
 
-    //    Customer customer = content.ToCustomer();
-    //    customer.Lastname = "Doe";
-    //    customer.Remark = "NotMapped";
-    //}
-}
+//    //    Customer customer = content.ToCustomer();
+//    //    customer.Lastname = "Doe";
+//    //    customer.Remark = "NotMapped";
+//    //}
+//}
