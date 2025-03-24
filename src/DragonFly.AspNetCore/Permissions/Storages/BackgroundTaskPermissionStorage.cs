@@ -33,17 +33,23 @@ public class BackgroundTaskPermissionStorage : IBackgroundTaskManager
 
     public async Task<Result> CancelAsync(int id)
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.CancelBackgroundTask).ThenAsync(x => Storage.CancelAsync(id));
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.CancelBackgroundTask)
+                        .ThenAsync(x => Storage.CancelAsync(id))
+                        .ConfigureAwait(false);
     }
 
     public async Task<Result<BackgroundTaskInfo[]>> GetTasksAsync()
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.GetTasksAsync());
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask)
+                        .ThenAsync(x => Storage.GetTasksAsync())
+                        .ConfigureAwait(false);
     }
 
     public async Task<Result<IBackgroundTaskNotificationProvider>> StartNotificationProviderAsync()
     {
-        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask).ThenAsync(x => Storage.StartNotificationProviderAsync());
+        return await Api.AuthorizeAsync(PrincipalContext.Current, BackgroundTaskPermissions.QueryBackgroundTask)
+                        .ThenAsync(x => Storage.StartNotificationProviderAsync())
+                        .ConfigureAwait(false);
     }
 
     public BackgroundTask Start(string name, Func<BackgroundTaskContext, Task> action)

@@ -17,6 +17,6 @@ public static class DragonFlyApiPermissionExtensions
     {
         IAuthorizationService authorizationService = api.ServiceProvider.GetRequiredService<IAuthorizationService>();
 
-        return await authorizationService.AuthorizeAsync(principal, permission);
+        return await authorizationService.AuthorizeAsync(principal, permission).ConfigureAwait(false);
     }
 }

@@ -35,12 +35,14 @@ public class ContentVersionPermissionStorage : IContentVersionStorage
     public async Task<Result<ContentItem?>> GetContentByVersionAsync(string schema, Guid id)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read))
-                                            .ThenAsync(x => Storage.GetContentByVersionAsync(schema, id));
+                        .ThenAsync(x => Storage.GetContentByVersionAsync(schema, id))
+                        .ConfigureAwait(false);
     }
 
     public async Task<Result<QueryResult<ContentVersionEntry>>> GetContentVersionsAsync(string schema, Guid id)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, ContentPermissions.Create(schema, ContentAction.Read))
-                                            .ThenAsync(x => Storage.GetContentVersionsAsync(schema, id));
+                        .ThenAsync(x => Storage.GetContentVersionsAsync(schema, id))
+                        .ConfigureAwait(false);
     }
 }
