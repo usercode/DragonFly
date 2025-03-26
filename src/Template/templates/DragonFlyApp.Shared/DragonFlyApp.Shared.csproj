@@ -11,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DragonFly.Core" Version="1.0.27" />
+    <PackageReference Include="DragonFly.Core" Version="1.0.31" />
   </ItemGroup>
 
 <ItemGroup>
-    <PackageReference Include="DragonFly.Generator" Version="1.0.27">
+    <PackageReference Include="DragonFly.Generator" Version="1.0.31">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

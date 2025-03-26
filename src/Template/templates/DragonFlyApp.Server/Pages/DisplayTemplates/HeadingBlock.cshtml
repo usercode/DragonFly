@@ -6,19 +6,19 @@
     <div class="block heading-block">
         @if (Model.HeadingType == HeadingType.H1)
         {
-            <h1 class="@Model.TextAlignment.ToBootstrapClass()"><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h1>
+            <h1><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h1>
         }
         else if (Model.HeadingType == HeadingType.H2)
         {
-            <h2 class="@Model.TextAlignment.ToBootstrapClass()"><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h2>
+            <h2><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h2>
         }
         else if (Model.HeadingType == HeadingType.H3)
         {
-            <h3 class="@Model.TextAlignment.ToBootstrapClass()"><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h3>
+            <h3><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h3>
         }
         else if (Model.HeadingType == HeadingType.H4)
         {
-            <h4 class="@Model.TextAlignment.ToBootstrapClass()"><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h4>
+            <h4><a id="@SlugService.Transform(Model.Text)">@Model.Text</a></h4>
         }
     </div>
 }
