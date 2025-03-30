@@ -83,8 +83,6 @@ builder.Services.AddDragonFlyClient(x => x
                                             x.Field().Add<HtmlField>().WithTinyMceView();
                                         }));
 
-builder.Services.AddSingleton<IPrincipalContext, PrincipalHttpContext>();
-
 var app = builder.Build();
 
 //init DragonFly

@@ -50,7 +50,8 @@ class PermissionHandler : AuthorizationHandler<PermissionRequirement>
         bool found = await Store.ApiKeys.AsQueryable()
                                             .Where(x => x.Id == apikeyId)
                                             .Where(x => permissions.Any(p => x.Permissions.Contains(p)))
-                                            .AnyAsync();
+                                            .AnyAsync()
+                                            .ConfigureAwait(false);
 
         if (found)
         {

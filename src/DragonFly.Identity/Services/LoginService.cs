@@ -75,8 +75,6 @@ class LoginService : ILoginService
 
         ClaimsPrincipal principal = new ClaimsPrincipal(new ClaimsIdentity(claims, "Password"));
 
-        PrincipalContext.Current = principal;
-
         await HttpContextAccessor.HttpContext!.SignInAsync(IdentityAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties() { IsPersistent = isPersistent }).ConfigureAwait(false);
         
         return new LoginResult(true) { Username = user.Username, Claims = claims.Select(x=> new ClaimItem(x.Type, x.Value)).ToList() };
@@ -84,7 +82,7 @@ class LoginService : ILoginService
 
     public async Task Logout()
     {
-        await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);        
+        await HttpContextAccessor.HttpContext!.SignOutAsync(IdentityAuthenticationDefaults.AuthenticationScheme);
     }
 
     public async Task<IdentityUser?> GetCurrentUserAsync()

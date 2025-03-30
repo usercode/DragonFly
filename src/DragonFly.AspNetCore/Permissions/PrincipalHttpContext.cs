@@ -18,6 +18,5 @@ public class PrincipalHttpContext : IPrincipalContext
     public ClaimsPrincipal? Current
     {
         get => HttpContextAccessor.HttpContext?.User;
-        set { }
     }
 }

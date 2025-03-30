@@ -64,7 +64,7 @@ public static class DragonFlyBuilderExtensions
 
         builder.Services.AddHttpClient<IContentInterceptor, WebHookInterceptor>();
 
-        builder.Services.AddSingleton<IPrincipalContext, PrincipalContext>();
+        builder.Services.AddSingleton<IPrincipalContext, PrincipalHttpContext>();
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
 
@@ -123,8 +123,8 @@ public static class DragonFlyBuilderExtensions
                                             }
                                         }
 
-                                        IPrincipalContext principal = context.RequestServices.GetRequiredService<IPrincipalContext>();
-                                        principal.Current = context.User;
+                                        //IPrincipalContext principal = context.RequestServices.GetRequiredService<IPrincipalContext>();
+                                        //principal.Current = context.User;
 
                                         await next(context);
                                     });

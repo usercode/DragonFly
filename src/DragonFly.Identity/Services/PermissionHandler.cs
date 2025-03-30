@@ -5,7 +5,6 @@
 using DragonFly.AspNetCore.Identity.MongoDB.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using DragonFly.AspNetCore.Identity.MongoDB;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using DragonFly.AspNetCore;

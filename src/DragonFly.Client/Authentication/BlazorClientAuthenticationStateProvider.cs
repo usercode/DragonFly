@@ -13,7 +13,7 @@ public class BlazorClientAuthenticationStateProvider : AuthenticationStateProvid
 {
     private ClaimsPrincipal Current { get; set; } = new ClaimsPrincipal();
 
-    ClaimsPrincipal IPrincipalContext.Current { get => Current; set => Current = value; }
+    ClaimsPrincipal IPrincipalContext.Current { get => Current; }
 
     public override Task<AuthenticationState> GetAuthenticationStateAsync()
     {

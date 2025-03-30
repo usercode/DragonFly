@@ -22,6 +22,11 @@ public static class AuthorizationExtensions
             return Result.Ok();
         }
 
+        if (DisableAuthorizationState.IsEnabled.Value)
+        {
+            return Result.Ok();
+        }
+
         AuthorizationResult result = await authorizationService.AuthorizeAsync(principal, permission.ToAuthorizationPolicy()).ConfigureAwait(false);
 
         if (result.Succeeded)
@@ -36,33 +41,6 @@ public static class AuthorizationExtensions
 
     public static IDisposable DisableAuthorization(this IDragonFlyApi api)
     {
-        var context = api.ServiceProvider.GetRequiredService<IPrincipalContext>();
-
-        return new DisableAuthorization(context);
+        return new DisableAuthorizationState();
     }
-
-    public static async Task UseNoAuthorizationAsync(this IDragonFlyApi api, Func<Task> action)
-    {
-        using (DisableAuthorization(api))
-        {
-            await action();
-        }
-    }
-
-    public static async Task<T> UseNoAuthorizationAsync<T>(this IDragonFlyApi api, Func<Task<T>> action)
-    {
-        using (DisableAuthorization(api))
-        {
-            return await action();
-        }
-    }
-
-    public static void UseNoAuthorization(this IDragonFlyApi api, Action action)
-    {
-        using (DisableAuthorization(api))
-        {
-            action();
-        }
-    }
-
 }
