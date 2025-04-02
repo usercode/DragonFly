@@ -21,6 +21,17 @@ public partial class StringField : TextBaseField
         Value = text;
     }
 
+    protected override void OnValueChanging(ref string? newValue)
+    {
+        base.OnValueChanging(ref newValue);
+
+        if (newValue != null)
+        {
+            //replace line breaks
+            newValue = newValue.Replace("\r\n", " ").Replace("\n", " ").Trim();
+        }
+    }
+
     public override void Validate(string fieldName, FieldOptions options, ValidationContext context)
     {
         base.Validate(fieldName, options, context);
