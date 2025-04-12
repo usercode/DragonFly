@@ -1,22 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
-	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<Authors>usercode</Authors>
-		<Description>Headless CMS based on ASP.NET Core and Blazor</Description>
-    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<PackageIcon>logo.png</PackageIcon>
-		<PackageTags>cms</PackageTags>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-    <IsPackable>true</IsPackable>
-	</PropertyGroup>
-  
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">  
 	<ItemGroup>
 	  <Content Remove="compilerconfig.json" />
 	  <Content Remove="libman.json" />
@@ -32,26 +14,10 @@
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
-
-	<ItemGroup>    
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-	</ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\logo.png" Pack="true" PackagePath="" />
-    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
   
   <ItemGroup>   
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.4" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" PrivateAssets="All" />
   </ItemGroup>
 

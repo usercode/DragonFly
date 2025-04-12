@@ -1,42 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net9.0</TargetFramework>
-		<Nullable>enable</Nullable>
-    <ImplicitUsings>true</ImplicitUsings>
-		<Authors>usercode</Authors>
-		<Description>Headless CMS based on ASP.NET Core and Blazor</Description>
-    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-		<PackageIcon>logo.png</PackageIcon>
-		<PackageTags>cms</PackageTags>
-		<IncludeSymbols>true</IncludeSymbols>
-		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-    <IsPackable>true</IsPackable>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.API.Core\DragonFly.API.Core.csproj" />
 		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\..\logo.png" Pack="true" PackagePath="" />
-    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
-	</ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
+	</ItemGroup>	
 </Project>

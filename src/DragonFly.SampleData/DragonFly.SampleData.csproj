@@ -1,29 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-	  <TargetFramework>net9.0</TargetFramework>
-	  <Nullable>enable</Nullable>
-	  <Authors>usercode</Authors>
-	  <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
-    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
-	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
-	  <PackageIcon>logo.png</PackageIcon>
-	  <PackageTags>cms</PackageTags>
-	  <IncludeSymbols>true</IncludeSymbols>
-	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <IsPackable>true</IsPackable>
-  </PropertyGroup>
-	
-	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\..\logo.png" Pack="true" PackagePath="" />
-    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
-	</ItemGroup>
-	
+﻿<Project Sdk="Microsoft.NET.Sdk">	
 	<ItemGroup>
     <PackageReference Include="Bogus" Version="35.6.2" />
   </ItemGroup>

@@ -1,28 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <Authors>usercode</Authors>
-    <ImplicitUsings>true</ImplicitUsings>
-    <Description>Headless CMS based on ASP.NET Core and Blazor</Description>
-    <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageIcon>logo.png</PackageIcon>
-    <PackageTags>cms</PackageTags>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <MinVerTagPrefix>v</MinVerTagPrefix>
-    <GenerateDocumentationFile>True</GenerateDocumentationFile>
-    <NoWarn>CS1591</NoWarn>
-    <IsPackable>true</IsPackable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
-  </ItemGroup>
-  
+﻿<Project Sdk="Microsoft.NET.Sdk">  
   <ItemGroup>
     <PackageReference Include="GraphQL" Version="8.4.1" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.2.0" />
@@ -31,17 +7,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\logo.png" Pack="true" PackagePath="" />
-    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MinVer" Version="6.0.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 </Project>
