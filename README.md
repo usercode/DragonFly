@@ -1,3 +1,6 @@
+
+![DragonFly](logo/Logo_DragonFly_Text.png)
+
 # DragonFly » Headless ASP.NET Core CMS + Blazor
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
