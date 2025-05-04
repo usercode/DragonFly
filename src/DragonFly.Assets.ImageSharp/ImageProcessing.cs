@@ -26,9 +26,9 @@ public class ImageProcessing : IAssetProcessing
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
-        using Stream stream = await context.OpenAssetStreamAsync();
+        using Stream stream = await context.OpenAssetStreamAsync().ConfigureAwait(false);
 
-        ImageInfo imageInfo = await Image.IdentifyAsync(stream);
+        ImageInfo imageInfo = await Image.IdentifyAsync(stream).ConfigureAwait(false);
 
         if (imageInfo != null)
         {
@@ -37,7 +37,7 @@ public class ImageProcessing : IAssetProcessing
                                                     Height = imageInfo.Height, 
                                                     BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
 
-            await context.SetMetadataAsync(metadata);
+            await context.SetMetadataAsync(metadata).ConfigureAwait(false);
 
             return true;
         }

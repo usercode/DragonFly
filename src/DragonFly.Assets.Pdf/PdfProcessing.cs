@@ -21,7 +21,7 @@ public class PdfProcessing : IAssetProcessing
     {
         MemoryStream mem = new MemoryStream();
 
-        using (Stream stream = await context.OpenAssetStreamAsync())
+        using (Stream stream = await context.OpenAssetStreamAsync().ConfigureAwait(false))
         {   
             await stream.CopyToAsync(mem);
         }
@@ -37,7 +37,7 @@ public class PdfProcessing : IAssetProcessing
             metadata.PdfVersion = document.Version.ToString(CultureInfo.InvariantCulture);
         }
 
-        await context.SetMetadataAsync(metadata);
+        await context.SetMetadataAsync(metadata).ConfigureAwait(false);
 
         return true;
     }

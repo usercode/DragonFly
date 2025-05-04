@@ -25,8 +25,8 @@ public class CropWhitespacesAssetAction : IAssetAction
         }
 
         int top = 0;
-        int bottom = image.Height - 1;
-        int left = image.Width - 1;
+        int bottom = 0;
+        int left = 0;
         int right = 0;
 
         image.ProcessPixelRows(p =>
@@ -49,7 +49,7 @@ public class CropWhitespacesAssetAction : IAssetAction
             }
 
             //bottom
-            for (int i = image.Height - 1; i >= 0; i--)
+            for (int i = image.Height - 1; i > top; i--)
             {
                 Span<Rgb24> row = p.GetRowSpan(i);
 
@@ -62,39 +62,61 @@ public class CropWhitespacesAssetAction : IAssetAction
                 }
             }
 
+            bool foundSide = false;
+
             //sides
-            for (int i = top; i <= bottom; i++)
+            for (int i = top; i < image.Height - bottom; i++)
             {
                 Span<Rgb24> row = p.GetRowSpan(i);
 
                 //left
                 int found = row.IndexOfAnyExcept(whitePixel);
 
-                if (found != -1)
+                if (found == -1)
+                {
+                    continue;
+                }
+
+                if (foundSide)
                 {
                     left = Math.Min(left, found);
-
-                    //right
-                    found = row.LastIndexOfAnyExcept(whitePixel);
-
-                    if (found != -1)
-                    {
-                        found = image.Width - found - 1;
-
-                        right = Math.Max(right, found);
-                    }
                 }
+                else
+                {
+                    left = found;
+                }
+
+                //right
+                found = row.LastIndexOfAnyExcept(whitePixel);
+
+                if (found == -1)
+                {
+                    throw new Exception();
+                }
+
+                found = image.Width - found - 1;
+
+                if (foundSide)
+                {
+                    right = Math.Min(right, found);
+                }
+                else
+                {
+                    right = found;
+                }
+
+                foundSide = true;
             }
         });
 
-        if (top == 0 && bottom == image.Height - 1 && left == image.Width -1 && right == 0)
+        if (top == 0 && bottom == 0 && left == 0 && right == 0)
         {
-            return false; //no whitespace found
+            return false; //no whitespaces found
         }
 
-        if (top > bottom)
+        if (top == image.Height)
         {
-            return false; //white image
+            return false;
         }
 
         image.Mutate(x => x.Crop(new Rectangle(left, top, image.Width - left - right, image.Height - bottom - top)));

@@ -24,7 +24,7 @@ public class VideoProcessing : IAssetProcessing
 
     public async Task<bool> OnAssetChangedAsync(IAssetProcessingContext context)
     {
-        using Stream stream = await context.OpenAssetStreamAsync();
+        using Stream stream = await context.OpenAssetStreamAsync().ConfigureAwait(false);
 
         IMediaAnalysis mediaInfo = FFProbe.Analyse(stream);
 
@@ -56,7 +56,7 @@ public class VideoProcessing : IAssetProcessing
             };
         }
 
-        await context.SetMetadataAsync(metadata);
+        await context.SetMetadataAsync(metadata).ConfigureAwait(false);
 
         return true;
     }
