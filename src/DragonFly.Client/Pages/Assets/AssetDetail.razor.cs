@@ -3,38 +3,33 @@
 // MIT License
 
 using BlazorStrap;
-using DragonFly.Client.Base;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using DragonFly.Razor.Extensions;
-using DragonFly.Client;
+using DragonFly.Core.Modules.Assets.Actions;
 
 namespace DragonFly.Client.Pages.Assets;
 
 public partial class AssetDetail
 {
     [Inject]
-    public IAssetStorage AssetStore { get; set; }
+    public IAssetStorage AssetStore { get; set; } = default!;
 
     [Inject]
-    public IAssetFolderStorage AssetFolderStore { get; set; }
-
+    public IAssetFolderStorage AssetFolderStore { get; set; } = default!;
 
     private IBrowserFile SelectedFile { get; set; }
 
     [Parameter]
     public Guid? FolderId { get; set; }
 
+    [Inject]
+    public IAssetStorage AssetService { get; set; } = default!;
 
     [Inject]
-    public IAssetStorage AssetService { get; set; }
+    public IContentStorage ContentService { get; set; } = default!;
 
-    [Inject]
-    public IContentStorage ContentService { get; set; }
+    public IList<ActionItem> Actions { get; set; } = [];
 
     public async Task PublishAsync()
     {
@@ -58,7 +53,17 @@ public partial class AssetDetail
             toolbarItems.AddUpdateButton(this);
             toolbarItems.AddDeleteButton(this);
             toolbarItems.Add(new ToolbarItem("Refresh metadata", BSColor.Primary, () => ApplyMetadata()));
-        }            
+
+            foreach (ActionItem action in Actions)
+            {
+                toolbarItems.Add(new ToolbarItem(action.Name, BSColor.Primary, async () =>
+                {
+                    await AssetStore.ApplyActionAsync(Entity.Id, action.Name);
+
+                    await RefreshAsync();
+                }));
+            }
+        }
     }
 
     protected override async Task RefreshActionAsync()
@@ -76,7 +81,11 @@ public partial class AssetDetail
         }
         else
         {
-            Entity = await AssetService.GetAssetAsync(EntityId);
+            Entity = await AssetService.GetAssetAsync(EntityId);           
+
+            var result = await AssetStore.GetActionsAsync(Entity.Id);
+
+            Actions = result.Value;
         }
     }
 

@@ -4,6 +4,9 @@
 
 using System.Security.Cryptography;
 using DragonFly.AspNetCore;
+using DragonFly.Assets;
+using DragonFly.Core.Modules.Assets.Actions;
+using DragonFly.MongoDB.Assets;
 using DragonFly.MongoDB.Storages;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
@@ -133,6 +136,13 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         //upload new stream to asset
         await AssetData.UploadFromStreamAsync(assetId.ToString(), stream).ConfigureAwait(false);
 
+        await OnAssetDataChanged(assetId, mimetype);
+
+        return Result.Ok();
+    }
+
+    private async Task OnAssetDataChanged(Guid assetId, string mimetype)
+    {
         Asset? asset = null;
 
         //refresh asset info
@@ -148,15 +158,13 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
                                                     .Set(x => x.Hash, hashString)
                                                     .Set(x => x.MimeType, mimetype)
                                                     .Set(x => x.Metaddata, new Dictionary<string, BsonDocument>())
-                                                    .Inc(x => x.Version, 1), 
+                                                    .Inc(x => x.Version, 1),
                                         new FindOneAndUpdateOptions<MongoAsset>() { ReturnDocument = ReturnDocument.After }).ConfigureAwait(false);
 
             asset = mongoAsset.ToModel();
         }
 
         await ApplyMetadataAsync(asset).ConfigureAwait(false);
-
-        return Result.Ok();
     }
 
     public async Task<Result<Stream>> OpenStreamAsync(Guid assetId)
@@ -258,5 +266,48 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
         });
 
         return Task.FromResult<Result<BackgroundTaskInfo>>((BackgroundTaskInfo)task);
+    }
+
+    public async Task<Result> ApplyActionAsync(Guid assetId, string name)
+    {
+        Asset? asset = await GetAssetAsync(assetId).ConfigureAwait(false);
+
+        if (asset == null)
+        {
+            return Result.Ok();
+        }
+
+        AssetActionItem? actionItem = AssetActionManager.Default.GetByName(name);
+
+        if (actionItem == null)
+        {
+            return Result.Ok();
+        }
+
+        IAssetAction action = (IAssetAction) Api.ServiceProvider.GetRequiredService(actionItem.Type);
+
+        bool changed = await action.ProcessAsync(new MongoAssetActionContext(asset, AssetData)).ConfigureAwait(false);
+
+        if (changed == true)
+        {
+            await OnAssetDataChanged(assetId, asset.MimeType).ConfigureAwait(false);
+        }
+
+        return Result.Ok();
+    }
+
+    public async Task<Result<ActionItem[]>> GetActionsAsync(Guid assetId)
+    {
+        Asset? asset = await GetAssetAsync(assetId).ConfigureAwait(false);
+
+        if (asset == null)
+        {
+            return Result<ActionItem[]>.Ok();
+        }
+
+        return Result.Ok(AssetActionManager.Default
+                                            .GetByMimeType(asset.MimeType)
+                                            .Select(x => new ActionItem() { Name = x.Name })
+                                            .ToArray());
     }
 }

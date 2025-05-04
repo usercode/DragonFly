@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Xml.Linq;
+using DragonFly.Core.Modules.Assets.Actions;
 using DragonFly.Permissions;
 using SmartResults;
 
@@ -31,6 +33,13 @@ public class AssetPermissionStorage : IAssetStorage
     /// </summary>
     private IAssetStorage Storage { get; }
 
+    public async Task<Result> ApplyActionAsync(Guid assetId, string name)
+    {
+        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.UpdateAsset)
+                        .ThenAsync(x => Storage.ApplyActionAsync(assetId, name))
+                        .ConfigureAwait(false);
+    }
+
     public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.UpdateAsset)
@@ -57,6 +66,13 @@ public class AssetPermissionStorage : IAssetStorage
         return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.DeleteAsset)
                         .ThenAsync(x => Storage.DeleteAsync(asset))
                         .ConfigureAwait(false);
+    }
+
+    public async Task<Result<ActionItem[]>> GetActionsAsync(Guid assetId)
+    {
+        return await Api.AuthorizeAsync(PrincipalContext.Current, AssetPermissions.ReadAsset)
+                           .ThenAsync(x => Storage.GetActionsAsync(assetId))
+                           .ConfigureAwait(false);
     }
 
     public async Task<Result<Asset?>> GetAssetAsync(Guid id)

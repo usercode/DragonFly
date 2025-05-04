@@ -44,8 +44,6 @@ public static class DragonFlyClientExtensions
         builder.Services.TryAddSingleton(ComponentManager.Default);
         builder.Services.TryAddSingleton(AssetPreviewManager.Default);
 
-        //builder.Services.AddScoped<IPrincipalContext>(x => x.GetRequiredService<BlazorClientAuthenticationStateProvider>());
-
         config?.Invoke(builder);
 
         return services;

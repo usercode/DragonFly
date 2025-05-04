@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Threading.Tasks;
 using DragonFly.Client.Pages.Assets.Metadata;
 using DragonFly.Client.Pages.Assets.Preview;
 using DragonFly.Init;

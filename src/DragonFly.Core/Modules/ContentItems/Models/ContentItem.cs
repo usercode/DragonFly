@@ -37,7 +37,7 @@ public class ContentItem : ContentBase<ContentItem>, IContentElement, IEquatable
     /// <summary>
     /// Fields
     /// </summary>
-    public virtual ContentFields Fields { get; set; } = new ContentFields();
+    public virtual ContentFields Fields { get; set; } = [];
 
     /// <summary>
     /// ValidationContext

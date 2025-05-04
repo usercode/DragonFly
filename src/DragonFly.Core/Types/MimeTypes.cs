@@ -27,4 +27,8 @@ public class MimeTypes
 
     public const string PlainText = "text/plain";
 
+    public static string[] Images = [WebP, Jpeg, Png, Gif, Bmp ];
+
+    public static string[] Videos = [Ogg, Mp4, WebM];
+
 }

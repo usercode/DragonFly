@@ -31,7 +31,7 @@ public static class ResultExtensions
     public static async Task<IResult> ToHttpResultAsync<TResult>(this Task<TResult> result)
         where TResult : IResult<TResult>
     {
-        TResult r = await result;
+        TResult r = await result.ConfigureAwait(false);
 
         return r.ToHttpResult();
     }

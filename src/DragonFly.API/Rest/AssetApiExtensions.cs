@@ -3,6 +3,7 @@
 // MIT License
 
 using DragonFly.AspNetCore;
+using DragonFly.Core.Modules.Assets.Actions;
 using DragonFly.Permissions;
 using DragonFly.Query;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +30,8 @@ static class AssetApiExtensions
         groupRoute.MapGet("{id:guid}/download", MapDownload);
         groupRoute.MapPost("{id:guid}/upload", MapUpload);
         groupRoute.MapPost("{id:guid}/metadata", MapRefreshMetadata);
+        groupRoute.MapPost("{id:guid}/action/{name}", MapExecuteAction);
+        groupRoute.MapGet("{id:guid}/action", MapGetAction);
         groupRoute.MapPost("metadata", MapRefreshMetadataQuery);
     }
 
@@ -123,18 +126,39 @@ static class AssetApiExtensions
             return TypedResults.NotFound();
         }
 
-        return (await storage.UploadAsync(asset.Id, context.Request.ContentType, context.Request.Body)).ToHttpResult();
+        return await storage
+                            .UploadAsync(asset.Id, context.Request.ContentType, context.Request.Body)
+                            .ToHttpResultAsync();
     }
 
     private static async Task<IResult> MapRefreshMetadata(IAssetStorage storage, Guid id)
     {
-        return await (await storage.GetAssetAsync(id))
-                                    .ThenAsync(async x => await storage.ApplyMetadataAsync(x.Value))
-                                    .ToHttpResultAsync();
+        return await storage
+                            .GetAssetAsync(id)
+                            .ThenAsync(async x => await storage.ApplyMetadataAsync(x.Value))
+                            .ToHttpResultAsync();
     }
 
     private static async Task<IResult> MapRefreshMetadataQuery(IAssetStorage storage, AssetQuery query)
     {   
-        return (await storage.ApplyMetadataAsync(query)).ToHttpResult();
+        return await storage
+                            .ApplyMetadataAsync(query)
+                            .ToHttpResultAsync();
+    }
+
+    private static async Task<IResult> MapExecuteAction(IAssetStorage storage, Guid id, string name)
+    {
+        return await storage
+                        .GetAssetAsync(id)
+                        .ThenAsync(async x => await storage.ApplyActionAsync(id, name))
+                        .ToHttpResultAsync();
+    }
+
+    private static async Task<IResult> MapGetAction(IAssetStorage storage, Guid id)
+    {
+        return await storage
+                        .GetAssetAsync(id)
+                        .ThenAsync(async x => await storage.GetActionsAsync(id))
+                        .ToHttpResultAsync();
     }
 }

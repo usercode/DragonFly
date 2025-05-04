@@ -4,8 +4,8 @@
   </ItemGroup> 
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="2.21.0" />
-    <PackageReference Include="SmartResults" Version="1.0.3" />
+    <PackageReference Include="Fluid.Core" Version="2.24.0" />
+    <PackageReference Include="SmartResults" Version="1.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.4" />
   </ItemGroup>

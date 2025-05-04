@@ -2,7 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace DragonFly.Client;
@@ -20,5 +19,5 @@ public sealed class RazorRoutingManager
     /// <summary>
     /// Items
     /// </summary>
-    public IList<Assembly> Items { get; } = new List<Assembly>();
+    public IList<Assembly> Items { get; } = [];
 }

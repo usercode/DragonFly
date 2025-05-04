@@ -6,6 +6,7 @@ using System.Net.Http.Json;
 using System.Net.Http.Headers;
 using DragonFly.Query;
 using SmartResults;
+using DragonFly.Core.Modules.Assets.Actions;
 
 namespace DragonFly.API.Client;
 
@@ -44,10 +45,10 @@ internal class AssetApiStorage : IAssetStorage
         return await Client.GetStreamAsync($"api/asset/{assetId}/download");
     }
 
-    public async Task<Result<Asset?>> GetAssetAsync(Guid id)
+    public async Task<Result<Asset?>> GetAssetAsync(Guid assetId)
     {
         var result = await Client
-                                .GetAsync($"api/asset/{id}")
+                                .GetAsync($"api/asset/{assetId}")
                                 .ReadResultFromJsonAsync<RestAsset>(ApiJsonSerializerDefault.Options);
 
         return result.ToResult(x => x?.ToModel());
@@ -70,7 +71,7 @@ internal class AssetApiStorage : IAssetStorage
     public async Task<Result> PublishAsync(Asset asset)
     {
         return await Client
-                        .PostAsync($"api/asset/{asset.Id}/publish", new StringContent(string.Empty))
+                        .PostAsync($"api/asset/{asset.Id}/publish", null)
                         .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
@@ -91,7 +92,7 @@ internal class AssetApiStorage : IAssetStorage
     public async Task<Result> ApplyMetadataAsync(Asset asset)
     {
         return await Client
-                        .PostAsync($"api/asset/{asset.Id}/metadata", new StringContent(string.Empty))
+                        .PostAsync($"api/asset/{asset.Id}/metadata", null)
                         .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
     }
 
@@ -100,5 +101,19 @@ internal class AssetApiStorage : IAssetStorage
         return await Client
                         .PostAsJsonAsync($"api/asset/metadata", query, ApiJsonSerializerDefault.Options)
                         .ReadResultFromJsonAsync<BackgroundTaskInfo>(ApiJsonSerializerDefault.Options);
+    }
+
+    public async Task<Result> ApplyActionAsync(Guid assetId, string name)
+    {
+        return await Client
+                        .PostAsync($"api/asset/{assetId}/action/{name}", null)
+                        .ReadResultFromJsonAsync(ApiJsonSerializerDefault.Options);
+    }
+
+    public async Task<Result<ActionItem[]>> GetActionsAsync(Guid assetId)
+    {
+        return await Client
+                       .GetAsync($"api/asset/{assetId}/action")
+                       .ReadResultFromJsonAsync<ActionItem[]>(ApiJsonSerializerDefault.Options);
     }
 }

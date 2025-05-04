@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Core.Modules.Assets.Actions;
 using SmartResults;
 
 namespace DragonFly;
@@ -30,4 +31,8 @@ public interface IAssetStorage
     Task<Result> ApplyMetadataAsync(Asset asset);
 
     Task<Result<BackgroundTaskInfo>> ApplyMetadataAsync(AssetQuery query);
+
+    Task<Result> ApplyActionAsync(Guid assetId, string name);
+
+    Task<Result<ActionItem[]>> GetActionsAsync(Guid assetId);
 }

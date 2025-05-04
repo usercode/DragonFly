@@ -9,7 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageIcon>logo.png</PackageIcon>
+    <PackageIcon>Logo_DragonFly.png</PackageIcon>
     <PackageTags>cms</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\logo.png" Pack="true" PackagePath="" />
+    <None Include="..\..\logo\Logo_DragonFly.png" Pack="true" PackagePath="" />
     <None Include="..\..\readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 

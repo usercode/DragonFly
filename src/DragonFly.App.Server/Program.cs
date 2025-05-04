@@ -53,7 +53,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
-    options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+    options.Limits.MaxRequestBodySize = 1024 * 1024 * 100; // if don't set default value is: 30 MB
 });
 
 //DragonFly services
