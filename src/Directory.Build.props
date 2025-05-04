@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\logo\Logo_DragonFly.png" Pack="true" PackagePath="" />
+    <None Include="..\..\logo\logo.png" Pack="true" PackagePath="" />
     <None Include="..\..\readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
