@@ -1,5 +1,5 @@
 
-![DragonFly](logo/logo.png)
+![DragonFly](logo/logo_text.png)
 
 # DragonFly » Headless ASP.NET Core CMS + Blazor
 
