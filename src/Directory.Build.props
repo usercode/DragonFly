@@ -9,7 +9,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>readme.md</PackageReadmeFile>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <PackageIcon>Logo_DragonFly.png</PackageIcon>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageTags>cms</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
