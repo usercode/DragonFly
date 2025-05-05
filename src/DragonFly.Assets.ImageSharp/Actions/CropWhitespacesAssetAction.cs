@@ -13,8 +13,6 @@ public class CropWhitespacesAssetAction : IAssetAction
 {
     public string Name => "CropWhitespaces";
 
-    public string[] MimeTypes => throw new NotImplementedException();
-
     public async Task<bool> ProcessAsync(IAssetActionContext context)
     {
         Image<Rgb24> image;

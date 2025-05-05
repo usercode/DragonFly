@@ -302,7 +302,7 @@ public class AssetMongoStorage : MongoStorage, IAssetStorage
 
         if (asset == null)
         {
-            return Result<ActionItem[]>.Ok();
+            return Result<ActionItem[]>.Failed($"Asset '{assetId}' not found.");
         }
 
         return Result.Ok(AssetActionManager.Default

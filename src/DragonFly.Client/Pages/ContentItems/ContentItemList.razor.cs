@@ -4,10 +4,6 @@
 
 using BlazorStrap;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DragonFly.Client.Pages.ContentItems;
 
@@ -47,6 +43,9 @@ public partial class ContentItemList
 
     [SupplyParameterFromQuery]
     public string State { get; set; }
+
+    [SupplyParameterFromQuery]
+    public string? Ref { get; set; }
 
     protected override void BuildToolbarItems(IList<ToolbarItem> toolbarItems)
     {
@@ -88,9 +87,14 @@ public partial class ContentItemList
                 }
             }
 
-            ContentQuery quey = CreateQuery();
+            ContentQuery query = CreateQuery();
 
-            SearchResult = await ContentService.QueryAsync(quey);
+            if (ContentReference.TryParse(Ref, null, out ContentReference contentReference))
+            {
+                query.Reference = contentReference;
+            }
+
+            SearchResult = await ContentService.QueryAsync(query);
         }
     }
 

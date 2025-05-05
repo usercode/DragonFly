@@ -1,9 +1,11 @@
-﻿<BSListGroup>
+﻿@inject NavigationManager NavigationManager
+
+<BSListGroup>
     @if (ReferenceIndex != null)
     {
         foreach (var content in ReferenceIndex.Entries)
         {
-            <BSListGroupItem>@content.Schema (@content.Count)</BSListGroupItem>
+            <BSListGroupItem> <BSButton Color="BSColor.Primary" OnClick="x => NavigateToQuery(content.Schema)">@content.Schema (@content.Count)</BSButton></BSListGroupItem>
         }
     }
 </BSListGroup>
@@ -25,5 +27,10 @@
         var result = await ContentStorage.GetReferencedByAsync(Schema, Id);
 
         ReferenceIndex = result.Value;
+    }
+
+    private void NavigateToQuery(string schema)
+    {
+        NavigationManager.NavigateToContentQuery(schema, new ContentReference(Schema, Id));
     }
 }

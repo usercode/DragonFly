@@ -2,12 +2,13 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace DragonFly.Core;
 
-internal class ContentReferenceConverter : JsonConverter<ContentReference>
+internal class ContentReferenceJsonConverter : JsonConverter<ContentReference>
 {
     public override ContentReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -18,9 +19,7 @@ internal class ContentReferenceConverter : JsonConverter<ContentReference>
             throw new Exception();
         }
 
-        int pos = value.IndexOf('/');
-
-        return new ContentReference(value[..pos], Guid.Parse(value[(pos + 1)..]));
+        return ContentReference.Parse(value, CultureInfo.InvariantCulture);
     }
 
     public override void Write(Utf8JsonWriter writer, ContentReference value, JsonSerializerOptions options)

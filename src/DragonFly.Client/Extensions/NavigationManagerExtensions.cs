@@ -27,4 +27,9 @@ public static class NavigationManagerExtensions
     {
         manager.NavigateTo($"content/{content.Schema.Name}/{content.Id}");
     }
+
+    public static void NavigateToContentQuery(this NavigationManager manager, string schema, ContentReference? reference)
+    {
+        manager.NavigateTo($"content/{schema}?ref={reference}");
+    }
 }

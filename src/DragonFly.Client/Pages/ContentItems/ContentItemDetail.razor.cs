@@ -5,10 +5,6 @@
 using BlazorStrap;
 using DragonFly.Razor.Base;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.JSInterop;
 using BlazorStrap.V5;
 using DragonFly.Razor.Extensions;

@@ -2,6 +2,8 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using DragonFly.Core;
 
@@ -10,9 +12,43 @@ namespace DragonFly;
 /// <summary>
 /// ContentReference
 /// </summary>
-[JsonConverter(typeof(ContentReferenceConverter))]
-public readonly struct ContentReference : IEquatable<ContentReference>
+[JsonConverter(typeof(ContentReferenceJsonConverter))]
+[TypeConverter(typeof(ContentReferenceTypeConverter))]
+public readonly struct ContentReference : IEquatable<ContentReference>, IParsable<ContentReference>
 {
+    public static ContentReference Parse(string s, IFormatProvider? provider)
+    {
+        if (TryParse(s, provider, out ContentReference result))
+        {
+            return result;
+        }
+
+        throw new Exception();
+    }
+
+    public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out ContentReference result)
+    {
+        if (s == null)
+        {
+            result = default;
+
+            return false;
+        }
+
+        int pos = s.IndexOf('/');
+
+        if (pos == -1)
+        {
+            result = default;
+
+            return false;
+        }
+
+        result = new ContentReference(s[..pos], Guid.Parse(s[(pos + 1)..]));
+
+        return true;
+    }
+
     public ContentReference(string schema, Guid id)
     {
         Schema = schema;
@@ -52,7 +88,7 @@ public readonly struct ContentReference : IEquatable<ContentReference>
     public override string ToString()
     {
         return $"{Schema}/{Id}";
-    }
+    }   
 
     public static bool operator ==(ContentReference left, ContentReference right)
     {
