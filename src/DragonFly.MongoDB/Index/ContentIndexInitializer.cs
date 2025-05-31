@@ -52,10 +52,6 @@ class ContentIndexInitializer : IPostInitialize
 
             async Task CreateIndicesInternalAsync(IMongoCollection<MongoContentItem> collection)
             {
-#if DEBUG == false
-                await collection.Indexes.DropAllAsync();
-#endif
-
                 await collection.AddIndexAsync($"{nameof(MongoContentItem.CreatedAt)}");
                 await collection.AddIndexAsync($"{nameof(MongoContentItem.ModifiedAt)}");
                 await collection.AddIndexAsync($"{nameof(MongoContentItem.PublishedAt)}");

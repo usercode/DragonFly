@@ -27,8 +27,6 @@ class AssetFolderIndexInitializer : IPostInitialize
     {
         IMongoCollection<MongoAssetFolder> assetFolders = Client.Database.GetAssetFolderCollection();
 
-        await assetFolders.Indexes.DropAllAsync();
-
         //AssetFolders
         await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.Name)}");
         await assetFolders.AddIndexAsync($"{nameof(MongoAssetFolder.Parent)}");

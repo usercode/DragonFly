@@ -27,8 +27,6 @@ class SchemaIndexInitializer : IPostInitialize
     {
         IMongoCollection<MongoContentSchema> schemas = Client.Database.GetSchemaCollection();
 
-        await schemas.Indexes.DropAllAsync();
-
         //assets
         await schemas.AddIndexAsync($"{nameof(MongoContentSchema.Name)}");
         await schemas.AddIndexAsync($"{nameof(MongoContentSchema.CreatedAt)}");

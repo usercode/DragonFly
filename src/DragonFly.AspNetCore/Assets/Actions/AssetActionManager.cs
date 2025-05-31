@@ -55,9 +55,9 @@ public class AssetActionManager
     /// <summary>
     /// GetByMimeType
     /// </summary>
-    public AssetActionItem[] GetByMimeType(string mimeType)
+    public AssetActionItem[] GetByMimeType(string? mimeType)
     {
-        if (_cache.TryGetValue(mimeType, out List<AssetActionItem>? list) == false)
+        if (mimeType == null || _cache.TryGetValue(mimeType, out List<AssetActionItem>? list) == false)
         {
             return [];
         }

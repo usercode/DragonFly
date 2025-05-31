@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Linq.Expressions;
+using System.Diagnostics;
 using MongoDB.Driver;
 
 namespace DragonFly.MongoDB.Storages;
@@ -45,7 +45,15 @@ public static class MongoClientExtensions
 
     public static async Task AddIndexAsync<T>(this IMongoCollection<T> collection, string fieldSelector)
     {
-        await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Ascending(fieldSelector), new CreateIndexOptions() { Name = $"{fieldSelector}.asc" })).ConfigureAwait(false);
-        await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Descending(fieldSelector), new CreateIndexOptions() { Name = $"{fieldSelector}.desc" })).ConfigureAwait(false);
+
+        try
+        {
+            await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Ascending(fieldSelector), new CreateIndexOptions() { Name = $"{fieldSelector}.asc" })).ConfigureAwait(false);
+            await collection.Indexes.CreateOneAsync(new CreateIndexModel<T>(Builders<T>.IndexKeys.Descending(fieldSelector), new CreateIndexOptions() { Name = $"{fieldSelector}.desc" })).ConfigureAwait(false);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"Failed to create index: {ex.Message}");
+        }
     }
 }

@@ -27,9 +27,6 @@ class AssetIndexInitializer : IPostInitialize
     {
         IMongoCollection<MongoAsset> assets = Client.Database.GetAssetCollection();
 
-        //assets
-        await assets.Indexes.DropAllAsync();
-
         await assets.AddIndexAsync($"{nameof(MongoAsset.Name)}");
         await assets.AddIndexAsync($"{nameof(MongoAsset.Slug)}");
         await assets.AddIndexAsync($"{nameof(MongoAsset.Alt)}");

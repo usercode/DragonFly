@@ -45,8 +45,6 @@ public class ToolbarItem
             IsRunning = true;
 
             await _action();
-
-            await Task.Delay(TimeSpan.FromMilliseconds(400));
         }
         finally
         {
