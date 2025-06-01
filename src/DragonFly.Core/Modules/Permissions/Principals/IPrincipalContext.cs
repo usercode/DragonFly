@@ -14,5 +14,5 @@ public interface IPrincipalContext
     /// <summary>
     /// Current
     /// </summary>
-    ClaimsPrincipal? Current { get; }
+    ClaimsPrincipal? Current { get; set; }
 }

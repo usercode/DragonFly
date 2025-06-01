@@ -6,17 +6,17 @@ using System.Security.Claims;
 
 namespace DragonFly.AspNetCore.Permissions;
 
-public class PrincipalHttpContext : IPrincipalContext
-{
-    public PrincipalHttpContext(IHttpContextAccessor httpContextAccessor)
-    {
-        HttpContextAccessor = httpContextAccessor;
-    }
+//public class PrincipalHttpContext : IPrincipalContext
+//{
+//    public PrincipalHttpContext(IHttpContextAccessor httpContextAccessor)
+//    {
+//        HttpContextAccessor = httpContextAccessor;
+//    }
 
-    private readonly IHttpContextAccessor HttpContextAccessor;
+//    private readonly IHttpContextAccessor HttpContextAccessor;
 
-    public ClaimsPrincipal? Current
-    {
-        get => HttpContextAccessor.HttpContext?.User;
-    }
-}
+//    public ClaimsPrincipal? Current
+//    {
+//        get => HttpContextAccessor.HttpContext?.User;
+//    }
+//}
