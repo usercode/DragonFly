@@ -16,18 +16,18 @@
 	</ItemGroup>
   
   <ItemGroup>   
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.8" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" PrivateAssets="All" />
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="BlazorStrap" Version="5.2.103.250524" />
-    <PackageReference Include="BlazorStrap.V5" Version="5.2.103.250523" />
+		<PackageReference Include="BlazorStrap" Version="5.2.104" />
+    <PackageReference Include="BlazorStrap.V5" Version="5.2.104" />
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="TinyMCE.Blazor" Version="2.1.0" />
+    <PackageReference Include="TinyMCE.Blazor" Version="2.2.1" />
   </ItemGroup>
 
   <ItemGroup>

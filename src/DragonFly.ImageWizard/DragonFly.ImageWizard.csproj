@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
-    <PackageReference Include="ImageWizard.Client" Version="3.10.0" />
-		<PackageReference Include="ImageWizard.Core" Version="3.10.0" />
-    <PackageReference Include="ImageWizard.ImageSharp" Version="3.10.0" />
-    <PackageReference Include="ImageWizard.DocNET" Version="3.10.0" />		
-		<PackageReference Include="ImageWizard.SvgNet" Version="3.10.0" />
-    <PackageReference Include="ImageWizard.OpenGraph" Version="3.10.0" />
+    <PackageReference Include="ImageWizard.Client" Version="3.11.2" />
+		<PackageReference Include="ImageWizard.Core" Version="3.11.2" />
+    <PackageReference Include="ImageWizard.ImageSharp" Version="3.11.2" />
+    <PackageReference Include="ImageWizard.DocNET" Version="3.11.2" />		
+		<PackageReference Include="ImageWizard.SvgNet" Version="3.11.2" />
+    <PackageReference Include="ImageWizard.OpenGraph" Version="3.11.2" />
   </ItemGroup>
 
 	<ItemGroup>

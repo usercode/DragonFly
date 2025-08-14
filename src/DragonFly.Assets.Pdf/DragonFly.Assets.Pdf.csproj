@@ -4,6 +4,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PdfPig" Version="0.1.10" />
+    <PackageReference Include="PdfPig" Version="0.1.11" />
   </ItemGroup>
 </Project>
