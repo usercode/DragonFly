@@ -2,8 +2,6 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using System.Collections.Generic;
-
 namespace DragonFly.Client;
 
 public class TinyMceConfiguration
@@ -12,6 +10,6 @@ public class TinyMceConfiguration
     {
         { "menubar", false },
         { "plugins", "link image code table lists autoresize" },
-        { "toolbar", "bold italic forecolor alignleft aligncenter alignright bullist numlist removeformat code" }
+        { "toolbar", "bold italic forecolor alignleft aligncenter alignright bullist numlist table removeformat code" }
     };
 }

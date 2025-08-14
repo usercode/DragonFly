@@ -3,11 +3,10 @@
 // MIT License
 
 using DragonFly.AspNetCore;
-using DragonFly.Permissions;
 using DragonFly.Query;
+using Mediator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 using SmartResults;
 
@@ -32,19 +31,10 @@ static class ContentItemApiExtensions
         groupRoute.MapPost("rebuildDatabase", MapRebuildDatabase);
     }
 
-    private static async Task<IResult> MapQuery(IContentStorage storage, ContentQuery query)
+    private static async Task<IResult> MapQuery(ISender sender, ContentQuery query)
     {
-        return (await storage.QueryAsync(query))
-                                .ToResult(x =>
-                                {
-                                    foreach (ContentItem contentItem in x.Items)
-                                    {
-                                        contentItem.ApplySchema();
-                                        contentItem.Validate();
-                                    }
-
-                                    return x.Convert(x => x.ToRest());
-                                })
+        return (await sender.Send(query))
+                                .ToResult(x => x.Convert(c => c.ToRest()))
                                 .ToHttpResult();
     }
 
@@ -66,25 +56,23 @@ static class ContentItemApiExtensions
                                     .ToHttpResult();
     }
 
-    private static async Task<IResult> MapCreate(IContentStorage contentStore, RestContentItem input)
+    private static async Task<IResult> MapCreate(ISender sender, RestContentItem input)
     {
         ContentItem model = input.ToModel();
 
-        return (await contentStore.CreateAsync(model))
-                                  .Then(x => Result.Ok(new ResourceCreated() { Id = model.Id }))
-                                  .ToHttpResult();
+        return (await sender.Send(new CreateContentItem { Content = model }))
+                                            .Then(x => Result.Ok(new ResourceCreated() { Id = model.Id }))
+                                            .ToHttpResult();
     }
 
-    private static async Task<IResult> MapUpdate(IContentStorage contentStore, RestContentItem input)
+    private static async Task<IResult> MapUpdate(ISender sender, RestContentItem input)
     {
-        ContentItem model = input.ToModel();
-
-        return (await contentStore.UpdateAsync(model)).ToHttpResult();
+        return (await sender.Send(new UpdateContentItem { Content = input.ToModel() })).ToHttpResult();
     }
 
-    private static async Task<IResult> MapDelete(IContentStorage contentStore, string schema, Guid id)
+    private static async Task<IResult> MapDelete(ISender sender, string schema, Guid id)
     {
-        return (await contentStore.DeleteAsync(schema, id)).ToHttpResult();
+        return (await sender.Send(new DeleteContentItem { Schema = schema, ContentId = id })).ToHttpResult();
     }
 
     private static async Task<IResult> MapReferencedBy(IContentStorage contentStore, string schema, Guid id)
@@ -92,14 +80,14 @@ static class ContentItemApiExtensions
         return (await contentStore.GetReferencedByAsync(schema, id)).ToHttpResult();
     }
 
-    private static async Task<IResult> MapPublish(IContentStorage contentStore, string schema, Guid id)
+    private static async Task<IResult> MapPublish(ISender sender, string schema, Guid id)
     {
-        return (await contentStore.PublishAsync(schema, id)).ToHttpResult();
+        return (await sender.Send(new PublishContentItem { Schema = schema, ContentId = id })).ToHttpResult();
     }
 
-    private static async Task<IResult> MapUnpublish(IContentStorage contentStore, string schema, Guid id)
+    private static async Task<IResult> MapUnpublish(ISender sender, string schema, Guid id)
     {
-        return (await contentStore.UnpublishAsync(schema, id)).ToHttpResult();
+        return (await sender.Send(new UnpublishContentItem { Schema = schema, ContentId = id })).ToHttpResult();
     }
 
     private static async Task<IResult> MapPublishQuery(IContentStorage contentStore, ContentQuery query)

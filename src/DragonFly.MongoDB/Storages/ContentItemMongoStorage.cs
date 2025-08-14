@@ -234,56 +234,19 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
 
     public async Task<Result> CreateAsync(ContentItem content)
     {
-        ArgumentNullException.ThrowIfNull(content);
-
-        if (content.Id == Guid.Empty)
-        {
-            content.Id = Guid.NewGuid();
-        }
-
-        DateTime now = DateTimeService.Current();
-
-        content.CreatedAt = now;
-        content.ModifiedAt = now;
-
         var items = Client.Database.GetContentCollection(content.Schema.Name);
-
-        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name).ConfigureAwait(false);
-
-        content.ApplySchema(schema);
-        content.Validate();
 
         MongoContentItem mongo = content.ToMongo();
 
         mongo.ReferencedTo = content.GetReferencedContent().ToMongo();
 
-        await items.InsertOneAsync(mongo).ConfigureAwait(false);
-
-        content.Id = mongo.Id;
-
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in ContentInterceptors)
-        {
-            await interceptor.OnCreatedAsync(content).ConfigureAwait(false);
-        }
+        await items.InsertOneAsync(mongo).ConfigureAwait(false);   
 
         return Result.Ok();
     }
 
     public async Task<Result> UpdateAsync(ContentItem content)
     {
-        ContentSchema? schema = await SchemaStorage.GetSchemaAsync(content.Schema.Name).ConfigureAwait(false);
-
-        ArgumentNullException.ThrowIfNull(schema);
-
-        content.ApplySchema(schema);
-        content.Validate();
-
-        if (content.ValidationState.Result == ValidationResult.Invalid)
-        {
-            return Result.Failed(ContentErrors.InvalidState);
-        }
-
         IMongoCollection<MongoContentItem> drafted = Client.Database.GetContentCollection(content.Schema.Name);
 
         //versioning
@@ -317,13 +280,8 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
             return Result.Failed<bool>(ContentErrors.NotFound);
         }
 
-        content = mongoContentItem.ToModel(schema);
+        //content = mongoContentItem.ToModel(schema);
 
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in ContentInterceptors)
-        {
-            await interceptor.OnUpdatedAsync(content).ConfigureAwait(false);
-        }
 
         return Result.Ok();
     }
@@ -396,21 +354,6 @@ public class ContentItemMongoStorage : MongoStorage, IContentStorage
                                     new ReplaceOptions() { IsUpsert = true }).ConfigureAwait(false);
 
         content = found.ToModel(content.Schema);
-
-        //execute interceptors
-        foreach (IContentInterceptor interceptor in ContentInterceptors)
-        {
-            try
-            {
-                await interceptor.OnPublishedAsync(content).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Publish interceptor failed.");
-            }
-        }
-
-        Logger.LogInformation($"Content was published: {content.Schema.Name}/{content.Id}");
         
         return Result.Ok(true);
     }

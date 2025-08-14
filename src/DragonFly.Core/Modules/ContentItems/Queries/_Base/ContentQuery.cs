@@ -2,12 +2,15 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using Mediator;
+using SmartResults;
+
 namespace DragonFly;
 
 /// <summary>
 /// ContentQuery
 /// </summary>
-public class ContentQuery : QueryBase
+public class ContentQuery : QueryBase, IQuery<Result<QueryResult<ContentItem>>>
 {
     public ContentQuery(string schema)
         : this()

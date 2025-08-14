@@ -2,17 +2,19 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using Microsoft.AspNetCore.Authorization;
+using AspNetCore.Decorator;
+using DragonFly.AspNetCore.Builders;
+using DragonFly.AspNetCore.Permissions;
+using DragonFly.AspNetCore.Permissions.Storages;
+using DragonFly.Client;
 using DragonFly.Core;
 using DragonFly.Init;
 using DragonFly.Permissions;
-using DragonFly.AspNetCore.Builders;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using DragonFly.AspNetCore.Permissions;
-using AspNetCore.Decorator;
-using DragonFly.AspNetCore.Permissions.Storages;
+using Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using DragonFly.Client;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace DragonFly.AspNetCore;
 
@@ -67,6 +69,12 @@ public static class DragonFlyBuilderExtensions
         builder.Services.AddSingleton<IPrincipalContext, PrincipalContext>();
 
         //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
+        
+        services.AddMediator(x =>
+        {
+            x.Namespace = "DragonFly.Mediator";
+            x.GenerateTypesAsInternal = true;
+        });
 
         config?.Invoke(builder);
 

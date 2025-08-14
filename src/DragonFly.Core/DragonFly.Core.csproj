@@ -5,6 +5,7 @@
 
   <ItemGroup>
     <PackageReference Include="Fluid.Core" Version="2.31.0" />
+    <PackageReference Include="Mediator.Abstractions" Version="3.0.1" />
     <PackageReference Include="SmartResults" Version="1.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.0" />
