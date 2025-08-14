@@ -30,7 +30,7 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
     /// </summary>
     private IAssetStorage Storage { get; }
 
-    public override async Task<LoaderResult> GetAsync(string source, ICachedData? existingCachedImage)
+    public override async Task<LoaderResult> GetAsync(string source, CachedData? existingCachedImage)
     {
         int pos = source.IndexOf('?');
 

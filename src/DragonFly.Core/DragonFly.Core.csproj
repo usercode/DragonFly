@@ -4,10 +4,11 @@
   </ItemGroup> 
 
   <ItemGroup>
-    <PackageReference Include="Fluid.Core" Version="2.24.0" />
+    <PackageReference Include="Mediator.Abstractions" Version="3.0.1" />
+    <PackageReference Include="Fluid.Core" Version="2.25.0" />
     <PackageReference Include="SmartResults" Version="1.0.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.8" />
   </ItemGroup>
   
   <ItemGroup>
