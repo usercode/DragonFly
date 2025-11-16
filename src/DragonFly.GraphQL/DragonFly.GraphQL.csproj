@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="8.5.0" />
-    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.3.0" />
-    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.3.0" />
+    <PackageReference Include="GraphQL" Version="8.7.0" />
+    <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.3.2" />
+    <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.3.2" />
   </ItemGroup>
 
   <ItemGroup>

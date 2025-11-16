@@ -29,14 +29,14 @@ public class ModelGenerator : IIncrementalGenerator
             {
                 if (item.ClassSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "ContentItem") == false)
                 {
-                    return;
+                    continue;
                 }
 
                 INamedTypeSymbol? classSymbol = item.GeneratorContext.SemanticModel.GetDeclaredSymbol(item.ClassSyntax);
 
                 if (classSymbol == null)
                 {
-                    return;
+                    continue;
                 }
 
                 string ns = classSymbol.ContainingNamespace.ToDisplayString();
