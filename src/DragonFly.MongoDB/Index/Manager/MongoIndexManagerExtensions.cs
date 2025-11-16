@@ -8,9 +8,9 @@ namespace DragonFly.MongoDB;
 
 public static class MongoIndexManagerExtensions
 {
-    public static MongoIndexManager MongoIndex(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return MongoIndexManager.Default;
+        public MongoIndexManager MongoIndexes => MongoIndexManager.Default;
     }
 
     public static MongoIndexManager AddDefaults(this MongoIndexManager manager)

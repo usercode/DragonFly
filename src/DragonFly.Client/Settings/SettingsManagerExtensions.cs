@@ -8,8 +8,8 @@ namespace DragonFly;
 
 public static class SettingsManagerExtensions
 {
-    public static SettingsManager Settings(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return SettingsManager.Default;
-    }       
+        public SettingsManager Settings => SettingsManager.Default;
+    }
 }

@@ -147,7 +147,7 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
                     continue;
                 }
 
-                Type? fieldType = Api.Field().GetFieldType(field.Value.FieldType);
+                Type? fieldType = Api.Fields.GetFieldType(field.Value.FieldType);
 
                 if (fieldType == null)
                 {
@@ -155,7 +155,7 @@ public class ContentSchemaMongoStorage : MongoStorage, ISchemaStorage
                 }
 
                 //add new indices
-                if (Api.MongoIndex().TryGetByType(fieldType, out FieldIndex? fieldIndex))
+                if (Api.MongoIndexes.TryGetByType(fieldType, out FieldIndex? fieldIndex))
                 {
                     await fieldIndex.CreateIndexAsync(collection.Indexes, field.Key).ConfigureAwait(false);
                 }

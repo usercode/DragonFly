@@ -6,15 +6,12 @@ namespace DragonFly;
 
 public static class BlockManagerExtensions
 {
-    /// <summary>
-    /// Gets the block manager.
-    /// </summary>
-    public static BlockManager Block(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return BlockManager.Default;
+        public BlockManager Blocks => BlockManager.Default;
     }
 
-    public static void AddDefaults(this BlockManager manager)
+    public static BlockManager AddDefaults(this BlockManager manager)
     {
         manager.Add<ColumnBlock>();
         manager.Add<GridBlock>();
@@ -33,5 +30,7 @@ public static class BlockManagerExtensions
         manager.Add<ProgressBlock>();
         manager.Add<CardsBlock>();
         manager.Add<SectionBlock>();
+
+        return manager;
     }
 }

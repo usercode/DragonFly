@@ -8,8 +8,8 @@ namespace DragonFly;
 
 public static class MenuItemManagerExtensions
 {
-    public static MenuItemManager MainMenu(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return MenuItemManager.Default;
+        public MenuItemManager MainMenu => MenuItemManager.Default;
     }
 }

@@ -16,12 +16,12 @@ public static class DragonFlyCoreBuilderExtensions
     {
         builder.PreInit(api =>
         {
-            api.Field().Added += factory => JsonFieldManager.Default.EnsureField(factory.FieldType);
+            api.Fields.Added += factory => JsonFieldManager.Default.EnsureField(factory.FieldType);
         });
 
         builder.Init(api =>
         {
-            api.JsonField().AddDefaults();
+            api.JsonFields.AddDefaults();
         });
 
         return builder;

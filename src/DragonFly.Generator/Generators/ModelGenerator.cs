@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -9,29 +10,18 @@ public class ModelGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var classProvider = context.SyntaxProvider
-                                   .CreateSyntaxProvider((node, _) =>
-                                   {
-                                       return node is ClassDeclarationSyntax syntax && syntax.AttributeLists.Count > 0;
-                                   },
-                                   (ctx, _) =>
-                                   {
-                                       return new { GeneratorContext = ctx, ClassSyntax = (ClassDeclarationSyntax)ctx.Node };
-                                   });
+        var classDeclarations = context.SyntaxProvider
+                                   .ForAttributeWithMetadataName("DragonFly.Generator.ContentItemAttribute",
+                                        predicate: static (node, _) =>  node is ClassDeclarationSyntax syntax,
+                                        transform: static (ctx, _) => new { GeneratorContext = ctx, ClassSyntax = (ClassDeclarationSyntax)ctx.TargetNode })
+                                   .Collect();
 
-        var r = classProvider.Collect();
-
-        context.RegisterSourceOutput(r, (ctx, ar) =>
+        context.RegisterSourceOutput(classDeclarations, (ctx, ar) =>
         {
             List<ClassItem> models = new List<ClassItem>();
 
             foreach (var item in ar)
             {
-                if (item.ClassSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "ContentItem") == false)
-                {
-                    continue;
-                }
-
                 INamedTypeSymbol? classSymbol = item.GeneratorContext.SemanticModel.GetDeclaredSymbol(item.ClassSyntax);
 
                 if (classSymbol == null)

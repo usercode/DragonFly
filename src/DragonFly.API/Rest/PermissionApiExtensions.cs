@@ -19,7 +19,7 @@ static class PermissionApiExtensions
 
     private static Ok<IEnumerable<Permission>> MapQuery(IDragonFlyApi api)
     {
-        IEnumerable<Permission> items = api.Permission().GetAll();
+        IEnumerable<Permission> items = api.Permissions.GetAll();
 
         return TypedResults.Ok(items);
     }

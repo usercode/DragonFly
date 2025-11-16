@@ -5,7 +5,7 @@
 <BSRow>
 	<BSCol ColumnLarge="3">
 		<BSListGroup>
-			@foreach (SettingsItem c in Api.Settings().Items.OrderBy(x=> x.Name))
+			@foreach (SettingsItem c in Api.Settings.Items.OrderBy(x=> x.Name))
 			{
 				<a class="list-group-item @(SelectedComponent == c ? "active" : "")" @onclick="e => SelectedComponent = c">
 					<span>@c.Name</span>

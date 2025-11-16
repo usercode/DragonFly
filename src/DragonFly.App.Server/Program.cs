@@ -69,18 +69,19 @@ builder.Services.AddDragonFly(x => x
                                                     .Add<Product2>()
                                                     .Add<Customer>()
                                                     )
-                                    .Init(x =>
+                                    .Init(api =>
                                     {
-
+                                        
                                     }));
 
 //Blazor Server client
 builder.Services.AddDragonFlyClient(x => x
                                         .AddIdentity()
                                         .AddApiKeys()
-                                        .Init(x =>
+                                        .Init(api =>
                                         {
-                                            x.Field().Add<HtmlField>().WithTinyMceView();
+                                            api.Fields.Add<HtmlField>().WithTinyMceView();
+                                            
                                         }));
 
 var app = builder.Build();

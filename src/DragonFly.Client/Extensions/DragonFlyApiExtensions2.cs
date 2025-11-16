@@ -19,10 +19,10 @@ public static class DragonFlyApiExtensions2
         where TBlock : Block, new()
         where TBlockView : BlockComponent<TBlock>, new()
     {
-        api.Block().Add<TBlock>();
+        api.Blocks.Add<TBlock>();
 
         Type elementType = new TBlockView().BlockType;
 
-        api.Component().Add(elementType, typeof(TBlockView));
+        api.Components.Add(elementType, typeof(TBlockView));
     }
 }

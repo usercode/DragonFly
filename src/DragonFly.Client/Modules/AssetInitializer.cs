@@ -15,16 +15,16 @@ public class AssetInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Assets", "fa-regular fa-image", "asset");
+        api.MainMenu.Add("Assets", "fa-regular fa-image", "asset");
 
-        api.Metadata().Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
-        api.Metadata().Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();
-        api.Metadata().Add<VideoMetadata>().WithMetadataView<VideoMetadataView>();
+        api.Metadatas.Add<ImageMetadata>().WithMetadataView<ImageMetadataView>();
+        api.Metadatas.Add<PdfMetadata>().WithMetadataView<PdfMetadataView>();
+        api.Metadatas.Add<VideoMetadata>().WithMetadataView<VideoMetadataView>();
 
-        api.AssetPreview().Add<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
-        api.AssetPreview().Add<PdfPreviewView>(MimeTypes.Pdf);
-        api.AssetPreview().Add<SvgPreviewView>(MimeTypes.Svg);
-        api.AssetPreview().Add<VideoPreviewView>(MimeTypes.Mp4, MimeTypes.Ogg, MimeTypes.WebM);
+        api.AssetPreviews.Add<ImagePreviewView>(MimeTypes.WebP, MimeTypes.Jpeg, MimeTypes.Png, MimeTypes.Gif, MimeTypes.Bmp);
+        api.AssetPreviews.Add<PdfPreviewView>(MimeTypes.Pdf);
+        api.AssetPreviews.Add<SvgPreviewView>(MimeTypes.Svg);
+        api.AssetPreviews.Add<VideoPreviewView>(MimeTypes.Mp4, MimeTypes.Ogg, MimeTypes.WebM);
 
         return Task.CompletedTask;
     }

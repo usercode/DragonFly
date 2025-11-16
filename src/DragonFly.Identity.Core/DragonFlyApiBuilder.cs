@@ -9,10 +9,8 @@ namespace DragonFly;
 
 public static class DragonFlyApiBuilder
 {
-    public static IIdentityService Identity(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        IIdentityService service = api.ServiceProvider.GetRequiredService<IIdentityService>();
-
-        return service;
-    }
+        public IIdentityService Identity => api.ServiceProvider.GetRequiredService<IIdentityService>();
+    }   
 }

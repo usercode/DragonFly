@@ -8,14 +8,9 @@ namespace DragonFly;
 
 public static class JsonFieldManagerExtensions
 {
-    /// <summary>
-    /// Gets the json field manager.
-    /// </summary>
-    /// <param name="api"></param>
-    /// <returns></returns>
-    public static JsonFieldManager JsonField(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return JsonFieldManager.Default;
+        public JsonFieldManager JsonFields => JsonFieldManager.Default;        
     }
 
     public static JsonFieldManager AddDefaults(this JsonFieldManager json)

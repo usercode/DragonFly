@@ -9,12 +9,9 @@ namespace DragonFly;
 /// </summary>
 public static class FieldManagerExtensions
 {
-    /// <summary>
-    /// Gets the field manager.
-    /// </summary>
-    public static FieldManager Field(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return FieldManager.Default;
+        public FieldManager Fields => FieldManager.Default;
     }
 
     public static FieldManager AddDefaults(this FieldManager manager)

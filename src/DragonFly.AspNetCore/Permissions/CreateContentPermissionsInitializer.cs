@@ -28,14 +28,14 @@ public class CreateContentPermissionsInitializer : IPostInitialize
 
         foreach (ContentSchema schema in result.Items)
         {
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Manage));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Query));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Read));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Create));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Update));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Delete));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Publish));
-            api.Permission().Add(ContentPermissions.Create(schema.Name, ContentAction.Unpublish));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Manage));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Query));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Read));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Create));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Update));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Delete));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Publish));
+            api.Permissions.Add(ContentPermissions.Create(schema.Name, ContentAction.Unpublish));
         }
     }
 }

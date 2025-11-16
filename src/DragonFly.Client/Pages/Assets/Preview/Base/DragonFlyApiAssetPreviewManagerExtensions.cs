@@ -11,8 +11,8 @@ namespace DragonFly;
 /// </summary>
 public static class DragonFlyApiAssetPreviewManagerExtensions
 {
-    public static AssetPreviewManager AssetPreview(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return AssetPreviewManager.Default;
+        public AssetPreviewManager AssetPreviews => AssetPreviewManager.Default;
     }
 }

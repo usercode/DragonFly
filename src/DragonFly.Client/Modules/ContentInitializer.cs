@@ -18,32 +18,32 @@ public class ContentInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {       
-        api.MainMenu().Add("Schema", "fa-solid fa-layer-group", "schema");
+        api.MainMenu.Add("Schema", "fa-solid fa-layer-group", "schema");
         //api.MainMenu().Add("Structure", "fa-solid fa-folder-tree", "structure");
-        api.MainMenu().Add("Content", "fa-solid fa-list", "content");
+        api.MainMenu.Add("Content", "fa-solid fa-list", "content");
 
         //fields
-        api.Field().Add<ArrayField>().WithFieldView<ArrayFieldView>().WithOptionView<ArrayFieldOptionsView>();
-        api.Field().Add<AssetField>().WithFieldView<AssetFieldView>().WithOptionView<AssetFieldOptionsView>().WithQueryView<AssetFieldQueryView>();
-        api.Field().Add<ReferenceField>().WithFieldView<ReferenceFieldView>().WithOptionView<ReferenceFieldOptionsView>().WithQueryView<ReferenceFieldQueryView>();
-        api.Field().Add<BoolField>().WithFieldView<BoolFieldView>().WithOptionView<BoolFieldOptionsView>().WithQueryView<BoolFieldQueryView>();
-        api.Field().Add<ComponentField>().WithFieldView<ComponentFieldView>().WithOptionView<ComponentFieldOptionsView>();
-        api.Field().Add<DateField>().WithFieldView<DateFieldView>();
-        api.Field().Add<TimeField>().WithFieldView<TimeFieldView>();
-        api.Field().Add<DateTimeField>().WithFieldView<DateTimeFieldView>();
-        api.Field().Add<StringField>().WithFieldView<StringFieldView>().WithOptionView<StringFieldOptionsView>().WithQueryView<StringFieldQueryView>();
-        api.Field().Add<FloatField>().WithFieldView<FloatFieldView>().WithOptionView<FloatFieldOptionsView>().WithQueryView<FloatFieldQueryView>();
-        api.Field().Add<IntegerField>().WithFieldView<IntegerFieldView>().WithOptionView<IntegerFieldOptionsView>().WithQueryView<IntegerFieldQueryView>();
-        api.Field().Add<SlugField>().WithFieldView<SlugFieldView>().WithOptionView<SlugFieldOptionsView>();
-        api.Field().Add<TextField>().WithFieldView<TextFieldView>();
-        api.Field().Add<HtmlField>().WithFieldView<HtmlFieldView>();
-        api.Field().Add<XmlField>().WithFieldView<XmlFieldView>();
-        api.Field().Add<ColorField>().WithFieldView<ColorFieldView>();
-        api.Field().Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();
-        api.Field().Add<UrlField>().WithFieldView<UrlFieldView>().WithOptionView<UrlFieldOptionsView>();
+        api.Fields.Add<ArrayField>().WithFieldView<ArrayFieldView>().WithOptionView<ArrayFieldOptionsView>();
+        api.Fields.Add<AssetField>().WithFieldView<AssetFieldView>().WithOptionView<AssetFieldOptionsView>().WithQueryView<AssetFieldQueryView>();
+        api.Fields.Add<ReferenceField>().WithFieldView<ReferenceFieldView>().WithOptionView<ReferenceFieldOptionsView>().WithQueryView<ReferenceFieldQueryView>();
+        api.Fields.Add<BoolField>().WithFieldView<BoolFieldView>().WithOptionView<BoolFieldOptionsView>().WithQueryView<BoolFieldQueryView>();
+        api.Fields.Add<ComponentField>().WithFieldView<ComponentFieldView>().WithOptionView<ComponentFieldOptionsView>();
+        api.Fields.Add<DateField>().WithFieldView<DateFieldView>();
+        api.Fields.Add<TimeField>().WithFieldView<TimeFieldView>();
+        api.Fields.Add<DateTimeField>().WithFieldView<DateTimeFieldView>();
+        api.Fields.Add<StringField>().WithFieldView<StringFieldView>().WithOptionView<StringFieldOptionsView>().WithQueryView<StringFieldQueryView>();
+        api.Fields.Add<FloatField>().WithFieldView<FloatFieldView>().WithOptionView<FloatFieldOptionsView>().WithQueryView<FloatFieldQueryView>();
+        api.Fields.Add<IntegerField>().WithFieldView<IntegerFieldView>().WithOptionView<IntegerFieldOptionsView>().WithQueryView<IntegerFieldQueryView>();
+        api.Fields.Add<SlugField>().WithFieldView<SlugFieldView>().WithOptionView<SlugFieldOptionsView>();
+        api.Fields.Add<TextField>().WithFieldView<TextFieldView>();
+        api.Fields.Add<HtmlField>().WithFieldView<HtmlFieldView>();
+        api.Fields.Add<XmlField>().WithFieldView<XmlFieldView>();
+        api.Fields.Add<ColorField>().WithFieldView<ColorFieldView>();
+        api.Fields.Add<GeolocationField>().WithFieldView<GeolocationFieldView>().WithOptionView<GeolocationFieldOptionsView>().WithQueryView<GeolocationFieldQueryView>();
+        api.Fields.Add<UrlField>().WithFieldView<UrlFieldView>().WithOptionView<UrlFieldOptionsView>();
 
         //blockfield
-        api.Field().Add<BlockField>().WithFieldView<BlockFieldView>();
+        api.Fields.Add<BlockField>().WithFieldView<BlockFieldView>();
 
         //blocks
         api.RegisterBlock<ColumnBlock, ColumnBlockView>();

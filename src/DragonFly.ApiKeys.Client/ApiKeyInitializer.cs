@@ -12,7 +12,7 @@ public class ApiKeyInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {        
-        api.Settings().Add<ApiKeyList>("ApiKey");
+        api.Settings.Add<ApiKeyList>("ApiKey");
 
         return Task.CompletedTask;
     }

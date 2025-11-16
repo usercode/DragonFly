@@ -7,7 +7,7 @@
                 <span class="fa-solid fa-house" aria-hidden="true"></span> Home
             </NavLink>
         </li>
-        @foreach (MenuItem menuItem in Api.MainMenu().Items)
+        @foreach (MenuItem menuItem in Api.MainMenu.Items)
         {
             <li class="nav-item">
                 <NavLink class="nav-link" href="@menuItem.Route">

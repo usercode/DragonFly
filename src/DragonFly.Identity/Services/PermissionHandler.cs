@@ -46,7 +46,7 @@ class PermissionHandler : AuthorizationHandler<PermissionRequirement>
         Guid userId = Guid.Parse(claim.Value);
         MongoIdentityUser user = await Store.Users.AsQueryable().FirstAsync(x => x.Id == userId).ConfigureAwait(false);
 
-        string[] permissions = Api.Permission().Get(requirement.Permission);
+        string[] permissions = Api.Permissions.Get(requirement.Permission);
 
         bool found = await Store.Roles.AsQueryable()
                                             .Where(x => user.Roles.Contains(x.Id))

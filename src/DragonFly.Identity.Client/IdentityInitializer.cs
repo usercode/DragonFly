@@ -12,8 +12,8 @@ public class IdentityInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {        
-        api.Settings().Add<UserList>("Users");
-        api.Settings().Add<RoleList>("Roles");
+        api.Settings.Add<UserList>("Users");
+        api.Settings.Add<RoleList>("Roles");
 
         return Task.CompletedTask;
     }

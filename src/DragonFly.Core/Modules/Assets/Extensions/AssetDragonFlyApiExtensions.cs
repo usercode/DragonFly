@@ -9,14 +9,9 @@ namespace DragonFly;
 /// </summary>
 public static class AssetDragonFlyApiExtensions
 {
-    /// <summary>
-    /// Gets the metadata manager.
-    /// </summary>
-    /// <param name="api"></param>
-    /// <returns></returns>
-    public static MetadataManager Metadata(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return MetadataManager.Default;
+        public MetadataManager Metadatas => MetadataManager.Default;
     }
 
     public static MetadataManager AddDefaults(this MetadataManager manager)

@@ -17,6 +17,6 @@ internal class PermissionService : IPermissionService
 
     public Task<IEnumerable<Permission>> GetPermissionsAsync()
     {
-        return Task.FromResult(Api.Permission().GetAll());
+        return Task.FromResult(Api.Permissions.GetAll());
     }
 }

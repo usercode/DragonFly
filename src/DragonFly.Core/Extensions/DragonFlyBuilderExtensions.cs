@@ -37,10 +37,10 @@ public static class DragonFlyBuilderExtensions
 
         builder.Init(api =>
         {
-            api.Field().AddDefaults();
-            api.Block().AddDefaults();
-            api.Metadata().AddDefaults();
-            api.Permission().AddDefaults();
+            api.Fields.AddDefaults();
+            api.Blocks.AddDefaults();
+            api.Metadatas.AddDefaults();
+            api.Permissions.AddDefaults();
         });
 
         return builder;

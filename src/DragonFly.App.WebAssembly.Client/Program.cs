@@ -17,7 +17,7 @@ builder.AddDragonFlyClient(x => x
             .AddApiKeys()
             .Init(x =>
             {
-                x.Field().Add<HtmlField>().WithTinyMceView();
+                x.Fields.Add<HtmlField>().WithTinyMceView();
             }));
 
 WebAssemblyHost host = builder.Build();

@@ -45,7 +45,7 @@ class PermissionHandler : AuthorizationHandler<PermissionRequirement>
 
         Guid apikeyId = Guid.Parse(claim.Value);
 
-        string[] permissions = Api.Permission().Get(requirement.Permission);
+        string[] permissions = Api.Permissions.Get(requirement.Permission);
 
         bool found = await Store.ApiKeys.AsQueryable()
                                             .Where(x => x.Id == apikeyId)

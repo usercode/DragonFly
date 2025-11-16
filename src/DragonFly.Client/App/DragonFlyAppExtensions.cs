@@ -9,8 +9,8 @@ namespace DragonFly;
 
 public static class DragonFlyAppExtensions
 {
-    public static DragonFlyApp App(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return api.ServiceProvider.GetRequiredService<DragonFlyApp>();
-    }
+        public DragonFlyApp App => api.ServiceProvider.GetRequiredService<DragonFlyApp>();
+    }    
 }

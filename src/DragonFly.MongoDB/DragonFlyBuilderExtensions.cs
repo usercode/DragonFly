@@ -48,15 +48,15 @@ public static class DragonFlyBuilderExtensions
 
         builder.PreInit(api =>
         {
-            api.Field().Added += factory => CreateFieldOptionsBsonClassMap(factory); //fix for nested field options (inside ArrayFieldOptions)
-            api.Field().Added += factory => MongoFieldManager.Default.EnsureField(factory);
+            api.Fields.Added += factory => CreateFieldOptionsBsonClassMap(factory); //fix for nested field options (inside ArrayFieldOptions)
+            api.Fields.Added += factory => MongoFieldManager.Default.EnsureField(factory);
         });
 
         builder.Init(api =>
         {
-            api.MongoField().AddDefaults();
-            api.MongoIndex().AddDefaults();
-            api.MongoQuery().AddDefaults();
+            api.MongoFields.AddDefaults();
+            api.MongoIndexes.AddDefaults();
+            api.MongoQueries.AddDefaults();
         });
 
         builder.PostInit<AssetIndexInitializer>();

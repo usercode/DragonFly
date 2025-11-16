@@ -6,9 +6,9 @@ namespace DragonFly.MongoDB;
 
 public static class MongoQueryManagerExtensions
 {
-    public static MongoQueryManager MongoQuery(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return MongoQueryManager.Default;
+        public MongoQueryManager MongoQueries => MongoQueryManager.Default;
     }
 
     public static MongoQueryManager AddDefaults(this MongoQueryManager manager)

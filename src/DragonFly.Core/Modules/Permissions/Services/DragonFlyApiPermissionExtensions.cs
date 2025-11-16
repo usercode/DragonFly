@@ -9,14 +9,9 @@ namespace DragonFly;
 
 public static class DragonFlyApiPermissionExtensions
 {
-    /// <summary>
-    /// Gets the permission manager.
-    /// </summary>
-    /// <param name="api"></param>
-    /// <returns></returns>
-    public static PermissionManager Permission(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return PermissionManager.Default;
+        public PermissionManager Permissions => PermissionManager.Default;
     }
 
     /// <summary>

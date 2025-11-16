@@ -14,7 +14,7 @@ public class BackgroundTaskInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {
-        api.MainMenu().Add("Tasks", "fa-solid fa-layer-group", "tasks");
+        api.MainMenu.Add("Tasks", "fa-solid fa-layer-group", "tasks");
 
         return Task.CompletedTask;
     }

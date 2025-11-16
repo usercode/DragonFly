@@ -9,9 +9,9 @@ namespace DragonFly;
 
 public static class MongoFieldManagerExtensions
 {
-    public static MongoFieldManager MongoField(this IDragonFlyApi api)
+    extension(IDragonFlyApi api)
     {
-        return MongoFieldManager.Default;
+        public MongoFieldManager MongoFields => MongoFieldManager.Default;
     }
 
     public static MongoFieldManager AddDefaults(this MongoFieldManager manager)

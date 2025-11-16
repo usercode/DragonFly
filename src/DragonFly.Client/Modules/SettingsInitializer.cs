@@ -15,7 +15,7 @@ public class SettingsInitializer : IInitialize
 {
     public Task ExecuteAsync(IDragonFlyApi api)
     {        
-        api.MainMenu().Add("Settings", "fa-solid fa-gear", "settings");
+        api.MainMenu.Add("Settings", "fa-solid fa-gear", "settings");
 
         SettingsManager.Default.Add<SystemTools>("Tools");
 
