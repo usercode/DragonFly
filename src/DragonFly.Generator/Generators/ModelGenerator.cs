@@ -13,7 +13,7 @@ public class ModelGenerator : IIncrementalGenerator
         var classDeclarations = context.SyntaxProvider
                                    .ForAttributeWithMetadataName("DragonFly.Generator.ContentItemAttribute",
                                         predicate: static (node, _) =>  node is ClassDeclarationSyntax syntax,
-                                        transform: static (ctx, _) => new { GeneratorContext = ctx, ClassSyntax = (ClassDeclarationSyntax)ctx.TargetNode })
+                                        transform: static (ctx, _) => ctx)
                                    .Collect();
 
         context.RegisterSourceOutput(classDeclarations, (ctx, ar) =>
@@ -22,7 +22,9 @@ public class ModelGenerator : IIncrementalGenerator
 
             foreach (var item in ar)
             {
-                INamedTypeSymbol? classSymbol = item.GeneratorContext.SemanticModel.GetDeclaredSymbol(item.ClassSyntax);
+                ClassDeclarationSyntax classSyntax = (ClassDeclarationSyntax)item.TargetNode;
+
+                INamedTypeSymbol? classSymbol = item.SemanticModel.GetDeclaredSymbol(classSyntax);
 
                 if (classSymbol == null)
                 {
@@ -39,19 +41,19 @@ public class ModelGenerator : IIncrementalGenerator
 
                 List<ContentItemProperty> properties = new List<ContentItemProperty>();
 
-                string? contentAttributeParameters = item.ClassSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString();
+                string? contentAttributeParameters = classSyntax.AttributeLists[0].Attributes[0].ArgumentList?.Arguments.ToString();
 
                 //properties of contentitems
-                foreach (var field in item.ClassSyntax.Members.OfType<PropertyDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
+                foreach (var field in classSyntax.Members.OfType<PropertyDeclarationSyntax>().Where(x => x.AttributeLists.Count > 0))
                 {
-                    TypeInfo attributeTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.AttributeLists[0].Attributes[0]);
+                    TypeInfo attributeTypeInfo = item.SemanticModel.GetTypeInfo(field.AttributeLists[0].Attributes[0]);
 
                     if (attributeTypeInfo.Type == null)
                     {
                         continue;
                     }
 
-                    TypeInfo propertyTypeInfo = item.GeneratorContext.SemanticModel.GetTypeInfo(field.Type);
+                    TypeInfo propertyTypeInfo = item.SemanticModel.GetTypeInfo(field.Type);
 
                     if (propertyTypeInfo.Type == null)
                     {

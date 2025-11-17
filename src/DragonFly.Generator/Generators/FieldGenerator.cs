@@ -10,30 +10,20 @@ public class FieldGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var classProvider = context.SyntaxProvider
-                                   .CreateSyntaxProvider((node, _) =>
-                                   {
-                                       return node is ClassDeclarationSyntax syntax && syntax.AttributeLists.Count > 0;
-                                   },
-                                   (ctx, _) =>
-                                   {
-                                       return new { GeneratorContext = ctx, ClassSyntax = (ClassDeclarationSyntax)ctx.Node };
-                                   });
-
-        var r = classProvider;
+                                   .ForAttributeWithMetadataName("DragonFly.Generator.FieldAttribute",
+                                        predicate: static (node, _) => node is ClassDeclarationSyntax syntax,
+                                        transform: static (ctx, _) => ctx);
         
-        context.RegisterSourceOutput(r, (ctx, ar) =>
+        context.RegisterSourceOutput(classProvider, (ctx, ar) =>
         {
-            if (ar.ClassSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "Field") == false)
-            {
-                return;
-            }
-
-            INamedTypeSymbol? classSymbol = ar.GeneratorContext.SemanticModel.GetDeclaredSymbol(ar.ClassSyntax);
+            ClassDeclarationSyntax classSyntax = (ClassDeclarationSyntax)ar.TargetNode;
+           
+            INamedTypeSymbol? classSymbol = ar.SemanticModel.GetDeclaredSymbol(classSyntax);
 
             if (classSymbol == null)
             {
                 return;
-            }           
+            }
 
             string ns = classSymbol.ContainingNamespace.ToDisplayString();
             string className = classSymbol.Name;
@@ -47,7 +37,7 @@ public class FieldGenerator : IIncrementalGenerator
 
             baseTypes.Add("IContentFieldFactory");
 
-            string? optionsParameter = ar.ClassSyntax.GetFirstAttributeParameters("FieldOptions").FirstOrDefault();
+            string? optionsParameter = classSyntax.GetFirstAttributeParameters("FieldOptions").FirstOrDefault();
             string optionsFactory = "null";
             string optionsType = "null";
 
@@ -57,7 +47,7 @@ public class FieldGenerator : IIncrementalGenerator
                 optionsType = $"typeof({optionsParameter})";
             }
 
-            string? queryParameter = ar.ClassSyntax.GetFirstAttributeParameters("FieldQuery").FirstOrDefault();
+            string? queryParameter = classSyntax.GetFirstAttributeParameters("FieldQuery").FirstOrDefault();
             string queryFactory = "null";
             string queryType = "null";
 

@@ -2,6 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
+using DragonFly.Generator;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DragonFly;

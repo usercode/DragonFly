@@ -10,25 +10,22 @@ public class ProxyGenerator : IIncrementalGenerator
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var classProvider = context.SyntaxProvider
-                                   .CreateSyntaxProvider((node, _) =>
-                                   {
-                                       return node is ClassDeclarationSyntax syntax && syntax.AttributeLists.Count > 0;
-                                   },
-                                   (ctx, _) =>
-                                   {
-                                       return new { GeneratorContext = ctx, ClassSyntax = (ClassDeclarationSyntax)ctx.Node };
-                                   });
+                                   .ForAttributeWithMetadataName("DragonFly.Generator.ProxyAttribute",
+                                        predicate: static (node, _) => node is ClassDeclarationSyntax syntax,
+                                        transform: static (ctx, _) => ctx);
 
         var r = classProvider;
         
         context.RegisterSourceOutput(r, (ctx, ar) =>
         {
-            if (ar.ClassSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "Proxy") == false)
+            ClassDeclarationSyntax classSyntax = (ClassDeclarationSyntax)ar.TargetNode;
+
+            if (classSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "Proxy") == false)
             {
                 return;
             }
 
-            INamedTypeSymbol? classSymbol = ar.GeneratorContext.SemanticModel.GetDeclaredSymbol(ar.ClassSyntax);
+            INamedTypeSymbol? classSymbol = ar.SemanticModel.GetDeclaredSymbol(classSyntax);
 
             if (classSymbol == null)
             {
@@ -78,7 +75,7 @@ public class ProxyGenerator : IIncrementalGenerator
 
                     builder.AppendLine("private bool _invocationTargetLoaded = false;");
 
-                    if (FindMethodWithAttribute(ar.ClassSyntax, "Intercept", out string? methodCaller, out bool isTask, out string[] ignoredProperties, out string[] ignoredMethods))
+                    if (FindMethodWithAttribute(classSyntax, "Intercept", out string? methodCaller, out bool isTask, out string[] ignoredProperties, out string[] ignoredMethods))
                     {
                         string? methodCallerAsyncExtensions = null;
 

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using DragonFly.Core;
+using DragonFly.Generator;
 
 namespace DragonFly;
 
