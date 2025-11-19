@@ -18,7 +18,7 @@
   <ItemGroup>   
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="10.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.71" PrivateAssets="All" />
   </ItemGroup>
 
 	<ItemGroup>
