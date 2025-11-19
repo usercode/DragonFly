@@ -5,6 +5,7 @@
 using ImageWizard;
 using ImageWizard.Loaders;
 using Microsoft.Extensions.Options;
+using SmartResults;
 
 namespace DragonFly.ImageWizard;
 
@@ -48,16 +49,21 @@ public class DragonFlyLoader : Loader<DragonFlyLoaderOptions>
 
         using (Api.DisableAuthorization())
         {
-            Asset? asset = await Storage.GetAssetAsync(id);
+            Result<Asset?> resultAsset = await Storage.GetAssetAsync(id).ConfigureAwait(false);
 
-            if (asset == null)
+            if (resultAsset.IsFailed || resultAsset.Value == null)
             {
                 return LoaderResult.Failed();
             }
 
-            Stream stream = await Storage.OpenStreamAsync(asset.Id);
+            Result<Stream> resultStream = await Storage.OpenStreamAsync(resultAsset.Value.Id).ConfigureAwait(false);
 
-            return LoaderResult.Success(new OriginalData(asset.MimeType, stream));
+            if (resultStream.IsFailed)
+            {
+                return LoaderResult.Failed();
+            }
+
+            return LoaderResult.Success(new OriginalData(resultAsset.Value.MimeType, resultStream.Value));
         }
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using DataUnits;
 using DragonFly;
 using DragonFly.API;
 using DragonFly.App.Server.Components;
@@ -53,7 +54,7 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
-    options.Limits.MaxRequestBodySize = 1024 * 1024 * 100; // if don't set default value is: 30 MB
+    options.Limits.MaxRequestBodySize = ByteSize.FromMegabytes(100); // if don't set default value is: 30 MB
 });
 
 //DragonFly services

@@ -44,7 +44,7 @@ public static class BackgroundTaskContextExtensions
 
                 try
                 {
-                    await itemAction(item);
+                    await itemAction(item).ConfigureAwait(false);
 
                     counterSucceed++;
                 }

@@ -20,11 +20,6 @@ public class ProxyGenerator : IIncrementalGenerator
         {
             ClassDeclarationSyntax classSyntax = (ClassDeclarationSyntax)ar.TargetNode;
 
-            if (classSyntax.AttributeLists.SelectMany(x => x.Attributes).Any(x => x.Name.ToString() == "Proxy") == false)
-            {
-                return;
-            }
-
             INamedTypeSymbol? classSymbol = ar.SemanticModel.GetDeclaredSymbol(classSyntax);
 
             if (classSymbol == null)
