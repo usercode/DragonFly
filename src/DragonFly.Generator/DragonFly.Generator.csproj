@@ -5,6 +5,7 @@
     <IsRoslynComponent>true</IsRoslynComponent>
     <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
  
   <ItemGroup>
