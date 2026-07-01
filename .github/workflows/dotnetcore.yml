@@ -6,57 +6,62 @@ on:
       - published
 
 jobs:
-  dragonfly:
-
+  build:
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 9.0.x
-    - name: Build with dotnet
-      run: dotnet build --configuration Release "./src/DragonFly.sln"
-    - name: Create the package
-      run: dotnet pack --configuration Release "./src/DragonFly.sln"
-    - name: Publish "DragonFly.AspNetCore" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.AspNetCore.WebAssembly" to nuget
-      run: dotnet nuget push "./src/DragonFly.AspNetCore.WebAssembly/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.API" to nuget
-      run: dotnet nuget push "./src/DragonFly.API/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.API.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.API.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.API.Core" to nuget
-      run: dotnet nuget push "./src/DragonFly.API.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}    
-    - name: Publish "DragonFly.Core" to nuget
-      run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}  
-    - name: Publish "DragonFly.Generator" to nuget
-      run: dotnet nuget push "./src/DragonFly.Generator/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}     
-    - name: Publish "DragonFly.ImageWizard" to nuget
-      run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
-    - name: Publish "DragonFly.Client.WebAssembly" to nuget
-      run: dotnet nuget push "./src/DragonFly.Client.WebAssembly/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
-    - name: Publish "DragonFly.ApiKeys.Core" to nuget
-      run: dotnet nuget push "./src/DragonFly.ApiKeys.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.ApiKeys" to nuget
-      run: dotnet nuget push "./src/DragonFly.ApiKeys/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.ApiKeys.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.ApiKeys.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}      
-    - name: Publish "DragonFly.Identity.Core" to nuget
-      run: dotnet nuget push "./src/DragonFly.Identity.Core/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Identity" to nuget
-      run: dotnet nuget push "./src/DragonFly.Identity/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Identity.Client" to nuget
-      run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}         
-    - name: Publish "DragonFly.MongoDB" to nuget
-      run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}   
-    - name: Publish "DragonFly.Assets.ImageSharp" to nuget
-      run: dotnet nuget push "./src/DragonFly.Assets.ImageSharp/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Assets.Pdf" to nuget
-      run: dotnet nuget push "./src/DragonFly.Assets.Pdf/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
-    - name: Publish "DragonFly.Assets.FFMpeg" to nuget
-      run: dotnet nuget push "./src/DragonFly.Assets.FFMpeg/bin/Release/*.nupkg" -s "https://api.nuget.org/v3/index.json" -k ${{secrets.NUGET_API_KEY}}
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+      - uses: actions/checkout@v6
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+      - name: Build with dotnet
+        run: dotnet build --configuration Release "./src/DragonFly.slnx"
+      - name: Create the package
+        run: dotnet pack --configuration Release "./src/DragonFly.slnx"
+      - name: Publish "DragonFly.AspNetCore" to nuget
+        run: dotnet nuget push "./src/DragonFly.AspNetCore/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.AspNetCore.WebAssembly" to nuget
+        run: dotnet nuget push "./src/DragonFly.AspNetCore.WebAssembly/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.API" to nuget
+        run: dotnet nuget push "./src/DragonFly.API/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.API.Client" to nuget
+        run: dotnet nuget push "./src/DragonFly.API.Client/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.API.Core" to nuget
+        run: dotnet nuget push "./src/DragonFly.API.Core/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json 
+      - name: Publish "DragonFly.Core" to nuget
+        run: dotnet nuget push "./src/DragonFly.Core/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Generator" to nuget
+        run: dotnet nuget push "./src/DragonFly.Generator/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json   
+      - name: Publish "DragonFly.ImageWizard" to nuget
+        run: dotnet nuget push "./src/DragonFly.ImageWizard/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Client" to nuget
+        run: dotnet nuget push "./src/DragonFly.Client/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json  
+      - name: Publish "DragonFly.Client.WebAssembly" to nuget
+        run: dotnet nuget push "./src/DragonFly.Client.WebAssembly/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.ApiKeys.Core" to nuget
+        run: dotnet nuget push "./src/DragonFly.ApiKeys.Core/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.ApiKeys" to nuget
+        run: dotnet nuget push "./src/DragonFly.ApiKeys/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.ApiKeys.Client" to nuget
+        run: dotnet nuget push "./src/DragonFly.ApiKeys.Client/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Identity.Core" to nuget
+        run: dotnet nuget push "./src/DragonFly.Identity.Core/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Identity" to nuget
+        run: dotnet nuget push "./src/DragonFly.Identity/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Identity.Client" to nuget
+        run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json    
+      - name: Publish "DragonFly.MongoDB" to nuget
+        run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Assets.ImageSharp" to nuget
+        run: dotnet nuget push "./src/DragonFly.Assets.ImageSharp/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Assets.Pdf" to nuget
+        run: dotnet nuget push "./src/DragonFly.Assets.Pdf/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Assets.FFMpeg" to nuget
+        run: dotnet nuget push "./src/DragonFly.Assets.FFMpeg/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
