@@ -2,5 +2,5 @@
 	<ItemGroup>
 		<ProjectReference Include="..\DragonFly.API.Core\DragonFly.API.Core.csproj" />
 		<ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
-	</ItemGroup>	
+	</ItemGroup>
 </Project>

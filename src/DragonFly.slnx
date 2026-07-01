@@ -1,0 +1,56 @@
+<Solution>
+  <Folder Name="/App/" />
+  <Folder Name="/App/Blazor.Server/">
+    <Project Path="DragonFly.App.Server/DragonFly.App.Server.csproj" />
+  </Folder>
+  <Folder Name="/App/Blazor.WebAssembly/">
+    <Project Path="DragonFly.App.WebAssembly.Client/DragonFly.App.WebAssembly.Client.csproj" />
+    <Project Path="DragonFly.App.WebAssembly.Server/DragonFly.App.WebAssembly.Server.csproj" />
+  </Folder>
+  <Folder Name="/Client/">
+    <Project Path="DragonFly.Client.WebAssembly/DragonFly.Client.WebAssembly.csproj" />
+    <Project Path="DragonFly.Client/DragonFly.Client.csproj" />
+  </Folder>
+  <Folder Name="/Core/">
+    <Project Path="DragonFly.Core/DragonFly.Core.csproj" />
+  </Folder>
+  <Folder Name="/Modules/" />
+  <Folder Name="/Modules/API/">
+    <Project Path="DragonFly.API.Client/DragonFly.API.Client.csproj" />
+    <Project Path="DragonFly.API.Core/DragonFly.API.Core.csproj" />
+    <Project Path="DragonFly.API/DragonFly.API.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Asset/">
+    <Project Path="DragonFly.Assets.FFMpeg/DragonFly.Assets.FFMpeg.csproj" />
+    <Project Path="DragonFly.Assets.ImageSharp/DragonFly.Assets.ImageSharp.csproj" />
+    <Project Path="DragonFly.Assets.Pdf/DragonFly.Assets.Pdf.csproj" />
+    <Project Path="DragonFly.ImageWizard/DragonFly.ImageWizard.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Generator/">
+    <Project Path="DragonFly.Generator.Tests/DragonFly.Generator.Tests.csproj" />
+    <Project Path="DragonFly.Generator/DragonFly.Generator.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Security/" />
+  <Folder Name="/Modules/Security/ApiKey/">
+    <Project Path="DragonFly.ApiKeys.Client/DragonFly.ApiKeys.Client.csproj" />
+    <Project Path="DragonFly.ApiKeys.Core/DragonFly.ApiKeys.Core.csproj" />
+    <Project Path="DragonFly.ApiKeys/DragonFly.ApiKeys.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Security/Identity/">
+    <Project Path="DragonFly.Identity.Client/DragonFly.Identity.Client.csproj" />
+    <Project Path="DragonFly.Identity.Core/DragonFly.Identity.Core.csproj" />
+    <Project Path="DragonFly.Identity/DragonFly.Identity.csproj" />
+  </Folder>
+  <Folder Name="/Modules/Storages/">
+    <Project Path="DragonFly.MongoDB/DragonFly.MongoDB.csproj" />
+  </Folder>
+  <Folder Name="/Server/">
+    <Project Path="DragonFly.AspNetCore.WebAssembly/DragonFly.AspNetCore.WebAssembly.csproj" />
+    <Project Path="DragonFly.AspNetCore/DragonFly.AspNetCore.csproj" />
+    <Project Path="DragonFly.GraphQL/DragonFly.GraphQL.csproj" />
+    <Project Path="DragonFly.SampleData/DragonFly.SampleData.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+</Solution>
