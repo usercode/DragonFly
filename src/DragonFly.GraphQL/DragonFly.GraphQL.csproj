@@ -1,11 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">  
   <ItemGroup>
-    <PackageReference Include="GraphQL" Version="8.8.4" />
+    <PackageReference Include="GraphQL" Version="8.8.5" />
     <PackageReference Include="GraphQL.Server.Transports.AspNetCore" Version="8.3.3" />
     <PackageReference Include="GraphQL.Server.Ui.Playground" Version="8.3.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="10.0.401" />
+    <PackageReference Update="MinVer" Version="8.0.0" />
   </ItemGroup>
 </Project>

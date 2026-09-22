@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="DragonFlyApp.Client/DragonFlyApp.Client.csproj" />
+  <Project Path="DragonFlyApp.Server/DragonFlyApp.Server.csproj" />
+  <Project Path="DragonFlyApp.Shared/DragonFlyApp.Shared.csproj" />
+</Solution>

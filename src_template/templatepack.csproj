@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.26</PackageVersion>
+    <PackageVersion>1.0.27</PackageVersion>
     <PackageId>DragonFly.Templates</PackageId>
     <PackageProjectUrl>https://github.com/usercode/DragonFly</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -11,9 +11,9 @@
     <Title>DragonFly CMS Templates</Title>
     <Authors>usercode</Authors>
     <Description>Templates to use when creating a DragonFly CMS app.</Description>
-    <PackageTags>dotnet-new;templates;contoso</PackageTags>
+    <PackageTags>dotnet-new;templates</PackageTags>
 
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
@@ -23,8 +23,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\logo.png" Pack="true" PackagePath="" />
-    <None Include="..\..\readme.md" Pack="true" PackagePath="" />
+    <None Include="..\logo\logo.png" Pack="true" PackagePath="" />
+    <None Include="..\readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>

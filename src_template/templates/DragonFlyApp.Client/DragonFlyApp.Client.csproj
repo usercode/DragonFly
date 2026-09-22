@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+	<TargetFramework>net10.0</TargetFramework>
+  <ImplicitUsings>true</ImplicitUsings>
+	<RunAOTCompilation>false</RunAOTCompilation>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="10.0.9" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="10.0.9" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="10.0.9" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DragonFly.Client" Version="1.0.39" />
+    <PackageReference Include="DragonFly.Client.WebAssembly" Version="1.0.39" />
+    <PackageReference Include="DragonFly.API.Client" Version="1.0.39" />
+    <PackageReference Include="DragonFly.ApiKeys.Client" Version="1.0.39" />
+    <PackageReference Include="DragonFly.Identity.Client" Version="1.0.39" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DragonFlyApp.Shared\DragonFlyApp.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
