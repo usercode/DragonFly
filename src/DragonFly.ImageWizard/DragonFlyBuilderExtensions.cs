@@ -27,7 +27,7 @@ public static class DragonFlyBuilderExtensions
 
         //ImageWizard
         IImageWizardBuilder imageWizardBuilder = builder.Services.AddImageWizard()
-                                                                    .AddImageSharp()
+                                                                    .AddSkiaSharp()
                                                                     .AddSvgNet()
                                                                     .AddDocNET()
                                                                     .AddDragonFlyLoader()
