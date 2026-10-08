@@ -3,7 +3,6 @@
 // MIT License
 
 using DragonFly.AspNetCore.Builders;
-using DragonFly.Assets.ImageSharp;
 using DragonFly.Core.Modules.Assets.Actions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,9 +16,9 @@ public static class DragonFlyBuilderExtensions
     public static IDragonFlyBuilder AddImageMetadata(this IDragonFlyBuilder builder)
     {
         builder.Services.AddTransient<IAssetProcessing, ImageProcessing>();
-        builder.Services.AddTransient<CropWhitespacesAssetAction>();
+        //builder.Services.AddTransient<CropWhitespacesAssetAction>();
 
-        AssetActionManager.Default.Add<CropWhitespacesAssetAction>("CropWhiteSpaces", MimeTypes.Images);
+        //AssetActionManager.Default.Add<CropWhitespacesAssetAction>("CropWhiteSpaces", MimeTypes.Images);
 
         return builder;
     }

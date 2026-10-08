@@ -80,4 +80,11 @@ public class UserDetailBase : EntityDetailComponent<IdentityUser>
             await UserStore.ChangePasswordAsync(Entity.Id, NewPassword);
         }
     }
+
+    protected override async Task DeleteActionAsync()
+    {
+        await base.DeleteActionAsync();
+
+        await UserStore.DeleteUserAsync(Entity);
+    }
 }

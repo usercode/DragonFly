@@ -24,10 +24,11 @@ internal static class UserExtensions
         group.MapPost("query", MapQuery).RequirePermission(IdentityPermissions.QueryUser);
         group.MapPost("", MapCreate).RequirePermission(IdentityPermissions.CreateUser);
         group.MapPut("", MapUpdate).RequirePermission(IdentityPermissions.UpdateUser);
+        group.MapDelete("{id:guid}", MapDelete).RequirePermission(IdentityPermissions.DeleteUser);
         group.MapPost("change-password", MapChangePassword).RequirePermission(IdentityPermissions.ChangePassword);
 
         return endpoints;
-    }
+    }   
 
     private static async Task<Results<Ok<IdentityUser>, NotFound>> MapGet(IIdentityService identityService, Guid id)
     {
@@ -46,6 +47,15 @@ internal static class UserExtensions
     private static async Task<Ok> MapUpdate(IdentityUser user, IIdentityService identityService)
     {
         await identityService.UpdateUserAsync(user);
+
+        return TypedResults.Ok();
+    }
+
+    private static async Task<Ok> MapDelete(Guid id, IIdentityService identityService)
+    {
+        IdentityUser user = await identityService.GetUserAsync(id);
+
+        await identityService.DeleteUserAsync(user);
 
         return TypedResults.Ok();
     }

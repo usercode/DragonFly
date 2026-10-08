@@ -12,7 +12,7 @@
 
   <ItemGroup>
 	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
-	  <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="10.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +21,7 @@
     <ProjectReference Include="..\DragonFly.AspNetCore.WebAssembly\DragonFly.AspNetCore.WebAssembly.csproj" />
     <ProjectReference Include="..\DragonFly.AspNetCore\DragonFly.AspNetCore.csproj" />
     <ProjectReference Include="..\DragonFly.Assets.FFMpeg\DragonFly.Assets.FFMpeg.csproj" />
-    <ProjectReference Include="..\DragonFly.Assets.ImageSharp\DragonFly.Assets.ImageSharp.csproj" />
+    <ProjectReference Include="..\DragonFly.Assets.SkiaSharp\DragonFly.Assets.SkiaSharp.csproj" />
     <ProjectReference Include="..\DragonFly.Assets.Pdf\DragonFly.Assets.Pdf.csproj" />
     <ProjectReference Include="..\DragonFly.ImageWizard\DragonFly.ImageWizard.csproj" />
     <ProjectReference Include="..\DragonFly.MongoDB\DragonFly.MongoDB.csproj" />

@@ -2,7 +2,7 @@
 // https://github.com/usercode/DragonFly
 // MIT License
 
-using SixLabors.ImageSharp;
+using SkiaSharp;
 
 namespace DragonFly.AspNetCore;
 
@@ -28,20 +28,17 @@ public class ImageProcessing : IAssetProcessing
     {
         using Stream stream = await context.OpenAssetStreamAsync().ConfigureAwait(false);
 
-        ImageInfo imageInfo = await Image.IdentifyAsync(stream).ConfigureAwait(false);
+        SKImageInfo info = SKBitmap.DecodeBounds(stream);
 
-        if (imageInfo != null)
+        ImageMetadata metadata = new ImageMetadata()
         {
-            ImageMetadata metadata = new ImageMetadata() { 
-                                                    Width = imageInfo.Width, 
-                                                    Height = imageInfo.Height, 
-                                                    BitsPerPixel = imageInfo.PixelType.BitsPerPixel };
+            Width = info.Width,
+            Height = info.Height,
+            BitsPerPixel = info.BitsPerPixel
+        };
 
-            await context.SetMetadataAsync(metadata).ConfigureAwait(false);
+        await context.SetMetadataAsync(metadata).ConfigureAwait(false);
 
-            return true;
-        }
-
-        return false;
+        return true;
     }
 }

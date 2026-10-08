@@ -59,8 +59,8 @@ jobs:
         run: dotnet nuget push "./src/DragonFly.Identity.Client/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json    
       - name: Publish "DragonFly.MongoDB" to nuget
         run: dotnet nuget push "./src/DragonFly.MongoDB/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
-      - name: Publish "DragonFly.Assets.ImageSharp" to nuget
-        run: dotnet nuget push "./src/DragonFly.Assets.ImageSharp/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
+      - name: Publish "DragonFly.Assets.SkiaSharp" to nuget
+        run: dotnet nuget push "./src/DragonFly.Assets.SkiaSharp/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
       - name: Publish "DragonFly.Assets.Pdf" to nuget
         run: dotnet nuget push "./src/DragonFly.Assets.Pdf/bin/Release/*.nupkg" --api-key ${{steps.login.outputs.NUGET_API_KEY}} --source https://api.nuget.org/v3/index.json
       - name: Publish "DragonFly.Assets.FFMpeg" to nuget

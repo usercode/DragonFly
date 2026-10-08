@@ -13,6 +13,7 @@ public interface IIdentityService
     Task<IdentityUser> GetUserAsync(string username);
 
     Task UpdateUserAsync(IdentityUser user);
+    Task DeleteUserAsync(IdentityUser user);
 
     Task<IdentityUser> GetUserAsync(Guid id);
 

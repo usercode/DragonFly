@@ -109,6 +109,13 @@ class IdentityService : IIdentityService
         response.EnsureSuccessStatusCode();
     }
 
+    public async Task DeleteUserAsync(IdentityUser user)
+    {
+        HttpResponseMessage response = await Client.DeleteAsync($"api/identity/user/{user.Id}");
+
+        response.EnsureSuccessStatusCode();
+    }
+
     public async Task UpdateRoleAsync(IdentityRole role)
     {
         HttpResponseMessage response = await Client.PutAsJsonAsync("api/identity/role", role, ApiJsonSerializerDefault.Options);

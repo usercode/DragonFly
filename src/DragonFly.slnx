@@ -22,7 +22,7 @@
   </Folder>
   <Folder Name="/Modules/Asset/">
     <Project Path="DragonFly.Assets.FFMpeg/DragonFly.Assets.FFMpeg.csproj" />
-    <Project Path="DragonFly.Assets.ImageSharp/DragonFly.Assets.ImageSharp.csproj" />
+    <Project Path="DragonFly.Assets.SkiaSharp/DragonFly.Assets.SkiaSharp.csproj" />
     <Project Path="DragonFly.Assets.Pdf/DragonFly.Assets.Pdf.csproj" />
     <Project Path="DragonFly.ImageWizard/DragonFly.ImageWizard.csproj" />
   </Folder>
