@@ -30,6 +30,11 @@ public class ImageProcessing : IAssetProcessing
 
         SKImageInfo info = SKBitmap.DecodeBounds(stream);
 
+        if (info.IsEmpty)
+        {
+            return false;
+        }
+
         ImageMetadata metadata = new ImageMetadata()
         {
             Width = info.Width,
